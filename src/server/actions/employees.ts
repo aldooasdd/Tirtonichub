@@ -1,6 +1,6 @@
 "use server";
 
-import type { Prisma, RoleCode } from "@prisma/client";
+import type { Prisma, RoleCode } from "@/generated/prisma";
 import { prisma } from "@/server/db";
 import { requireHr, can } from "@/server/auth/rbac";
 import { revokeAllSessions } from "@/server/auth/session";

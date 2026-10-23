@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useMemo, useTransition } from "react";
-import type { RoleCode } from "@prisma/client";
+import type { RoleCode } from "@/generated/prisma";
 import { selectRoleAction } from "@/server/actions/auth";
 
 export type SessionUser = { fullName: string; email: string };

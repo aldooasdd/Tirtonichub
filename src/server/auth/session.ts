@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import type { RoleCode } from "@prisma/client";
+import type { RoleCode } from "@/generated/prisma";
 import { prisma } from "@/server/db";
 import { hashValue, randomToken } from "./hash";
 

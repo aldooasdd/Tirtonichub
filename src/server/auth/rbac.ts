@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import type { RoleCode } from "@prisma/client";
+import type { RoleCode } from "@/generated/prisma";
 import { getSession } from "./session";
 import { can } from "./permissions";
 

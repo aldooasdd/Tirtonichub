@@ -1,4 +1,4 @@
-import type { RoleCode } from "@prisma/client";
+import type { RoleCode } from "@/generated/prisma";
 
 const HR_ROLES: RoleCode[] = ["BOSS", "HR"];
 

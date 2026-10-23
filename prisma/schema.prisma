@@ -3,6 +3,8 @@ generator client {
   provider   = "prisma-client-js"
   // engineType "client" = queryCompiler (WASM, tanpa engine binary). Shared host blokir download engine.
   engineType = "client"
+  // Output di repo + di-commit: host cPanel gak bisa jalanin prisma CLI (crash WASM).
+  output     = "../src/generated/prisma"
 }
 
 datasource db {

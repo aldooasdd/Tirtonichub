@@ -1,4 +1,4 @@
-import type { Prisma, RoleCode } from "@prisma/client";
+import type { Prisma, RoleCode } from "@/generated/prisma";
 import { prisma } from "@/server/db";
 
 type LogInput = {

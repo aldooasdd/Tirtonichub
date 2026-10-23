@@ -1,6 +1,6 @@
 "use server";
 
-import type { Prisma } from "@prisma/client";
+import type { Prisma } from "@/generated/prisma";
 import { prisma } from "@/server/db";
 import { requireAuth, can, assert } from "@/server/auth/rbac";
 import { roleAttends } from "@/lib/roles";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useTransition } from "react";
-import type { RoleCode } from "@prisma/client";
+import type { RoleCode } from "@/generated/prisma";
 import { ROLE_LABELS } from "@/lib/roles";
 import {
   Card,
