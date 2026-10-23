@@ -3,6 +3,7 @@ import {
   Clock,
   FileText,
   Bell,
+  MessagesSquare,
   User,
   Users,
   Building2,
@@ -35,6 +36,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
     umum.push({ label: "Riwayat Absen", href: "/riwayat-absen", icon: ClipboardList });
   }
   umum.push({ label: "Pengajuan", href: "/pengajuan", icon: FileText });
+  umum.push({ label: "Chat", href: "/chat", icon: MessagesSquare });
   umum.push({ label: "Notifikasi", href: "/notifikasi", icon: Bell });
   umum.push({ label: "Profil", href: "/profil", icon: User });
 
@@ -64,7 +66,7 @@ export function bottomNavForRole(role: RoleCode): NavItem[] {
   const items: NavItem[] = [{ label: "Beranda", href: "/beranda", icon: Home }];
   if (roleAttends(role)) items.push({ label: "Absen", href: "/absen", icon: Clock });
   items.push({ label: "Pengajuan", href: "/pengajuan", icon: FileText });
-  items.push({ label: "Notifikasi", href: "/notifikasi", icon: Bell });
+  items.push({ label: "Chat", href: "/chat", icon: MessagesSquare });
   items.push({ label: "Profil", href: "/profil", icon: User });
-  return items;
+  return items; // Notifikasi via bell di header (hemat slot bottom nav)
 }
