@@ -1,0 +1,64 @@
+{
+  "node": {
+    "40a4a7e0dba14942ec29fed8036ba6c4916d473c43": {
+      "workers": {
+        "app/(dash)/beranda/page": {
+          "moduleId": "[project]/.next-internal/server/app/(dash)/beranda/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/server/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true
+        },
+        "app/(dash)/hr/karyawan/page": {
+          "moduleId": "[project]/.next-internal/server/app/(dash)/hr/karyawan/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/server/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/server/actions/employees.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true
+        }
+      },
+      "filename": "src/server/actions/auth.ts",
+      "exportedName": "selectRoleAction"
+    },
+    "0046b7958b7436e2d055b98b50ff9bedfdbd7098ad": {
+      "workers": {
+        "app/(dash)/beranda/page": {
+          "moduleId": "[project]/.next-internal/server/app/(dash)/beranda/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/server/actions/auth.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true
+        },
+        "app/(dash)/hr/karyawan/page": {
+          "moduleId": "[project]/.next-internal/server/app/(dash)/hr/karyawan/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/server/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/server/actions/employees.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true
+        }
+      },
+      "filename": "src/server/actions/auth.ts",
+      "exportedName": "logoutAction"
+    },
+    "601b02e7b9eae801b8ed2a7e549f535a009bc18197": {
+      "workers": {
+        "app/(dash)/hr/karyawan/page": {
+          "moduleId": "[project]/.next-internal/server/app/(dash)/hr/karyawan/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/server/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/server/actions/employees.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true
+        }
+      },
+      "filename": "src/server/actions/employees.ts",
+      "exportedName": "setEmployeeActive"
+    },
+    "60dc5e8ba737436f66932c20ef1de88a44f0bfc727": {
+      "workers": {
+        "app/(dash)/hr/karyawan/page": {
+          "moduleId": "[project]/.next-internal/server/app/(dash)/hr/karyawan/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/server/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/server/actions/employees.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true
+        }
+      },
+      "filename": "src/server/actions/employees.ts",
+      "exportedName": "updateEmployee"
+    },
+    "40b0e7fbd4c6b7e2326942e9990fe5ac91afa4e3fb": {
+      "workers": {
+        "app/(dash)/hr/karyawan/page": {
+          "moduleId": "[project]/.next-internal/server/app/(dash)/hr/karyawan/page/actions.js { ACTIONS_MODULE0 => \"[project]/src/server/actions/auth.ts [app-rsc] (ecmascript)\", ACTIONS_MODULE1 => \"[project]/src/server/actions/employees.ts [app-rsc] (ecmascript)\" } [app-rsc] (server actions loader, ecmascript)",
+          "async": true
+        }
+      },
+      "filename": "src/server/actions/employees.ts",
+      "exportedName": "createEmployee"
+    }
+  },
+  "edge": {},
+  "encryptionKey": "fbABjdu/PKRVfm5BopL60xGNfjQploddYCW2CixHJRE="
+}

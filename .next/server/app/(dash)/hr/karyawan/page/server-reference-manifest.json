@@ -1,0 +1,55 @@
+{
+  "node": {
+    "40cb68bd69c9f705546bf9e2546b12d30c0bd6b5f6": {
+      "workers": {
+        "app/(dash)/hr/karyawan/page": {
+          "moduleId": 24292,
+          "async": true
+        }
+      },
+      "exportedName": "selectRoleAction",
+      "filename": "src/server/actions/auth.ts"
+    },
+    "009c180e2b358072164d2323d2b3d8c4696e515d3f": {
+      "workers": {
+        "app/(dash)/hr/karyawan/page": {
+          "moduleId": 24292,
+          "async": true
+        }
+      },
+      "exportedName": "logoutAction",
+      "filename": "src/server/actions/auth.ts"
+    },
+    "40461699a63b83a639f9b1c8f87795fd75b3629b53": {
+      "workers": {
+        "app/(dash)/hr/karyawan/page": {
+          "moduleId": 24292,
+          "async": true
+        }
+      },
+      "exportedName": "createEmployee",
+      "filename": "src/server/actions/employees.ts"
+    },
+    "6030347480b50b5cb02d20b6f647eb0191fe50ab85": {
+      "workers": {
+        "app/(dash)/hr/karyawan/page": {
+          "moduleId": 24292,
+          "async": true
+        }
+      },
+      "exportedName": "updateEmployee",
+      "filename": "src/server/actions/employees.ts"
+    },
+    "602ac309716abf47ee17e10088fcaccdf9e336347e": {
+      "workers": {
+        "app/(dash)/hr/karyawan/page": {
+          "moduleId": 24292,
+          "async": true
+        }
+      },
+      "exportedName": "setEmployeeActive",
+      "filename": "src/server/actions/employees.ts"
+    }
+  },
+  "edge": {}
+}

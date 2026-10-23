@@ -1,0 +1,35 @@
+{
+  "node": {
+    "40cb68bd69c9f705546bf9e2546b12d30c0bd6b5f6": {
+      "workers": {
+        "app/(dash)/profil/page": {
+          "moduleId": 12633,
+          "async": true
+        }
+      },
+      "exportedName": "selectRoleAction",
+      "filename": "src/server/actions/auth.ts"
+    },
+    "009c180e2b358072164d2323d2b3d8c4696e515d3f": {
+      "workers": {
+        "app/(dash)/profil/page": {
+          "moduleId": 12633,
+          "async": true
+        }
+      },
+      "exportedName": "logoutAction",
+      "filename": "src/server/actions/auth.ts"
+    },
+    "40c5614302a309dbaf8a90c5b735f9123d445987fa": {
+      "workers": {
+        "app/(dash)/profil/page": {
+          "moduleId": 12633,
+          "async": true
+        }
+      },
+      "exportedName": "updateOwnProfile",
+      "filename": "src/server/actions/profile.ts"
+    }
+  },
+  "edge": {}
+}

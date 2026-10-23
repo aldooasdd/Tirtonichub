@@ -1,0 +1,15 @@
+{
+  "node": {
+    "40cb68bd69c9f705546bf9e2546b12d30c0bd6b5f6": {
+      "workers": {
+        "app/(auth)/pilih-role/page": {
+          "moduleId": 82658,
+          "async": true
+        }
+      },
+      "exportedName": "selectRoleAction",
+      "filename": "src/server/actions/auth.ts"
+    }
+  },
+  "edge": {}
+}

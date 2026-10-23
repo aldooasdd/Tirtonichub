@@ -1,0 +1,35 @@
+{
+  "node": {
+    "40cb68bd69c9f705546bf9e2546b12d30c0bd6b5f6": {
+      "workers": {
+        "app/(dash)/hr/approval/page": {
+          "moduleId": 14589,
+          "async": true
+        }
+      },
+      "exportedName": "selectRoleAction",
+      "filename": "src/server/actions/auth.ts"
+    },
+    "009c180e2b358072164d2323d2b3d8c4696e515d3f": {
+      "workers": {
+        "app/(dash)/hr/approval/page": {
+          "moduleId": 14589,
+          "async": true
+        }
+      },
+      "exportedName": "logoutAction",
+      "filename": "src/server/actions/auth.ts"
+    },
+    "7029561b4ea2b73a54bdeb057a6cf6e33ab6124250": {
+      "workers": {
+        "app/(dash)/hr/approval/page": {
+          "moduleId": 14589,
+          "async": true
+        }
+      },
+      "exportedName": "reviewRequest",
+      "filename": "src/server/actions/requests.ts"
+    }
+  },
+  "edge": {}
+}

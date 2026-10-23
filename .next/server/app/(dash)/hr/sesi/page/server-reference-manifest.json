@@ -1,0 +1,35 @@
+{
+  "node": {
+    "40cb68bd69c9f705546bf9e2546b12d30c0bd6b5f6": {
+      "workers": {
+        "app/(dash)/hr/sesi/page": {
+          "moduleId": 42012,
+          "async": true
+        }
+      },
+      "exportedName": "selectRoleAction",
+      "filename": "src/server/actions/auth.ts"
+    },
+    "009c180e2b358072164d2323d2b3d8c4696e515d3f": {
+      "workers": {
+        "app/(dash)/hr/sesi/page": {
+          "moduleId": 42012,
+          "async": true
+        }
+      },
+      "exportedName": "logoutAction",
+      "filename": "src/server/actions/auth.ts"
+    },
+    "40e8152033f09a43d89d54bb0382d7b340570f1c80": {
+      "workers": {
+        "app/(dash)/hr/sesi/page": {
+          "moduleId": 42012,
+          "async": true
+        }
+      },
+      "exportedName": "revokeUserSession",
+      "filename": "src/server/actions/sessions.ts"
+    }
+  },
+  "edge": {}
+}

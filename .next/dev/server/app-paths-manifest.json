@@ -1,0 +1,5 @@
+{
+  "/(dash)/beranda/page": "app/(dash)/beranda/page.js",
+  "/(dash)/hr/karyawan/page": "app/(dash)/hr/karyawan/page.js",
+  "/manifest.webmanifest/route": "app/manifest.webmanifest/route.js"
+}

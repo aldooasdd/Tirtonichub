@@ -1,0 +1,25 @@
+{
+  "node": {
+    "40cb68bd69c9f705546bf9e2546b12d30c0bd6b5f6": {
+      "workers": {
+        "app/(dash)/riwayat-absen/page": {
+          "moduleId": 72249,
+          "async": true
+        }
+      },
+      "exportedName": "selectRoleAction",
+      "filename": "src/server/actions/auth.ts"
+    },
+    "009c180e2b358072164d2323d2b3d8c4696e515d3f": {
+      "workers": {
+        "app/(dash)/riwayat-absen/page": {
+          "moduleId": 72249,
+          "async": true
+        }
+      },
+      "exportedName": "logoutAction",
+      "filename": "src/server/actions/auth.ts"
+    }
+  },
+  "edge": {}
+}

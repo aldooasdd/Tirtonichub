@@ -1,0 +1,195 @@
+{
+  "version": 3,
+  "pages404": true,
+  "appType": "app",
+  "caseSensitive": false,
+  "basePath": "",
+  "redirects": [
+    {
+      "source": "/:path+/",
+      "destination": "/:path+",
+      "internal": true,
+      "priority": true,
+      "statusCode": 308,
+      "regex": "^(?:/((?:[^/]+?)(?:/(?:[^/]+?))*))/$"
+    }
+  ],
+  "headers": [],
+  "onMatchHeaders": [],
+  "rewrites": {
+    "beforeFiles": [],
+    "afterFiles": [],
+    "fallback": []
+  },
+  "dynamicRoutes": [],
+  "staticRoutes": [
+    {
+      "page": "/",
+      "regex": "^/(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/(?:/)?$"
+    },
+    {
+      "page": "/_global-error",
+      "regex": "^/_global\\-error(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_global\\-error(?:/)?$"
+    },
+    {
+      "page": "/_not-found",
+      "regex": "^/_not\\-found(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/_not\\-found(?:/)?$"
+    },
+    {
+      "page": "/absen",
+      "regex": "^/absen(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/absen(?:/)?$"
+    },
+    {
+      "page": "/api/chat/messages",
+      "regex": "^/api/chat/messages(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/chat/messages(?:/)?$"
+    },
+    {
+      "page": "/api/dev-file",
+      "regex": "^/api/dev\\-file(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/dev\\-file(?:/)?$"
+    },
+    {
+      "page": "/beranda",
+      "regex": "^/beranda(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/beranda(?:/)?$"
+    },
+    {
+      "page": "/chat",
+      "regex": "^/chat(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/chat(?:/)?$"
+    },
+    {
+      "page": "/favicon.ico",
+      "regex": "^/favicon\\.ico(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/hr/approval",
+      "regex": "^/hr/approval(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/hr/approval(?:/)?$"
+    },
+    {
+      "page": "/hr/cabang",
+      "regex": "^/hr/cabang(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/hr/cabang(?:/)?$"
+    },
+    {
+      "page": "/hr/hari-libur",
+      "regex": "^/hr/hari\\-libur(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/hr/hari\\-libur(?:/)?$"
+    },
+    {
+      "page": "/hr/jadwal",
+      "regex": "^/hr/jadwal(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/hr/jadwal(?:/)?$"
+    },
+    {
+      "page": "/hr/karyawan",
+      "regex": "^/hr/karyawan(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/hr/karyawan(?:/)?$"
+    },
+    {
+      "page": "/hr/log",
+      "regex": "^/hr/log(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/hr/log(?:/)?$"
+    },
+    {
+      "page": "/hr/rekap",
+      "regex": "^/hr/rekap(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/hr/rekap(?:/)?$"
+    },
+    {
+      "page": "/hr/rekap/export",
+      "regex": "^/hr/rekap/export(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/hr/rekap/export(?:/)?$"
+    },
+    {
+      "page": "/hr/sesi",
+      "regex": "^/hr/sesi(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/hr/sesi(?:/)?$"
+    },
+    {
+      "page": "/login",
+      "regex": "^/login(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/login(?:/)?$"
+    },
+    {
+      "page": "/manifest.webmanifest",
+      "regex": "^/manifest\\.webmanifest(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/manifest\\.webmanifest(?:/)?$"
+    },
+    {
+      "page": "/notifikasi",
+      "regex": "^/notifikasi(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/notifikasi(?:/)?$"
+    },
+    {
+      "page": "/pengajuan",
+      "regex": "^/pengajuan(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pengajuan(?:/)?$"
+    },
+    {
+      "page": "/pilih-role",
+      "regex": "^/pilih\\-role(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pilih\\-role(?:/)?$"
+    },
+    {
+      "page": "/profil",
+      "regex": "^/profil(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/profil(?:/)?$"
+    },
+    {
+      "page": "/riwayat-absen",
+      "regex": "^/riwayat\\-absen(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/riwayat\\-absen(?:/)?$"
+    }
+  ],
+  "dataRoutes": [],
+  "rsc": {
+    "header": "rsc",
+    "varyHeader": "rsc, next-router-state-tree, next-router-prefetch, next-router-segment-prefetch",
+    "prefetchHeader": "next-router-prefetch",
+    "didPostponeHeader": "x-nextjs-postponed",
+    "contentTypeHeader": "text/x-component",
+    "suffix": ".rsc",
+    "prefetchSegmentHeader": "next-router-segment-prefetch",
+    "prefetchSegmentSuffix": ".segment.rsc",
+    "prefetchSegmentDirSuffix": ".segments",
+    "clientParamParsing": false,
+    "dynamicRSCPrerender": false
+  },
+  "rewriteHeaders": {
+    "pathHeader": "x-nextjs-rewritten-path",
+    "queryHeader": "x-nextjs-rewritten-query"
+  }
+}
