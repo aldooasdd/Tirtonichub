@@ -1,18 +1,89 @@
+import Link from "next/link";
 import { Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { requireAuth } from "@/server/auth/rbac";
+import { prisma } from "@/server/db";
 import { roleAttends } from "@/lib/roles";
+import { fmtWIB } from "@/lib/datetime";
+import { dateKeyWIB } from "@/server/attendance/logic";
 
-const kpis = [
-  { label: "Hadir bulan ini", value: "18", bg: "bg-kpi-1" },
-  { label: "Terlambat", value: "2", bg: "bg-kpi-2" },
-  { label: "Sisa cuti", value: "10", bg: "bg-kpi-1" },
-  { label: "Pengajuan pending", value: "1", bg: "bg-kpi-2" },
-];
+function Kpi({ label, value, bg }: { label: string; value: string | number; bg: string }) {
+  return (
+    <div className={`${bg} rounded-lg p-5 text-kpi-foreground`}>
+      <p className="text-14 opacity-80">{label}</p>
+      <p className="mt-2 text-32 font-semibold leading-[1.2]">{value}</p>
+    </div>
+  );
+}
 
 export default async function BerandaPage() {
   const ctx = await requireAuth();
-  const attends = roleAttends(ctx.activeRole); // Boss tak absen (PRD §6.4)
+  const today = dateKeyWIB(new Date());
+
+  if (!roleAttends(ctx.activeRole)) {
+    // Boss: ringkasan perusahaan (PRD §6.4)
+    const [karyawanAktif, pending, hadirHariIni] = await Promise.all([
+      prisma.user.count({ where: { isActive: true } }),
+      prisma.request.count({ where: { status: "PENDING" } }),
+      prisma.attendance.count({
+        where: { date: today, status: { in: ["ON_TIME", "LATE"] } },
+      }),
+    ]);
+    return (
+      <div className="space-y-6">
+        <div>
+          <h1 className="text-24 font-semibold">Beranda</h1>
+          <p className="text-14 text-muted-foreground">Ringkasan perusahaan.</p>
+        </div>
+        <section className="grid grid-cols-2 gap-4 lg:grid-cols-3">
+          <Kpi label="Karyawan aktif" value={karyawanAktif} bg="bg-kpi-1" />
+          <Kpi label="Hadir hari ini" value={hadirHariIni} bg="bg-kpi-2" />
+          <Kpi label="Pengajuan pending" value={pending} bg="bg-kpi-1" />
+        </section>
+      </div>
+    );
+  }
+
+  // Karyawan: KPI absensi personal
+  const now = new Date();
+  const year = today.getUTCFullYear();
+  const monthStart = new Date(Date.UTC(year, today.getUTCMonth(), 1));
+  const monthEnd = new Date(Date.UTC(year, today.getUTCMonth() + 1, 1));
+  const yearStart = new Date(Date.UTC(year, 0, 1));
+  const yearEnd = new Date(Date.UTC(year + 1, 0, 1));
+
+  const [user, monthRows, pending, att, leaveReqs] = await Promise.all([
+    prisma.user.findUniqueOrThrow({ where: { id: ctx.userId }, select: { joinedAt: true } }),
+    prisma.attendance.findMany({
+      where: { userId: ctx.userId, date: { gte: monthStart, lt: monthEnd } },
+      select: { status: true },
+    }),
+    prisma.request.count({ where: { userId: ctx.userId, status: "PENDING" } }),
+    prisma.attendance.findUnique({ where: { userId_date: { userId: ctx.userId, date: today } } }),
+    prisma.request.findMany({
+      where: {
+        userId: ctx.userId,
+        type: "LEAVE",
+        status: "APPROVED",
+        startDate: { gte: yearStart, lt: yearEnd },
+      },
+      select: { startDate: true, endDate: true },
+    }),
+  ]);
+
+  const hadir = monthRows.filter((r) => r.status === "ON_TIME" || r.status === "LATE").length;
+  const telat = monthRows.filter((r) => r.status === "LATE").length;
+
+  const tenureOk =
+    user.joinedAt != null && now.getTime() - user.joinedAt.getTime() >= 365 * 86_400_000;
+  const cutiTerpakai = leaveReqs.reduce(
+    (sum, r) =>
+      sum + Math.floor((r.endDate.getTime() - r.startDate.getTime()) / 86_400_000) + 1,
+    0,
+  );
+  const sisaCuti = tenureOk ? Math.max(0, 12 - cutiTerpakai) : 0;
+
+  const absenPhase = !att?.checkInAt ? "in" : !att.checkOutAt ? "out" : "done";
 
   return (
     <div className="space-y-6">
@@ -22,30 +93,35 @@ export default async function BerandaPage() {
       </div>
 
       <section className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        {kpis.map((k) => (
-          <div key={k.label} className={`${k.bg} rounded-lg p-5 text-kpi-foreground`}>
-            <p className="text-14 opacity-80">{k.label}</p>
-            <p className="mt-2 text-32 font-semibold leading-[1.2]">{k.value}</p>
-          </div>
-        ))}
+        <Kpi label="Hadir bulan ini" value={hadir} bg="bg-kpi-1" />
+        <Kpi label="Terlambat" value={telat} bg="bg-kpi-2" />
+        <Kpi label="Sisa cuti" value={sisaCuti} bg="bg-kpi-1" />
+        <Kpi label="Pengajuan pending" value={pending} bg="bg-kpi-2" />
       </section>
 
-      {attends && (
-        <section className="rounded-lg bg-card p-5">
-          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-3">
-              <div className="flex h-11 w-11 items-center justify-center rounded-md bg-muted">
-                <Clock className="h-5 w-5" />
-              </div>
-              <div>
-                <p className="text-14 text-muted-foreground">Status hari ini</p>
-                <p className="font-semibold">Belum absen · Jam kerja 09:00–17:00</p>
-              </div>
+      <section className="rounded-lg bg-card p-5">
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <div className="flex h-11 w-11 items-center justify-center rounded-md bg-muted">
+              <Clock className="h-5 w-5" />
             </div>
-            <Button className="w-full sm:w-auto">Absen Masuk</Button>
+            <div>
+              <p className="text-14 text-muted-foreground">Status hari ini</p>
+              <p className="font-semibold">
+                {!att?.checkInAt
+                  ? "Belum absen masuk"
+                  : `Masuk ${fmtWIB(att.checkInAt)}${att.status === "LATE" ? ` (telat ${att.lateMinutes}m)` : ""}`}
+                {att?.checkOutAt ? ` · Pulang ${fmtWIB(att.checkOutAt)}` : ""}
+              </p>
+            </div>
           </div>
-        </section>
-      )}
+          {absenPhase !== "done" && (
+            <Button asChild className="w-full sm:w-auto">
+              <Link href="/absen">{absenPhase === "in" ? "Absen Masuk" : "Absen Pulang"}</Link>
+            </Button>
+          )}
+        </div>
+      </section>
 
       <section className="rounded-lg bg-card p-5">
         <h2 className="mb-3 font-semibold">Tugas harian</h2>

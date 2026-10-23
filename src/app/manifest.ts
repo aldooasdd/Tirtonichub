@@ -1,0 +1,18 @@
+import type { MetadataRoute } from "next";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "Tirtonic Internal",
+    short_name: "Tirtonic",
+    description: "Sistem manajemen internal Tirtonic",
+    start_url: "/beranda",
+    display: "standalone",
+    background_color: "#ffffff",
+    theme_color: "#ffffff",
+    lang: "id",
+    icons: [
+      { src: "/icon.svg", sizes: "any", type: "image/svg+xml", purpose: "any" },
+      { src: "/icon-maskable.svg", sizes: "any", type: "image/svg+xml", purpose: "maskable" },
+    ],
+  };
+}

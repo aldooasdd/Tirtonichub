@@ -82,8 +82,10 @@ export function Header({ onTogglePanel }: { onTogglePanel: () => void }) {
       <div className="ml-auto flex items-center gap-1">
         <RoleSwitcher />
         {/* ThemeToggle ditunda (fokus light) */}
-        <Button variant="ghost" size="icon" aria-label="Notifikasi">
-          <Bell className="h-5 w-5" />
+        <Button asChild variant="ghost" size="icon" aria-label="Notifikasi">
+          <Link href="/notifikasi">
+            <Bell className="h-5 w-5" />
+          </Link>
         </Button>
         <Button
           variant="ghost"

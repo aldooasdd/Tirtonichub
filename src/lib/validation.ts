@@ -52,5 +52,33 @@ export const profileSelfSchema = z.object({
 });
 
 // Pakai z.input (bentuk yang dikirim client sebelum coerce) untuk tipe argumen action.
+const timeHHMM = z.string().regex(/^([01]\d|2[0-3]):[0-5]\d$/, "Jam format HH:MM");
+
+export const scheduleSchema = z.object({
+  name: z.string().trim().min(2, "Nama jadwal minimal 2 karakter"),
+  workDays: z.array(z.number().int().min(1).max(7)).min(1, "Pilih minimal 1 hari kerja"),
+  startTime: timeHHMM,
+  endTime: timeHHMM,
+  lateToleranceMin: z.coerce.number().int().min(0).max(240),
+});
+
+export const holidaySchema = z.object({
+  date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, "Tanggal format YYYY-MM-DD"),
+  name: z.string().trim().min(2, "Nama libur minimal 2 karakter"),
+});
+
+export const requestSchema = z.object({
+  type: z.enum(["LEAVE", "PERMIT", "SICK", "ATTENDANCE_CORRECTION"]),
+  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  reason: z.string().trim().min(3, "Alasan wajib diisi"),
+  attachmentKey: z.string().trim().optional().nullable(),
+  // untuk koreksi absen: { checkInAt?, checkOutAt?, status? }
+  payload: z.record(z.string(), z.unknown()).optional().nullable(),
+});
+
 export type EmployeeInput = z.input<typeof employeeSchema>;
 export type BranchInput = z.input<typeof branchSchema>;
+export type ScheduleInput = z.input<typeof scheduleSchema>;
+export type HolidayInput = z.input<typeof holidaySchema>;
+export type RequestInput = z.input<typeof requestSchema>;

@@ -1,5 +1,7 @@
-# Infra dev lokal: PostgreSQL + MinIO.
-# WAHA & n8n pakai instance yang sudah ada (bukan di sini). App dijalankan `pnpm dev`.
+# Infra dev lokal: PostgreSQL saja.
+# MinIO: produksi jalan di PC server kantor (via Cloudflare Tunnel/Tailscale, lihat PRD §15/§17).
+# Dev tanpa S3 env → storage.ts fallback simpan ke .data/uploads (lihat src/server/storage.ts).
+# WAHA & n8n pakai instance yang sudah ada.
 services:
   postgres:
     image: postgres:17-alpine
@@ -13,19 +15,5 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
 
-  minio:
-    image: quay.io/minio/minio:latest
-    restart: unless-stopped
-    command: server /data --console-address ":9001"
-    environment:
-      MINIO_ROOT_USER: minioadmin
-      MINIO_ROOT_PASSWORD: minioadmin
-    ports:
-      - "9000:9000" # S3 API
-      - "9001:9001" # console
-    volumes:
-      - miniodata:/data
-
 volumes:
   pgdata:
-  miniodata:
