@@ -93,6 +93,11 @@ export type ChatMember = $Result.DefaultSelection<Prisma.$ChatMemberPayload>
  * 
  */
 export type ChatMessage = $Result.DefaultSelection<Prisma.$ChatMessagePayload>
+/**
+ * Model RawProduct
+ * 
+ */
+export type RawProduct = $Result.DefaultSelection<Prisma.$RawProductPayload>
 
 /**
  * Enums
@@ -152,6 +157,16 @@ export const ChatRoomType: {
 
 export type ChatRoomType = (typeof ChatRoomType)[keyof typeof ChatRoomType]
 
+
+export const RawProductStatus: {
+  DRAFT: 'DRAFT',
+  QC: 'QC',
+  STOCK: 'STOCK',
+  REJECTED: 'REJECTED'
+};
+
+export type RawProductStatus = (typeof RawProductStatus)[keyof typeof RawProductStatus]
+
 }
 
 export type RoleCode = $Enums.RoleCode
@@ -173,6 +188,10 @@ export const RequestStatus: typeof $Enums.RequestStatus
 export type ChatRoomType = $Enums.ChatRoomType
 
 export const ChatRoomType: typeof $Enums.ChatRoomType
+
+export type RawProductStatus = $Enums.RawProductStatus
+
+export const RawProductStatus: typeof $Enums.RawProductStatus
 
 /**
  * ##  Prisma Client ʲˢ
@@ -451,6 +470,16 @@ export class PrismaClient<
     * ```
     */
   get chatMessage(): Prisma.ChatMessageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.rawProduct`: Exposes CRUD operations for the **RawProduct** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RawProducts
+    * const rawProducts = await prisma.rawProduct.findMany()
+    * ```
+    */
+  get rawProduct(): Prisma.RawProductDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -907,7 +936,8 @@ export namespace Prisma {
     ActivityLog: 'ActivityLog',
     ChatRoom: 'ChatRoom',
     ChatMember: 'ChatMember',
-    ChatMessage: 'ChatMessage'
+    ChatMessage: 'ChatMessage',
+    RawProduct: 'RawProduct'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -926,7 +956,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage"
+      modelProps: "user" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "rawProduct"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2114,6 +2144,80 @@ export namespace Prisma {
           }
         }
       }
+      RawProduct: {
+        payload: Prisma.$RawProductPayload<ExtArgs>
+        fields: Prisma.RawProductFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RawProductFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RawProductPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RawProductFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RawProductPayload>
+          }
+          findFirst: {
+            args: Prisma.RawProductFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RawProductPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RawProductFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RawProductPayload>
+          }
+          findMany: {
+            args: Prisma.RawProductFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RawProductPayload>[]
+          }
+          create: {
+            args: Prisma.RawProductCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RawProductPayload>
+          }
+          createMany: {
+            args: Prisma.RawProductCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RawProductCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RawProductPayload>[]
+          }
+          delete: {
+            args: Prisma.RawProductDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RawProductPayload>
+          }
+          update: {
+            args: Prisma.RawProductUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RawProductPayload>
+          }
+          deleteMany: {
+            args: Prisma.RawProductDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RawProductUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RawProductUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RawProductPayload>[]
+          }
+          upsert: {
+            args: Prisma.RawProductUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RawProductPayload>
+          }
+          aggregate: {
+            args: Prisma.RawProductAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRawProduct>
+          }
+          groupBy: {
+            args: Prisma.RawProductGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RawProductGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RawProductCountArgs<ExtArgs>
+            result: $Utils.Optional<RawProductCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2226,6 +2330,7 @@ export namespace Prisma {
     chatRoom?: ChatRoomOmit
     chatMember?: ChatMemberOmit
     chatMessage?: ChatMessageOmit
+    rawProduct?: RawProductOmit
   }
 
   /* Types for Logging */
@@ -2317,6 +2422,8 @@ export namespace Prisma {
     activityLogs: number
     chatMembers: number
     chatMessages: number
+    rawCreated: number
+    rawQc: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2331,6 +2438,8 @@ export namespace Prisma {
     activityLogs?: boolean | UserCountOutputTypeCountActivityLogsArgs
     chatMembers?: boolean | UserCountOutputTypeCountChatMembersArgs
     chatMessages?: boolean | UserCountOutputTypeCountChatMessagesArgs
+    rawCreated?: boolean | UserCountOutputTypeCountRawCreatedArgs
+    rawQc?: boolean | UserCountOutputTypeCountRawQcArgs
   }
 
   // Custom InputTypes
@@ -2419,6 +2528,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountChatMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ChatMessageWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountRawCreatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RawProductWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountRawQcArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RawProductWhereInput
   }
 
 
@@ -2808,6 +2931,8 @@ export namespace Prisma {
     activityLogs?: boolean | User$activityLogsArgs<ExtArgs>
     chatMembers?: boolean | User$chatMembersArgs<ExtArgs>
     chatMessages?: boolean | User$chatMessagesArgs<ExtArgs>
+    rawCreated?: boolean | User$rawCreatedArgs<ExtArgs>
+    rawQc?: boolean | User$rawQcArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -2875,6 +3000,8 @@ export namespace Prisma {
     activityLogs?: boolean | User$activityLogsArgs<ExtArgs>
     chatMembers?: boolean | User$chatMembersArgs<ExtArgs>
     chatMessages?: boolean | User$chatMessagesArgs<ExtArgs>
+    rawCreated?: boolean | User$rawCreatedArgs<ExtArgs>
+    rawQc?: boolean | User$rawQcArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2899,6 +3026,8 @@ export namespace Prisma {
       activityLogs: Prisma.$ActivityLogPayload<ExtArgs>[]
       chatMembers: Prisma.$ChatMemberPayload<ExtArgs>[]
       chatMessages: Prisma.$ChatMessagePayload<ExtArgs>[]
+      rawCreated: Prisma.$RawProductPayload<ExtArgs>[]
+      rawQc: Prisma.$RawProductPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3320,6 +3449,8 @@ export namespace Prisma {
     activityLogs<T extends User$activityLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$activityLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     chatMembers<T extends User$chatMembersArgs<ExtArgs> = {}>(args?: Subset<T, User$chatMembersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     chatMessages<T extends User$chatMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$chatMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    rawCreated<T extends User$rawCreatedArgs<ExtArgs> = {}>(args?: Subset<T, User$rawCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    rawQc<T extends User$rawQcArgs<ExtArgs> = {}>(args?: Subset<T, User$rawQcArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4038,6 +4169,54 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ChatMessageScalarFieldEnum | ChatMessageScalarFieldEnum[]
+  }
+
+  /**
+   * User.rawCreated
+   */
+  export type User$rawCreatedArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RawProduct
+     */
+    select?: RawProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RawProduct
+     */
+    omit?: RawProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RawProductInclude<ExtArgs> | null
+    where?: RawProductWhereInput
+    orderBy?: RawProductOrderByWithRelationInput | RawProductOrderByWithRelationInput[]
+    cursor?: RawProductWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RawProductScalarFieldEnum | RawProductScalarFieldEnum[]
+  }
+
+  /**
+   * User.rawQc
+   */
+  export type User$rawQcArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RawProduct
+     */
+    select?: RawProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RawProduct
+     */
+    omit?: RawProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RawProductInclude<ExtArgs> | null
+    where?: RawProductWhereInput
+    orderBy?: RawProductOrderByWithRelationInput | RawProductOrderByWithRelationInput[]
+    cursor?: RawProductWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: RawProductScalarFieldEnum | RawProductScalarFieldEnum[]
   }
 
   /**
@@ -20619,6 +20798,1272 @@ export namespace Prisma {
 
 
   /**
+   * Model RawProduct
+   */
+
+  export type AggregateRawProduct = {
+    _count: RawProductCountAggregateOutputType | null
+    _avg: RawProductAvgAggregateOutputType | null
+    _sum: RawProductSumAggregateOutputType | null
+    _min: RawProductMinAggregateOutputType | null
+    _max: RawProductMaxAggregateOutputType | null
+  }
+
+  export type RawProductAvgAggregateOutputType = {
+    qty: number | null
+    unitPrice: number | null
+  }
+
+  export type RawProductSumAggregateOutputType = {
+    qty: number | null
+    unitPrice: number | null
+  }
+
+  export type RawProductMinAggregateOutputType = {
+    id: string | null
+    batchId: string | null
+    name: string | null
+    qty: number | null
+    unit: string | null
+    unitPrice: number | null
+    supplier: string | null
+    notaDate: Date | null
+    notaPhotoKey: string | null
+    status: $Enums.RawProductStatus | null
+    createdById: string | null
+    qcById: string | null
+    qcAt: Date | null
+    qcNote: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RawProductMaxAggregateOutputType = {
+    id: string | null
+    batchId: string | null
+    name: string | null
+    qty: number | null
+    unit: string | null
+    unitPrice: number | null
+    supplier: string | null
+    notaDate: Date | null
+    notaPhotoKey: string | null
+    status: $Enums.RawProductStatus | null
+    createdById: string | null
+    qcById: string | null
+    qcAt: Date | null
+    qcNote: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RawProductCountAggregateOutputType = {
+    id: number
+    batchId: number
+    name: number
+    qty: number
+    unit: number
+    unitPrice: number
+    supplier: number
+    notaDate: number
+    notaPhotoKey: number
+    status: number
+    createdById: number
+    qcById: number
+    qcAt: number
+    qcNote: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RawProductAvgAggregateInputType = {
+    qty?: true
+    unitPrice?: true
+  }
+
+  export type RawProductSumAggregateInputType = {
+    qty?: true
+    unitPrice?: true
+  }
+
+  export type RawProductMinAggregateInputType = {
+    id?: true
+    batchId?: true
+    name?: true
+    qty?: true
+    unit?: true
+    unitPrice?: true
+    supplier?: true
+    notaDate?: true
+    notaPhotoKey?: true
+    status?: true
+    createdById?: true
+    qcById?: true
+    qcAt?: true
+    qcNote?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RawProductMaxAggregateInputType = {
+    id?: true
+    batchId?: true
+    name?: true
+    qty?: true
+    unit?: true
+    unitPrice?: true
+    supplier?: true
+    notaDate?: true
+    notaPhotoKey?: true
+    status?: true
+    createdById?: true
+    qcById?: true
+    qcAt?: true
+    qcNote?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RawProductCountAggregateInputType = {
+    id?: true
+    batchId?: true
+    name?: true
+    qty?: true
+    unit?: true
+    unitPrice?: true
+    supplier?: true
+    notaDate?: true
+    notaPhotoKey?: true
+    status?: true
+    createdById?: true
+    qcById?: true
+    qcAt?: true
+    qcNote?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RawProductAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RawProduct to aggregate.
+     */
+    where?: RawProductWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RawProducts to fetch.
+     */
+    orderBy?: RawProductOrderByWithRelationInput | RawProductOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RawProductWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RawProducts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RawProducts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RawProducts
+    **/
+    _count?: true | RawProductCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: RawProductAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: RawProductSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RawProductMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RawProductMaxAggregateInputType
+  }
+
+  export type GetRawProductAggregateType<T extends RawProductAggregateArgs> = {
+        [P in keyof T & keyof AggregateRawProduct]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRawProduct[P]>
+      : GetScalarType<T[P], AggregateRawProduct[P]>
+  }
+
+
+
+
+  export type RawProductGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RawProductWhereInput
+    orderBy?: RawProductOrderByWithAggregationInput | RawProductOrderByWithAggregationInput[]
+    by: RawProductScalarFieldEnum[] | RawProductScalarFieldEnum
+    having?: RawProductScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RawProductCountAggregateInputType | true
+    _avg?: RawProductAvgAggregateInputType
+    _sum?: RawProductSumAggregateInputType
+    _min?: RawProductMinAggregateInputType
+    _max?: RawProductMaxAggregateInputType
+  }
+
+  export type RawProductGroupByOutputType = {
+    id: string
+    batchId: string
+    name: string
+    qty: number
+    unit: string | null
+    unitPrice: number
+    supplier: string | null
+    notaDate: Date | null
+    notaPhotoKey: string | null
+    status: $Enums.RawProductStatus
+    createdById: string
+    qcById: string | null
+    qcAt: Date | null
+    qcNote: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: RawProductCountAggregateOutputType | null
+    _avg: RawProductAvgAggregateOutputType | null
+    _sum: RawProductSumAggregateOutputType | null
+    _min: RawProductMinAggregateOutputType | null
+    _max: RawProductMaxAggregateOutputType | null
+  }
+
+  type GetRawProductGroupByPayload<T extends RawProductGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RawProductGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RawProductGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RawProductGroupByOutputType[P]>
+            : GetScalarType<T[P], RawProductGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RawProductSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    batchId?: boolean
+    name?: boolean
+    qty?: boolean
+    unit?: boolean
+    unitPrice?: boolean
+    supplier?: boolean
+    notaDate?: boolean
+    notaPhotoKey?: boolean
+    status?: boolean
+    createdById?: boolean
+    qcById?: boolean
+    qcAt?: boolean
+    qcNote?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    qcBy?: boolean | RawProduct$qcByArgs<ExtArgs>
+  }, ExtArgs["result"]["rawProduct"]>
+
+  export type RawProductSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    batchId?: boolean
+    name?: boolean
+    qty?: boolean
+    unit?: boolean
+    unitPrice?: boolean
+    supplier?: boolean
+    notaDate?: boolean
+    notaPhotoKey?: boolean
+    status?: boolean
+    createdById?: boolean
+    qcById?: boolean
+    qcAt?: boolean
+    qcNote?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    qcBy?: boolean | RawProduct$qcByArgs<ExtArgs>
+  }, ExtArgs["result"]["rawProduct"]>
+
+  export type RawProductSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    batchId?: boolean
+    name?: boolean
+    qty?: boolean
+    unit?: boolean
+    unitPrice?: boolean
+    supplier?: boolean
+    notaDate?: boolean
+    notaPhotoKey?: boolean
+    status?: boolean
+    createdById?: boolean
+    qcById?: boolean
+    qcAt?: boolean
+    qcNote?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    qcBy?: boolean | RawProduct$qcByArgs<ExtArgs>
+  }, ExtArgs["result"]["rawProduct"]>
+
+  export type RawProductSelectScalar = {
+    id?: boolean
+    batchId?: boolean
+    name?: boolean
+    qty?: boolean
+    unit?: boolean
+    unitPrice?: boolean
+    supplier?: boolean
+    notaDate?: boolean
+    notaPhotoKey?: boolean
+    status?: boolean
+    createdById?: boolean
+    qcById?: boolean
+    qcAt?: boolean
+    qcNote?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type RawProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "batchId" | "name" | "qty" | "unit" | "unitPrice" | "supplier" | "notaDate" | "notaPhotoKey" | "status" | "createdById" | "qcById" | "qcAt" | "qcNote" | "createdAt" | "updatedAt", ExtArgs["result"]["rawProduct"]>
+  export type RawProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    qcBy?: boolean | RawProduct$qcByArgs<ExtArgs>
+  }
+  export type RawProductIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    qcBy?: boolean | RawProduct$qcByArgs<ExtArgs>
+  }
+  export type RawProductIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    qcBy?: boolean | RawProduct$qcByArgs<ExtArgs>
+  }
+
+  export type $RawProductPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "RawProduct"
+    objects: {
+      createdBy: Prisma.$UserPayload<ExtArgs>
+      qcBy: Prisma.$UserPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      batchId: string
+      name: string
+      qty: number
+      unit: string | null
+      unitPrice: number
+      supplier: string | null
+      notaDate: Date | null
+      notaPhotoKey: string | null
+      status: $Enums.RawProductStatus
+      createdById: string
+      qcById: string | null
+      qcAt: Date | null
+      qcNote: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["rawProduct"]>
+    composites: {}
+  }
+
+  type RawProductGetPayload<S extends boolean | null | undefined | RawProductDefaultArgs> = $Result.GetResult<Prisma.$RawProductPayload, S>
+
+  type RawProductCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RawProductFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RawProductCountAggregateInputType | true
+    }
+
+  export interface RawProductDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RawProduct'], meta: { name: 'RawProduct' } }
+    /**
+     * Find zero or one RawProduct that matches the filter.
+     * @param {RawProductFindUniqueArgs} args - Arguments to find a RawProduct
+     * @example
+     * // Get one RawProduct
+     * const rawProduct = await prisma.rawProduct.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RawProductFindUniqueArgs>(args: SelectSubset<T, RawProductFindUniqueArgs<ExtArgs>>): Prisma__RawProductClient<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one RawProduct that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RawProductFindUniqueOrThrowArgs} args - Arguments to find a RawProduct
+     * @example
+     * // Get one RawProduct
+     * const rawProduct = await prisma.rawProduct.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RawProductFindUniqueOrThrowArgs>(args: SelectSubset<T, RawProductFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RawProductClient<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RawProduct that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RawProductFindFirstArgs} args - Arguments to find a RawProduct
+     * @example
+     * // Get one RawProduct
+     * const rawProduct = await prisma.rawProduct.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RawProductFindFirstArgs>(args?: SelectSubset<T, RawProductFindFirstArgs<ExtArgs>>): Prisma__RawProductClient<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RawProduct that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RawProductFindFirstOrThrowArgs} args - Arguments to find a RawProduct
+     * @example
+     * // Get one RawProduct
+     * const rawProduct = await prisma.rawProduct.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RawProductFindFirstOrThrowArgs>(args?: SelectSubset<T, RawProductFindFirstOrThrowArgs<ExtArgs>>): Prisma__RawProductClient<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more RawProducts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RawProductFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RawProducts
+     * const rawProducts = await prisma.rawProduct.findMany()
+     * 
+     * // Get first 10 RawProducts
+     * const rawProducts = await prisma.rawProduct.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const rawProductWithIdOnly = await prisma.rawProduct.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends RawProductFindManyArgs>(args?: SelectSubset<T, RawProductFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a RawProduct.
+     * @param {RawProductCreateArgs} args - Arguments to create a RawProduct.
+     * @example
+     * // Create one RawProduct
+     * const RawProduct = await prisma.rawProduct.create({
+     *   data: {
+     *     // ... data to create a RawProduct
+     *   }
+     * })
+     * 
+     */
+    create<T extends RawProductCreateArgs>(args: SelectSubset<T, RawProductCreateArgs<ExtArgs>>): Prisma__RawProductClient<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many RawProducts.
+     * @param {RawProductCreateManyArgs} args - Arguments to create many RawProducts.
+     * @example
+     * // Create many RawProducts
+     * const rawProduct = await prisma.rawProduct.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RawProductCreateManyArgs>(args?: SelectSubset<T, RawProductCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many RawProducts and returns the data saved in the database.
+     * @param {RawProductCreateManyAndReturnArgs} args - Arguments to create many RawProducts.
+     * @example
+     * // Create many RawProducts
+     * const rawProduct = await prisma.rawProduct.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many RawProducts and only return the `id`
+     * const rawProductWithIdOnly = await prisma.rawProduct.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RawProductCreateManyAndReturnArgs>(args?: SelectSubset<T, RawProductCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a RawProduct.
+     * @param {RawProductDeleteArgs} args - Arguments to delete one RawProduct.
+     * @example
+     * // Delete one RawProduct
+     * const RawProduct = await prisma.rawProduct.delete({
+     *   where: {
+     *     // ... filter to delete one RawProduct
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RawProductDeleteArgs>(args: SelectSubset<T, RawProductDeleteArgs<ExtArgs>>): Prisma__RawProductClient<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one RawProduct.
+     * @param {RawProductUpdateArgs} args - Arguments to update one RawProduct.
+     * @example
+     * // Update one RawProduct
+     * const rawProduct = await prisma.rawProduct.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RawProductUpdateArgs>(args: SelectSubset<T, RawProductUpdateArgs<ExtArgs>>): Prisma__RawProductClient<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more RawProducts.
+     * @param {RawProductDeleteManyArgs} args - Arguments to filter RawProducts to delete.
+     * @example
+     * // Delete a few RawProducts
+     * const { count } = await prisma.rawProduct.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RawProductDeleteManyArgs>(args?: SelectSubset<T, RawProductDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RawProducts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RawProductUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RawProducts
+     * const rawProduct = await prisma.rawProduct.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RawProductUpdateManyArgs>(args: SelectSubset<T, RawProductUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RawProducts and returns the data updated in the database.
+     * @param {RawProductUpdateManyAndReturnArgs} args - Arguments to update many RawProducts.
+     * @example
+     * // Update many RawProducts
+     * const rawProduct = await prisma.rawProduct.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more RawProducts and only return the `id`
+     * const rawProductWithIdOnly = await prisma.rawProduct.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RawProductUpdateManyAndReturnArgs>(args: SelectSubset<T, RawProductUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one RawProduct.
+     * @param {RawProductUpsertArgs} args - Arguments to update or create a RawProduct.
+     * @example
+     * // Update or create a RawProduct
+     * const rawProduct = await prisma.rawProduct.upsert({
+     *   create: {
+     *     // ... data to create a RawProduct
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RawProduct we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RawProductUpsertArgs>(args: SelectSubset<T, RawProductUpsertArgs<ExtArgs>>): Prisma__RawProductClient<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of RawProducts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RawProductCountArgs} args - Arguments to filter RawProducts to count.
+     * @example
+     * // Count the number of RawProducts
+     * const count = await prisma.rawProduct.count({
+     *   where: {
+     *     // ... the filter for the RawProducts we want to count
+     *   }
+     * })
+    **/
+    count<T extends RawProductCountArgs>(
+      args?: Subset<T, RawProductCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RawProductCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RawProduct.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RawProductAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RawProductAggregateArgs>(args: Subset<T, RawProductAggregateArgs>): Prisma.PrismaPromise<GetRawProductAggregateType<T>>
+
+    /**
+     * Group by RawProduct.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RawProductGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RawProductGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RawProductGroupByArgs['orderBy'] }
+        : { orderBy?: RawProductGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RawProductGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRawProductGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the RawProduct model
+   */
+  readonly fields: RawProductFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RawProduct.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RawProductClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    qcBy<T extends RawProduct$qcByArgs<ExtArgs> = {}>(args?: Subset<T, RawProduct$qcByArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the RawProduct model
+   */
+  interface RawProductFieldRefs {
+    readonly id: FieldRef<"RawProduct", 'String'>
+    readonly batchId: FieldRef<"RawProduct", 'String'>
+    readonly name: FieldRef<"RawProduct", 'String'>
+    readonly qty: FieldRef<"RawProduct", 'Int'>
+    readonly unit: FieldRef<"RawProduct", 'String'>
+    readonly unitPrice: FieldRef<"RawProduct", 'Int'>
+    readonly supplier: FieldRef<"RawProduct", 'String'>
+    readonly notaDate: FieldRef<"RawProduct", 'DateTime'>
+    readonly notaPhotoKey: FieldRef<"RawProduct", 'String'>
+    readonly status: FieldRef<"RawProduct", 'RawProductStatus'>
+    readonly createdById: FieldRef<"RawProduct", 'String'>
+    readonly qcById: FieldRef<"RawProduct", 'String'>
+    readonly qcAt: FieldRef<"RawProduct", 'DateTime'>
+    readonly qcNote: FieldRef<"RawProduct", 'String'>
+    readonly createdAt: FieldRef<"RawProduct", 'DateTime'>
+    readonly updatedAt: FieldRef<"RawProduct", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * RawProduct findUnique
+   */
+  export type RawProductFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RawProduct
+     */
+    select?: RawProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RawProduct
+     */
+    omit?: RawProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RawProductInclude<ExtArgs> | null
+    /**
+     * Filter, which RawProduct to fetch.
+     */
+    where: RawProductWhereUniqueInput
+  }
+
+  /**
+   * RawProduct findUniqueOrThrow
+   */
+  export type RawProductFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RawProduct
+     */
+    select?: RawProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RawProduct
+     */
+    omit?: RawProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RawProductInclude<ExtArgs> | null
+    /**
+     * Filter, which RawProduct to fetch.
+     */
+    where: RawProductWhereUniqueInput
+  }
+
+  /**
+   * RawProduct findFirst
+   */
+  export type RawProductFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RawProduct
+     */
+    select?: RawProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RawProduct
+     */
+    omit?: RawProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RawProductInclude<ExtArgs> | null
+    /**
+     * Filter, which RawProduct to fetch.
+     */
+    where?: RawProductWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RawProducts to fetch.
+     */
+    orderBy?: RawProductOrderByWithRelationInput | RawProductOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RawProducts.
+     */
+    cursor?: RawProductWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RawProducts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RawProducts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RawProducts.
+     */
+    distinct?: RawProductScalarFieldEnum | RawProductScalarFieldEnum[]
+  }
+
+  /**
+   * RawProduct findFirstOrThrow
+   */
+  export type RawProductFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RawProduct
+     */
+    select?: RawProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RawProduct
+     */
+    omit?: RawProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RawProductInclude<ExtArgs> | null
+    /**
+     * Filter, which RawProduct to fetch.
+     */
+    where?: RawProductWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RawProducts to fetch.
+     */
+    orderBy?: RawProductOrderByWithRelationInput | RawProductOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RawProducts.
+     */
+    cursor?: RawProductWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RawProducts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RawProducts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RawProducts.
+     */
+    distinct?: RawProductScalarFieldEnum | RawProductScalarFieldEnum[]
+  }
+
+  /**
+   * RawProduct findMany
+   */
+  export type RawProductFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RawProduct
+     */
+    select?: RawProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RawProduct
+     */
+    omit?: RawProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RawProductInclude<ExtArgs> | null
+    /**
+     * Filter, which RawProducts to fetch.
+     */
+    where?: RawProductWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RawProducts to fetch.
+     */
+    orderBy?: RawProductOrderByWithRelationInput | RawProductOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RawProducts.
+     */
+    cursor?: RawProductWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RawProducts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RawProducts.
+     */
+    skip?: number
+    distinct?: RawProductScalarFieldEnum | RawProductScalarFieldEnum[]
+  }
+
+  /**
+   * RawProduct create
+   */
+  export type RawProductCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RawProduct
+     */
+    select?: RawProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RawProduct
+     */
+    omit?: RawProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RawProductInclude<ExtArgs> | null
+    /**
+     * The data needed to create a RawProduct.
+     */
+    data: XOR<RawProductCreateInput, RawProductUncheckedCreateInput>
+  }
+
+  /**
+   * RawProduct createMany
+   */
+  export type RawProductCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many RawProducts.
+     */
+    data: RawProductCreateManyInput | RawProductCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * RawProduct createManyAndReturn
+   */
+  export type RawProductCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RawProduct
+     */
+    select?: RawProductSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RawProduct
+     */
+    omit?: RawProductOmit<ExtArgs> | null
+    /**
+     * The data used to create many RawProducts.
+     */
+    data: RawProductCreateManyInput | RawProductCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RawProductIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * RawProduct update
+   */
+  export type RawProductUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RawProduct
+     */
+    select?: RawProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RawProduct
+     */
+    omit?: RawProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RawProductInclude<ExtArgs> | null
+    /**
+     * The data needed to update a RawProduct.
+     */
+    data: XOR<RawProductUpdateInput, RawProductUncheckedUpdateInput>
+    /**
+     * Choose, which RawProduct to update.
+     */
+    where: RawProductWhereUniqueInput
+  }
+
+  /**
+   * RawProduct updateMany
+   */
+  export type RawProductUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update RawProducts.
+     */
+    data: XOR<RawProductUpdateManyMutationInput, RawProductUncheckedUpdateManyInput>
+    /**
+     * Filter which RawProducts to update
+     */
+    where?: RawProductWhereInput
+    /**
+     * Limit how many RawProducts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * RawProduct updateManyAndReturn
+   */
+  export type RawProductUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RawProduct
+     */
+    select?: RawProductSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RawProduct
+     */
+    omit?: RawProductOmit<ExtArgs> | null
+    /**
+     * The data used to update RawProducts.
+     */
+    data: XOR<RawProductUpdateManyMutationInput, RawProductUncheckedUpdateManyInput>
+    /**
+     * Filter which RawProducts to update
+     */
+    where?: RawProductWhereInput
+    /**
+     * Limit how many RawProducts to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RawProductIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * RawProduct upsert
+   */
+  export type RawProductUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RawProduct
+     */
+    select?: RawProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RawProduct
+     */
+    omit?: RawProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RawProductInclude<ExtArgs> | null
+    /**
+     * The filter to search for the RawProduct to update in case it exists.
+     */
+    where: RawProductWhereUniqueInput
+    /**
+     * In case the RawProduct found by the `where` argument doesn't exist, create a new RawProduct with this data.
+     */
+    create: XOR<RawProductCreateInput, RawProductUncheckedCreateInput>
+    /**
+     * In case the RawProduct was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RawProductUpdateInput, RawProductUncheckedUpdateInput>
+  }
+
+  /**
+   * RawProduct delete
+   */
+  export type RawProductDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RawProduct
+     */
+    select?: RawProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RawProduct
+     */
+    omit?: RawProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RawProductInclude<ExtArgs> | null
+    /**
+     * Filter which RawProduct to delete.
+     */
+    where: RawProductWhereUniqueInput
+  }
+
+  /**
+   * RawProduct deleteMany
+   */
+  export type RawProductDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RawProducts to delete
+     */
+    where?: RawProductWhereInput
+    /**
+     * Limit how many RawProducts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * RawProduct.qcBy
+   */
+  export type RawProduct$qcByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the User
+     */
+    select?: UserSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the User
+     */
+    omit?: UserOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: UserInclude<ExtArgs> | null
+    where?: UserWhereInput
+  }
+
+  /**
+   * RawProduct without action
+   */
+  export type RawProductDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RawProduct
+     */
+    select?: RawProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RawProduct
+     */
+    omit?: RawProductOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: RawProductInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -20850,6 +22295,28 @@ export namespace Prisma {
   export type ChatMessageScalarFieldEnum = (typeof ChatMessageScalarFieldEnum)[keyof typeof ChatMessageScalarFieldEnum]
 
 
+  export const RawProductScalarFieldEnum: {
+    id: 'id',
+    batchId: 'batchId',
+    name: 'name',
+    qty: 'qty',
+    unit: 'unit',
+    unitPrice: 'unitPrice',
+    supplier: 'supplier',
+    notaDate: 'notaDate',
+    notaPhotoKey: 'notaPhotoKey',
+    status: 'status',
+    createdById: 'createdById',
+    qcById: 'qcById',
+    qcAt: 'qcAt',
+    qcNote: 'qcNote',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RawProductScalarFieldEnum = (typeof RawProductScalarFieldEnum)[keyof typeof RawProductScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -21041,6 +22508,20 @@ export namespace Prisma {
    */
   export type ListEnumChatRoomTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ChatRoomType[]'>
     
+
+
+  /**
+   * Reference to a field of type 'RawProductStatus'
+   */
+  export type EnumRawProductStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RawProductStatus'>
+    
+
+
+  /**
+   * Reference to a field of type 'RawProductStatus[]'
+   */
+  export type ListEnumRawProductStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RawProductStatus[]'>
+    
   /**
    * Deep Input Types
    */
@@ -21075,6 +22556,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogListRelationFilter
     chatMembers?: ChatMemberListRelationFilter
     chatMessages?: ChatMessageListRelationFilter
+    rawCreated?: RawProductListRelationFilter
+    rawQc?: RawProductListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -21103,6 +22586,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogOrderByRelationAggregateInput
     chatMembers?: ChatMemberOrderByRelationAggregateInput
     chatMessages?: ChatMessageOrderByRelationAggregateInput
+    rawCreated?: RawProductOrderByRelationAggregateInput
+    rawQc?: RawProductOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -21134,6 +22619,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogListRelationFilter
     chatMembers?: ChatMemberListRelationFilter
     chatMessages?: ChatMessageListRelationFilter
+    rawCreated?: RawProductListRelationFilter
+    rawQc?: RawProductListRelationFilter
   }, "id" | "email" | "waNumber">
 
   export type UserOrderByWithAggregationInput = {
@@ -22201,6 +23688,121 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableWithAggregatesFilter<"ChatMessage"> | Date | string | null
   }
 
+  export type RawProductWhereInput = {
+    AND?: RawProductWhereInput | RawProductWhereInput[]
+    OR?: RawProductWhereInput[]
+    NOT?: RawProductWhereInput | RawProductWhereInput[]
+    id?: StringFilter<"RawProduct"> | string
+    batchId?: StringFilter<"RawProduct"> | string
+    name?: StringFilter<"RawProduct"> | string
+    qty?: IntFilter<"RawProduct"> | number
+    unit?: StringNullableFilter<"RawProduct"> | string | null
+    unitPrice?: IntFilter<"RawProduct"> | number
+    supplier?: StringNullableFilter<"RawProduct"> | string | null
+    notaDate?: DateTimeNullableFilter<"RawProduct"> | Date | string | null
+    notaPhotoKey?: StringNullableFilter<"RawProduct"> | string | null
+    status?: EnumRawProductStatusFilter<"RawProduct"> | $Enums.RawProductStatus
+    createdById?: StringFilter<"RawProduct"> | string
+    qcById?: StringNullableFilter<"RawProduct"> | string | null
+    qcAt?: DateTimeNullableFilter<"RawProduct"> | Date | string | null
+    qcNote?: StringNullableFilter<"RawProduct"> | string | null
+    createdAt?: DateTimeFilter<"RawProduct"> | Date | string
+    updatedAt?: DateTimeFilter<"RawProduct"> | Date | string
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    qcBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }
+
+  export type RawProductOrderByWithRelationInput = {
+    id?: SortOrder
+    batchId?: SortOrder
+    name?: SortOrder
+    qty?: SortOrder
+    unit?: SortOrderInput | SortOrder
+    unitPrice?: SortOrder
+    supplier?: SortOrderInput | SortOrder
+    notaDate?: SortOrderInput | SortOrder
+    notaPhotoKey?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdById?: SortOrder
+    qcById?: SortOrderInput | SortOrder
+    qcAt?: SortOrderInput | SortOrder
+    qcNote?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: UserOrderByWithRelationInput
+    qcBy?: UserOrderByWithRelationInput
+  }
+
+  export type RawProductWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: RawProductWhereInput | RawProductWhereInput[]
+    OR?: RawProductWhereInput[]
+    NOT?: RawProductWhereInput | RawProductWhereInput[]
+    batchId?: StringFilter<"RawProduct"> | string
+    name?: StringFilter<"RawProduct"> | string
+    qty?: IntFilter<"RawProduct"> | number
+    unit?: StringNullableFilter<"RawProduct"> | string | null
+    unitPrice?: IntFilter<"RawProduct"> | number
+    supplier?: StringNullableFilter<"RawProduct"> | string | null
+    notaDate?: DateTimeNullableFilter<"RawProduct"> | Date | string | null
+    notaPhotoKey?: StringNullableFilter<"RawProduct"> | string | null
+    status?: EnumRawProductStatusFilter<"RawProduct"> | $Enums.RawProductStatus
+    createdById?: StringFilter<"RawProduct"> | string
+    qcById?: StringNullableFilter<"RawProduct"> | string | null
+    qcAt?: DateTimeNullableFilter<"RawProduct"> | Date | string | null
+    qcNote?: StringNullableFilter<"RawProduct"> | string | null
+    createdAt?: DateTimeFilter<"RawProduct"> | Date | string
+    updatedAt?: DateTimeFilter<"RawProduct"> | Date | string
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    qcBy?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
+  }, "id">
+
+  export type RawProductOrderByWithAggregationInput = {
+    id?: SortOrder
+    batchId?: SortOrder
+    name?: SortOrder
+    qty?: SortOrder
+    unit?: SortOrderInput | SortOrder
+    unitPrice?: SortOrder
+    supplier?: SortOrderInput | SortOrder
+    notaDate?: SortOrderInput | SortOrder
+    notaPhotoKey?: SortOrderInput | SortOrder
+    status?: SortOrder
+    createdById?: SortOrder
+    qcById?: SortOrderInput | SortOrder
+    qcAt?: SortOrderInput | SortOrder
+    qcNote?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: RawProductCountOrderByAggregateInput
+    _avg?: RawProductAvgOrderByAggregateInput
+    _max?: RawProductMaxOrderByAggregateInput
+    _min?: RawProductMinOrderByAggregateInput
+    _sum?: RawProductSumOrderByAggregateInput
+  }
+
+  export type RawProductScalarWhereWithAggregatesInput = {
+    AND?: RawProductScalarWhereWithAggregatesInput | RawProductScalarWhereWithAggregatesInput[]
+    OR?: RawProductScalarWhereWithAggregatesInput[]
+    NOT?: RawProductScalarWhereWithAggregatesInput | RawProductScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"RawProduct"> | string
+    batchId?: StringWithAggregatesFilter<"RawProduct"> | string
+    name?: StringWithAggregatesFilter<"RawProduct"> | string
+    qty?: IntWithAggregatesFilter<"RawProduct"> | number
+    unit?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
+    unitPrice?: IntWithAggregatesFilter<"RawProduct"> | number
+    supplier?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
+    notaDate?: DateTimeNullableWithAggregatesFilter<"RawProduct"> | Date | string | null
+    notaPhotoKey?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
+    status?: EnumRawProductStatusWithAggregatesFilter<"RawProduct"> | $Enums.RawProductStatus
+    createdById?: StringWithAggregatesFilter<"RawProduct"> | string
+    qcById?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
+    qcAt?: DateTimeNullableWithAggregatesFilter<"RawProduct"> | Date | string | null
+    qcNote?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"RawProduct"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"RawProduct"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     fullName: string
@@ -22226,6 +23828,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -22253,6 +23857,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
   }
 
   export type UserUpdateInput = {
@@ -22280,6 +23886,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -22307,6 +23915,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -23442,6 +25052,137 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type RawProductCreateInput = {
+    id?: string
+    batchId: string
+    name: string
+    qty?: number
+    unit?: string | null
+    unitPrice?: number
+    supplier?: string | null
+    notaDate?: Date | string | null
+    notaPhotoKey?: string | null
+    status?: $Enums.RawProductStatus
+    qcAt?: Date | string | null
+    qcNote?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: UserCreateNestedOneWithoutRawCreatedInput
+    qcBy?: UserCreateNestedOneWithoutRawQcInput
+  }
+
+  export type RawProductUncheckedCreateInput = {
+    id?: string
+    batchId: string
+    name: string
+    qty?: number
+    unit?: string | null
+    unitPrice?: number
+    supplier?: string | null
+    notaDate?: Date | string | null
+    notaPhotoKey?: string | null
+    status?: $Enums.RawProductStatus
+    createdById: string
+    qcById?: string | null
+    qcAt?: Date | string | null
+    qcNote?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RawProductUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    batchId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    unitPrice?: IntFieldUpdateOperationsInput | number
+    supplier?: NullableStringFieldUpdateOperationsInput | string | null
+    notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
+    qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    qcNote?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneRequiredWithoutRawCreatedNestedInput
+    qcBy?: UserUpdateOneWithoutRawQcNestedInput
+  }
+
+  export type RawProductUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    batchId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    unitPrice?: IntFieldUpdateOperationsInput | number
+    supplier?: NullableStringFieldUpdateOperationsInput | string | null
+    notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
+    createdById?: StringFieldUpdateOperationsInput | string
+    qcById?: NullableStringFieldUpdateOperationsInput | string | null
+    qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    qcNote?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RawProductCreateManyInput = {
+    id?: string
+    batchId: string
+    name: string
+    qty?: number
+    unit?: string | null
+    unitPrice?: number
+    supplier?: string | null
+    notaDate?: Date | string | null
+    notaPhotoKey?: string | null
+    status?: $Enums.RawProductStatus
+    createdById: string
+    qcById?: string | null
+    qcAt?: Date | string | null
+    qcNote?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RawProductUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    batchId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    unitPrice?: IntFieldUpdateOperationsInput | number
+    supplier?: NullableStringFieldUpdateOperationsInput | string | null
+    notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
+    qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    qcNote?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RawProductUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    batchId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    unitPrice?: IntFieldUpdateOperationsInput | number
+    supplier?: NullableStringFieldUpdateOperationsInput | string | null
+    notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
+    createdById?: StringFieldUpdateOperationsInput | string
+    qcById?: NullableStringFieldUpdateOperationsInput | string | null
+    qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    qcNote?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -23558,6 +25299,12 @@ export namespace Prisma {
     none?: ChatMessageWhereInput
   }
 
+  export type RawProductListRelationFilter = {
+    every?: RawProductWhereInput
+    some?: RawProductWhereInput
+    none?: RawProductWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -23596,6 +25343,10 @@ export namespace Prisma {
   }
 
   export type ChatMessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type RawProductOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -24486,6 +26237,90 @@ export namespace Prisma {
     deletedAt?: SortOrder
   }
 
+  export type EnumRawProductStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.RawProductStatus | EnumRawProductStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RawProductStatus[] | ListEnumRawProductStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RawProductStatus[] | ListEnumRawProductStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRawProductStatusFilter<$PrismaModel> | $Enums.RawProductStatus
+  }
+
+  export type RawProductCountOrderByAggregateInput = {
+    id?: SortOrder
+    batchId?: SortOrder
+    name?: SortOrder
+    qty?: SortOrder
+    unit?: SortOrder
+    unitPrice?: SortOrder
+    supplier?: SortOrder
+    notaDate?: SortOrder
+    notaPhotoKey?: SortOrder
+    status?: SortOrder
+    createdById?: SortOrder
+    qcById?: SortOrder
+    qcAt?: SortOrder
+    qcNote?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RawProductAvgOrderByAggregateInput = {
+    qty?: SortOrder
+    unitPrice?: SortOrder
+  }
+
+  export type RawProductMaxOrderByAggregateInput = {
+    id?: SortOrder
+    batchId?: SortOrder
+    name?: SortOrder
+    qty?: SortOrder
+    unit?: SortOrder
+    unitPrice?: SortOrder
+    supplier?: SortOrder
+    notaDate?: SortOrder
+    notaPhotoKey?: SortOrder
+    status?: SortOrder
+    createdById?: SortOrder
+    qcById?: SortOrder
+    qcAt?: SortOrder
+    qcNote?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RawProductMinOrderByAggregateInput = {
+    id?: SortOrder
+    batchId?: SortOrder
+    name?: SortOrder
+    qty?: SortOrder
+    unit?: SortOrder
+    unitPrice?: SortOrder
+    supplier?: SortOrder
+    notaDate?: SortOrder
+    notaPhotoKey?: SortOrder
+    status?: SortOrder
+    createdById?: SortOrder
+    qcById?: SortOrder
+    qcAt?: SortOrder
+    qcNote?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RawProductSumOrderByAggregateInput = {
+    qty?: SortOrder
+    unitPrice?: SortOrder
+  }
+
+  export type EnumRawProductStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RawProductStatus | EnumRawProductStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RawProductStatus[] | ListEnumRawProductStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RawProductStatus[] | ListEnumRawProductStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRawProductStatusWithAggregatesFilter<$PrismaModel> | $Enums.RawProductStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRawProductStatusFilter<$PrismaModel>
+    _max?: NestedEnumRawProductStatusFilter<$PrismaModel>
+  }
+
   export type BranchCreateNestedOneWithoutUsersInput = {
     create?: XOR<BranchCreateWithoutUsersInput, BranchUncheckedCreateWithoutUsersInput>
     connectOrCreate?: BranchCreateOrConnectWithoutUsersInput
@@ -24569,6 +26404,20 @@ export namespace Prisma {
     connect?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[]
   }
 
+  export type RawProductCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<RawProductCreateWithoutCreatedByInput, RawProductUncheckedCreateWithoutCreatedByInput> | RawProductCreateWithoutCreatedByInput[] | RawProductUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: RawProductCreateOrConnectWithoutCreatedByInput | RawProductCreateOrConnectWithoutCreatedByInput[]
+    createMany?: RawProductCreateManyCreatedByInputEnvelope
+    connect?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+  }
+
+  export type RawProductCreateNestedManyWithoutQcByInput = {
+    create?: XOR<RawProductCreateWithoutQcByInput, RawProductUncheckedCreateWithoutQcByInput> | RawProductCreateWithoutQcByInput[] | RawProductUncheckedCreateWithoutQcByInput[]
+    connectOrCreate?: RawProductCreateOrConnectWithoutQcByInput | RawProductCreateOrConnectWithoutQcByInput[]
+    createMany?: RawProductCreateManyQcByInputEnvelope
+    connect?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+  }
+
   export type UserRoleUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -24644,6 +26493,20 @@ export namespace Prisma {
     connectOrCreate?: ChatMessageCreateOrConnectWithoutSenderInput | ChatMessageCreateOrConnectWithoutSenderInput[]
     createMany?: ChatMessageCreateManySenderInputEnvelope
     connect?: ChatMessageWhereUniqueInput | ChatMessageWhereUniqueInput[]
+  }
+
+  export type RawProductUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<RawProductCreateWithoutCreatedByInput, RawProductUncheckedCreateWithoutCreatedByInput> | RawProductCreateWithoutCreatedByInput[] | RawProductUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: RawProductCreateOrConnectWithoutCreatedByInput | RawProductCreateOrConnectWithoutCreatedByInput[]
+    createMany?: RawProductCreateManyCreatedByInputEnvelope
+    connect?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+  }
+
+  export type RawProductUncheckedCreateNestedManyWithoutQcByInput = {
+    create?: XOR<RawProductCreateWithoutQcByInput, RawProductUncheckedCreateWithoutQcByInput> | RawProductCreateWithoutQcByInput[] | RawProductUncheckedCreateWithoutQcByInput[]
+    connectOrCreate?: RawProductCreateOrConnectWithoutQcByInput | RawProductCreateOrConnectWithoutQcByInput[]
+    createMany?: RawProductCreateManyQcByInputEnvelope
+    connect?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -24830,6 +26693,34 @@ export namespace Prisma {
     deleteMany?: ChatMessageScalarWhereInput | ChatMessageScalarWhereInput[]
   }
 
+  export type RawProductUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<RawProductCreateWithoutCreatedByInput, RawProductUncheckedCreateWithoutCreatedByInput> | RawProductCreateWithoutCreatedByInput[] | RawProductUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: RawProductCreateOrConnectWithoutCreatedByInput | RawProductCreateOrConnectWithoutCreatedByInput[]
+    upsert?: RawProductUpsertWithWhereUniqueWithoutCreatedByInput | RawProductUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: RawProductCreateManyCreatedByInputEnvelope
+    set?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    disconnect?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    delete?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    connect?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    update?: RawProductUpdateWithWhereUniqueWithoutCreatedByInput | RawProductUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: RawProductUpdateManyWithWhereWithoutCreatedByInput | RawProductUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: RawProductScalarWhereInput | RawProductScalarWhereInput[]
+  }
+
+  export type RawProductUpdateManyWithoutQcByNestedInput = {
+    create?: XOR<RawProductCreateWithoutQcByInput, RawProductUncheckedCreateWithoutQcByInput> | RawProductCreateWithoutQcByInput[] | RawProductUncheckedCreateWithoutQcByInput[]
+    connectOrCreate?: RawProductCreateOrConnectWithoutQcByInput | RawProductCreateOrConnectWithoutQcByInput[]
+    upsert?: RawProductUpsertWithWhereUniqueWithoutQcByInput | RawProductUpsertWithWhereUniqueWithoutQcByInput[]
+    createMany?: RawProductCreateManyQcByInputEnvelope
+    set?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    disconnect?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    delete?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    connect?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    update?: RawProductUpdateWithWhereUniqueWithoutQcByInput | RawProductUpdateWithWhereUniqueWithoutQcByInput[]
+    updateMany?: RawProductUpdateManyWithWhereWithoutQcByInput | RawProductUpdateManyWithWhereWithoutQcByInput[]
+    deleteMany?: RawProductScalarWhereInput | RawProductScalarWhereInput[]
+  }
+
   export type UserRoleUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -24982,6 +26873,34 @@ export namespace Prisma {
     update?: ChatMessageUpdateWithWhereUniqueWithoutSenderInput | ChatMessageUpdateWithWhereUniqueWithoutSenderInput[]
     updateMany?: ChatMessageUpdateManyWithWhereWithoutSenderInput | ChatMessageUpdateManyWithWhereWithoutSenderInput[]
     deleteMany?: ChatMessageScalarWhereInput | ChatMessageScalarWhereInput[]
+  }
+
+  export type RawProductUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<RawProductCreateWithoutCreatedByInput, RawProductUncheckedCreateWithoutCreatedByInput> | RawProductCreateWithoutCreatedByInput[] | RawProductUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: RawProductCreateOrConnectWithoutCreatedByInput | RawProductCreateOrConnectWithoutCreatedByInput[]
+    upsert?: RawProductUpsertWithWhereUniqueWithoutCreatedByInput | RawProductUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: RawProductCreateManyCreatedByInputEnvelope
+    set?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    disconnect?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    delete?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    connect?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    update?: RawProductUpdateWithWhereUniqueWithoutCreatedByInput | RawProductUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: RawProductUpdateManyWithWhereWithoutCreatedByInput | RawProductUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: RawProductScalarWhereInput | RawProductScalarWhereInput[]
+  }
+
+  export type RawProductUncheckedUpdateManyWithoutQcByNestedInput = {
+    create?: XOR<RawProductCreateWithoutQcByInput, RawProductUncheckedCreateWithoutQcByInput> | RawProductCreateWithoutQcByInput[] | RawProductUncheckedCreateWithoutQcByInput[]
+    connectOrCreate?: RawProductCreateOrConnectWithoutQcByInput | RawProductCreateOrConnectWithoutQcByInput[]
+    upsert?: RawProductUpsertWithWhereUniqueWithoutQcByInput | RawProductUpsertWithWhereUniqueWithoutQcByInput[]
+    createMany?: RawProductCreateManyQcByInputEnvelope
+    set?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    disconnect?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    delete?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    connect?: RawProductWhereUniqueInput | RawProductWhereUniqueInput[]
+    update?: RawProductUpdateWithWhereUniqueWithoutQcByInput | RawProductUpdateWithWhereUniqueWithoutQcByInput[]
+    updateMany?: RawProductUpdateManyWithWhereWithoutQcByInput | RawProductUpdateManyWithWhereWithoutQcByInput[]
+    deleteMany?: RawProductScalarWhereInput | RawProductScalarWhereInput[]
   }
 
   export type UserRoleCreateNestedManyWithoutRoleInput = {
@@ -25515,6 +27434,40 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutChatMessagesInput, UserUpdateWithoutChatMessagesInput>, UserUncheckedUpdateWithoutChatMessagesInput>
   }
 
+  export type UserCreateNestedOneWithoutRawCreatedInput = {
+    create?: XOR<UserCreateWithoutRawCreatedInput, UserUncheckedCreateWithoutRawCreatedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRawCreatedInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserCreateNestedOneWithoutRawQcInput = {
+    create?: XOR<UserCreateWithoutRawQcInput, UserUncheckedCreateWithoutRawQcInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRawQcInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumRawProductStatusFieldUpdateOperationsInput = {
+    set?: $Enums.RawProductStatus
+  }
+
+  export type UserUpdateOneRequiredWithoutRawCreatedNestedInput = {
+    create?: XOR<UserCreateWithoutRawCreatedInput, UserUncheckedCreateWithoutRawCreatedInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRawCreatedInput
+    upsert?: UserUpsertWithoutRawCreatedInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRawCreatedInput, UserUpdateWithoutRawCreatedInput>, UserUncheckedUpdateWithoutRawCreatedInput>
+  }
+
+  export type UserUpdateOneWithoutRawQcNestedInput = {
+    create?: XOR<UserCreateWithoutRawQcInput, UserUncheckedCreateWithoutRawQcInput>
+    connectOrCreate?: UserCreateOrConnectWithoutRawQcInput
+    upsert?: UserUpsertWithoutRawQcInput
+    disconnect?: UserWhereInput | boolean
+    delete?: UserWhereInput | boolean
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRawQcInput, UserUpdateWithoutRawQcInput>, UserUncheckedUpdateWithoutRawQcInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -25839,6 +27792,23 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumChatRoomTypeFilter<$PrismaModel>
     _max?: NestedEnumChatRoomTypeFilter<$PrismaModel>
+  }
+
+  export type NestedEnumRawProductStatusFilter<$PrismaModel = never> = {
+    equals?: $Enums.RawProductStatus | EnumRawProductStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RawProductStatus[] | ListEnumRawProductStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RawProductStatus[] | ListEnumRawProductStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRawProductStatusFilter<$PrismaModel> | $Enums.RawProductStatus
+  }
+
+  export type NestedEnumRawProductStatusWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.RawProductStatus | EnumRawProductStatusFieldRefInput<$PrismaModel>
+    in?: $Enums.RawProductStatus[] | ListEnumRawProductStatusFieldRefInput<$PrismaModel>
+    notIn?: $Enums.RawProductStatus[] | ListEnumRawProductStatusFieldRefInput<$PrismaModel>
+    not?: NestedEnumRawProductStatusWithAggregatesFilter<$PrismaModel> | $Enums.RawProductStatus
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumRawProductStatusFilter<$PrismaModel>
+    _max?: NestedEnumRawProductStatusFilter<$PrismaModel>
   }
 
   export type BranchCreateWithoutUsersInput = {
@@ -26206,6 +28176,98 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type RawProductCreateWithoutCreatedByInput = {
+    id?: string
+    batchId: string
+    name: string
+    qty?: number
+    unit?: string | null
+    unitPrice?: number
+    supplier?: string | null
+    notaDate?: Date | string | null
+    notaPhotoKey?: string | null
+    status?: $Enums.RawProductStatus
+    qcAt?: Date | string | null
+    qcNote?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    qcBy?: UserCreateNestedOneWithoutRawQcInput
+  }
+
+  export type RawProductUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    batchId: string
+    name: string
+    qty?: number
+    unit?: string | null
+    unitPrice?: number
+    supplier?: string | null
+    notaDate?: Date | string | null
+    notaPhotoKey?: string | null
+    status?: $Enums.RawProductStatus
+    qcById?: string | null
+    qcAt?: Date | string | null
+    qcNote?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RawProductCreateOrConnectWithoutCreatedByInput = {
+    where: RawProductWhereUniqueInput
+    create: XOR<RawProductCreateWithoutCreatedByInput, RawProductUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type RawProductCreateManyCreatedByInputEnvelope = {
+    data: RawProductCreateManyCreatedByInput | RawProductCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type RawProductCreateWithoutQcByInput = {
+    id?: string
+    batchId: string
+    name: string
+    qty?: number
+    unit?: string | null
+    unitPrice?: number
+    supplier?: string | null
+    notaDate?: Date | string | null
+    notaPhotoKey?: string | null
+    status?: $Enums.RawProductStatus
+    qcAt?: Date | string | null
+    qcNote?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: UserCreateNestedOneWithoutRawCreatedInput
+  }
+
+  export type RawProductUncheckedCreateWithoutQcByInput = {
+    id?: string
+    batchId: string
+    name: string
+    qty?: number
+    unit?: string | null
+    unitPrice?: number
+    supplier?: string | null
+    notaDate?: Date | string | null
+    notaPhotoKey?: string | null
+    status?: $Enums.RawProductStatus
+    createdById: string
+    qcAt?: Date | string | null
+    qcNote?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RawProductCreateOrConnectWithoutQcByInput = {
+    where: RawProductWhereUniqueInput
+    create: XOR<RawProductCreateWithoutQcByInput, RawProductUncheckedCreateWithoutQcByInput>
+  }
+
+  export type RawProductCreateManyQcByInputEnvelope = {
+    data: RawProductCreateManyQcByInput | RawProductCreateManyQcByInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BranchUpsertWithoutUsersInput = {
     update: XOR<BranchUpdateWithoutUsersInput, BranchUncheckedUpdateWithoutUsersInput>
     create: XOR<BranchCreateWithoutUsersInput, BranchUncheckedCreateWithoutUsersInput>
@@ -26542,6 +28604,60 @@ export namespace Prisma {
     deletedAt?: DateTimeNullableFilter<"ChatMessage"> | Date | string | null
   }
 
+  export type RawProductUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: RawProductWhereUniqueInput
+    update: XOR<RawProductUpdateWithoutCreatedByInput, RawProductUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<RawProductCreateWithoutCreatedByInput, RawProductUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type RawProductUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: RawProductWhereUniqueInput
+    data: XOR<RawProductUpdateWithoutCreatedByInput, RawProductUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type RawProductUpdateManyWithWhereWithoutCreatedByInput = {
+    where: RawProductScalarWhereInput
+    data: XOR<RawProductUpdateManyMutationInput, RawProductUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type RawProductScalarWhereInput = {
+    AND?: RawProductScalarWhereInput | RawProductScalarWhereInput[]
+    OR?: RawProductScalarWhereInput[]
+    NOT?: RawProductScalarWhereInput | RawProductScalarWhereInput[]
+    id?: StringFilter<"RawProduct"> | string
+    batchId?: StringFilter<"RawProduct"> | string
+    name?: StringFilter<"RawProduct"> | string
+    qty?: IntFilter<"RawProduct"> | number
+    unit?: StringNullableFilter<"RawProduct"> | string | null
+    unitPrice?: IntFilter<"RawProduct"> | number
+    supplier?: StringNullableFilter<"RawProduct"> | string | null
+    notaDate?: DateTimeNullableFilter<"RawProduct"> | Date | string | null
+    notaPhotoKey?: StringNullableFilter<"RawProduct"> | string | null
+    status?: EnumRawProductStatusFilter<"RawProduct"> | $Enums.RawProductStatus
+    createdById?: StringFilter<"RawProduct"> | string
+    qcById?: StringNullableFilter<"RawProduct"> | string | null
+    qcAt?: DateTimeNullableFilter<"RawProduct"> | Date | string | null
+    qcNote?: StringNullableFilter<"RawProduct"> | string | null
+    createdAt?: DateTimeFilter<"RawProduct"> | Date | string
+    updatedAt?: DateTimeFilter<"RawProduct"> | Date | string
+  }
+
+  export type RawProductUpsertWithWhereUniqueWithoutQcByInput = {
+    where: RawProductWhereUniqueInput
+    update: XOR<RawProductUpdateWithoutQcByInput, RawProductUncheckedUpdateWithoutQcByInput>
+    create: XOR<RawProductCreateWithoutQcByInput, RawProductUncheckedCreateWithoutQcByInput>
+  }
+
+  export type RawProductUpdateWithWhereUniqueWithoutQcByInput = {
+    where: RawProductWhereUniqueInput
+    data: XOR<RawProductUpdateWithoutQcByInput, RawProductUncheckedUpdateWithoutQcByInput>
+  }
+
+  export type RawProductUpdateManyWithWhereWithoutQcByInput = {
+    where: RawProductScalarWhereInput
+    data: XOR<RawProductUpdateManyMutationInput, RawProductUncheckedUpdateManyWithoutQcByInput>
+  }
+
   export type UserRoleCreateWithoutRoleInput = {
     assignedAt?: Date | string
     user: UserCreateNestedOneWithoutRolesInput
@@ -26604,6 +28720,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
   }
 
   export type UserUncheckedCreateWithoutRolesInput = {
@@ -26630,6 +28748,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
   }
 
   export type UserCreateOrConnectWithoutRolesInput = {
@@ -26678,6 +28798,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
   }
 
   export type UserUncheckedCreateWithoutAssignedRolesInput = {
@@ -26704,6 +28826,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
   }
 
   export type UserCreateOrConnectWithoutAssignedRolesInput = {
@@ -26746,6 +28870,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRolesInput = {
@@ -26772,6 +28898,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
   }
 
   export type RoleUpsertWithoutUsersInput = {
@@ -26832,6 +28960,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedRolesInput = {
@@ -26858,6 +28988,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -26884,6 +29016,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -26910,6 +29044,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -26952,6 +29088,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -26978,6 +29116,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
   }
 
   export type UserCreateWithoutBranchInput = {
@@ -27004,6 +29144,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
   }
 
   export type UserUncheckedCreateWithoutBranchInput = {
@@ -27030,6 +29172,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
   }
 
   export type UserCreateOrConnectWithoutBranchInput = {
@@ -27201,6 +29345,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
   }
 
   export type UserUncheckedCreateWithoutSchedulesInput = {
@@ -27227,6 +29373,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
   }
 
   export type UserCreateOrConnectWithoutSchedulesInput = {
@@ -27292,6 +29440,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSchedulesInput = {
@@ -27318,6 +29468,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
   }
 
   export type WorkScheduleUpsertWithoutUsersInput = {
@@ -27373,6 +29525,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
   }
 
   export type UserUncheckedCreateWithoutAttendancesInput = {
@@ -27399,6 +29553,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
   }
 
   export type UserCreateOrConnectWithoutAttendancesInput = {
@@ -27464,6 +29620,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAttendancesInput = {
@@ -27490,6 +29648,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
   }
 
   export type BranchUpsertWithoutAttendancesInput = {
@@ -27545,6 +29705,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
   }
 
   export type UserUncheckedCreateWithoutRequestsInput = {
@@ -27571,6 +29733,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
   }
 
   export type UserCreateOrConnectWithoutRequestsInput = {
@@ -27602,6 +29766,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
   }
 
   export type UserUncheckedCreateWithoutReviewedInput = {
@@ -27628,6 +29794,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
   }
 
   export type UserCreateOrConnectWithoutReviewedInput = {
@@ -27670,6 +29838,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRequestsInput = {
@@ -27696,6 +29866,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUpsertWithoutReviewedInput = {
@@ -27733,6 +29905,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedInput = {
@@ -27759,6 +29933,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -27785,6 +29961,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -27811,6 +29989,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -27853,6 +30033,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -27879,6 +30061,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
   }
 
   export type UserCreateWithoutActivityLogsInput = {
@@ -27905,6 +30089,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
   }
 
   export type UserUncheckedCreateWithoutActivityLogsInput = {
@@ -27931,6 +30117,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
   }
 
   export type UserCreateOrConnectWithoutActivityLogsInput = {
@@ -27973,6 +30161,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivityLogsInput = {
@@ -27999,6 +30189,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
   }
 
   export type ChatMemberCreateWithoutRoomInput = {
@@ -28132,6 +30324,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
   }
 
   export type UserUncheckedCreateWithoutChatMembersInput = {
@@ -28158,6 +30352,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
   }
 
   export type UserCreateOrConnectWithoutChatMembersInput = {
@@ -28229,6 +30425,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMembersInput = {
@@ -28255,6 +30453,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
   }
 
   export type ChatRoomCreateWithoutMessagesInput = {
@@ -28304,6 +30504,8 @@ export namespace Prisma {
     notifications?: NotificationCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
   }
 
   export type UserUncheckedCreateWithoutChatMessagesInput = {
@@ -28330,6 +30532,8 @@ export namespace Prisma {
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
   }
 
   export type UserCreateOrConnectWithoutChatMessagesInput = {
@@ -28401,6 +30605,8 @@ export namespace Prisma {
     notifications?: NotificationUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMessagesInput = {
@@ -28427,6 +30633,264 @@ export namespace Prisma {
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
+  }
+
+  export type UserCreateWithoutRawCreatedInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    avatarKey?: string | null
+    bio?: string | null
+    joinedAt?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    branch?: BranchCreateNestedOneWithoutUsersInput
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleCreateNestedManyWithoutUserInput
+    attendances?: AttendanceCreateNestedManyWithoutUserInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    reviewed?: RequestCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
+  }
+
+  export type UserUncheckedCreateWithoutRawCreatedInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    avatarKey?: string | null
+    bio?: string | null
+    branchId?: string | null
+    joinedAt?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleUncheckedCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleUncheckedCreateNestedManyWithoutUserInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutUserInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
+  }
+
+  export type UserCreateOrConnectWithoutRawCreatedInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRawCreatedInput, UserUncheckedCreateWithoutRawCreatedInput>
+  }
+
+  export type UserCreateWithoutRawQcInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    avatarKey?: string | null
+    bio?: string | null
+    joinedAt?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    branch?: BranchCreateNestedOneWithoutUsersInput
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleCreateNestedManyWithoutUserInput
+    attendances?: AttendanceCreateNestedManyWithoutUserInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    reviewed?: RequestCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutRawQcInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    avatarKey?: string | null
+    bio?: string | null
+    branchId?: string | null
+    joinedAt?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleUncheckedCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleUncheckedCreateNestedManyWithoutUserInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutUserInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutRawQcInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutRawQcInput, UserUncheckedCreateWithoutRawQcInput>
+  }
+
+  export type UserUpsertWithoutRawCreatedInput = {
+    update: XOR<UserUpdateWithoutRawCreatedInput, UserUncheckedUpdateWithoutRawCreatedInput>
+    create: XOR<UserCreateWithoutRawCreatedInput, UserUncheckedCreateWithoutRawCreatedInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutRawCreatedInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutRawCreatedInput, UserUncheckedUpdateWithoutRawCreatedInput>
+  }
+
+  export type UserUpdateWithoutRawCreatedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branch?: BranchUpdateOneWithoutUsersNestedInput
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUpdateManyWithoutUserNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutRawCreatedInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUncheckedUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUncheckedUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
+  }
+
+  export type UserUpsertWithoutRawQcInput = {
+    update: XOR<UserUpdateWithoutRawQcInput, UserUncheckedUpdateWithoutRawQcInput>
+    create: XOR<UserCreateWithoutRawQcInput, UserUncheckedCreateWithoutRawQcInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutRawQcInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutRawQcInput, UserUncheckedUpdateWithoutRawQcInput>
+  }
+
+  export type UserUpdateWithoutRawQcInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branch?: BranchUpdateOneWithoutUsersNestedInput
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUpdateManyWithoutUserNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutRawQcInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUncheckedUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUncheckedUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserRoleCreateManyUserInput = {
@@ -28543,6 +31007,42 @@ export namespace Prisma {
     createdAt?: Date | string
     editedAt?: Date | string | null
     deletedAt?: Date | string | null
+  }
+
+  export type RawProductCreateManyCreatedByInput = {
+    id?: string
+    batchId: string
+    name: string
+    qty?: number
+    unit?: string | null
+    unitPrice?: number
+    supplier?: string | null
+    notaDate?: Date | string | null
+    notaPhotoKey?: string | null
+    status?: $Enums.RawProductStatus
+    qcById?: string | null
+    qcAt?: Date | string | null
+    qcNote?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RawProductCreateManyQcByInput = {
+    id?: string
+    batchId: string
+    name: string
+    qty?: number
+    unit?: string | null
+    unitPrice?: number
+    supplier?: string | null
+    notaDate?: Date | string | null
+    notaPhotoKey?: string | null
+    status?: $Enums.RawProductStatus
+    createdById: string
+    qcAt?: Date | string | null
+    qcNote?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type UserRoleUpdateWithoutUserInput = {
@@ -28893,6 +31393,114 @@ export namespace Prisma {
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type RawProductUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    batchId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    unitPrice?: IntFieldUpdateOperationsInput | number
+    supplier?: NullableStringFieldUpdateOperationsInput | string | null
+    notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
+    qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    qcNote?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    qcBy?: UserUpdateOneWithoutRawQcNestedInput
+  }
+
+  export type RawProductUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    batchId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    unitPrice?: IntFieldUpdateOperationsInput | number
+    supplier?: NullableStringFieldUpdateOperationsInput | string | null
+    notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
+    qcById?: NullableStringFieldUpdateOperationsInput | string | null
+    qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    qcNote?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RawProductUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    batchId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    unitPrice?: IntFieldUpdateOperationsInput | number
+    supplier?: NullableStringFieldUpdateOperationsInput | string | null
+    notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
+    qcById?: NullableStringFieldUpdateOperationsInput | string | null
+    qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    qcNote?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RawProductUpdateWithoutQcByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    batchId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    unitPrice?: IntFieldUpdateOperationsInput | number
+    supplier?: NullableStringFieldUpdateOperationsInput | string | null
+    notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
+    qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    qcNote?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneRequiredWithoutRawCreatedNestedInput
+  }
+
+  export type RawProductUncheckedUpdateWithoutQcByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    batchId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    unitPrice?: IntFieldUpdateOperationsInput | number
+    supplier?: NullableStringFieldUpdateOperationsInput | string | null
+    notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
+    createdById?: StringFieldUpdateOperationsInput | string
+    qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    qcNote?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RawProductUncheckedUpdateManyWithoutQcByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    batchId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    qty?: IntFieldUpdateOperationsInput | number
+    unit?: NullableStringFieldUpdateOperationsInput | string | null
+    unitPrice?: IntFieldUpdateOperationsInput | number
+    supplier?: NullableStringFieldUpdateOperationsInput | string | null
+    notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
+    createdById?: StringFieldUpdateOperationsInput | string
+    qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    qcNote?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserRoleCreateManyRoleInput = {
     userId: string
     assignedById?: string | null
@@ -28974,6 +31582,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBranchInput = {
@@ -29000,6 +31610,8 @@ export namespace Prisma {
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBranchInput = {

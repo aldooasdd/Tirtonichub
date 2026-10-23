@@ -13,9 +13,10 @@
 # testing
 /coverage
 
-# next.js — .next DI-COMMIT (host cPanel gak bisa build, OOM). Cache + sourcemap diabaikan.
+# next.js — .next DI-COMMIT (host cPanel gak bisa build, OOM). Cache/sourcemap/dev diabaikan.
 /.next/**/cache/
 /.next/**/*.map
+/.next/dev/
 /out/
 
 # production

@@ -13,9 +13,12 @@ import {
   CheckSquare,
   ScrollText,
   MonitorSmartphone,
+  Receipt,
+  ClipboardCheck,
+  Boxes,
   type LucideIcon,
 } from "lucide-react";
-import { HR_ROLES, roleAttends, type RoleCode } from "./roles";
+import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, roleAttends, type RoleCode } from "./roles";
 
 export type NavItem = {
   label: string;
@@ -54,6 +57,23 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Pengajuan Masuk", href: "/hr/approval", icon: CheckSquare },
         { label: "Log Aktivitas", href: "/hr/log", icon: ScrollText },
         { label: "Sesi Aktif", href: "/hr/sesi", icon: MonitorSmartphone },
+      ],
+    });
+  }
+
+  if (FINANCE_ROLES.includes(role)) {
+    groups.push({
+      title: "Finance",
+      items: [{ label: "Produk Mentah", href: "/finance", icon: Receipt }],
+    });
+  }
+
+  if (STOCK_ROLES.includes(role)) {
+    groups.push({
+      title: "Stok",
+      items: [
+        { label: "Quality Control", href: "/stok/qc", icon: ClipboardCheck },
+        { label: "Stok", href: "/stok", icon: Boxes },
       ],
     });
   }

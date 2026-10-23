@@ -52,6 +52,14 @@ enum ChatRoomType {
   DM
 }
 
+// Alur produk: Finance scan nota → DRAFT (edit) → QC (Stock Room) → STOCK / REJECTED.
+enum RawProductStatus {
+  DRAFT
+  QC
+  STOCK
+  REJECTED
+}
+
 model User {
   id         String    @id @default(cuid())
   fullName   String
@@ -79,6 +87,8 @@ model User {
   activityLogs  ActivityLog[]
   chatMembers   ChatMember[]
   chatMessages  ChatMessage[]
+  rawCreated    RawProduct[]   @relation("RawProductCreator")
+  rawQc         RawProduct[]   @relation("RawProductQc")
 
   @@index([branchId])
 }
@@ -295,4 +305,31 @@ model ChatMessage {
   sender User     @relation(fields: [senderId], references: [id])
 
   @@index([roomId, createdAt])
+}
+
+// --- Finance: produk mentah dari nota belanja ---
+model RawProduct {
+  id           String           @id @default(cuid())
+  batchId      String // grup per nota (satu kali scan)
+  name         String
+  qty          Int              @default(1)
+  unit         String? // pcs, box, dst
+  unitPrice    Int              @default(0) // rupiah, harga beli satuan
+  supplier     String?
+  notaDate     DateTime?        @db.Date
+  notaPhotoKey String?
+  status       RawProductStatus @default(DRAFT)
+  createdById  String
+  qcById       String?
+  qcAt         DateTime?
+  qcNote       String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  createdBy User  @relation("RawProductCreator", fields: [createdById], references: [id])
+  qcBy      User? @relation("RawProductQc", fields: [qcById], references: [id])
+
+  @@index([status])
+  @@index([batchId])
+  @@index([createdById])
 }

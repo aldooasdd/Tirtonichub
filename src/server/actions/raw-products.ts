@@ -1,0 +1,154 @@
+"use server";
+
+import { randomUUID } from "node:crypto";
+import { prisma } from "@/server/db";
+import { requireFinance, requireStock } from "@/server/auth/rbac";
+import { logActivity } from "@/server/activity-log";
+import { clientMeta } from "@/server/request-meta";
+import { makeKey, putObject } from "@/server/storage";
+import { parseNotaViaN8n, type NotaItem } from "@/server/n8n-nota";
+
+export type ActionResult = { ok: boolean; message?: string };
+
+export type ScanResult = {
+  ok: boolean;
+  message?: string;
+  batchId?: string;
+  notaPhotoKey?: string;
+  items?: NotaItem[];
+  ocr?: boolean; // true bila n8n mengisi, false bila manual
+};
+
+/** Upload foto nota + OCR via n8n. Tidak menyimpan DB (biar diedit dulu). */
+export async function scanNota(imageBase64: string, mimeType: string): Promise<ScanResult> {
+  await requireFinance();
+  if (!imageBase64) return { ok: false, message: "Foto nota kosong." };
+
+  const ext = mimeType.includes("png") ? "png" : "jpg";
+  const key = makeKey("nota", ext);
+  try {
+    const buf = Buffer.from(imageBase64, "base64");
+    await putObject(key, buf, mimeType || "image/jpeg");
+  } catch {
+    return { ok: false, message: "Gagal simpan foto nota." };
+  }
+
+  const items = await parseNotaViaN8n(imageBase64, mimeType);
+  return {
+    ok: true,
+    batchId: randomUUID(),
+    notaPhotoKey: key,
+    items: items ?? [],
+    ocr: items !== null,
+  };
+}
+
+type SaveItem = {
+  name: string;
+  qty: number;
+  unit?: string | null;
+  unitPrice: number;
+  supplier?: string | null;
+  notaDate?: string | null;
+};
+
+/** Simpan kartu produk mentah (status DRAFT). */
+export async function saveRawBatch(input: {
+  batchId: string;
+  notaPhotoKey?: string | null;
+  items: SaveItem[];
+}): Promise<ActionResult> {
+  const ctx = await requireFinance();
+  const items = input.items.filter((i) => i.name.trim());
+  if (items.length === 0) return { ok: false, message: "Tidak ada item." };
+
+  await prisma.rawProduct.createMany({
+    data: items.map((i) => ({
+      batchId: input.batchId,
+      name: i.name.trim().slice(0, 200),
+      qty: Math.max(1, Math.round(i.qty) || 1),
+      unit: i.unit?.trim() || null,
+      unitPrice: Math.max(0, Math.round(i.unitPrice) || 0),
+      supplier: i.supplier?.trim() || null,
+      notaDate: i.notaDate ? new Date(i.notaDate) : null,
+      notaPhotoKey: input.notaPhotoKey ?? null,
+      status: "DRAFT" as const,
+      createdById: ctx.userId,
+    })),
+  });
+
+  const { ip } = await clientMeta();
+  await logActivity(
+    { ...ctx, ip },
+    { action: "create", entity: "RawProduct", entityId: input.batchId, after: { count: items.length } },
+  );
+  return { ok: true };
+}
+
+/** Edit satu kartu DRAFT milik sendiri. */
+export async function updateRawProduct(id: string, fields: SaveItem): Promise<ActionResult> {
+  const ctx = await requireFinance();
+  const p = await prisma.rawProduct.findUnique({ where: { id } });
+  if (!p || p.createdById !== ctx.userId) return { ok: false, message: "Tidak ditemukan." };
+  if (p.status !== "DRAFT") return { ok: false, message: "Hanya draft bisa diedit." };
+  await prisma.rawProduct.update({
+    where: { id },
+    data: {
+      name: fields.name.trim().slice(0, 200),
+      qty: Math.max(1, Math.round(fields.qty) || 1),
+      unit: fields.unit?.trim() || null,
+      unitPrice: Math.max(0, Math.round(fields.unitPrice) || 0),
+      supplier: fields.supplier?.trim() || null,
+      notaDate: fields.notaDate ? new Date(fields.notaDate) : null,
+    },
+  });
+  return { ok: true };
+}
+
+/** Hapus kartu DRAFT milik sendiri. */
+export async function deleteRawProduct(id: string): Promise<ActionResult> {
+  const ctx = await requireFinance();
+  const p = await prisma.rawProduct.findUnique({ where: { id } });
+  if (!p || p.createdById !== ctx.userId) return { ok: false, message: "Tidak ditemukan." };
+  if (p.status !== "DRAFT") return { ok: false, message: "Hanya draft bisa dihapus." };
+  await prisma.rawProduct.delete({ where: { id } });
+  return { ok: true };
+}
+
+/** Kirim seluruh batch DRAFT ke Quality Control (Stock Room). */
+export async function submitBatchToQc(batchId: string): Promise<ActionResult> {
+  const ctx = await requireFinance();
+  const r = await prisma.rawProduct.updateMany({
+    where: { batchId, createdById: ctx.userId, status: "DRAFT" },
+    data: { status: "QC" },
+  });
+  if (r.count === 0) return { ok: false, message: "Tidak ada draft untuk dikirim." };
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "submit_qc", entity: "RawProduct", entityId: batchId });
+  return { ok: true };
+}
+
+/** Keputusan QC oleh Stock Room: lolos → STOCK, tolak → REJECTED. */
+export async function qcDecision(
+  id: string,
+  decision: "STOCK" | "REJECTED",
+  note: string,
+): Promise<ActionResult> {
+  const ctx = await requireStock();
+  if (decision === "REJECTED" && !note.trim())
+    return { ok: false, message: "Penolakan wajib ada catatan." };
+  const p = await prisma.rawProduct.findUnique({ where: { id } });
+  if (!p) return { ok: false, message: "Tidak ditemukan." };
+  if (p.status !== "QC") return { ok: false, message: "Item tidak dalam antrean QC." };
+
+  await prisma.rawProduct.update({
+    where: { id },
+    data: { status: decision, qcById: ctx.userId, qcAt: new Date(), qcNote: note.trim() || null },
+  });
+  const { ip } = await clientMeta();
+  await logActivity(
+    { ...ctx, ip },
+    { action: decision === "STOCK" ? "qc_pass" : "qc_reject", entity: "RawProduct", entityId: id },
+  );
+  return { ok: true };
+}

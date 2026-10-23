@@ -44,3 +44,17 @@ export async function requireHr(): Promise<AuthContext> {
   assert(can.manageEmployees(ctx.activeRole));
   return ctx;
 }
+
+/** Finance/Boss: scan nota + produk mentah. */
+export async function requireFinance(): Promise<AuthContext> {
+  const ctx = await requireAuth();
+  assert(can.manageFinance(ctx.activeRole));
+  return ctx;
+}
+
+/** Stock Room/Boss: QC + stok. */
+export async function requireStock(): Promise<AuthContext> {
+  const ctx = await requireAuth();
+  assert(can.manageStock(ctx.activeRole));
+  return ctx;
+}

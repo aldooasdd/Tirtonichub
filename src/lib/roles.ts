@@ -24,6 +24,10 @@ export const ROLE_LABELS: Record<RoleCode, string> = {
 
 /** Role yang punya modul HR (kelola karyawan, rekap, approval, dll). */
 export const HR_ROLES: RoleCode[] = ["BOSS", "HR"];
+/** Finance: scan nota + produk mentah. */
+export const FINANCE_ROLES: RoleCode[] = ["BOSS", "FINANCE"];
+/** Stock Room: QC + stok. */
+export const STOCK_ROLES: RoleCode[] = ["BOSS", "STOCK_ROOM"];
 
 /** Boss tidak absen; role lain absen. (PRD §3) */
 export function roleAttends(role: RoleCode): boolean {

@@ -291,6 +291,25 @@ exports.Prisma.ChatMessageScalarFieldEnum = {
   deletedAt: 'deletedAt'
 };
 
+exports.Prisma.RawProductScalarFieldEnum = {
+  id: 'id',
+  batchId: 'batchId',
+  name: 'name',
+  qty: 'qty',
+  unit: 'unit',
+  unitPrice: 'unitPrice',
+  supplier: 'supplier',
+  notaDate: 'notaDate',
+  notaPhotoKey: 'notaPhotoKey',
+  status: 'status',
+  createdById: 'createdById',
+  qcById: 'qcById',
+  qcAt: 'qcAt',
+  qcNote: 'qcNote',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -356,6 +375,13 @@ exports.ChatRoomType = exports.$Enums.ChatRoomType = {
   DM: 'DM'
 };
 
+exports.RawProductStatus = exports.$Enums.RawProductStatus = {
+  DRAFT: 'DRAFT',
+  QC: 'QC',
+  STOCK: 'STOCK',
+  REJECTED: 'REJECTED'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Role: 'Role',
@@ -372,7 +398,8 @@ exports.Prisma.ModelName = {
   ActivityLog: 'ActivityLog',
   ChatRoom: 'ChatRoom',
   ChatMember: 'ChatMember',
-  ChatMessage: 'ChatMessage'
+  ChatMessage: 'ChatMessage',
+  RawProduct: 'RawProduct'
 };
 
 /**
