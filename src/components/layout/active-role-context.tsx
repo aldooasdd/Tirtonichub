@@ -1,33 +1,57 @@
 "use client";
 
-import { createContext, useContext, useMemo, useState } from "react";
-import type { RoleCode } from "@/lib/roles";
+import { createContext, useContext, useMemo, useTransition } from "react";
+import type { RoleCode } from "@prisma/client";
+import { selectRoleAction } from "@/server/actions/auth";
 
-type ActiveRoleCtx = {
+export type SessionUser = { fullName: string; email: string };
+
+type Ctx = {
+  user: SessionUser;
   role: RoleCode;
   roles: RoleCode[];
   setRole: (r: RoleCode) => void;
+  switching: boolean;
 };
 
-const Ctx = createContext<ActiveRoleCtx | null>(null);
+const SessionCtx = createContext<Ctx | null>(null);
 
-// ponytail: mock sampai auth Fase 1. Role aktif asli nanti dari Session.activeRoleCode.
-export function ActiveRoleProvider({
+export function SessionProvider({
   children,
-  initialRole = "HR",
-  roles = ["HR", "SALES"],
+  user,
+  role,
+  roles,
 }: {
   children: React.ReactNode;
-  initialRole?: RoleCode;
-  roles?: RoleCode[];
+  user: SessionUser;
+  role: RoleCode;
+  roles: RoleCode[];
 }) {
-  const [role, setRole] = useState<RoleCode>(initialRole);
-  const value = useMemo(() => ({ role, roles, setRole }), [role, roles]);
-  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+  const [switching, start] = useTransition();
+  const value = useMemo<Ctx>(
+    () => ({
+      user,
+      role,
+      roles,
+      switching,
+      setRole: (r) => start(() => selectRoleAction(r).then(() => {})),
+    }),
+    [user, role, roles, switching],
+  );
+  return <SessionCtx.Provider value={value}>{children}</SessionCtx.Provider>;
+}
+
+function useSession() {
+  const v = useContext(SessionCtx);
+  if (!v) throw new Error("useSession di luar SessionProvider");
+  return v;
 }
 
 export function useActiveRole() {
-  const v = useContext(Ctx);
-  if (!v) throw new Error("useActiveRole di luar ActiveRoleProvider");
-  return v;
+  const { role, roles, setRole } = useSession();
+  return { role, roles, setRole };
+}
+
+export function useSessionUser() {
+  return useSession().user;
 }

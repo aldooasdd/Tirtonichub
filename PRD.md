@@ -383,7 +383,7 @@ ChatMessage     id, roomId, senderId, body, attachmentKey, createdAt, editedAt, 
 
 ## 17. Tech stack
 
-Next.js (App Router) + TypeScript · Tailwind CSS + shadcn/ui · PostgreSQL + Prisma · Better Auth (dengan alur OTP kustom via WAHA) · `@aws-sdk/client-s3` → MinIO · PWA · Docker + docker-compose di VPS · GitHub Actions (push ke `main` → build image → deploy).
+Next.js (App Router) + TypeScript · Tailwind CSS + shadcn/ui · PostgreSQL + Prisma · **Sesi & OTP kustom (hand-rolled, tanpa library auth)**: cookie sesi di DB + OTP via n8n→WAHA · `@aws-sdk/client-s3` → MinIO · PWA · Docker + docker-compose di VPS · GitHub Actions (push ke `main` → build image → deploy).
 
 Infrastruktur: VPS kantor (aplikasi + PostgreSQL + n8n + WAHA) · PC server kantor (MinIO + tujuan backup DB, diakses via Cloudflare Tunnel/Tailscale) · ±27 pengguna.
 

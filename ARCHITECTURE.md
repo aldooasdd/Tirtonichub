@@ -164,11 +164,12 @@ POST /api/auth/select-role { roleCode }
 - Setiap request server membaca sesi → `{ userId, activeRole, allRoles }`.
 - Kewajiban absen = properti **orang**: wajib jika punya ≥1 role selain `BOSS`. Akun hanya-`BOSS` tak absen. Dicek dari `allRoles`, bukan `activeRole`.
 
-### 3.3 Better Auth
+### 3.3 Sesi (hand-rolled, tanpa library auth)
 
-Better Auth mengelola session store (di DB) + cookie. Alur OTP WAHA dibuat **kustom**
-(plugin/credential flow): generate → kirim WAHA → verify. Password tidak dipakai.
-`Session` diperluas dengan kolom `activeRoleCode` (lihat skema PRD §14).
+Keputusan: sesi & OTP dibuat sendiri pakai model Prisma `Session` + `OtpChallenge` (PRD §14),
+bukan Better Auth — lebih ramping untuk alur WA-OTP + role aktif di sesi, tanpa tabel/adapter
+library yang tumpang tindih. Token sesi acak 32 byte, cookie menyimpan token mentah, DB menyimpan
+`sha256(token)` di `tokenHash` (bisa dicabut). Tanpa password. `Session.activeRoleCode` menyimpan role aktif.
 
 ---
 
@@ -259,7 +260,7 @@ NODE_ENV=production
 APP_URL=https://tirtonichub.com              # tanpa subdomain (§11.7)
 ALLOWED_EMAIL_DOMAINS=tirtonichub.com         # §11.6
 SESSION_TTL_DAYS=7                            # §5.5
-BETTER_AUTH_SECRET=                           # random panjang
+AUTH_SECRET=                                  # random panjang (pepper hash OTP/token sesi)
 
 # Database
 DATABASE_URL=postgresql://user:pass@postgres:5432/tirtonichub

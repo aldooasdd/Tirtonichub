@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bell, Menu, PanelRight, Search, Settings, LogOut, User } from "lucide-react";
+import { Bell, Menu, PanelRight, Search, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -21,13 +21,19 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { navForRole } from "@/lib/nav";
-import { useActiveRole } from "./active-role-context";
+import { useActiveRole, useSessionUser } from "./active-role-context";
 import { ThemeToggle } from "./theme-toggle";
 import { RoleSwitcher } from "./role-switcher";
+import { logoutAction } from "@/server/actions/auth";
+
+function initials(name: string) {
+  return name.trim().split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase()).join("") || "?";
+}
 
 export function Header({ onTogglePanel }: { onTogglePanel: () => void }) {
   const pathname = usePathname();
   const { role } = useActiveRole();
+  const user = useSessionUser();
   const groups = navForRole(role);
 
   return (
@@ -93,23 +99,25 @@ export function Header({ onTogglePanel }: { onTogglePanel: () => void }) {
           <DropdownMenuTrigger asChild>
             <button aria-label="Akun" className="ml-1">
               <Avatar className="h-8 w-8">
-                <AvatarFallback>A</AvatarFallback>
+                <AvatarFallback>{initials(user.fullName)}</AvatarFallback>
               </Avatar>
             </button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-48">
-            <DropdownMenuLabel>Akun</DropdownMenuLabel>
+          <DropdownMenuContent align="end" className="w-56">
+            <DropdownMenuLabel>
+              <div className="flex flex-col">
+                <span>{user.fullName}</span>
+                <span className="text-12 font-normal text-muted-foreground">{user.email}</span>
+              </div>
+            </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuItem asChild>
               <Link href="/profil">
                 <User className="h-4 w-4" /> Profil
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem disabled>
-              <Settings className="h-4 w-4" /> Pengaturan
-            </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem disabled>
+            <DropdownMenuItem onClick={() => logoutAction()}>
               <LogOut className="h-4 w-4" /> Keluar
             </DropdownMenuItem>
           </DropdownMenuContent>

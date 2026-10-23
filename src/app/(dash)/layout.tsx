@@ -1,11 +1,20 @@
-import { ActiveRoleProvider } from "@/components/layout/active-role-context";
+import { redirect } from "next/navigation";
+import { getSession } from "@/server/auth/session";
+import { SessionProvider } from "@/components/layout/active-role-context";
 import { AppShell } from "@/components/layout/app-shell";
 
-export default function DashLayout({ children }: LayoutProps<"/">) {
-  // ponytail: role aktif di-mock sampai auth Fase 1.
+export default async function DashLayout({ children }: LayoutProps<"/">) {
+  const s = await getSession();
+  if (!s) redirect("/login");
+  if (!s.activeRole) redirect("/pilih-role");
+
   return (
-    <ActiveRoleProvider>
+    <SessionProvider
+      user={{ fullName: s.user.fullName, email: s.user.email }}
+      role={s.activeRole}
+      roles={s.roles}
+    >
       <AppShell>{children}</AppShell>
-    </ActiveRoleProvider>
+    </SessionProvider>
   );
 }
