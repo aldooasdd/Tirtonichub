@@ -1,0 +1,155 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+/* dark mode via class (next-themes) */
+@custom-variant dark (&:is(.dark *));
+
+/* === SnowUI tokens (lihat DESIGN_TOKENS.md) === */
+:root {
+  --background: #ffffff;
+  --foreground: #000000;
+  --card: #ffffff;
+  --card-foreground: #000000;
+  --popover: #ffffff;
+  --popover-foreground: #000000;
+  --muted: #f9f9fa;
+  --muted-foreground: rgba(0, 0, 0, 0.4);
+  --primary: #000000;
+  --primary-foreground: #ffffff;
+  --secondary: #f9f9fa;
+  --secondary-foreground: #000000;
+  --accent: rgba(0, 0, 0, 0.04);
+  --accent-foreground: #000000;
+  --border: rgba(0, 0, 0, 0.1);
+  --input: rgba(0, 0, 0, 0.1);
+  --ring: #33d1ff;
+  --destructive: #ff4747;
+  --destructive-foreground: #ffffff;
+
+  /* brand & status (tetap di light & dark) */
+  --brand: #33d1ff;
+  --success: #71dd8c;
+  --warning: #ffcc00;
+  --info: #33d1ff;
+  --kpi-1: #e6f1fd;
+  --kpi-2: #edeefc;
+  --kpi-foreground: rgba(0, 0, 0, 0.8);
+
+  /* skala opacity teks/garis (light = black) */
+  --fg-80: rgba(0, 0, 0, 0.8);
+  --fg-40: rgba(0, 0, 0, 0.4);
+  --fg-20: rgba(0, 0, 0, 0.2);
+  --fg-10: rgba(0, 0, 0, 0.1);
+  --fg-4: rgba(0, 0, 0, 0.04);
+
+  --radius: 16px;
+}
+
+.dark {
+  --background: #333333;
+  --foreground: #ffffff;
+  --card: #3b3b3b;
+  --card-foreground: #ffffff;
+  --popover: #3b3b3b;
+  --popover-foreground: #ffffff;
+  --muted: rgba(255, 255, 255, 0.04);
+  --muted-foreground: rgba(255, 255, 255, 0.4);
+  --primary: #ffffff;
+  --primary-foreground: #000000;
+  --secondary: rgba(255, 255, 255, 0.1);
+  --secondary-foreground: #ffffff;
+  --accent: rgba(255, 255, 255, 0.04);
+  --accent-foreground: #ffffff;
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #33d1ff;
+  --destructive: #ff4747;
+  --destructive-foreground: #ffffff;
+
+  /* --brand/success/warning/kpi-* tetap. KPI card tetap terang → teks tetap gelap */
+  --kpi-foreground: rgba(0, 0, 0, 0.8);
+
+  --fg-80: rgba(255, 255, 255, 0.8);
+  --fg-40: rgba(255, 255, 255, 0.4);
+  --fg-20: rgba(255, 255, 255, 0.2);
+  --fg-10: rgba(255, 255, 255, 0.1);
+  --fg-4: rgba(255, 255, 255, 0.04);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-brand: var(--brand);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-kpi-1: var(--kpi-1);
+  --color-kpi-2: var(--kpi-2);
+  --color-kpi-foreground: var(--kpi-foreground);
+
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --text-12: 12px;
+  --text-12--line-height: 16px;
+  --text-14: 14px;
+  --text-14--line-height: 20px;
+  --text-16: 16px;
+  --text-16--line-height: 24px;
+  --text-18: 18px;
+  --text-18--line-height: 28px;
+  --text-24: 24px;
+  --text-24--line-height: 32px;
+  --text-32: 32px;
+  --text-32--line-height: 40px;
+  --text-48: 48px;
+  --text-48--line-height: 56px;
+  --text-64: 64px;
+  --text-64--line-height: 72px;
+
+  --spacing-4: 4px;
+  --spacing-8: 8px;
+  --spacing-12: 12px;
+  --spacing-16: 16px;
+  --spacing-20: 20px;
+  --spacing-24: 24px;
+  --spacing-28: 28px;
+  --spacing-40: 40px;
+  --spacing-48: 48px;
+  --spacing-80: 80px;
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+
+  --shadow-ds1: 0 0.5px 0.5px rgba(0, 0, 0, 0.1);
+  --shadow-ds2: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+  }
+}
