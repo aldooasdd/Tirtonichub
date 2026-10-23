@@ -37,6 +37,7 @@ Simpan. cPanel bikin virtualenv + kasih baris `source .../bin/activate` (dipakai
 ### Environment variables (di panel Node App, bagian "Environment variables")
 ```
 NODE_ENV=production
+PRISMA_SKIP_POSTINSTALL_GENERATE=true
 APP_URL=https://tirtonichub.com
 ALLOWED_EMAIL_DOMAINS=tirtonichub.com
 SESSION_TTL_DAYS=7
@@ -57,35 +58,36 @@ S3_BUCKET=tirtonichub
 ```
 (SMTP_* opsional — fallback email bila WA gagal.)
 
-## 4. Install + migrasi + build (SSH)
+## 4. Install + seed (tanpa SSH, tanpa build)
 
-SSH ke server, lalu:
-```bash
-cd ~/tirtonichub
-source ~/nodevenv/tirtonichub/20/bin/activate   # path dari panel Node App
-npm install                                      # termasuk devDeps (prisma, tsx)
-npx prisma generate
-npx prisma migrate deploy                        # terapkan migrasi (bukan db push)
-npx prisma db seed                               # sekali saja: 8 role, 2 Boss, 3 cabang
-npm run build                                    # next build
-```
-Lalu di panel Node App klik **Restart**.
+Host ini **tidak bisa build**: `next build` dan `prisma generate` crash (WebAssembly out of memory, limit LVE). Karena itu:
+- Hasil build `.next` sudah di-commit ke repo → host cukup menyajikannya, tidak build ulang.
+- Prisma client sudah di-commit di `src/generated/prisma` → tidak perlu `prisma generate`. Env `PRISMA_SKIP_POSTINSTALL_GENERATE=true` mencegah `npm install` memicu generate (yang bikin crash).
+- Skema DB sudah dimuat manual lewat phpPgAdmin → tidak perlu `prisma migrate deploy`.
 
-> Tanpa SSH: panel Node App punya tombol **Run NPM Install** + **Run JS script**. Build/migrate bisa lewat situ (bikin script npm), tapi SSH jauh lebih gampang.
+Lewat panel **Setup Node.js App** (semua tombol, tanpa terminal):
+1. **Run NPM Install** — download dependency (next, react, pg, @prisma/adapter-pg). Tidak build, aman.
+2. **Restart** — Passenger jalankan `server.js`, app menyajikan `.next` yang sudah ada.
+3. Buka domain → kalau halaman login muncul, serving OK.
+4. Seed sekali (8 role, 2 Boss, 3 cabang): **Run JS script** → isi `prisma/seed.ts`... (lihat catatan di bawah).
 
-> Build kehabisan memori di shared hosting? Set env `NODE_OPTIONS=--max-old-space-size=1024`, atau build lokal lalu upload folder `.next`.
+> **Seed butuh tsx.** `Run JS script` cPanel jalankan `node <file>`, bukan tsx. Dua pilihan:
+> - Jalankan seed **dari lokal** (mesin dev) dengan `DATABASE_URL` menunjuk ke DB cPanel — kalau port 5432 dibuka ke publik. Biasanya tidak.
+> - Atau pakai **phpPgAdmin**: jalankan SQL seed manual (role, Boss, cabang). Minta file SQL seed ke sini bila perlu.
 
 ## 5. DNS
 
 Arahkan `tirtonichub.com` (A record) ke IP server cPanel. SSL pakai **AutoSSL** cPanel (Let's Encrypt). HTTPS wajib untuk PWA + kamera + lokasi absen.
 
 ## 6. Update berikutnya
+
+Build dilakukan **di lokal**, lalu commit `.next`:
 ```bash
-cd ~/tirtonichub && git pull --ff-only
-source ~/nodevenv/.../bin/activate
-npm install && npx prisma migrate deploy && npm run build
-# panel Node App → Restart
+# di mesin dev:
+pnpm build
+git add -A && git commit -m "deploy" && git push
 ```
+Di cPanel: **Git Version Control → Pull or Deploy → Update from Remote**, lalu panel Node App → **Restart**. Tanpa build, tanpa migrate (kecuali skema berubah → muat SQL migrasi baru lewat phpPgAdmin).
 
 ## Akun login pertama
 Seed bikin 2 Boss: `boss1@tirtonichub.com`, `boss2@tirtonichub.com` (nomor WA fiktif — ganti via HR/DB ke nomor asli biar OTP WA kekirim).
