@@ -9,9 +9,9 @@ import { dateKeyWIB } from "@/server/attendance/logic";
 
 function Kpi({ label, value, bg }: { label: string; value: string | number; bg: string }) {
   return (
-    <div className={`${bg} rounded-lg p-5 text-kpi-foreground`}>
-      <p className="text-14 opacity-80">{label}</p>
-      <p className="mt-2 text-32 font-semibold leading-[1.2]">{value}</p>
+    <div className={`${bg} rounded-2xl p-6 text-kpi-foreground`}>
+      <p className="text-14">{label}</p>
+      <p className="mt-3 text-24 font-semibold leading-none">{value}</p>
     </div>
   );
 }
@@ -32,10 +32,10 @@ export default async function BerandaPage() {
     return (
       <div className="space-y-6">
         <div>
-          <h1 className="text-24 font-semibold">Beranda</h1>
+          <h1 className="text-16 font-semibold">Beranda</h1>
           <p className="text-14 text-muted-foreground">Ringkasan perusahaan.</p>
         </div>
-        <section className="grid grid-cols-2 gap-4 lg:grid-cols-3">
+        <section className="grid grid-cols-2 gap-5 lg:grid-cols-3">
           <Kpi label="Karyawan aktif" value={karyawanAktif} bg="bg-kpi-1" />
           <Kpi label="Hadir hari ini" value={hadirHariIni} bg="bg-kpi-2" />
           <Kpi label="Pengajuan pending" value={pending} bg="bg-kpi-1" />
@@ -92,22 +92,22 @@ export default async function BerandaPage() {
         <p className="text-14 text-muted-foreground">Ringkasan kinerja & absensi kamu.</p>
       </div>
 
-      <section className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+      <section className="grid grid-cols-2 gap-5 lg:grid-cols-4">
         <Kpi label="Hadir bulan ini" value={hadir} bg="bg-kpi-1" />
         <Kpi label="Terlambat" value={telat} bg="bg-kpi-2" />
         <Kpi label="Sisa cuti" value={sisaCuti} bg="bg-kpi-1" />
         <Kpi label="Pengajuan pending" value={pending} bg="bg-kpi-2" />
       </section>
 
-      <section className="rounded-lg bg-card p-5">
+      <section className="rounded-2xl border bg-card p-6">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-md bg-muted">
+            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-muted">
               <Clock className="h-5 w-5" />
             </div>
             <div>
-              <p className="text-14 text-muted-foreground">Status hari ini</p>
-              <p className="font-semibold">
+              <p className="text-12 text-muted-foreground">Status hari ini</p>
+              <p className="text-14 font-semibold">
                 {!att?.checkInAt
                   ? "Belum absen masuk"
                   : `Masuk ${fmtWIB(att.checkInAt)}${att.status === "LATE" ? ` (telat ${att.lateMinutes}m)` : ""}`}
@@ -123,9 +123,9 @@ export default async function BerandaPage() {
         </div>
       </section>
 
-      <section className="rounded-lg bg-card p-5">
-        <h2 className="mb-3 font-semibold">Tugas harian</h2>
-        <p className="rounded-md bg-muted p-6 text-center text-14 text-muted-foreground">
+      <section className="rounded-2xl border bg-card p-6">
+        <h2 className="mb-3 text-14 font-semibold">Tugas harian</h2>
+        <p className="rounded-xl bg-muted p-6 text-center text-14 text-muted-foreground">
           Belum ada tugas.
         </p>
       </section>
