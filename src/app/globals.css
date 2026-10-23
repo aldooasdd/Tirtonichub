@@ -123,16 +123,7 @@
   --text-64: 64px;
   --text-64--line-height: 72px;
 
-  --spacing-4: 4px;
-  --spacing-8: 8px;
-  --spacing-12: 12px;
-  --spacing-16: 16px;
-  --spacing-20: 20px;
-  --spacing-24: 24px;
-  --spacing-28: 28px;
-  --spacing-40: 40px;
-  --spacing-48: 48px;
-  --spacing-80: 80px;
+  /* Jangan definisikan --spacing-N: menimpa skala angka Tailwind (w-80, p-4, dst). */
 
   --radius-sm: 8px;
   --radius-md: 12px;

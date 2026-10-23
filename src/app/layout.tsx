@@ -21,7 +21,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       suppressHydrationWarning
       className={`${inter.variable} h-full antialiased`}
     >
-      <body className="min-h-full">
+      <body className="min-h-full" suppressHydrationWarning>
         {/* sementara fokus mode light; dark ditunda — hapus forcedTheme utk aktifkan lagi */}
         <ThemeProvider
           attribute="class"
