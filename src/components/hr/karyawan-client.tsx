@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Plus, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -116,7 +117,9 @@ export function KaryawanClient({
           <div key={u.id} className="rounded-lg border bg-card p-4">
             <div className="flex items-start justify-between gap-2">
               <div className="min-w-0">
-                <p className="truncate font-medium">{u.fullName}</p>
+                <Link href={`/hr/karyawan/${u.id}`} className="truncate font-medium hover:underline">
+                  {u.fullName}
+                </Link>
                 <p className="truncate text-14 text-muted-foreground">{u.email}</p>
                 <p className="truncate text-14 text-muted-foreground">{u.waNumber}</p>
               </div>
@@ -174,7 +177,11 @@ export function KaryawanClient({
             )}
             {filtered.map((u) => (
               <TableRow key={u.id}>
-                <TableCell className="font-medium">{u.fullName}</TableCell>
+                <TableCell className="font-medium">
+                  <Link href={`/hr/karyawan/${u.id}`} className="hover:underline">
+                    {u.fullName}
+                  </Link>
+                </TableCell>
                 <TableCell className="text-muted-foreground">{u.email}</TableCell>
                 <TableCell className="text-muted-foreground">{u.waNumber}</TableCell>
                 <TableCell>
