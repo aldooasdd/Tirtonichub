@@ -105,7 +105,53 @@ export function KaryawanClient({
         className="max-w-xs"
       />
 
-      <div className="rounded-lg border bg-card">
+      {/* HP: list kartu (PRD §7.1) */}
+      <div className="flex flex-col gap-3 md:hidden">
+        {filtered.length === 0 && (
+          <p className="rounded-lg border bg-card py-10 text-center text-muted-foreground">
+            Tidak ada karyawan.
+          </p>
+        )}
+        {filtered.map((u) => (
+          <div key={u.id} className="rounded-lg border bg-card p-4">
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0">
+                <p className="truncate font-medium">{u.fullName}</p>
+                <p className="truncate text-14 text-muted-foreground">{u.email}</p>
+                <p className="truncate text-14 text-muted-foreground">{u.waNumber}</p>
+              </div>
+              <Badge variant={u.isActive ? "default" : "outline"}>
+                {u.isActive ? "Aktif" : "Nonaktif"}
+              </Badge>
+            </div>
+            <div className="mt-3 flex flex-wrap gap-1">
+              {u.roleCodes.map((c) => (
+                <Badge key={c} variant="secondary">
+                  {ROLE_LABELS[c]}
+                </Badge>
+              ))}
+            </div>
+            <p className="mt-2 text-14 text-muted-foreground">Cabang: {u.branchName ?? "—"}</p>
+            <div className="mt-3 flex gap-2">
+              <Button variant="secondary" size="sm" className="flex-1" onClick={() => openEdit(u)}>
+                <Pencil className="h-4 w-4" /> Edit
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                className="flex-1"
+                disabled={pending}
+                onClick={() => toggleActive(u)}
+              >
+                {u.isActive ? "Nonaktifkan" : "Aktifkan"}
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop: tabel */}
+      <div className="hidden rounded-lg border bg-card md:block">
         <Table>
           <TableHeader>
             <TableRow>

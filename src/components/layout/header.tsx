@@ -22,7 +22,6 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { navForRole } from "@/lib/nav";
 import { useActiveRole, useSessionUser } from "./active-role-context";
-import { ThemeToggle } from "./theme-toggle";
 import { RoleSwitcher } from "./role-switcher";
 import { logoutAction } from "@/server/actions/auth";
 
@@ -82,7 +81,7 @@ export function Header({ onTogglePanel }: { onTogglePanel: () => void }) {
 
       <div className="ml-auto flex items-center gap-1">
         <RoleSwitcher />
-        <ThemeToggle />
+        {/* ThemeToggle ditunda (fokus light) */}
         <Button variant="ghost" size="icon" aria-label="Notifikasi">
           <Bell className="h-5 w-5" />
         </Button>

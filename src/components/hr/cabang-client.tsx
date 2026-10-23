@@ -61,7 +61,49 @@ export function CabangClient({ branches }: { branches: Row[] }) {
         </Button>
       </div>
 
-      <div className="rounded-lg border bg-card">
+      {/* HP: list kartu */}
+      <div className="flex flex-col gap-3 md:hidden">
+        {branches.length === 0 && (
+          <p className="rounded-lg border bg-card py-10 text-center text-muted-foreground">
+            Belum ada cabang.
+          </p>
+        )}
+        {branches.map((b) => (
+          <div key={b.id} className="rounded-lg border bg-card p-4">
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0">
+                <p className="truncate font-medium">{b.name}</p>
+                <p className="truncate text-14 text-muted-foreground">{b.address ?? "—"}</p>
+              </div>
+              <span className="text-14 text-muted-foreground">{b.userCount} org</span>
+            </div>
+            <div className="mt-3 flex gap-2">
+              <Button
+                variant="secondary"
+                size="sm"
+                className="flex-1"
+                onClick={() => {
+                  setEditing(b);
+                  setOpen(true);
+                }}
+              >
+                <Pencil className="h-4 w-4" /> Edit
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                disabled={pending}
+                onClick={() => remove(b)}
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop: tabel */}
+      <div className="hidden rounded-lg border bg-card md:block">
         <Table>
           <TableHeader>
             <TableRow>
