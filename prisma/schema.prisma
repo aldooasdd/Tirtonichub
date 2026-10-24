@@ -91,6 +91,9 @@ model User {
   rawCreated    RawProduct[]   @relation("RawProductCreator")
   rawQc         RawProduct[]   @relation("RawProductQc")
   calendarEvents CalendarEvent[] @relation("CalendarCreator")
+  mediaMember    MediaMember?
+  mediaItems     MediaItem[]       @relation("MediaItemCreator")
+  personalCalEvents PersonalCalEvent[]
 
   @@index([branchId])
 }
@@ -358,4 +361,144 @@ model RawProduct {
   @@index([status])
   @@index([batchId])
   @@index([createdById])
+}
+
+// --- Media (Tirtonic Studio): produksi konten IG, port dari app media Zaki ---
+enum MediaRole {
+  ADMIN // admin penuh (Zaki); kelola kode Louis1, tim, laporan
+  ADMIN2 // kelola barang/konten & pengaturan, tanpa tim & laporan
+  MEMBER
+}
+
+enum MediaTier {
+  EX // Eksklusif Produk
+  LS // Limited Stock
+  JP // Jumlah Produk (default)
+}
+
+// 1:1 ke User. BOSS dianggap admin penuh walau tanpa MediaMember.
+model MediaMember {
+  userId     String    @id
+  code       String    @unique // Z / R / A / S
+  role       MediaRole @default(MEMBER)
+  idcc       Boolean   @default(false) // izin Analisis IDCC
+  offDays    Int[] // hari libur mingguan, 0=Min … 6=Sab
+  phone      String?
+  avColor    String    @default("lime")
+  avAnimal   String?
+  avPhotoKey String? // foto profil kecil di storage
+  pcalColor  String    @default("lime") // warna kalender pribadi
+  pcalNotes  String? // catatan pribadi
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// Barang masuk yang diproduksi kontennya.
+model MediaItem {
+  id          String    @id @default(cuid())
+  name        String
+  color       String?
+  cat         String // sepatu/raket/tas/baju/celana/aksesoris/lainnya
+  gender      String? // men/women/unisex (hanya sepatu/baju/celana)
+  qty         Int       @default(0)
+  arrived     DateTime  @db.Date
+  tier        MediaTier @default(JP)
+  seasonal    Boolean   @default(false)
+  old         Boolean   @default(false) // stok lama (hasil IDCC)
+  thumb       String? // thumbnail kecil (base64) untuk tampil cepat
+  photoKey    String? // foto besar di storage
+  createdById String
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  createdBy User        @relation("MediaItemCreator", fields: [createdById], references: [id])
+  tasks     MediaTask[]
+
+  @@index([createdById])
+  @@index([arrived])
+}
+
+// Satu tugas konten (ktl/igf/vpr/vrv/idc/idf/evt/khs/cmp). Tanggal sbg string 'YYYY-MM-DD'
+// agar mesin penjadwalan diport 1:1 (hitung hari kerja pakai string, tanpa bug zona waktu).
+model MediaTask {
+  id        String   @id @default(cuid())
+  itemId    String?
+  type      String
+  title     String
+  cat       String?
+  status    String   @default("Terdata") // Terdata/Diproduksi/Editing/Ready/Tayang
+  source    String? // 'baru' | 'lama'
+  reason    String? // 'idcc' dst
+  producer  String? // kode orang (Z/R/A/S)
+  editor    String?
+  talent    String?
+  script    String?
+  shootPlan String? // 'YYYY-MM-DD'
+  editPlan  String?
+  postAt    String?
+  postTime  String? // '09:00'
+  due       String?
+  target    String?
+  locked    Boolean  @default(false)
+  checked   Boolean  @default(false) // dicek Zaki
+  metaAt    DateTime? // sudah dijadwalkan di Meta (null = belum)
+  driveUrl  String?
+  note      String?
+  history   Json?
+  eventKey  String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  item MediaItem? @relation(fields: [itemId], references: [id], onDelete: SetNull)
+
+  @@index([status])
+  @@index([itemId])
+  @@index([postAt])
+}
+
+// Pengaturan media (singleton, id=1).
+model MediaSettings {
+  id              Int      @id @default(1)
+  jobdesk         Json? // override DEFAULT_JOB per jenis konten
+  idccDay         Int      @default(3) // hari slot IDCC mingguan (0=Min)
+  idccQty         Int      @default(10)
+  idccDays        Int      @default(90)
+  captionTemplate String?
+  updatedAt       DateTime @updatedAt
+}
+
+// Riwayat Analisis IDCC.
+model MediaIdccReport {
+  id          String    @id @default(cuid())
+  reportDate  DateTime? @db.Date
+  data        Json
+  summary     String?
+  createdById String
+  createdAt   DateTime  @default(now())
+}
+
+// Log penyesuaian otomatis penjadwalan (singleton, id=1; entri terbaru ≤40).
+model MediaBalanceLog {
+  id        Int      @id @default(1)
+  entries   Json
+  updatedAt DateTime @updatedAt
+}
+
+// Kalender pribadi per orang. Hanya pemilik yang boleh baca/tulis (dijaga di server action).
+model PersonalCalEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  date      String // 'YYYY-MM-DD'
+  title     String
+  time      String?
+  color     String   @default("lime")
+  note      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }

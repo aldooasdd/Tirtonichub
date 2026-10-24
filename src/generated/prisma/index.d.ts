@@ -103,6 +103,41 @@ export type CalendarEvent = $Result.DefaultSelection<Prisma.$CalendarEventPayloa
  * 
  */
 export type RawProduct = $Result.DefaultSelection<Prisma.$RawProductPayload>
+/**
+ * Model MediaMember
+ * 
+ */
+export type MediaMember = $Result.DefaultSelection<Prisma.$MediaMemberPayload>
+/**
+ * Model MediaItem
+ * 
+ */
+export type MediaItem = $Result.DefaultSelection<Prisma.$MediaItemPayload>
+/**
+ * Model MediaTask
+ * 
+ */
+export type MediaTask = $Result.DefaultSelection<Prisma.$MediaTaskPayload>
+/**
+ * Model MediaSettings
+ * 
+ */
+export type MediaSettings = $Result.DefaultSelection<Prisma.$MediaSettingsPayload>
+/**
+ * Model MediaIdccReport
+ * 
+ */
+export type MediaIdccReport = $Result.DefaultSelection<Prisma.$MediaIdccReportPayload>
+/**
+ * Model MediaBalanceLog
+ * 
+ */
+export type MediaBalanceLog = $Result.DefaultSelection<Prisma.$MediaBalanceLogPayload>
+/**
+ * Model PersonalCalEvent
+ * 
+ */
+export type PersonalCalEvent = $Result.DefaultSelection<Prisma.$PersonalCalEventPayload>
 
 /**
  * Enums
@@ -172,6 +207,24 @@ export const RawProductStatus: {
 
 export type RawProductStatus = (typeof RawProductStatus)[keyof typeof RawProductStatus]
 
+
+export const MediaRole: {
+  ADMIN: 'ADMIN',
+  ADMIN2: 'ADMIN2',
+  MEMBER: 'MEMBER'
+};
+
+export type MediaRole = (typeof MediaRole)[keyof typeof MediaRole]
+
+
+export const MediaTier: {
+  EX: 'EX',
+  LS: 'LS',
+  JP: 'JP'
+};
+
+export type MediaTier = (typeof MediaTier)[keyof typeof MediaTier]
+
 }
 
 export type RoleCode = $Enums.RoleCode
@@ -197,6 +250,14 @@ export const ChatRoomType: typeof $Enums.ChatRoomType
 export type RawProductStatus = $Enums.RawProductStatus
 
 export const RawProductStatus: typeof $Enums.RawProductStatus
+
+export type MediaRole = $Enums.MediaRole
+
+export const MediaRole: typeof $Enums.MediaRole
+
+export type MediaTier = $Enums.MediaTier
+
+export const MediaTier: typeof $Enums.MediaTier
 
 /**
  * ##  Prisma Client ʲˢ
@@ -495,6 +556,76 @@ export class PrismaClient<
     * ```
     */
   get rawProduct(): Prisma.RawProductDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mediaMember`: Exposes CRUD operations for the **MediaMember** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MediaMembers
+    * const mediaMembers = await prisma.mediaMember.findMany()
+    * ```
+    */
+  get mediaMember(): Prisma.MediaMemberDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mediaItem`: Exposes CRUD operations for the **MediaItem** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MediaItems
+    * const mediaItems = await prisma.mediaItem.findMany()
+    * ```
+    */
+  get mediaItem(): Prisma.MediaItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mediaTask`: Exposes CRUD operations for the **MediaTask** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MediaTasks
+    * const mediaTasks = await prisma.mediaTask.findMany()
+    * ```
+    */
+  get mediaTask(): Prisma.MediaTaskDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mediaSettings`: Exposes CRUD operations for the **MediaSettings** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MediaSettings
+    * const mediaSettings = await prisma.mediaSettings.findMany()
+    * ```
+    */
+  get mediaSettings(): Prisma.MediaSettingsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mediaIdccReport`: Exposes CRUD operations for the **MediaIdccReport** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MediaIdccReports
+    * const mediaIdccReports = await prisma.mediaIdccReport.findMany()
+    * ```
+    */
+  get mediaIdccReport(): Prisma.MediaIdccReportDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mediaBalanceLog`: Exposes CRUD operations for the **MediaBalanceLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MediaBalanceLogs
+    * const mediaBalanceLogs = await prisma.mediaBalanceLog.findMany()
+    * ```
+    */
+  get mediaBalanceLog(): Prisma.MediaBalanceLogDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.personalCalEvent`: Exposes CRUD operations for the **PersonalCalEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PersonalCalEvents
+    * const personalCalEvents = await prisma.personalCalEvent.findMany()
+    * ```
+    */
+  get personalCalEvent(): Prisma.PersonalCalEventDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -953,7 +1084,14 @@ export namespace Prisma {
     ChatMember: 'ChatMember',
     ChatMessage: 'ChatMessage',
     CalendarEvent: 'CalendarEvent',
-    RawProduct: 'RawProduct'
+    RawProduct: 'RawProduct',
+    MediaMember: 'MediaMember',
+    MediaItem: 'MediaItem',
+    MediaTask: 'MediaTask',
+    MediaSettings: 'MediaSettings',
+    MediaIdccReport: 'MediaIdccReport',
+    MediaBalanceLog: 'MediaBalanceLog',
+    PersonalCalEvent: 'PersonalCalEvent'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -972,7 +1110,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct"
+      modelProps: "user" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2308,6 +2446,524 @@ export namespace Prisma {
           }
         }
       }
+      MediaMember: {
+        payload: Prisma.$MediaMemberPayload<ExtArgs>
+        fields: Prisma.MediaMemberFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MediaMemberFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaMemberPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MediaMemberFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaMemberPayload>
+          }
+          findFirst: {
+            args: Prisma.MediaMemberFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaMemberPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MediaMemberFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaMemberPayload>
+          }
+          findMany: {
+            args: Prisma.MediaMemberFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaMemberPayload>[]
+          }
+          create: {
+            args: Prisma.MediaMemberCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaMemberPayload>
+          }
+          createMany: {
+            args: Prisma.MediaMemberCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MediaMemberCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaMemberPayload>[]
+          }
+          delete: {
+            args: Prisma.MediaMemberDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaMemberPayload>
+          }
+          update: {
+            args: Prisma.MediaMemberUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaMemberPayload>
+          }
+          deleteMany: {
+            args: Prisma.MediaMemberDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MediaMemberUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MediaMemberUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaMemberPayload>[]
+          }
+          upsert: {
+            args: Prisma.MediaMemberUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaMemberPayload>
+          }
+          aggregate: {
+            args: Prisma.MediaMemberAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMediaMember>
+          }
+          groupBy: {
+            args: Prisma.MediaMemberGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MediaMemberGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MediaMemberCountArgs<ExtArgs>
+            result: $Utils.Optional<MediaMemberCountAggregateOutputType> | number
+          }
+        }
+      }
+      MediaItem: {
+        payload: Prisma.$MediaItemPayload<ExtArgs>
+        fields: Prisma.MediaItemFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MediaItemFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaItemPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MediaItemFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaItemPayload>
+          }
+          findFirst: {
+            args: Prisma.MediaItemFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaItemPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MediaItemFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaItemPayload>
+          }
+          findMany: {
+            args: Prisma.MediaItemFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaItemPayload>[]
+          }
+          create: {
+            args: Prisma.MediaItemCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaItemPayload>
+          }
+          createMany: {
+            args: Prisma.MediaItemCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MediaItemCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaItemPayload>[]
+          }
+          delete: {
+            args: Prisma.MediaItemDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaItemPayload>
+          }
+          update: {
+            args: Prisma.MediaItemUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaItemPayload>
+          }
+          deleteMany: {
+            args: Prisma.MediaItemDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MediaItemUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MediaItemUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaItemPayload>[]
+          }
+          upsert: {
+            args: Prisma.MediaItemUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaItemPayload>
+          }
+          aggregate: {
+            args: Prisma.MediaItemAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMediaItem>
+          }
+          groupBy: {
+            args: Prisma.MediaItemGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MediaItemGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MediaItemCountArgs<ExtArgs>
+            result: $Utils.Optional<MediaItemCountAggregateOutputType> | number
+          }
+        }
+      }
+      MediaTask: {
+        payload: Prisma.$MediaTaskPayload<ExtArgs>
+        fields: Prisma.MediaTaskFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MediaTaskFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaTaskPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MediaTaskFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaTaskPayload>
+          }
+          findFirst: {
+            args: Prisma.MediaTaskFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaTaskPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MediaTaskFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaTaskPayload>
+          }
+          findMany: {
+            args: Prisma.MediaTaskFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaTaskPayload>[]
+          }
+          create: {
+            args: Prisma.MediaTaskCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaTaskPayload>
+          }
+          createMany: {
+            args: Prisma.MediaTaskCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MediaTaskCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaTaskPayload>[]
+          }
+          delete: {
+            args: Prisma.MediaTaskDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaTaskPayload>
+          }
+          update: {
+            args: Prisma.MediaTaskUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaTaskPayload>
+          }
+          deleteMany: {
+            args: Prisma.MediaTaskDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MediaTaskUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MediaTaskUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaTaskPayload>[]
+          }
+          upsert: {
+            args: Prisma.MediaTaskUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaTaskPayload>
+          }
+          aggregate: {
+            args: Prisma.MediaTaskAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMediaTask>
+          }
+          groupBy: {
+            args: Prisma.MediaTaskGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MediaTaskGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MediaTaskCountArgs<ExtArgs>
+            result: $Utils.Optional<MediaTaskCountAggregateOutputType> | number
+          }
+        }
+      }
+      MediaSettings: {
+        payload: Prisma.$MediaSettingsPayload<ExtArgs>
+        fields: Prisma.MediaSettingsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MediaSettingsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaSettingsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MediaSettingsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaSettingsPayload>
+          }
+          findFirst: {
+            args: Prisma.MediaSettingsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaSettingsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MediaSettingsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaSettingsPayload>
+          }
+          findMany: {
+            args: Prisma.MediaSettingsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaSettingsPayload>[]
+          }
+          create: {
+            args: Prisma.MediaSettingsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaSettingsPayload>
+          }
+          createMany: {
+            args: Prisma.MediaSettingsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MediaSettingsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaSettingsPayload>[]
+          }
+          delete: {
+            args: Prisma.MediaSettingsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaSettingsPayload>
+          }
+          update: {
+            args: Prisma.MediaSettingsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaSettingsPayload>
+          }
+          deleteMany: {
+            args: Prisma.MediaSettingsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MediaSettingsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MediaSettingsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaSettingsPayload>[]
+          }
+          upsert: {
+            args: Prisma.MediaSettingsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaSettingsPayload>
+          }
+          aggregate: {
+            args: Prisma.MediaSettingsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMediaSettings>
+          }
+          groupBy: {
+            args: Prisma.MediaSettingsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MediaSettingsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MediaSettingsCountArgs<ExtArgs>
+            result: $Utils.Optional<MediaSettingsCountAggregateOutputType> | number
+          }
+        }
+      }
+      MediaIdccReport: {
+        payload: Prisma.$MediaIdccReportPayload<ExtArgs>
+        fields: Prisma.MediaIdccReportFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MediaIdccReportFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaIdccReportPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MediaIdccReportFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaIdccReportPayload>
+          }
+          findFirst: {
+            args: Prisma.MediaIdccReportFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaIdccReportPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MediaIdccReportFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaIdccReportPayload>
+          }
+          findMany: {
+            args: Prisma.MediaIdccReportFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaIdccReportPayload>[]
+          }
+          create: {
+            args: Prisma.MediaIdccReportCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaIdccReportPayload>
+          }
+          createMany: {
+            args: Prisma.MediaIdccReportCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MediaIdccReportCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaIdccReportPayload>[]
+          }
+          delete: {
+            args: Prisma.MediaIdccReportDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaIdccReportPayload>
+          }
+          update: {
+            args: Prisma.MediaIdccReportUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaIdccReportPayload>
+          }
+          deleteMany: {
+            args: Prisma.MediaIdccReportDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MediaIdccReportUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MediaIdccReportUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaIdccReportPayload>[]
+          }
+          upsert: {
+            args: Prisma.MediaIdccReportUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaIdccReportPayload>
+          }
+          aggregate: {
+            args: Prisma.MediaIdccReportAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMediaIdccReport>
+          }
+          groupBy: {
+            args: Prisma.MediaIdccReportGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MediaIdccReportGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MediaIdccReportCountArgs<ExtArgs>
+            result: $Utils.Optional<MediaIdccReportCountAggregateOutputType> | number
+          }
+        }
+      }
+      MediaBalanceLog: {
+        payload: Prisma.$MediaBalanceLogPayload<ExtArgs>
+        fields: Prisma.MediaBalanceLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MediaBalanceLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaBalanceLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MediaBalanceLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaBalanceLogPayload>
+          }
+          findFirst: {
+            args: Prisma.MediaBalanceLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaBalanceLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MediaBalanceLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaBalanceLogPayload>
+          }
+          findMany: {
+            args: Prisma.MediaBalanceLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaBalanceLogPayload>[]
+          }
+          create: {
+            args: Prisma.MediaBalanceLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaBalanceLogPayload>
+          }
+          createMany: {
+            args: Prisma.MediaBalanceLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MediaBalanceLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaBalanceLogPayload>[]
+          }
+          delete: {
+            args: Prisma.MediaBalanceLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaBalanceLogPayload>
+          }
+          update: {
+            args: Prisma.MediaBalanceLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaBalanceLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.MediaBalanceLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MediaBalanceLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MediaBalanceLogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaBalanceLogPayload>[]
+          }
+          upsert: {
+            args: Prisma.MediaBalanceLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaBalanceLogPayload>
+          }
+          aggregate: {
+            args: Prisma.MediaBalanceLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMediaBalanceLog>
+          }
+          groupBy: {
+            args: Prisma.MediaBalanceLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MediaBalanceLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MediaBalanceLogCountArgs<ExtArgs>
+            result: $Utils.Optional<MediaBalanceLogCountAggregateOutputType> | number
+          }
+        }
+      }
+      PersonalCalEvent: {
+        payload: Prisma.$PersonalCalEventPayload<ExtArgs>
+        fields: Prisma.PersonalCalEventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PersonalCalEventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalCalEventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PersonalCalEventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalCalEventPayload>
+          }
+          findFirst: {
+            args: Prisma.PersonalCalEventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalCalEventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PersonalCalEventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalCalEventPayload>
+          }
+          findMany: {
+            args: Prisma.PersonalCalEventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalCalEventPayload>[]
+          }
+          create: {
+            args: Prisma.PersonalCalEventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalCalEventPayload>
+          }
+          createMany: {
+            args: Prisma.PersonalCalEventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PersonalCalEventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalCalEventPayload>[]
+          }
+          delete: {
+            args: Prisma.PersonalCalEventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalCalEventPayload>
+          }
+          update: {
+            args: Prisma.PersonalCalEventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalCalEventPayload>
+          }
+          deleteMany: {
+            args: Prisma.PersonalCalEventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PersonalCalEventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PersonalCalEventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalCalEventPayload>[]
+          }
+          upsert: {
+            args: Prisma.PersonalCalEventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PersonalCalEventPayload>
+          }
+          aggregate: {
+            args: Prisma.PersonalCalEventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePersonalCalEvent>
+          }
+          groupBy: {
+            args: Prisma.PersonalCalEventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PersonalCalEventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PersonalCalEventCountArgs<ExtArgs>
+            result: $Utils.Optional<PersonalCalEventCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -2422,6 +3078,13 @@ export namespace Prisma {
     chatMessage?: ChatMessageOmit
     calendarEvent?: CalendarEventOmit
     rawProduct?: RawProductOmit
+    mediaMember?: MediaMemberOmit
+    mediaItem?: MediaItemOmit
+    mediaTask?: MediaTaskOmit
+    mediaSettings?: MediaSettingsOmit
+    mediaIdccReport?: MediaIdccReportOmit
+    mediaBalanceLog?: MediaBalanceLogOmit
+    personalCalEvent?: PersonalCalEventOmit
   }
 
   /* Types for Logging */
@@ -2516,6 +3179,8 @@ export namespace Prisma {
     rawCreated: number
     rawQc: number
     calendarEvents: number
+    mediaItems: number
+    personalCalEvents: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -2533,6 +3198,8 @@ export namespace Prisma {
     rawCreated?: boolean | UserCountOutputTypeCountRawCreatedArgs
     rawQc?: boolean | UserCountOutputTypeCountRawQcArgs
     calendarEvents?: boolean | UserCountOutputTypeCountCalendarEventsArgs
+    mediaItems?: boolean | UserCountOutputTypeCountMediaItemsArgs
+    personalCalEvents?: boolean | UserCountOutputTypeCountPersonalCalEventsArgs
   }
 
   // Custom InputTypes
@@ -2642,6 +3309,20 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountCalendarEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CalendarEventWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountMediaItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaItemWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPersonalCalEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PersonalCalEventWhereInput
   }
 
 
@@ -2784,6 +3465,37 @@ export namespace Prisma {
    */
   export type ChatRoomCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ChatMessageWhereInput
+  }
+
+
+  /**
+   * Count Type MediaItemCountOutputType
+   */
+
+  export type MediaItemCountOutputType = {
+    tasks: number
+  }
+
+  export type MediaItemCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    tasks?: boolean | MediaItemCountOutputTypeCountTasksArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * MediaItemCountOutputType without action
+   */
+  export type MediaItemCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItemCountOutputType
+     */
+    select?: MediaItemCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * MediaItemCountOutputType without action
+   */
+  export type MediaItemCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaTaskWhereInput
   }
 
 
@@ -3042,6 +3754,9 @@ export namespace Prisma {
     rawCreated?: boolean | User$rawCreatedArgs<ExtArgs>
     rawQc?: boolean | User$rawQcArgs<ExtArgs>
     calendarEvents?: boolean | User$calendarEventsArgs<ExtArgs>
+    mediaMember?: boolean | User$mediaMemberArgs<ExtArgs>
+    mediaItems?: boolean | User$mediaItemsArgs<ExtArgs>
+    personalCalEvents?: boolean | User$personalCalEventsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -3115,6 +3830,9 @@ export namespace Prisma {
     rawCreated?: boolean | User$rawCreatedArgs<ExtArgs>
     rawQc?: boolean | User$rawQcArgs<ExtArgs>
     calendarEvents?: boolean | User$calendarEventsArgs<ExtArgs>
+    mediaMember?: boolean | User$mediaMemberArgs<ExtArgs>
+    mediaItems?: boolean | User$mediaItemsArgs<ExtArgs>
+    personalCalEvents?: boolean | User$personalCalEventsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3142,6 +3860,9 @@ export namespace Prisma {
       rawCreated: Prisma.$RawProductPayload<ExtArgs>[]
       rawQc: Prisma.$RawProductPayload<ExtArgs>[]
       calendarEvents: Prisma.$CalendarEventPayload<ExtArgs>[]
+      mediaMember: Prisma.$MediaMemberPayload<ExtArgs> | null
+      mediaItems: Prisma.$MediaItemPayload<ExtArgs>[]
+      personalCalEvents: Prisma.$PersonalCalEventPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -3567,6 +4288,9 @@ export namespace Prisma {
     rawCreated<T extends User$rawCreatedArgs<ExtArgs> = {}>(args?: Subset<T, User$rawCreatedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     rawQc<T extends User$rawQcArgs<ExtArgs> = {}>(args?: Subset<T, User$rawQcArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RawProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     calendarEvents<T extends User$calendarEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$calendarEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CalendarEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    mediaMember<T extends User$mediaMemberArgs<ExtArgs> = {}>(args?: Subset<T, User$mediaMemberArgs<ExtArgs>>): Prisma__MediaMemberClient<$Result.GetResult<Prisma.$MediaMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    mediaItems<T extends User$mediaItemsArgs<ExtArgs> = {}>(args?: Subset<T, User$mediaItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    personalCalEvents<T extends User$personalCalEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$personalCalEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4358,6 +5082,73 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: CalendarEventScalarFieldEnum | CalendarEventScalarFieldEnum[]
+  }
+
+  /**
+   * User.mediaMember
+   */
+  export type User$mediaMemberArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaMember
+     */
+    select?: MediaMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaMember
+     */
+    omit?: MediaMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaMemberInclude<ExtArgs> | null
+    where?: MediaMemberWhereInput
+  }
+
+  /**
+   * User.mediaItems
+   */
+  export type User$mediaItemsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemInclude<ExtArgs> | null
+    where?: MediaItemWhereInput
+    orderBy?: MediaItemOrderByWithRelationInput | MediaItemOrderByWithRelationInput[]
+    cursor?: MediaItemWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MediaItemScalarFieldEnum | MediaItemScalarFieldEnum[]
+  }
+
+  /**
+   * User.personalCalEvents
+   */
+  export type User$personalCalEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalCalEvent
+     */
+    select?: PersonalCalEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalCalEvent
+     */
+    omit?: PersonalCalEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalCalEventInclude<ExtArgs> | null
+    where?: PersonalCalEventWhereInput
+    orderBy?: PersonalCalEventOrderByWithRelationInput | PersonalCalEventOrderByWithRelationInput[]
+    cursor?: PersonalCalEventWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PersonalCalEventScalarFieldEnum | PersonalCalEventScalarFieldEnum[]
   }
 
   /**
@@ -23406,6 +24197,7985 @@ export namespace Prisma {
 
 
   /**
+   * Model MediaMember
+   */
+
+  export type AggregateMediaMember = {
+    _count: MediaMemberCountAggregateOutputType | null
+    _avg: MediaMemberAvgAggregateOutputType | null
+    _sum: MediaMemberSumAggregateOutputType | null
+    _min: MediaMemberMinAggregateOutputType | null
+    _max: MediaMemberMaxAggregateOutputType | null
+  }
+
+  export type MediaMemberAvgAggregateOutputType = {
+    offDays: number | null
+  }
+
+  export type MediaMemberSumAggregateOutputType = {
+    offDays: number[]
+  }
+
+  export type MediaMemberMinAggregateOutputType = {
+    userId: string | null
+    code: string | null
+    role: $Enums.MediaRole | null
+    idcc: boolean | null
+    phone: string | null
+    avColor: string | null
+    avAnimal: string | null
+    avPhotoKey: string | null
+    pcalColor: string | null
+    pcalNotes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MediaMemberMaxAggregateOutputType = {
+    userId: string | null
+    code: string | null
+    role: $Enums.MediaRole | null
+    idcc: boolean | null
+    phone: string | null
+    avColor: string | null
+    avAnimal: string | null
+    avPhotoKey: string | null
+    pcalColor: string | null
+    pcalNotes: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MediaMemberCountAggregateOutputType = {
+    userId: number
+    code: number
+    role: number
+    idcc: number
+    offDays: number
+    phone: number
+    avColor: number
+    avAnimal: number
+    avPhotoKey: number
+    pcalColor: number
+    pcalNotes: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MediaMemberAvgAggregateInputType = {
+    offDays?: true
+  }
+
+  export type MediaMemberSumAggregateInputType = {
+    offDays?: true
+  }
+
+  export type MediaMemberMinAggregateInputType = {
+    userId?: true
+    code?: true
+    role?: true
+    idcc?: true
+    phone?: true
+    avColor?: true
+    avAnimal?: true
+    avPhotoKey?: true
+    pcalColor?: true
+    pcalNotes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MediaMemberMaxAggregateInputType = {
+    userId?: true
+    code?: true
+    role?: true
+    idcc?: true
+    phone?: true
+    avColor?: true
+    avAnimal?: true
+    avPhotoKey?: true
+    pcalColor?: true
+    pcalNotes?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MediaMemberCountAggregateInputType = {
+    userId?: true
+    code?: true
+    role?: true
+    idcc?: true
+    offDays?: true
+    phone?: true
+    avColor?: true
+    avAnimal?: true
+    avPhotoKey?: true
+    pcalColor?: true
+    pcalNotes?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MediaMemberAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaMember to aggregate.
+     */
+    where?: MediaMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaMembers to fetch.
+     */
+    orderBy?: MediaMemberOrderByWithRelationInput | MediaMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MediaMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MediaMembers
+    **/
+    _count?: true | MediaMemberCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MediaMemberAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MediaMemberSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MediaMemberMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MediaMemberMaxAggregateInputType
+  }
+
+  export type GetMediaMemberAggregateType<T extends MediaMemberAggregateArgs> = {
+        [P in keyof T & keyof AggregateMediaMember]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMediaMember[P]>
+      : GetScalarType<T[P], AggregateMediaMember[P]>
+  }
+
+
+
+
+  export type MediaMemberGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaMemberWhereInput
+    orderBy?: MediaMemberOrderByWithAggregationInput | MediaMemberOrderByWithAggregationInput[]
+    by: MediaMemberScalarFieldEnum[] | MediaMemberScalarFieldEnum
+    having?: MediaMemberScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MediaMemberCountAggregateInputType | true
+    _avg?: MediaMemberAvgAggregateInputType
+    _sum?: MediaMemberSumAggregateInputType
+    _min?: MediaMemberMinAggregateInputType
+    _max?: MediaMemberMaxAggregateInputType
+  }
+
+  export type MediaMemberGroupByOutputType = {
+    userId: string
+    code: string
+    role: $Enums.MediaRole
+    idcc: boolean
+    offDays: number[]
+    phone: string | null
+    avColor: string
+    avAnimal: string | null
+    avPhotoKey: string | null
+    pcalColor: string
+    pcalNotes: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: MediaMemberCountAggregateOutputType | null
+    _avg: MediaMemberAvgAggregateOutputType | null
+    _sum: MediaMemberSumAggregateOutputType | null
+    _min: MediaMemberMinAggregateOutputType | null
+    _max: MediaMemberMaxAggregateOutputType | null
+  }
+
+  type GetMediaMemberGroupByPayload<T extends MediaMemberGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MediaMemberGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MediaMemberGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MediaMemberGroupByOutputType[P]>
+            : GetScalarType<T[P], MediaMemberGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MediaMemberSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    code?: boolean
+    role?: boolean
+    idcc?: boolean
+    offDays?: boolean
+    phone?: boolean
+    avColor?: boolean
+    avAnimal?: boolean
+    avPhotoKey?: boolean
+    pcalColor?: boolean
+    pcalNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaMember"]>
+
+  export type MediaMemberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    code?: boolean
+    role?: boolean
+    idcc?: boolean
+    offDays?: boolean
+    phone?: boolean
+    avColor?: boolean
+    avAnimal?: boolean
+    avPhotoKey?: boolean
+    pcalColor?: boolean
+    pcalNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaMember"]>
+
+  export type MediaMemberSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    code?: boolean
+    role?: boolean
+    idcc?: boolean
+    offDays?: boolean
+    phone?: boolean
+    avColor?: boolean
+    avAnimal?: boolean
+    avPhotoKey?: boolean
+    pcalColor?: boolean
+    pcalNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaMember"]>
+
+  export type MediaMemberSelectScalar = {
+    userId?: boolean
+    code?: boolean
+    role?: boolean
+    idcc?: boolean
+    offDays?: boolean
+    phone?: boolean
+    avColor?: boolean
+    avAnimal?: boolean
+    avPhotoKey?: boolean
+    pcalColor?: boolean
+    pcalNotes?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type MediaMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "code" | "role" | "idcc" | "offDays" | "phone" | "avColor" | "avAnimal" | "avPhotoKey" | "pcalColor" | "pcalNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaMember"]>
+  export type MediaMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MediaMemberIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MediaMemberIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $MediaMemberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MediaMember"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      userId: string
+      code: string
+      role: $Enums.MediaRole
+      idcc: boolean
+      offDays: number[]
+      phone: string | null
+      avColor: string
+      avAnimal: string | null
+      avPhotoKey: string | null
+      pcalColor: string
+      pcalNotes: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["mediaMember"]>
+    composites: {}
+  }
+
+  type MediaMemberGetPayload<S extends boolean | null | undefined | MediaMemberDefaultArgs> = $Result.GetResult<Prisma.$MediaMemberPayload, S>
+
+  type MediaMemberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MediaMemberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MediaMemberCountAggregateInputType | true
+    }
+
+  export interface MediaMemberDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MediaMember'], meta: { name: 'MediaMember' } }
+    /**
+     * Find zero or one MediaMember that matches the filter.
+     * @param {MediaMemberFindUniqueArgs} args - Arguments to find a MediaMember
+     * @example
+     * // Get one MediaMember
+     * const mediaMember = await prisma.mediaMember.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MediaMemberFindUniqueArgs>(args: SelectSubset<T, MediaMemberFindUniqueArgs<ExtArgs>>): Prisma__MediaMemberClient<$Result.GetResult<Prisma.$MediaMemberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MediaMember that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MediaMemberFindUniqueOrThrowArgs} args - Arguments to find a MediaMember
+     * @example
+     * // Get one MediaMember
+     * const mediaMember = await prisma.mediaMember.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MediaMemberFindUniqueOrThrowArgs>(args: SelectSubset<T, MediaMemberFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MediaMemberClient<$Result.GetResult<Prisma.$MediaMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaMember that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaMemberFindFirstArgs} args - Arguments to find a MediaMember
+     * @example
+     * // Get one MediaMember
+     * const mediaMember = await prisma.mediaMember.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MediaMemberFindFirstArgs>(args?: SelectSubset<T, MediaMemberFindFirstArgs<ExtArgs>>): Prisma__MediaMemberClient<$Result.GetResult<Prisma.$MediaMemberPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaMember that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaMemberFindFirstOrThrowArgs} args - Arguments to find a MediaMember
+     * @example
+     * // Get one MediaMember
+     * const mediaMember = await prisma.mediaMember.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MediaMemberFindFirstOrThrowArgs>(args?: SelectSubset<T, MediaMemberFindFirstOrThrowArgs<ExtArgs>>): Prisma__MediaMemberClient<$Result.GetResult<Prisma.$MediaMemberPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MediaMembers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaMemberFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MediaMembers
+     * const mediaMembers = await prisma.mediaMember.findMany()
+     * 
+     * // Get first 10 MediaMembers
+     * const mediaMembers = await prisma.mediaMember.findMany({ take: 10 })
+     * 
+     * // Only select the `userId`
+     * const mediaMemberWithUserIdOnly = await prisma.mediaMember.findMany({ select: { userId: true } })
+     * 
+     */
+    findMany<T extends MediaMemberFindManyArgs>(args?: SelectSubset<T, MediaMemberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MediaMember.
+     * @param {MediaMemberCreateArgs} args - Arguments to create a MediaMember.
+     * @example
+     * // Create one MediaMember
+     * const MediaMember = await prisma.mediaMember.create({
+     *   data: {
+     *     // ... data to create a MediaMember
+     *   }
+     * })
+     * 
+     */
+    create<T extends MediaMemberCreateArgs>(args: SelectSubset<T, MediaMemberCreateArgs<ExtArgs>>): Prisma__MediaMemberClient<$Result.GetResult<Prisma.$MediaMemberPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MediaMembers.
+     * @param {MediaMemberCreateManyArgs} args - Arguments to create many MediaMembers.
+     * @example
+     * // Create many MediaMembers
+     * const mediaMember = await prisma.mediaMember.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MediaMemberCreateManyArgs>(args?: SelectSubset<T, MediaMemberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MediaMembers and returns the data saved in the database.
+     * @param {MediaMemberCreateManyAndReturnArgs} args - Arguments to create many MediaMembers.
+     * @example
+     * // Create many MediaMembers
+     * const mediaMember = await prisma.mediaMember.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MediaMembers and only return the `userId`
+     * const mediaMemberWithUserIdOnly = await prisma.mediaMember.createManyAndReturn({
+     *   select: { userId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MediaMemberCreateManyAndReturnArgs>(args?: SelectSubset<T, MediaMemberCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaMemberPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MediaMember.
+     * @param {MediaMemberDeleteArgs} args - Arguments to delete one MediaMember.
+     * @example
+     * // Delete one MediaMember
+     * const MediaMember = await prisma.mediaMember.delete({
+     *   where: {
+     *     // ... filter to delete one MediaMember
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MediaMemberDeleteArgs>(args: SelectSubset<T, MediaMemberDeleteArgs<ExtArgs>>): Prisma__MediaMemberClient<$Result.GetResult<Prisma.$MediaMemberPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MediaMember.
+     * @param {MediaMemberUpdateArgs} args - Arguments to update one MediaMember.
+     * @example
+     * // Update one MediaMember
+     * const mediaMember = await prisma.mediaMember.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MediaMemberUpdateArgs>(args: SelectSubset<T, MediaMemberUpdateArgs<ExtArgs>>): Prisma__MediaMemberClient<$Result.GetResult<Prisma.$MediaMemberPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MediaMembers.
+     * @param {MediaMemberDeleteManyArgs} args - Arguments to filter MediaMembers to delete.
+     * @example
+     * // Delete a few MediaMembers
+     * const { count } = await prisma.mediaMember.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MediaMemberDeleteManyArgs>(args?: SelectSubset<T, MediaMemberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaMemberUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MediaMembers
+     * const mediaMember = await prisma.mediaMember.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MediaMemberUpdateManyArgs>(args: SelectSubset<T, MediaMemberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaMembers and returns the data updated in the database.
+     * @param {MediaMemberUpdateManyAndReturnArgs} args - Arguments to update many MediaMembers.
+     * @example
+     * // Update many MediaMembers
+     * const mediaMember = await prisma.mediaMember.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MediaMembers and only return the `userId`
+     * const mediaMemberWithUserIdOnly = await prisma.mediaMember.updateManyAndReturn({
+     *   select: { userId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MediaMemberUpdateManyAndReturnArgs>(args: SelectSubset<T, MediaMemberUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaMemberPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MediaMember.
+     * @param {MediaMemberUpsertArgs} args - Arguments to update or create a MediaMember.
+     * @example
+     * // Update or create a MediaMember
+     * const mediaMember = await prisma.mediaMember.upsert({
+     *   create: {
+     *     // ... data to create a MediaMember
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MediaMember we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MediaMemberUpsertArgs>(args: SelectSubset<T, MediaMemberUpsertArgs<ExtArgs>>): Prisma__MediaMemberClient<$Result.GetResult<Prisma.$MediaMemberPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MediaMembers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaMemberCountArgs} args - Arguments to filter MediaMembers to count.
+     * @example
+     * // Count the number of MediaMembers
+     * const count = await prisma.mediaMember.count({
+     *   where: {
+     *     // ... the filter for the MediaMembers we want to count
+     *   }
+     * })
+    **/
+    count<T extends MediaMemberCountArgs>(
+      args?: Subset<T, MediaMemberCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MediaMemberCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MediaMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaMemberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MediaMemberAggregateArgs>(args: Subset<T, MediaMemberAggregateArgs>): Prisma.PrismaPromise<GetMediaMemberAggregateType<T>>
+
+    /**
+     * Group by MediaMember.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaMemberGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MediaMemberGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MediaMemberGroupByArgs['orderBy'] }
+        : { orderBy?: MediaMemberGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MediaMemberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMediaMemberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MediaMember model
+   */
+  readonly fields: MediaMemberFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MediaMember.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MediaMemberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MediaMember model
+   */
+  interface MediaMemberFieldRefs {
+    readonly userId: FieldRef<"MediaMember", 'String'>
+    readonly code: FieldRef<"MediaMember", 'String'>
+    readonly role: FieldRef<"MediaMember", 'MediaRole'>
+    readonly idcc: FieldRef<"MediaMember", 'Boolean'>
+    readonly offDays: FieldRef<"MediaMember", 'Int[]'>
+    readonly phone: FieldRef<"MediaMember", 'String'>
+    readonly avColor: FieldRef<"MediaMember", 'String'>
+    readonly avAnimal: FieldRef<"MediaMember", 'String'>
+    readonly avPhotoKey: FieldRef<"MediaMember", 'String'>
+    readonly pcalColor: FieldRef<"MediaMember", 'String'>
+    readonly pcalNotes: FieldRef<"MediaMember", 'String'>
+    readonly createdAt: FieldRef<"MediaMember", 'DateTime'>
+    readonly updatedAt: FieldRef<"MediaMember", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MediaMember findUnique
+   */
+  export type MediaMemberFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaMember
+     */
+    select?: MediaMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaMember
+     */
+    omit?: MediaMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaMember to fetch.
+     */
+    where: MediaMemberWhereUniqueInput
+  }
+
+  /**
+   * MediaMember findUniqueOrThrow
+   */
+  export type MediaMemberFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaMember
+     */
+    select?: MediaMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaMember
+     */
+    omit?: MediaMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaMember to fetch.
+     */
+    where: MediaMemberWhereUniqueInput
+  }
+
+  /**
+   * MediaMember findFirst
+   */
+  export type MediaMemberFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaMember
+     */
+    select?: MediaMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaMember
+     */
+    omit?: MediaMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaMember to fetch.
+     */
+    where?: MediaMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaMembers to fetch.
+     */
+    orderBy?: MediaMemberOrderByWithRelationInput | MediaMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaMembers.
+     */
+    cursor?: MediaMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaMembers.
+     */
+    distinct?: MediaMemberScalarFieldEnum | MediaMemberScalarFieldEnum[]
+  }
+
+  /**
+   * MediaMember findFirstOrThrow
+   */
+  export type MediaMemberFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaMember
+     */
+    select?: MediaMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaMember
+     */
+    omit?: MediaMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaMember to fetch.
+     */
+    where?: MediaMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaMembers to fetch.
+     */
+    orderBy?: MediaMemberOrderByWithRelationInput | MediaMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaMembers.
+     */
+    cursor?: MediaMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaMembers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaMembers.
+     */
+    distinct?: MediaMemberScalarFieldEnum | MediaMemberScalarFieldEnum[]
+  }
+
+  /**
+   * MediaMember findMany
+   */
+  export type MediaMemberFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaMember
+     */
+    select?: MediaMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaMember
+     */
+    omit?: MediaMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaMemberInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaMembers to fetch.
+     */
+    where?: MediaMemberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaMembers to fetch.
+     */
+    orderBy?: MediaMemberOrderByWithRelationInput | MediaMemberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MediaMembers.
+     */
+    cursor?: MediaMemberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaMembers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaMembers.
+     */
+    skip?: number
+    distinct?: MediaMemberScalarFieldEnum | MediaMemberScalarFieldEnum[]
+  }
+
+  /**
+   * MediaMember create
+   */
+  export type MediaMemberCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaMember
+     */
+    select?: MediaMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaMember
+     */
+    omit?: MediaMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaMemberInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MediaMember.
+     */
+    data: XOR<MediaMemberCreateInput, MediaMemberUncheckedCreateInput>
+  }
+
+  /**
+   * MediaMember createMany
+   */
+  export type MediaMemberCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MediaMembers.
+     */
+    data: MediaMemberCreateManyInput | MediaMemberCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MediaMember createManyAndReturn
+   */
+  export type MediaMemberCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaMember
+     */
+    select?: MediaMemberSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaMember
+     */
+    omit?: MediaMemberOmit<ExtArgs> | null
+    /**
+     * The data used to create many MediaMembers.
+     */
+    data: MediaMemberCreateManyInput | MediaMemberCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaMemberIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MediaMember update
+   */
+  export type MediaMemberUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaMember
+     */
+    select?: MediaMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaMember
+     */
+    omit?: MediaMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaMemberInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MediaMember.
+     */
+    data: XOR<MediaMemberUpdateInput, MediaMemberUncheckedUpdateInput>
+    /**
+     * Choose, which MediaMember to update.
+     */
+    where: MediaMemberWhereUniqueInput
+  }
+
+  /**
+   * MediaMember updateMany
+   */
+  export type MediaMemberUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MediaMembers.
+     */
+    data: XOR<MediaMemberUpdateManyMutationInput, MediaMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaMembers to update
+     */
+    where?: MediaMemberWhereInput
+    /**
+     * Limit how many MediaMembers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaMember updateManyAndReturn
+   */
+  export type MediaMemberUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaMember
+     */
+    select?: MediaMemberSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaMember
+     */
+    omit?: MediaMemberOmit<ExtArgs> | null
+    /**
+     * The data used to update MediaMembers.
+     */
+    data: XOR<MediaMemberUpdateManyMutationInput, MediaMemberUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaMembers to update
+     */
+    where?: MediaMemberWhereInput
+    /**
+     * Limit how many MediaMembers to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaMemberIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MediaMember upsert
+   */
+  export type MediaMemberUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaMember
+     */
+    select?: MediaMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaMember
+     */
+    omit?: MediaMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaMemberInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MediaMember to update in case it exists.
+     */
+    where: MediaMemberWhereUniqueInput
+    /**
+     * In case the MediaMember found by the `where` argument doesn't exist, create a new MediaMember with this data.
+     */
+    create: XOR<MediaMemberCreateInput, MediaMemberUncheckedCreateInput>
+    /**
+     * In case the MediaMember was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MediaMemberUpdateInput, MediaMemberUncheckedUpdateInput>
+  }
+
+  /**
+   * MediaMember delete
+   */
+  export type MediaMemberDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaMember
+     */
+    select?: MediaMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaMember
+     */
+    omit?: MediaMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaMemberInclude<ExtArgs> | null
+    /**
+     * Filter which MediaMember to delete.
+     */
+    where: MediaMemberWhereUniqueInput
+  }
+
+  /**
+   * MediaMember deleteMany
+   */
+  export type MediaMemberDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaMembers to delete
+     */
+    where?: MediaMemberWhereInput
+    /**
+     * Limit how many MediaMembers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaMember without action
+   */
+  export type MediaMemberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaMember
+     */
+    select?: MediaMemberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaMember
+     */
+    omit?: MediaMemberOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaMemberInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MediaItem
+   */
+
+  export type AggregateMediaItem = {
+    _count: MediaItemCountAggregateOutputType | null
+    _avg: MediaItemAvgAggregateOutputType | null
+    _sum: MediaItemSumAggregateOutputType | null
+    _min: MediaItemMinAggregateOutputType | null
+    _max: MediaItemMaxAggregateOutputType | null
+  }
+
+  export type MediaItemAvgAggregateOutputType = {
+    qty: number | null
+  }
+
+  export type MediaItemSumAggregateOutputType = {
+    qty: number | null
+  }
+
+  export type MediaItemMinAggregateOutputType = {
+    id: string | null
+    name: string | null
+    color: string | null
+    cat: string | null
+    gender: string | null
+    qty: number | null
+    arrived: Date | null
+    tier: $Enums.MediaTier | null
+    seasonal: boolean | null
+    old: boolean | null
+    thumb: string | null
+    photoKey: string | null
+    createdById: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MediaItemMaxAggregateOutputType = {
+    id: string | null
+    name: string | null
+    color: string | null
+    cat: string | null
+    gender: string | null
+    qty: number | null
+    arrived: Date | null
+    tier: $Enums.MediaTier | null
+    seasonal: boolean | null
+    old: boolean | null
+    thumb: string | null
+    photoKey: string | null
+    createdById: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MediaItemCountAggregateOutputType = {
+    id: number
+    name: number
+    color: number
+    cat: number
+    gender: number
+    qty: number
+    arrived: number
+    tier: number
+    seasonal: number
+    old: number
+    thumb: number
+    photoKey: number
+    createdById: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MediaItemAvgAggregateInputType = {
+    qty?: true
+  }
+
+  export type MediaItemSumAggregateInputType = {
+    qty?: true
+  }
+
+  export type MediaItemMinAggregateInputType = {
+    id?: true
+    name?: true
+    color?: true
+    cat?: true
+    gender?: true
+    qty?: true
+    arrived?: true
+    tier?: true
+    seasonal?: true
+    old?: true
+    thumb?: true
+    photoKey?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MediaItemMaxAggregateInputType = {
+    id?: true
+    name?: true
+    color?: true
+    cat?: true
+    gender?: true
+    qty?: true
+    arrived?: true
+    tier?: true
+    seasonal?: true
+    old?: true
+    thumb?: true
+    photoKey?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MediaItemCountAggregateInputType = {
+    id?: true
+    name?: true
+    color?: true
+    cat?: true
+    gender?: true
+    qty?: true
+    arrived?: true
+    tier?: true
+    seasonal?: true
+    old?: true
+    thumb?: true
+    photoKey?: true
+    createdById?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MediaItemAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaItem to aggregate.
+     */
+    where?: MediaItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaItems to fetch.
+     */
+    orderBy?: MediaItemOrderByWithRelationInput | MediaItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MediaItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MediaItems
+    **/
+    _count?: true | MediaItemCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MediaItemAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MediaItemSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MediaItemMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MediaItemMaxAggregateInputType
+  }
+
+  export type GetMediaItemAggregateType<T extends MediaItemAggregateArgs> = {
+        [P in keyof T & keyof AggregateMediaItem]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMediaItem[P]>
+      : GetScalarType<T[P], AggregateMediaItem[P]>
+  }
+
+
+
+
+  export type MediaItemGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaItemWhereInput
+    orderBy?: MediaItemOrderByWithAggregationInput | MediaItemOrderByWithAggregationInput[]
+    by: MediaItemScalarFieldEnum[] | MediaItemScalarFieldEnum
+    having?: MediaItemScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MediaItemCountAggregateInputType | true
+    _avg?: MediaItemAvgAggregateInputType
+    _sum?: MediaItemSumAggregateInputType
+    _min?: MediaItemMinAggregateInputType
+    _max?: MediaItemMaxAggregateInputType
+  }
+
+  export type MediaItemGroupByOutputType = {
+    id: string
+    name: string
+    color: string | null
+    cat: string
+    gender: string | null
+    qty: number
+    arrived: Date
+    tier: $Enums.MediaTier
+    seasonal: boolean
+    old: boolean
+    thumb: string | null
+    photoKey: string | null
+    createdById: string
+    createdAt: Date
+    updatedAt: Date
+    _count: MediaItemCountAggregateOutputType | null
+    _avg: MediaItemAvgAggregateOutputType | null
+    _sum: MediaItemSumAggregateOutputType | null
+    _min: MediaItemMinAggregateOutputType | null
+    _max: MediaItemMaxAggregateOutputType | null
+  }
+
+  type GetMediaItemGroupByPayload<T extends MediaItemGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MediaItemGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MediaItemGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MediaItemGroupByOutputType[P]>
+            : GetScalarType<T[P], MediaItemGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MediaItemSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    color?: boolean
+    cat?: boolean
+    gender?: boolean
+    qty?: boolean
+    arrived?: boolean
+    tier?: boolean
+    seasonal?: boolean
+    old?: boolean
+    thumb?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    tasks?: boolean | MediaItem$tasksArgs<ExtArgs>
+    _count?: boolean | MediaItemCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaItem"]>
+
+  export type MediaItemSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    color?: boolean
+    cat?: boolean
+    gender?: boolean
+    qty?: boolean
+    arrived?: boolean
+    tier?: boolean
+    seasonal?: boolean
+    old?: boolean
+    thumb?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaItem"]>
+
+  export type MediaItemSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    name?: boolean
+    color?: boolean
+    cat?: boolean
+    gender?: boolean
+    qty?: boolean
+    arrived?: boolean
+    tier?: boolean
+    seasonal?: boolean
+    old?: boolean
+    thumb?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaItem"]>
+
+  export type MediaItemSelectScalar = {
+    id?: boolean
+    name?: boolean
+    color?: boolean
+    cat?: boolean
+    gender?: boolean
+    qty?: boolean
+    arrived?: boolean
+    tier?: boolean
+    seasonal?: boolean
+    old?: boolean
+    thumb?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type MediaItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "color" | "cat" | "gender" | "qty" | "arrived" | "tier" | "seasonal" | "old" | "thumb" | "photoKey" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaItem"]>
+  export type MediaItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+    tasks?: boolean | MediaItem$tasksArgs<ExtArgs>
+    _count?: boolean | MediaItemCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type MediaItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MediaItemIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $MediaItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MediaItem"
+    objects: {
+      createdBy: Prisma.$UserPayload<ExtArgs>
+      tasks: Prisma.$MediaTaskPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      name: string
+      color: string | null
+      cat: string
+      gender: string | null
+      qty: number
+      arrived: Date
+      tier: $Enums.MediaTier
+      seasonal: boolean
+      old: boolean
+      thumb: string | null
+      photoKey: string | null
+      createdById: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["mediaItem"]>
+    composites: {}
+  }
+
+  type MediaItemGetPayload<S extends boolean | null | undefined | MediaItemDefaultArgs> = $Result.GetResult<Prisma.$MediaItemPayload, S>
+
+  type MediaItemCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MediaItemFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MediaItemCountAggregateInputType | true
+    }
+
+  export interface MediaItemDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MediaItem'], meta: { name: 'MediaItem' } }
+    /**
+     * Find zero or one MediaItem that matches the filter.
+     * @param {MediaItemFindUniqueArgs} args - Arguments to find a MediaItem
+     * @example
+     * // Get one MediaItem
+     * const mediaItem = await prisma.mediaItem.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MediaItemFindUniqueArgs>(args: SelectSubset<T, MediaItemFindUniqueArgs<ExtArgs>>): Prisma__MediaItemClient<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MediaItem that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MediaItemFindUniqueOrThrowArgs} args - Arguments to find a MediaItem
+     * @example
+     * // Get one MediaItem
+     * const mediaItem = await prisma.mediaItem.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MediaItemFindUniqueOrThrowArgs>(args: SelectSubset<T, MediaItemFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MediaItemClient<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaItem that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaItemFindFirstArgs} args - Arguments to find a MediaItem
+     * @example
+     * // Get one MediaItem
+     * const mediaItem = await prisma.mediaItem.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MediaItemFindFirstArgs>(args?: SelectSubset<T, MediaItemFindFirstArgs<ExtArgs>>): Prisma__MediaItemClient<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaItem that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaItemFindFirstOrThrowArgs} args - Arguments to find a MediaItem
+     * @example
+     * // Get one MediaItem
+     * const mediaItem = await prisma.mediaItem.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MediaItemFindFirstOrThrowArgs>(args?: SelectSubset<T, MediaItemFindFirstOrThrowArgs<ExtArgs>>): Prisma__MediaItemClient<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MediaItems that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaItemFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MediaItems
+     * const mediaItems = await prisma.mediaItem.findMany()
+     * 
+     * // Get first 10 MediaItems
+     * const mediaItems = await prisma.mediaItem.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mediaItemWithIdOnly = await prisma.mediaItem.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MediaItemFindManyArgs>(args?: SelectSubset<T, MediaItemFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MediaItem.
+     * @param {MediaItemCreateArgs} args - Arguments to create a MediaItem.
+     * @example
+     * // Create one MediaItem
+     * const MediaItem = await prisma.mediaItem.create({
+     *   data: {
+     *     // ... data to create a MediaItem
+     *   }
+     * })
+     * 
+     */
+    create<T extends MediaItemCreateArgs>(args: SelectSubset<T, MediaItemCreateArgs<ExtArgs>>): Prisma__MediaItemClient<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MediaItems.
+     * @param {MediaItemCreateManyArgs} args - Arguments to create many MediaItems.
+     * @example
+     * // Create many MediaItems
+     * const mediaItem = await prisma.mediaItem.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MediaItemCreateManyArgs>(args?: SelectSubset<T, MediaItemCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MediaItems and returns the data saved in the database.
+     * @param {MediaItemCreateManyAndReturnArgs} args - Arguments to create many MediaItems.
+     * @example
+     * // Create many MediaItems
+     * const mediaItem = await prisma.mediaItem.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MediaItems and only return the `id`
+     * const mediaItemWithIdOnly = await prisma.mediaItem.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MediaItemCreateManyAndReturnArgs>(args?: SelectSubset<T, MediaItemCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MediaItem.
+     * @param {MediaItemDeleteArgs} args - Arguments to delete one MediaItem.
+     * @example
+     * // Delete one MediaItem
+     * const MediaItem = await prisma.mediaItem.delete({
+     *   where: {
+     *     // ... filter to delete one MediaItem
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MediaItemDeleteArgs>(args: SelectSubset<T, MediaItemDeleteArgs<ExtArgs>>): Prisma__MediaItemClient<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MediaItem.
+     * @param {MediaItemUpdateArgs} args - Arguments to update one MediaItem.
+     * @example
+     * // Update one MediaItem
+     * const mediaItem = await prisma.mediaItem.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MediaItemUpdateArgs>(args: SelectSubset<T, MediaItemUpdateArgs<ExtArgs>>): Prisma__MediaItemClient<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MediaItems.
+     * @param {MediaItemDeleteManyArgs} args - Arguments to filter MediaItems to delete.
+     * @example
+     * // Delete a few MediaItems
+     * const { count } = await prisma.mediaItem.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MediaItemDeleteManyArgs>(args?: SelectSubset<T, MediaItemDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaItemUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MediaItems
+     * const mediaItem = await prisma.mediaItem.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MediaItemUpdateManyArgs>(args: SelectSubset<T, MediaItemUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaItems and returns the data updated in the database.
+     * @param {MediaItemUpdateManyAndReturnArgs} args - Arguments to update many MediaItems.
+     * @example
+     * // Update many MediaItems
+     * const mediaItem = await prisma.mediaItem.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MediaItems and only return the `id`
+     * const mediaItemWithIdOnly = await prisma.mediaItem.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MediaItemUpdateManyAndReturnArgs>(args: SelectSubset<T, MediaItemUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MediaItem.
+     * @param {MediaItemUpsertArgs} args - Arguments to update or create a MediaItem.
+     * @example
+     * // Update or create a MediaItem
+     * const mediaItem = await prisma.mediaItem.upsert({
+     *   create: {
+     *     // ... data to create a MediaItem
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MediaItem we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MediaItemUpsertArgs>(args: SelectSubset<T, MediaItemUpsertArgs<ExtArgs>>): Prisma__MediaItemClient<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MediaItems.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaItemCountArgs} args - Arguments to filter MediaItems to count.
+     * @example
+     * // Count the number of MediaItems
+     * const count = await prisma.mediaItem.count({
+     *   where: {
+     *     // ... the filter for the MediaItems we want to count
+     *   }
+     * })
+    **/
+    count<T extends MediaItemCountArgs>(
+      args?: Subset<T, MediaItemCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MediaItemCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MediaItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaItemAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MediaItemAggregateArgs>(args: Subset<T, MediaItemAggregateArgs>): Prisma.PrismaPromise<GetMediaItemAggregateType<T>>
+
+    /**
+     * Group by MediaItem.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaItemGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MediaItemGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MediaItemGroupByArgs['orderBy'] }
+        : { orderBy?: MediaItemGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MediaItemGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMediaItemGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MediaItem model
+   */
+  readonly fields: MediaItemFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MediaItem.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MediaItemClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    tasks<T extends MediaItem$tasksArgs<ExtArgs> = {}>(args?: Subset<T, MediaItem$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MediaItem model
+   */
+  interface MediaItemFieldRefs {
+    readonly id: FieldRef<"MediaItem", 'String'>
+    readonly name: FieldRef<"MediaItem", 'String'>
+    readonly color: FieldRef<"MediaItem", 'String'>
+    readonly cat: FieldRef<"MediaItem", 'String'>
+    readonly gender: FieldRef<"MediaItem", 'String'>
+    readonly qty: FieldRef<"MediaItem", 'Int'>
+    readonly arrived: FieldRef<"MediaItem", 'DateTime'>
+    readonly tier: FieldRef<"MediaItem", 'MediaTier'>
+    readonly seasonal: FieldRef<"MediaItem", 'Boolean'>
+    readonly old: FieldRef<"MediaItem", 'Boolean'>
+    readonly thumb: FieldRef<"MediaItem", 'String'>
+    readonly photoKey: FieldRef<"MediaItem", 'String'>
+    readonly createdById: FieldRef<"MediaItem", 'String'>
+    readonly createdAt: FieldRef<"MediaItem", 'DateTime'>
+    readonly updatedAt: FieldRef<"MediaItem", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MediaItem findUnique
+   */
+  export type MediaItemFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaItem to fetch.
+     */
+    where: MediaItemWhereUniqueInput
+  }
+
+  /**
+   * MediaItem findUniqueOrThrow
+   */
+  export type MediaItemFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaItem to fetch.
+     */
+    where: MediaItemWhereUniqueInput
+  }
+
+  /**
+   * MediaItem findFirst
+   */
+  export type MediaItemFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaItem to fetch.
+     */
+    where?: MediaItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaItems to fetch.
+     */
+    orderBy?: MediaItemOrderByWithRelationInput | MediaItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaItems.
+     */
+    cursor?: MediaItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaItems.
+     */
+    distinct?: MediaItemScalarFieldEnum | MediaItemScalarFieldEnum[]
+  }
+
+  /**
+   * MediaItem findFirstOrThrow
+   */
+  export type MediaItemFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaItem to fetch.
+     */
+    where?: MediaItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaItems to fetch.
+     */
+    orderBy?: MediaItemOrderByWithRelationInput | MediaItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaItems.
+     */
+    cursor?: MediaItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaItems.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaItems.
+     */
+    distinct?: MediaItemScalarFieldEnum | MediaItemScalarFieldEnum[]
+  }
+
+  /**
+   * MediaItem findMany
+   */
+  export type MediaItemFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaItems to fetch.
+     */
+    where?: MediaItemWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaItems to fetch.
+     */
+    orderBy?: MediaItemOrderByWithRelationInput | MediaItemOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MediaItems.
+     */
+    cursor?: MediaItemWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaItems from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaItems.
+     */
+    skip?: number
+    distinct?: MediaItemScalarFieldEnum | MediaItemScalarFieldEnum[]
+  }
+
+  /**
+   * MediaItem create
+   */
+  export type MediaItemCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MediaItem.
+     */
+    data: XOR<MediaItemCreateInput, MediaItemUncheckedCreateInput>
+  }
+
+  /**
+   * MediaItem createMany
+   */
+  export type MediaItemCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MediaItems.
+     */
+    data: MediaItemCreateManyInput | MediaItemCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MediaItem createManyAndReturn
+   */
+  export type MediaItemCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * The data used to create many MediaItems.
+     */
+    data: MediaItemCreateManyInput | MediaItemCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MediaItem update
+   */
+  export type MediaItemUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MediaItem.
+     */
+    data: XOR<MediaItemUpdateInput, MediaItemUncheckedUpdateInput>
+    /**
+     * Choose, which MediaItem to update.
+     */
+    where: MediaItemWhereUniqueInput
+  }
+
+  /**
+   * MediaItem updateMany
+   */
+  export type MediaItemUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MediaItems.
+     */
+    data: XOR<MediaItemUpdateManyMutationInput, MediaItemUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaItems to update
+     */
+    where?: MediaItemWhereInput
+    /**
+     * Limit how many MediaItems to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaItem updateManyAndReturn
+   */
+  export type MediaItemUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * The data used to update MediaItems.
+     */
+    data: XOR<MediaItemUpdateManyMutationInput, MediaItemUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaItems to update
+     */
+    where?: MediaItemWhereInput
+    /**
+     * Limit how many MediaItems to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MediaItem upsert
+   */
+  export type MediaItemUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MediaItem to update in case it exists.
+     */
+    where: MediaItemWhereUniqueInput
+    /**
+     * In case the MediaItem found by the `where` argument doesn't exist, create a new MediaItem with this data.
+     */
+    create: XOR<MediaItemCreateInput, MediaItemUncheckedCreateInput>
+    /**
+     * In case the MediaItem was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MediaItemUpdateInput, MediaItemUncheckedUpdateInput>
+  }
+
+  /**
+   * MediaItem delete
+   */
+  export type MediaItemDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemInclude<ExtArgs> | null
+    /**
+     * Filter which MediaItem to delete.
+     */
+    where: MediaItemWhereUniqueInput
+  }
+
+  /**
+   * MediaItem deleteMany
+   */
+  export type MediaItemDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaItems to delete
+     */
+    where?: MediaItemWhereInput
+    /**
+     * Limit how many MediaItems to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaItem.tasks
+   */
+  export type MediaItem$tasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaTask
+     */
+    select?: MediaTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaTask
+     */
+    omit?: MediaTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaTaskInclude<ExtArgs> | null
+    where?: MediaTaskWhereInput
+    orderBy?: MediaTaskOrderByWithRelationInput | MediaTaskOrderByWithRelationInput[]
+    cursor?: MediaTaskWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MediaTaskScalarFieldEnum | MediaTaskScalarFieldEnum[]
+  }
+
+  /**
+   * MediaItem without action
+   */
+  export type MediaItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MediaTask
+   */
+
+  export type AggregateMediaTask = {
+    _count: MediaTaskCountAggregateOutputType | null
+    _min: MediaTaskMinAggregateOutputType | null
+    _max: MediaTaskMaxAggregateOutputType | null
+  }
+
+  export type MediaTaskMinAggregateOutputType = {
+    id: string | null
+    itemId: string | null
+    type: string | null
+    title: string | null
+    cat: string | null
+    status: string | null
+    source: string | null
+    reason: string | null
+    producer: string | null
+    editor: string | null
+    talent: string | null
+    script: string | null
+    shootPlan: string | null
+    editPlan: string | null
+    postAt: string | null
+    postTime: string | null
+    due: string | null
+    target: string | null
+    locked: boolean | null
+    checked: boolean | null
+    metaAt: Date | null
+    driveUrl: string | null
+    note: string | null
+    eventKey: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MediaTaskMaxAggregateOutputType = {
+    id: string | null
+    itemId: string | null
+    type: string | null
+    title: string | null
+    cat: string | null
+    status: string | null
+    source: string | null
+    reason: string | null
+    producer: string | null
+    editor: string | null
+    talent: string | null
+    script: string | null
+    shootPlan: string | null
+    editPlan: string | null
+    postAt: string | null
+    postTime: string | null
+    due: string | null
+    target: string | null
+    locked: boolean | null
+    checked: boolean | null
+    metaAt: Date | null
+    driveUrl: string | null
+    note: string | null
+    eventKey: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type MediaTaskCountAggregateOutputType = {
+    id: number
+    itemId: number
+    type: number
+    title: number
+    cat: number
+    status: number
+    source: number
+    reason: number
+    producer: number
+    editor: number
+    talent: number
+    script: number
+    shootPlan: number
+    editPlan: number
+    postAt: number
+    postTime: number
+    due: number
+    target: number
+    locked: number
+    checked: number
+    metaAt: number
+    driveUrl: number
+    note: number
+    history: number
+    eventKey: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MediaTaskMinAggregateInputType = {
+    id?: true
+    itemId?: true
+    type?: true
+    title?: true
+    cat?: true
+    status?: true
+    source?: true
+    reason?: true
+    producer?: true
+    editor?: true
+    talent?: true
+    script?: true
+    shootPlan?: true
+    editPlan?: true
+    postAt?: true
+    postTime?: true
+    due?: true
+    target?: true
+    locked?: true
+    checked?: true
+    metaAt?: true
+    driveUrl?: true
+    note?: true
+    eventKey?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MediaTaskMaxAggregateInputType = {
+    id?: true
+    itemId?: true
+    type?: true
+    title?: true
+    cat?: true
+    status?: true
+    source?: true
+    reason?: true
+    producer?: true
+    editor?: true
+    talent?: true
+    script?: true
+    shootPlan?: true
+    editPlan?: true
+    postAt?: true
+    postTime?: true
+    due?: true
+    target?: true
+    locked?: true
+    checked?: true
+    metaAt?: true
+    driveUrl?: true
+    note?: true
+    eventKey?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type MediaTaskCountAggregateInputType = {
+    id?: true
+    itemId?: true
+    type?: true
+    title?: true
+    cat?: true
+    status?: true
+    source?: true
+    reason?: true
+    producer?: true
+    editor?: true
+    talent?: true
+    script?: true
+    shootPlan?: true
+    editPlan?: true
+    postAt?: true
+    postTime?: true
+    due?: true
+    target?: true
+    locked?: true
+    checked?: true
+    metaAt?: true
+    driveUrl?: true
+    note?: true
+    history?: true
+    eventKey?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MediaTaskAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaTask to aggregate.
+     */
+    where?: MediaTaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaTasks to fetch.
+     */
+    orderBy?: MediaTaskOrderByWithRelationInput | MediaTaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MediaTaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaTasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaTasks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MediaTasks
+    **/
+    _count?: true | MediaTaskCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MediaTaskMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MediaTaskMaxAggregateInputType
+  }
+
+  export type GetMediaTaskAggregateType<T extends MediaTaskAggregateArgs> = {
+        [P in keyof T & keyof AggregateMediaTask]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMediaTask[P]>
+      : GetScalarType<T[P], AggregateMediaTask[P]>
+  }
+
+
+
+
+  export type MediaTaskGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaTaskWhereInput
+    orderBy?: MediaTaskOrderByWithAggregationInput | MediaTaskOrderByWithAggregationInput[]
+    by: MediaTaskScalarFieldEnum[] | MediaTaskScalarFieldEnum
+    having?: MediaTaskScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MediaTaskCountAggregateInputType | true
+    _min?: MediaTaskMinAggregateInputType
+    _max?: MediaTaskMaxAggregateInputType
+  }
+
+  export type MediaTaskGroupByOutputType = {
+    id: string
+    itemId: string | null
+    type: string
+    title: string
+    cat: string | null
+    status: string
+    source: string | null
+    reason: string | null
+    producer: string | null
+    editor: string | null
+    talent: string | null
+    script: string | null
+    shootPlan: string | null
+    editPlan: string | null
+    postAt: string | null
+    postTime: string | null
+    due: string | null
+    target: string | null
+    locked: boolean
+    checked: boolean
+    metaAt: Date | null
+    driveUrl: string | null
+    note: string | null
+    history: JsonValue | null
+    eventKey: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: MediaTaskCountAggregateOutputType | null
+    _min: MediaTaskMinAggregateOutputType | null
+    _max: MediaTaskMaxAggregateOutputType | null
+  }
+
+  type GetMediaTaskGroupByPayload<T extends MediaTaskGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MediaTaskGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MediaTaskGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MediaTaskGroupByOutputType[P]>
+            : GetScalarType<T[P], MediaTaskGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MediaTaskSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    itemId?: boolean
+    type?: boolean
+    title?: boolean
+    cat?: boolean
+    status?: boolean
+    source?: boolean
+    reason?: boolean
+    producer?: boolean
+    editor?: boolean
+    talent?: boolean
+    script?: boolean
+    shootPlan?: boolean
+    editPlan?: boolean
+    postAt?: boolean
+    postTime?: boolean
+    due?: boolean
+    target?: boolean
+    locked?: boolean
+    checked?: boolean
+    metaAt?: boolean
+    driveUrl?: boolean
+    note?: boolean
+    history?: boolean
+    eventKey?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    item?: boolean | MediaTask$itemArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaTask"]>
+
+  export type MediaTaskSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    itemId?: boolean
+    type?: boolean
+    title?: boolean
+    cat?: boolean
+    status?: boolean
+    source?: boolean
+    reason?: boolean
+    producer?: boolean
+    editor?: boolean
+    talent?: boolean
+    script?: boolean
+    shootPlan?: boolean
+    editPlan?: boolean
+    postAt?: boolean
+    postTime?: boolean
+    due?: boolean
+    target?: boolean
+    locked?: boolean
+    checked?: boolean
+    metaAt?: boolean
+    driveUrl?: boolean
+    note?: boolean
+    history?: boolean
+    eventKey?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    item?: boolean | MediaTask$itemArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaTask"]>
+
+  export type MediaTaskSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    itemId?: boolean
+    type?: boolean
+    title?: boolean
+    cat?: boolean
+    status?: boolean
+    source?: boolean
+    reason?: boolean
+    producer?: boolean
+    editor?: boolean
+    talent?: boolean
+    script?: boolean
+    shootPlan?: boolean
+    editPlan?: boolean
+    postAt?: boolean
+    postTime?: boolean
+    due?: boolean
+    target?: boolean
+    locked?: boolean
+    checked?: boolean
+    metaAt?: boolean
+    driveUrl?: boolean
+    note?: boolean
+    history?: boolean
+    eventKey?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    item?: boolean | MediaTask$itemArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaTask"]>
+
+  export type MediaTaskSelectScalar = {
+    id?: boolean
+    itemId?: boolean
+    type?: boolean
+    title?: boolean
+    cat?: boolean
+    status?: boolean
+    source?: boolean
+    reason?: boolean
+    producer?: boolean
+    editor?: boolean
+    talent?: boolean
+    script?: boolean
+    shootPlan?: boolean
+    editPlan?: boolean
+    postAt?: boolean
+    postTime?: boolean
+    due?: boolean
+    target?: boolean
+    locked?: boolean
+    checked?: boolean
+    metaAt?: boolean
+    driveUrl?: boolean
+    note?: boolean
+    history?: boolean
+    eventKey?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type MediaTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "type" | "title" | "cat" | "status" | "source" | "reason" | "producer" | "editor" | "talent" | "script" | "shootPlan" | "editPlan" | "postAt" | "postTime" | "due" | "target" | "locked" | "checked" | "metaAt" | "driveUrl" | "note" | "history" | "eventKey" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaTask"]>
+  export type MediaTaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    item?: boolean | MediaTask$itemArgs<ExtArgs>
+  }
+  export type MediaTaskIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    item?: boolean | MediaTask$itemArgs<ExtArgs>
+  }
+  export type MediaTaskIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    item?: boolean | MediaTask$itemArgs<ExtArgs>
+  }
+
+  export type $MediaTaskPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MediaTask"
+    objects: {
+      item: Prisma.$MediaItemPayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      itemId: string | null
+      type: string
+      title: string
+      cat: string | null
+      status: string
+      source: string | null
+      reason: string | null
+      producer: string | null
+      editor: string | null
+      talent: string | null
+      script: string | null
+      shootPlan: string | null
+      editPlan: string | null
+      postAt: string | null
+      postTime: string | null
+      due: string | null
+      target: string | null
+      locked: boolean
+      checked: boolean
+      metaAt: Date | null
+      driveUrl: string | null
+      note: string | null
+      history: Prisma.JsonValue | null
+      eventKey: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["mediaTask"]>
+    composites: {}
+  }
+
+  type MediaTaskGetPayload<S extends boolean | null | undefined | MediaTaskDefaultArgs> = $Result.GetResult<Prisma.$MediaTaskPayload, S>
+
+  type MediaTaskCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MediaTaskFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MediaTaskCountAggregateInputType | true
+    }
+
+  export interface MediaTaskDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MediaTask'], meta: { name: 'MediaTask' } }
+    /**
+     * Find zero or one MediaTask that matches the filter.
+     * @param {MediaTaskFindUniqueArgs} args - Arguments to find a MediaTask
+     * @example
+     * // Get one MediaTask
+     * const mediaTask = await prisma.mediaTask.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MediaTaskFindUniqueArgs>(args: SelectSubset<T, MediaTaskFindUniqueArgs<ExtArgs>>): Prisma__MediaTaskClient<$Result.GetResult<Prisma.$MediaTaskPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MediaTask that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MediaTaskFindUniqueOrThrowArgs} args - Arguments to find a MediaTask
+     * @example
+     * // Get one MediaTask
+     * const mediaTask = await prisma.mediaTask.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MediaTaskFindUniqueOrThrowArgs>(args: SelectSubset<T, MediaTaskFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MediaTaskClient<$Result.GetResult<Prisma.$MediaTaskPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaTask that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaTaskFindFirstArgs} args - Arguments to find a MediaTask
+     * @example
+     * // Get one MediaTask
+     * const mediaTask = await prisma.mediaTask.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MediaTaskFindFirstArgs>(args?: SelectSubset<T, MediaTaskFindFirstArgs<ExtArgs>>): Prisma__MediaTaskClient<$Result.GetResult<Prisma.$MediaTaskPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaTask that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaTaskFindFirstOrThrowArgs} args - Arguments to find a MediaTask
+     * @example
+     * // Get one MediaTask
+     * const mediaTask = await prisma.mediaTask.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MediaTaskFindFirstOrThrowArgs>(args?: SelectSubset<T, MediaTaskFindFirstOrThrowArgs<ExtArgs>>): Prisma__MediaTaskClient<$Result.GetResult<Prisma.$MediaTaskPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MediaTasks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaTaskFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MediaTasks
+     * const mediaTasks = await prisma.mediaTask.findMany()
+     * 
+     * // Get first 10 MediaTasks
+     * const mediaTasks = await prisma.mediaTask.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mediaTaskWithIdOnly = await prisma.mediaTask.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MediaTaskFindManyArgs>(args?: SelectSubset<T, MediaTaskFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MediaTask.
+     * @param {MediaTaskCreateArgs} args - Arguments to create a MediaTask.
+     * @example
+     * // Create one MediaTask
+     * const MediaTask = await prisma.mediaTask.create({
+     *   data: {
+     *     // ... data to create a MediaTask
+     *   }
+     * })
+     * 
+     */
+    create<T extends MediaTaskCreateArgs>(args: SelectSubset<T, MediaTaskCreateArgs<ExtArgs>>): Prisma__MediaTaskClient<$Result.GetResult<Prisma.$MediaTaskPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MediaTasks.
+     * @param {MediaTaskCreateManyArgs} args - Arguments to create many MediaTasks.
+     * @example
+     * // Create many MediaTasks
+     * const mediaTask = await prisma.mediaTask.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MediaTaskCreateManyArgs>(args?: SelectSubset<T, MediaTaskCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MediaTasks and returns the data saved in the database.
+     * @param {MediaTaskCreateManyAndReturnArgs} args - Arguments to create many MediaTasks.
+     * @example
+     * // Create many MediaTasks
+     * const mediaTask = await prisma.mediaTask.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MediaTasks and only return the `id`
+     * const mediaTaskWithIdOnly = await prisma.mediaTask.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MediaTaskCreateManyAndReturnArgs>(args?: SelectSubset<T, MediaTaskCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaTaskPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MediaTask.
+     * @param {MediaTaskDeleteArgs} args - Arguments to delete one MediaTask.
+     * @example
+     * // Delete one MediaTask
+     * const MediaTask = await prisma.mediaTask.delete({
+     *   where: {
+     *     // ... filter to delete one MediaTask
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MediaTaskDeleteArgs>(args: SelectSubset<T, MediaTaskDeleteArgs<ExtArgs>>): Prisma__MediaTaskClient<$Result.GetResult<Prisma.$MediaTaskPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MediaTask.
+     * @param {MediaTaskUpdateArgs} args - Arguments to update one MediaTask.
+     * @example
+     * // Update one MediaTask
+     * const mediaTask = await prisma.mediaTask.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MediaTaskUpdateArgs>(args: SelectSubset<T, MediaTaskUpdateArgs<ExtArgs>>): Prisma__MediaTaskClient<$Result.GetResult<Prisma.$MediaTaskPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MediaTasks.
+     * @param {MediaTaskDeleteManyArgs} args - Arguments to filter MediaTasks to delete.
+     * @example
+     * // Delete a few MediaTasks
+     * const { count } = await prisma.mediaTask.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MediaTaskDeleteManyArgs>(args?: SelectSubset<T, MediaTaskDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaTasks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaTaskUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MediaTasks
+     * const mediaTask = await prisma.mediaTask.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MediaTaskUpdateManyArgs>(args: SelectSubset<T, MediaTaskUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaTasks and returns the data updated in the database.
+     * @param {MediaTaskUpdateManyAndReturnArgs} args - Arguments to update many MediaTasks.
+     * @example
+     * // Update many MediaTasks
+     * const mediaTask = await prisma.mediaTask.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MediaTasks and only return the `id`
+     * const mediaTaskWithIdOnly = await prisma.mediaTask.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MediaTaskUpdateManyAndReturnArgs>(args: SelectSubset<T, MediaTaskUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaTaskPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MediaTask.
+     * @param {MediaTaskUpsertArgs} args - Arguments to update or create a MediaTask.
+     * @example
+     * // Update or create a MediaTask
+     * const mediaTask = await prisma.mediaTask.upsert({
+     *   create: {
+     *     // ... data to create a MediaTask
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MediaTask we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MediaTaskUpsertArgs>(args: SelectSubset<T, MediaTaskUpsertArgs<ExtArgs>>): Prisma__MediaTaskClient<$Result.GetResult<Prisma.$MediaTaskPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MediaTasks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaTaskCountArgs} args - Arguments to filter MediaTasks to count.
+     * @example
+     * // Count the number of MediaTasks
+     * const count = await prisma.mediaTask.count({
+     *   where: {
+     *     // ... the filter for the MediaTasks we want to count
+     *   }
+     * })
+    **/
+    count<T extends MediaTaskCountArgs>(
+      args?: Subset<T, MediaTaskCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MediaTaskCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MediaTask.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaTaskAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MediaTaskAggregateArgs>(args: Subset<T, MediaTaskAggregateArgs>): Prisma.PrismaPromise<GetMediaTaskAggregateType<T>>
+
+    /**
+     * Group by MediaTask.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaTaskGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MediaTaskGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MediaTaskGroupByArgs['orderBy'] }
+        : { orderBy?: MediaTaskGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MediaTaskGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMediaTaskGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MediaTask model
+   */
+  readonly fields: MediaTaskFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MediaTask.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MediaTaskClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    item<T extends MediaTask$itemArgs<ExtArgs> = {}>(args?: Subset<T, MediaTask$itemArgs<ExtArgs>>): Prisma__MediaItemClient<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MediaTask model
+   */
+  interface MediaTaskFieldRefs {
+    readonly id: FieldRef<"MediaTask", 'String'>
+    readonly itemId: FieldRef<"MediaTask", 'String'>
+    readonly type: FieldRef<"MediaTask", 'String'>
+    readonly title: FieldRef<"MediaTask", 'String'>
+    readonly cat: FieldRef<"MediaTask", 'String'>
+    readonly status: FieldRef<"MediaTask", 'String'>
+    readonly source: FieldRef<"MediaTask", 'String'>
+    readonly reason: FieldRef<"MediaTask", 'String'>
+    readonly producer: FieldRef<"MediaTask", 'String'>
+    readonly editor: FieldRef<"MediaTask", 'String'>
+    readonly talent: FieldRef<"MediaTask", 'String'>
+    readonly script: FieldRef<"MediaTask", 'String'>
+    readonly shootPlan: FieldRef<"MediaTask", 'String'>
+    readonly editPlan: FieldRef<"MediaTask", 'String'>
+    readonly postAt: FieldRef<"MediaTask", 'String'>
+    readonly postTime: FieldRef<"MediaTask", 'String'>
+    readonly due: FieldRef<"MediaTask", 'String'>
+    readonly target: FieldRef<"MediaTask", 'String'>
+    readonly locked: FieldRef<"MediaTask", 'Boolean'>
+    readonly checked: FieldRef<"MediaTask", 'Boolean'>
+    readonly metaAt: FieldRef<"MediaTask", 'DateTime'>
+    readonly driveUrl: FieldRef<"MediaTask", 'String'>
+    readonly note: FieldRef<"MediaTask", 'String'>
+    readonly history: FieldRef<"MediaTask", 'Json'>
+    readonly eventKey: FieldRef<"MediaTask", 'String'>
+    readonly createdAt: FieldRef<"MediaTask", 'DateTime'>
+    readonly updatedAt: FieldRef<"MediaTask", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MediaTask findUnique
+   */
+  export type MediaTaskFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaTask
+     */
+    select?: MediaTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaTask
+     */
+    omit?: MediaTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaTaskInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaTask to fetch.
+     */
+    where: MediaTaskWhereUniqueInput
+  }
+
+  /**
+   * MediaTask findUniqueOrThrow
+   */
+  export type MediaTaskFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaTask
+     */
+    select?: MediaTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaTask
+     */
+    omit?: MediaTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaTaskInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaTask to fetch.
+     */
+    where: MediaTaskWhereUniqueInput
+  }
+
+  /**
+   * MediaTask findFirst
+   */
+  export type MediaTaskFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaTask
+     */
+    select?: MediaTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaTask
+     */
+    omit?: MediaTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaTaskInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaTask to fetch.
+     */
+    where?: MediaTaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaTasks to fetch.
+     */
+    orderBy?: MediaTaskOrderByWithRelationInput | MediaTaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaTasks.
+     */
+    cursor?: MediaTaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaTasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaTasks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaTasks.
+     */
+    distinct?: MediaTaskScalarFieldEnum | MediaTaskScalarFieldEnum[]
+  }
+
+  /**
+   * MediaTask findFirstOrThrow
+   */
+  export type MediaTaskFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaTask
+     */
+    select?: MediaTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaTask
+     */
+    omit?: MediaTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaTaskInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaTask to fetch.
+     */
+    where?: MediaTaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaTasks to fetch.
+     */
+    orderBy?: MediaTaskOrderByWithRelationInput | MediaTaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaTasks.
+     */
+    cursor?: MediaTaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaTasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaTasks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaTasks.
+     */
+    distinct?: MediaTaskScalarFieldEnum | MediaTaskScalarFieldEnum[]
+  }
+
+  /**
+   * MediaTask findMany
+   */
+  export type MediaTaskFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaTask
+     */
+    select?: MediaTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaTask
+     */
+    omit?: MediaTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaTaskInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaTasks to fetch.
+     */
+    where?: MediaTaskWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaTasks to fetch.
+     */
+    orderBy?: MediaTaskOrderByWithRelationInput | MediaTaskOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MediaTasks.
+     */
+    cursor?: MediaTaskWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaTasks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaTasks.
+     */
+    skip?: number
+    distinct?: MediaTaskScalarFieldEnum | MediaTaskScalarFieldEnum[]
+  }
+
+  /**
+   * MediaTask create
+   */
+  export type MediaTaskCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaTask
+     */
+    select?: MediaTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaTask
+     */
+    omit?: MediaTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaTaskInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MediaTask.
+     */
+    data: XOR<MediaTaskCreateInput, MediaTaskUncheckedCreateInput>
+  }
+
+  /**
+   * MediaTask createMany
+   */
+  export type MediaTaskCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MediaTasks.
+     */
+    data: MediaTaskCreateManyInput | MediaTaskCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MediaTask createManyAndReturn
+   */
+  export type MediaTaskCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaTask
+     */
+    select?: MediaTaskSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaTask
+     */
+    omit?: MediaTaskOmit<ExtArgs> | null
+    /**
+     * The data used to create many MediaTasks.
+     */
+    data: MediaTaskCreateManyInput | MediaTaskCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaTaskIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MediaTask update
+   */
+  export type MediaTaskUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaTask
+     */
+    select?: MediaTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaTask
+     */
+    omit?: MediaTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaTaskInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MediaTask.
+     */
+    data: XOR<MediaTaskUpdateInput, MediaTaskUncheckedUpdateInput>
+    /**
+     * Choose, which MediaTask to update.
+     */
+    where: MediaTaskWhereUniqueInput
+  }
+
+  /**
+   * MediaTask updateMany
+   */
+  export type MediaTaskUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MediaTasks.
+     */
+    data: XOR<MediaTaskUpdateManyMutationInput, MediaTaskUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaTasks to update
+     */
+    where?: MediaTaskWhereInput
+    /**
+     * Limit how many MediaTasks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaTask updateManyAndReturn
+   */
+  export type MediaTaskUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaTask
+     */
+    select?: MediaTaskSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaTask
+     */
+    omit?: MediaTaskOmit<ExtArgs> | null
+    /**
+     * The data used to update MediaTasks.
+     */
+    data: XOR<MediaTaskUpdateManyMutationInput, MediaTaskUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaTasks to update
+     */
+    where?: MediaTaskWhereInput
+    /**
+     * Limit how many MediaTasks to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaTaskIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MediaTask upsert
+   */
+  export type MediaTaskUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaTask
+     */
+    select?: MediaTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaTask
+     */
+    omit?: MediaTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaTaskInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MediaTask to update in case it exists.
+     */
+    where: MediaTaskWhereUniqueInput
+    /**
+     * In case the MediaTask found by the `where` argument doesn't exist, create a new MediaTask with this data.
+     */
+    create: XOR<MediaTaskCreateInput, MediaTaskUncheckedCreateInput>
+    /**
+     * In case the MediaTask was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MediaTaskUpdateInput, MediaTaskUncheckedUpdateInput>
+  }
+
+  /**
+   * MediaTask delete
+   */
+  export type MediaTaskDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaTask
+     */
+    select?: MediaTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaTask
+     */
+    omit?: MediaTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaTaskInclude<ExtArgs> | null
+    /**
+     * Filter which MediaTask to delete.
+     */
+    where: MediaTaskWhereUniqueInput
+  }
+
+  /**
+   * MediaTask deleteMany
+   */
+  export type MediaTaskDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaTasks to delete
+     */
+    where?: MediaTaskWhereInput
+    /**
+     * Limit how many MediaTasks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaTask.item
+   */
+  export type MediaTask$itemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemInclude<ExtArgs> | null
+    where?: MediaItemWhereInput
+  }
+
+  /**
+   * MediaTask without action
+   */
+  export type MediaTaskDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaTask
+     */
+    select?: MediaTaskSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaTask
+     */
+    omit?: MediaTaskOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaTaskInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MediaSettings
+   */
+
+  export type AggregateMediaSettings = {
+    _count: MediaSettingsCountAggregateOutputType | null
+    _avg: MediaSettingsAvgAggregateOutputType | null
+    _sum: MediaSettingsSumAggregateOutputType | null
+    _min: MediaSettingsMinAggregateOutputType | null
+    _max: MediaSettingsMaxAggregateOutputType | null
+  }
+
+  export type MediaSettingsAvgAggregateOutputType = {
+    id: number | null
+    idccDay: number | null
+    idccQty: number | null
+    idccDays: number | null
+  }
+
+  export type MediaSettingsSumAggregateOutputType = {
+    id: number | null
+    idccDay: number | null
+    idccQty: number | null
+    idccDays: number | null
+  }
+
+  export type MediaSettingsMinAggregateOutputType = {
+    id: number | null
+    idccDay: number | null
+    idccQty: number | null
+    idccDays: number | null
+    captionTemplate: string | null
+    updatedAt: Date | null
+  }
+
+  export type MediaSettingsMaxAggregateOutputType = {
+    id: number | null
+    idccDay: number | null
+    idccQty: number | null
+    idccDays: number | null
+    captionTemplate: string | null
+    updatedAt: Date | null
+  }
+
+  export type MediaSettingsCountAggregateOutputType = {
+    id: number
+    jobdesk: number
+    idccDay: number
+    idccQty: number
+    idccDays: number
+    captionTemplate: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MediaSettingsAvgAggregateInputType = {
+    id?: true
+    idccDay?: true
+    idccQty?: true
+    idccDays?: true
+  }
+
+  export type MediaSettingsSumAggregateInputType = {
+    id?: true
+    idccDay?: true
+    idccQty?: true
+    idccDays?: true
+  }
+
+  export type MediaSettingsMinAggregateInputType = {
+    id?: true
+    idccDay?: true
+    idccQty?: true
+    idccDays?: true
+    captionTemplate?: true
+    updatedAt?: true
+  }
+
+  export type MediaSettingsMaxAggregateInputType = {
+    id?: true
+    idccDay?: true
+    idccQty?: true
+    idccDays?: true
+    captionTemplate?: true
+    updatedAt?: true
+  }
+
+  export type MediaSettingsCountAggregateInputType = {
+    id?: true
+    jobdesk?: true
+    idccDay?: true
+    idccQty?: true
+    idccDays?: true
+    captionTemplate?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MediaSettingsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaSettings to aggregate.
+     */
+    where?: MediaSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaSettings to fetch.
+     */
+    orderBy?: MediaSettingsOrderByWithRelationInput | MediaSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MediaSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MediaSettings
+    **/
+    _count?: true | MediaSettingsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MediaSettingsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MediaSettingsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MediaSettingsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MediaSettingsMaxAggregateInputType
+  }
+
+  export type GetMediaSettingsAggregateType<T extends MediaSettingsAggregateArgs> = {
+        [P in keyof T & keyof AggregateMediaSettings]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMediaSettings[P]>
+      : GetScalarType<T[P], AggregateMediaSettings[P]>
+  }
+
+
+
+
+  export type MediaSettingsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaSettingsWhereInput
+    orderBy?: MediaSettingsOrderByWithAggregationInput | MediaSettingsOrderByWithAggregationInput[]
+    by: MediaSettingsScalarFieldEnum[] | MediaSettingsScalarFieldEnum
+    having?: MediaSettingsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MediaSettingsCountAggregateInputType | true
+    _avg?: MediaSettingsAvgAggregateInputType
+    _sum?: MediaSettingsSumAggregateInputType
+    _min?: MediaSettingsMinAggregateInputType
+    _max?: MediaSettingsMaxAggregateInputType
+  }
+
+  export type MediaSettingsGroupByOutputType = {
+    id: number
+    jobdesk: JsonValue | null
+    idccDay: number
+    idccQty: number
+    idccDays: number
+    captionTemplate: string | null
+    updatedAt: Date
+    _count: MediaSettingsCountAggregateOutputType | null
+    _avg: MediaSettingsAvgAggregateOutputType | null
+    _sum: MediaSettingsSumAggregateOutputType | null
+    _min: MediaSettingsMinAggregateOutputType | null
+    _max: MediaSettingsMaxAggregateOutputType | null
+  }
+
+  type GetMediaSettingsGroupByPayload<T extends MediaSettingsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MediaSettingsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MediaSettingsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MediaSettingsGroupByOutputType[P]>
+            : GetScalarType<T[P], MediaSettingsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MediaSettingsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    jobdesk?: boolean
+    idccDay?: boolean
+    idccQty?: boolean
+    idccDays?: boolean
+    captionTemplate?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["mediaSettings"]>
+
+  export type MediaSettingsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    jobdesk?: boolean
+    idccDay?: boolean
+    idccQty?: boolean
+    idccDays?: boolean
+    captionTemplate?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["mediaSettings"]>
+
+  export type MediaSettingsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    jobdesk?: boolean
+    idccDay?: boolean
+    idccQty?: boolean
+    idccDays?: boolean
+    captionTemplate?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["mediaSettings"]>
+
+  export type MediaSettingsSelectScalar = {
+    id?: boolean
+    jobdesk?: boolean
+    idccDay?: boolean
+    idccQty?: boolean
+    idccDays?: boolean
+    captionTemplate?: boolean
+    updatedAt?: boolean
+  }
+
+  export type MediaSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "jobdesk" | "idccDay" | "idccQty" | "idccDays" | "captionTemplate" | "updatedAt", ExtArgs["result"]["mediaSettings"]>
+
+  export type $MediaSettingsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MediaSettings"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      jobdesk: Prisma.JsonValue | null
+      idccDay: number
+      idccQty: number
+      idccDays: number
+      captionTemplate: string | null
+      updatedAt: Date
+    }, ExtArgs["result"]["mediaSettings"]>
+    composites: {}
+  }
+
+  type MediaSettingsGetPayload<S extends boolean | null | undefined | MediaSettingsDefaultArgs> = $Result.GetResult<Prisma.$MediaSettingsPayload, S>
+
+  type MediaSettingsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MediaSettingsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MediaSettingsCountAggregateInputType | true
+    }
+
+  export interface MediaSettingsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MediaSettings'], meta: { name: 'MediaSettings' } }
+    /**
+     * Find zero or one MediaSettings that matches the filter.
+     * @param {MediaSettingsFindUniqueArgs} args - Arguments to find a MediaSettings
+     * @example
+     * // Get one MediaSettings
+     * const mediaSettings = await prisma.mediaSettings.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MediaSettingsFindUniqueArgs>(args: SelectSubset<T, MediaSettingsFindUniqueArgs<ExtArgs>>): Prisma__MediaSettingsClient<$Result.GetResult<Prisma.$MediaSettingsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MediaSettings that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MediaSettingsFindUniqueOrThrowArgs} args - Arguments to find a MediaSettings
+     * @example
+     * // Get one MediaSettings
+     * const mediaSettings = await prisma.mediaSettings.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MediaSettingsFindUniqueOrThrowArgs>(args: SelectSubset<T, MediaSettingsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MediaSettingsClient<$Result.GetResult<Prisma.$MediaSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaSettings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaSettingsFindFirstArgs} args - Arguments to find a MediaSettings
+     * @example
+     * // Get one MediaSettings
+     * const mediaSettings = await prisma.mediaSettings.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MediaSettingsFindFirstArgs>(args?: SelectSubset<T, MediaSettingsFindFirstArgs<ExtArgs>>): Prisma__MediaSettingsClient<$Result.GetResult<Prisma.$MediaSettingsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaSettings that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaSettingsFindFirstOrThrowArgs} args - Arguments to find a MediaSettings
+     * @example
+     * // Get one MediaSettings
+     * const mediaSettings = await prisma.mediaSettings.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MediaSettingsFindFirstOrThrowArgs>(args?: SelectSubset<T, MediaSettingsFindFirstOrThrowArgs<ExtArgs>>): Prisma__MediaSettingsClient<$Result.GetResult<Prisma.$MediaSettingsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MediaSettings that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaSettingsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MediaSettings
+     * const mediaSettings = await prisma.mediaSettings.findMany()
+     * 
+     * // Get first 10 MediaSettings
+     * const mediaSettings = await prisma.mediaSettings.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mediaSettingsWithIdOnly = await prisma.mediaSettings.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MediaSettingsFindManyArgs>(args?: SelectSubset<T, MediaSettingsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaSettingsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MediaSettings.
+     * @param {MediaSettingsCreateArgs} args - Arguments to create a MediaSettings.
+     * @example
+     * // Create one MediaSettings
+     * const MediaSettings = await prisma.mediaSettings.create({
+     *   data: {
+     *     // ... data to create a MediaSettings
+     *   }
+     * })
+     * 
+     */
+    create<T extends MediaSettingsCreateArgs>(args: SelectSubset<T, MediaSettingsCreateArgs<ExtArgs>>): Prisma__MediaSettingsClient<$Result.GetResult<Prisma.$MediaSettingsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MediaSettings.
+     * @param {MediaSettingsCreateManyArgs} args - Arguments to create many MediaSettings.
+     * @example
+     * // Create many MediaSettings
+     * const mediaSettings = await prisma.mediaSettings.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MediaSettingsCreateManyArgs>(args?: SelectSubset<T, MediaSettingsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MediaSettings and returns the data saved in the database.
+     * @param {MediaSettingsCreateManyAndReturnArgs} args - Arguments to create many MediaSettings.
+     * @example
+     * // Create many MediaSettings
+     * const mediaSettings = await prisma.mediaSettings.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MediaSettings and only return the `id`
+     * const mediaSettingsWithIdOnly = await prisma.mediaSettings.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MediaSettingsCreateManyAndReturnArgs>(args?: SelectSubset<T, MediaSettingsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaSettingsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MediaSettings.
+     * @param {MediaSettingsDeleteArgs} args - Arguments to delete one MediaSettings.
+     * @example
+     * // Delete one MediaSettings
+     * const MediaSettings = await prisma.mediaSettings.delete({
+     *   where: {
+     *     // ... filter to delete one MediaSettings
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MediaSettingsDeleteArgs>(args: SelectSubset<T, MediaSettingsDeleteArgs<ExtArgs>>): Prisma__MediaSettingsClient<$Result.GetResult<Prisma.$MediaSettingsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MediaSettings.
+     * @param {MediaSettingsUpdateArgs} args - Arguments to update one MediaSettings.
+     * @example
+     * // Update one MediaSettings
+     * const mediaSettings = await prisma.mediaSettings.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MediaSettingsUpdateArgs>(args: SelectSubset<T, MediaSettingsUpdateArgs<ExtArgs>>): Prisma__MediaSettingsClient<$Result.GetResult<Prisma.$MediaSettingsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MediaSettings.
+     * @param {MediaSettingsDeleteManyArgs} args - Arguments to filter MediaSettings to delete.
+     * @example
+     * // Delete a few MediaSettings
+     * const { count } = await prisma.mediaSettings.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MediaSettingsDeleteManyArgs>(args?: SelectSubset<T, MediaSettingsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaSettingsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MediaSettings
+     * const mediaSettings = await prisma.mediaSettings.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MediaSettingsUpdateManyArgs>(args: SelectSubset<T, MediaSettingsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaSettings and returns the data updated in the database.
+     * @param {MediaSettingsUpdateManyAndReturnArgs} args - Arguments to update many MediaSettings.
+     * @example
+     * // Update many MediaSettings
+     * const mediaSettings = await prisma.mediaSettings.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MediaSettings and only return the `id`
+     * const mediaSettingsWithIdOnly = await prisma.mediaSettings.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MediaSettingsUpdateManyAndReturnArgs>(args: SelectSubset<T, MediaSettingsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaSettingsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MediaSettings.
+     * @param {MediaSettingsUpsertArgs} args - Arguments to update or create a MediaSettings.
+     * @example
+     * // Update or create a MediaSettings
+     * const mediaSettings = await prisma.mediaSettings.upsert({
+     *   create: {
+     *     // ... data to create a MediaSettings
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MediaSettings we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MediaSettingsUpsertArgs>(args: SelectSubset<T, MediaSettingsUpsertArgs<ExtArgs>>): Prisma__MediaSettingsClient<$Result.GetResult<Prisma.$MediaSettingsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MediaSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaSettingsCountArgs} args - Arguments to filter MediaSettings to count.
+     * @example
+     * // Count the number of MediaSettings
+     * const count = await prisma.mediaSettings.count({
+     *   where: {
+     *     // ... the filter for the MediaSettings we want to count
+     *   }
+     * })
+    **/
+    count<T extends MediaSettingsCountArgs>(
+      args?: Subset<T, MediaSettingsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MediaSettingsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MediaSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaSettingsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MediaSettingsAggregateArgs>(args: Subset<T, MediaSettingsAggregateArgs>): Prisma.PrismaPromise<GetMediaSettingsAggregateType<T>>
+
+    /**
+     * Group by MediaSettings.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaSettingsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MediaSettingsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MediaSettingsGroupByArgs['orderBy'] }
+        : { orderBy?: MediaSettingsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MediaSettingsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMediaSettingsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MediaSettings model
+   */
+  readonly fields: MediaSettingsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MediaSettings.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MediaSettingsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MediaSettings model
+   */
+  interface MediaSettingsFieldRefs {
+    readonly id: FieldRef<"MediaSettings", 'Int'>
+    readonly jobdesk: FieldRef<"MediaSettings", 'Json'>
+    readonly idccDay: FieldRef<"MediaSettings", 'Int'>
+    readonly idccQty: FieldRef<"MediaSettings", 'Int'>
+    readonly idccDays: FieldRef<"MediaSettings", 'Int'>
+    readonly captionTemplate: FieldRef<"MediaSettings", 'String'>
+    readonly updatedAt: FieldRef<"MediaSettings", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MediaSettings findUnique
+   */
+  export type MediaSettingsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaSettings
+     */
+    select?: MediaSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaSettings
+     */
+    omit?: MediaSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaSettings to fetch.
+     */
+    where: MediaSettingsWhereUniqueInput
+  }
+
+  /**
+   * MediaSettings findUniqueOrThrow
+   */
+  export type MediaSettingsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaSettings
+     */
+    select?: MediaSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaSettings
+     */
+    omit?: MediaSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaSettings to fetch.
+     */
+    where: MediaSettingsWhereUniqueInput
+  }
+
+  /**
+   * MediaSettings findFirst
+   */
+  export type MediaSettingsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaSettings
+     */
+    select?: MediaSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaSettings
+     */
+    omit?: MediaSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaSettings to fetch.
+     */
+    where?: MediaSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaSettings to fetch.
+     */
+    orderBy?: MediaSettingsOrderByWithRelationInput | MediaSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaSettings.
+     */
+    cursor?: MediaSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaSettings.
+     */
+    distinct?: MediaSettingsScalarFieldEnum | MediaSettingsScalarFieldEnum[]
+  }
+
+  /**
+   * MediaSettings findFirstOrThrow
+   */
+  export type MediaSettingsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaSettings
+     */
+    select?: MediaSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaSettings
+     */
+    omit?: MediaSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaSettings to fetch.
+     */
+    where?: MediaSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaSettings to fetch.
+     */
+    orderBy?: MediaSettingsOrderByWithRelationInput | MediaSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaSettings.
+     */
+    cursor?: MediaSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaSettings.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaSettings.
+     */
+    distinct?: MediaSettingsScalarFieldEnum | MediaSettingsScalarFieldEnum[]
+  }
+
+  /**
+   * MediaSettings findMany
+   */
+  export type MediaSettingsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaSettings
+     */
+    select?: MediaSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaSettings
+     */
+    omit?: MediaSettingsOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaSettings to fetch.
+     */
+    where?: MediaSettingsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaSettings to fetch.
+     */
+    orderBy?: MediaSettingsOrderByWithRelationInput | MediaSettingsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MediaSettings.
+     */
+    cursor?: MediaSettingsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaSettings from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaSettings.
+     */
+    skip?: number
+    distinct?: MediaSettingsScalarFieldEnum | MediaSettingsScalarFieldEnum[]
+  }
+
+  /**
+   * MediaSettings create
+   */
+  export type MediaSettingsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaSettings
+     */
+    select?: MediaSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaSettings
+     */
+    omit?: MediaSettingsOmit<ExtArgs> | null
+    /**
+     * The data needed to create a MediaSettings.
+     */
+    data: XOR<MediaSettingsCreateInput, MediaSettingsUncheckedCreateInput>
+  }
+
+  /**
+   * MediaSettings createMany
+   */
+  export type MediaSettingsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MediaSettings.
+     */
+    data: MediaSettingsCreateManyInput | MediaSettingsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MediaSettings createManyAndReturn
+   */
+  export type MediaSettingsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaSettings
+     */
+    select?: MediaSettingsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaSettings
+     */
+    omit?: MediaSettingsOmit<ExtArgs> | null
+    /**
+     * The data used to create many MediaSettings.
+     */
+    data: MediaSettingsCreateManyInput | MediaSettingsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MediaSettings update
+   */
+  export type MediaSettingsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaSettings
+     */
+    select?: MediaSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaSettings
+     */
+    omit?: MediaSettingsOmit<ExtArgs> | null
+    /**
+     * The data needed to update a MediaSettings.
+     */
+    data: XOR<MediaSettingsUpdateInput, MediaSettingsUncheckedUpdateInput>
+    /**
+     * Choose, which MediaSettings to update.
+     */
+    where: MediaSettingsWhereUniqueInput
+  }
+
+  /**
+   * MediaSettings updateMany
+   */
+  export type MediaSettingsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MediaSettings.
+     */
+    data: XOR<MediaSettingsUpdateManyMutationInput, MediaSettingsUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaSettings to update
+     */
+    where?: MediaSettingsWhereInput
+    /**
+     * Limit how many MediaSettings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaSettings updateManyAndReturn
+   */
+  export type MediaSettingsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaSettings
+     */
+    select?: MediaSettingsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaSettings
+     */
+    omit?: MediaSettingsOmit<ExtArgs> | null
+    /**
+     * The data used to update MediaSettings.
+     */
+    data: XOR<MediaSettingsUpdateManyMutationInput, MediaSettingsUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaSettings to update
+     */
+    where?: MediaSettingsWhereInput
+    /**
+     * Limit how many MediaSettings to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaSettings upsert
+   */
+  export type MediaSettingsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaSettings
+     */
+    select?: MediaSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaSettings
+     */
+    omit?: MediaSettingsOmit<ExtArgs> | null
+    /**
+     * The filter to search for the MediaSettings to update in case it exists.
+     */
+    where: MediaSettingsWhereUniqueInput
+    /**
+     * In case the MediaSettings found by the `where` argument doesn't exist, create a new MediaSettings with this data.
+     */
+    create: XOR<MediaSettingsCreateInput, MediaSettingsUncheckedCreateInput>
+    /**
+     * In case the MediaSettings was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MediaSettingsUpdateInput, MediaSettingsUncheckedUpdateInput>
+  }
+
+  /**
+   * MediaSettings delete
+   */
+  export type MediaSettingsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaSettings
+     */
+    select?: MediaSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaSettings
+     */
+    omit?: MediaSettingsOmit<ExtArgs> | null
+    /**
+     * Filter which MediaSettings to delete.
+     */
+    where: MediaSettingsWhereUniqueInput
+  }
+
+  /**
+   * MediaSettings deleteMany
+   */
+  export type MediaSettingsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaSettings to delete
+     */
+    where?: MediaSettingsWhereInput
+    /**
+     * Limit how many MediaSettings to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaSettings without action
+   */
+  export type MediaSettingsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaSettings
+     */
+    select?: MediaSettingsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaSettings
+     */
+    omit?: MediaSettingsOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MediaIdccReport
+   */
+
+  export type AggregateMediaIdccReport = {
+    _count: MediaIdccReportCountAggregateOutputType | null
+    _min: MediaIdccReportMinAggregateOutputType | null
+    _max: MediaIdccReportMaxAggregateOutputType | null
+  }
+
+  export type MediaIdccReportMinAggregateOutputType = {
+    id: string | null
+    reportDate: Date | null
+    summary: string | null
+    createdById: string | null
+    createdAt: Date | null
+  }
+
+  export type MediaIdccReportMaxAggregateOutputType = {
+    id: string | null
+    reportDate: Date | null
+    summary: string | null
+    createdById: string | null
+    createdAt: Date | null
+  }
+
+  export type MediaIdccReportCountAggregateOutputType = {
+    id: number
+    reportDate: number
+    data: number
+    summary: number
+    createdById: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type MediaIdccReportMinAggregateInputType = {
+    id?: true
+    reportDate?: true
+    summary?: true
+    createdById?: true
+    createdAt?: true
+  }
+
+  export type MediaIdccReportMaxAggregateInputType = {
+    id?: true
+    reportDate?: true
+    summary?: true
+    createdById?: true
+    createdAt?: true
+  }
+
+  export type MediaIdccReportCountAggregateInputType = {
+    id?: true
+    reportDate?: true
+    data?: true
+    summary?: true
+    createdById?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type MediaIdccReportAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaIdccReport to aggregate.
+     */
+    where?: MediaIdccReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaIdccReports to fetch.
+     */
+    orderBy?: MediaIdccReportOrderByWithRelationInput | MediaIdccReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MediaIdccReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaIdccReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaIdccReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MediaIdccReports
+    **/
+    _count?: true | MediaIdccReportCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MediaIdccReportMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MediaIdccReportMaxAggregateInputType
+  }
+
+  export type GetMediaIdccReportAggregateType<T extends MediaIdccReportAggregateArgs> = {
+        [P in keyof T & keyof AggregateMediaIdccReport]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMediaIdccReport[P]>
+      : GetScalarType<T[P], AggregateMediaIdccReport[P]>
+  }
+
+
+
+
+  export type MediaIdccReportGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaIdccReportWhereInput
+    orderBy?: MediaIdccReportOrderByWithAggregationInput | MediaIdccReportOrderByWithAggregationInput[]
+    by: MediaIdccReportScalarFieldEnum[] | MediaIdccReportScalarFieldEnum
+    having?: MediaIdccReportScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MediaIdccReportCountAggregateInputType | true
+    _min?: MediaIdccReportMinAggregateInputType
+    _max?: MediaIdccReportMaxAggregateInputType
+  }
+
+  export type MediaIdccReportGroupByOutputType = {
+    id: string
+    reportDate: Date | null
+    data: JsonValue
+    summary: string | null
+    createdById: string
+    createdAt: Date
+    _count: MediaIdccReportCountAggregateOutputType | null
+    _min: MediaIdccReportMinAggregateOutputType | null
+    _max: MediaIdccReportMaxAggregateOutputType | null
+  }
+
+  type GetMediaIdccReportGroupByPayload<T extends MediaIdccReportGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MediaIdccReportGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MediaIdccReportGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MediaIdccReportGroupByOutputType[P]>
+            : GetScalarType<T[P], MediaIdccReportGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MediaIdccReportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    reportDate?: boolean
+    data?: boolean
+    summary?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["mediaIdccReport"]>
+
+  export type MediaIdccReportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    reportDate?: boolean
+    data?: boolean
+    summary?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["mediaIdccReport"]>
+
+  export type MediaIdccReportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    reportDate?: boolean
+    data?: boolean
+    summary?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["mediaIdccReport"]>
+
+  export type MediaIdccReportSelectScalar = {
+    id?: boolean
+    reportDate?: boolean
+    data?: boolean
+    summary?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+  }
+
+  export type MediaIdccReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "reportDate" | "data" | "summary" | "createdById" | "createdAt", ExtArgs["result"]["mediaIdccReport"]>
+
+  export type $MediaIdccReportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MediaIdccReport"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      reportDate: Date | null
+      data: Prisma.JsonValue
+      summary: string | null
+      createdById: string
+      createdAt: Date
+    }, ExtArgs["result"]["mediaIdccReport"]>
+    composites: {}
+  }
+
+  type MediaIdccReportGetPayload<S extends boolean | null | undefined | MediaIdccReportDefaultArgs> = $Result.GetResult<Prisma.$MediaIdccReportPayload, S>
+
+  type MediaIdccReportCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MediaIdccReportFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MediaIdccReportCountAggregateInputType | true
+    }
+
+  export interface MediaIdccReportDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MediaIdccReport'], meta: { name: 'MediaIdccReport' } }
+    /**
+     * Find zero or one MediaIdccReport that matches the filter.
+     * @param {MediaIdccReportFindUniqueArgs} args - Arguments to find a MediaIdccReport
+     * @example
+     * // Get one MediaIdccReport
+     * const mediaIdccReport = await prisma.mediaIdccReport.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MediaIdccReportFindUniqueArgs>(args: SelectSubset<T, MediaIdccReportFindUniqueArgs<ExtArgs>>): Prisma__MediaIdccReportClient<$Result.GetResult<Prisma.$MediaIdccReportPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MediaIdccReport that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MediaIdccReportFindUniqueOrThrowArgs} args - Arguments to find a MediaIdccReport
+     * @example
+     * // Get one MediaIdccReport
+     * const mediaIdccReport = await prisma.mediaIdccReport.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MediaIdccReportFindUniqueOrThrowArgs>(args: SelectSubset<T, MediaIdccReportFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MediaIdccReportClient<$Result.GetResult<Prisma.$MediaIdccReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaIdccReport that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaIdccReportFindFirstArgs} args - Arguments to find a MediaIdccReport
+     * @example
+     * // Get one MediaIdccReport
+     * const mediaIdccReport = await prisma.mediaIdccReport.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MediaIdccReportFindFirstArgs>(args?: SelectSubset<T, MediaIdccReportFindFirstArgs<ExtArgs>>): Prisma__MediaIdccReportClient<$Result.GetResult<Prisma.$MediaIdccReportPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaIdccReport that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaIdccReportFindFirstOrThrowArgs} args - Arguments to find a MediaIdccReport
+     * @example
+     * // Get one MediaIdccReport
+     * const mediaIdccReport = await prisma.mediaIdccReport.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MediaIdccReportFindFirstOrThrowArgs>(args?: SelectSubset<T, MediaIdccReportFindFirstOrThrowArgs<ExtArgs>>): Prisma__MediaIdccReportClient<$Result.GetResult<Prisma.$MediaIdccReportPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MediaIdccReports that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaIdccReportFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MediaIdccReports
+     * const mediaIdccReports = await prisma.mediaIdccReport.findMany()
+     * 
+     * // Get first 10 MediaIdccReports
+     * const mediaIdccReports = await prisma.mediaIdccReport.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mediaIdccReportWithIdOnly = await prisma.mediaIdccReport.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MediaIdccReportFindManyArgs>(args?: SelectSubset<T, MediaIdccReportFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaIdccReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MediaIdccReport.
+     * @param {MediaIdccReportCreateArgs} args - Arguments to create a MediaIdccReport.
+     * @example
+     * // Create one MediaIdccReport
+     * const MediaIdccReport = await prisma.mediaIdccReport.create({
+     *   data: {
+     *     // ... data to create a MediaIdccReport
+     *   }
+     * })
+     * 
+     */
+    create<T extends MediaIdccReportCreateArgs>(args: SelectSubset<T, MediaIdccReportCreateArgs<ExtArgs>>): Prisma__MediaIdccReportClient<$Result.GetResult<Prisma.$MediaIdccReportPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MediaIdccReports.
+     * @param {MediaIdccReportCreateManyArgs} args - Arguments to create many MediaIdccReports.
+     * @example
+     * // Create many MediaIdccReports
+     * const mediaIdccReport = await prisma.mediaIdccReport.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MediaIdccReportCreateManyArgs>(args?: SelectSubset<T, MediaIdccReportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MediaIdccReports and returns the data saved in the database.
+     * @param {MediaIdccReportCreateManyAndReturnArgs} args - Arguments to create many MediaIdccReports.
+     * @example
+     * // Create many MediaIdccReports
+     * const mediaIdccReport = await prisma.mediaIdccReport.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MediaIdccReports and only return the `id`
+     * const mediaIdccReportWithIdOnly = await prisma.mediaIdccReport.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MediaIdccReportCreateManyAndReturnArgs>(args?: SelectSubset<T, MediaIdccReportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaIdccReportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MediaIdccReport.
+     * @param {MediaIdccReportDeleteArgs} args - Arguments to delete one MediaIdccReport.
+     * @example
+     * // Delete one MediaIdccReport
+     * const MediaIdccReport = await prisma.mediaIdccReport.delete({
+     *   where: {
+     *     // ... filter to delete one MediaIdccReport
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MediaIdccReportDeleteArgs>(args: SelectSubset<T, MediaIdccReportDeleteArgs<ExtArgs>>): Prisma__MediaIdccReportClient<$Result.GetResult<Prisma.$MediaIdccReportPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MediaIdccReport.
+     * @param {MediaIdccReportUpdateArgs} args - Arguments to update one MediaIdccReport.
+     * @example
+     * // Update one MediaIdccReport
+     * const mediaIdccReport = await prisma.mediaIdccReport.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MediaIdccReportUpdateArgs>(args: SelectSubset<T, MediaIdccReportUpdateArgs<ExtArgs>>): Prisma__MediaIdccReportClient<$Result.GetResult<Prisma.$MediaIdccReportPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MediaIdccReports.
+     * @param {MediaIdccReportDeleteManyArgs} args - Arguments to filter MediaIdccReports to delete.
+     * @example
+     * // Delete a few MediaIdccReports
+     * const { count } = await prisma.mediaIdccReport.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MediaIdccReportDeleteManyArgs>(args?: SelectSubset<T, MediaIdccReportDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaIdccReports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaIdccReportUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MediaIdccReports
+     * const mediaIdccReport = await prisma.mediaIdccReport.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MediaIdccReportUpdateManyArgs>(args: SelectSubset<T, MediaIdccReportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaIdccReports and returns the data updated in the database.
+     * @param {MediaIdccReportUpdateManyAndReturnArgs} args - Arguments to update many MediaIdccReports.
+     * @example
+     * // Update many MediaIdccReports
+     * const mediaIdccReport = await prisma.mediaIdccReport.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MediaIdccReports and only return the `id`
+     * const mediaIdccReportWithIdOnly = await prisma.mediaIdccReport.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MediaIdccReportUpdateManyAndReturnArgs>(args: SelectSubset<T, MediaIdccReportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaIdccReportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MediaIdccReport.
+     * @param {MediaIdccReportUpsertArgs} args - Arguments to update or create a MediaIdccReport.
+     * @example
+     * // Update or create a MediaIdccReport
+     * const mediaIdccReport = await prisma.mediaIdccReport.upsert({
+     *   create: {
+     *     // ... data to create a MediaIdccReport
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MediaIdccReport we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MediaIdccReportUpsertArgs>(args: SelectSubset<T, MediaIdccReportUpsertArgs<ExtArgs>>): Prisma__MediaIdccReportClient<$Result.GetResult<Prisma.$MediaIdccReportPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MediaIdccReports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaIdccReportCountArgs} args - Arguments to filter MediaIdccReports to count.
+     * @example
+     * // Count the number of MediaIdccReports
+     * const count = await prisma.mediaIdccReport.count({
+     *   where: {
+     *     // ... the filter for the MediaIdccReports we want to count
+     *   }
+     * })
+    **/
+    count<T extends MediaIdccReportCountArgs>(
+      args?: Subset<T, MediaIdccReportCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MediaIdccReportCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MediaIdccReport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaIdccReportAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MediaIdccReportAggregateArgs>(args: Subset<T, MediaIdccReportAggregateArgs>): Prisma.PrismaPromise<GetMediaIdccReportAggregateType<T>>
+
+    /**
+     * Group by MediaIdccReport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaIdccReportGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MediaIdccReportGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MediaIdccReportGroupByArgs['orderBy'] }
+        : { orderBy?: MediaIdccReportGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MediaIdccReportGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMediaIdccReportGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MediaIdccReport model
+   */
+  readonly fields: MediaIdccReportFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MediaIdccReport.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MediaIdccReportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MediaIdccReport model
+   */
+  interface MediaIdccReportFieldRefs {
+    readonly id: FieldRef<"MediaIdccReport", 'String'>
+    readonly reportDate: FieldRef<"MediaIdccReport", 'DateTime'>
+    readonly data: FieldRef<"MediaIdccReport", 'Json'>
+    readonly summary: FieldRef<"MediaIdccReport", 'String'>
+    readonly createdById: FieldRef<"MediaIdccReport", 'String'>
+    readonly createdAt: FieldRef<"MediaIdccReport", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MediaIdccReport findUnique
+   */
+  export type MediaIdccReportFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaIdccReport
+     */
+    select?: MediaIdccReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaIdccReport
+     */
+    omit?: MediaIdccReportOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaIdccReport to fetch.
+     */
+    where: MediaIdccReportWhereUniqueInput
+  }
+
+  /**
+   * MediaIdccReport findUniqueOrThrow
+   */
+  export type MediaIdccReportFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaIdccReport
+     */
+    select?: MediaIdccReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaIdccReport
+     */
+    omit?: MediaIdccReportOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaIdccReport to fetch.
+     */
+    where: MediaIdccReportWhereUniqueInput
+  }
+
+  /**
+   * MediaIdccReport findFirst
+   */
+  export type MediaIdccReportFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaIdccReport
+     */
+    select?: MediaIdccReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaIdccReport
+     */
+    omit?: MediaIdccReportOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaIdccReport to fetch.
+     */
+    where?: MediaIdccReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaIdccReports to fetch.
+     */
+    orderBy?: MediaIdccReportOrderByWithRelationInput | MediaIdccReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaIdccReports.
+     */
+    cursor?: MediaIdccReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaIdccReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaIdccReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaIdccReports.
+     */
+    distinct?: MediaIdccReportScalarFieldEnum | MediaIdccReportScalarFieldEnum[]
+  }
+
+  /**
+   * MediaIdccReport findFirstOrThrow
+   */
+  export type MediaIdccReportFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaIdccReport
+     */
+    select?: MediaIdccReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaIdccReport
+     */
+    omit?: MediaIdccReportOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaIdccReport to fetch.
+     */
+    where?: MediaIdccReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaIdccReports to fetch.
+     */
+    orderBy?: MediaIdccReportOrderByWithRelationInput | MediaIdccReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaIdccReports.
+     */
+    cursor?: MediaIdccReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaIdccReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaIdccReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaIdccReports.
+     */
+    distinct?: MediaIdccReportScalarFieldEnum | MediaIdccReportScalarFieldEnum[]
+  }
+
+  /**
+   * MediaIdccReport findMany
+   */
+  export type MediaIdccReportFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaIdccReport
+     */
+    select?: MediaIdccReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaIdccReport
+     */
+    omit?: MediaIdccReportOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaIdccReports to fetch.
+     */
+    where?: MediaIdccReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaIdccReports to fetch.
+     */
+    orderBy?: MediaIdccReportOrderByWithRelationInput | MediaIdccReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MediaIdccReports.
+     */
+    cursor?: MediaIdccReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaIdccReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaIdccReports.
+     */
+    skip?: number
+    distinct?: MediaIdccReportScalarFieldEnum | MediaIdccReportScalarFieldEnum[]
+  }
+
+  /**
+   * MediaIdccReport create
+   */
+  export type MediaIdccReportCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaIdccReport
+     */
+    select?: MediaIdccReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaIdccReport
+     */
+    omit?: MediaIdccReportOmit<ExtArgs> | null
+    /**
+     * The data needed to create a MediaIdccReport.
+     */
+    data: XOR<MediaIdccReportCreateInput, MediaIdccReportUncheckedCreateInput>
+  }
+
+  /**
+   * MediaIdccReport createMany
+   */
+  export type MediaIdccReportCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MediaIdccReports.
+     */
+    data: MediaIdccReportCreateManyInput | MediaIdccReportCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MediaIdccReport createManyAndReturn
+   */
+  export type MediaIdccReportCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaIdccReport
+     */
+    select?: MediaIdccReportSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaIdccReport
+     */
+    omit?: MediaIdccReportOmit<ExtArgs> | null
+    /**
+     * The data used to create many MediaIdccReports.
+     */
+    data: MediaIdccReportCreateManyInput | MediaIdccReportCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MediaIdccReport update
+   */
+  export type MediaIdccReportUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaIdccReport
+     */
+    select?: MediaIdccReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaIdccReport
+     */
+    omit?: MediaIdccReportOmit<ExtArgs> | null
+    /**
+     * The data needed to update a MediaIdccReport.
+     */
+    data: XOR<MediaIdccReportUpdateInput, MediaIdccReportUncheckedUpdateInput>
+    /**
+     * Choose, which MediaIdccReport to update.
+     */
+    where: MediaIdccReportWhereUniqueInput
+  }
+
+  /**
+   * MediaIdccReport updateMany
+   */
+  export type MediaIdccReportUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MediaIdccReports.
+     */
+    data: XOR<MediaIdccReportUpdateManyMutationInput, MediaIdccReportUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaIdccReports to update
+     */
+    where?: MediaIdccReportWhereInput
+    /**
+     * Limit how many MediaIdccReports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaIdccReport updateManyAndReturn
+   */
+  export type MediaIdccReportUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaIdccReport
+     */
+    select?: MediaIdccReportSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaIdccReport
+     */
+    omit?: MediaIdccReportOmit<ExtArgs> | null
+    /**
+     * The data used to update MediaIdccReports.
+     */
+    data: XOR<MediaIdccReportUpdateManyMutationInput, MediaIdccReportUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaIdccReports to update
+     */
+    where?: MediaIdccReportWhereInput
+    /**
+     * Limit how many MediaIdccReports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaIdccReport upsert
+   */
+  export type MediaIdccReportUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaIdccReport
+     */
+    select?: MediaIdccReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaIdccReport
+     */
+    omit?: MediaIdccReportOmit<ExtArgs> | null
+    /**
+     * The filter to search for the MediaIdccReport to update in case it exists.
+     */
+    where: MediaIdccReportWhereUniqueInput
+    /**
+     * In case the MediaIdccReport found by the `where` argument doesn't exist, create a new MediaIdccReport with this data.
+     */
+    create: XOR<MediaIdccReportCreateInput, MediaIdccReportUncheckedCreateInput>
+    /**
+     * In case the MediaIdccReport was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MediaIdccReportUpdateInput, MediaIdccReportUncheckedUpdateInput>
+  }
+
+  /**
+   * MediaIdccReport delete
+   */
+  export type MediaIdccReportDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaIdccReport
+     */
+    select?: MediaIdccReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaIdccReport
+     */
+    omit?: MediaIdccReportOmit<ExtArgs> | null
+    /**
+     * Filter which MediaIdccReport to delete.
+     */
+    where: MediaIdccReportWhereUniqueInput
+  }
+
+  /**
+   * MediaIdccReport deleteMany
+   */
+  export type MediaIdccReportDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaIdccReports to delete
+     */
+    where?: MediaIdccReportWhereInput
+    /**
+     * Limit how many MediaIdccReports to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaIdccReport without action
+   */
+  export type MediaIdccReportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaIdccReport
+     */
+    select?: MediaIdccReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaIdccReport
+     */
+    omit?: MediaIdccReportOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MediaBalanceLog
+   */
+
+  export type AggregateMediaBalanceLog = {
+    _count: MediaBalanceLogCountAggregateOutputType | null
+    _avg: MediaBalanceLogAvgAggregateOutputType | null
+    _sum: MediaBalanceLogSumAggregateOutputType | null
+    _min: MediaBalanceLogMinAggregateOutputType | null
+    _max: MediaBalanceLogMaxAggregateOutputType | null
+  }
+
+  export type MediaBalanceLogAvgAggregateOutputType = {
+    id: number | null
+  }
+
+  export type MediaBalanceLogSumAggregateOutputType = {
+    id: number | null
+  }
+
+  export type MediaBalanceLogMinAggregateOutputType = {
+    id: number | null
+    updatedAt: Date | null
+  }
+
+  export type MediaBalanceLogMaxAggregateOutputType = {
+    id: number | null
+    updatedAt: Date | null
+  }
+
+  export type MediaBalanceLogCountAggregateOutputType = {
+    id: number
+    entries: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MediaBalanceLogAvgAggregateInputType = {
+    id?: true
+  }
+
+  export type MediaBalanceLogSumAggregateInputType = {
+    id?: true
+  }
+
+  export type MediaBalanceLogMinAggregateInputType = {
+    id?: true
+    updatedAt?: true
+  }
+
+  export type MediaBalanceLogMaxAggregateInputType = {
+    id?: true
+    updatedAt?: true
+  }
+
+  export type MediaBalanceLogCountAggregateInputType = {
+    id?: true
+    entries?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MediaBalanceLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaBalanceLog to aggregate.
+     */
+    where?: MediaBalanceLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaBalanceLogs to fetch.
+     */
+    orderBy?: MediaBalanceLogOrderByWithRelationInput | MediaBalanceLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MediaBalanceLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaBalanceLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaBalanceLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MediaBalanceLogs
+    **/
+    _count?: true | MediaBalanceLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MediaBalanceLogAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MediaBalanceLogSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MediaBalanceLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MediaBalanceLogMaxAggregateInputType
+  }
+
+  export type GetMediaBalanceLogAggregateType<T extends MediaBalanceLogAggregateArgs> = {
+        [P in keyof T & keyof AggregateMediaBalanceLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMediaBalanceLog[P]>
+      : GetScalarType<T[P], AggregateMediaBalanceLog[P]>
+  }
+
+
+
+
+  export type MediaBalanceLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaBalanceLogWhereInput
+    orderBy?: MediaBalanceLogOrderByWithAggregationInput | MediaBalanceLogOrderByWithAggregationInput[]
+    by: MediaBalanceLogScalarFieldEnum[] | MediaBalanceLogScalarFieldEnum
+    having?: MediaBalanceLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MediaBalanceLogCountAggregateInputType | true
+    _avg?: MediaBalanceLogAvgAggregateInputType
+    _sum?: MediaBalanceLogSumAggregateInputType
+    _min?: MediaBalanceLogMinAggregateInputType
+    _max?: MediaBalanceLogMaxAggregateInputType
+  }
+
+  export type MediaBalanceLogGroupByOutputType = {
+    id: number
+    entries: JsonValue
+    updatedAt: Date
+    _count: MediaBalanceLogCountAggregateOutputType | null
+    _avg: MediaBalanceLogAvgAggregateOutputType | null
+    _sum: MediaBalanceLogSumAggregateOutputType | null
+    _min: MediaBalanceLogMinAggregateOutputType | null
+    _max: MediaBalanceLogMaxAggregateOutputType | null
+  }
+
+  type GetMediaBalanceLogGroupByPayload<T extends MediaBalanceLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MediaBalanceLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MediaBalanceLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MediaBalanceLogGroupByOutputType[P]>
+            : GetScalarType<T[P], MediaBalanceLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MediaBalanceLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    entries?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["mediaBalanceLog"]>
+
+  export type MediaBalanceLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    entries?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["mediaBalanceLog"]>
+
+  export type MediaBalanceLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    entries?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["mediaBalanceLog"]>
+
+  export type MediaBalanceLogSelectScalar = {
+    id?: boolean
+    entries?: boolean
+    updatedAt?: boolean
+  }
+
+  export type MediaBalanceLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "entries" | "updatedAt", ExtArgs["result"]["mediaBalanceLog"]>
+
+  export type $MediaBalanceLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MediaBalanceLog"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: number
+      entries: Prisma.JsonValue
+      updatedAt: Date
+    }, ExtArgs["result"]["mediaBalanceLog"]>
+    composites: {}
+  }
+
+  type MediaBalanceLogGetPayload<S extends boolean | null | undefined | MediaBalanceLogDefaultArgs> = $Result.GetResult<Prisma.$MediaBalanceLogPayload, S>
+
+  type MediaBalanceLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MediaBalanceLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MediaBalanceLogCountAggregateInputType | true
+    }
+
+  export interface MediaBalanceLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MediaBalanceLog'], meta: { name: 'MediaBalanceLog' } }
+    /**
+     * Find zero or one MediaBalanceLog that matches the filter.
+     * @param {MediaBalanceLogFindUniqueArgs} args - Arguments to find a MediaBalanceLog
+     * @example
+     * // Get one MediaBalanceLog
+     * const mediaBalanceLog = await prisma.mediaBalanceLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MediaBalanceLogFindUniqueArgs>(args: SelectSubset<T, MediaBalanceLogFindUniqueArgs<ExtArgs>>): Prisma__MediaBalanceLogClient<$Result.GetResult<Prisma.$MediaBalanceLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MediaBalanceLog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MediaBalanceLogFindUniqueOrThrowArgs} args - Arguments to find a MediaBalanceLog
+     * @example
+     * // Get one MediaBalanceLog
+     * const mediaBalanceLog = await prisma.mediaBalanceLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MediaBalanceLogFindUniqueOrThrowArgs>(args: SelectSubset<T, MediaBalanceLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MediaBalanceLogClient<$Result.GetResult<Prisma.$MediaBalanceLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaBalanceLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaBalanceLogFindFirstArgs} args - Arguments to find a MediaBalanceLog
+     * @example
+     * // Get one MediaBalanceLog
+     * const mediaBalanceLog = await prisma.mediaBalanceLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MediaBalanceLogFindFirstArgs>(args?: SelectSubset<T, MediaBalanceLogFindFirstArgs<ExtArgs>>): Prisma__MediaBalanceLogClient<$Result.GetResult<Prisma.$MediaBalanceLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaBalanceLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaBalanceLogFindFirstOrThrowArgs} args - Arguments to find a MediaBalanceLog
+     * @example
+     * // Get one MediaBalanceLog
+     * const mediaBalanceLog = await prisma.mediaBalanceLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MediaBalanceLogFindFirstOrThrowArgs>(args?: SelectSubset<T, MediaBalanceLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__MediaBalanceLogClient<$Result.GetResult<Prisma.$MediaBalanceLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MediaBalanceLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaBalanceLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MediaBalanceLogs
+     * const mediaBalanceLogs = await prisma.mediaBalanceLog.findMany()
+     * 
+     * // Get first 10 MediaBalanceLogs
+     * const mediaBalanceLogs = await prisma.mediaBalanceLog.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mediaBalanceLogWithIdOnly = await prisma.mediaBalanceLog.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MediaBalanceLogFindManyArgs>(args?: SelectSubset<T, MediaBalanceLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaBalanceLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MediaBalanceLog.
+     * @param {MediaBalanceLogCreateArgs} args - Arguments to create a MediaBalanceLog.
+     * @example
+     * // Create one MediaBalanceLog
+     * const MediaBalanceLog = await prisma.mediaBalanceLog.create({
+     *   data: {
+     *     // ... data to create a MediaBalanceLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends MediaBalanceLogCreateArgs>(args: SelectSubset<T, MediaBalanceLogCreateArgs<ExtArgs>>): Prisma__MediaBalanceLogClient<$Result.GetResult<Prisma.$MediaBalanceLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MediaBalanceLogs.
+     * @param {MediaBalanceLogCreateManyArgs} args - Arguments to create many MediaBalanceLogs.
+     * @example
+     * // Create many MediaBalanceLogs
+     * const mediaBalanceLog = await prisma.mediaBalanceLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MediaBalanceLogCreateManyArgs>(args?: SelectSubset<T, MediaBalanceLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MediaBalanceLogs and returns the data saved in the database.
+     * @param {MediaBalanceLogCreateManyAndReturnArgs} args - Arguments to create many MediaBalanceLogs.
+     * @example
+     * // Create many MediaBalanceLogs
+     * const mediaBalanceLog = await prisma.mediaBalanceLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MediaBalanceLogs and only return the `id`
+     * const mediaBalanceLogWithIdOnly = await prisma.mediaBalanceLog.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MediaBalanceLogCreateManyAndReturnArgs>(args?: SelectSubset<T, MediaBalanceLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaBalanceLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MediaBalanceLog.
+     * @param {MediaBalanceLogDeleteArgs} args - Arguments to delete one MediaBalanceLog.
+     * @example
+     * // Delete one MediaBalanceLog
+     * const MediaBalanceLog = await prisma.mediaBalanceLog.delete({
+     *   where: {
+     *     // ... filter to delete one MediaBalanceLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MediaBalanceLogDeleteArgs>(args: SelectSubset<T, MediaBalanceLogDeleteArgs<ExtArgs>>): Prisma__MediaBalanceLogClient<$Result.GetResult<Prisma.$MediaBalanceLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MediaBalanceLog.
+     * @param {MediaBalanceLogUpdateArgs} args - Arguments to update one MediaBalanceLog.
+     * @example
+     * // Update one MediaBalanceLog
+     * const mediaBalanceLog = await prisma.mediaBalanceLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MediaBalanceLogUpdateArgs>(args: SelectSubset<T, MediaBalanceLogUpdateArgs<ExtArgs>>): Prisma__MediaBalanceLogClient<$Result.GetResult<Prisma.$MediaBalanceLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MediaBalanceLogs.
+     * @param {MediaBalanceLogDeleteManyArgs} args - Arguments to filter MediaBalanceLogs to delete.
+     * @example
+     * // Delete a few MediaBalanceLogs
+     * const { count } = await prisma.mediaBalanceLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MediaBalanceLogDeleteManyArgs>(args?: SelectSubset<T, MediaBalanceLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaBalanceLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaBalanceLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MediaBalanceLogs
+     * const mediaBalanceLog = await prisma.mediaBalanceLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MediaBalanceLogUpdateManyArgs>(args: SelectSubset<T, MediaBalanceLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaBalanceLogs and returns the data updated in the database.
+     * @param {MediaBalanceLogUpdateManyAndReturnArgs} args - Arguments to update many MediaBalanceLogs.
+     * @example
+     * // Update many MediaBalanceLogs
+     * const mediaBalanceLog = await prisma.mediaBalanceLog.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MediaBalanceLogs and only return the `id`
+     * const mediaBalanceLogWithIdOnly = await prisma.mediaBalanceLog.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MediaBalanceLogUpdateManyAndReturnArgs>(args: SelectSubset<T, MediaBalanceLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaBalanceLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MediaBalanceLog.
+     * @param {MediaBalanceLogUpsertArgs} args - Arguments to update or create a MediaBalanceLog.
+     * @example
+     * // Update or create a MediaBalanceLog
+     * const mediaBalanceLog = await prisma.mediaBalanceLog.upsert({
+     *   create: {
+     *     // ... data to create a MediaBalanceLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MediaBalanceLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MediaBalanceLogUpsertArgs>(args: SelectSubset<T, MediaBalanceLogUpsertArgs<ExtArgs>>): Prisma__MediaBalanceLogClient<$Result.GetResult<Prisma.$MediaBalanceLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MediaBalanceLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaBalanceLogCountArgs} args - Arguments to filter MediaBalanceLogs to count.
+     * @example
+     * // Count the number of MediaBalanceLogs
+     * const count = await prisma.mediaBalanceLog.count({
+     *   where: {
+     *     // ... the filter for the MediaBalanceLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends MediaBalanceLogCountArgs>(
+      args?: Subset<T, MediaBalanceLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MediaBalanceLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MediaBalanceLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaBalanceLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MediaBalanceLogAggregateArgs>(args: Subset<T, MediaBalanceLogAggregateArgs>): Prisma.PrismaPromise<GetMediaBalanceLogAggregateType<T>>
+
+    /**
+     * Group by MediaBalanceLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaBalanceLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MediaBalanceLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MediaBalanceLogGroupByArgs['orderBy'] }
+        : { orderBy?: MediaBalanceLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MediaBalanceLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMediaBalanceLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MediaBalanceLog model
+   */
+  readonly fields: MediaBalanceLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MediaBalanceLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MediaBalanceLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MediaBalanceLog model
+   */
+  interface MediaBalanceLogFieldRefs {
+    readonly id: FieldRef<"MediaBalanceLog", 'Int'>
+    readonly entries: FieldRef<"MediaBalanceLog", 'Json'>
+    readonly updatedAt: FieldRef<"MediaBalanceLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MediaBalanceLog findUnique
+   */
+  export type MediaBalanceLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaBalanceLog
+     */
+    select?: MediaBalanceLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaBalanceLog
+     */
+    omit?: MediaBalanceLogOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaBalanceLog to fetch.
+     */
+    where: MediaBalanceLogWhereUniqueInput
+  }
+
+  /**
+   * MediaBalanceLog findUniqueOrThrow
+   */
+  export type MediaBalanceLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaBalanceLog
+     */
+    select?: MediaBalanceLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaBalanceLog
+     */
+    omit?: MediaBalanceLogOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaBalanceLog to fetch.
+     */
+    where: MediaBalanceLogWhereUniqueInput
+  }
+
+  /**
+   * MediaBalanceLog findFirst
+   */
+  export type MediaBalanceLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaBalanceLog
+     */
+    select?: MediaBalanceLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaBalanceLog
+     */
+    omit?: MediaBalanceLogOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaBalanceLog to fetch.
+     */
+    where?: MediaBalanceLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaBalanceLogs to fetch.
+     */
+    orderBy?: MediaBalanceLogOrderByWithRelationInput | MediaBalanceLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaBalanceLogs.
+     */
+    cursor?: MediaBalanceLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaBalanceLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaBalanceLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaBalanceLogs.
+     */
+    distinct?: MediaBalanceLogScalarFieldEnum | MediaBalanceLogScalarFieldEnum[]
+  }
+
+  /**
+   * MediaBalanceLog findFirstOrThrow
+   */
+  export type MediaBalanceLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaBalanceLog
+     */
+    select?: MediaBalanceLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaBalanceLog
+     */
+    omit?: MediaBalanceLogOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaBalanceLog to fetch.
+     */
+    where?: MediaBalanceLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaBalanceLogs to fetch.
+     */
+    orderBy?: MediaBalanceLogOrderByWithRelationInput | MediaBalanceLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaBalanceLogs.
+     */
+    cursor?: MediaBalanceLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaBalanceLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaBalanceLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaBalanceLogs.
+     */
+    distinct?: MediaBalanceLogScalarFieldEnum | MediaBalanceLogScalarFieldEnum[]
+  }
+
+  /**
+   * MediaBalanceLog findMany
+   */
+  export type MediaBalanceLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaBalanceLog
+     */
+    select?: MediaBalanceLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaBalanceLog
+     */
+    omit?: MediaBalanceLogOmit<ExtArgs> | null
+    /**
+     * Filter, which MediaBalanceLogs to fetch.
+     */
+    where?: MediaBalanceLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaBalanceLogs to fetch.
+     */
+    orderBy?: MediaBalanceLogOrderByWithRelationInput | MediaBalanceLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MediaBalanceLogs.
+     */
+    cursor?: MediaBalanceLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaBalanceLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaBalanceLogs.
+     */
+    skip?: number
+    distinct?: MediaBalanceLogScalarFieldEnum | MediaBalanceLogScalarFieldEnum[]
+  }
+
+  /**
+   * MediaBalanceLog create
+   */
+  export type MediaBalanceLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaBalanceLog
+     */
+    select?: MediaBalanceLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaBalanceLog
+     */
+    omit?: MediaBalanceLogOmit<ExtArgs> | null
+    /**
+     * The data needed to create a MediaBalanceLog.
+     */
+    data: XOR<MediaBalanceLogCreateInput, MediaBalanceLogUncheckedCreateInput>
+  }
+
+  /**
+   * MediaBalanceLog createMany
+   */
+  export type MediaBalanceLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MediaBalanceLogs.
+     */
+    data: MediaBalanceLogCreateManyInput | MediaBalanceLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MediaBalanceLog createManyAndReturn
+   */
+  export type MediaBalanceLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaBalanceLog
+     */
+    select?: MediaBalanceLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaBalanceLog
+     */
+    omit?: MediaBalanceLogOmit<ExtArgs> | null
+    /**
+     * The data used to create many MediaBalanceLogs.
+     */
+    data: MediaBalanceLogCreateManyInput | MediaBalanceLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MediaBalanceLog update
+   */
+  export type MediaBalanceLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaBalanceLog
+     */
+    select?: MediaBalanceLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaBalanceLog
+     */
+    omit?: MediaBalanceLogOmit<ExtArgs> | null
+    /**
+     * The data needed to update a MediaBalanceLog.
+     */
+    data: XOR<MediaBalanceLogUpdateInput, MediaBalanceLogUncheckedUpdateInput>
+    /**
+     * Choose, which MediaBalanceLog to update.
+     */
+    where: MediaBalanceLogWhereUniqueInput
+  }
+
+  /**
+   * MediaBalanceLog updateMany
+   */
+  export type MediaBalanceLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MediaBalanceLogs.
+     */
+    data: XOR<MediaBalanceLogUpdateManyMutationInput, MediaBalanceLogUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaBalanceLogs to update
+     */
+    where?: MediaBalanceLogWhereInput
+    /**
+     * Limit how many MediaBalanceLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaBalanceLog updateManyAndReturn
+   */
+  export type MediaBalanceLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaBalanceLog
+     */
+    select?: MediaBalanceLogSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaBalanceLog
+     */
+    omit?: MediaBalanceLogOmit<ExtArgs> | null
+    /**
+     * The data used to update MediaBalanceLogs.
+     */
+    data: XOR<MediaBalanceLogUpdateManyMutationInput, MediaBalanceLogUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaBalanceLogs to update
+     */
+    where?: MediaBalanceLogWhereInput
+    /**
+     * Limit how many MediaBalanceLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaBalanceLog upsert
+   */
+  export type MediaBalanceLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaBalanceLog
+     */
+    select?: MediaBalanceLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaBalanceLog
+     */
+    omit?: MediaBalanceLogOmit<ExtArgs> | null
+    /**
+     * The filter to search for the MediaBalanceLog to update in case it exists.
+     */
+    where: MediaBalanceLogWhereUniqueInput
+    /**
+     * In case the MediaBalanceLog found by the `where` argument doesn't exist, create a new MediaBalanceLog with this data.
+     */
+    create: XOR<MediaBalanceLogCreateInput, MediaBalanceLogUncheckedCreateInput>
+    /**
+     * In case the MediaBalanceLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MediaBalanceLogUpdateInput, MediaBalanceLogUncheckedUpdateInput>
+  }
+
+  /**
+   * MediaBalanceLog delete
+   */
+  export type MediaBalanceLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaBalanceLog
+     */
+    select?: MediaBalanceLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaBalanceLog
+     */
+    omit?: MediaBalanceLogOmit<ExtArgs> | null
+    /**
+     * Filter which MediaBalanceLog to delete.
+     */
+    where: MediaBalanceLogWhereUniqueInput
+  }
+
+  /**
+   * MediaBalanceLog deleteMany
+   */
+  export type MediaBalanceLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaBalanceLogs to delete
+     */
+    where?: MediaBalanceLogWhereInput
+    /**
+     * Limit how many MediaBalanceLogs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaBalanceLog without action
+   */
+  export type MediaBalanceLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaBalanceLog
+     */
+    select?: MediaBalanceLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaBalanceLog
+     */
+    omit?: MediaBalanceLogOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PersonalCalEvent
+   */
+
+  export type AggregatePersonalCalEvent = {
+    _count: PersonalCalEventCountAggregateOutputType | null
+    _min: PersonalCalEventMinAggregateOutputType | null
+    _max: PersonalCalEventMaxAggregateOutputType | null
+  }
+
+  export type PersonalCalEventMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    date: string | null
+    title: string | null
+    time: string | null
+    color: string | null
+    note: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PersonalCalEventMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    date: string | null
+    title: string | null
+    time: string | null
+    color: string | null
+    note: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PersonalCalEventCountAggregateOutputType = {
+    id: number
+    userId: number
+    date: number
+    title: number
+    time: number
+    color: number
+    note: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PersonalCalEventMinAggregateInputType = {
+    id?: true
+    userId?: true
+    date?: true
+    title?: true
+    time?: true
+    color?: true
+    note?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PersonalCalEventMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    date?: true
+    title?: true
+    time?: true
+    color?: true
+    note?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PersonalCalEventCountAggregateInputType = {
+    id?: true
+    userId?: true
+    date?: true
+    title?: true
+    time?: true
+    color?: true
+    note?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PersonalCalEventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PersonalCalEvent to aggregate.
+     */
+    where?: PersonalCalEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PersonalCalEvents to fetch.
+     */
+    orderBy?: PersonalCalEventOrderByWithRelationInput | PersonalCalEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PersonalCalEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PersonalCalEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PersonalCalEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PersonalCalEvents
+    **/
+    _count?: true | PersonalCalEventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PersonalCalEventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PersonalCalEventMaxAggregateInputType
+  }
+
+  export type GetPersonalCalEventAggregateType<T extends PersonalCalEventAggregateArgs> = {
+        [P in keyof T & keyof AggregatePersonalCalEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePersonalCalEvent[P]>
+      : GetScalarType<T[P], AggregatePersonalCalEvent[P]>
+  }
+
+
+
+
+  export type PersonalCalEventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PersonalCalEventWhereInput
+    orderBy?: PersonalCalEventOrderByWithAggregationInput | PersonalCalEventOrderByWithAggregationInput[]
+    by: PersonalCalEventScalarFieldEnum[] | PersonalCalEventScalarFieldEnum
+    having?: PersonalCalEventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PersonalCalEventCountAggregateInputType | true
+    _min?: PersonalCalEventMinAggregateInputType
+    _max?: PersonalCalEventMaxAggregateInputType
+  }
+
+  export type PersonalCalEventGroupByOutputType = {
+    id: string
+    userId: string
+    date: string
+    title: string
+    time: string | null
+    color: string
+    note: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: PersonalCalEventCountAggregateOutputType | null
+    _min: PersonalCalEventMinAggregateOutputType | null
+    _max: PersonalCalEventMaxAggregateOutputType | null
+  }
+
+  type GetPersonalCalEventGroupByPayload<T extends PersonalCalEventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PersonalCalEventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PersonalCalEventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PersonalCalEventGroupByOutputType[P]>
+            : GetScalarType<T[P], PersonalCalEventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PersonalCalEventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    date?: boolean
+    title?: boolean
+    time?: boolean
+    color?: boolean
+    note?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["personalCalEvent"]>
+
+  export type PersonalCalEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    date?: boolean
+    title?: boolean
+    time?: boolean
+    color?: boolean
+    note?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["personalCalEvent"]>
+
+  export type PersonalCalEventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    date?: boolean
+    title?: boolean
+    time?: boolean
+    color?: boolean
+    note?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["personalCalEvent"]>
+
+  export type PersonalCalEventSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    date?: boolean
+    title?: boolean
+    time?: boolean
+    color?: boolean
+    note?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PersonalCalEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "date" | "title" | "time" | "color" | "note" | "createdAt" | "updatedAt", ExtArgs["result"]["personalCalEvent"]>
+  export type PersonalCalEventInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PersonalCalEventIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PersonalCalEventIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $PersonalCalEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PersonalCalEvent"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      date: string
+      title: string
+      time: string | null
+      color: string
+      note: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["personalCalEvent"]>
+    composites: {}
+  }
+
+  type PersonalCalEventGetPayload<S extends boolean | null | undefined | PersonalCalEventDefaultArgs> = $Result.GetResult<Prisma.$PersonalCalEventPayload, S>
+
+  type PersonalCalEventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PersonalCalEventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PersonalCalEventCountAggregateInputType | true
+    }
+
+  export interface PersonalCalEventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PersonalCalEvent'], meta: { name: 'PersonalCalEvent' } }
+    /**
+     * Find zero or one PersonalCalEvent that matches the filter.
+     * @param {PersonalCalEventFindUniqueArgs} args - Arguments to find a PersonalCalEvent
+     * @example
+     * // Get one PersonalCalEvent
+     * const personalCalEvent = await prisma.personalCalEvent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PersonalCalEventFindUniqueArgs>(args: SelectSubset<T, PersonalCalEventFindUniqueArgs<ExtArgs>>): Prisma__PersonalCalEventClient<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PersonalCalEvent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PersonalCalEventFindUniqueOrThrowArgs} args - Arguments to find a PersonalCalEvent
+     * @example
+     * // Get one PersonalCalEvent
+     * const personalCalEvent = await prisma.personalCalEvent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PersonalCalEventFindUniqueOrThrowArgs>(args: SelectSubset<T, PersonalCalEventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PersonalCalEventClient<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PersonalCalEvent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonalCalEventFindFirstArgs} args - Arguments to find a PersonalCalEvent
+     * @example
+     * // Get one PersonalCalEvent
+     * const personalCalEvent = await prisma.personalCalEvent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PersonalCalEventFindFirstArgs>(args?: SelectSubset<T, PersonalCalEventFindFirstArgs<ExtArgs>>): Prisma__PersonalCalEventClient<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PersonalCalEvent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonalCalEventFindFirstOrThrowArgs} args - Arguments to find a PersonalCalEvent
+     * @example
+     * // Get one PersonalCalEvent
+     * const personalCalEvent = await prisma.personalCalEvent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PersonalCalEventFindFirstOrThrowArgs>(args?: SelectSubset<T, PersonalCalEventFindFirstOrThrowArgs<ExtArgs>>): Prisma__PersonalCalEventClient<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PersonalCalEvents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonalCalEventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PersonalCalEvents
+     * const personalCalEvents = await prisma.personalCalEvent.findMany()
+     * 
+     * // Get first 10 PersonalCalEvents
+     * const personalCalEvents = await prisma.personalCalEvent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const personalCalEventWithIdOnly = await prisma.personalCalEvent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PersonalCalEventFindManyArgs>(args?: SelectSubset<T, PersonalCalEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PersonalCalEvent.
+     * @param {PersonalCalEventCreateArgs} args - Arguments to create a PersonalCalEvent.
+     * @example
+     * // Create one PersonalCalEvent
+     * const PersonalCalEvent = await prisma.personalCalEvent.create({
+     *   data: {
+     *     // ... data to create a PersonalCalEvent
+     *   }
+     * })
+     * 
+     */
+    create<T extends PersonalCalEventCreateArgs>(args: SelectSubset<T, PersonalCalEventCreateArgs<ExtArgs>>): Prisma__PersonalCalEventClient<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PersonalCalEvents.
+     * @param {PersonalCalEventCreateManyArgs} args - Arguments to create many PersonalCalEvents.
+     * @example
+     * // Create many PersonalCalEvents
+     * const personalCalEvent = await prisma.personalCalEvent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PersonalCalEventCreateManyArgs>(args?: SelectSubset<T, PersonalCalEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PersonalCalEvents and returns the data saved in the database.
+     * @param {PersonalCalEventCreateManyAndReturnArgs} args - Arguments to create many PersonalCalEvents.
+     * @example
+     * // Create many PersonalCalEvents
+     * const personalCalEvent = await prisma.personalCalEvent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PersonalCalEvents and only return the `id`
+     * const personalCalEventWithIdOnly = await prisma.personalCalEvent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PersonalCalEventCreateManyAndReturnArgs>(args?: SelectSubset<T, PersonalCalEventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PersonalCalEvent.
+     * @param {PersonalCalEventDeleteArgs} args - Arguments to delete one PersonalCalEvent.
+     * @example
+     * // Delete one PersonalCalEvent
+     * const PersonalCalEvent = await prisma.personalCalEvent.delete({
+     *   where: {
+     *     // ... filter to delete one PersonalCalEvent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PersonalCalEventDeleteArgs>(args: SelectSubset<T, PersonalCalEventDeleteArgs<ExtArgs>>): Prisma__PersonalCalEventClient<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PersonalCalEvent.
+     * @param {PersonalCalEventUpdateArgs} args - Arguments to update one PersonalCalEvent.
+     * @example
+     * // Update one PersonalCalEvent
+     * const personalCalEvent = await prisma.personalCalEvent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PersonalCalEventUpdateArgs>(args: SelectSubset<T, PersonalCalEventUpdateArgs<ExtArgs>>): Prisma__PersonalCalEventClient<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PersonalCalEvents.
+     * @param {PersonalCalEventDeleteManyArgs} args - Arguments to filter PersonalCalEvents to delete.
+     * @example
+     * // Delete a few PersonalCalEvents
+     * const { count } = await prisma.personalCalEvent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PersonalCalEventDeleteManyArgs>(args?: SelectSubset<T, PersonalCalEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PersonalCalEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonalCalEventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PersonalCalEvents
+     * const personalCalEvent = await prisma.personalCalEvent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PersonalCalEventUpdateManyArgs>(args: SelectSubset<T, PersonalCalEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PersonalCalEvents and returns the data updated in the database.
+     * @param {PersonalCalEventUpdateManyAndReturnArgs} args - Arguments to update many PersonalCalEvents.
+     * @example
+     * // Update many PersonalCalEvents
+     * const personalCalEvent = await prisma.personalCalEvent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PersonalCalEvents and only return the `id`
+     * const personalCalEventWithIdOnly = await prisma.personalCalEvent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PersonalCalEventUpdateManyAndReturnArgs>(args: SelectSubset<T, PersonalCalEventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PersonalCalEvent.
+     * @param {PersonalCalEventUpsertArgs} args - Arguments to update or create a PersonalCalEvent.
+     * @example
+     * // Update or create a PersonalCalEvent
+     * const personalCalEvent = await prisma.personalCalEvent.upsert({
+     *   create: {
+     *     // ... data to create a PersonalCalEvent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PersonalCalEvent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PersonalCalEventUpsertArgs>(args: SelectSubset<T, PersonalCalEventUpsertArgs<ExtArgs>>): Prisma__PersonalCalEventClient<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PersonalCalEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonalCalEventCountArgs} args - Arguments to filter PersonalCalEvents to count.
+     * @example
+     * // Count the number of PersonalCalEvents
+     * const count = await prisma.personalCalEvent.count({
+     *   where: {
+     *     // ... the filter for the PersonalCalEvents we want to count
+     *   }
+     * })
+    **/
+    count<T extends PersonalCalEventCountArgs>(
+      args?: Subset<T, PersonalCalEventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PersonalCalEventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PersonalCalEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonalCalEventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PersonalCalEventAggregateArgs>(args: Subset<T, PersonalCalEventAggregateArgs>): Prisma.PrismaPromise<GetPersonalCalEventAggregateType<T>>
+
+    /**
+     * Group by PersonalCalEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PersonalCalEventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PersonalCalEventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PersonalCalEventGroupByArgs['orderBy'] }
+        : { orderBy?: PersonalCalEventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PersonalCalEventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPersonalCalEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PersonalCalEvent model
+   */
+  readonly fields: PersonalCalEventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PersonalCalEvent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PersonalCalEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PersonalCalEvent model
+   */
+  interface PersonalCalEventFieldRefs {
+    readonly id: FieldRef<"PersonalCalEvent", 'String'>
+    readonly userId: FieldRef<"PersonalCalEvent", 'String'>
+    readonly date: FieldRef<"PersonalCalEvent", 'String'>
+    readonly title: FieldRef<"PersonalCalEvent", 'String'>
+    readonly time: FieldRef<"PersonalCalEvent", 'String'>
+    readonly color: FieldRef<"PersonalCalEvent", 'String'>
+    readonly note: FieldRef<"PersonalCalEvent", 'String'>
+    readonly createdAt: FieldRef<"PersonalCalEvent", 'DateTime'>
+    readonly updatedAt: FieldRef<"PersonalCalEvent", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PersonalCalEvent findUnique
+   */
+  export type PersonalCalEventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalCalEvent
+     */
+    select?: PersonalCalEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalCalEvent
+     */
+    omit?: PersonalCalEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalCalEventInclude<ExtArgs> | null
+    /**
+     * Filter, which PersonalCalEvent to fetch.
+     */
+    where: PersonalCalEventWhereUniqueInput
+  }
+
+  /**
+   * PersonalCalEvent findUniqueOrThrow
+   */
+  export type PersonalCalEventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalCalEvent
+     */
+    select?: PersonalCalEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalCalEvent
+     */
+    omit?: PersonalCalEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalCalEventInclude<ExtArgs> | null
+    /**
+     * Filter, which PersonalCalEvent to fetch.
+     */
+    where: PersonalCalEventWhereUniqueInput
+  }
+
+  /**
+   * PersonalCalEvent findFirst
+   */
+  export type PersonalCalEventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalCalEvent
+     */
+    select?: PersonalCalEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalCalEvent
+     */
+    omit?: PersonalCalEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalCalEventInclude<ExtArgs> | null
+    /**
+     * Filter, which PersonalCalEvent to fetch.
+     */
+    where?: PersonalCalEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PersonalCalEvents to fetch.
+     */
+    orderBy?: PersonalCalEventOrderByWithRelationInput | PersonalCalEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PersonalCalEvents.
+     */
+    cursor?: PersonalCalEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PersonalCalEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PersonalCalEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PersonalCalEvents.
+     */
+    distinct?: PersonalCalEventScalarFieldEnum | PersonalCalEventScalarFieldEnum[]
+  }
+
+  /**
+   * PersonalCalEvent findFirstOrThrow
+   */
+  export type PersonalCalEventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalCalEvent
+     */
+    select?: PersonalCalEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalCalEvent
+     */
+    omit?: PersonalCalEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalCalEventInclude<ExtArgs> | null
+    /**
+     * Filter, which PersonalCalEvent to fetch.
+     */
+    where?: PersonalCalEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PersonalCalEvents to fetch.
+     */
+    orderBy?: PersonalCalEventOrderByWithRelationInput | PersonalCalEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PersonalCalEvents.
+     */
+    cursor?: PersonalCalEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PersonalCalEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PersonalCalEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PersonalCalEvents.
+     */
+    distinct?: PersonalCalEventScalarFieldEnum | PersonalCalEventScalarFieldEnum[]
+  }
+
+  /**
+   * PersonalCalEvent findMany
+   */
+  export type PersonalCalEventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalCalEvent
+     */
+    select?: PersonalCalEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalCalEvent
+     */
+    omit?: PersonalCalEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalCalEventInclude<ExtArgs> | null
+    /**
+     * Filter, which PersonalCalEvents to fetch.
+     */
+    where?: PersonalCalEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PersonalCalEvents to fetch.
+     */
+    orderBy?: PersonalCalEventOrderByWithRelationInput | PersonalCalEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PersonalCalEvents.
+     */
+    cursor?: PersonalCalEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PersonalCalEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PersonalCalEvents.
+     */
+    skip?: number
+    distinct?: PersonalCalEventScalarFieldEnum | PersonalCalEventScalarFieldEnum[]
+  }
+
+  /**
+   * PersonalCalEvent create
+   */
+  export type PersonalCalEventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalCalEvent
+     */
+    select?: PersonalCalEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalCalEvent
+     */
+    omit?: PersonalCalEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalCalEventInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PersonalCalEvent.
+     */
+    data: XOR<PersonalCalEventCreateInput, PersonalCalEventUncheckedCreateInput>
+  }
+
+  /**
+   * PersonalCalEvent createMany
+   */
+  export type PersonalCalEventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PersonalCalEvents.
+     */
+    data: PersonalCalEventCreateManyInput | PersonalCalEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PersonalCalEvent createManyAndReturn
+   */
+  export type PersonalCalEventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalCalEvent
+     */
+    select?: PersonalCalEventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalCalEvent
+     */
+    omit?: PersonalCalEventOmit<ExtArgs> | null
+    /**
+     * The data used to create many PersonalCalEvents.
+     */
+    data: PersonalCalEventCreateManyInput | PersonalCalEventCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalCalEventIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PersonalCalEvent update
+   */
+  export type PersonalCalEventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalCalEvent
+     */
+    select?: PersonalCalEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalCalEvent
+     */
+    omit?: PersonalCalEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalCalEventInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PersonalCalEvent.
+     */
+    data: XOR<PersonalCalEventUpdateInput, PersonalCalEventUncheckedUpdateInput>
+    /**
+     * Choose, which PersonalCalEvent to update.
+     */
+    where: PersonalCalEventWhereUniqueInput
+  }
+
+  /**
+   * PersonalCalEvent updateMany
+   */
+  export type PersonalCalEventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PersonalCalEvents.
+     */
+    data: XOR<PersonalCalEventUpdateManyMutationInput, PersonalCalEventUncheckedUpdateManyInput>
+    /**
+     * Filter which PersonalCalEvents to update
+     */
+    where?: PersonalCalEventWhereInput
+    /**
+     * Limit how many PersonalCalEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PersonalCalEvent updateManyAndReturn
+   */
+  export type PersonalCalEventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalCalEvent
+     */
+    select?: PersonalCalEventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalCalEvent
+     */
+    omit?: PersonalCalEventOmit<ExtArgs> | null
+    /**
+     * The data used to update PersonalCalEvents.
+     */
+    data: XOR<PersonalCalEventUpdateManyMutationInput, PersonalCalEventUncheckedUpdateManyInput>
+    /**
+     * Filter which PersonalCalEvents to update
+     */
+    where?: PersonalCalEventWhereInput
+    /**
+     * Limit how many PersonalCalEvents to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalCalEventIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PersonalCalEvent upsert
+   */
+  export type PersonalCalEventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalCalEvent
+     */
+    select?: PersonalCalEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalCalEvent
+     */
+    omit?: PersonalCalEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalCalEventInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PersonalCalEvent to update in case it exists.
+     */
+    where: PersonalCalEventWhereUniqueInput
+    /**
+     * In case the PersonalCalEvent found by the `where` argument doesn't exist, create a new PersonalCalEvent with this data.
+     */
+    create: XOR<PersonalCalEventCreateInput, PersonalCalEventUncheckedCreateInput>
+    /**
+     * In case the PersonalCalEvent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PersonalCalEventUpdateInput, PersonalCalEventUncheckedUpdateInput>
+  }
+
+  /**
+   * PersonalCalEvent delete
+   */
+  export type PersonalCalEventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalCalEvent
+     */
+    select?: PersonalCalEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalCalEvent
+     */
+    omit?: PersonalCalEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalCalEventInclude<ExtArgs> | null
+    /**
+     * Filter which PersonalCalEvent to delete.
+     */
+    where: PersonalCalEventWhereUniqueInput
+  }
+
+  /**
+   * PersonalCalEvent deleteMany
+   */
+  export type PersonalCalEventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PersonalCalEvents to delete
+     */
+    where?: PersonalCalEventWhereInput
+    /**
+     * Limit how many PersonalCalEvents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PersonalCalEvent without action
+   */
+  export type PersonalCalEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PersonalCalEvent
+     */
+    select?: PersonalCalEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PersonalCalEvent
+     */
+    omit?: PersonalCalEventOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PersonalCalEventInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -23682,6 +32452,128 @@ export namespace Prisma {
   export type RawProductScalarFieldEnum = (typeof RawProductScalarFieldEnum)[keyof typeof RawProductScalarFieldEnum]
 
 
+  export const MediaMemberScalarFieldEnum: {
+    userId: 'userId',
+    code: 'code',
+    role: 'role',
+    idcc: 'idcc',
+    offDays: 'offDays',
+    phone: 'phone',
+    avColor: 'avColor',
+    avAnimal: 'avAnimal',
+    avPhotoKey: 'avPhotoKey',
+    pcalColor: 'pcalColor',
+    pcalNotes: 'pcalNotes',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MediaMemberScalarFieldEnum = (typeof MediaMemberScalarFieldEnum)[keyof typeof MediaMemberScalarFieldEnum]
+
+
+  export const MediaItemScalarFieldEnum: {
+    id: 'id',
+    name: 'name',
+    color: 'color',
+    cat: 'cat',
+    gender: 'gender',
+    qty: 'qty',
+    arrived: 'arrived',
+    tier: 'tier',
+    seasonal: 'seasonal',
+    old: 'old',
+    thumb: 'thumb',
+    photoKey: 'photoKey',
+    createdById: 'createdById',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MediaItemScalarFieldEnum = (typeof MediaItemScalarFieldEnum)[keyof typeof MediaItemScalarFieldEnum]
+
+
+  export const MediaTaskScalarFieldEnum: {
+    id: 'id',
+    itemId: 'itemId',
+    type: 'type',
+    title: 'title',
+    cat: 'cat',
+    status: 'status',
+    source: 'source',
+    reason: 'reason',
+    producer: 'producer',
+    editor: 'editor',
+    talent: 'talent',
+    script: 'script',
+    shootPlan: 'shootPlan',
+    editPlan: 'editPlan',
+    postAt: 'postAt',
+    postTime: 'postTime',
+    due: 'due',
+    target: 'target',
+    locked: 'locked',
+    checked: 'checked',
+    metaAt: 'metaAt',
+    driveUrl: 'driveUrl',
+    note: 'note',
+    history: 'history',
+    eventKey: 'eventKey',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MediaTaskScalarFieldEnum = (typeof MediaTaskScalarFieldEnum)[keyof typeof MediaTaskScalarFieldEnum]
+
+
+  export const MediaSettingsScalarFieldEnum: {
+    id: 'id',
+    jobdesk: 'jobdesk',
+    idccDay: 'idccDay',
+    idccQty: 'idccQty',
+    idccDays: 'idccDays',
+    captionTemplate: 'captionTemplate',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MediaSettingsScalarFieldEnum = (typeof MediaSettingsScalarFieldEnum)[keyof typeof MediaSettingsScalarFieldEnum]
+
+
+  export const MediaIdccReportScalarFieldEnum: {
+    id: 'id',
+    reportDate: 'reportDate',
+    data: 'data',
+    summary: 'summary',
+    createdById: 'createdById',
+    createdAt: 'createdAt'
+  };
+
+  export type MediaIdccReportScalarFieldEnum = (typeof MediaIdccReportScalarFieldEnum)[keyof typeof MediaIdccReportScalarFieldEnum]
+
+
+  export const MediaBalanceLogScalarFieldEnum: {
+    id: 'id',
+    entries: 'entries',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MediaBalanceLogScalarFieldEnum = (typeof MediaBalanceLogScalarFieldEnum)[keyof typeof MediaBalanceLogScalarFieldEnum]
+
+
+  export const PersonalCalEventScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    date: 'date',
+    title: 'title',
+    time: 'time',
+    color: 'color',
+    note: 'note',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PersonalCalEventScalarFieldEnum = (typeof PersonalCalEventScalarFieldEnum)[keyof typeof PersonalCalEventScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -23696,6 +32588,13 @@ export namespace Prisma {
   };
 
   export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
+
+
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -23887,6 +32786,34 @@ export namespace Prisma {
    */
   export type ListEnumRawProductStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RawProductStatus[]'>
     
+
+
+  /**
+   * Reference to a field of type 'MediaRole'
+   */
+  export type EnumMediaRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'MediaRole[]'
+   */
+  export type ListEnumMediaRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaRole[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'MediaTier'
+   */
+  export type EnumMediaTierFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaTier'>
+    
+
+
+  /**
+   * Reference to a field of type 'MediaTier[]'
+   */
+  export type ListEnumMediaTierFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MediaTier[]'>
+    
   /**
    * Deep Input Types
    */
@@ -23925,6 +32852,9 @@ export namespace Prisma {
     rawCreated?: RawProductListRelationFilter
     rawQc?: RawProductListRelationFilter
     calendarEvents?: CalendarEventListRelationFilter
+    mediaMember?: XOR<MediaMemberNullableScalarRelationFilter, MediaMemberWhereInput> | null
+    mediaItems?: MediaItemListRelationFilter
+    personalCalEvents?: PersonalCalEventListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -23957,6 +32887,9 @@ export namespace Prisma {
     rawCreated?: RawProductOrderByRelationAggregateInput
     rawQc?: RawProductOrderByRelationAggregateInput
     calendarEvents?: CalendarEventOrderByRelationAggregateInput
+    mediaMember?: MediaMemberOrderByWithRelationInput
+    mediaItems?: MediaItemOrderByRelationAggregateInput
+    personalCalEvents?: PersonalCalEventOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -23992,6 +32925,9 @@ export namespace Prisma {
     rawCreated?: RawProductListRelationFilter
     rawQc?: RawProductListRelationFilter
     calendarEvents?: CalendarEventListRelationFilter
+    mediaMember?: XOR<MediaMemberNullableScalarRelationFilter, MediaMemberWhereInput> | null
+    mediaItems?: MediaItemListRelationFilter
+    personalCalEvents?: PersonalCalEventListRelationFilter
   }, "id" | "email" | "waNumber">
 
   export type UserOrderByWithAggregationInput = {
@@ -25286,6 +34222,618 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"RawProduct"> | Date | string
   }
 
+  export type MediaMemberWhereInput = {
+    AND?: MediaMemberWhereInput | MediaMemberWhereInput[]
+    OR?: MediaMemberWhereInput[]
+    NOT?: MediaMemberWhereInput | MediaMemberWhereInput[]
+    userId?: StringFilter<"MediaMember"> | string
+    code?: StringFilter<"MediaMember"> | string
+    role?: EnumMediaRoleFilter<"MediaMember"> | $Enums.MediaRole
+    idcc?: BoolFilter<"MediaMember"> | boolean
+    offDays?: IntNullableListFilter<"MediaMember">
+    phone?: StringNullableFilter<"MediaMember"> | string | null
+    avColor?: StringFilter<"MediaMember"> | string
+    avAnimal?: StringNullableFilter<"MediaMember"> | string | null
+    avPhotoKey?: StringNullableFilter<"MediaMember"> | string | null
+    pcalColor?: StringFilter<"MediaMember"> | string
+    pcalNotes?: StringNullableFilter<"MediaMember"> | string | null
+    createdAt?: DateTimeFilter<"MediaMember"> | Date | string
+    updatedAt?: DateTimeFilter<"MediaMember"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type MediaMemberOrderByWithRelationInput = {
+    userId?: SortOrder
+    code?: SortOrder
+    role?: SortOrder
+    idcc?: SortOrder
+    offDays?: SortOrder
+    phone?: SortOrderInput | SortOrder
+    avColor?: SortOrder
+    avAnimal?: SortOrderInput | SortOrder
+    avPhotoKey?: SortOrderInput | SortOrder
+    pcalColor?: SortOrder
+    pcalNotes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type MediaMemberWhereUniqueInput = Prisma.AtLeast<{
+    userId?: string
+    code?: string
+    AND?: MediaMemberWhereInput | MediaMemberWhereInput[]
+    OR?: MediaMemberWhereInput[]
+    NOT?: MediaMemberWhereInput | MediaMemberWhereInput[]
+    role?: EnumMediaRoleFilter<"MediaMember"> | $Enums.MediaRole
+    idcc?: BoolFilter<"MediaMember"> | boolean
+    offDays?: IntNullableListFilter<"MediaMember">
+    phone?: StringNullableFilter<"MediaMember"> | string | null
+    avColor?: StringFilter<"MediaMember"> | string
+    avAnimal?: StringNullableFilter<"MediaMember"> | string | null
+    avPhotoKey?: StringNullableFilter<"MediaMember"> | string | null
+    pcalColor?: StringFilter<"MediaMember"> | string
+    pcalNotes?: StringNullableFilter<"MediaMember"> | string | null
+    createdAt?: DateTimeFilter<"MediaMember"> | Date | string
+    updatedAt?: DateTimeFilter<"MediaMember"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "userId" | "code">
+
+  export type MediaMemberOrderByWithAggregationInput = {
+    userId?: SortOrder
+    code?: SortOrder
+    role?: SortOrder
+    idcc?: SortOrder
+    offDays?: SortOrder
+    phone?: SortOrderInput | SortOrder
+    avColor?: SortOrder
+    avAnimal?: SortOrderInput | SortOrder
+    avPhotoKey?: SortOrderInput | SortOrder
+    pcalColor?: SortOrder
+    pcalNotes?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MediaMemberCountOrderByAggregateInput
+    _avg?: MediaMemberAvgOrderByAggregateInput
+    _max?: MediaMemberMaxOrderByAggregateInput
+    _min?: MediaMemberMinOrderByAggregateInput
+    _sum?: MediaMemberSumOrderByAggregateInput
+  }
+
+  export type MediaMemberScalarWhereWithAggregatesInput = {
+    AND?: MediaMemberScalarWhereWithAggregatesInput | MediaMemberScalarWhereWithAggregatesInput[]
+    OR?: MediaMemberScalarWhereWithAggregatesInput[]
+    NOT?: MediaMemberScalarWhereWithAggregatesInput | MediaMemberScalarWhereWithAggregatesInput[]
+    userId?: StringWithAggregatesFilter<"MediaMember"> | string
+    code?: StringWithAggregatesFilter<"MediaMember"> | string
+    role?: EnumMediaRoleWithAggregatesFilter<"MediaMember"> | $Enums.MediaRole
+    idcc?: BoolWithAggregatesFilter<"MediaMember"> | boolean
+    offDays?: IntNullableListFilter<"MediaMember">
+    phone?: StringNullableWithAggregatesFilter<"MediaMember"> | string | null
+    avColor?: StringWithAggregatesFilter<"MediaMember"> | string
+    avAnimal?: StringNullableWithAggregatesFilter<"MediaMember"> | string | null
+    avPhotoKey?: StringNullableWithAggregatesFilter<"MediaMember"> | string | null
+    pcalColor?: StringWithAggregatesFilter<"MediaMember"> | string
+    pcalNotes?: StringNullableWithAggregatesFilter<"MediaMember"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"MediaMember"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"MediaMember"> | Date | string
+  }
+
+  export type MediaItemWhereInput = {
+    AND?: MediaItemWhereInput | MediaItemWhereInput[]
+    OR?: MediaItemWhereInput[]
+    NOT?: MediaItemWhereInput | MediaItemWhereInput[]
+    id?: StringFilter<"MediaItem"> | string
+    name?: StringFilter<"MediaItem"> | string
+    color?: StringNullableFilter<"MediaItem"> | string | null
+    cat?: StringFilter<"MediaItem"> | string
+    gender?: StringNullableFilter<"MediaItem"> | string | null
+    qty?: IntFilter<"MediaItem"> | number
+    arrived?: DateTimeFilter<"MediaItem"> | Date | string
+    tier?: EnumMediaTierFilter<"MediaItem"> | $Enums.MediaTier
+    seasonal?: BoolFilter<"MediaItem"> | boolean
+    old?: BoolFilter<"MediaItem"> | boolean
+    thumb?: StringNullableFilter<"MediaItem"> | string | null
+    photoKey?: StringNullableFilter<"MediaItem"> | string | null
+    createdById?: StringFilter<"MediaItem"> | string
+    createdAt?: DateTimeFilter<"MediaItem"> | Date | string
+    updatedAt?: DateTimeFilter<"MediaItem"> | Date | string
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    tasks?: MediaTaskListRelationFilter
+  }
+
+  export type MediaItemOrderByWithRelationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    color?: SortOrderInput | SortOrder
+    cat?: SortOrder
+    gender?: SortOrderInput | SortOrder
+    qty?: SortOrder
+    arrived?: SortOrder
+    tier?: SortOrder
+    seasonal?: SortOrder
+    old?: SortOrder
+    thumb?: SortOrderInput | SortOrder
+    photoKey?: SortOrderInput | SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    createdBy?: UserOrderByWithRelationInput
+    tasks?: MediaTaskOrderByRelationAggregateInput
+  }
+
+  export type MediaItemWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MediaItemWhereInput | MediaItemWhereInput[]
+    OR?: MediaItemWhereInput[]
+    NOT?: MediaItemWhereInput | MediaItemWhereInput[]
+    name?: StringFilter<"MediaItem"> | string
+    color?: StringNullableFilter<"MediaItem"> | string | null
+    cat?: StringFilter<"MediaItem"> | string
+    gender?: StringNullableFilter<"MediaItem"> | string | null
+    qty?: IntFilter<"MediaItem"> | number
+    arrived?: DateTimeFilter<"MediaItem"> | Date | string
+    tier?: EnumMediaTierFilter<"MediaItem"> | $Enums.MediaTier
+    seasonal?: BoolFilter<"MediaItem"> | boolean
+    old?: BoolFilter<"MediaItem"> | boolean
+    thumb?: StringNullableFilter<"MediaItem"> | string | null
+    photoKey?: StringNullableFilter<"MediaItem"> | string | null
+    createdById?: StringFilter<"MediaItem"> | string
+    createdAt?: DateTimeFilter<"MediaItem"> | Date | string
+    updatedAt?: DateTimeFilter<"MediaItem"> | Date | string
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+    tasks?: MediaTaskListRelationFilter
+  }, "id">
+
+  export type MediaItemOrderByWithAggregationInput = {
+    id?: SortOrder
+    name?: SortOrder
+    color?: SortOrderInput | SortOrder
+    cat?: SortOrder
+    gender?: SortOrderInput | SortOrder
+    qty?: SortOrder
+    arrived?: SortOrder
+    tier?: SortOrder
+    seasonal?: SortOrder
+    old?: SortOrder
+    thumb?: SortOrderInput | SortOrder
+    photoKey?: SortOrderInput | SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MediaItemCountOrderByAggregateInput
+    _avg?: MediaItemAvgOrderByAggregateInput
+    _max?: MediaItemMaxOrderByAggregateInput
+    _min?: MediaItemMinOrderByAggregateInput
+    _sum?: MediaItemSumOrderByAggregateInput
+  }
+
+  export type MediaItemScalarWhereWithAggregatesInput = {
+    AND?: MediaItemScalarWhereWithAggregatesInput | MediaItemScalarWhereWithAggregatesInput[]
+    OR?: MediaItemScalarWhereWithAggregatesInput[]
+    NOT?: MediaItemScalarWhereWithAggregatesInput | MediaItemScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MediaItem"> | string
+    name?: StringWithAggregatesFilter<"MediaItem"> | string
+    color?: StringNullableWithAggregatesFilter<"MediaItem"> | string | null
+    cat?: StringWithAggregatesFilter<"MediaItem"> | string
+    gender?: StringNullableWithAggregatesFilter<"MediaItem"> | string | null
+    qty?: IntWithAggregatesFilter<"MediaItem"> | number
+    arrived?: DateTimeWithAggregatesFilter<"MediaItem"> | Date | string
+    tier?: EnumMediaTierWithAggregatesFilter<"MediaItem"> | $Enums.MediaTier
+    seasonal?: BoolWithAggregatesFilter<"MediaItem"> | boolean
+    old?: BoolWithAggregatesFilter<"MediaItem"> | boolean
+    thumb?: StringNullableWithAggregatesFilter<"MediaItem"> | string | null
+    photoKey?: StringNullableWithAggregatesFilter<"MediaItem"> | string | null
+    createdById?: StringWithAggregatesFilter<"MediaItem"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"MediaItem"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"MediaItem"> | Date | string
+  }
+
+  export type MediaTaskWhereInput = {
+    AND?: MediaTaskWhereInput | MediaTaskWhereInput[]
+    OR?: MediaTaskWhereInput[]
+    NOT?: MediaTaskWhereInput | MediaTaskWhereInput[]
+    id?: StringFilter<"MediaTask"> | string
+    itemId?: StringNullableFilter<"MediaTask"> | string | null
+    type?: StringFilter<"MediaTask"> | string
+    title?: StringFilter<"MediaTask"> | string
+    cat?: StringNullableFilter<"MediaTask"> | string | null
+    status?: StringFilter<"MediaTask"> | string
+    source?: StringNullableFilter<"MediaTask"> | string | null
+    reason?: StringNullableFilter<"MediaTask"> | string | null
+    producer?: StringNullableFilter<"MediaTask"> | string | null
+    editor?: StringNullableFilter<"MediaTask"> | string | null
+    talent?: StringNullableFilter<"MediaTask"> | string | null
+    script?: StringNullableFilter<"MediaTask"> | string | null
+    shootPlan?: StringNullableFilter<"MediaTask"> | string | null
+    editPlan?: StringNullableFilter<"MediaTask"> | string | null
+    postAt?: StringNullableFilter<"MediaTask"> | string | null
+    postTime?: StringNullableFilter<"MediaTask"> | string | null
+    due?: StringNullableFilter<"MediaTask"> | string | null
+    target?: StringNullableFilter<"MediaTask"> | string | null
+    locked?: BoolFilter<"MediaTask"> | boolean
+    checked?: BoolFilter<"MediaTask"> | boolean
+    metaAt?: DateTimeNullableFilter<"MediaTask"> | Date | string | null
+    driveUrl?: StringNullableFilter<"MediaTask"> | string | null
+    note?: StringNullableFilter<"MediaTask"> | string | null
+    history?: JsonNullableFilter<"MediaTask">
+    eventKey?: StringNullableFilter<"MediaTask"> | string | null
+    createdAt?: DateTimeFilter<"MediaTask"> | Date | string
+    updatedAt?: DateTimeFilter<"MediaTask"> | Date | string
+    item?: XOR<MediaItemNullableScalarRelationFilter, MediaItemWhereInput> | null
+  }
+
+  export type MediaTaskOrderByWithRelationInput = {
+    id?: SortOrder
+    itemId?: SortOrderInput | SortOrder
+    type?: SortOrder
+    title?: SortOrder
+    cat?: SortOrderInput | SortOrder
+    status?: SortOrder
+    source?: SortOrderInput | SortOrder
+    reason?: SortOrderInput | SortOrder
+    producer?: SortOrderInput | SortOrder
+    editor?: SortOrderInput | SortOrder
+    talent?: SortOrderInput | SortOrder
+    script?: SortOrderInput | SortOrder
+    shootPlan?: SortOrderInput | SortOrder
+    editPlan?: SortOrderInput | SortOrder
+    postAt?: SortOrderInput | SortOrder
+    postTime?: SortOrderInput | SortOrder
+    due?: SortOrderInput | SortOrder
+    target?: SortOrderInput | SortOrder
+    locked?: SortOrder
+    checked?: SortOrder
+    metaAt?: SortOrderInput | SortOrder
+    driveUrl?: SortOrderInput | SortOrder
+    note?: SortOrderInput | SortOrder
+    history?: SortOrderInput | SortOrder
+    eventKey?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    item?: MediaItemOrderByWithRelationInput
+  }
+
+  export type MediaTaskWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MediaTaskWhereInput | MediaTaskWhereInput[]
+    OR?: MediaTaskWhereInput[]
+    NOT?: MediaTaskWhereInput | MediaTaskWhereInput[]
+    itemId?: StringNullableFilter<"MediaTask"> | string | null
+    type?: StringFilter<"MediaTask"> | string
+    title?: StringFilter<"MediaTask"> | string
+    cat?: StringNullableFilter<"MediaTask"> | string | null
+    status?: StringFilter<"MediaTask"> | string
+    source?: StringNullableFilter<"MediaTask"> | string | null
+    reason?: StringNullableFilter<"MediaTask"> | string | null
+    producer?: StringNullableFilter<"MediaTask"> | string | null
+    editor?: StringNullableFilter<"MediaTask"> | string | null
+    talent?: StringNullableFilter<"MediaTask"> | string | null
+    script?: StringNullableFilter<"MediaTask"> | string | null
+    shootPlan?: StringNullableFilter<"MediaTask"> | string | null
+    editPlan?: StringNullableFilter<"MediaTask"> | string | null
+    postAt?: StringNullableFilter<"MediaTask"> | string | null
+    postTime?: StringNullableFilter<"MediaTask"> | string | null
+    due?: StringNullableFilter<"MediaTask"> | string | null
+    target?: StringNullableFilter<"MediaTask"> | string | null
+    locked?: BoolFilter<"MediaTask"> | boolean
+    checked?: BoolFilter<"MediaTask"> | boolean
+    metaAt?: DateTimeNullableFilter<"MediaTask"> | Date | string | null
+    driveUrl?: StringNullableFilter<"MediaTask"> | string | null
+    note?: StringNullableFilter<"MediaTask"> | string | null
+    history?: JsonNullableFilter<"MediaTask">
+    eventKey?: StringNullableFilter<"MediaTask"> | string | null
+    createdAt?: DateTimeFilter<"MediaTask"> | Date | string
+    updatedAt?: DateTimeFilter<"MediaTask"> | Date | string
+    item?: XOR<MediaItemNullableScalarRelationFilter, MediaItemWhereInput> | null
+  }, "id">
+
+  export type MediaTaskOrderByWithAggregationInput = {
+    id?: SortOrder
+    itemId?: SortOrderInput | SortOrder
+    type?: SortOrder
+    title?: SortOrder
+    cat?: SortOrderInput | SortOrder
+    status?: SortOrder
+    source?: SortOrderInput | SortOrder
+    reason?: SortOrderInput | SortOrder
+    producer?: SortOrderInput | SortOrder
+    editor?: SortOrderInput | SortOrder
+    talent?: SortOrderInput | SortOrder
+    script?: SortOrderInput | SortOrder
+    shootPlan?: SortOrderInput | SortOrder
+    editPlan?: SortOrderInput | SortOrder
+    postAt?: SortOrderInput | SortOrder
+    postTime?: SortOrderInput | SortOrder
+    due?: SortOrderInput | SortOrder
+    target?: SortOrderInput | SortOrder
+    locked?: SortOrder
+    checked?: SortOrder
+    metaAt?: SortOrderInput | SortOrder
+    driveUrl?: SortOrderInput | SortOrder
+    note?: SortOrderInput | SortOrder
+    history?: SortOrderInput | SortOrder
+    eventKey?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MediaTaskCountOrderByAggregateInput
+    _max?: MediaTaskMaxOrderByAggregateInput
+    _min?: MediaTaskMinOrderByAggregateInput
+  }
+
+  export type MediaTaskScalarWhereWithAggregatesInput = {
+    AND?: MediaTaskScalarWhereWithAggregatesInput | MediaTaskScalarWhereWithAggregatesInput[]
+    OR?: MediaTaskScalarWhereWithAggregatesInput[]
+    NOT?: MediaTaskScalarWhereWithAggregatesInput | MediaTaskScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MediaTask"> | string
+    itemId?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    type?: StringWithAggregatesFilter<"MediaTask"> | string
+    title?: StringWithAggregatesFilter<"MediaTask"> | string
+    cat?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    status?: StringWithAggregatesFilter<"MediaTask"> | string
+    source?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    reason?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    producer?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    editor?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    talent?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    script?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    shootPlan?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    editPlan?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    postAt?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    postTime?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    due?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    target?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    locked?: BoolWithAggregatesFilter<"MediaTask"> | boolean
+    checked?: BoolWithAggregatesFilter<"MediaTask"> | boolean
+    metaAt?: DateTimeNullableWithAggregatesFilter<"MediaTask"> | Date | string | null
+    driveUrl?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    note?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    history?: JsonNullableWithAggregatesFilter<"MediaTask">
+    eventKey?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"MediaTask"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"MediaTask"> | Date | string
+  }
+
+  export type MediaSettingsWhereInput = {
+    AND?: MediaSettingsWhereInput | MediaSettingsWhereInput[]
+    OR?: MediaSettingsWhereInput[]
+    NOT?: MediaSettingsWhereInput | MediaSettingsWhereInput[]
+    id?: IntFilter<"MediaSettings"> | number
+    jobdesk?: JsonNullableFilter<"MediaSettings">
+    idccDay?: IntFilter<"MediaSettings"> | number
+    idccQty?: IntFilter<"MediaSettings"> | number
+    idccDays?: IntFilter<"MediaSettings"> | number
+    captionTemplate?: StringNullableFilter<"MediaSettings"> | string | null
+    updatedAt?: DateTimeFilter<"MediaSettings"> | Date | string
+  }
+
+  export type MediaSettingsOrderByWithRelationInput = {
+    id?: SortOrder
+    jobdesk?: SortOrderInput | SortOrder
+    idccDay?: SortOrder
+    idccQty?: SortOrder
+    idccDays?: SortOrder
+    captionTemplate?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaSettingsWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: MediaSettingsWhereInput | MediaSettingsWhereInput[]
+    OR?: MediaSettingsWhereInput[]
+    NOT?: MediaSettingsWhereInput | MediaSettingsWhereInput[]
+    jobdesk?: JsonNullableFilter<"MediaSettings">
+    idccDay?: IntFilter<"MediaSettings"> | number
+    idccQty?: IntFilter<"MediaSettings"> | number
+    idccDays?: IntFilter<"MediaSettings"> | number
+    captionTemplate?: StringNullableFilter<"MediaSettings"> | string | null
+    updatedAt?: DateTimeFilter<"MediaSettings"> | Date | string
+  }, "id">
+
+  export type MediaSettingsOrderByWithAggregationInput = {
+    id?: SortOrder
+    jobdesk?: SortOrderInput | SortOrder
+    idccDay?: SortOrder
+    idccQty?: SortOrder
+    idccDays?: SortOrder
+    captionTemplate?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    _count?: MediaSettingsCountOrderByAggregateInput
+    _avg?: MediaSettingsAvgOrderByAggregateInput
+    _max?: MediaSettingsMaxOrderByAggregateInput
+    _min?: MediaSettingsMinOrderByAggregateInput
+    _sum?: MediaSettingsSumOrderByAggregateInput
+  }
+
+  export type MediaSettingsScalarWhereWithAggregatesInput = {
+    AND?: MediaSettingsScalarWhereWithAggregatesInput | MediaSettingsScalarWhereWithAggregatesInput[]
+    OR?: MediaSettingsScalarWhereWithAggregatesInput[]
+    NOT?: MediaSettingsScalarWhereWithAggregatesInput | MediaSettingsScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"MediaSettings"> | number
+    jobdesk?: JsonNullableWithAggregatesFilter<"MediaSettings">
+    idccDay?: IntWithAggregatesFilter<"MediaSettings"> | number
+    idccQty?: IntWithAggregatesFilter<"MediaSettings"> | number
+    idccDays?: IntWithAggregatesFilter<"MediaSettings"> | number
+    captionTemplate?: StringNullableWithAggregatesFilter<"MediaSettings"> | string | null
+    updatedAt?: DateTimeWithAggregatesFilter<"MediaSettings"> | Date | string
+  }
+
+  export type MediaIdccReportWhereInput = {
+    AND?: MediaIdccReportWhereInput | MediaIdccReportWhereInput[]
+    OR?: MediaIdccReportWhereInput[]
+    NOT?: MediaIdccReportWhereInput | MediaIdccReportWhereInput[]
+    id?: StringFilter<"MediaIdccReport"> | string
+    reportDate?: DateTimeNullableFilter<"MediaIdccReport"> | Date | string | null
+    data?: JsonFilter<"MediaIdccReport">
+    summary?: StringNullableFilter<"MediaIdccReport"> | string | null
+    createdById?: StringFilter<"MediaIdccReport"> | string
+    createdAt?: DateTimeFilter<"MediaIdccReport"> | Date | string
+  }
+
+  export type MediaIdccReportOrderByWithRelationInput = {
+    id?: SortOrder
+    reportDate?: SortOrderInput | SortOrder
+    data?: SortOrder
+    summary?: SortOrderInput | SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MediaIdccReportWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MediaIdccReportWhereInput | MediaIdccReportWhereInput[]
+    OR?: MediaIdccReportWhereInput[]
+    NOT?: MediaIdccReportWhereInput | MediaIdccReportWhereInput[]
+    reportDate?: DateTimeNullableFilter<"MediaIdccReport"> | Date | string | null
+    data?: JsonFilter<"MediaIdccReport">
+    summary?: StringNullableFilter<"MediaIdccReport"> | string | null
+    createdById?: StringFilter<"MediaIdccReport"> | string
+    createdAt?: DateTimeFilter<"MediaIdccReport"> | Date | string
+  }, "id">
+
+  export type MediaIdccReportOrderByWithAggregationInput = {
+    id?: SortOrder
+    reportDate?: SortOrderInput | SortOrder
+    data?: SortOrder
+    summary?: SortOrderInput | SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    _count?: MediaIdccReportCountOrderByAggregateInput
+    _max?: MediaIdccReportMaxOrderByAggregateInput
+    _min?: MediaIdccReportMinOrderByAggregateInput
+  }
+
+  export type MediaIdccReportScalarWhereWithAggregatesInput = {
+    AND?: MediaIdccReportScalarWhereWithAggregatesInput | MediaIdccReportScalarWhereWithAggregatesInput[]
+    OR?: MediaIdccReportScalarWhereWithAggregatesInput[]
+    NOT?: MediaIdccReportScalarWhereWithAggregatesInput | MediaIdccReportScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MediaIdccReport"> | string
+    reportDate?: DateTimeNullableWithAggregatesFilter<"MediaIdccReport"> | Date | string | null
+    data?: JsonWithAggregatesFilter<"MediaIdccReport">
+    summary?: StringNullableWithAggregatesFilter<"MediaIdccReport"> | string | null
+    createdById?: StringWithAggregatesFilter<"MediaIdccReport"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"MediaIdccReport"> | Date | string
+  }
+
+  export type MediaBalanceLogWhereInput = {
+    AND?: MediaBalanceLogWhereInput | MediaBalanceLogWhereInput[]
+    OR?: MediaBalanceLogWhereInput[]
+    NOT?: MediaBalanceLogWhereInput | MediaBalanceLogWhereInput[]
+    id?: IntFilter<"MediaBalanceLog"> | number
+    entries?: JsonFilter<"MediaBalanceLog">
+    updatedAt?: DateTimeFilter<"MediaBalanceLog"> | Date | string
+  }
+
+  export type MediaBalanceLogOrderByWithRelationInput = {
+    id?: SortOrder
+    entries?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaBalanceLogWhereUniqueInput = Prisma.AtLeast<{
+    id?: number
+    AND?: MediaBalanceLogWhereInput | MediaBalanceLogWhereInput[]
+    OR?: MediaBalanceLogWhereInput[]
+    NOT?: MediaBalanceLogWhereInput | MediaBalanceLogWhereInput[]
+    entries?: JsonFilter<"MediaBalanceLog">
+    updatedAt?: DateTimeFilter<"MediaBalanceLog"> | Date | string
+  }, "id">
+
+  export type MediaBalanceLogOrderByWithAggregationInput = {
+    id?: SortOrder
+    entries?: SortOrder
+    updatedAt?: SortOrder
+    _count?: MediaBalanceLogCountOrderByAggregateInput
+    _avg?: MediaBalanceLogAvgOrderByAggregateInput
+    _max?: MediaBalanceLogMaxOrderByAggregateInput
+    _min?: MediaBalanceLogMinOrderByAggregateInput
+    _sum?: MediaBalanceLogSumOrderByAggregateInput
+  }
+
+  export type MediaBalanceLogScalarWhereWithAggregatesInput = {
+    AND?: MediaBalanceLogScalarWhereWithAggregatesInput | MediaBalanceLogScalarWhereWithAggregatesInput[]
+    OR?: MediaBalanceLogScalarWhereWithAggregatesInput[]
+    NOT?: MediaBalanceLogScalarWhereWithAggregatesInput | MediaBalanceLogScalarWhereWithAggregatesInput[]
+    id?: IntWithAggregatesFilter<"MediaBalanceLog"> | number
+    entries?: JsonWithAggregatesFilter<"MediaBalanceLog">
+    updatedAt?: DateTimeWithAggregatesFilter<"MediaBalanceLog"> | Date | string
+  }
+
+  export type PersonalCalEventWhereInput = {
+    AND?: PersonalCalEventWhereInput | PersonalCalEventWhereInput[]
+    OR?: PersonalCalEventWhereInput[]
+    NOT?: PersonalCalEventWhereInput | PersonalCalEventWhereInput[]
+    id?: StringFilter<"PersonalCalEvent"> | string
+    userId?: StringFilter<"PersonalCalEvent"> | string
+    date?: StringFilter<"PersonalCalEvent"> | string
+    title?: StringFilter<"PersonalCalEvent"> | string
+    time?: StringNullableFilter<"PersonalCalEvent"> | string | null
+    color?: StringFilter<"PersonalCalEvent"> | string
+    note?: StringNullableFilter<"PersonalCalEvent"> | string | null
+    createdAt?: DateTimeFilter<"PersonalCalEvent"> | Date | string
+    updatedAt?: DateTimeFilter<"PersonalCalEvent"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type PersonalCalEventOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    title?: SortOrder
+    time?: SortOrderInput | SortOrder
+    color?: SortOrder
+    note?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type PersonalCalEventWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PersonalCalEventWhereInput | PersonalCalEventWhereInput[]
+    OR?: PersonalCalEventWhereInput[]
+    NOT?: PersonalCalEventWhereInput | PersonalCalEventWhereInput[]
+    userId?: StringFilter<"PersonalCalEvent"> | string
+    date?: StringFilter<"PersonalCalEvent"> | string
+    title?: StringFilter<"PersonalCalEvent"> | string
+    time?: StringNullableFilter<"PersonalCalEvent"> | string | null
+    color?: StringFilter<"PersonalCalEvent"> | string
+    note?: StringNullableFilter<"PersonalCalEvent"> | string | null
+    createdAt?: DateTimeFilter<"PersonalCalEvent"> | Date | string
+    updatedAt?: DateTimeFilter<"PersonalCalEvent"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type PersonalCalEventOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    title?: SortOrder
+    time?: SortOrderInput | SortOrder
+    color?: SortOrder
+    note?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PersonalCalEventCountOrderByAggregateInput
+    _max?: PersonalCalEventMaxOrderByAggregateInput
+    _min?: PersonalCalEventMinOrderByAggregateInput
+  }
+
+  export type PersonalCalEventScalarWhereWithAggregatesInput = {
+    AND?: PersonalCalEventScalarWhereWithAggregatesInput | PersonalCalEventScalarWhereWithAggregatesInput[]
+    OR?: PersonalCalEventScalarWhereWithAggregatesInput[]
+    NOT?: PersonalCalEventScalarWhereWithAggregatesInput | PersonalCalEventScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PersonalCalEvent"> | string
+    userId?: StringWithAggregatesFilter<"PersonalCalEvent"> | string
+    date?: StringWithAggregatesFilter<"PersonalCalEvent"> | string
+    title?: StringWithAggregatesFilter<"PersonalCalEvent"> | string
+    time?: StringNullableWithAggregatesFilter<"PersonalCalEvent"> | string | null
+    color?: StringWithAggregatesFilter<"PersonalCalEvent"> | string
+    note?: StringNullableWithAggregatesFilter<"PersonalCalEvent"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"PersonalCalEvent"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PersonalCalEvent"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     fullName: string
@@ -25315,6 +34863,9 @@ export namespace Prisma {
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -25346,6 +34897,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -25377,6 +34931,9 @@ export namespace Prisma {
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -25408,6 +34965,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -26809,6 +36369,713 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type MediaMemberCreateInput = {
+    code: string
+    role?: $Enums.MediaRole
+    idcc?: boolean
+    offDays?: MediaMemberCreateoffDaysInput | number[]
+    phone?: string | null
+    avColor?: string
+    avAnimal?: string | null
+    avPhotoKey?: string | null
+    pcalColor?: string
+    pcalNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutMediaMemberInput
+  }
+
+  export type MediaMemberUncheckedCreateInput = {
+    userId: string
+    code: string
+    role?: $Enums.MediaRole
+    idcc?: boolean
+    offDays?: MediaMemberCreateoffDaysInput | number[]
+    phone?: string | null
+    avColor?: string
+    avAnimal?: string | null
+    avPhotoKey?: string | null
+    pcalColor?: string
+    pcalNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaMemberUpdateInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    role?: EnumMediaRoleFieldUpdateOperationsInput | $Enums.MediaRole
+    idcc?: BoolFieldUpdateOperationsInput | boolean
+    offDays?: MediaMemberUpdateoffDaysInput | number[]
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    avColor?: StringFieldUpdateOperationsInput | string
+    avAnimal?: NullableStringFieldUpdateOperationsInput | string | null
+    avPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    pcalColor?: StringFieldUpdateOperationsInput | string
+    pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutMediaMemberNestedInput
+  }
+
+  export type MediaMemberUncheckedUpdateInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    role?: EnumMediaRoleFieldUpdateOperationsInput | $Enums.MediaRole
+    idcc?: BoolFieldUpdateOperationsInput | boolean
+    offDays?: MediaMemberUpdateoffDaysInput | number[]
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    avColor?: StringFieldUpdateOperationsInput | string
+    avAnimal?: NullableStringFieldUpdateOperationsInput | string | null
+    avPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    pcalColor?: StringFieldUpdateOperationsInput | string
+    pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaMemberCreateManyInput = {
+    userId: string
+    code: string
+    role?: $Enums.MediaRole
+    idcc?: boolean
+    offDays?: MediaMemberCreateoffDaysInput | number[]
+    phone?: string | null
+    avColor?: string
+    avAnimal?: string | null
+    avPhotoKey?: string | null
+    pcalColor?: string
+    pcalNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaMemberUpdateManyMutationInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    role?: EnumMediaRoleFieldUpdateOperationsInput | $Enums.MediaRole
+    idcc?: BoolFieldUpdateOperationsInput | boolean
+    offDays?: MediaMemberUpdateoffDaysInput | number[]
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    avColor?: StringFieldUpdateOperationsInput | string
+    avAnimal?: NullableStringFieldUpdateOperationsInput | string | null
+    avPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    pcalColor?: StringFieldUpdateOperationsInput | string
+    pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaMemberUncheckedUpdateManyInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    code?: StringFieldUpdateOperationsInput | string
+    role?: EnumMediaRoleFieldUpdateOperationsInput | $Enums.MediaRole
+    idcc?: BoolFieldUpdateOperationsInput | boolean
+    offDays?: MediaMemberUpdateoffDaysInput | number[]
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    avColor?: StringFieldUpdateOperationsInput | string
+    avAnimal?: NullableStringFieldUpdateOperationsInput | string | null
+    avPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    pcalColor?: StringFieldUpdateOperationsInput | string
+    pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaItemCreateInput = {
+    id?: string
+    name: string
+    color?: string | null
+    cat: string
+    gender?: string | null
+    qty?: number
+    arrived: Date | string
+    tier?: $Enums.MediaTier
+    seasonal?: boolean
+    old?: boolean
+    thumb?: string | null
+    photoKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: UserCreateNestedOneWithoutMediaItemsInput
+    tasks?: MediaTaskCreateNestedManyWithoutItemInput
+  }
+
+  export type MediaItemUncheckedCreateInput = {
+    id?: string
+    name: string
+    color?: string | null
+    cat: string
+    gender?: string | null
+    qty?: number
+    arrived: Date | string
+    tier?: $Enums.MediaTier
+    seasonal?: boolean
+    old?: boolean
+    thumb?: string | null
+    photoKey?: string | null
+    createdById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tasks?: MediaTaskUncheckedCreateNestedManyWithoutItemInput
+  }
+
+  export type MediaItemUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    cat?: StringFieldUpdateOperationsInput | string
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    arrived?: DateTimeFieldUpdateOperationsInput | Date | string
+    tier?: EnumMediaTierFieldUpdateOperationsInput | $Enums.MediaTier
+    seasonal?: BoolFieldUpdateOperationsInput | boolean
+    old?: BoolFieldUpdateOperationsInput | boolean
+    thumb?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneRequiredWithoutMediaItemsNestedInput
+    tasks?: MediaTaskUpdateManyWithoutItemNestedInput
+  }
+
+  export type MediaItemUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    cat?: StringFieldUpdateOperationsInput | string
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    arrived?: DateTimeFieldUpdateOperationsInput | Date | string
+    tier?: EnumMediaTierFieldUpdateOperationsInput | $Enums.MediaTier
+    seasonal?: BoolFieldUpdateOperationsInput | boolean
+    old?: BoolFieldUpdateOperationsInput | boolean
+    thumb?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tasks?: MediaTaskUncheckedUpdateManyWithoutItemNestedInput
+  }
+
+  export type MediaItemCreateManyInput = {
+    id?: string
+    name: string
+    color?: string | null
+    cat: string
+    gender?: string | null
+    qty?: number
+    arrived: Date | string
+    tier?: $Enums.MediaTier
+    seasonal?: boolean
+    old?: boolean
+    thumb?: string | null
+    photoKey?: string | null
+    createdById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaItemUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    cat?: StringFieldUpdateOperationsInput | string
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    arrived?: DateTimeFieldUpdateOperationsInput | Date | string
+    tier?: EnumMediaTierFieldUpdateOperationsInput | $Enums.MediaTier
+    seasonal?: BoolFieldUpdateOperationsInput | boolean
+    old?: BoolFieldUpdateOperationsInput | boolean
+    thumb?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaItemUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    cat?: StringFieldUpdateOperationsInput | string
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    arrived?: DateTimeFieldUpdateOperationsInput | Date | string
+    tier?: EnumMediaTierFieldUpdateOperationsInput | $Enums.MediaTier
+    seasonal?: BoolFieldUpdateOperationsInput | boolean
+    old?: BoolFieldUpdateOperationsInput | boolean
+    thumb?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaTaskCreateInput = {
+    id?: string
+    type: string
+    title: string
+    cat?: string | null
+    status?: string
+    source?: string | null
+    reason?: string | null
+    producer?: string | null
+    editor?: string | null
+    talent?: string | null
+    script?: string | null
+    shootPlan?: string | null
+    editPlan?: string | null
+    postAt?: string | null
+    postTime?: string | null
+    due?: string | null
+    target?: string | null
+    locked?: boolean
+    checked?: boolean
+    metaAt?: Date | string | null
+    driveUrl?: string | null
+    note?: string | null
+    history?: NullableJsonNullValueInput | InputJsonValue
+    eventKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    item?: MediaItemCreateNestedOneWithoutTasksInput
+  }
+
+  export type MediaTaskUncheckedCreateInput = {
+    id?: string
+    itemId?: string | null
+    type: string
+    title: string
+    cat?: string | null
+    status?: string
+    source?: string | null
+    reason?: string | null
+    producer?: string | null
+    editor?: string | null
+    talent?: string | null
+    script?: string | null
+    shootPlan?: string | null
+    editPlan?: string | null
+    postAt?: string | null
+    postTime?: string | null
+    due?: string | null
+    target?: string | null
+    locked?: boolean
+    checked?: boolean
+    metaAt?: Date | string | null
+    driveUrl?: string | null
+    note?: string | null
+    history?: NullableJsonNullValueInput | InputJsonValue
+    eventKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaTaskUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    producer?: NullableStringFieldUpdateOperationsInput | string | null
+    editor?: NullableStringFieldUpdateOperationsInput | string | null
+    talent?: NullableStringFieldUpdateOperationsInput | string | null
+    script?: NullableStringFieldUpdateOperationsInput | string | null
+    shootPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    editPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    postAt?: NullableStringFieldUpdateOperationsInput | string | null
+    postTime?: NullableStringFieldUpdateOperationsInput | string | null
+    due?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableStringFieldUpdateOperationsInput | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    checked?: BoolFieldUpdateOperationsInput | boolean
+    metaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    driveUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    history?: NullableJsonNullValueInput | InputJsonValue
+    eventKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    item?: MediaItemUpdateOneWithoutTasksNestedInput
+  }
+
+  export type MediaTaskUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    producer?: NullableStringFieldUpdateOperationsInput | string | null
+    editor?: NullableStringFieldUpdateOperationsInput | string | null
+    talent?: NullableStringFieldUpdateOperationsInput | string | null
+    script?: NullableStringFieldUpdateOperationsInput | string | null
+    shootPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    editPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    postAt?: NullableStringFieldUpdateOperationsInput | string | null
+    postTime?: NullableStringFieldUpdateOperationsInput | string | null
+    due?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableStringFieldUpdateOperationsInput | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    checked?: BoolFieldUpdateOperationsInput | boolean
+    metaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    driveUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    history?: NullableJsonNullValueInput | InputJsonValue
+    eventKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaTaskCreateManyInput = {
+    id?: string
+    itemId?: string | null
+    type: string
+    title: string
+    cat?: string | null
+    status?: string
+    source?: string | null
+    reason?: string | null
+    producer?: string | null
+    editor?: string | null
+    talent?: string | null
+    script?: string | null
+    shootPlan?: string | null
+    editPlan?: string | null
+    postAt?: string | null
+    postTime?: string | null
+    due?: string | null
+    target?: string | null
+    locked?: boolean
+    checked?: boolean
+    metaAt?: Date | string | null
+    driveUrl?: string | null
+    note?: string | null
+    history?: NullableJsonNullValueInput | InputJsonValue
+    eventKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaTaskUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    producer?: NullableStringFieldUpdateOperationsInput | string | null
+    editor?: NullableStringFieldUpdateOperationsInput | string | null
+    talent?: NullableStringFieldUpdateOperationsInput | string | null
+    script?: NullableStringFieldUpdateOperationsInput | string | null
+    shootPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    editPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    postAt?: NullableStringFieldUpdateOperationsInput | string | null
+    postTime?: NullableStringFieldUpdateOperationsInput | string | null
+    due?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableStringFieldUpdateOperationsInput | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    checked?: BoolFieldUpdateOperationsInput | boolean
+    metaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    driveUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    history?: NullableJsonNullValueInput | InputJsonValue
+    eventKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaTaskUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemId?: NullableStringFieldUpdateOperationsInput | string | null
+    type?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    producer?: NullableStringFieldUpdateOperationsInput | string | null
+    editor?: NullableStringFieldUpdateOperationsInput | string | null
+    talent?: NullableStringFieldUpdateOperationsInput | string | null
+    script?: NullableStringFieldUpdateOperationsInput | string | null
+    shootPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    editPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    postAt?: NullableStringFieldUpdateOperationsInput | string | null
+    postTime?: NullableStringFieldUpdateOperationsInput | string | null
+    due?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableStringFieldUpdateOperationsInput | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    checked?: BoolFieldUpdateOperationsInput | boolean
+    metaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    driveUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    history?: NullableJsonNullValueInput | InputJsonValue
+    eventKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaSettingsCreateInput = {
+    id?: number
+    jobdesk?: NullableJsonNullValueInput | InputJsonValue
+    idccDay?: number
+    idccQty?: number
+    idccDays?: number
+    captionTemplate?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type MediaSettingsUncheckedCreateInput = {
+    id?: number
+    jobdesk?: NullableJsonNullValueInput | InputJsonValue
+    idccDay?: number
+    idccQty?: number
+    idccDays?: number
+    captionTemplate?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type MediaSettingsUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    jobdesk?: NullableJsonNullValueInput | InputJsonValue
+    idccDay?: IntFieldUpdateOperationsInput | number
+    idccQty?: IntFieldUpdateOperationsInput | number
+    idccDays?: IntFieldUpdateOperationsInput | number
+    captionTemplate?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaSettingsUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    jobdesk?: NullableJsonNullValueInput | InputJsonValue
+    idccDay?: IntFieldUpdateOperationsInput | number
+    idccQty?: IntFieldUpdateOperationsInput | number
+    idccDays?: IntFieldUpdateOperationsInput | number
+    captionTemplate?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaSettingsCreateManyInput = {
+    id?: number
+    jobdesk?: NullableJsonNullValueInput | InputJsonValue
+    idccDay?: number
+    idccQty?: number
+    idccDays?: number
+    captionTemplate?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type MediaSettingsUpdateManyMutationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    jobdesk?: NullableJsonNullValueInput | InputJsonValue
+    idccDay?: IntFieldUpdateOperationsInput | number
+    idccQty?: IntFieldUpdateOperationsInput | number
+    idccDays?: IntFieldUpdateOperationsInput | number
+    captionTemplate?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaSettingsUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    jobdesk?: NullableJsonNullValueInput | InputJsonValue
+    idccDay?: IntFieldUpdateOperationsInput | number
+    idccQty?: IntFieldUpdateOperationsInput | number
+    idccDays?: IntFieldUpdateOperationsInput | number
+    captionTemplate?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaIdccReportCreateInput = {
+    id?: string
+    reportDate?: Date | string | null
+    data: JsonNullValueInput | InputJsonValue
+    summary?: string | null
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type MediaIdccReportUncheckedCreateInput = {
+    id?: string
+    reportDate?: Date | string | null
+    data: JsonNullValueInput | InputJsonValue
+    summary?: string | null
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type MediaIdccReportUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaIdccReportUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaIdccReportCreateManyInput = {
+    id?: string
+    reportDate?: Date | string | null
+    data: JsonNullValueInput | InputJsonValue
+    summary?: string | null
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type MediaIdccReportUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaIdccReportUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    reportDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    data?: JsonNullValueInput | InputJsonValue
+    summary?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaBalanceLogCreateInput = {
+    id?: number
+    entries: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+  }
+
+  export type MediaBalanceLogUncheckedCreateInput = {
+    id?: number
+    entries: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+  }
+
+  export type MediaBalanceLogUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    entries?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaBalanceLogUncheckedUpdateInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    entries?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaBalanceLogCreateManyInput = {
+    id?: number
+    entries: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+  }
+
+  export type MediaBalanceLogUpdateManyMutationInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    entries?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaBalanceLogUncheckedUpdateManyInput = {
+    id?: IntFieldUpdateOperationsInput | number
+    entries?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersonalCalEventCreateInput = {
+    id?: string
+    date: string
+    title: string
+    time?: string | null
+    color?: string
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutPersonalCalEventsInput
+  }
+
+  export type PersonalCalEventUncheckedCreateInput = {
+    id?: string
+    userId: string
+    date: string
+    title: string
+    time?: string | null
+    color?: string
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PersonalCalEventUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    time?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPersonalCalEventsNestedInput
+  }
+
+  export type PersonalCalEventUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    time?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersonalCalEventCreateManyInput = {
+    id?: string
+    userId: string
+    date: string
+    title: string
+    time?: string | null
+    color?: string
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PersonalCalEventUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    time?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersonalCalEventUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    time?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -26937,6 +37204,23 @@ export namespace Prisma {
     none?: CalendarEventWhereInput
   }
 
+  export type MediaMemberNullableScalarRelationFilter = {
+    is?: MediaMemberWhereInput | null
+    isNot?: MediaMemberWhereInput | null
+  }
+
+  export type MediaItemListRelationFilter = {
+    every?: MediaItemWhereInput
+    some?: MediaItemWhereInput
+    none?: MediaItemWhereInput
+  }
+
+  export type PersonalCalEventListRelationFilter = {
+    every?: PersonalCalEventWhereInput
+    some?: PersonalCalEventWhereInput
+    none?: PersonalCalEventWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -26983,6 +37267,14 @@ export namespace Prisma {
   }
 
   export type CalendarEventOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MediaItemOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PersonalCalEventOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -28052,6 +38344,435 @@ export namespace Prisma {
     _max?: NestedEnumRawProductStatusFilter<$PrismaModel>
   }
 
+  export type EnumMediaRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaRole | EnumMediaRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaRole[] | ListEnumMediaRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaRole[] | ListEnumMediaRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaRoleFilter<$PrismaModel> | $Enums.MediaRole
+  }
+
+  export type MediaMemberCountOrderByAggregateInput = {
+    userId?: SortOrder
+    code?: SortOrder
+    role?: SortOrder
+    idcc?: SortOrder
+    offDays?: SortOrder
+    phone?: SortOrder
+    avColor?: SortOrder
+    avAnimal?: SortOrder
+    avPhotoKey?: SortOrder
+    pcalColor?: SortOrder
+    pcalNotes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaMemberAvgOrderByAggregateInput = {
+    offDays?: SortOrder
+  }
+
+  export type MediaMemberMaxOrderByAggregateInput = {
+    userId?: SortOrder
+    code?: SortOrder
+    role?: SortOrder
+    idcc?: SortOrder
+    phone?: SortOrder
+    avColor?: SortOrder
+    avAnimal?: SortOrder
+    avPhotoKey?: SortOrder
+    pcalColor?: SortOrder
+    pcalNotes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaMemberMinOrderByAggregateInput = {
+    userId?: SortOrder
+    code?: SortOrder
+    role?: SortOrder
+    idcc?: SortOrder
+    phone?: SortOrder
+    avColor?: SortOrder
+    avAnimal?: SortOrder
+    avPhotoKey?: SortOrder
+    pcalColor?: SortOrder
+    pcalNotes?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaMemberSumOrderByAggregateInput = {
+    offDays?: SortOrder
+  }
+
+  export type EnumMediaRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaRole | EnumMediaRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaRole[] | ListEnumMediaRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaRole[] | ListEnumMediaRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaRoleWithAggregatesFilter<$PrismaModel> | $Enums.MediaRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMediaRoleFilter<$PrismaModel>
+    _max?: NestedEnumMediaRoleFilter<$PrismaModel>
+  }
+
+  export type EnumMediaTierFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaTier | EnumMediaTierFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaTier[] | ListEnumMediaTierFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaTier[] | ListEnumMediaTierFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaTierFilter<$PrismaModel> | $Enums.MediaTier
+  }
+
+  export type MediaTaskListRelationFilter = {
+    every?: MediaTaskWhereInput
+    some?: MediaTaskWhereInput
+    none?: MediaTaskWhereInput
+  }
+
+  export type MediaTaskOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MediaItemCountOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    color?: SortOrder
+    cat?: SortOrder
+    gender?: SortOrder
+    qty?: SortOrder
+    arrived?: SortOrder
+    tier?: SortOrder
+    seasonal?: SortOrder
+    old?: SortOrder
+    thumb?: SortOrder
+    photoKey?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaItemAvgOrderByAggregateInput = {
+    qty?: SortOrder
+  }
+
+  export type MediaItemMaxOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    color?: SortOrder
+    cat?: SortOrder
+    gender?: SortOrder
+    qty?: SortOrder
+    arrived?: SortOrder
+    tier?: SortOrder
+    seasonal?: SortOrder
+    old?: SortOrder
+    thumb?: SortOrder
+    photoKey?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaItemMinOrderByAggregateInput = {
+    id?: SortOrder
+    name?: SortOrder
+    color?: SortOrder
+    cat?: SortOrder
+    gender?: SortOrder
+    qty?: SortOrder
+    arrived?: SortOrder
+    tier?: SortOrder
+    seasonal?: SortOrder
+    old?: SortOrder
+    thumb?: SortOrder
+    photoKey?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaItemSumOrderByAggregateInput = {
+    qty?: SortOrder
+  }
+
+  export type EnumMediaTierWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaTier | EnumMediaTierFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaTier[] | ListEnumMediaTierFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaTier[] | ListEnumMediaTierFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaTierWithAggregatesFilter<$PrismaModel> | $Enums.MediaTier
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMediaTierFilter<$PrismaModel>
+    _max?: NestedEnumMediaTierFilter<$PrismaModel>
+  }
+
+  export type MediaItemNullableScalarRelationFilter = {
+    is?: MediaItemWhereInput | null
+    isNot?: MediaItemWhereInput | null
+  }
+
+  export type MediaTaskCountOrderByAggregateInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    type?: SortOrder
+    title?: SortOrder
+    cat?: SortOrder
+    status?: SortOrder
+    source?: SortOrder
+    reason?: SortOrder
+    producer?: SortOrder
+    editor?: SortOrder
+    talent?: SortOrder
+    script?: SortOrder
+    shootPlan?: SortOrder
+    editPlan?: SortOrder
+    postAt?: SortOrder
+    postTime?: SortOrder
+    due?: SortOrder
+    target?: SortOrder
+    locked?: SortOrder
+    checked?: SortOrder
+    metaAt?: SortOrder
+    driveUrl?: SortOrder
+    note?: SortOrder
+    history?: SortOrder
+    eventKey?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaTaskMaxOrderByAggregateInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    type?: SortOrder
+    title?: SortOrder
+    cat?: SortOrder
+    status?: SortOrder
+    source?: SortOrder
+    reason?: SortOrder
+    producer?: SortOrder
+    editor?: SortOrder
+    talent?: SortOrder
+    script?: SortOrder
+    shootPlan?: SortOrder
+    editPlan?: SortOrder
+    postAt?: SortOrder
+    postTime?: SortOrder
+    due?: SortOrder
+    target?: SortOrder
+    locked?: SortOrder
+    checked?: SortOrder
+    metaAt?: SortOrder
+    driveUrl?: SortOrder
+    note?: SortOrder
+    eventKey?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaTaskMinOrderByAggregateInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    type?: SortOrder
+    title?: SortOrder
+    cat?: SortOrder
+    status?: SortOrder
+    source?: SortOrder
+    reason?: SortOrder
+    producer?: SortOrder
+    editor?: SortOrder
+    talent?: SortOrder
+    script?: SortOrder
+    shootPlan?: SortOrder
+    editPlan?: SortOrder
+    postAt?: SortOrder
+    postTime?: SortOrder
+    due?: SortOrder
+    target?: SortOrder
+    locked?: SortOrder
+    checked?: SortOrder
+    metaAt?: SortOrder
+    driveUrl?: SortOrder
+    note?: SortOrder
+    eventKey?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaSettingsCountOrderByAggregateInput = {
+    id?: SortOrder
+    jobdesk?: SortOrder
+    idccDay?: SortOrder
+    idccQty?: SortOrder
+    idccDays?: SortOrder
+    captionTemplate?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaSettingsAvgOrderByAggregateInput = {
+    id?: SortOrder
+    idccDay?: SortOrder
+    idccQty?: SortOrder
+    idccDays?: SortOrder
+  }
+
+  export type MediaSettingsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    idccDay?: SortOrder
+    idccQty?: SortOrder
+    idccDays?: SortOrder
+    captionTemplate?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaSettingsMinOrderByAggregateInput = {
+    id?: SortOrder
+    idccDay?: SortOrder
+    idccQty?: SortOrder
+    idccDays?: SortOrder
+    captionTemplate?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaSettingsSumOrderByAggregateInput = {
+    id?: SortOrder
+    idccDay?: SortOrder
+    idccQty?: SortOrder
+    idccDays?: SortOrder
+  }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type MediaIdccReportCountOrderByAggregateInput = {
+    id?: SortOrder
+    reportDate?: SortOrder
+    data?: SortOrder
+    summary?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MediaIdccReportMaxOrderByAggregateInput = {
+    id?: SortOrder
+    reportDate?: SortOrder
+    summary?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MediaIdccReportMinOrderByAggregateInput = {
+    id?: SortOrder
+    reportDate?: SortOrder
+    summary?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type MediaBalanceLogCountOrderByAggregateInput = {
+    id?: SortOrder
+    entries?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaBalanceLogAvgOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type MediaBalanceLogMaxOrderByAggregateInput = {
+    id?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaBalanceLogMinOrderByAggregateInput = {
+    id?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaBalanceLogSumOrderByAggregateInput = {
+    id?: SortOrder
+  }
+
+  export type PersonalCalEventCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    title?: SortOrder
+    time?: SortOrder
+    color?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PersonalCalEventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    title?: SortOrder
+    time?: SortOrder
+    color?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PersonalCalEventMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    title?: SortOrder
+    time?: SortOrder
+    color?: SortOrder
+    note?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type BranchCreateNestedOneWithoutUsersInput = {
     create?: XOR<BranchCreateWithoutUsersInput, BranchUncheckedCreateWithoutUsersInput>
     connectOrCreate?: BranchCreateOrConnectWithoutUsersInput
@@ -28156,6 +38877,26 @@ export namespace Prisma {
     connect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
   }
 
+  export type MediaMemberCreateNestedOneWithoutUserInput = {
+    create?: XOR<MediaMemberCreateWithoutUserInput, MediaMemberUncheckedCreateWithoutUserInput>
+    connectOrCreate?: MediaMemberCreateOrConnectWithoutUserInput
+    connect?: MediaMemberWhereUniqueInput
+  }
+
+  export type MediaItemCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<MediaItemCreateWithoutCreatedByInput, MediaItemUncheckedCreateWithoutCreatedByInput> | MediaItemCreateWithoutCreatedByInput[] | MediaItemUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: MediaItemCreateOrConnectWithoutCreatedByInput | MediaItemCreateOrConnectWithoutCreatedByInput[]
+    createMany?: MediaItemCreateManyCreatedByInputEnvelope
+    connect?: MediaItemWhereUniqueInput | MediaItemWhereUniqueInput[]
+  }
+
+  export type PersonalCalEventCreateNestedManyWithoutUserInput = {
+    create?: XOR<PersonalCalEventCreateWithoutUserInput, PersonalCalEventUncheckedCreateWithoutUserInput> | PersonalCalEventCreateWithoutUserInput[] | PersonalCalEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PersonalCalEventCreateOrConnectWithoutUserInput | PersonalCalEventCreateOrConnectWithoutUserInput[]
+    createMany?: PersonalCalEventCreateManyUserInputEnvelope
+    connect?: PersonalCalEventWhereUniqueInput | PersonalCalEventWhereUniqueInput[]
+  }
+
   export type UserRoleUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -28252,6 +38993,26 @@ export namespace Prisma {
     connectOrCreate?: CalendarEventCreateOrConnectWithoutCreatedByInput | CalendarEventCreateOrConnectWithoutCreatedByInput[]
     createMany?: CalendarEventCreateManyCreatedByInputEnvelope
     connect?: CalendarEventWhereUniqueInput | CalendarEventWhereUniqueInput[]
+  }
+
+  export type MediaMemberUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<MediaMemberCreateWithoutUserInput, MediaMemberUncheckedCreateWithoutUserInput>
+    connectOrCreate?: MediaMemberCreateOrConnectWithoutUserInput
+    connect?: MediaMemberWhereUniqueInput
+  }
+
+  export type MediaItemUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<MediaItemCreateWithoutCreatedByInput, MediaItemUncheckedCreateWithoutCreatedByInput> | MediaItemCreateWithoutCreatedByInput[] | MediaItemUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: MediaItemCreateOrConnectWithoutCreatedByInput | MediaItemCreateOrConnectWithoutCreatedByInput[]
+    createMany?: MediaItemCreateManyCreatedByInputEnvelope
+    connect?: MediaItemWhereUniqueInput | MediaItemWhereUniqueInput[]
+  }
+
+  export type PersonalCalEventUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<PersonalCalEventCreateWithoutUserInput, PersonalCalEventUncheckedCreateWithoutUserInput> | PersonalCalEventCreateWithoutUserInput[] | PersonalCalEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PersonalCalEventCreateOrConnectWithoutUserInput | PersonalCalEventCreateOrConnectWithoutUserInput[]
+    createMany?: PersonalCalEventCreateManyUserInputEnvelope
+    connect?: PersonalCalEventWhereUniqueInput | PersonalCalEventWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -28480,6 +39241,44 @@ export namespace Prisma {
     deleteMany?: CalendarEventScalarWhereInput | CalendarEventScalarWhereInput[]
   }
 
+  export type MediaMemberUpdateOneWithoutUserNestedInput = {
+    create?: XOR<MediaMemberCreateWithoutUserInput, MediaMemberUncheckedCreateWithoutUserInput>
+    connectOrCreate?: MediaMemberCreateOrConnectWithoutUserInput
+    upsert?: MediaMemberUpsertWithoutUserInput
+    disconnect?: MediaMemberWhereInput | boolean
+    delete?: MediaMemberWhereInput | boolean
+    connect?: MediaMemberWhereUniqueInput
+    update?: XOR<XOR<MediaMemberUpdateToOneWithWhereWithoutUserInput, MediaMemberUpdateWithoutUserInput>, MediaMemberUncheckedUpdateWithoutUserInput>
+  }
+
+  export type MediaItemUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<MediaItemCreateWithoutCreatedByInput, MediaItemUncheckedCreateWithoutCreatedByInput> | MediaItemCreateWithoutCreatedByInput[] | MediaItemUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: MediaItemCreateOrConnectWithoutCreatedByInput | MediaItemCreateOrConnectWithoutCreatedByInput[]
+    upsert?: MediaItemUpsertWithWhereUniqueWithoutCreatedByInput | MediaItemUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: MediaItemCreateManyCreatedByInputEnvelope
+    set?: MediaItemWhereUniqueInput | MediaItemWhereUniqueInput[]
+    disconnect?: MediaItemWhereUniqueInput | MediaItemWhereUniqueInput[]
+    delete?: MediaItemWhereUniqueInput | MediaItemWhereUniqueInput[]
+    connect?: MediaItemWhereUniqueInput | MediaItemWhereUniqueInput[]
+    update?: MediaItemUpdateWithWhereUniqueWithoutCreatedByInput | MediaItemUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: MediaItemUpdateManyWithWhereWithoutCreatedByInput | MediaItemUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: MediaItemScalarWhereInput | MediaItemScalarWhereInput[]
+  }
+
+  export type PersonalCalEventUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PersonalCalEventCreateWithoutUserInput, PersonalCalEventUncheckedCreateWithoutUserInput> | PersonalCalEventCreateWithoutUserInput[] | PersonalCalEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PersonalCalEventCreateOrConnectWithoutUserInput | PersonalCalEventCreateOrConnectWithoutUserInput[]
+    upsert?: PersonalCalEventUpsertWithWhereUniqueWithoutUserInput | PersonalCalEventUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PersonalCalEventCreateManyUserInputEnvelope
+    set?: PersonalCalEventWhereUniqueInput | PersonalCalEventWhereUniqueInput[]
+    disconnect?: PersonalCalEventWhereUniqueInput | PersonalCalEventWhereUniqueInput[]
+    delete?: PersonalCalEventWhereUniqueInput | PersonalCalEventWhereUniqueInput[]
+    connect?: PersonalCalEventWhereUniqueInput | PersonalCalEventWhereUniqueInput[]
+    update?: PersonalCalEventUpdateWithWhereUniqueWithoutUserInput | PersonalCalEventUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PersonalCalEventUpdateManyWithWhereWithoutUserInput | PersonalCalEventUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PersonalCalEventScalarWhereInput | PersonalCalEventScalarWhereInput[]
+  }
+
   export type UserRoleUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -28674,6 +39473,44 @@ export namespace Prisma {
     update?: CalendarEventUpdateWithWhereUniqueWithoutCreatedByInput | CalendarEventUpdateWithWhereUniqueWithoutCreatedByInput[]
     updateMany?: CalendarEventUpdateManyWithWhereWithoutCreatedByInput | CalendarEventUpdateManyWithWhereWithoutCreatedByInput[]
     deleteMany?: CalendarEventScalarWhereInput | CalendarEventScalarWhereInput[]
+  }
+
+  export type MediaMemberUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<MediaMemberCreateWithoutUserInput, MediaMemberUncheckedCreateWithoutUserInput>
+    connectOrCreate?: MediaMemberCreateOrConnectWithoutUserInput
+    upsert?: MediaMemberUpsertWithoutUserInput
+    disconnect?: MediaMemberWhereInput | boolean
+    delete?: MediaMemberWhereInput | boolean
+    connect?: MediaMemberWhereUniqueInput
+    update?: XOR<XOR<MediaMemberUpdateToOneWithWhereWithoutUserInput, MediaMemberUpdateWithoutUserInput>, MediaMemberUncheckedUpdateWithoutUserInput>
+  }
+
+  export type MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<MediaItemCreateWithoutCreatedByInput, MediaItemUncheckedCreateWithoutCreatedByInput> | MediaItemCreateWithoutCreatedByInput[] | MediaItemUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: MediaItemCreateOrConnectWithoutCreatedByInput | MediaItemCreateOrConnectWithoutCreatedByInput[]
+    upsert?: MediaItemUpsertWithWhereUniqueWithoutCreatedByInput | MediaItemUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: MediaItemCreateManyCreatedByInputEnvelope
+    set?: MediaItemWhereUniqueInput | MediaItemWhereUniqueInput[]
+    disconnect?: MediaItemWhereUniqueInput | MediaItemWhereUniqueInput[]
+    delete?: MediaItemWhereUniqueInput | MediaItemWhereUniqueInput[]
+    connect?: MediaItemWhereUniqueInput | MediaItemWhereUniqueInput[]
+    update?: MediaItemUpdateWithWhereUniqueWithoutCreatedByInput | MediaItemUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: MediaItemUpdateManyWithWhereWithoutCreatedByInput | MediaItemUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: MediaItemScalarWhereInput | MediaItemScalarWhereInput[]
+  }
+
+  export type PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PersonalCalEventCreateWithoutUserInput, PersonalCalEventUncheckedCreateWithoutUserInput> | PersonalCalEventCreateWithoutUserInput[] | PersonalCalEventUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PersonalCalEventCreateOrConnectWithoutUserInput | PersonalCalEventCreateOrConnectWithoutUserInput[]
+    upsert?: PersonalCalEventUpsertWithWhereUniqueWithoutUserInput | PersonalCalEventUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PersonalCalEventCreateManyUserInputEnvelope
+    set?: PersonalCalEventWhereUniqueInput | PersonalCalEventWhereUniqueInput[]
+    disconnect?: PersonalCalEventWhereUniqueInput | PersonalCalEventWhereUniqueInput[]
+    delete?: PersonalCalEventWhereUniqueInput | PersonalCalEventWhereUniqueInput[]
+    connect?: PersonalCalEventWhereUniqueInput | PersonalCalEventWhereUniqueInput[]
+    update?: PersonalCalEventUpdateWithWhereUniqueWithoutUserInput | PersonalCalEventUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PersonalCalEventUpdateManyWithWhereWithoutUserInput | PersonalCalEventUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PersonalCalEventScalarWhereInput | PersonalCalEventScalarWhereInput[]
   }
 
   export type UserRoleCreateNestedManyWithoutRoleInput = {
@@ -29272,6 +40109,123 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRawQcInput, UserUpdateWithoutRawQcInput>, UserUncheckedUpdateWithoutRawQcInput>
   }
 
+  export type MediaMemberCreateoffDaysInput = {
+    set: number[]
+  }
+
+  export type UserCreateNestedOneWithoutMediaMemberInput = {
+    create?: XOR<UserCreateWithoutMediaMemberInput, UserUncheckedCreateWithoutMediaMemberInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMediaMemberInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type EnumMediaRoleFieldUpdateOperationsInput = {
+    set?: $Enums.MediaRole
+  }
+
+  export type MediaMemberUpdateoffDaysInput = {
+    set?: number[]
+    push?: number | number[]
+  }
+
+  export type UserUpdateOneRequiredWithoutMediaMemberNestedInput = {
+    create?: XOR<UserCreateWithoutMediaMemberInput, UserUncheckedCreateWithoutMediaMemberInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMediaMemberInput
+    upsert?: UserUpsertWithoutMediaMemberInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMediaMemberInput, UserUpdateWithoutMediaMemberInput>, UserUncheckedUpdateWithoutMediaMemberInput>
+  }
+
+  export type UserCreateNestedOneWithoutMediaItemsInput = {
+    create?: XOR<UserCreateWithoutMediaItemsInput, UserUncheckedCreateWithoutMediaItemsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMediaItemsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type MediaTaskCreateNestedManyWithoutItemInput = {
+    create?: XOR<MediaTaskCreateWithoutItemInput, MediaTaskUncheckedCreateWithoutItemInput> | MediaTaskCreateWithoutItemInput[] | MediaTaskUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: MediaTaskCreateOrConnectWithoutItemInput | MediaTaskCreateOrConnectWithoutItemInput[]
+    createMany?: MediaTaskCreateManyItemInputEnvelope
+    connect?: MediaTaskWhereUniqueInput | MediaTaskWhereUniqueInput[]
+  }
+
+  export type MediaTaskUncheckedCreateNestedManyWithoutItemInput = {
+    create?: XOR<MediaTaskCreateWithoutItemInput, MediaTaskUncheckedCreateWithoutItemInput> | MediaTaskCreateWithoutItemInput[] | MediaTaskUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: MediaTaskCreateOrConnectWithoutItemInput | MediaTaskCreateOrConnectWithoutItemInput[]
+    createMany?: MediaTaskCreateManyItemInputEnvelope
+    connect?: MediaTaskWhereUniqueInput | MediaTaskWhereUniqueInput[]
+  }
+
+  export type EnumMediaTierFieldUpdateOperationsInput = {
+    set?: $Enums.MediaTier
+  }
+
+  export type UserUpdateOneRequiredWithoutMediaItemsNestedInput = {
+    create?: XOR<UserCreateWithoutMediaItemsInput, UserUncheckedCreateWithoutMediaItemsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMediaItemsInput
+    upsert?: UserUpsertWithoutMediaItemsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMediaItemsInput, UserUpdateWithoutMediaItemsInput>, UserUncheckedUpdateWithoutMediaItemsInput>
+  }
+
+  export type MediaTaskUpdateManyWithoutItemNestedInput = {
+    create?: XOR<MediaTaskCreateWithoutItemInput, MediaTaskUncheckedCreateWithoutItemInput> | MediaTaskCreateWithoutItemInput[] | MediaTaskUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: MediaTaskCreateOrConnectWithoutItemInput | MediaTaskCreateOrConnectWithoutItemInput[]
+    upsert?: MediaTaskUpsertWithWhereUniqueWithoutItemInput | MediaTaskUpsertWithWhereUniqueWithoutItemInput[]
+    createMany?: MediaTaskCreateManyItemInputEnvelope
+    set?: MediaTaskWhereUniqueInput | MediaTaskWhereUniqueInput[]
+    disconnect?: MediaTaskWhereUniqueInput | MediaTaskWhereUniqueInput[]
+    delete?: MediaTaskWhereUniqueInput | MediaTaskWhereUniqueInput[]
+    connect?: MediaTaskWhereUniqueInput | MediaTaskWhereUniqueInput[]
+    update?: MediaTaskUpdateWithWhereUniqueWithoutItemInput | MediaTaskUpdateWithWhereUniqueWithoutItemInput[]
+    updateMany?: MediaTaskUpdateManyWithWhereWithoutItemInput | MediaTaskUpdateManyWithWhereWithoutItemInput[]
+    deleteMany?: MediaTaskScalarWhereInput | MediaTaskScalarWhereInput[]
+  }
+
+  export type MediaTaskUncheckedUpdateManyWithoutItemNestedInput = {
+    create?: XOR<MediaTaskCreateWithoutItemInput, MediaTaskUncheckedCreateWithoutItemInput> | MediaTaskCreateWithoutItemInput[] | MediaTaskUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: MediaTaskCreateOrConnectWithoutItemInput | MediaTaskCreateOrConnectWithoutItemInput[]
+    upsert?: MediaTaskUpsertWithWhereUniqueWithoutItemInput | MediaTaskUpsertWithWhereUniqueWithoutItemInput[]
+    createMany?: MediaTaskCreateManyItemInputEnvelope
+    set?: MediaTaskWhereUniqueInput | MediaTaskWhereUniqueInput[]
+    disconnect?: MediaTaskWhereUniqueInput | MediaTaskWhereUniqueInput[]
+    delete?: MediaTaskWhereUniqueInput | MediaTaskWhereUniqueInput[]
+    connect?: MediaTaskWhereUniqueInput | MediaTaskWhereUniqueInput[]
+    update?: MediaTaskUpdateWithWhereUniqueWithoutItemInput | MediaTaskUpdateWithWhereUniqueWithoutItemInput[]
+    updateMany?: MediaTaskUpdateManyWithWhereWithoutItemInput | MediaTaskUpdateManyWithWhereWithoutItemInput[]
+    deleteMany?: MediaTaskScalarWhereInput | MediaTaskScalarWhereInput[]
+  }
+
+  export type MediaItemCreateNestedOneWithoutTasksInput = {
+    create?: XOR<MediaItemCreateWithoutTasksInput, MediaItemUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: MediaItemCreateOrConnectWithoutTasksInput
+    connect?: MediaItemWhereUniqueInput
+  }
+
+  export type MediaItemUpdateOneWithoutTasksNestedInput = {
+    create?: XOR<MediaItemCreateWithoutTasksInput, MediaItemUncheckedCreateWithoutTasksInput>
+    connectOrCreate?: MediaItemCreateOrConnectWithoutTasksInput
+    upsert?: MediaItemUpsertWithoutTasksInput
+    disconnect?: MediaItemWhereInput | boolean
+    delete?: MediaItemWhereInput | boolean
+    connect?: MediaItemWhereUniqueInput
+    update?: XOR<XOR<MediaItemUpdateToOneWithWhereWithoutTasksInput, MediaItemUpdateWithoutTasksInput>, MediaItemUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type UserCreateNestedOneWithoutPersonalCalEventsInput = {
+    create?: XOR<UserCreateWithoutPersonalCalEventsInput, UserUncheckedCreateWithoutPersonalCalEventsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPersonalCalEventsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutPersonalCalEventsNestedInput = {
+    create?: XOR<UserCreateWithoutPersonalCalEventsInput, UserUncheckedCreateWithoutPersonalCalEventsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPersonalCalEventsInput
+    upsert?: UserUpsertWithoutPersonalCalEventsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPersonalCalEventsInput, UserUpdateWithoutPersonalCalEventsInput>, UserUncheckedUpdateWithoutPersonalCalEventsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -29629,6 +40583,63 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRawProductStatusFilter<$PrismaModel>
     _max?: NestedEnumRawProductStatusFilter<$PrismaModel>
+  }
+
+  export type NestedEnumMediaRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaRole | EnumMediaRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaRole[] | ListEnumMediaRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaRole[] | ListEnumMediaRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaRoleFilter<$PrismaModel> | $Enums.MediaRole
+  }
+
+  export type NestedEnumMediaRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaRole | EnumMediaRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaRole[] | ListEnumMediaRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaRole[] | ListEnumMediaRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaRoleWithAggregatesFilter<$PrismaModel> | $Enums.MediaRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMediaRoleFilter<$PrismaModel>
+    _max?: NestedEnumMediaRoleFilter<$PrismaModel>
+  }
+
+  export type NestedEnumMediaTierFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaTier | EnumMediaTierFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaTier[] | ListEnumMediaTierFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaTier[] | ListEnumMediaTierFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaTierFilter<$PrismaModel> | $Enums.MediaTier
+  }
+
+  export type NestedEnumMediaTierWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.MediaTier | EnumMediaTierFieldRefInput<$PrismaModel>
+    in?: $Enums.MediaTier[] | ListEnumMediaTierFieldRefInput<$PrismaModel>
+    notIn?: $Enums.MediaTier[] | ListEnumMediaTierFieldRefInput<$PrismaModel>
+    not?: NestedEnumMediaTierWithAggregatesFilter<$PrismaModel> | $Enums.MediaTier
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumMediaTierFilter<$PrismaModel>
+    _max?: NestedEnumMediaTierFilter<$PrismaModel>
+  }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type BranchCreateWithoutUsersInput = {
@@ -30144,6 +41155,119 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type MediaMemberCreateWithoutUserInput = {
+    code: string
+    role?: $Enums.MediaRole
+    idcc?: boolean
+    offDays?: MediaMemberCreateoffDaysInput | number[]
+    phone?: string | null
+    avColor?: string
+    avAnimal?: string | null
+    avPhotoKey?: string | null
+    pcalColor?: string
+    pcalNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaMemberUncheckedCreateWithoutUserInput = {
+    code: string
+    role?: $Enums.MediaRole
+    idcc?: boolean
+    offDays?: MediaMemberCreateoffDaysInput | number[]
+    phone?: string | null
+    avColor?: string
+    avAnimal?: string | null
+    avPhotoKey?: string | null
+    pcalColor?: string
+    pcalNotes?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaMemberCreateOrConnectWithoutUserInput = {
+    where: MediaMemberWhereUniqueInput
+    create: XOR<MediaMemberCreateWithoutUserInput, MediaMemberUncheckedCreateWithoutUserInput>
+  }
+
+  export type MediaItemCreateWithoutCreatedByInput = {
+    id?: string
+    name: string
+    color?: string | null
+    cat: string
+    gender?: string | null
+    qty?: number
+    arrived: Date | string
+    tier?: $Enums.MediaTier
+    seasonal?: boolean
+    old?: boolean
+    thumb?: string | null
+    photoKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tasks?: MediaTaskCreateNestedManyWithoutItemInput
+  }
+
+  export type MediaItemUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    name: string
+    color?: string | null
+    cat: string
+    gender?: string | null
+    qty?: number
+    arrived: Date | string
+    tier?: $Enums.MediaTier
+    seasonal?: boolean
+    old?: boolean
+    thumb?: string | null
+    photoKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tasks?: MediaTaskUncheckedCreateNestedManyWithoutItemInput
+  }
+
+  export type MediaItemCreateOrConnectWithoutCreatedByInput = {
+    where: MediaItemWhereUniqueInput
+    create: XOR<MediaItemCreateWithoutCreatedByInput, MediaItemUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type MediaItemCreateManyCreatedByInputEnvelope = {
+    data: MediaItemCreateManyCreatedByInput | MediaItemCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PersonalCalEventCreateWithoutUserInput = {
+    id?: string
+    date: string
+    title: string
+    time?: string | null
+    color?: string
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PersonalCalEventUncheckedCreateWithoutUserInput = {
+    id?: string
+    date: string
+    title: string
+    time?: string | null
+    color?: string
+    note?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PersonalCalEventCreateOrConnectWithoutUserInput = {
+    where: PersonalCalEventWhereUniqueInput
+    create: XOR<PersonalCalEventCreateWithoutUserInput, PersonalCalEventUncheckedCreateWithoutUserInput>
+  }
+
+  export type PersonalCalEventCreateManyUserInputEnvelope = {
+    data: PersonalCalEventCreateManyUserInput | PersonalCalEventCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BranchUpsertWithoutUsersInput = {
     update: XOR<BranchUpdateWithoutUsersInput, BranchUncheckedUpdateWithoutUsersInput>
     create: XOR<BranchCreateWithoutUsersInput, BranchUncheckedCreateWithoutUsersInput>
@@ -30572,6 +41696,115 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"CalendarEvent"> | Date | string
   }
 
+  export type MediaMemberUpsertWithoutUserInput = {
+    update: XOR<MediaMemberUpdateWithoutUserInput, MediaMemberUncheckedUpdateWithoutUserInput>
+    create: XOR<MediaMemberCreateWithoutUserInput, MediaMemberUncheckedCreateWithoutUserInput>
+    where?: MediaMemberWhereInput
+  }
+
+  export type MediaMemberUpdateToOneWithWhereWithoutUserInput = {
+    where?: MediaMemberWhereInput
+    data: XOR<MediaMemberUpdateWithoutUserInput, MediaMemberUncheckedUpdateWithoutUserInput>
+  }
+
+  export type MediaMemberUpdateWithoutUserInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    role?: EnumMediaRoleFieldUpdateOperationsInput | $Enums.MediaRole
+    idcc?: BoolFieldUpdateOperationsInput | boolean
+    offDays?: MediaMemberUpdateoffDaysInput | number[]
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    avColor?: StringFieldUpdateOperationsInput | string
+    avAnimal?: NullableStringFieldUpdateOperationsInput | string | null
+    avPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    pcalColor?: StringFieldUpdateOperationsInput | string
+    pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaMemberUncheckedUpdateWithoutUserInput = {
+    code?: StringFieldUpdateOperationsInput | string
+    role?: EnumMediaRoleFieldUpdateOperationsInput | $Enums.MediaRole
+    idcc?: BoolFieldUpdateOperationsInput | boolean
+    offDays?: MediaMemberUpdateoffDaysInput | number[]
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    avColor?: StringFieldUpdateOperationsInput | string
+    avAnimal?: NullableStringFieldUpdateOperationsInput | string | null
+    avPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    pcalColor?: StringFieldUpdateOperationsInput | string
+    pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaItemUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: MediaItemWhereUniqueInput
+    update: XOR<MediaItemUpdateWithoutCreatedByInput, MediaItemUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<MediaItemCreateWithoutCreatedByInput, MediaItemUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type MediaItemUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: MediaItemWhereUniqueInput
+    data: XOR<MediaItemUpdateWithoutCreatedByInput, MediaItemUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type MediaItemUpdateManyWithWhereWithoutCreatedByInput = {
+    where: MediaItemScalarWhereInput
+    data: XOR<MediaItemUpdateManyMutationInput, MediaItemUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type MediaItemScalarWhereInput = {
+    AND?: MediaItemScalarWhereInput | MediaItemScalarWhereInput[]
+    OR?: MediaItemScalarWhereInput[]
+    NOT?: MediaItemScalarWhereInput | MediaItemScalarWhereInput[]
+    id?: StringFilter<"MediaItem"> | string
+    name?: StringFilter<"MediaItem"> | string
+    color?: StringNullableFilter<"MediaItem"> | string | null
+    cat?: StringFilter<"MediaItem"> | string
+    gender?: StringNullableFilter<"MediaItem"> | string | null
+    qty?: IntFilter<"MediaItem"> | number
+    arrived?: DateTimeFilter<"MediaItem"> | Date | string
+    tier?: EnumMediaTierFilter<"MediaItem"> | $Enums.MediaTier
+    seasonal?: BoolFilter<"MediaItem"> | boolean
+    old?: BoolFilter<"MediaItem"> | boolean
+    thumb?: StringNullableFilter<"MediaItem"> | string | null
+    photoKey?: StringNullableFilter<"MediaItem"> | string | null
+    createdById?: StringFilter<"MediaItem"> | string
+    createdAt?: DateTimeFilter<"MediaItem"> | Date | string
+    updatedAt?: DateTimeFilter<"MediaItem"> | Date | string
+  }
+
+  export type PersonalCalEventUpsertWithWhereUniqueWithoutUserInput = {
+    where: PersonalCalEventWhereUniqueInput
+    update: XOR<PersonalCalEventUpdateWithoutUserInput, PersonalCalEventUncheckedUpdateWithoutUserInput>
+    create: XOR<PersonalCalEventCreateWithoutUserInput, PersonalCalEventUncheckedCreateWithoutUserInput>
+  }
+
+  export type PersonalCalEventUpdateWithWhereUniqueWithoutUserInput = {
+    where: PersonalCalEventWhereUniqueInput
+    data: XOR<PersonalCalEventUpdateWithoutUserInput, PersonalCalEventUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PersonalCalEventUpdateManyWithWhereWithoutUserInput = {
+    where: PersonalCalEventScalarWhereInput
+    data: XOR<PersonalCalEventUpdateManyMutationInput, PersonalCalEventUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type PersonalCalEventScalarWhereInput = {
+    AND?: PersonalCalEventScalarWhereInput | PersonalCalEventScalarWhereInput[]
+    OR?: PersonalCalEventScalarWhereInput[]
+    NOT?: PersonalCalEventScalarWhereInput | PersonalCalEventScalarWhereInput[]
+    id?: StringFilter<"PersonalCalEvent"> | string
+    userId?: StringFilter<"PersonalCalEvent"> | string
+    date?: StringFilter<"PersonalCalEvent"> | string
+    title?: StringFilter<"PersonalCalEvent"> | string
+    time?: StringNullableFilter<"PersonalCalEvent"> | string | null
+    color?: StringFilter<"PersonalCalEvent"> | string
+    note?: StringNullableFilter<"PersonalCalEvent"> | string | null
+    createdAt?: DateTimeFilter<"PersonalCalEvent"> | Date | string
+    updatedAt?: DateTimeFilter<"PersonalCalEvent"> | Date | string
+  }
+
   export type UserRoleCreateWithoutRoleInput = {
     assignedAt?: Date | string
     user: UserCreateNestedOneWithoutRolesInput
@@ -30638,6 +41871,9 @@ export namespace Prisma {
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRolesInput = {
@@ -30668,6 +41904,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRolesInput = {
@@ -30720,6 +41959,9 @@ export namespace Prisma {
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssignedRolesInput = {
@@ -30750,6 +41992,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssignedRolesInput = {
@@ -30796,6 +42041,9 @@ export namespace Prisma {
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRolesInput = {
@@ -30826,6 +42074,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type RoleUpsertWithoutUsersInput = {
@@ -30890,6 +42141,9 @@ export namespace Prisma {
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedRolesInput = {
@@ -30920,6 +42174,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -30950,6 +42207,9 @@ export namespace Prisma {
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -30980,6 +42240,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -31026,6 +42289,9 @@ export namespace Prisma {
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -31056,6 +42322,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutBranchInput = {
@@ -31086,6 +42355,9 @@ export namespace Prisma {
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBranchInput = {
@@ -31116,6 +42388,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBranchInput = {
@@ -31292,6 +42567,9 @@ export namespace Prisma {
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSchedulesInput = {
@@ -31322,6 +42600,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSchedulesInput = {
@@ -31391,6 +42672,9 @@ export namespace Prisma {
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSchedulesInput = {
@@ -31421,6 +42705,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WorkScheduleUpsertWithoutUsersInput = {
@@ -31480,6 +42767,9 @@ export namespace Prisma {
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAttendancesInput = {
@@ -31510,6 +42800,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAttendancesInput = {
@@ -31579,6 +42872,9 @@ export namespace Prisma {
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAttendancesInput = {
@@ -31609,6 +42905,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BranchUpsertWithoutAttendancesInput = {
@@ -31668,6 +42967,9 @@ export namespace Prisma {
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRequestsInput = {
@@ -31698,6 +43000,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRequestsInput = {
@@ -31733,6 +43038,9 @@ export namespace Prisma {
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewedInput = {
@@ -31763,6 +43071,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewedInput = {
@@ -31809,6 +43120,9 @@ export namespace Prisma {
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRequestsInput = {
@@ -31839,6 +43153,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutReviewedInput = {
@@ -31880,6 +43197,9 @@ export namespace Prisma {
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedInput = {
@@ -31910,6 +43230,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -31940,6 +43263,9 @@ export namespace Prisma {
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -31970,6 +43296,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -32016,6 +43345,9 @@ export namespace Prisma {
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -32046,6 +43378,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutActivityLogsInput = {
@@ -32076,6 +43411,9 @@ export namespace Prisma {
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivityLogsInput = {
@@ -32106,6 +43444,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivityLogsInput = {
@@ -32152,6 +43493,9 @@ export namespace Prisma {
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivityLogsInput = {
@@ -32182,6 +43526,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ChatMemberCreateWithoutRoomInput = {
@@ -32319,6 +43666,9 @@ export namespace Prisma {
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChatMembersInput = {
@@ -32349,6 +43699,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChatMembersInput = {
@@ -32424,6 +43777,9 @@ export namespace Prisma {
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMembersInput = {
@@ -32454,6 +43810,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ChatRoomCreateWithoutMessagesInput = {
@@ -32507,6 +43866,9 @@ export namespace Prisma {
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChatMessagesInput = {
@@ -32537,6 +43899,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChatMessagesInput = {
@@ -32612,6 +43977,9 @@ export namespace Prisma {
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMessagesInput = {
@@ -32642,6 +44010,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutCalendarEventsInput = {
@@ -32672,6 +44043,9 @@ export namespace Prisma {
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCalendarEventsInput = {
@@ -32702,6 +44076,9 @@ export namespace Prisma {
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCalendarEventsInput = {
@@ -32748,6 +44125,9 @@ export namespace Prisma {
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCalendarEventsInput = {
@@ -32778,6 +44158,9 @@ export namespace Prisma {
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutRawCreatedInput = {
@@ -32808,6 +44191,9 @@ export namespace Prisma {
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
     rawQc?: RawProductCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRawCreatedInput = {
@@ -32838,6 +44224,9 @@ export namespace Prisma {
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
     rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRawCreatedInput = {
@@ -32873,6 +44262,9 @@ export namespace Prisma {
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRawQcInput = {
@@ -32903,6 +44295,9 @@ export namespace Prisma {
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRawQcInput = {
@@ -32949,6 +44344,9 @@ export namespace Prisma {
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRawCreatedInput = {
@@ -32979,6 +44377,9 @@ export namespace Prisma {
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutRawQcInput = {
@@ -33020,6 +44421,9 @@ export namespace Prisma {
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRawQcInput = {
@@ -33050,6 +44454,658 @@ export namespace Prisma {
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutMediaMemberInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    avatarKey?: string | null
+    bio?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    branch?: BranchCreateNestedOneWithoutUsersInput
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleCreateNestedManyWithoutUserInput
+    attendances?: AttendanceCreateNestedManyWithoutUserInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    reviewed?: RequestCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutMediaMemberInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    avatarKey?: string | null
+    bio?: string | null
+    branchId?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleUncheckedCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleUncheckedCreateNestedManyWithoutUserInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutUserInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutMediaMemberInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutMediaMemberInput, UserUncheckedCreateWithoutMediaMemberInput>
+  }
+
+  export type UserUpsertWithoutMediaMemberInput = {
+    update: XOR<UserUpdateWithoutMediaMemberInput, UserUncheckedUpdateWithoutMediaMemberInput>
+    create: XOR<UserCreateWithoutMediaMemberInput, UserUncheckedCreateWithoutMediaMemberInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutMediaMemberInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutMediaMemberInput, UserUncheckedUpdateWithoutMediaMemberInput>
+  }
+
+  export type UserUpdateWithoutMediaMemberInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branch?: BranchUpdateOneWithoutUsersNestedInput
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUpdateManyWithoutUserNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutMediaMemberInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUncheckedUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUncheckedUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutMediaItemsInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    avatarKey?: string | null
+    bio?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    branch?: BranchCreateNestedOneWithoutUsersInput
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleCreateNestedManyWithoutUserInput
+    attendances?: AttendanceCreateNestedManyWithoutUserInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    reviewed?: RequestCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutMediaItemsInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    avatarKey?: string | null
+    bio?: string | null
+    branchId?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleUncheckedCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleUncheckedCreateNestedManyWithoutUserInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutUserInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutMediaItemsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutMediaItemsInput, UserUncheckedCreateWithoutMediaItemsInput>
+  }
+
+  export type MediaTaskCreateWithoutItemInput = {
+    id?: string
+    type: string
+    title: string
+    cat?: string | null
+    status?: string
+    source?: string | null
+    reason?: string | null
+    producer?: string | null
+    editor?: string | null
+    talent?: string | null
+    script?: string | null
+    shootPlan?: string | null
+    editPlan?: string | null
+    postAt?: string | null
+    postTime?: string | null
+    due?: string | null
+    target?: string | null
+    locked?: boolean
+    checked?: boolean
+    metaAt?: Date | string | null
+    driveUrl?: string | null
+    note?: string | null
+    history?: NullableJsonNullValueInput | InputJsonValue
+    eventKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaTaskUncheckedCreateWithoutItemInput = {
+    id?: string
+    type: string
+    title: string
+    cat?: string | null
+    status?: string
+    source?: string | null
+    reason?: string | null
+    producer?: string | null
+    editor?: string | null
+    talent?: string | null
+    script?: string | null
+    shootPlan?: string | null
+    editPlan?: string | null
+    postAt?: string | null
+    postTime?: string | null
+    due?: string | null
+    target?: string | null
+    locked?: boolean
+    checked?: boolean
+    metaAt?: Date | string | null
+    driveUrl?: string | null
+    note?: string | null
+    history?: NullableJsonNullValueInput | InputJsonValue
+    eventKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaTaskCreateOrConnectWithoutItemInput = {
+    where: MediaTaskWhereUniqueInput
+    create: XOR<MediaTaskCreateWithoutItemInput, MediaTaskUncheckedCreateWithoutItemInput>
+  }
+
+  export type MediaTaskCreateManyItemInputEnvelope = {
+    data: MediaTaskCreateManyItemInput | MediaTaskCreateManyItemInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type UserUpsertWithoutMediaItemsInput = {
+    update: XOR<UserUpdateWithoutMediaItemsInput, UserUncheckedUpdateWithoutMediaItemsInput>
+    create: XOR<UserCreateWithoutMediaItemsInput, UserUncheckedCreateWithoutMediaItemsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutMediaItemsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutMediaItemsInput, UserUncheckedUpdateWithoutMediaItemsInput>
+  }
+
+  export type UserUpdateWithoutMediaItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branch?: BranchUpdateOneWithoutUsersNestedInput
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUpdateManyWithoutUserNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutMediaItemsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUncheckedUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUncheckedUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type MediaTaskUpsertWithWhereUniqueWithoutItemInput = {
+    where: MediaTaskWhereUniqueInput
+    update: XOR<MediaTaskUpdateWithoutItemInput, MediaTaskUncheckedUpdateWithoutItemInput>
+    create: XOR<MediaTaskCreateWithoutItemInput, MediaTaskUncheckedCreateWithoutItemInput>
+  }
+
+  export type MediaTaskUpdateWithWhereUniqueWithoutItemInput = {
+    where: MediaTaskWhereUniqueInput
+    data: XOR<MediaTaskUpdateWithoutItemInput, MediaTaskUncheckedUpdateWithoutItemInput>
+  }
+
+  export type MediaTaskUpdateManyWithWhereWithoutItemInput = {
+    where: MediaTaskScalarWhereInput
+    data: XOR<MediaTaskUpdateManyMutationInput, MediaTaskUncheckedUpdateManyWithoutItemInput>
+  }
+
+  export type MediaTaskScalarWhereInput = {
+    AND?: MediaTaskScalarWhereInput | MediaTaskScalarWhereInput[]
+    OR?: MediaTaskScalarWhereInput[]
+    NOT?: MediaTaskScalarWhereInput | MediaTaskScalarWhereInput[]
+    id?: StringFilter<"MediaTask"> | string
+    itemId?: StringNullableFilter<"MediaTask"> | string | null
+    type?: StringFilter<"MediaTask"> | string
+    title?: StringFilter<"MediaTask"> | string
+    cat?: StringNullableFilter<"MediaTask"> | string | null
+    status?: StringFilter<"MediaTask"> | string
+    source?: StringNullableFilter<"MediaTask"> | string | null
+    reason?: StringNullableFilter<"MediaTask"> | string | null
+    producer?: StringNullableFilter<"MediaTask"> | string | null
+    editor?: StringNullableFilter<"MediaTask"> | string | null
+    talent?: StringNullableFilter<"MediaTask"> | string | null
+    script?: StringNullableFilter<"MediaTask"> | string | null
+    shootPlan?: StringNullableFilter<"MediaTask"> | string | null
+    editPlan?: StringNullableFilter<"MediaTask"> | string | null
+    postAt?: StringNullableFilter<"MediaTask"> | string | null
+    postTime?: StringNullableFilter<"MediaTask"> | string | null
+    due?: StringNullableFilter<"MediaTask"> | string | null
+    target?: StringNullableFilter<"MediaTask"> | string | null
+    locked?: BoolFilter<"MediaTask"> | boolean
+    checked?: BoolFilter<"MediaTask"> | boolean
+    metaAt?: DateTimeNullableFilter<"MediaTask"> | Date | string | null
+    driveUrl?: StringNullableFilter<"MediaTask"> | string | null
+    note?: StringNullableFilter<"MediaTask"> | string | null
+    history?: JsonNullableFilter<"MediaTask">
+    eventKey?: StringNullableFilter<"MediaTask"> | string | null
+    createdAt?: DateTimeFilter<"MediaTask"> | Date | string
+    updatedAt?: DateTimeFilter<"MediaTask"> | Date | string
+  }
+
+  export type MediaItemCreateWithoutTasksInput = {
+    id?: string
+    name: string
+    color?: string | null
+    cat: string
+    gender?: string | null
+    qty?: number
+    arrived: Date | string
+    tier?: $Enums.MediaTier
+    seasonal?: boolean
+    old?: boolean
+    thumb?: string | null
+    photoKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: UserCreateNestedOneWithoutMediaItemsInput
+  }
+
+  export type MediaItemUncheckedCreateWithoutTasksInput = {
+    id?: string
+    name: string
+    color?: string | null
+    cat: string
+    gender?: string | null
+    qty?: number
+    arrived: Date | string
+    tier?: $Enums.MediaTier
+    seasonal?: boolean
+    old?: boolean
+    thumb?: string | null
+    photoKey?: string | null
+    createdById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaItemCreateOrConnectWithoutTasksInput = {
+    where: MediaItemWhereUniqueInput
+    create: XOR<MediaItemCreateWithoutTasksInput, MediaItemUncheckedCreateWithoutTasksInput>
+  }
+
+  export type MediaItemUpsertWithoutTasksInput = {
+    update: XOR<MediaItemUpdateWithoutTasksInput, MediaItemUncheckedUpdateWithoutTasksInput>
+    create: XOR<MediaItemCreateWithoutTasksInput, MediaItemUncheckedCreateWithoutTasksInput>
+    where?: MediaItemWhereInput
+  }
+
+  export type MediaItemUpdateToOneWithWhereWithoutTasksInput = {
+    where?: MediaItemWhereInput
+    data: XOR<MediaItemUpdateWithoutTasksInput, MediaItemUncheckedUpdateWithoutTasksInput>
+  }
+
+  export type MediaItemUpdateWithoutTasksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    cat?: StringFieldUpdateOperationsInput | string
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    arrived?: DateTimeFieldUpdateOperationsInput | Date | string
+    tier?: EnumMediaTierFieldUpdateOperationsInput | $Enums.MediaTier
+    seasonal?: BoolFieldUpdateOperationsInput | boolean
+    old?: BoolFieldUpdateOperationsInput | boolean
+    thumb?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneRequiredWithoutMediaItemsNestedInput
+  }
+
+  export type MediaItemUncheckedUpdateWithoutTasksInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    cat?: StringFieldUpdateOperationsInput | string
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    arrived?: DateTimeFieldUpdateOperationsInput | Date | string
+    tier?: EnumMediaTierFieldUpdateOperationsInput | $Enums.MediaTier
+    seasonal?: BoolFieldUpdateOperationsInput | boolean
+    old?: BoolFieldUpdateOperationsInput | boolean
+    thumb?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type UserCreateWithoutPersonalCalEventsInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    avatarKey?: string | null
+    bio?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    branch?: BranchCreateNestedOneWithoutUsersInput
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleCreateNestedManyWithoutUserInput
+    attendances?: AttendanceCreateNestedManyWithoutUserInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    reviewed?: RequestCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutPersonalCalEventsInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    avatarKey?: string | null
+    bio?: string | null
+    branchId?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleUncheckedCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleUncheckedCreateNestedManyWithoutUserInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutUserInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutPersonalCalEventsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPersonalCalEventsInput, UserUncheckedCreateWithoutPersonalCalEventsInput>
+  }
+
+  export type UserUpsertWithoutPersonalCalEventsInput = {
+    update: XOR<UserUpdateWithoutPersonalCalEventsInput, UserUncheckedUpdateWithoutPersonalCalEventsInput>
+    create: XOR<UserCreateWithoutPersonalCalEventsInput, UserUncheckedCreateWithoutPersonalCalEventsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPersonalCalEventsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPersonalCalEventsInput, UserUncheckedUpdateWithoutPersonalCalEventsInput>
+  }
+
+  export type UserUpdateWithoutPersonalCalEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branch?: BranchUpdateOneWithoutUsersNestedInput
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUpdateManyWithoutUserNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPersonalCalEventsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUncheckedUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUncheckedUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserRoleCreateManyUserInput = {
@@ -33223,6 +45279,34 @@ export namespace Prisma {
     color?: string
     category?: string | null
     tags?: CalendarEventCreatetagsInput | string[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaItemCreateManyCreatedByInput = {
+    id?: string
+    name: string
+    color?: string | null
+    cat: string
+    gender?: string | null
+    qty?: number
+    arrived: Date | string
+    tier?: $Enums.MediaTier
+    seasonal?: boolean
+    old?: boolean
+    thumb?: string | null
+    photoKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PersonalCalEventCreateManyUserInput = {
+    id?: string
+    date: string
+    title: string
+    time?: string | null
+    color?: string
+    note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -33752,6 +45836,92 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type MediaItemUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    cat?: StringFieldUpdateOperationsInput | string
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    arrived?: DateTimeFieldUpdateOperationsInput | Date | string
+    tier?: EnumMediaTierFieldUpdateOperationsInput | $Enums.MediaTier
+    seasonal?: BoolFieldUpdateOperationsInput | boolean
+    old?: BoolFieldUpdateOperationsInput | boolean
+    thumb?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tasks?: MediaTaskUpdateManyWithoutItemNestedInput
+  }
+
+  export type MediaItemUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    cat?: StringFieldUpdateOperationsInput | string
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    arrived?: DateTimeFieldUpdateOperationsInput | Date | string
+    tier?: EnumMediaTierFieldUpdateOperationsInput | $Enums.MediaTier
+    seasonal?: BoolFieldUpdateOperationsInput | boolean
+    old?: BoolFieldUpdateOperationsInput | boolean
+    thumb?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tasks?: MediaTaskUncheckedUpdateManyWithoutItemNestedInput
+  }
+
+  export type MediaItemUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    cat?: StringFieldUpdateOperationsInput | string
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    arrived?: DateTimeFieldUpdateOperationsInput | Date | string
+    tier?: EnumMediaTierFieldUpdateOperationsInput | $Enums.MediaTier
+    seasonal?: BoolFieldUpdateOperationsInput | boolean
+    old?: BoolFieldUpdateOperationsInput | boolean
+    thumb?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersonalCalEventUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    time?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersonalCalEventUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    time?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PersonalCalEventUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    time?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserRoleCreateManyRoleInput = {
     userId: string
     assignedById?: string | null
@@ -33838,6 +46008,9 @@ export namespace Prisma {
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBranchInput = {
@@ -33868,6 +46041,9 @@ export namespace Prisma {
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
     rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBranchInput = {
@@ -34026,6 +46202,122 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     editedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type MediaTaskCreateManyItemInput = {
+    id?: string
+    type: string
+    title: string
+    cat?: string | null
+    status?: string
+    source?: string | null
+    reason?: string | null
+    producer?: string | null
+    editor?: string | null
+    talent?: string | null
+    script?: string | null
+    shootPlan?: string | null
+    editPlan?: string | null
+    postAt?: string | null
+    postTime?: string | null
+    due?: string | null
+    target?: string | null
+    locked?: boolean
+    checked?: boolean
+    metaAt?: Date | string | null
+    driveUrl?: string | null
+    note?: string | null
+    history?: NullableJsonNullValueInput | InputJsonValue
+    eventKey?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type MediaTaskUpdateWithoutItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    producer?: NullableStringFieldUpdateOperationsInput | string | null
+    editor?: NullableStringFieldUpdateOperationsInput | string | null
+    talent?: NullableStringFieldUpdateOperationsInput | string | null
+    script?: NullableStringFieldUpdateOperationsInput | string | null
+    shootPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    editPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    postAt?: NullableStringFieldUpdateOperationsInput | string | null
+    postTime?: NullableStringFieldUpdateOperationsInput | string | null
+    due?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableStringFieldUpdateOperationsInput | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    checked?: BoolFieldUpdateOperationsInput | boolean
+    metaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    driveUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    history?: NullableJsonNullValueInput | InputJsonValue
+    eventKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaTaskUncheckedUpdateWithoutItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    producer?: NullableStringFieldUpdateOperationsInput | string | null
+    editor?: NullableStringFieldUpdateOperationsInput | string | null
+    talent?: NullableStringFieldUpdateOperationsInput | string | null
+    script?: NullableStringFieldUpdateOperationsInput | string | null
+    shootPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    editPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    postAt?: NullableStringFieldUpdateOperationsInput | string | null
+    postTime?: NullableStringFieldUpdateOperationsInput | string | null
+    due?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableStringFieldUpdateOperationsInput | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    checked?: BoolFieldUpdateOperationsInput | boolean
+    metaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    driveUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    history?: NullableJsonNullValueInput | InputJsonValue
+    eventKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaTaskUncheckedUpdateManyWithoutItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    source?: NullableStringFieldUpdateOperationsInput | string | null
+    reason?: NullableStringFieldUpdateOperationsInput | string | null
+    producer?: NullableStringFieldUpdateOperationsInput | string | null
+    editor?: NullableStringFieldUpdateOperationsInput | string | null
+    talent?: NullableStringFieldUpdateOperationsInput | string | null
+    script?: NullableStringFieldUpdateOperationsInput | string | null
+    shootPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    editPlan?: NullableStringFieldUpdateOperationsInput | string | null
+    postAt?: NullableStringFieldUpdateOperationsInput | string | null
+    postTime?: NullableStringFieldUpdateOperationsInput | string | null
+    due?: NullableStringFieldUpdateOperationsInput | string | null
+    target?: NullableStringFieldUpdateOperationsInput | string | null
+    locked?: BoolFieldUpdateOperationsInput | boolean
+    checked?: BoolFieldUpdateOperationsInput | boolean
+    metaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    driveUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    history?: NullableJsonNullValueInput | InputJsonValue
+    eventKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

@@ -330,6 +330,107 @@ exports.Prisma.RawProductScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.MediaMemberScalarFieldEnum = {
+  userId: 'userId',
+  code: 'code',
+  role: 'role',
+  idcc: 'idcc',
+  offDays: 'offDays',
+  phone: 'phone',
+  avColor: 'avColor',
+  avAnimal: 'avAnimal',
+  avPhotoKey: 'avPhotoKey',
+  pcalColor: 'pcalColor',
+  pcalNotes: 'pcalNotes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MediaItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  color: 'color',
+  cat: 'cat',
+  gender: 'gender',
+  qty: 'qty',
+  arrived: 'arrived',
+  tier: 'tier',
+  seasonal: 'seasonal',
+  old: 'old',
+  thumb: 'thumb',
+  photoKey: 'photoKey',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MediaTaskScalarFieldEnum = {
+  id: 'id',
+  itemId: 'itemId',
+  type: 'type',
+  title: 'title',
+  cat: 'cat',
+  status: 'status',
+  source: 'source',
+  reason: 'reason',
+  producer: 'producer',
+  editor: 'editor',
+  talent: 'talent',
+  script: 'script',
+  shootPlan: 'shootPlan',
+  editPlan: 'editPlan',
+  postAt: 'postAt',
+  postTime: 'postTime',
+  due: 'due',
+  target: 'target',
+  locked: 'locked',
+  checked: 'checked',
+  metaAt: 'metaAt',
+  driveUrl: 'driveUrl',
+  note: 'note',
+  history: 'history',
+  eventKey: 'eventKey',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MediaSettingsScalarFieldEnum = {
+  id: 'id',
+  jobdesk: 'jobdesk',
+  idccDay: 'idccDay',
+  idccQty: 'idccQty',
+  idccDays: 'idccDays',
+  captionTemplate: 'captionTemplate',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.MediaIdccReportScalarFieldEnum = {
+  id: 'id',
+  reportDate: 'reportDate',
+  data: 'data',
+  summary: 'summary',
+  createdById: 'createdById',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.MediaBalanceLogScalarFieldEnum = {
+  id: 'id',
+  entries: 'entries',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PersonalCalEventScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  date: 'date',
+  title: 'title',
+  time: 'time',
+  color: 'color',
+  note: 'note',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -337,6 +438,10 @@ exports.Prisma.SortOrder = {
 
 exports.Prisma.NullableJsonNullValueInput = {
   DbNull: Prisma.DbNull,
+  JsonNull: Prisma.JsonNull
+};
+
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
@@ -402,6 +507,18 @@ exports.RawProductStatus = exports.$Enums.RawProductStatus = {
   REJECTED: 'REJECTED'
 };
 
+exports.MediaRole = exports.$Enums.MediaRole = {
+  ADMIN: 'ADMIN',
+  ADMIN2: 'ADMIN2',
+  MEMBER: 'MEMBER'
+};
+
+exports.MediaTier = exports.$Enums.MediaTier = {
+  EX: 'EX',
+  LS: 'LS',
+  JP: 'JP'
+};
+
 exports.Prisma.ModelName = {
   User: 'User',
   Role: 'Role',
@@ -420,7 +537,14 @@ exports.Prisma.ModelName = {
   ChatMember: 'ChatMember',
   ChatMessage: 'ChatMessage',
   CalendarEvent: 'CalendarEvent',
-  RawProduct: 'RawProduct'
+  RawProduct: 'RawProduct',
+  MediaMember: 'MediaMember',
+  MediaItem: 'MediaItem',
+  MediaTask: 'MediaTask',
+  MediaSettings: 'MediaSettings',
+  MediaIdccReport: 'MediaIdccReport',
+  MediaBalanceLog: 'MediaBalanceLog',
+  PersonalCalEvent: 'PersonalCalEvent'
 };
 
 /**
