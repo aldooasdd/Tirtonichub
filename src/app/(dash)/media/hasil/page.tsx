@@ -33,7 +33,7 @@ export default async function MediaHasilPage() {
               photoUrl={photos[idx]}
               seed={idx + 3}
               appearDelay={(idx % 3) * 120}
-              width={300}
+              width={220}
               canManage={acc.canManage}
               assets={it.assets.map((a) => ({ id: a.id, name: a.name, key: a.key, mime: a.mime, size: a.size }))}
             />
