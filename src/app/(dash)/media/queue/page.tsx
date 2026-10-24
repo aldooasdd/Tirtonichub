@@ -1,5 +1,6 @@
 import { requireMedia } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
+import { fileUrl } from "@/server/storage";
 import { STAGES, IDX, POSTED, TYPES, CATLBL, isOff, toT, addDays, workBetween } from "@/lib/media/schedule";
 import { isExpired, late, ready } from "@/lib/media/card";
 import { todayWIB } from "@/server/media/schedule-runner";
@@ -15,6 +16,9 @@ export default async function MediaQueuePage() {
   await requireMedia();
   const today = todayWIB();
   const [rawTasks, items] = await Promise.all([prisma.mediaTask.findMany(), prisma.mediaItem.findMany()]);
+  const itemPhotos = await Promise.all(items.map((i) => (i.photoKey ? fileUrl(i.photoKey) : Promise.resolve(null))));
+  const photoById = new Map(items.map((i, idx) => [i.id, itemPhotos[idx]]));
+  const photoByName = new Map(items.map((i, idx) => [i.name, itemPhotos[idx]]));
   const tasks = rawTasks
     .map((t) => ({ ...t, metaAtMs: t.metaAt ? t.metaAt.getTime() : 0 }))
     .filter((t) => !isExpired({ id: t.id, status: t.status, createdAt: t.createdAt.getTime(), type: t.type, title: t.title }, today));
@@ -101,26 +105,35 @@ export default async function MediaQueuePage() {
 
       <section className="rounded-lg border bg-card p-4">
         <h2 className="mb-3 text-14 font-medium">Watchlist semua barang ({byItem.size})</h2>
-        <div className="space-y-2">
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {[...byItem.entries()].map(([k, ts]) => {
             const first = ts[0];
+            const photo = (first.itemId ? photoById.get(first.itemId) : null) ?? photoByName.get(first.title) ?? null;
             return (
-              <div key={k} className="flex flex-wrap items-center gap-2 border-b pb-2 last:border-0">
-                <div className="min-w-[160px] flex-1">
-                  <p className="font-medium">{first.title}</p>
-                  <p className="text-11 text-muted-foreground">{first.cat ? CATLBL[first.cat] ?? first.cat : ""}{first.source === "lama" ? " · stok lama" : ""}</p>
+              <div key={k} className="overflow-hidden rounded-lg border bg-card">
+                <div className="relative h-36 w-full bg-gradient-to-br from-sky-200 via-violet-200 to-fuchsia-200">
+                  {photo && (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={photo} alt={first.title} className="h-full w-full object-cover" />
+                  )}
                 </div>
-                <div className="flex flex-wrap gap-1 text-11">
-                  {ts.sort((a, b) => (TYPES[a.type]?.prio ?? 9) - (TYPES[b.type]?.prio ?? 9)).map((t) => (
-                    <span key={t.id} className={`rounded px-1.5 py-0.5 ${sched(t) ? "bg-green-100 text-green-800" : late({ status: t.status, due: t.due }, today) ? "bg-red-100 text-red-700" : "bg-muted"}`}>
-                      {TYPES[t.type]?.label}: {IDX[t.status] >= IDX["Ready"] && sched(t) ? "Tayang" : t.status}
-                    </span>
-                  ))}
+                <div className="space-y-2 p-3">
+                  <div>
+                    <p className="font-medium leading-tight">{first.title}</p>
+                    <p className="text-11 text-muted-foreground">{first.cat ? CATLBL[first.cat] ?? first.cat : ""}{first.source === "lama" ? " · stok lama" : ""}</p>
+                  </div>
+                  <div className="flex flex-wrap gap-1 text-11">
+                    {ts.sort((a, b) => (TYPES[a.type]?.prio ?? 9) - (TYPES[b.type]?.prio ?? 9)).map((t) => (
+                      <span key={t.id} className={`rounded px-1.5 py-0.5 ${sched(t) ? "bg-green-100 text-green-800" : late({ status: t.status, due: t.due }, today) ? "bg-red-100 text-red-700" : "bg-muted"}`}>
+                        {TYPES[t.type]?.label}: {IDX[t.status] >= IDX["Ready"] && sched(t) ? "Tayang" : t.status}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             );
           })}
-          {byItem.size === 0 && <p className="py-6 text-center text-muted-foreground">Belum ada konten.</p>}
+          {byItem.size === 0 && <p className="col-span-full py-6 text-center text-muted-foreground">Belum ada konten.</p>}
         </div>
       </section>
     </div>
