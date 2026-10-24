@@ -55,6 +55,15 @@ function statusVariant(s: Item["status"]): "default" | "secondary" | "outline" |
 
 const rupiah = new Intl.NumberFormat("id-ID");
 
+function Field({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <label className="block space-y-1">
+      <span className="block text-12 text-muted-foreground">{label}</span>
+      {children}
+    </label>
+  );
+}
+
 function blobToBase64(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
     const r = new FileReader();
@@ -295,20 +304,40 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
       </div>
       {rows.map((row) => (
         <div key={row.id} className="space-y-2 rounded-md border p-3">
-          <Input value={row.name} onChange={(e) => setField(row.id, "name", e.target.value)} placeholder="Nama barang" />
+          <Field label="Nama barang">
+            <Input value={row.name} onChange={(e) => setField(row.id, "name", e.target.value)} placeholder="Nama barang" />
+          </Field>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            <Input value={row.brand} onChange={(e) => setField(row.id, "brand", e.target.value)} placeholder="Merek" />
-            <Input value={row.color} onChange={(e) => setField(row.id, "color", e.target.value)} placeholder="Warna" />
-            <Input value={row.size} onChange={(e) => setField(row.id, "size", e.target.value)} placeholder="Ukuran" />
-            <Input value={row.sku} onChange={(e) => setField(row.id, "sku", e.target.value)} placeholder="SKU" />
+            <Field label="Merek">
+              <Input value={row.brand} onChange={(e) => setField(row.id, "brand", e.target.value)} placeholder="Merek" />
+            </Field>
+            <Field label="Warna">
+              <Input value={row.color} onChange={(e) => setField(row.id, "color", e.target.value)} placeholder="Warna" />
+            </Field>
+            <Field label="Ukuran">
+              <Input value={row.size} onChange={(e) => setField(row.id, "size", e.target.value)} placeholder="Ukuran" />
+            </Field>
+            <Field label="SKU">
+              <Input value={row.sku} onChange={(e) => setField(row.id, "sku", e.target.value)} placeholder="SKU" />
+            </Field>
           </div>
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            <Input type="number" value={row.qty} onChange={(e) => setField(row.id, "qty", e.target.value)} placeholder="Qty" />
-            <Input value={row.unit} onChange={(e) => setField(row.id, "unit", e.target.value)} placeholder="Satuan (pcs)" />
-            <Input type="number" value={row.unitPrice} onChange={(e) => setField(row.id, "unitPrice", e.target.value)} placeholder="Harga/unit" />
-            <Input type="date" value={row.notaDate} onChange={(e) => setField(row.id, "notaDate", e.target.value)} />
+            <Field label="Qty">
+              <Input type="number" value={row.qty} onChange={(e) => setField(row.id, "qty", e.target.value)} placeholder="Qty" />
+            </Field>
+            <Field label="Satuan">
+              <Input value={row.unit} onChange={(e) => setField(row.id, "unit", e.target.value)} placeholder="pcs" />
+            </Field>
+            <Field label="Harga/unit">
+              <Input type="number" value={row.unitPrice} onChange={(e) => setField(row.id, "unitPrice", e.target.value)} placeholder="Harga/unit" />
+            </Field>
+            <Field label="Tanggal nota">
+              <Input type="date" value={row.notaDate} onChange={(e) => setField(row.id, "notaDate", e.target.value)} />
+            </Field>
           </div>
-          <Input value={row.supplier} onChange={(e) => setField(row.id, "supplier", e.target.value)} placeholder="Supplier" />
+          <Field label="Supplier">
+            <Input value={row.supplier} onChange={(e) => setField(row.id, "supplier", e.target.value)} placeholder="Supplier" />
+          </Field>
           <p className="text-12 text-muted-foreground">
             Harga jual (×135%×115%, bulat 5rb): Rp {rupiah.format(computeSellPrice(Number(row.unitPrice) || 0))}
           </p>
