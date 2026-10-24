@@ -40,7 +40,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
     umum.push({ label: "Riwayat Absen", href: "/riwayat-absen", icon: ClipboardList });
   }
   umum.push({ label: "Pengajuan", href: "/pengajuan", icon: FileText });
-  umum.push({ label: "Chat", href: "/chat", icon: MessagesSquare });
+  // Chat desktop pindah ke widget mengambang (FloatingChat); mobile tetap di bottom-nav.
   umum.push({ label: "Kalender", href: "/kalender", icon: CalendarDays });
   umum.push({ label: "Notifikasi", href: "/notifikasi", icon: Bell });
   umum.push({ label: "Profil", href: "/profil", icon: User });

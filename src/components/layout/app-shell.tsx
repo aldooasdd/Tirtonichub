@@ -5,15 +5,23 @@ import { Sidebar } from "./sidebar";
 import { Header } from "./header";
 import { RightPanel, type RightNotif, type RightAct } from "./right-panel";
 import { BottomNav } from "./bottom-nav";
+import { FloatingChat, type Presence } from "@/components/chat/floating-chat";
+import type { RoomListItem } from "@/server/chat/queries";
 
 export function AppShell({
   children,
   notifications,
   activities,
+  rooms,
+  presence,
+  me,
 }: {
   children: React.ReactNode;
   notifications: RightNotif[];
   activities: RightAct[];
+  rooms: RoomListItem[];
+  presence: Presence[];
+  me: string;
 }) {
   const [panelOpen, setPanelOpen] = useState(true);
 
@@ -30,6 +38,7 @@ export function AppShell({
         </div>
       </div>
       <BottomNav />
+      <FloatingChat rooms={rooms} presence={presence} me={me} />
     </div>
   );
 }

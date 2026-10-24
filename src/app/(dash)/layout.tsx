@@ -5,13 +5,15 @@ import { AppShell } from "@/components/layout/app-shell";
 import { prisma } from "@/server/db";
 import { HR_ROLES } from "@/lib/roles";
 import { timeAgo } from "@/lib/datetime";
+import { listRooms } from "@/server/chat/queries";
+import { dateKeyWIB } from "@/server/attendance/logic";
 
 export default async function DashLayout({ children }: LayoutProps<"/">) {
   const s = await getSession();
   if (!s) redirect("/login");
   if (!s.activeRole) redirect("/pilih-role");
 
-  const [notifRows, actRows] = await Promise.all([
+  const [notifRows, actRows, rooms, presenceRows] = await Promise.all([
     prisma.notification.findMany({
       where: { userId: s.user.id },
       orderBy: { createdAt: "desc" },
@@ -25,7 +27,19 @@ export default async function DashLayout({ children }: LayoutProps<"/">) {
           include: { actor: { select: { fullName: true } } },
         })
       : [],
+    listRooms(s.user.id),
+    prisma.attendance.findMany({
+      where: { date: dateKeyWIB(new Date()), checkInAt: { not: null } },
+      orderBy: { checkInAt: "asc" },
+      include: { user: { select: { id: true, fullName: true } } },
+    }),
   ]);
+
+  const presence = presenceRows.map((a) => ({
+    id: a.userId,
+    name: a.user.fullName,
+    late: a.status === "LATE",
+  }));
 
   const notifications = notifRows.map((n) => ({
     id: n.id,
@@ -45,7 +59,13 @@ export default async function DashLayout({ children }: LayoutProps<"/">) {
       role={s.activeRole}
       roles={s.roles}
     >
-      <AppShell notifications={notifications} activities={activities}>
+      <AppShell
+        notifications={notifications}
+        activities={activities}
+        rooms={rooms}
+        presence={presence}
+        me={s.user.id}
+      >
         {children}
       </AppShell>
     </SessionProvider>
