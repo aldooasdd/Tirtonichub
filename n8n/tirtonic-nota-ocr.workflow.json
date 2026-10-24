@@ -1,0 +1,86 @@
+{
+  "name": "Tirtonic — OCR Nota",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "tirtonic-nota-ocr",
+        "authentication": "headerAuth",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook-nota",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "tirtonic-nota-ocr",
+      "credentials": {
+        "httpHeaderAuth": { "id": "", "name": "x-webhook-secret (nota)" }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const b = $input.first().json.body || {};\nconst mime = b.mimeType || 'image/jpeg';\nconst img = b.imageBase64 || '';\nconst sys = 'Kamu OCR nota belanja Indonesia. Dari foto nota, keluarkan HANYA JSON object berbentuk {\"items\":[{\"name\":string,\"qty\":number,\"unit\":string|null,\"unitPrice\":number,\"supplier\":string|null,\"notaDate\":\"YYYY-MM-DD\"|null}]}. unitPrice = harga satuan dalam rupiah, angka saja tanpa titik/koma. Jika sebuah field tak ada di nota, isi null. Jangan menambah teks lain.';\nreturn [{ json: { body: {\n  model: 'gpt-4o',\n  response_format: { type: 'json_object' },\n  messages: [\n    { role: 'system', content: sys },\n    { role: 'user', content: [\n      { type: 'text', text: 'Ambil daftar item dari nota ini.' },\n      { type: 'image_url', image_url: { url: `data:${mime};base64,${img}` } }\n    ] }\n  ]\n} } }];"
+      },
+      "id": "build-req",
+      "name": "Build OCR request",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.openai.com/v1/chat/completions",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "openAiApi",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.body }}",
+        "options": {}
+      },
+      "id": "openai-vision",
+      "name": "OpenAI Vision",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [680, 300],
+      "credentials": {
+        "openAiApi": { "id": "", "name": "OpenAI" }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const c = $input.first().json;\nconst txt = (c.choices && c.choices[0] && c.choices[0].message && c.choices[0].message.content) || '{}';\nlet o; try { o = JSON.parse(txt); } catch (e) { o = { items: [] }; }\nconst items = Array.isArray(o.items) ? o.items : [];\nreturn [{ json: { items } }];"
+      },
+      "id": "parse-items",
+      "name": "Parse Items",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json }}",
+        "options": {}
+      },
+      "id": "respond",
+      "name": "Respond",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1120, 300]
+    }
+  ],
+  "connections": {
+    "Webhook": { "main": [[{ "node": "Build OCR request", "type": "main", "index": 0 }]] },
+    "Build OCR request": { "main": [[{ "node": "OpenAI Vision", "type": "main", "index": 0 }]] },
+    "OpenAI Vision": { "main": [[{ "node": "Parse Items", "type": "main", "index": 0 }]] },
+    "Parse Items": { "main": [[{ "node": "Respond", "type": "main", "index": 0 }]] }
+  },
+  "settings": { "executionOrder": "v1" }
+}
