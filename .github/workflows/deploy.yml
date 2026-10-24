@@ -1,0 +1,50 @@
+# Auto-deploy ke PC server (self-hosted runner Windows + Docker Desktop).
+# Butuh repo variable DEPLOY_DIR = folder clone di PC (berisi .env).
+# Sengaja cuma push ke main / manual: repo public, jangan jalankan kode PR fork di PC.
+name: Deploy PC
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-pc
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    defaults:
+      run:
+        shell: powershell
+        working-directory: ${{ vars.DEPLOY_DIR }}
+    steps:
+      - name: Pull
+        run: |
+          git fetch origin main
+          if ($LASTEXITCODE) { exit 1 }
+          git reset --hard origin/main
+          if ($LASTEXITCODE) { exit 1 }
+
+      - name: Build + up
+        run: |
+          docker compose up -d --build
+          if ($LASTEXITCODE) { exit 1 }
+
+      - name: Migrasi DB
+        run: |
+          docker compose exec -T web pnpm db:deploy
+          if ($LASTEXITCODE) { exit 1 }
+
+      - name: Health check
+        run: |
+          for ($i = 0; $i -lt 30; $i++) {
+            try {
+              $r = Invoke-WebRequest http://localhost:3000/ -UseBasicParsing -MaximumRedirection 5 -TimeoutSec 5
+              if ($r.StatusCode -eq 200) { "OK"; exit 0 }
+            } catch {}
+            Start-Sleep 2
+          }
+          docker compose logs web --tail 50
+          exit 1

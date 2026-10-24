@@ -1,6 +1,10 @@
 import { PrismaClient, type RoleCode } from "../src/generated/prisma";
+import { PrismaPg } from "@prisma/adapter-pg";
 
-const prisma = new PrismaClient();
+// engineType "client" wajib driver adapter (sama seperti src/server/db.ts).
+const prisma = new PrismaClient({
+  adapter: new PrismaPg({ connectionString: process.env.DATABASE_URL }),
+});
 
 const ROLES: { code: RoleCode; name: string }[] = [
   { code: "BOSS", name: "Boss" },

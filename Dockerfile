@@ -9,12 +9,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends openssl \
 WORKDIR /app
 
 # Install deps dulu (layer cache). Postinstall @prisma/client generate jalan di sini — aman, RAM cukup.
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 # Sisa source + build.
 COPY . .
-RUN pnpm build
+# AUTH_SECRET asli cuma ada di runtime (.env tidak masuk image); hash.ts throw saat build tanpa ini.
+RUN AUTH_SECRET=build-only-placeholder pnpm build
 
 ENV NODE_ENV=production
 EXPOSE 3000
