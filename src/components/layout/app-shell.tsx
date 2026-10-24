@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { Sidebar } from "./sidebar";
 import { Header } from "./header";
-import { RightPanel, type RightNotif, type RightAct } from "./right-panel";
+import { RightPanel, type RightNotif, type RightMember } from "./right-panel";
 import { BottomNav } from "./bottom-nav";
 import { FloatingChat, type Presence } from "@/components/chat/floating-chat";
 import type { RoomListItem } from "@/server/chat/queries";
@@ -11,14 +11,14 @@ import type { RoomListItem } from "@/server/chat/queries";
 export function AppShell({
   children,
   notifications,
-  activities,
+  members,
   rooms,
   presence,
   me,
 }: {
   children: React.ReactNode;
   notifications: RightNotif[];
-  activities: RightAct[];
+  members: RightMember[];
   rooms: RoomListItem[];
   presence: Presence[];
   me: string;
@@ -34,7 +34,7 @@ export function AppShell({
           <main className="min-w-0 flex-1 overflow-y-auto p-4 pb-20 md:p-6 md:pb-6">
             {children}
           </main>
-          {panelOpen && <RightPanel notifications={notifications} activities={activities} />}
+          {panelOpen && <RightPanel notifications={notifications} members={members} />}
         </div>
       </div>
       <BottomNav />
