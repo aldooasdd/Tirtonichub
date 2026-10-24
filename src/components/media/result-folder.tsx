@@ -38,6 +38,7 @@ export function ResultFolder({
   const [busy, setBusy] = useState(false);
 
   const [preview, setPreview] = useState<AssetFile | null>(null);
+  const [browser, setBrowser] = useState(false);
 
   const files: FolderFile[] = assets.map((a) => ({
     name: a.name,
@@ -80,12 +81,63 @@ export function ResultFolder({
         appearDelay={appearDelay}
         files={files}
         action={canManage ? "add" : "none"}
-        onFileSelect={(_f, i) => setPreview(assets[i] ?? null)}
+        open={false}
+        onOpenChange={(o) => o && setBrowser(true)}
         onAdd={() => {
           inputRef.current?.click();
           return { name: "Mengunggah…", meta: "" }; // placeholder sementara
         }}
       />
+
+      {browser && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+          onClick={() => setBrowser(false)}
+        >
+          <div
+            className="flex max-h-[85vh] w-full max-w-3xl flex-col rounded-xl bg-card shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between gap-2 border-b px-4 py-3">
+              <p className="truncate font-medium">{name}</p>
+              <div className="flex items-center gap-3">
+                {canManage && (
+                  <button className="text-14 text-primary" onClick={() => inputRef.current?.click()}>
+                    {busy ? "Mengunggah…" : "+ Unggah"}
+                  </button>
+                )}
+                <button className="text-14 text-muted-foreground hover:text-foreground" onClick={() => setBrowser(false)}>Tutup</button>
+              </div>
+            </div>
+            {assets.length === 0 ? (
+              <p className="py-16 text-center text-muted-foreground">Folder kosong.</p>
+            ) : (
+              <div className="grid grid-cols-2 gap-3 overflow-auto p-4 sm:grid-cols-3 md:grid-cols-4">
+                {assets.map((a) => (
+                  <button
+                    key={a.id}
+                    onClick={() => setPreview(a)}
+                    className="flex flex-col overflow-hidden rounded-lg border bg-background text-left hover:border-primary"
+                  >
+                    <div className="flex h-24 items-center justify-center bg-muted">
+                      {a.mime.startsWith("image/") ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={raw(a)} alt={a.name} className="h-full w-full object-cover" />
+                      ) : (
+                        <span className="text-30">{a.mime.startsWith("video/") ? "🎬" : "📄"}</span>
+                      )}
+                    </div>
+                    <div className="p-2">
+                      <p className="truncate text-12 font-medium">{a.name}</p>
+                      <p className="text-11 text-muted-foreground">{fmtSize(a.size)}</p>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {preview && (
         <div
