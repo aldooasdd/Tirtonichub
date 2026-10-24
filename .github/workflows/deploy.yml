@@ -17,7 +17,8 @@ jobs:
     runs-on: self-hosted
     defaults:
       run:
-        shell: powershell
+        # Bypass cuma untuk skrip step ini; execution policy PC tidak diubah.
+        shell: powershell -NoProfile -ExecutionPolicy Bypass -Command ". '{0}'"
         working-directory: ${{ vars.DEPLOY_DIR }}
     steps:
       - name: Pull
