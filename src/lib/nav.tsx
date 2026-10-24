@@ -21,6 +21,8 @@ import {
   CalendarDays,
   LayoutList,
   Sparkles,
+  UsersRound,
+  BarChart3,
   type LucideIcon,
 } from "lucide-react";
 import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, roleAttends, type RoleCode } from "./roles";
@@ -93,6 +95,8 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Content Queue", href: "/media/queue", icon: LayoutList },
         { label: "Kalender", href: "/media/kalender", icon: CalendarDays },
         { label: "Analisis IDCC", href: "/media/idcc", icon: Sparkles },
+        { label: "Laporan", href: "/media/laporan", icon: BarChart3 },
+        { label: "Tim", href: "/media/tim", icon: UsersRound },
       ],
     });
   }
