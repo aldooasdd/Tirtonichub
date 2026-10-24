@@ -6,10 +6,8 @@ import {
   PutObjectCommand,
   GetObjectCommand,
 } from "@aws-sdk/client-s3";
-import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const BUCKET = process.env.S3_BUCKET ?? "";
-const PRESIGN_TTL = Number(process.env.S3_PRESIGN_TTL_SEC) || 300;
 
 function s3Configured(): boolean {
   return !!(
@@ -36,7 +34,7 @@ function client(): S3Client {
   return _client;
 }
 
-// ponytail: dev tanpa S3/MinIO → simpan ke .data/uploads, disajikan via /api/dev-file.
+// ponytail: dev tanpa S3/MinIO → simpan ke .data/uploads, disajikan via /api/file.
 // Produksi WAJIB set S3_* (MinIO di PC server). JANGAN pakai fallback disk di produksi.
 const DEV_DIR = path.join(process.cwd(), ".data", "uploads");
 
@@ -62,18 +60,18 @@ export async function putObject(key: string, body: Buffer, contentType: string):
   await fs.writeFile(p, body);
 }
 
-/** URL baca berumur pendek (presigned). Dev: route lokal. */
+// ponytail: proxy lewat app (/api/file) alih-alih presigned langsung — MinIO
+// internal tak perlu diekspos publik & tak ada masalah host di URL browser.
 export async function fileUrl(key: string): Promise<string> {
-  if (s3Configured()) {
-    return getSignedUrl(client(), new GetObjectCommand({ Bucket: BUCKET, Key: key }), {
-      expiresIn: PRESIGN_TTL,
-    });
-  }
-  return `/api/dev-file?key=${encodeURIComponent(key)}`;
+  return `/api/file?key=${encodeURIComponent(key)}`;
 }
 
-/** Dev only: baca file dari disk. */
-export async function readDevFile(key: string): Promise<Buffer> {
-  if (s3Configured()) throw new Error("dev-file dimatikan saat S3 aktif");
+/** Baca objek jadi Buffer (S3/MinIO atau disk fallback). */
+export async function getObject(key: string): Promise<Buffer> {
+  if (s3Configured()) {
+    const r = await client().send(new GetObjectCommand({ Bucket: BUCKET, Key: key }));
+    const bytes = await r.Body!.transformToByteArray();
+    return Buffer.from(bytes);
+  }
   return fs.readFile(safeKeyToPath(key));
 }

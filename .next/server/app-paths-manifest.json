@@ -32,7 +32,7 @@
   "/_global-error/page": "app/_global-error/page.js",
   "/_not-found/page": "app/_not-found/page.js",
   "/api/chat/messages/route": "app/api/chat/messages/route.js",
-  "/api/dev-file/route": "app/api/dev-file/route.js",
+  "/api/file/route": "app/api/file/route.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/manifest.webmanifest/route": "app/manifest.webmanifest/route.js",
   "/page": "app/page.js"

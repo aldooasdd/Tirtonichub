@@ -63,10 +63,10 @@
       "namedRegex": "^/api/chat/messages(?:/)?$"
     },
     {
-      "page": "/api/dev-file",
-      "regex": "^/api/dev\\-file(?:/)?$",
+      "page": "/api/file",
+      "regex": "^/api/file(?:/)?$",
       "routeKeys": {},
-      "namedRegex": "^/api/dev\\-file(?:/)?$"
+      "namedRegex": "^/api/file(?:/)?$"
     },
     {
       "page": "/beranda",
