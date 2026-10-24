@@ -58,3 +58,10 @@ export async function requireStock(): Promise<AuthContext> {
   assert(can.manageStock(ctx.activeRole));
   return ctx;
 }
+
+/** Media/Boss: Tirtonic Studio (produksi konten). */
+export async function requireMedia(): Promise<AuthContext> {
+  const ctx = await requireAuth();
+  assert(can.manageMedia(ctx.activeRole));
+  return ctx;
+}

@@ -16,9 +16,14 @@ import {
   Receipt,
   ClipboardCheck,
   Boxes,
+  Package,
+  Clapperboard,
+  CalendarDays,
+  LayoutList,
+  Sparkles,
   type LucideIcon,
 } from "lucide-react";
-import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, roleAttends, type RoleCode } from "./roles";
+import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, roleAttends, type RoleCode } from "./roles";
 
 export type NavItem = {
   label: string;
@@ -75,6 +80,19 @@ export function navForRole(role: RoleCode): NavGroup[] {
       items: [
         { label: "Quality Control", href: "/stok/qc", icon: ClipboardCheck },
         { label: "Stok", href: "/stok", icon: Boxes },
+      ],
+    });
+  }
+
+  if (MEDIA_ROLES.includes(role)) {
+    groups.push({
+      title: "Media",
+      items: [
+        { label: "Barang", href: "/media/barang", icon: Package },
+        { label: "Workflow Hub", href: "/media/workflow", icon: Clapperboard },
+        { label: "Content Queue", href: "/media/queue", icon: LayoutList },
+        { label: "Kalender", href: "/media/kalender", icon: CalendarDays },
+        { label: "Analisis IDCC", href: "/media/idcc", icon: Sparkles },
       ],
     });
   }
