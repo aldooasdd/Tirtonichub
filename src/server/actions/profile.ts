@@ -23,6 +23,10 @@ export async function updateOwnProfile(
     data: {
       nickname: parsed.data.nickname ?? null,
       bio: parsed.data.bio ?? null,
+      // "YYYY-MM-DD" → Date UTC midnight; "" → null. undefined = tidak diubah.
+      ...(parsed.data.birthDate !== undefined
+        ? { birthDate: parsed.data.birthDate ? new Date(`${parsed.data.birthDate}T00:00:00.000Z`) : null }
+        : {}),
       ...(parsed.data.themePref ? { themePref: parsed.data.themePref } : {}),
     },
   });

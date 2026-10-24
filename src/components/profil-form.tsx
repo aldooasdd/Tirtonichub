@@ -11,20 +11,23 @@ import { updateOwnProfile } from "@/server/actions/profile";
 export function ProfilForm({
   nickname: initNick,
   bio: initBio,
+  birthDate: initBirth,
 }: {
   nickname: string;
   bio: string;
+  birthDate?: string;
   themePref?: "light" | "dark" | "system";
 }) {
   const [nickname, setNickname] = useState(initNick);
   const [bio, setBio] = useState(initBio);
+  const [birthDate, setBirthDate] = useState(initBirth ?? "");
   const [msg, setMsg] = useState<string | null>(null);
   const [pending, start] = useTransition();
 
   function submit() {
     setMsg(null);
     start(async () => {
-      const r = await updateOwnProfile({ nickname, bio });
+      const r = await updateOwnProfile({ nickname, bio, birthDate });
       setMsg(r.ok ? "Tersimpan." : (r.message ?? "Gagal."));
     });
   }
@@ -36,6 +39,10 @@ export function ProfilForm({
         <div className="space-y-2">
           <Label>Nama panggilan</Label>
           <Input value={nickname} onChange={(e) => setNickname(e.target.value)} />
+        </div>
+        <div className="space-y-2">
+          <Label>Tanggal lahir</Label>
+          <Input type="date" value={birthDate} onChange={(e) => setBirthDate(e.target.value)} />
         </div>
         <div className="space-y-2">
           <Label>Bio singkat</Label>

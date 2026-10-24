@@ -131,6 +131,7 @@ exports.Prisma.UserScalarFieldEnum = {
   bio: 'bio',
   branchId: 'branchId',
   joinedAt: 'joinedAt',
+  birthDate: 'birthDate',
   isActive: 'isActive',
   themePref: 'themePref',
   createdAt: 'createdAt',

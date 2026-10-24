@@ -48,6 +48,13 @@ export const branchSchema = z.object({
 export const profileSelfSchema = z.object({
   nickname: z.string().trim().max(50).optional().nullable(),
   bio: z.string().trim().max(280).optional().nullable(),
+  // "" = kosongkan; "YYYY-MM-DD" = set tanggal lahir.
+  birthDate: z
+    .string()
+    .regex(/^\d{4}-\d{2}-\d{2}$/)
+    .optional()
+    .nullable()
+    .or(z.literal("")),
   themePref: z.enum(["light", "dark", "system"]).optional(),
 });
 

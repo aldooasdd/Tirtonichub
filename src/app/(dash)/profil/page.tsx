@@ -38,6 +38,7 @@ export default async function ProfilPage() {
       <ProfilForm
         nickname={user.nickname ?? ""}
         bio={user.bio ?? ""}
+        birthDate={user.birthDate ? user.birthDate.toISOString().slice(0, 10) : ""}
         themePref={user.themePref as "light" | "dark" | "system"}
       />
     </div>

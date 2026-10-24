@@ -2811,6 +2811,7 @@ export namespace Prisma {
     bio: string | null
     branchId: string | null
     joinedAt: Date | null
+    birthDate: Date | null
     isActive: boolean | null
     themePref: string | null
     createdAt: Date | null
@@ -2827,6 +2828,7 @@ export namespace Prisma {
     bio: string | null
     branchId: string | null
     joinedAt: Date | null
+    birthDate: Date | null
     isActive: boolean | null
     themePref: string | null
     createdAt: Date | null
@@ -2843,6 +2845,7 @@ export namespace Prisma {
     bio: number
     branchId: number
     joinedAt: number
+    birthDate: number
     isActive: number
     themePref: number
     createdAt: number
@@ -2861,6 +2864,7 @@ export namespace Prisma {
     bio?: true
     branchId?: true
     joinedAt?: true
+    birthDate?: true
     isActive?: true
     themePref?: true
     createdAt?: true
@@ -2877,6 +2881,7 @@ export namespace Prisma {
     bio?: true
     branchId?: true
     joinedAt?: true
+    birthDate?: true
     isActive?: true
     themePref?: true
     createdAt?: true
@@ -2893,6 +2898,7 @@ export namespace Prisma {
     bio?: true
     branchId?: true
     joinedAt?: true
+    birthDate?: true
     isActive?: true
     themePref?: true
     createdAt?: true
@@ -2982,6 +2988,7 @@ export namespace Prisma {
     bio: string | null
     branchId: string | null
     joinedAt: Date | null
+    birthDate: Date | null
     isActive: boolean
     themePref: string
     createdAt: Date
@@ -3015,6 +3022,7 @@ export namespace Prisma {
     bio?: boolean
     branchId?: boolean
     joinedAt?: boolean
+    birthDate?: boolean
     isActive?: boolean
     themePref?: boolean
     createdAt?: boolean
@@ -3047,6 +3055,7 @@ export namespace Prisma {
     bio?: boolean
     branchId?: boolean
     joinedAt?: boolean
+    birthDate?: boolean
     isActive?: boolean
     themePref?: boolean
     createdAt?: boolean
@@ -3064,6 +3073,7 @@ export namespace Prisma {
     bio?: boolean
     branchId?: boolean
     joinedAt?: boolean
+    birthDate?: boolean
     isActive?: boolean
     themePref?: boolean
     createdAt?: boolean
@@ -3081,13 +3091,14 @@ export namespace Prisma {
     bio?: boolean
     branchId?: boolean
     joinedAt?: boolean
+    birthDate?: boolean
     isActive?: boolean
     themePref?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "nickname" | "email" | "waNumber" | "avatarKey" | "bio" | "branchId" | "joinedAt" | "isActive" | "themePref" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "nickname" | "email" | "waNumber" | "avatarKey" | "bio" | "branchId" | "joinedAt" | "birthDate" | "isActive" | "themePref" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     branch?: boolean | User$branchArgs<ExtArgs>
     roles?: boolean | User$rolesArgs<ExtArgs>
@@ -3142,6 +3153,7 @@ export namespace Prisma {
       bio: string | null
       branchId: string | null
       joinedAt: Date | null
+      birthDate: Date | null
       isActive: boolean
       themePref: string
       createdAt: Date
@@ -3593,6 +3605,7 @@ export namespace Prisma {
     readonly bio: FieldRef<"User", 'String'>
     readonly branchId: FieldRef<"User", 'String'>
     readonly joinedAt: FieldRef<"User", 'DateTime'>
+    readonly birthDate: FieldRef<"User", 'DateTime'>
     readonly isActive: FieldRef<"User", 'Boolean'>
     readonly themePref: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
@@ -23347,6 +23360,7 @@ export namespace Prisma {
     bio: 'bio',
     branchId: 'branchId',
     joinedAt: 'joinedAt',
+    birthDate: 'birthDate',
     isActive: 'isActive',
     themePref: 'themePref',
     createdAt: 'createdAt',
@@ -23817,6 +23831,7 @@ export namespace Prisma {
     bio?: StringNullableFilter<"User"> | string | null
     branchId?: StringNullableFilter<"User"> | string | null
     joinedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    birthDate?: DateTimeNullableFilter<"User"> | Date | string | null
     isActive?: BoolFilter<"User"> | boolean
     themePref?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
@@ -23848,6 +23863,7 @@ export namespace Prisma {
     bio?: SortOrderInput | SortOrder
     branchId?: SortOrderInput | SortOrder
     joinedAt?: SortOrderInput | SortOrder
+    birthDate?: SortOrderInput | SortOrder
     isActive?: SortOrder
     themePref?: SortOrder
     createdAt?: SortOrder
@@ -23882,6 +23898,7 @@ export namespace Prisma {
     bio?: StringNullableFilter<"User"> | string | null
     branchId?: StringNullableFilter<"User"> | string | null
     joinedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    birthDate?: DateTimeNullableFilter<"User"> | Date | string | null
     isActive?: BoolFilter<"User"> | boolean
     themePref?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
@@ -23913,6 +23930,7 @@ export namespace Prisma {
     bio?: SortOrderInput | SortOrder
     branchId?: SortOrderInput | SortOrder
     joinedAt?: SortOrderInput | SortOrder
+    birthDate?: SortOrderInput | SortOrder
     isActive?: SortOrder
     themePref?: SortOrder
     createdAt?: SortOrder
@@ -23935,6 +23953,7 @@ export namespace Prisma {
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
     branchId?: StringNullableWithAggregatesFilter<"User"> | string | null
     joinedAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    birthDate?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
     isActive?: BoolWithAggregatesFilter<"User"> | boolean
     themePref?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -25177,6 +25196,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -25208,6 +25228,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -25237,6 +25258,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25268,6 +25290,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25298,6 +25321,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -25313,6 +25337,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -25329,6 +25354,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -26836,6 +26862,7 @@ export namespace Prisma {
     bio?: SortOrder
     branchId?: SortOrder
     joinedAt?: SortOrder
+    birthDate?: SortOrder
     isActive?: SortOrder
     themePref?: SortOrder
     createdAt?: SortOrder
@@ -26852,6 +26879,7 @@ export namespace Prisma {
     bio?: SortOrder
     branchId?: SortOrder
     joinedAt?: SortOrder
+    birthDate?: SortOrder
     isActive?: SortOrder
     themePref?: SortOrder
     createdAt?: SortOrder
@@ -26868,6 +26896,7 @@ export namespace Prisma {
     bio?: SortOrder
     branchId?: SortOrder
     joinedAt?: SortOrder
+    birthDate?: SortOrder
     isActive?: SortOrder
     themePref?: SortOrder
     createdAt?: SortOrder
@@ -30363,6 +30392,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -30393,6 +30423,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -30443,6 +30474,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -30473,6 +30505,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -30517,6 +30550,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30547,6 +30581,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30609,6 +30644,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30639,6 +30675,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30667,6 +30704,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -30697,6 +30735,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -30741,6 +30780,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30771,6 +30811,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -30799,6 +30840,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -30828,6 +30870,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -30933,6 +30976,7 @@ export namespace Prisma {
     bio?: StringNullableFilter<"User"> | string | null
     branchId?: StringNullableFilter<"User"> | string | null
     joinedAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    birthDate?: DateTimeNullableFilter<"User"> | Date | string | null
     isActive?: BoolFilter<"User"> | boolean
     themePref?: StringFilter<"User"> | string
     createdAt?: DateTimeFilter<"User"> | Date | string
@@ -31002,6 +31046,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -31032,6 +31077,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -31099,6 +31145,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31129,6 +31176,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31186,6 +31234,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -31216,6 +31265,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -31283,6 +31333,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31313,6 +31364,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31370,6 +31422,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -31400,6 +31453,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -31433,6 +31487,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -31463,6 +31518,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -31507,6 +31563,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31537,6 +31594,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31576,6 +31634,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31606,6 +31665,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31634,6 +31694,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -31664,6 +31725,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -31708,6 +31770,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31738,6 +31801,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31766,6 +31830,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -31796,6 +31861,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -31840,6 +31906,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -31870,6 +31937,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32005,6 +32073,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -32035,6 +32104,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -32108,6 +32178,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32138,6 +32209,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32189,6 +32261,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -32219,6 +32292,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -32292,6 +32366,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32322,6 +32397,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32350,6 +32426,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -32380,6 +32457,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -32424,6 +32502,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32454,6 +32533,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32482,6 +32562,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -32512,6 +32593,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -32545,6 +32627,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -32575,6 +32658,7 @@ export namespace Prisma {
     bio?: string | null
     branchId?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -32619,6 +32703,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32649,6 +32734,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32688,6 +32774,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -32718,6 +32805,7 @@ export namespace Prisma {
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33430,6 +33518,7 @@ export namespace Prisma {
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
+    birthDate?: Date | string | null
     isActive?: boolean
     themePref?: string
     createdAt?: Date | string
@@ -33463,6 +33552,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33492,6 +33582,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -33521,6 +33612,7 @@ export namespace Prisma {
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string

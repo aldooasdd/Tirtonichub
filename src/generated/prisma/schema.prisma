@@ -70,6 +70,7 @@ model User {
   bio       String?
   branchId  String?
   joinedAt  DateTime? // tgl mulai kerja, untuk kuota cuti (≥1 thn) — §11.3
+  birthDate DateTime? @db.Date // tanggal lahir (opsional)
   isActive  Boolean   @default(true)
   themePref String    @default("system")
   createdAt DateTime  @default(now())
