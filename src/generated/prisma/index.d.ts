@@ -138,6 +138,11 @@ export type MediaBalanceLog = $Result.DefaultSelection<Prisma.$MediaBalanceLogPa
  * 
  */
 export type PersonalCalEvent = $Result.DefaultSelection<Prisma.$PersonalCalEventPayload>
+/**
+ * Model MediaPcal
+ * 
+ */
+export type MediaPcal = $Result.DefaultSelection<Prisma.$MediaPcalPayload>
 
 /**
  * Enums
@@ -626,6 +631,16 @@ export class PrismaClient<
     * ```
     */
   get personalCalEvent(): Prisma.PersonalCalEventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mediaPcal`: Exposes CRUD operations for the **MediaPcal** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MediaPcals
+    * const mediaPcals = await prisma.mediaPcal.findMany()
+    * ```
+    */
+  get mediaPcal(): Prisma.MediaPcalDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1091,7 +1106,8 @@ export namespace Prisma {
     MediaSettings: 'MediaSettings',
     MediaIdccReport: 'MediaIdccReport',
     MediaBalanceLog: 'MediaBalanceLog',
-    PersonalCalEvent: 'PersonalCalEvent'
+    PersonalCalEvent: 'PersonalCalEvent',
+    MediaPcal: 'MediaPcal'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1110,7 +1126,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent"
+      modelProps: "user" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2964,6 +2980,80 @@ export namespace Prisma {
           }
         }
       }
+      MediaPcal: {
+        payload: Prisma.$MediaPcalPayload<ExtArgs>
+        fields: Prisma.MediaPcalFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MediaPcalFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPcalPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MediaPcalFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPcalPayload>
+          }
+          findFirst: {
+            args: Prisma.MediaPcalFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPcalPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MediaPcalFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPcalPayload>
+          }
+          findMany: {
+            args: Prisma.MediaPcalFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPcalPayload>[]
+          }
+          create: {
+            args: Prisma.MediaPcalCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPcalPayload>
+          }
+          createMany: {
+            args: Prisma.MediaPcalCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MediaPcalCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPcalPayload>[]
+          }
+          delete: {
+            args: Prisma.MediaPcalDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPcalPayload>
+          }
+          update: {
+            args: Prisma.MediaPcalUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPcalPayload>
+          }
+          deleteMany: {
+            args: Prisma.MediaPcalDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MediaPcalUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MediaPcalUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPcalPayload>[]
+          }
+          upsert: {
+            args: Prisma.MediaPcalUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaPcalPayload>
+          }
+          aggregate: {
+            args: Prisma.MediaPcalAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMediaPcal>
+          }
+          groupBy: {
+            args: Prisma.MediaPcalGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MediaPcalGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MediaPcalCountArgs<ExtArgs>
+            result: $Utils.Optional<MediaPcalCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3085,6 +3175,7 @@ export namespace Prisma {
     mediaIdccReport?: MediaIdccReportOmit
     mediaBalanceLog?: MediaBalanceLogOmit
     personalCalEvent?: PersonalCalEventOmit
+    mediaPcal?: MediaPcalOmit
   }
 
   /* Types for Logging */
@@ -3757,6 +3848,7 @@ export namespace Prisma {
     mediaMember?: boolean | User$mediaMemberArgs<ExtArgs>
     mediaItems?: boolean | User$mediaItemsArgs<ExtArgs>
     personalCalEvents?: boolean | User$personalCalEventsArgs<ExtArgs>
+    mediaPcal?: boolean | User$mediaPcalArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -3833,6 +3925,7 @@ export namespace Prisma {
     mediaMember?: boolean | User$mediaMemberArgs<ExtArgs>
     mediaItems?: boolean | User$mediaItemsArgs<ExtArgs>
     personalCalEvents?: boolean | User$personalCalEventsArgs<ExtArgs>
+    mediaPcal?: boolean | User$mediaPcalArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3863,6 +3956,7 @@ export namespace Prisma {
       mediaMember: Prisma.$MediaMemberPayload<ExtArgs> | null
       mediaItems: Prisma.$MediaItemPayload<ExtArgs>[]
       personalCalEvents: Prisma.$PersonalCalEventPayload<ExtArgs>[]
+      mediaPcal: Prisma.$MediaPcalPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4291,6 +4385,7 @@ export namespace Prisma {
     mediaMember<T extends User$mediaMemberArgs<ExtArgs> = {}>(args?: Subset<T, User$mediaMemberArgs<ExtArgs>>): Prisma__MediaMemberClient<$Result.GetResult<Prisma.$MediaMemberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     mediaItems<T extends User$mediaItemsArgs<ExtArgs> = {}>(args?: Subset<T, User$mediaItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     personalCalEvents<T extends User$personalCalEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$personalCalEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    mediaPcal<T extends User$mediaPcalArgs<ExtArgs> = {}>(args?: Subset<T, User$mediaPcalArgs<ExtArgs>>): Prisma__MediaPcalClient<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5149,6 +5244,25 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PersonalCalEventScalarFieldEnum | PersonalCalEventScalarFieldEnum[]
+  }
+
+  /**
+   * User.mediaPcal
+   */
+  export type User$mediaPcalArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaPcal
+     */
+    select?: MediaPcalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaPcal
+     */
+    omit?: MediaPcalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaPcalInclude<ExtArgs> | null
+    where?: MediaPcalWhereInput
   }
 
   /**
@@ -32254,6 +32368,1051 @@ export namespace Prisma {
 
 
   /**
+   * Model MediaPcal
+   */
+
+  export type AggregateMediaPcal = {
+    _count: MediaPcalCountAggregateOutputType | null
+    _min: MediaPcalMinAggregateOutputType | null
+    _max: MediaPcalMaxAggregateOutputType | null
+  }
+
+  export type MediaPcalMinAggregateOutputType = {
+    userId: string | null
+    color: string | null
+    notes: string | null
+    updatedAt: Date | null
+  }
+
+  export type MediaPcalMaxAggregateOutputType = {
+    userId: string | null
+    color: string | null
+    notes: string | null
+    updatedAt: Date | null
+  }
+
+  export type MediaPcalCountAggregateOutputType = {
+    userId: number
+    color: number
+    notes: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type MediaPcalMinAggregateInputType = {
+    userId?: true
+    color?: true
+    notes?: true
+    updatedAt?: true
+  }
+
+  export type MediaPcalMaxAggregateInputType = {
+    userId?: true
+    color?: true
+    notes?: true
+    updatedAt?: true
+  }
+
+  export type MediaPcalCountAggregateInputType = {
+    userId?: true
+    color?: true
+    notes?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type MediaPcalAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaPcal to aggregate.
+     */
+    where?: MediaPcalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaPcals to fetch.
+     */
+    orderBy?: MediaPcalOrderByWithRelationInput | MediaPcalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MediaPcalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaPcals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaPcals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MediaPcals
+    **/
+    _count?: true | MediaPcalCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MediaPcalMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MediaPcalMaxAggregateInputType
+  }
+
+  export type GetMediaPcalAggregateType<T extends MediaPcalAggregateArgs> = {
+        [P in keyof T & keyof AggregateMediaPcal]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMediaPcal[P]>
+      : GetScalarType<T[P], AggregateMediaPcal[P]>
+  }
+
+
+
+
+  export type MediaPcalGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaPcalWhereInput
+    orderBy?: MediaPcalOrderByWithAggregationInput | MediaPcalOrderByWithAggregationInput[]
+    by: MediaPcalScalarFieldEnum[] | MediaPcalScalarFieldEnum
+    having?: MediaPcalScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MediaPcalCountAggregateInputType | true
+    _min?: MediaPcalMinAggregateInputType
+    _max?: MediaPcalMaxAggregateInputType
+  }
+
+  export type MediaPcalGroupByOutputType = {
+    userId: string
+    color: string
+    notes: string | null
+    updatedAt: Date
+    _count: MediaPcalCountAggregateOutputType | null
+    _min: MediaPcalMinAggregateOutputType | null
+    _max: MediaPcalMaxAggregateOutputType | null
+  }
+
+  type GetMediaPcalGroupByPayload<T extends MediaPcalGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MediaPcalGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MediaPcalGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MediaPcalGroupByOutputType[P]>
+            : GetScalarType<T[P], MediaPcalGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MediaPcalSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    color?: boolean
+    notes?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaPcal"]>
+
+  export type MediaPcalSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    color?: boolean
+    notes?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaPcal"]>
+
+  export type MediaPcalSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    color?: boolean
+    notes?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaPcal"]>
+
+  export type MediaPcalSelectScalar = {
+    userId?: boolean
+    color?: boolean
+    notes?: boolean
+    updatedAt?: boolean
+  }
+
+  export type MediaPcalOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "color" | "notes" | "updatedAt", ExtArgs["result"]["mediaPcal"]>
+  export type MediaPcalInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MediaPcalIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type MediaPcalIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $MediaPcalPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MediaPcal"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      userId: string
+      color: string
+      notes: string | null
+      updatedAt: Date
+    }, ExtArgs["result"]["mediaPcal"]>
+    composites: {}
+  }
+
+  type MediaPcalGetPayload<S extends boolean | null | undefined | MediaPcalDefaultArgs> = $Result.GetResult<Prisma.$MediaPcalPayload, S>
+
+  type MediaPcalCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MediaPcalFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MediaPcalCountAggregateInputType | true
+    }
+
+  export interface MediaPcalDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MediaPcal'], meta: { name: 'MediaPcal' } }
+    /**
+     * Find zero or one MediaPcal that matches the filter.
+     * @param {MediaPcalFindUniqueArgs} args - Arguments to find a MediaPcal
+     * @example
+     * // Get one MediaPcal
+     * const mediaPcal = await prisma.mediaPcal.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MediaPcalFindUniqueArgs>(args: SelectSubset<T, MediaPcalFindUniqueArgs<ExtArgs>>): Prisma__MediaPcalClient<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MediaPcal that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MediaPcalFindUniqueOrThrowArgs} args - Arguments to find a MediaPcal
+     * @example
+     * // Get one MediaPcal
+     * const mediaPcal = await prisma.mediaPcal.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MediaPcalFindUniqueOrThrowArgs>(args: SelectSubset<T, MediaPcalFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MediaPcalClient<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaPcal that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaPcalFindFirstArgs} args - Arguments to find a MediaPcal
+     * @example
+     * // Get one MediaPcal
+     * const mediaPcal = await prisma.mediaPcal.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MediaPcalFindFirstArgs>(args?: SelectSubset<T, MediaPcalFindFirstArgs<ExtArgs>>): Prisma__MediaPcalClient<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaPcal that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaPcalFindFirstOrThrowArgs} args - Arguments to find a MediaPcal
+     * @example
+     * // Get one MediaPcal
+     * const mediaPcal = await prisma.mediaPcal.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MediaPcalFindFirstOrThrowArgs>(args?: SelectSubset<T, MediaPcalFindFirstOrThrowArgs<ExtArgs>>): Prisma__MediaPcalClient<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MediaPcals that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaPcalFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MediaPcals
+     * const mediaPcals = await prisma.mediaPcal.findMany()
+     * 
+     * // Get first 10 MediaPcals
+     * const mediaPcals = await prisma.mediaPcal.findMany({ take: 10 })
+     * 
+     * // Only select the `userId`
+     * const mediaPcalWithUserIdOnly = await prisma.mediaPcal.findMany({ select: { userId: true } })
+     * 
+     */
+    findMany<T extends MediaPcalFindManyArgs>(args?: SelectSubset<T, MediaPcalFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MediaPcal.
+     * @param {MediaPcalCreateArgs} args - Arguments to create a MediaPcal.
+     * @example
+     * // Create one MediaPcal
+     * const MediaPcal = await prisma.mediaPcal.create({
+     *   data: {
+     *     // ... data to create a MediaPcal
+     *   }
+     * })
+     * 
+     */
+    create<T extends MediaPcalCreateArgs>(args: SelectSubset<T, MediaPcalCreateArgs<ExtArgs>>): Prisma__MediaPcalClient<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MediaPcals.
+     * @param {MediaPcalCreateManyArgs} args - Arguments to create many MediaPcals.
+     * @example
+     * // Create many MediaPcals
+     * const mediaPcal = await prisma.mediaPcal.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MediaPcalCreateManyArgs>(args?: SelectSubset<T, MediaPcalCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MediaPcals and returns the data saved in the database.
+     * @param {MediaPcalCreateManyAndReturnArgs} args - Arguments to create many MediaPcals.
+     * @example
+     * // Create many MediaPcals
+     * const mediaPcal = await prisma.mediaPcal.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MediaPcals and only return the `userId`
+     * const mediaPcalWithUserIdOnly = await prisma.mediaPcal.createManyAndReturn({
+     *   select: { userId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MediaPcalCreateManyAndReturnArgs>(args?: SelectSubset<T, MediaPcalCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MediaPcal.
+     * @param {MediaPcalDeleteArgs} args - Arguments to delete one MediaPcal.
+     * @example
+     * // Delete one MediaPcal
+     * const MediaPcal = await prisma.mediaPcal.delete({
+     *   where: {
+     *     // ... filter to delete one MediaPcal
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MediaPcalDeleteArgs>(args: SelectSubset<T, MediaPcalDeleteArgs<ExtArgs>>): Prisma__MediaPcalClient<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MediaPcal.
+     * @param {MediaPcalUpdateArgs} args - Arguments to update one MediaPcal.
+     * @example
+     * // Update one MediaPcal
+     * const mediaPcal = await prisma.mediaPcal.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MediaPcalUpdateArgs>(args: SelectSubset<T, MediaPcalUpdateArgs<ExtArgs>>): Prisma__MediaPcalClient<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MediaPcals.
+     * @param {MediaPcalDeleteManyArgs} args - Arguments to filter MediaPcals to delete.
+     * @example
+     * // Delete a few MediaPcals
+     * const { count } = await prisma.mediaPcal.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MediaPcalDeleteManyArgs>(args?: SelectSubset<T, MediaPcalDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaPcals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaPcalUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MediaPcals
+     * const mediaPcal = await prisma.mediaPcal.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MediaPcalUpdateManyArgs>(args: SelectSubset<T, MediaPcalUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaPcals and returns the data updated in the database.
+     * @param {MediaPcalUpdateManyAndReturnArgs} args - Arguments to update many MediaPcals.
+     * @example
+     * // Update many MediaPcals
+     * const mediaPcal = await prisma.mediaPcal.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MediaPcals and only return the `userId`
+     * const mediaPcalWithUserIdOnly = await prisma.mediaPcal.updateManyAndReturn({
+     *   select: { userId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MediaPcalUpdateManyAndReturnArgs>(args: SelectSubset<T, MediaPcalUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MediaPcal.
+     * @param {MediaPcalUpsertArgs} args - Arguments to update or create a MediaPcal.
+     * @example
+     * // Update or create a MediaPcal
+     * const mediaPcal = await prisma.mediaPcal.upsert({
+     *   create: {
+     *     // ... data to create a MediaPcal
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MediaPcal we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MediaPcalUpsertArgs>(args: SelectSubset<T, MediaPcalUpsertArgs<ExtArgs>>): Prisma__MediaPcalClient<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MediaPcals.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaPcalCountArgs} args - Arguments to filter MediaPcals to count.
+     * @example
+     * // Count the number of MediaPcals
+     * const count = await prisma.mediaPcal.count({
+     *   where: {
+     *     // ... the filter for the MediaPcals we want to count
+     *   }
+     * })
+    **/
+    count<T extends MediaPcalCountArgs>(
+      args?: Subset<T, MediaPcalCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MediaPcalCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MediaPcal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaPcalAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MediaPcalAggregateArgs>(args: Subset<T, MediaPcalAggregateArgs>): Prisma.PrismaPromise<GetMediaPcalAggregateType<T>>
+
+    /**
+     * Group by MediaPcal.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaPcalGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MediaPcalGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MediaPcalGroupByArgs['orderBy'] }
+        : { orderBy?: MediaPcalGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MediaPcalGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMediaPcalGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MediaPcal model
+   */
+  readonly fields: MediaPcalFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MediaPcal.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MediaPcalClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MediaPcal model
+   */
+  interface MediaPcalFieldRefs {
+    readonly userId: FieldRef<"MediaPcal", 'String'>
+    readonly color: FieldRef<"MediaPcal", 'String'>
+    readonly notes: FieldRef<"MediaPcal", 'String'>
+    readonly updatedAt: FieldRef<"MediaPcal", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MediaPcal findUnique
+   */
+  export type MediaPcalFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaPcal
+     */
+    select?: MediaPcalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaPcal
+     */
+    omit?: MediaPcalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaPcalInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaPcal to fetch.
+     */
+    where: MediaPcalWhereUniqueInput
+  }
+
+  /**
+   * MediaPcal findUniqueOrThrow
+   */
+  export type MediaPcalFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaPcal
+     */
+    select?: MediaPcalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaPcal
+     */
+    omit?: MediaPcalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaPcalInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaPcal to fetch.
+     */
+    where: MediaPcalWhereUniqueInput
+  }
+
+  /**
+   * MediaPcal findFirst
+   */
+  export type MediaPcalFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaPcal
+     */
+    select?: MediaPcalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaPcal
+     */
+    omit?: MediaPcalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaPcalInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaPcal to fetch.
+     */
+    where?: MediaPcalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaPcals to fetch.
+     */
+    orderBy?: MediaPcalOrderByWithRelationInput | MediaPcalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaPcals.
+     */
+    cursor?: MediaPcalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaPcals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaPcals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaPcals.
+     */
+    distinct?: MediaPcalScalarFieldEnum | MediaPcalScalarFieldEnum[]
+  }
+
+  /**
+   * MediaPcal findFirstOrThrow
+   */
+  export type MediaPcalFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaPcal
+     */
+    select?: MediaPcalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaPcal
+     */
+    omit?: MediaPcalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaPcalInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaPcal to fetch.
+     */
+    where?: MediaPcalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaPcals to fetch.
+     */
+    orderBy?: MediaPcalOrderByWithRelationInput | MediaPcalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaPcals.
+     */
+    cursor?: MediaPcalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaPcals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaPcals.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaPcals.
+     */
+    distinct?: MediaPcalScalarFieldEnum | MediaPcalScalarFieldEnum[]
+  }
+
+  /**
+   * MediaPcal findMany
+   */
+  export type MediaPcalFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaPcal
+     */
+    select?: MediaPcalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaPcal
+     */
+    omit?: MediaPcalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaPcalInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaPcals to fetch.
+     */
+    where?: MediaPcalWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaPcals to fetch.
+     */
+    orderBy?: MediaPcalOrderByWithRelationInput | MediaPcalOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MediaPcals.
+     */
+    cursor?: MediaPcalWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaPcals from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaPcals.
+     */
+    skip?: number
+    distinct?: MediaPcalScalarFieldEnum | MediaPcalScalarFieldEnum[]
+  }
+
+  /**
+   * MediaPcal create
+   */
+  export type MediaPcalCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaPcal
+     */
+    select?: MediaPcalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaPcal
+     */
+    omit?: MediaPcalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaPcalInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MediaPcal.
+     */
+    data: XOR<MediaPcalCreateInput, MediaPcalUncheckedCreateInput>
+  }
+
+  /**
+   * MediaPcal createMany
+   */
+  export type MediaPcalCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MediaPcals.
+     */
+    data: MediaPcalCreateManyInput | MediaPcalCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MediaPcal createManyAndReturn
+   */
+  export type MediaPcalCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaPcal
+     */
+    select?: MediaPcalSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaPcal
+     */
+    omit?: MediaPcalOmit<ExtArgs> | null
+    /**
+     * The data used to create many MediaPcals.
+     */
+    data: MediaPcalCreateManyInput | MediaPcalCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaPcalIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MediaPcal update
+   */
+  export type MediaPcalUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaPcal
+     */
+    select?: MediaPcalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaPcal
+     */
+    omit?: MediaPcalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaPcalInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MediaPcal.
+     */
+    data: XOR<MediaPcalUpdateInput, MediaPcalUncheckedUpdateInput>
+    /**
+     * Choose, which MediaPcal to update.
+     */
+    where: MediaPcalWhereUniqueInput
+  }
+
+  /**
+   * MediaPcal updateMany
+   */
+  export type MediaPcalUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MediaPcals.
+     */
+    data: XOR<MediaPcalUpdateManyMutationInput, MediaPcalUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaPcals to update
+     */
+    where?: MediaPcalWhereInput
+    /**
+     * Limit how many MediaPcals to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaPcal updateManyAndReturn
+   */
+  export type MediaPcalUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaPcal
+     */
+    select?: MediaPcalSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaPcal
+     */
+    omit?: MediaPcalOmit<ExtArgs> | null
+    /**
+     * The data used to update MediaPcals.
+     */
+    data: XOR<MediaPcalUpdateManyMutationInput, MediaPcalUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaPcals to update
+     */
+    where?: MediaPcalWhereInput
+    /**
+     * Limit how many MediaPcals to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaPcalIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MediaPcal upsert
+   */
+  export type MediaPcalUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaPcal
+     */
+    select?: MediaPcalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaPcal
+     */
+    omit?: MediaPcalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaPcalInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MediaPcal to update in case it exists.
+     */
+    where: MediaPcalWhereUniqueInput
+    /**
+     * In case the MediaPcal found by the `where` argument doesn't exist, create a new MediaPcal with this data.
+     */
+    create: XOR<MediaPcalCreateInput, MediaPcalUncheckedCreateInput>
+    /**
+     * In case the MediaPcal was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MediaPcalUpdateInput, MediaPcalUncheckedUpdateInput>
+  }
+
+  /**
+   * MediaPcal delete
+   */
+  export type MediaPcalDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaPcal
+     */
+    select?: MediaPcalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaPcal
+     */
+    omit?: MediaPcalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaPcalInclude<ExtArgs> | null
+    /**
+     * Filter which MediaPcal to delete.
+     */
+    where: MediaPcalWhereUniqueInput
+  }
+
+  /**
+   * MediaPcal deleteMany
+   */
+  export type MediaPcalDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaPcals to delete
+     */
+    where?: MediaPcalWhereInput
+    /**
+     * Limit how many MediaPcals to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaPcal without action
+   */
+  export type MediaPcalDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaPcal
+     */
+    select?: MediaPcalSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaPcal
+     */
+    omit?: MediaPcalOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaPcalInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -32658,6 +33817,16 @@ export namespace Prisma {
   export type PersonalCalEventScalarFieldEnum = (typeof PersonalCalEventScalarFieldEnum)[keyof typeof PersonalCalEventScalarFieldEnum]
 
 
+  export const MediaPcalScalarFieldEnum: {
+    userId: 'userId',
+    color: 'color',
+    notes: 'notes',
+    updatedAt: 'updatedAt'
+  };
+
+  export type MediaPcalScalarFieldEnum = (typeof MediaPcalScalarFieldEnum)[keyof typeof MediaPcalScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -32939,6 +34108,7 @@ export namespace Prisma {
     mediaMember?: XOR<MediaMemberNullableScalarRelationFilter, MediaMemberWhereInput> | null
     mediaItems?: MediaItemListRelationFilter
     personalCalEvents?: PersonalCalEventListRelationFilter
+    mediaPcal?: XOR<MediaPcalNullableScalarRelationFilter, MediaPcalWhereInput> | null
   }
 
   export type UserOrderByWithRelationInput = {
@@ -32974,6 +34144,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberOrderByWithRelationInput
     mediaItems?: MediaItemOrderByRelationAggregateInput
     personalCalEvents?: PersonalCalEventOrderByRelationAggregateInput
+    mediaPcal?: MediaPcalOrderByWithRelationInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -33012,6 +34183,7 @@ export namespace Prisma {
     mediaMember?: XOR<MediaMemberNullableScalarRelationFilter, MediaMemberWhereInput> | null
     mediaItems?: MediaItemListRelationFilter
     personalCalEvents?: PersonalCalEventListRelationFilter
+    mediaPcal?: XOR<MediaPcalNullableScalarRelationFilter, MediaPcalWhereInput> | null
   }, "id" | "email" | "waNumber">
 
   export type UserOrderByWithAggregationInput = {
@@ -34948,6 +36120,56 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"PersonalCalEvent"> | Date | string
   }
 
+  export type MediaPcalWhereInput = {
+    AND?: MediaPcalWhereInput | MediaPcalWhereInput[]
+    OR?: MediaPcalWhereInput[]
+    NOT?: MediaPcalWhereInput | MediaPcalWhereInput[]
+    userId?: StringFilter<"MediaPcal"> | string
+    color?: StringFilter<"MediaPcal"> | string
+    notes?: StringNullableFilter<"MediaPcal"> | string | null
+    updatedAt?: DateTimeFilter<"MediaPcal"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type MediaPcalOrderByWithRelationInput = {
+    userId?: SortOrder
+    color?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type MediaPcalWhereUniqueInput = Prisma.AtLeast<{
+    userId?: string
+    AND?: MediaPcalWhereInput | MediaPcalWhereInput[]
+    OR?: MediaPcalWhereInput[]
+    NOT?: MediaPcalWhereInput | MediaPcalWhereInput[]
+    color?: StringFilter<"MediaPcal"> | string
+    notes?: StringNullableFilter<"MediaPcal"> | string | null
+    updatedAt?: DateTimeFilter<"MediaPcal"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "userId">
+
+  export type MediaPcalOrderByWithAggregationInput = {
+    userId?: SortOrder
+    color?: SortOrder
+    notes?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    _count?: MediaPcalCountOrderByAggregateInput
+    _max?: MediaPcalMaxOrderByAggregateInput
+    _min?: MediaPcalMinOrderByAggregateInput
+  }
+
+  export type MediaPcalScalarWhereWithAggregatesInput = {
+    AND?: MediaPcalScalarWhereWithAggregatesInput | MediaPcalScalarWhereWithAggregatesInput[]
+    OR?: MediaPcalScalarWhereWithAggregatesInput[]
+    NOT?: MediaPcalScalarWhereWithAggregatesInput | MediaPcalScalarWhereWithAggregatesInput[]
+    userId?: StringWithAggregatesFilter<"MediaPcal"> | string
+    color?: StringWithAggregatesFilter<"MediaPcal"> | string
+    notes?: StringNullableWithAggregatesFilter<"MediaPcal"> | string | null
+    updatedAt?: DateTimeWithAggregatesFilter<"MediaPcal"> | Date | string
+  }
+
   export type UserCreateInput = {
     id?: string
     fullName: string
@@ -34980,6 +36202,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -35014,6 +36237,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -35048,6 +36272,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -35082,6 +36307,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -37232,6 +38458,54 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type MediaPcalCreateInput = {
+    color?: string
+    notes?: string | null
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutMediaPcalInput
+  }
+
+  export type MediaPcalUncheckedCreateInput = {
+    userId: string
+    color?: string
+    notes?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type MediaPcalUpdateInput = {
+    color?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutMediaPcalNestedInput
+  }
+
+  export type MediaPcalUncheckedUpdateInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaPcalCreateManyInput = {
+    userId: string
+    color?: string
+    notes?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type MediaPcalUpdateManyMutationInput = {
+    color?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaPcalUncheckedUpdateManyInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -37375,6 +38649,11 @@ export namespace Prisma {
     every?: PersonalCalEventWhereInput
     some?: PersonalCalEventWhereInput
     none?: PersonalCalEventWhereInput
+  }
+
+  export type MediaPcalNullableScalarRelationFilter = {
+    is?: MediaPcalWhereInput | null
+    isNot?: MediaPcalWhereInput | null
   }
 
   export type SortOrderInput = {
@@ -38947,6 +40226,27 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type MediaPcalCountOrderByAggregateInput = {
+    userId?: SortOrder
+    color?: SortOrder
+    notes?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaPcalMaxOrderByAggregateInput = {
+    userId?: SortOrder
+    color?: SortOrder
+    notes?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type MediaPcalMinOrderByAggregateInput = {
+    userId?: SortOrder
+    color?: SortOrder
+    notes?: SortOrder
+    updatedAt?: SortOrder
+  }
+
   export type BranchCreateNestedOneWithoutUsersInput = {
     create?: XOR<BranchCreateWithoutUsersInput, BranchUncheckedCreateWithoutUsersInput>
     connectOrCreate?: BranchCreateOrConnectWithoutUsersInput
@@ -39071,6 +40371,12 @@ export namespace Prisma {
     connect?: PersonalCalEventWhereUniqueInput | PersonalCalEventWhereUniqueInput[]
   }
 
+  export type MediaPcalCreateNestedOneWithoutUserInput = {
+    create?: XOR<MediaPcalCreateWithoutUserInput, MediaPcalUncheckedCreateWithoutUserInput>
+    connectOrCreate?: MediaPcalCreateOrConnectWithoutUserInput
+    connect?: MediaPcalWhereUniqueInput
+  }
+
   export type UserRoleUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -39187,6 +40493,12 @@ export namespace Prisma {
     connectOrCreate?: PersonalCalEventCreateOrConnectWithoutUserInput | PersonalCalEventCreateOrConnectWithoutUserInput[]
     createMany?: PersonalCalEventCreateManyUserInputEnvelope
     connect?: PersonalCalEventWhereUniqueInput | PersonalCalEventWhereUniqueInput[]
+  }
+
+  export type MediaPcalUncheckedCreateNestedOneWithoutUserInput = {
+    create?: XOR<MediaPcalCreateWithoutUserInput, MediaPcalUncheckedCreateWithoutUserInput>
+    connectOrCreate?: MediaPcalCreateOrConnectWithoutUserInput
+    connect?: MediaPcalWhereUniqueInput
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -39453,6 +40765,16 @@ export namespace Prisma {
     deleteMany?: PersonalCalEventScalarWhereInput | PersonalCalEventScalarWhereInput[]
   }
 
+  export type MediaPcalUpdateOneWithoutUserNestedInput = {
+    create?: XOR<MediaPcalCreateWithoutUserInput, MediaPcalUncheckedCreateWithoutUserInput>
+    connectOrCreate?: MediaPcalCreateOrConnectWithoutUserInput
+    upsert?: MediaPcalUpsertWithoutUserInput
+    disconnect?: MediaPcalWhereInput | boolean
+    delete?: MediaPcalWhereInput | boolean
+    connect?: MediaPcalWhereUniqueInput
+    update?: XOR<XOR<MediaPcalUpdateToOneWithWhereWithoutUserInput, MediaPcalUpdateWithoutUserInput>, MediaPcalUncheckedUpdateWithoutUserInput>
+  }
+
   export type UserRoleUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -39685,6 +41007,16 @@ export namespace Prisma {
     update?: PersonalCalEventUpdateWithWhereUniqueWithoutUserInput | PersonalCalEventUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: PersonalCalEventUpdateManyWithWhereWithoutUserInput | PersonalCalEventUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: PersonalCalEventScalarWhereInput | PersonalCalEventScalarWhereInput[]
+  }
+
+  export type MediaPcalUncheckedUpdateOneWithoutUserNestedInput = {
+    create?: XOR<MediaPcalCreateWithoutUserInput, MediaPcalUncheckedCreateWithoutUserInput>
+    connectOrCreate?: MediaPcalCreateOrConnectWithoutUserInput
+    upsert?: MediaPcalUpsertWithoutUserInput
+    disconnect?: MediaPcalWhereInput | boolean
+    delete?: MediaPcalWhereInput | boolean
+    connect?: MediaPcalWhereUniqueInput
+    update?: XOR<XOR<MediaPcalUpdateToOneWithWhereWithoutUserInput, MediaPcalUpdateWithoutUserInput>, MediaPcalUncheckedUpdateWithoutUserInput>
   }
 
   export type UserRoleCreateNestedManyWithoutRoleInput = {
@@ -40398,6 +41730,20 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutPersonalCalEventsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPersonalCalEventsInput, UserUpdateWithoutPersonalCalEventsInput>, UserUncheckedUpdateWithoutPersonalCalEventsInput>
+  }
+
+  export type UserCreateNestedOneWithoutMediaPcalInput = {
+    create?: XOR<UserCreateWithoutMediaPcalInput, UserUncheckedCreateWithoutMediaPcalInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMediaPcalInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutMediaPcalNestedInput = {
+    create?: XOR<UserCreateWithoutMediaPcalInput, UserUncheckedCreateWithoutMediaPcalInput>
+    connectOrCreate?: UserCreateOrConnectWithoutMediaPcalInput
+    upsert?: UserUpsertWithoutMediaPcalInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMediaPcalInput, UserUpdateWithoutMediaPcalInput>, UserUncheckedUpdateWithoutMediaPcalInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -41446,6 +42792,23 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type MediaPcalCreateWithoutUserInput = {
+    color?: string
+    notes?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type MediaPcalUncheckedCreateWithoutUserInput = {
+    color?: string
+    notes?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type MediaPcalCreateOrConnectWithoutUserInput = {
+    where: MediaPcalWhereUniqueInput
+    create: XOR<MediaPcalCreateWithoutUserInput, MediaPcalUncheckedCreateWithoutUserInput>
+  }
+
   export type BranchUpsertWithoutUsersInput = {
     update: XOR<BranchUpdateWithoutUsersInput, BranchUncheckedUpdateWithoutUsersInput>
     create: XOR<BranchCreateWithoutUsersInput, BranchUncheckedCreateWithoutUsersInput>
@@ -41985,6 +43348,29 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"PersonalCalEvent"> | Date | string
   }
 
+  export type MediaPcalUpsertWithoutUserInput = {
+    update: XOR<MediaPcalUpdateWithoutUserInput, MediaPcalUncheckedUpdateWithoutUserInput>
+    create: XOR<MediaPcalCreateWithoutUserInput, MediaPcalUncheckedCreateWithoutUserInput>
+    where?: MediaPcalWhereInput
+  }
+
+  export type MediaPcalUpdateToOneWithWhereWithoutUserInput = {
+    where?: MediaPcalWhereInput
+    data: XOR<MediaPcalUpdateWithoutUserInput, MediaPcalUncheckedUpdateWithoutUserInput>
+  }
+
+  export type MediaPcalUpdateWithoutUserInput = {
+    color?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaPcalUncheckedUpdateWithoutUserInput = {
+    color?: StringFieldUpdateOperationsInput | string
+    notes?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserRoleCreateWithoutRoleInput = {
     assignedAt?: Date | string
     user: UserCreateNestedOneWithoutRolesInput
@@ -42054,6 +43440,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRolesInput = {
@@ -42087,6 +43474,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRolesInput = {
@@ -42142,6 +43530,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssignedRolesInput = {
@@ -42175,6 +43564,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssignedRolesInput = {
@@ -42224,6 +43614,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRolesInput = {
@@ -42257,6 +43648,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type RoleUpsertWithoutUsersInput = {
@@ -42324,6 +43716,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedRolesInput = {
@@ -42357,6 +43750,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -42390,6 +43784,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -42423,6 +43818,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -42472,6 +43868,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -42505,6 +43902,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutBranchInput = {
@@ -42538,6 +43936,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBranchInput = {
@@ -42571,6 +43970,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBranchInput = {
@@ -42750,6 +44150,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSchedulesInput = {
@@ -42783,6 +44184,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSchedulesInput = {
@@ -42855,6 +44257,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSchedulesInput = {
@@ -42888,6 +44291,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type WorkScheduleUpsertWithoutUsersInput = {
@@ -42950,6 +44354,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAttendancesInput = {
@@ -42983,6 +44388,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAttendancesInput = {
@@ -43055,6 +44461,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAttendancesInput = {
@@ -43088,6 +44495,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type BranchUpsertWithoutAttendancesInput = {
@@ -43150,6 +44558,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRequestsInput = {
@@ -43183,6 +44592,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRequestsInput = {
@@ -43221,6 +44631,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewedInput = {
@@ -43254,6 +44665,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewedInput = {
@@ -43303,6 +44715,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRequestsInput = {
@@ -43336,6 +44749,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutReviewedInput = {
@@ -43380,6 +44794,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedInput = {
@@ -43413,6 +44828,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -43446,6 +44862,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -43479,6 +44896,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -43528,6 +44946,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -43561,6 +44980,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutActivityLogsInput = {
@@ -43594,6 +45014,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivityLogsInput = {
@@ -43627,6 +45048,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivityLogsInput = {
@@ -43676,6 +45098,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivityLogsInput = {
@@ -43709,6 +45132,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type ChatMemberCreateWithoutRoomInput = {
@@ -43849,6 +45273,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChatMembersInput = {
@@ -43882,6 +45307,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChatMembersInput = {
@@ -43960,6 +45386,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMembersInput = {
@@ -43993,6 +45420,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type ChatRoomCreateWithoutMessagesInput = {
@@ -44049,6 +45477,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChatMessagesInput = {
@@ -44082,6 +45511,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChatMessagesInput = {
@@ -44160,6 +45590,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMessagesInput = {
@@ -44193,6 +45624,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutCalendarEventsInput = {
@@ -44226,6 +45658,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCalendarEventsInput = {
@@ -44259,6 +45692,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCalendarEventsInput = {
@@ -44308,6 +45742,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCalendarEventsInput = {
@@ -44341,6 +45776,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutRawCreatedInput = {
@@ -44374,6 +45810,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRawCreatedInput = {
@@ -44407,6 +45844,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRawCreatedInput = {
@@ -44445,6 +45883,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRawQcInput = {
@@ -44478,6 +45917,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRawQcInput = {
@@ -44527,6 +45967,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRawCreatedInput = {
@@ -44560,6 +46001,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutRawQcInput = {
@@ -44604,6 +46046,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRawQcInput = {
@@ -44637,6 +46080,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutMediaMemberInput = {
@@ -44670,6 +46114,7 @@ export namespace Prisma {
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMediaMemberInput = {
@@ -44703,6 +46148,7 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMediaMemberInput = {
@@ -44752,6 +46198,7 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaMemberInput = {
@@ -44785,6 +46232,7 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserCreateWithoutMediaItemsInput = {
@@ -44818,6 +46266,7 @@ export namespace Prisma {
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMediaItemsInput = {
@@ -44851,6 +46300,7 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMediaItemsInput = {
@@ -44976,6 +46426,7 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaItemsInput = {
@@ -45009,6 +46460,7 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type MediaTaskUpsertWithWhereUniqueWithoutItemInput = {
@@ -45191,6 +46643,7 @@ export namespace Prisma {
     calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPersonalCalEventsInput = {
@@ -45224,6 +46677,7 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPersonalCalEventsInput = {
@@ -45273,6 +46727,7 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPersonalCalEventsInput = {
@@ -45306,6 +46761,159 @@ export namespace Prisma {
     calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserCreateWithoutMediaPcalInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    avatarKey?: string | null
+    bio?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    branch?: BranchCreateNestedOneWithoutUsersInput
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleCreateNestedManyWithoutUserInput
+    attendances?: AttendanceCreateNestedManyWithoutUserInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    reviewed?: RequestCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutMediaPcalInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    avatarKey?: string | null
+    bio?: string | null
+    branchId?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleUncheckedCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleUncheckedCreateNestedManyWithoutUserInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutUserInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutMediaPcalInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutMediaPcalInput, UserUncheckedCreateWithoutMediaPcalInput>
+  }
+
+  export type UserUpsertWithoutMediaPcalInput = {
+    update: XOR<UserUpdateWithoutMediaPcalInput, UserUncheckedUpdateWithoutMediaPcalInput>
+    create: XOR<UserCreateWithoutMediaPcalInput, UserUncheckedCreateWithoutMediaPcalInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutMediaPcalInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutMediaPcalInput, UserUncheckedUpdateWithoutMediaPcalInput>
+  }
+
+  export type UserUpdateWithoutMediaPcalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branch?: BranchUpdateOneWithoutUsersNestedInput
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUpdateManyWithoutUserNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutMediaPcalInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUncheckedUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUncheckedUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserRoleCreateManyUserInput = {
@@ -46219,6 +47827,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBranchInput = {
@@ -46252,6 +47861,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBranchInput = {

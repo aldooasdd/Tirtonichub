@@ -437,6 +437,13 @@ exports.Prisma.PersonalCalEventScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.MediaPcalScalarFieldEnum = {
+  userId: 'userId',
+  color: 'color',
+  notes: 'notes',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -550,7 +557,8 @@ exports.Prisma.ModelName = {
   MediaSettings: 'MediaSettings',
   MediaIdccReport: 'MediaIdccReport',
   MediaBalanceLog: 'MediaBalanceLog',
-  PersonalCalEvent: 'PersonalCalEvent'
+  PersonalCalEvent: 'PersonalCalEvent',
+  MediaPcal: 'MediaPcal'
 };
 
 /**

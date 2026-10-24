@@ -8,10 +8,11 @@ import { MediaKalenderClient, type CalData } from "@/components/media/media-kale
 export default async function MediaKalenderPage() {
   const ctx = await requireMedia();
   const today = todayWIB();
-  const [rows, events, schedCtx] = await Promise.all([
+  const [rows, events, schedCtx, pcal] = await Promise.all([
     prisma.mediaTask.findMany(),
     prisma.personalCalEvent.findMany({ where: { userId: ctx.userId }, orderBy: [{ date: "asc" }, { time: "asc" }] }),
     loadCtx(),
+    prisma.mediaPcal.findUnique({ where: { userId: ctx.userId } }),
   ]);
   const sch = makeScheduler(schedCtx);
   const tasks = rows.filter((t) => !isExpired({ id: t.id, status: t.status, createdAt: t.createdAt.getTime(), type: t.type, title: t.title }, today));
@@ -34,6 +35,7 @@ export default async function MediaKalenderPage() {
     prod,
     post,
     events: events.map((e) => ({ id: e.id, date: e.date, title: e.title, time: e.time, color: e.color, note: e.note })),
+    pcal: { color: pcal?.color ?? "lime", notes: pcal?.notes ?? "" },
   };
   return <MediaKalenderClient data={data} today={today} />;
 }

@@ -4,12 +4,12 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { addEvent, updateEvent, deleteEvent, PCAL_COLORS } from "@/server/actions/media-personal";
+import { addEvent, updateEvent, deleteEvent, savePcal, PCAL_COLORS } from "@/server/actions/media-personal";
 
 type Prod = { date: string; label: string; title: string };
 type Post = { date: string; time: string; label: string; title: string; sched: boolean };
 type Ev = { id: string; date: string; title: string; time: string | null; color: string; note: string | null };
-export type CalData = { prod: Prod[]; post: Post[]; events: Ev[] };
+export type CalData = { prod: Prod[]; post: Post[]; events: Ev[]; pcal: { color: string; notes: string } };
 
 const HARI = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
 const BULAN = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
@@ -21,6 +21,15 @@ export function MediaKalenderClient({ data, today }: { data: CalData; today: str
   const [pending, start] = useTransition();
   const [ym, setYm] = useState(today.slice(0, 7)); // 'YYYY-MM'
   const [edit, setEdit] = useState<Partial<Ev> | null>(null);
+  const [pcalColor, setPcalColor] = useState(data.pcal.color);
+
+  const newEvent = (date: string) => setEdit({ date, color: pcalColor });
+  function savePref(color: string, notes: string) {
+    start(async () => {
+      await savePcal({ color, notes });
+      router.refresh();
+    });
+  }
 
   const [y, m] = ym.split("-").map(Number);
   const first = new Date(Date.UTC(y, m - 1, 1));
@@ -71,7 +80,7 @@ export function MediaKalenderClient({ data, today }: { data: CalData; today: str
           <Button variant="outline" size="sm" onClick={() => shift(-1)}>‹</Button>
           <span className="min-w-[150px] text-center font-medium">{BULAN[m - 1]} {y}</span>
           <Button variant="outline" size="sm" onClick={() => shift(1)}>›</Button>
-          <Button size="sm" onClick={() => setEdit({ date: today, color: "lime" })}>+ Acara</Button>
+          <Button size="sm" onClick={() => newEvent(today)}>+ Acara</Button>
         </div>
       </div>
 
@@ -87,7 +96,7 @@ export function MediaKalenderClient({ data, today }: { data: CalData; today: str
               <>
                 <div className="flex items-center justify-between">
                   <span className="text-11 text-muted-foreground">{Number(d.slice(8))}</span>
-                  <button className="text-11 text-muted-foreground hover:text-foreground" onClick={() => setEdit({ date: d, color: "lime" })} title="Tambah acara">＋</button>
+                  <button className="text-11 text-muted-foreground hover:text-foreground" onClick={() => newEvent(d)} title="Tambah acara">＋</button>
                 </div>
                 <div className="space-y-0.5">
                   {(postBy[d] || []).map((p, j) => (
@@ -110,6 +119,19 @@ export function MediaKalenderClient({ data, today }: { data: CalData; today: str
           </div>
         ))}
       </div>
+
+      <section className="space-y-2 rounded-lg border bg-card p-4">
+        <h2 className="text-14 font-medium">Catatan pribadi</h2>
+        <textarea className="w-full rounded-md border bg-background p-2 text-14" rows={3} defaultValue={data.pcal.notes} maxLength={5000}
+          placeholder="Catatan hanya kamu yang lihat" onBlur={(e) => e.target.value !== data.pcal.notes && savePref(pcalColor, e.target.value)} />
+        <div className="flex items-center gap-2">
+          <span className="text-12 text-muted-foreground">Warna default acara baru:</span>
+          {PCAL_COLORS.map((c) => (
+            <button key={c} onClick={() => { setPcalColor(c); savePref(c, data.pcal.notes); }}
+              className={`h-6 w-6 rounded-full ${pcalColor === c ? "ring-2 ring-offset-1 ring-foreground" : ""}`} style={{ background: DOT[c] }} title={c} />
+          ))}
+        </div>
+      </section>
 
       {edit && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4" onClick={() => setEdit(null)}>

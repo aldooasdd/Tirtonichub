@@ -80,6 +80,16 @@
       "exportedName": "deleteEvent",
       "filename": "src/server/actions/media-personal.ts"
     },
+    "405ebbe95b4bd5c27cd9a17c147b885fb08fcd6448": {
+      "workers": {
+        "app/(dash)/media/kalender/page": {
+          "moduleId": 61097,
+          "async": true
+        }
+      },
+      "exportedName": "savePcal",
+      "filename": "src/server/actions/media-personal.ts"
+    },
     "7f671cf7444889f1fa2db8ac1443d3fb13d6b0a71b": {
       "workers": {
         "app/(dash)/media/kalender/page": {

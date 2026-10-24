@@ -94,6 +94,7 @@ model User {
   mediaMember    MediaMember?
   mediaItems     MediaItem[]       @relation("MediaItemCreator")
   personalCalEvents PersonalCalEvent[]
+  mediaPcal      MediaPcal?
 
   @@index([branchId])
 }
@@ -507,4 +508,14 @@ model PersonalCalEvent {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+// Preferensi kalender pribadi per user (warna default + catatan privat). Lepas dari MediaMember.
+model MediaPcal {
+  userId    String   @id
+  color     String   @default("lime")
+  notes     String?
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

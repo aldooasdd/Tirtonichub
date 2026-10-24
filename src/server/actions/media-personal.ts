@@ -65,3 +65,16 @@ export async function deleteEvent(id: string): Promise<ActionResult> {
   await prisma.personalCalEvent.delete({ where: { id } });
   return { ok: true };
 }
+
+/** Simpan warna default + catatan privat kalender sendiri. */
+export async function savePcal(f: { color?: string; notes?: string }): Promise<ActionResult> {
+  const ctx = await requireMedia();
+  const color = f.color && PCAL_COLORS.includes(f.color) ? f.color : "lime";
+  const notes = f.notes?.slice(0, 5000) || null;
+  await prisma.mediaPcal.upsert({
+    where: { userId: ctx.userId },
+    update: { color, notes },
+    create: { userId: ctx.userId, color, notes },
+  });
+  return { ok: true };
+}
