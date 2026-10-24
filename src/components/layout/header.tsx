@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bell, Menu, PanelRight, Search, LogOut, User } from "lucide-react";
+import { Bell, Menu, PanelRight, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -72,12 +72,6 @@ export function Header({ onTogglePanel }: { onTogglePanel: () => void }) {
           </nav>
         </SheetContent>
       </Sheet>
-
-      {/* search (placeholder) */}
-      <div className="hidden items-center gap-2 rounded-md bg-muted px-3 py-2 text-muted-foreground sm:flex">
-        <Search className="h-4 w-4" />
-        <span className="text-14">Cari…</span>
-      </div>
 
       <div className="ml-auto flex items-center gap-1">
         <RoleSwitcher />
