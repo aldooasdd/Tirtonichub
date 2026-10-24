@@ -32,11 +32,15 @@ export function FloatingChat({
   presence,
   members,
   me,
+  requestDM,
+  onDmHandled,
 }: {
   rooms: RoomListItem[];
   presence: Presence[];
   members: Member[];
   me: string;
+  requestDM?: Member | null;
+  onDmHandled?: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<RoomListItem | null>(null);
@@ -79,6 +83,16 @@ export function FloatingChat({
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [msgs]);
+
+  // Dipicu dari panel kanan: buka widget + DM orang terpilih.
+  useEffect(() => {
+    if (!requestDM) return;
+    setOpen(true);
+    setPicking(false);
+    openDM(requestDM);
+    onDmHandled?.();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [requestDM]);
 
   async function send() {
     if (!active || !text.trim()) return;
