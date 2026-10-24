@@ -8,6 +8,7 @@ import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
 import { parseNotaViaN8n, type NotaItem } from "@/server/n8n-nota";
 import { computeSellPrice } from "@/lib/pricing";
+import { notifyBosses } from "@/server/notify";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -192,6 +193,7 @@ export async function submitItemToQc(id: string): Promise<ActionResult> {
   await prisma.rawProduct.update({ where: { id }, data: { status: "QC" } });
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "submit_qc", entity: "RawProduct", entityId: id });
+  await notifyBosses({ type: "qc_in", title: `Produk mentah masuk QC: ${p.name}`, link: "/stok/qc" });
   return { ok: true };
 }
 
@@ -205,6 +207,7 @@ export async function submitBatchToQc(batchId: string): Promise<ActionResult> {
   if (r.count === 0) return { ok: false, message: "Tidak ada draft untuk dikirim." };
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "submit_qc", entity: "RawProduct", entityId: batchId });
+  await notifyBosses({ type: "qc_in", title: `${r.count} produk mentah masuk QC`, link: "/stok/qc" });
   return { ok: true };
 }
 
@@ -229,6 +232,11 @@ export async function qcDecision(
   await logActivity(
     { ...ctx, ip },
     { action: decision === "STOCK" ? "qc_pass" : "qc_reject", entity: "RawProduct", entityId: id },
+  );
+  await notifyBosses(
+    decision === "STOCK"
+      ? { type: "qc_pass", title: `Produk lolos QC → Stok: ${p.name}`, link: "/stok" }
+      : { type: "qc_reject", title: `Produk ditolak QC: ${p.name}`, link: "/stok/qc" },
   );
   return { ok: true };
 }

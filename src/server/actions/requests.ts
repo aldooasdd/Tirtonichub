@@ -6,6 +6,8 @@ import { requireAuth, can, assert } from "@/server/auth/rbac";
 import { roleAttends } from "@/lib/roles";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
+import { notifyBosses } from "@/server/notify";
+import { REQ_TYPE_LABEL } from "@/lib/request-labels";
 import { requestSchema, type RequestInput } from "@/lib/validation";
 
 export type ActionResult = { ok: boolean; message?: string; id?: string };
@@ -54,6 +56,7 @@ export async function createRequest(input: RequestInput): Promise<ActionResult> 
   });
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "create", entity: "Request", entityId: r.id, after: { type: d.type } });
+  await notifyBosses({ type: "request", title: `Pengajuan ${REQ_TYPE_LABEL[d.type]} baru masuk`, link: "/hr/approval" });
   return { ok: true, id: r.id };
 }
 
