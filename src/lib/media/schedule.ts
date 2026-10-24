@@ -32,9 +32,16 @@ export type Task = {
   postTime?: string | null;
   due?: string | null;
   target?: string | null;
+  shotAt?: string | null;
+  readyAt?: string | null;
   locked?: boolean;
   checked?: boolean;
   metaAt?: number; // ms (0 = belum dijadwalkan di Meta)
+  caption?: string | null;
+  srcDesc?: string | null;
+  driveUrl?: string | null;
+  note?: string | null;
+  title?: string | null;
   eventKey?: string | null;
   cat?: string | null;
   createdAt?: number; // ms
@@ -144,7 +151,7 @@ export function workBetween(a: string, b: string) {
 // libur per orang (0=Min … 6=Sab). ponytail: pindah ke MediaMember.offDays bila tim berubah.
 const OFF: Record<string, number[]> = { Z: [4], R: [2, 4], A: [4, 5], S: [4, 5] };
 const dowOf = (s: string) => new Date(toT(s)).getUTCDay();
-function avail(p: string | null | undefined, s: string) {
+export function avail(p: string | null | undefined, s: string) {
   return !p || !(OFF[p] || []).includes(dowOf(s));
 }
 function nextDayWith(people: string[], from: string) {

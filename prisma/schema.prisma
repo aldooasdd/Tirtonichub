@@ -443,10 +443,14 @@ model MediaTask {
   postTime  String? // '09:00'
   due       String?
   target    String?
+  shotAt    String? // tanggal mulai syuting (status ≥ Diproduksi)
+  readyAt   String? // tanggal file final siap (status ≥ Ready)
   locked    Boolean  @default(false)
   checked   Boolean  @default(false) // dicek Zaki
   metaAt    DateTime? // sudah dijadwalkan di Meta (null = belum)
   driveUrl  String?
+  caption   String? // caption Instagram final
+  srcDesc   String? // deskripsi barang dari toko online (bahan caption)
   note      String?
   history   Json?
   eventKey  String?

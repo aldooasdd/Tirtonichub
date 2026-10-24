@@ -26695,10 +26695,14 @@ export namespace Prisma {
     postTime: string | null
     due: string | null
     target: string | null
+    shotAt: string | null
+    readyAt: string | null
     locked: boolean | null
     checked: boolean | null
     metaAt: Date | null
     driveUrl: string | null
+    caption: string | null
+    srcDesc: string | null
     note: string | null
     eventKey: string | null
     createdAt: Date | null
@@ -26724,10 +26728,14 @@ export namespace Prisma {
     postTime: string | null
     due: string | null
     target: string | null
+    shotAt: string | null
+    readyAt: string | null
     locked: boolean | null
     checked: boolean | null
     metaAt: Date | null
     driveUrl: string | null
+    caption: string | null
+    srcDesc: string | null
     note: string | null
     eventKey: string | null
     createdAt: Date | null
@@ -26753,10 +26761,14 @@ export namespace Prisma {
     postTime: number
     due: number
     target: number
+    shotAt: number
+    readyAt: number
     locked: number
     checked: number
     metaAt: number
     driveUrl: number
+    caption: number
+    srcDesc: number
     note: number
     history: number
     eventKey: number
@@ -26785,10 +26797,14 @@ export namespace Prisma {
     postTime?: true
     due?: true
     target?: true
+    shotAt?: true
+    readyAt?: true
     locked?: true
     checked?: true
     metaAt?: true
     driveUrl?: true
+    caption?: true
+    srcDesc?: true
     note?: true
     eventKey?: true
     createdAt?: true
@@ -26814,10 +26830,14 @@ export namespace Prisma {
     postTime?: true
     due?: true
     target?: true
+    shotAt?: true
+    readyAt?: true
     locked?: true
     checked?: true
     metaAt?: true
     driveUrl?: true
+    caption?: true
+    srcDesc?: true
     note?: true
     eventKey?: true
     createdAt?: true
@@ -26843,10 +26863,14 @@ export namespace Prisma {
     postTime?: true
     due?: true
     target?: true
+    shotAt?: true
+    readyAt?: true
     locked?: true
     checked?: true
     metaAt?: true
     driveUrl?: true
+    caption?: true
+    srcDesc?: true
     note?: true
     history?: true
     eventKey?: true
@@ -26946,10 +26970,14 @@ export namespace Prisma {
     postTime: string | null
     due: string | null
     target: string | null
+    shotAt: string | null
+    readyAt: string | null
     locked: boolean
     checked: boolean
     metaAt: Date | null
     driveUrl: string | null
+    caption: string | null
+    srcDesc: string | null
     note: string | null
     history: JsonValue | null
     eventKey: string | null
@@ -26993,10 +27021,14 @@ export namespace Prisma {
     postTime?: boolean
     due?: boolean
     target?: boolean
+    shotAt?: boolean
+    readyAt?: boolean
     locked?: boolean
     checked?: boolean
     metaAt?: boolean
     driveUrl?: boolean
+    caption?: boolean
+    srcDesc?: boolean
     note?: boolean
     history?: boolean
     eventKey?: boolean
@@ -27024,10 +27056,14 @@ export namespace Prisma {
     postTime?: boolean
     due?: boolean
     target?: boolean
+    shotAt?: boolean
+    readyAt?: boolean
     locked?: boolean
     checked?: boolean
     metaAt?: boolean
     driveUrl?: boolean
+    caption?: boolean
+    srcDesc?: boolean
     note?: boolean
     history?: boolean
     eventKey?: boolean
@@ -27055,10 +27091,14 @@ export namespace Prisma {
     postTime?: boolean
     due?: boolean
     target?: boolean
+    shotAt?: boolean
+    readyAt?: boolean
     locked?: boolean
     checked?: boolean
     metaAt?: boolean
     driveUrl?: boolean
+    caption?: boolean
+    srcDesc?: boolean
     note?: boolean
     history?: boolean
     eventKey?: boolean
@@ -27086,10 +27126,14 @@ export namespace Prisma {
     postTime?: boolean
     due?: boolean
     target?: boolean
+    shotAt?: boolean
+    readyAt?: boolean
     locked?: boolean
     checked?: boolean
     metaAt?: boolean
     driveUrl?: boolean
+    caption?: boolean
+    srcDesc?: boolean
     note?: boolean
     history?: boolean
     eventKey?: boolean
@@ -27097,7 +27141,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type MediaTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "type" | "title" | "cat" | "status" | "source" | "reason" | "producer" | "editor" | "talent" | "script" | "shootPlan" | "editPlan" | "postAt" | "postTime" | "due" | "target" | "locked" | "checked" | "metaAt" | "driveUrl" | "note" | "history" | "eventKey" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaTask"]>
+  export type MediaTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "type" | "title" | "cat" | "status" | "source" | "reason" | "producer" | "editor" | "talent" | "script" | "shootPlan" | "editPlan" | "postAt" | "postTime" | "due" | "target" | "shotAt" | "readyAt" | "locked" | "checked" | "metaAt" | "driveUrl" | "caption" | "srcDesc" | "note" | "history" | "eventKey" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaTask"]>
   export type MediaTaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     item?: boolean | MediaTask$itemArgs<ExtArgs>
   }
@@ -27132,10 +27176,14 @@ export namespace Prisma {
       postTime: string | null
       due: string | null
       target: string | null
+      shotAt: string | null
+      readyAt: string | null
       locked: boolean
       checked: boolean
       metaAt: Date | null
       driveUrl: string | null
+      caption: string | null
+      srcDesc: string | null
       note: string | null
       history: Prisma.JsonValue | null
       eventKey: string | null
@@ -27583,10 +27631,14 @@ export namespace Prisma {
     readonly postTime: FieldRef<"MediaTask", 'String'>
     readonly due: FieldRef<"MediaTask", 'String'>
     readonly target: FieldRef<"MediaTask", 'String'>
+    readonly shotAt: FieldRef<"MediaTask", 'String'>
+    readonly readyAt: FieldRef<"MediaTask", 'String'>
     readonly locked: FieldRef<"MediaTask", 'Boolean'>
     readonly checked: FieldRef<"MediaTask", 'Boolean'>
     readonly metaAt: FieldRef<"MediaTask", 'DateTime'>
     readonly driveUrl: FieldRef<"MediaTask", 'String'>
+    readonly caption: FieldRef<"MediaTask", 'String'>
+    readonly srcDesc: FieldRef<"MediaTask", 'String'>
     readonly note: FieldRef<"MediaTask", 'String'>
     readonly history: FieldRef<"MediaTask", 'Json'>
     readonly eventKey: FieldRef<"MediaTask", 'String'>
@@ -32539,10 +32591,14 @@ export namespace Prisma {
     postTime: 'postTime',
     due: 'due',
     target: 'target',
+    shotAt: 'shotAt',
+    readyAt: 'readyAt',
     locked: 'locked',
     checked: 'checked',
     metaAt: 'metaAt',
     driveUrl: 'driveUrl',
+    caption: 'caption',
+    srcDesc: 'srcDesc',
     note: 'note',
     history: 'history',
     eventKey: 'eventKey',
@@ -34489,10 +34545,14 @@ export namespace Prisma {
     postTime?: StringNullableFilter<"MediaTask"> | string | null
     due?: StringNullableFilter<"MediaTask"> | string | null
     target?: StringNullableFilter<"MediaTask"> | string | null
+    shotAt?: StringNullableFilter<"MediaTask"> | string | null
+    readyAt?: StringNullableFilter<"MediaTask"> | string | null
     locked?: BoolFilter<"MediaTask"> | boolean
     checked?: BoolFilter<"MediaTask"> | boolean
     metaAt?: DateTimeNullableFilter<"MediaTask"> | Date | string | null
     driveUrl?: StringNullableFilter<"MediaTask"> | string | null
+    caption?: StringNullableFilter<"MediaTask"> | string | null
+    srcDesc?: StringNullableFilter<"MediaTask"> | string | null
     note?: StringNullableFilter<"MediaTask"> | string | null
     history?: JsonNullableFilter<"MediaTask">
     eventKey?: StringNullableFilter<"MediaTask"> | string | null
@@ -34520,10 +34580,14 @@ export namespace Prisma {
     postTime?: SortOrderInput | SortOrder
     due?: SortOrderInput | SortOrder
     target?: SortOrderInput | SortOrder
+    shotAt?: SortOrderInput | SortOrder
+    readyAt?: SortOrderInput | SortOrder
     locked?: SortOrder
     checked?: SortOrder
     metaAt?: SortOrderInput | SortOrder
     driveUrl?: SortOrderInput | SortOrder
+    caption?: SortOrderInput | SortOrder
+    srcDesc?: SortOrderInput | SortOrder
     note?: SortOrderInput | SortOrder
     history?: SortOrderInput | SortOrder
     eventKey?: SortOrderInput | SortOrder
@@ -34554,10 +34618,14 @@ export namespace Prisma {
     postTime?: StringNullableFilter<"MediaTask"> | string | null
     due?: StringNullableFilter<"MediaTask"> | string | null
     target?: StringNullableFilter<"MediaTask"> | string | null
+    shotAt?: StringNullableFilter<"MediaTask"> | string | null
+    readyAt?: StringNullableFilter<"MediaTask"> | string | null
     locked?: BoolFilter<"MediaTask"> | boolean
     checked?: BoolFilter<"MediaTask"> | boolean
     metaAt?: DateTimeNullableFilter<"MediaTask"> | Date | string | null
     driveUrl?: StringNullableFilter<"MediaTask"> | string | null
+    caption?: StringNullableFilter<"MediaTask"> | string | null
+    srcDesc?: StringNullableFilter<"MediaTask"> | string | null
     note?: StringNullableFilter<"MediaTask"> | string | null
     history?: JsonNullableFilter<"MediaTask">
     eventKey?: StringNullableFilter<"MediaTask"> | string | null
@@ -34585,10 +34653,14 @@ export namespace Prisma {
     postTime?: SortOrderInput | SortOrder
     due?: SortOrderInput | SortOrder
     target?: SortOrderInput | SortOrder
+    shotAt?: SortOrderInput | SortOrder
+    readyAt?: SortOrderInput | SortOrder
     locked?: SortOrder
     checked?: SortOrder
     metaAt?: SortOrderInput | SortOrder
     driveUrl?: SortOrderInput | SortOrder
+    caption?: SortOrderInput | SortOrder
+    srcDesc?: SortOrderInput | SortOrder
     note?: SortOrderInput | SortOrder
     history?: SortOrderInput | SortOrder
     eventKey?: SortOrderInput | SortOrder
@@ -34621,10 +34693,14 @@ export namespace Prisma {
     postTime?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
     due?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
     target?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    shotAt?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    readyAt?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
     locked?: BoolWithAggregatesFilter<"MediaTask"> | boolean
     checked?: BoolWithAggregatesFilter<"MediaTask"> | boolean
     metaAt?: DateTimeNullableWithAggregatesFilter<"MediaTask"> | Date | string | null
     driveUrl?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    caption?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    srcDesc?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
     note?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
     history?: JsonNullableWithAggregatesFilter<"MediaTask">
     eventKey?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
@@ -36679,10 +36755,14 @@ export namespace Prisma {
     postTime?: string | null
     due?: string | null
     target?: string | null
+    shotAt?: string | null
+    readyAt?: string | null
     locked?: boolean
     checked?: boolean
     metaAt?: Date | string | null
     driveUrl?: string | null
+    caption?: string | null
+    srcDesc?: string | null
     note?: string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
@@ -36710,10 +36790,14 @@ export namespace Prisma {
     postTime?: string | null
     due?: string | null
     target?: string | null
+    shotAt?: string | null
+    readyAt?: string | null
     locked?: boolean
     checked?: boolean
     metaAt?: Date | string | null
     driveUrl?: string | null
+    caption?: string | null
+    srcDesc?: string | null
     note?: string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
@@ -36739,10 +36823,14 @@ export namespace Prisma {
     postTime?: NullableStringFieldUpdateOperationsInput | string | null
     due?: NullableStringFieldUpdateOperationsInput | string | null
     target?: NullableStringFieldUpdateOperationsInput | string | null
+    shotAt?: NullableStringFieldUpdateOperationsInput | string | null
+    readyAt?: NullableStringFieldUpdateOperationsInput | string | null
     locked?: BoolFieldUpdateOperationsInput | boolean
     checked?: BoolFieldUpdateOperationsInput | boolean
     metaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     driveUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    srcDesc?: NullableStringFieldUpdateOperationsInput | string | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
@@ -36770,10 +36858,14 @@ export namespace Prisma {
     postTime?: NullableStringFieldUpdateOperationsInput | string | null
     due?: NullableStringFieldUpdateOperationsInput | string | null
     target?: NullableStringFieldUpdateOperationsInput | string | null
+    shotAt?: NullableStringFieldUpdateOperationsInput | string | null
+    readyAt?: NullableStringFieldUpdateOperationsInput | string | null
     locked?: BoolFieldUpdateOperationsInput | boolean
     checked?: BoolFieldUpdateOperationsInput | boolean
     metaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     driveUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    srcDesc?: NullableStringFieldUpdateOperationsInput | string | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
@@ -36800,10 +36892,14 @@ export namespace Prisma {
     postTime?: string | null
     due?: string | null
     target?: string | null
+    shotAt?: string | null
+    readyAt?: string | null
     locked?: boolean
     checked?: boolean
     metaAt?: Date | string | null
     driveUrl?: string | null
+    caption?: string | null
+    srcDesc?: string | null
     note?: string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
@@ -36829,10 +36925,14 @@ export namespace Prisma {
     postTime?: NullableStringFieldUpdateOperationsInput | string | null
     due?: NullableStringFieldUpdateOperationsInput | string | null
     target?: NullableStringFieldUpdateOperationsInput | string | null
+    shotAt?: NullableStringFieldUpdateOperationsInput | string | null
+    readyAt?: NullableStringFieldUpdateOperationsInput | string | null
     locked?: BoolFieldUpdateOperationsInput | boolean
     checked?: BoolFieldUpdateOperationsInput | boolean
     metaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     driveUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    srcDesc?: NullableStringFieldUpdateOperationsInput | string | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
@@ -36859,10 +36959,14 @@ export namespace Prisma {
     postTime?: NullableStringFieldUpdateOperationsInput | string | null
     due?: NullableStringFieldUpdateOperationsInput | string | null
     target?: NullableStringFieldUpdateOperationsInput | string | null
+    shotAt?: NullableStringFieldUpdateOperationsInput | string | null
+    readyAt?: NullableStringFieldUpdateOperationsInput | string | null
     locked?: BoolFieldUpdateOperationsInput | boolean
     checked?: BoolFieldUpdateOperationsInput | boolean
     metaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     driveUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    srcDesc?: NullableStringFieldUpdateOperationsInput | string | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
@@ -38586,10 +38690,14 @@ export namespace Prisma {
     postTime?: SortOrder
     due?: SortOrder
     target?: SortOrder
+    shotAt?: SortOrder
+    readyAt?: SortOrder
     locked?: SortOrder
     checked?: SortOrder
     metaAt?: SortOrder
     driveUrl?: SortOrder
+    caption?: SortOrder
+    srcDesc?: SortOrder
     note?: SortOrder
     history?: SortOrder
     eventKey?: SortOrder
@@ -38616,10 +38724,14 @@ export namespace Prisma {
     postTime?: SortOrder
     due?: SortOrder
     target?: SortOrder
+    shotAt?: SortOrder
+    readyAt?: SortOrder
     locked?: SortOrder
     checked?: SortOrder
     metaAt?: SortOrder
     driveUrl?: SortOrder
+    caption?: SortOrder
+    srcDesc?: SortOrder
     note?: SortOrder
     eventKey?: SortOrder
     createdAt?: SortOrder
@@ -38645,10 +38757,14 @@ export namespace Prisma {
     postTime?: SortOrder
     due?: SortOrder
     target?: SortOrder
+    shotAt?: SortOrder
+    readyAt?: SortOrder
     locked?: SortOrder
     checked?: SortOrder
     metaAt?: SortOrder
     driveUrl?: SortOrder
+    caption?: SortOrder
+    srcDesc?: SortOrder
     note?: SortOrder
     eventKey?: SortOrder
     createdAt?: SortOrder
@@ -44760,10 +44876,14 @@ export namespace Prisma {
     postTime?: string | null
     due?: string | null
     target?: string | null
+    shotAt?: string | null
+    readyAt?: string | null
     locked?: boolean
     checked?: boolean
     metaAt?: Date | string | null
     driveUrl?: string | null
+    caption?: string | null
+    srcDesc?: string | null
     note?: string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
@@ -44789,10 +44909,14 @@ export namespace Prisma {
     postTime?: string | null
     due?: string | null
     target?: string | null
+    shotAt?: string | null
+    readyAt?: string | null
     locked?: boolean
     checked?: boolean
     metaAt?: Date | string | null
     driveUrl?: string | null
+    caption?: string | null
+    srcDesc?: string | null
     note?: string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
@@ -44925,10 +45049,14 @@ export namespace Prisma {
     postTime?: StringNullableFilter<"MediaTask"> | string | null
     due?: StringNullableFilter<"MediaTask"> | string | null
     target?: StringNullableFilter<"MediaTask"> | string | null
+    shotAt?: StringNullableFilter<"MediaTask"> | string | null
+    readyAt?: StringNullableFilter<"MediaTask"> | string | null
     locked?: BoolFilter<"MediaTask"> | boolean
     checked?: BoolFilter<"MediaTask"> | boolean
     metaAt?: DateTimeNullableFilter<"MediaTask"> | Date | string | null
     driveUrl?: StringNullableFilter<"MediaTask"> | string | null
+    caption?: StringNullableFilter<"MediaTask"> | string | null
+    srcDesc?: StringNullableFilter<"MediaTask"> | string | null
     note?: StringNullableFilter<"MediaTask"> | string | null
     history?: JsonNullableFilter<"MediaTask">
     eventKey?: StringNullableFilter<"MediaTask"> | string | null
@@ -46302,10 +46430,14 @@ export namespace Prisma {
     postTime?: string | null
     due?: string | null
     target?: string | null
+    shotAt?: string | null
+    readyAt?: string | null
     locked?: boolean
     checked?: boolean
     metaAt?: Date | string | null
     driveUrl?: string | null
+    caption?: string | null
+    srcDesc?: string | null
     note?: string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
@@ -46331,10 +46463,14 @@ export namespace Prisma {
     postTime?: NullableStringFieldUpdateOperationsInput | string | null
     due?: NullableStringFieldUpdateOperationsInput | string | null
     target?: NullableStringFieldUpdateOperationsInput | string | null
+    shotAt?: NullableStringFieldUpdateOperationsInput | string | null
+    readyAt?: NullableStringFieldUpdateOperationsInput | string | null
     locked?: BoolFieldUpdateOperationsInput | boolean
     checked?: BoolFieldUpdateOperationsInput | boolean
     metaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     driveUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    srcDesc?: NullableStringFieldUpdateOperationsInput | string | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46360,10 +46496,14 @@ export namespace Prisma {
     postTime?: NullableStringFieldUpdateOperationsInput | string | null
     due?: NullableStringFieldUpdateOperationsInput | string | null
     target?: NullableStringFieldUpdateOperationsInput | string | null
+    shotAt?: NullableStringFieldUpdateOperationsInput | string | null
+    readyAt?: NullableStringFieldUpdateOperationsInput | string | null
     locked?: BoolFieldUpdateOperationsInput | boolean
     checked?: BoolFieldUpdateOperationsInput | boolean
     metaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     driveUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    srcDesc?: NullableStringFieldUpdateOperationsInput | string | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
@@ -46389,10 +46529,14 @@ export namespace Prisma {
     postTime?: NullableStringFieldUpdateOperationsInput | string | null
     due?: NullableStringFieldUpdateOperationsInput | string | null
     target?: NullableStringFieldUpdateOperationsInput | string | null
+    shotAt?: NullableStringFieldUpdateOperationsInput | string | null
+    readyAt?: NullableStringFieldUpdateOperationsInput | string | null
     locked?: BoolFieldUpdateOperationsInput | boolean
     checked?: BoolFieldUpdateOperationsInput | boolean
     metaAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     driveUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    caption?: NullableStringFieldUpdateOperationsInput | string | null
+    srcDesc?: NullableStringFieldUpdateOperationsInput | string | null
     note?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null

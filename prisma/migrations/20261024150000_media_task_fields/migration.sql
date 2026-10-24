@@ -1,0 +1,4 @@
+ALTER TABLE "MediaTask" ADD COLUMN "shotAt" TEXT;
+ALTER TABLE "MediaTask" ADD COLUMN "readyAt" TEXT;
+ALTER TABLE "MediaTask" ADD COLUMN "caption" TEXT;
+ALTER TABLE "MediaTask" ADD COLUMN "srcDesc" TEXT;
