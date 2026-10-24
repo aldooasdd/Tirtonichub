@@ -64,7 +64,7 @@
   },
   {
     "route": "/media/hasil",
-    "firstLoadUncompressedJsBytes": 685851,
+    "firstLoadUncompressedJsBytes": 685871,
     "firstLoadChunkPaths": [
       ".next/static/chunks/218yun3xk1rsz.js",
       ".next/static/chunks/420358txk31hs.js",
@@ -73,7 +73,7 @@
       ".next/static/chunks/0g86ehmvuaub_.js",
       ".next/static/chunks/28xcljbvev8ct.js",
       ".next/static/chunks/2xir_f8fx68v5.js",
-      ".next/static/chunks/28tl2r976wzjc.js",
+      ".next/static/chunks/1cdk6owyfhm9w.js",
       ".next/static/chunks/06cza79ljre1d.js",
       ".next/static/chunks/1xl97uaxttk17.js",
       ".next/static/chunks/19rwnbr1_-u2m.js",

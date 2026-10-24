@@ -24,7 +24,7 @@ export default async function MediaHasilPage() {
       {items.length === 0 ? (
         <p className="rounded-lg border bg-card py-12 text-center text-muted-foreground">Belum ada barang.</p>
       ) : (
-        <div className="relative grid grid-cols-1 items-end justify-items-center gap-x-10 gap-y-8 md:grid-cols-2 xl:grid-cols-3">
+        <div className="flex flex-wrap gap-x-10 gap-y-6">
           {items.map((it, idx) => (
             <ResultFolder
               key={it.id}
@@ -33,6 +33,7 @@ export default async function MediaHasilPage() {
               photoUrl={photos[idx]}
               seed={idx + 3}
               appearDelay={(idx % 3) * 120}
+              width={300}
               canManage={acc.canManage}
               assets={it.assets.map((a) => ({ id: a.id, name: a.name, key: a.key, mime: a.mime, size: a.size }))}
             />

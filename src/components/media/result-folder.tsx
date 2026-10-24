@@ -22,6 +22,7 @@ export function ResultFolder({
   canManage,
   seed,
   appearDelay,
+  width = 300,
 }: {
   itemId: string;
   name: string;
@@ -30,6 +31,7 @@ export function ResultFolder({
   canManage: boolean;
   seed: number;
   appearDelay: number;
+  width?: number;
 }) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -75,6 +77,7 @@ export function ResultFolder({
         art={photoUrl ? undefined : ARTS[seed % ARTS.length]}
         image={photoUrl ?? undefined}
         seed={seed}
+        width={width}
         appearDelay={appearDelay}
         files={files}
         action={canManage ? "add" : "none"}
