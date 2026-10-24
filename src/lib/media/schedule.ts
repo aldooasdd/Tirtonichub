@@ -227,11 +227,14 @@ type Sched = {
   scheduleEdit: (st: CapState, type: string, from: string, pool?: string[], days?: number) => { d: string; ed: string } | null;
   computeBalance: (todayStr: string, rollAfter15: boolean) => { t: Task; patch: Partial<Task> }[];
   planBatch: (rows: Item[], base: string, order?: number[], excl?: (t: Task) => boolean) => PlannedItem[];
+  planOld: (rows: OldRow[], start: string, order?: number[]) => PlannedItem[];
   fileDue: (t: Task) => string;
 };
 type CapState = { sh: Record<string, Record<string, number>>; ed: Record<string, Record<string, number>>; ty: Record<string, Record<string, number>> };
-export type PlannedTask = { type: string; due: string; late: boolean; target: string; producer: string; editor: string; talent: string; shootPlan: string; editPlan: string; postAt: string };
+export type PlannedTask = { type: string; due: string; late?: boolean; target?: string; producer: string; editor: string; talent: string; shootPlan: string; editPlan: string; postAt: string; source?: string; reason?: string; script?: string };
 export type PlannedItem = { i: number; row: Item; key: string; tasks: PlannedTask[]; igfDay?: string };
+export const OLD_TYPES = ["igf", "idf", "vpr", "vrv", "idc"];
+export type OldRow = Item & { types: string[]; reason?: string; itemId?: string };
 
 export function makeScheduler(ctx: Ctx): Sched {
   const S = ctx; // alias agar port 1:1 dari kode asli (S.tasks, S.items, S.settings)
@@ -623,5 +626,27 @@ export function makeScheduler(ctx: Ctx): Sched {
     return items;
   }
 
-  return { itemOf, seasonalActive, jpAtLimit, bumpable, rankOfTask, slotUse, isIdccDay, dayPlan, timeOf, job, capState, scheduleShoot, scheduleEdit, computeBalance, planBatch, fileDue };
+  // konten stok lama (IDCC): slot isOld, source 'lama'
+  function planOld(rows: OldRow[], start: string, order?: number[]): PlannedItem[] {
+    const st = capState();
+    const use = slotUse();
+    const s0 = nextDayWith([], start);
+    const seq = interleave(rows, order && order.length === rows.length ? order : rows.map((_, i) => i));
+    const items: PlannedItem[] = seq.map((i) => ({ i, row: rows[i], key: rows[i].itemId || "__old" + i, tasks: [] }));
+    OLD_TYPES.forEach((t) =>
+      items.forEach((it) => {
+        const r = it.row as OldRow;
+        if (!r.types.includes(t)) return;
+        const from = t === "vpr" && it.igfDay ? it.igfDay : s0;
+        const sh = scheduleShoot(st, t, from)!;
+        if (t === "igf") it.igfDay = sh.d;
+        const ed = scheduleEdit(st, t, sh.d)!;
+        const post = t === "idc" ? pickIdcc(addDays(ed.d, 2), it.key, use) : pickPost(kindOf(t), addDays(ed.d, 2), it.key, use, r.cat || undefined, true, t);
+        it.tasks.push({ type: t, due: ed.d, producer: sh.prod, editor: ed.ed, talent: sh.tal, script: t === "vrv" ? "S" : t === "idc" ? "A" : "", shootPlan: sh.d, editPlan: ed.d, postAt: post, source: "lama", reason: r.reason });
+      }),
+    );
+    return items;
+  }
+
+  return { itemOf, seasonalActive, jpAtLimit, bumpable, rankOfTask, slotUse, isIdccDay, dayPlan, timeOf, job, capState, scheduleShoot, scheduleEdit, computeBalance, planBatch, planOld, fileDue };
 }

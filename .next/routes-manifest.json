@@ -21,7 +21,16 @@
     "afterFiles": [],
     "fallback": []
   },
-  "dynamicRoutes": [],
+  "dynamicRoutes": [
+    {
+      "page": "/hr/karyawan/[id]",
+      "regex": "^/hr/karyawan/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/hr/karyawan/(?<nxtPid>[^/]+?)(?:/)?$"
+    }
+  ],
   "staticRoutes": [
     {
       "page": "/",
@@ -76,6 +85,12 @@
       "regex": "^/favicon\\.ico(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/favicon\\.ico(?:/)?$"
+    },
+    {
+      "page": "/finance",
+      "regex": "^/finance(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/finance(?:/)?$"
     },
     {
       "page": "/hr/approval",
@@ -144,6 +159,54 @@
       "namedRegex": "^/manifest\\.webmanifest(?:/)?$"
     },
     {
+      "page": "/media/barang",
+      "regex": "^/media/barang(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/media/barang(?:/)?$"
+    },
+    {
+      "page": "/media/idcc",
+      "regex": "^/media/idcc(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/media/idcc(?:/)?$"
+    },
+    {
+      "page": "/media/kalender",
+      "regex": "^/media/kalender(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/media/kalender(?:/)?$"
+    },
+    {
+      "page": "/media/laporan",
+      "regex": "^/media/laporan(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/media/laporan(?:/)?$"
+    },
+    {
+      "page": "/media/panduan",
+      "regex": "^/media/panduan(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/media/panduan(?:/)?$"
+    },
+    {
+      "page": "/media/queue",
+      "regex": "^/media/queue(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/media/queue(?:/)?$"
+    },
+    {
+      "page": "/media/tim",
+      "regex": "^/media/tim(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/media/tim(?:/)?$"
+    },
+    {
+      "page": "/media/workflow",
+      "regex": "^/media/workflow(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/media/workflow(?:/)?$"
+    },
+    {
       "page": "/notifikasi",
       "regex": "^/notifikasi(?:/)?$",
       "routeKeys": {},
@@ -172,6 +235,18 @@
       "regex": "^/riwayat\\-absen(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/riwayat\\-absen(?:/)?$"
+    },
+    {
+      "page": "/stok",
+      "regex": "^/stok(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/stok(?:/)?$"
+    },
+    {
+      "page": "/stok/qc",
+      "regex": "^/stok/qc(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/stok/qc(?:/)?$"
     }
   ],
   "dataRoutes": [],

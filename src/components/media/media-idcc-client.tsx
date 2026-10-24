@@ -4,9 +4,11 @@ import { useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { runIdccAnalysis } from "@/server/actions/media-idcc";
+import { runIdccAnalysis, createIdccContent } from "@/server/actions/media-idcc";
 
 type Row = { id: string; nama: string; rekomendasi: string; prioritas: number; alasan: string; ide_konten: string };
+
+const REK_TYPES: Record<string, string[]> = { video: ["idc"], foto: ["idf"], keduanya: ["idf", "idc"], pantau: [] };
 
 const REK: Record<string, { label: string; cls: string }> = {
   video: { label: "Video", cls: "bg-purple-100 text-purple-800" },
@@ -24,6 +26,15 @@ export function MediaIdccClient({ canRun, summary, reportAt, rows }: { canRun: b
     start(async () => {
       const r = await runIdccAnalysis();
       if (!r.ok) alert(r.message);
+      router.refresh();
+    });
+  }
+  function makeContent(row: Row) {
+    const types = REK_TYPES[row.rekomendasi] ?? [];
+    if (!types.length) return;
+    start(async () => {
+      const r = await createIdccContent(row.id, types);
+      alert(r.ok ? "Konten IDCC dibuat & dijadwalkan." : r.message);
       router.refresh();
     });
   }
@@ -62,6 +73,11 @@ export function MediaIdccClient({ canRun, summary, reportAt, rows }: { canRun: b
               </div>
               <p className="mt-1 text-13 text-muted-foreground">{r.alasan}</p>
               <p className="mt-1 text-13"><span className="text-muted-foreground">Ide: </span>{r.ide_konten}</p>
+              {canRun && (REK_TYPES[r.rekomendasi]?.length ?? 0) > 0 && (
+                <Button size="sm" variant="outline" className="mt-2" disabled={pending} onClick={() => makeContent(r)}>
+                  Buat konten IDCC
+                </Button>
+              )}
             </div>
           ))}
         </div>

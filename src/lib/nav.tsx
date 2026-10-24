@@ -23,6 +23,7 @@ import {
   Sparkles,
   UsersRound,
   BarChart3,
+  BookOpen,
   type LucideIcon,
 } from "lucide-react";
 import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, roleAttends, type RoleCode } from "./roles";
@@ -97,6 +98,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Analisis IDCC", href: "/media/idcc", icon: Sparkles },
         { label: "Laporan", href: "/media/laporan", icon: BarChart3 },
         { label: "Tim", href: "/media/tim", icon: UsersRound },
+        { label: "Panduan", href: "/media/panduan", icon: BookOpen },
       ],
     });
   }
