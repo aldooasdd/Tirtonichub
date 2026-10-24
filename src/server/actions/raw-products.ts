@@ -7,6 +7,7 @@ import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
 import { parseNotaViaN8n, type NotaItem } from "@/server/n8n-nota";
+import { computeSellPrice } from "@/lib/pricing";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -70,7 +71,9 @@ export async function saveRawBatch(input: {
   if (items.length === 0) return { ok: false, message: "Tidak ada item." };
 
   await prisma.rawProduct.createMany({
-    data: items.map((i) => ({
+    data: items.map((i) => {
+      const unitPrice = Math.max(0, Math.round(i.unitPrice) || 0);
+      return {
       batchId: input.batchId,
       name: i.name.trim().slice(0, 200),
       brand: clean(i.brand, 80),
@@ -79,13 +82,15 @@ export async function saveRawBatch(input: {
       sku: clean(i.sku, 60),
       qty: Math.max(1, Math.round(i.qty) || 1),
       unit: i.unit?.trim() || null,
-      unitPrice: Math.max(0, Math.round(i.unitPrice) || 0),
+      unitPrice,
+      sellPrice: computeSellPrice(unitPrice),
       supplier: i.supplier?.trim() || null,
       notaDate: i.notaDate ? new Date(i.notaDate) : null,
       notaPhotoKey: input.notaPhotoKey ?? null,
       status: "DRAFT" as const,
       createdById: ctx.userId,
-    })),
+      };
+    }),
   });
 
   const { ip } = await clientMeta();
@@ -102,6 +107,7 @@ export async function updateRawProduct(id: string, fields: SaveItem): Promise<Ac
   const p = await prisma.rawProduct.findUnique({ where: { id } });
   if (!p || p.createdById !== ctx.userId) return { ok: false, message: "Tidak ditemukan." };
   if (p.status !== "DRAFT") return { ok: false, message: "Hanya draft bisa diedit." };
+  const unitPrice = Math.max(0, Math.round(fields.unitPrice) || 0);
   await prisma.rawProduct.update({
     where: { id },
     data: {
@@ -112,7 +118,8 @@ export async function updateRawProduct(id: string, fields: SaveItem): Promise<Ac
       sku: clean(fields.sku, 60),
       qty: Math.max(1, Math.round(fields.qty) || 1),
       unit: fields.unit?.trim() || null,
-      unitPrice: Math.max(0, Math.round(fields.unitPrice) || 0),
+      unitPrice,
+      sellPrice: computeSellPrice(unitPrice),
       supplier: fields.supplier?.trim() || null,
       notaDate: fields.notaDate ? new Date(fields.notaDate) : null,
     },

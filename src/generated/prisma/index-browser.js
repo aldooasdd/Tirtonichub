@@ -317,6 +317,7 @@ exports.Prisma.RawProductScalarFieldEnum = {
   qty: 'qty',
   unit: 'unit',
   unitPrice: 'unitPrice',
+  sellPrice: 'sellPrice',
   supplier: 'supplier',
   notaDate: 'notaDate',
   notaPhotoKey: 'notaPhotoKey',

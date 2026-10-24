@@ -31,6 +31,7 @@ export default async function StokPage() {
               <TableHead>SKU</TableHead>
               <TableHead>Qty</TableHead>
               <TableHead>Harga satuan</TableHead>
+              <TableHead>Harga jual</TableHead>
               <TableHead>Supplier</TableHead>
               <TableHead>Diloloskan</TableHead>
             </TableRow>
@@ -38,7 +39,7 @@ export default async function StokPage() {
           <TableBody>
             {rows.length === 0 && (
               <TableRow>
-                <TableCell colSpan={7} className="py-10 text-center text-muted-foreground">
+                <TableCell colSpan={8} className="py-10 text-center text-muted-foreground">
                   Belum ada stok.
                 </TableCell>
               </TableRow>
@@ -54,6 +55,7 @@ export default async function StokPage() {
                   {r.qty} {r.unit ?? "pcs"}
                 </TableCell>
                 <TableCell>Rp {rupiah.format(r.unitPrice)}</TableCell>
+                <TableCell className="font-medium">{r.sellPrice != null ? `Rp ${rupiah.format(r.sellPrice)}` : "—"}</TableCell>
                 <TableCell className="text-muted-foreground">{r.supplier ?? "—"}</TableCell>
                 <TableCell className="text-muted-foreground">{r.qcBy?.fullName ?? "—"}</TableCell>
               </TableRow>

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { compressImage } from "@/lib/image";
+import { computeSellPrice } from "@/lib/pricing";
 import {
   scanNota,
   saveRawBatch,
@@ -26,6 +27,7 @@ type Item = {
   qty: number;
   unit: string | null;
   unitPrice: number;
+  sellPrice: number | null;
   supplier: string | null;
   notaDate: string | null;
   status: "DRAFT" | "QC" | "STOCK" | "REJECTED";
@@ -156,6 +158,9 @@ export function FinanceClient({ items }: { items: Item[] }) {
                   {i.qty} {i.unit ?? "pcs"} · Rp {rupiah.format(i.unitPrice)}
                   {i.supplier ? ` · ${i.supplier}` : ""}
                 </p>
+                {i.sellPrice != null && (
+                  <p className="text-12 font-medium">Jual: Rp {rupiah.format(i.sellPrice)}</p>
+                )}
                 {i.qcNote && (
                   <p className="mt-1 text-12 text-muted-foreground">
                     QC: {i.qcNote}
@@ -263,6 +268,9 @@ function DraftCard({ item }: { item: Item }) {
         <Input type="date" value={notaDate} onChange={(e) => setNotaDate(e.target.value)} />
       </div>
       <Input value={supplier} onChange={(e) => setSupplier(e.target.value)} placeholder="Supplier" />
+      <p className="text-12 text-muted-foreground">
+        Harga jual (×135%×115%, bulat 5rb): Rp {rupiah.format(computeSellPrice(Number(unitPrice) || 0))}
+      </p>
       <div className="flex gap-2">
         <Button size="sm" variant="secondary" className="flex-1" disabled={pending} onClick={save}>
           Simpan

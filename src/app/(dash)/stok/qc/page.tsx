@@ -22,6 +22,7 @@ export default async function QcPage() {
         qty: r.qty,
         unit: r.unit,
         unitPrice: r.unitPrice,
+        sellPrice: r.sellPrice,
         supplier: r.supplier,
         notaDate: r.notaDate ? r.notaDate.toISOString().slice(0, 10) : null,
         byName: r.createdBy.fullName,

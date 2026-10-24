@@ -340,6 +340,7 @@ model RawProduct {
   qty          Int              @default(1)
   unit         String? // pcs, box, dst
   unitPrice    Int              @default(0) // rupiah, harga beli satuan
+  sellPrice    Int? // harga jual = unitPrice×135%×115%, bulat ke atas 5000
   supplier     String?
   notaDate     DateTime?        @db.Date
   notaPhotoKey String?

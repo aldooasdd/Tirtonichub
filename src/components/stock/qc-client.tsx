@@ -16,6 +16,7 @@ type Item = {
   qty: number;
   unit: string | null;
   unitPrice: number;
+  sellPrice: number | null;
   supplier: string | null;
   notaDate: string | null;
   byName: string;
@@ -62,6 +63,9 @@ export function QcClient({ items }: { items: Item[] }) {
               {i.qty} {i.unit ?? "pcs"} · Rp {rupiah.format(i.unitPrice)}
               {i.supplier ? ` · ${i.supplier}` : ""}
             </p>
+            {i.sellPrice != null && (
+              <p className="text-12 font-medium">Jual: Rp {rupiah.format(i.sellPrice)}</p>
+            )}
             <p className="text-12 text-muted-foreground">
               Dari: {i.byName}
               {i.notaDate ? ` · nota ${i.notaDate}` : ""}
