@@ -10,9 +10,9 @@ export const REASONS: Record<string, { lbl: string; short: string }> = {
   idcc: { lbl: "Stok banyak & umur lama", short: "Stok lama · IDCC" },
 };
 
-export const open = (t: Task) => t.status !== "Tayang";
-export const ready = (t: Task) => IDX[t.status] >= IDX["Ready"];
-export const late = (t: Task, today: string) => !ready(t) && !!t.due && t.due < today;
+export const open = (t: Pick<Task, "status">) => t.status !== "Tayang";
+export const ready = (t: Pick<Task, "status">) => IDX[t.status] >= IDX["Ready"];
+export const late = (t: Pick<Task, "status" | "due">, today: string) => !ready(t) && !!t.due && t.due < today;
 
 export function slug(s: string): string {
   return String(s || "")
