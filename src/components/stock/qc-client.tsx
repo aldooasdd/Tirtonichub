@@ -1,10 +1,20 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { compressImage } from "@/lib/image";
 import { qcDecision } from "@/server/actions/raw-products";
+
+function blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const r = new FileReader();
+    r.onloadend = () => resolve(String(r.result).split(",")[1] ?? "");
+    r.onerror = reject;
+    r.readAsDataURL(blob);
+  });
+}
 
 type Item = {
   id: string;
@@ -40,10 +50,23 @@ export function QcClient({ items }: { items: Item[] }) {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [form, setForm] = useState<Record<string, Partial<Record<FieldKey, string>>>>({});
+  const [photo, setPhoto] = useState<Record<string, string>>({}); // id → base64 (tanpa prefix)
+  const fileRefs = useRef<Record<string, HTMLInputElement | null>>({});
 
   const val = (i: Item, key: FieldKey) => form[i.id]?.[key] ?? defVal(i, key);
   const setField = (id: string, key: FieldKey, v: string) =>
     setForm((n) => ({ ...n, [id]: { ...n[id], [key]: v } }));
+
+  async function onCapture(id: string, file?: File) {
+    if (!file) return;
+    try {
+      const blob = await compressImage(file, 1280, 0.7);
+      const b64 = await blobToBase64(blob);
+      setPhoto((p) => ({ ...p, [id]: b64 }));
+    } catch {
+      alert("Foto tidak bisa dibaca. Coba ambil ulang.");
+    }
+  }
 
   function act(i: Item, decision: "STOCK" | "REJECTED") {
     if (decision === "STOCK") {
@@ -53,6 +76,10 @@ export function QcClient({ items }: { items: Item[] }) {
       }
       if (!val(i, "sku").trim()) {
         alert("Scan / isi SKU barcode dulu sebelum loloskan.");
+        return;
+      }
+      if (!photo[i.id]) {
+        alert("Ambil foto dokumentasi produk dulu sebelum loloskan.");
         return;
       }
     }
@@ -72,6 +99,7 @@ export function QcClient({ items }: { items: Item[] }) {
               supplier: val(i, "supplier"),
             }
           : undefined,
+        decision === "STOCK" ? { base64: photo[i.id], mime: "image/jpeg" } : undefined,
       );
       if (!r.ok) alert(r.message);
       router.refresh();
@@ -136,6 +164,28 @@ export function QcClient({ items }: { items: Item[] }) {
                 onChange={(e) => setField(i.id, "qty", e.target.value)}
               />
             </label>
+            <div className="space-y-1">
+              <span className="block text-12 text-muted-foreground">Foto dokumentasi (wajib)</span>
+              <input
+                ref={(el) => { fileRefs.current[i.id] = el; }}
+                type="file"
+                accept="image/*"
+                capture="environment"
+                className="hidden"
+                onChange={(e) => { const f = e.target.files?.[0]; e.target.value = ""; onCapture(i.id, f); }}
+              />
+              <div className="flex items-center gap-3">
+                <Button type="button" variant="outline" size="sm" onClick={() => fileRefs.current[i.id]?.click()}>
+                  {photo[i.id] ? "Ganti foto" : "Ambil foto"}
+                </Button>
+                {photo[i.id] ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={`data:image/jpeg;base64,${photo[i.id]}`} alt="Foto QC" className="h-14 w-14 rounded object-cover" />
+                ) : (
+                  <span className="text-11 text-muted-foreground">Belum ada foto</span>
+                )}
+              </div>
+            </div>
             <div className="flex gap-2 pt-1">
               <Button className="flex-1" disabled={pending} onClick={() => act(i, "STOCK")}>
                 Loloskan ke Stok

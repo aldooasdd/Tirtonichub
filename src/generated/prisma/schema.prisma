@@ -348,6 +348,7 @@ model RawProduct {
   supplier     String?
   notaDate     DateTime?        @db.Date
   notaPhotoKey String?
+  qcPhotoKey   String? // foto dokumentasi QC (wajib saat loloskan ke stok)
   status       RawProductStatus @default(DRAFT)
   createdById  String
   qcById       String?

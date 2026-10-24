@@ -228,12 +228,27 @@ export async function qcDecision(
   id: string,
   decision: "STOCK" | "REJECTED",
   edits?: QcEdits,
+  photo?: { base64: string; mime?: string },
 ): Promise<ActionResult> {
   const ctx = await requireStock();
   const p = await prisma.rawProduct.findUnique({ where: { id } });
   if (!p) return { ok: false, message: "Tidak ditemukan." };
   if (p.status !== "QC") return { ok: false, message: "Item tidak dalam antrean QC." };
   if (decision === "STOCK" && !clean(edits?.sku, 60)) return { ok: false, message: "SKU barcode wajib diisi/scan." };
+  if (decision === "STOCK" && !photo?.base64) return { ok: false, message: "Ambil foto dokumentasi produk dulu sebelum loloskan." };
+
+  // Foto dokumentasi QC → storage (wajib saat loloskan).
+  let qcPhotoKey: string | null = null;
+  if (decision === "STOCK" && photo?.base64) {
+    const mime = photo.mime || "image/jpeg";
+    const key = makeKey("qc", mime.includes("png") ? "png" : "jpg");
+    try {
+      await putObject(key, Buffer.from(photo.base64, "base64"), mime);
+      qcPhotoKey = key;
+    } catch {
+      return { ok: false, message: "Gagal simpan foto QC. Coba lagi." };
+    }
+  }
 
   // QC boleh ubah semua kecuali brand (merek).
   const data =
@@ -242,6 +257,7 @@ export async function qcDecision(
           status: "STOCK" as const,
           qcById: ctx.userId,
           qcAt: new Date(),
+          qcPhotoKey,
           name: clean(edits?.name, 200) ?? p.name,
           color: clean(edits?.color, 40),
           size: clean(edits?.size, 40),

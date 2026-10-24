@@ -23014,6 +23014,7 @@ export namespace Prisma {
     supplier: string | null
     notaDate: Date | null
     notaPhotoKey: string | null
+    qcPhotoKey: string | null
     status: $Enums.RawProductStatus | null
     createdById: string | null
     qcById: string | null
@@ -23038,6 +23039,7 @@ export namespace Prisma {
     supplier: string | null
     notaDate: Date | null
     notaPhotoKey: string | null
+    qcPhotoKey: string | null
     status: $Enums.RawProductStatus | null
     createdById: string | null
     qcById: string | null
@@ -23062,6 +23064,7 @@ export namespace Prisma {
     supplier: number
     notaDate: number
     notaPhotoKey: number
+    qcPhotoKey: number
     status: number
     createdById: number
     qcById: number
@@ -23100,6 +23103,7 @@ export namespace Prisma {
     supplier?: true
     notaDate?: true
     notaPhotoKey?: true
+    qcPhotoKey?: true
     status?: true
     createdById?: true
     qcById?: true
@@ -23124,6 +23128,7 @@ export namespace Prisma {
     supplier?: true
     notaDate?: true
     notaPhotoKey?: true
+    qcPhotoKey?: true
     status?: true
     createdById?: true
     qcById?: true
@@ -23148,6 +23153,7 @@ export namespace Prisma {
     supplier?: true
     notaDate?: true
     notaPhotoKey?: true
+    qcPhotoKey?: true
     status?: true
     createdById?: true
     qcById?: true
@@ -23259,6 +23265,7 @@ export namespace Prisma {
     supplier: string | null
     notaDate: Date | null
     notaPhotoKey: string | null
+    qcPhotoKey: string | null
     status: $Enums.RawProductStatus
     createdById: string
     qcById: string | null
@@ -23302,6 +23309,7 @@ export namespace Prisma {
     supplier?: boolean
     notaDate?: boolean
     notaPhotoKey?: boolean
+    qcPhotoKey?: boolean
     status?: boolean
     createdById?: boolean
     qcById?: boolean
@@ -23328,6 +23336,7 @@ export namespace Prisma {
     supplier?: boolean
     notaDate?: boolean
     notaPhotoKey?: boolean
+    qcPhotoKey?: boolean
     status?: boolean
     createdById?: boolean
     qcById?: boolean
@@ -23354,6 +23363,7 @@ export namespace Prisma {
     supplier?: boolean
     notaDate?: boolean
     notaPhotoKey?: boolean
+    qcPhotoKey?: boolean
     status?: boolean
     createdById?: boolean
     qcById?: boolean
@@ -23380,6 +23390,7 @@ export namespace Prisma {
     supplier?: boolean
     notaDate?: boolean
     notaPhotoKey?: boolean
+    qcPhotoKey?: boolean
     status?: boolean
     createdById?: boolean
     qcById?: boolean
@@ -23389,7 +23400,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type RawProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "batchId" | "name" | "brand" | "color" | "size" | "sku" | "qty" | "unit" | "unitPrice" | "sellPrice" | "supplier" | "notaDate" | "notaPhotoKey" | "status" | "createdById" | "qcById" | "qcAt" | "qcNote" | "createdAt" | "updatedAt", ExtArgs["result"]["rawProduct"]>
+  export type RawProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "batchId" | "name" | "brand" | "color" | "size" | "sku" | "qty" | "unit" | "unitPrice" | "sellPrice" | "supplier" | "notaDate" | "notaPhotoKey" | "qcPhotoKey" | "status" | "createdById" | "qcById" | "qcAt" | "qcNote" | "createdAt" | "updatedAt", ExtArgs["result"]["rawProduct"]>
   export type RawProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
     qcBy?: boolean | RawProduct$qcByArgs<ExtArgs>
@@ -23424,6 +23435,7 @@ export namespace Prisma {
       supplier: string | null
       notaDate: Date | null
       notaPhotoKey: string | null
+      qcPhotoKey: string | null
       status: $Enums.RawProductStatus
       createdById: string
       qcById: string | null
@@ -23870,6 +23882,7 @@ export namespace Prisma {
     readonly supplier: FieldRef<"RawProduct", 'String'>
     readonly notaDate: FieldRef<"RawProduct", 'DateTime'>
     readonly notaPhotoKey: FieldRef<"RawProduct", 'String'>
+    readonly qcPhotoKey: FieldRef<"RawProduct", 'String'>
     readonly status: FieldRef<"RawProduct", 'RawProductStatus'>
     readonly createdById: FieldRef<"RawProduct", 'String'>
     readonly qcById: FieldRef<"RawProduct", 'String'>
@@ -33677,6 +33690,7 @@ export namespace Prisma {
     supplier: 'supplier',
     notaDate: 'notaDate',
     notaPhotoKey: 'notaPhotoKey',
+    qcPhotoKey: 'qcPhotoKey',
     status: 'status',
     createdById: 'createdById',
     qcById: 'qcById',
@@ -35356,6 +35370,7 @@ export namespace Prisma {
     supplier?: StringNullableFilter<"RawProduct"> | string | null
     notaDate?: DateTimeNullableFilter<"RawProduct"> | Date | string | null
     notaPhotoKey?: StringNullableFilter<"RawProduct"> | string | null
+    qcPhotoKey?: StringNullableFilter<"RawProduct"> | string | null
     status?: EnumRawProductStatusFilter<"RawProduct"> | $Enums.RawProductStatus
     createdById?: StringFilter<"RawProduct"> | string
     qcById?: StringNullableFilter<"RawProduct"> | string | null
@@ -35382,6 +35397,7 @@ export namespace Prisma {
     supplier?: SortOrderInput | SortOrder
     notaDate?: SortOrderInput | SortOrder
     notaPhotoKey?: SortOrderInput | SortOrder
+    qcPhotoKey?: SortOrderInput | SortOrder
     status?: SortOrder
     createdById?: SortOrder
     qcById?: SortOrderInput | SortOrder
@@ -35411,6 +35427,7 @@ export namespace Prisma {
     supplier?: StringNullableFilter<"RawProduct"> | string | null
     notaDate?: DateTimeNullableFilter<"RawProduct"> | Date | string | null
     notaPhotoKey?: StringNullableFilter<"RawProduct"> | string | null
+    qcPhotoKey?: StringNullableFilter<"RawProduct"> | string | null
     status?: EnumRawProductStatusFilter<"RawProduct"> | $Enums.RawProductStatus
     createdById?: StringFilter<"RawProduct"> | string
     qcById?: StringNullableFilter<"RawProduct"> | string | null
@@ -35437,6 +35454,7 @@ export namespace Prisma {
     supplier?: SortOrderInput | SortOrder
     notaDate?: SortOrderInput | SortOrder
     notaPhotoKey?: SortOrderInput | SortOrder
+    qcPhotoKey?: SortOrderInput | SortOrder
     status?: SortOrder
     createdById?: SortOrder
     qcById?: SortOrderInput | SortOrder
@@ -35469,6 +35487,7 @@ export namespace Prisma {
     supplier?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
     notaDate?: DateTimeNullableWithAggregatesFilter<"RawProduct"> | Date | string | null
     notaPhotoKey?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
+    qcPhotoKey?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
     status?: EnumRawProductStatusWithAggregatesFilter<"RawProduct"> | $Enums.RawProductStatus
     createdById?: StringWithAggregatesFilter<"RawProduct"> | string
     qcById?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
@@ -37558,6 +37577,7 @@ export namespace Prisma {
     supplier?: string | null
     notaDate?: Date | string | null
     notaPhotoKey?: string | null
+    qcPhotoKey?: string | null
     status?: $Enums.RawProductStatus
     qcAt?: Date | string | null
     qcNote?: string | null
@@ -37582,6 +37602,7 @@ export namespace Prisma {
     supplier?: string | null
     notaDate?: Date | string | null
     notaPhotoKey?: string | null
+    qcPhotoKey?: string | null
     status?: $Enums.RawProductStatus
     createdById: string
     qcById?: string | null
@@ -37606,6 +37627,7 @@ export namespace Prisma {
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
     notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    qcPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
     qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     qcNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37630,6 +37652,7 @@ export namespace Prisma {
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
     notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    qcPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
     createdById?: StringFieldUpdateOperationsInput | string
     qcById?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37654,6 +37677,7 @@ export namespace Prisma {
     supplier?: string | null
     notaDate?: Date | string | null
     notaPhotoKey?: string | null
+    qcPhotoKey?: string | null
     status?: $Enums.RawProductStatus
     createdById: string
     qcById?: string | null
@@ -37678,6 +37702,7 @@ export namespace Prisma {
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
     notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    qcPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
     qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     qcNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -37700,6 +37725,7 @@ export namespace Prisma {
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
     notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    qcPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
     createdById?: StringFieldUpdateOperationsInput | string
     qcById?: NullableStringFieldUpdateOperationsInput | string | null
@@ -39684,6 +39710,7 @@ export namespace Prisma {
     supplier?: SortOrder
     notaDate?: SortOrder
     notaPhotoKey?: SortOrder
+    qcPhotoKey?: SortOrder
     status?: SortOrder
     createdById?: SortOrder
     qcById?: SortOrder
@@ -39714,6 +39741,7 @@ export namespace Prisma {
     supplier?: SortOrder
     notaDate?: SortOrder
     notaPhotoKey?: SortOrder
+    qcPhotoKey?: SortOrder
     status?: SortOrder
     createdById?: SortOrder
     qcById?: SortOrder
@@ -39738,6 +39766,7 @@ export namespace Prisma {
     supplier?: SortOrder
     notaDate?: SortOrder
     notaPhotoKey?: SortOrder
+    qcPhotoKey?: SortOrder
     status?: SortOrder
     createdById?: SortOrder
     qcById?: SortOrder
@@ -42542,6 +42571,7 @@ export namespace Prisma {
     supplier?: string | null
     notaDate?: Date | string | null
     notaPhotoKey?: string | null
+    qcPhotoKey?: string | null
     status?: $Enums.RawProductStatus
     qcAt?: Date | string | null
     qcNote?: string | null
@@ -42565,6 +42595,7 @@ export namespace Prisma {
     supplier?: string | null
     notaDate?: Date | string | null
     notaPhotoKey?: string | null
+    qcPhotoKey?: string | null
     status?: $Enums.RawProductStatus
     qcById?: string | null
     qcAt?: Date | string | null
@@ -42598,6 +42629,7 @@ export namespace Prisma {
     supplier?: string | null
     notaDate?: Date | string | null
     notaPhotoKey?: string | null
+    qcPhotoKey?: string | null
     status?: $Enums.RawProductStatus
     qcAt?: Date | string | null
     qcNote?: string | null
@@ -42621,6 +42653,7 @@ export namespace Prisma {
     supplier?: string | null
     notaDate?: Date | string | null
     notaPhotoKey?: string | null
+    qcPhotoKey?: string | null
     status?: $Enums.RawProductStatus
     createdById: string
     qcAt?: Date | string | null
@@ -43179,6 +43212,7 @@ export namespace Prisma {
     supplier?: StringNullableFilter<"RawProduct"> | string | null
     notaDate?: DateTimeNullableFilter<"RawProduct"> | Date | string | null
     notaPhotoKey?: StringNullableFilter<"RawProduct"> | string | null
+    qcPhotoKey?: StringNullableFilter<"RawProduct"> | string | null
     status?: EnumRawProductStatusFilter<"RawProduct"> | $Enums.RawProductStatus
     createdById?: StringFilter<"RawProduct"> | string
     qcById?: StringNullableFilter<"RawProduct"> | string | null
@@ -47047,6 +47081,7 @@ export namespace Prisma {
     supplier?: string | null
     notaDate?: Date | string | null
     notaPhotoKey?: string | null
+    qcPhotoKey?: string | null
     status?: $Enums.RawProductStatus
     qcById?: string | null
     qcAt?: Date | string | null
@@ -47070,6 +47105,7 @@ export namespace Prisma {
     supplier?: string | null
     notaDate?: Date | string | null
     notaPhotoKey?: string | null
+    qcPhotoKey?: string | null
     status?: $Enums.RawProductStatus
     createdById: string
     qcAt?: Date | string | null
@@ -47484,6 +47520,7 @@ export namespace Prisma {
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
     notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    qcPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
     qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     qcNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -47507,6 +47544,7 @@ export namespace Prisma {
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
     notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    qcPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
     qcById?: NullableStringFieldUpdateOperationsInput | string | null
     qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -47530,6 +47568,7 @@ export namespace Prisma {
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
     notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    qcPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
     qcById?: NullableStringFieldUpdateOperationsInput | string | null
     qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -47553,6 +47592,7 @@ export namespace Prisma {
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
     notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    qcPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
     qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     qcNote?: NullableStringFieldUpdateOperationsInput | string | null
@@ -47576,6 +47616,7 @@ export namespace Prisma {
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
     notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    qcPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
     createdById?: StringFieldUpdateOperationsInput | string
     qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -47599,6 +47640,7 @@ export namespace Prisma {
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
     notaDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     notaPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    qcPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumRawProductStatusFieldUpdateOperationsInput | $Enums.RawProductStatus
     createdById?: StringFieldUpdateOperationsInput | string
     qcAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

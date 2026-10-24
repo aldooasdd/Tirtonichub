@@ -50,7 +50,7 @@
       "exportedName": "startDM",
       "filename": "src/server/actions/chat.ts"
     },
-    "7075a967cdb7cac29b61f8bd2cf268ce2d04836ec1": {
+    "7875a967cdb7cac29b61f8bd2cf268ce2d04836ec1": {
       "workers": {
         "app/(dash)/stok/qc/page": {
           "moduleId": 47994,

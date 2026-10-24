@@ -321,6 +321,7 @@ exports.Prisma.RawProductScalarFieldEnum = {
   supplier: 'supplier',
   notaDate: 'notaDate',
   notaPhotoKey: 'notaPhotoKey',
+  qcPhotoKey: 'qcPhotoKey',
   status: 'status',
   createdById: 'createdById',
   qcById: 'qcById',
