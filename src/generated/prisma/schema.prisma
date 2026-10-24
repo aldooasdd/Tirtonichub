@@ -417,11 +417,28 @@ model MediaItem {
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
 
-  createdBy User        @relation("MediaItemCreator", fields: [createdById], references: [id])
+  createdBy User         @relation("MediaItemCreator", fields: [createdById], references: [id])
   tasks     MediaTask[]
+  assets    MediaAsset[]
 
   @@index([createdById])
   @@index([arrived])
+}
+
+// File hasil konten (foto/video final) yang diunggah tim media per barang.
+model MediaAsset {
+  id          String   @id @default(cuid())
+  itemId      String
+  name        String
+  key         String // objek di MinIO/S3
+  mime        String
+  size        Int
+  createdById String
+  createdAt   DateTime @default(now())
+
+  item MediaItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+
+  @@index([itemId])
 }
 
 // Satu tugas konten (ktl/igf/vpr/vrv/idc/idf/evt/khs/cmp). Tanggal sbg string 'YYYY-MM-DD'

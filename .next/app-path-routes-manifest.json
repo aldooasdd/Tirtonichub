@@ -16,6 +16,7 @@
   "/(dash)/hr/rekap/page": "/hr/rekap",
   "/(dash)/hr/sesi/page": "/hr/sesi",
   "/(dash)/media/barang/page": "/media/barang",
+  "/(dash)/media/hasil/page": "/media/hasil",
   "/(dash)/media/idcc/page": "/media/idcc",
   "/(dash)/media/kalender/page": "/media/kalender",
   "/(dash)/media/laporan/page": "/media/laporan",
@@ -33,6 +34,7 @@
   "/_not-found/page": "/_not-found",
   "/api/chat/messages/route": "/api/chat/messages",
   "/api/file/route": "/api/file",
+  "/api/media/upload/route": "/api/media/upload",
   "/favicon.ico/route": "/favicon.ico",
   "/manifest.webmanifest/route": "/manifest.webmanifest",
   "/page": "/"

@@ -10,12 +10,13 @@ export async function GET(req: NextRequest) {
   const key = req.nextUrl.searchParams.get("key");
   if (!key) return new Response("key wajib", { status: 400 });
 
+  const dlName = req.nextUrl.searchParams.get("name"); // hadir = paksa download
   try {
     const buf = await getObject(key);
     const ct = key.endsWith(".png") ? "image/png" : "image/jpeg";
-    return new Response(new Uint8Array(buf), {
-      headers: { "content-type": ct, "cache-control": "private, max-age=300" },
-    });
+    const headers: Record<string, string> = { "content-type": ct, "cache-control": "private, max-age=300" };
+    if (dlName) headers["content-disposition"] = `attachment; filename*=UTF-8''${encodeURIComponent(dlName)}`;
+    return new Response(new Uint8Array(buf), { headers });
   } catch {
     return new Response("Not found", { status: 404 });
   }

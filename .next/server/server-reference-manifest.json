@@ -82,6 +82,10 @@
           "moduleId": 34923,
           "async": true
         },
+        "app/(dash)/media/hasil/page": {
+          "moduleId": 20332,
+          "async": true
+        },
         "app/(dash)/media/idcc/page": {
           "moduleId": 53735,
           "async": true
@@ -194,6 +198,10 @@
         },
         "app/(dash)/media/barang/page": {
           "moduleId": 34923,
+          "async": true
+        },
+        "app/(dash)/media/hasil/page": {
+          "moduleId": 20332,
           "async": true
         },
         "app/(dash)/media/idcc/page": {
@@ -310,6 +318,10 @@
           "moduleId": 34923,
           "async": true
         },
+        "app/(dash)/media/hasil/page": {
+          "moduleId": 20332,
+          "async": true
+        },
         "app/(dash)/media/idcc/page": {
           "moduleId": 53735,
           "async": true
@@ -424,6 +436,10 @@
           "moduleId": 34923,
           "async": true
         },
+        "app/(dash)/media/hasil/page": {
+          "moduleId": 20332,
+          "async": true
+        },
         "app/(dash)/media/idcc/page": {
           "moduleId": 53735,
           "async": true
@@ -536,6 +552,10 @@
         },
         "app/(dash)/media/barang/page": {
           "moduleId": 34923,
+          "async": true
+        },
+        "app/(dash)/media/hasil/page": {
+          "moduleId": 20332,
           "async": true
         },
         "app/(dash)/media/idcc/page": {

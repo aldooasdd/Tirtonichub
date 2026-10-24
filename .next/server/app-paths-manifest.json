@@ -16,6 +16,7 @@
   "/(dash)/hr/rekap/page": "app/(dash)/hr/rekap/page.js",
   "/(dash)/hr/sesi/page": "app/(dash)/hr/sesi/page.js",
   "/(dash)/media/barang/page": "app/(dash)/media/barang/page.js",
+  "/(dash)/media/hasil/page": "app/(dash)/media/hasil/page.js",
   "/(dash)/media/idcc/page": "app/(dash)/media/idcc/page.js",
   "/(dash)/media/kalender/page": "app/(dash)/media/kalender/page.js",
   "/(dash)/media/laporan/page": "app/(dash)/media/laporan/page.js",
@@ -33,6 +34,7 @@
   "/_not-found/page": "app/_not-found/page.js",
   "/api/chat/messages/route": "app/api/chat/messages/route.js",
   "/api/file/route": "app/api/file/route.js",
+  "/api/media/upload/route": "app/api/media/upload/route.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
   "/manifest.webmanifest/route": "app/manifest.webmanifest/route.js",
   "/page": "app/page.js"

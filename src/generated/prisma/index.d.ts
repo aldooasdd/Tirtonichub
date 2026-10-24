@@ -114,6 +114,11 @@ export type MediaMember = $Result.DefaultSelection<Prisma.$MediaMemberPayload>
  */
 export type MediaItem = $Result.DefaultSelection<Prisma.$MediaItemPayload>
 /**
+ * Model MediaAsset
+ * 
+ */
+export type MediaAsset = $Result.DefaultSelection<Prisma.$MediaAssetPayload>
+/**
  * Model MediaTask
  * 
  */
@@ -581,6 +586,16 @@ export class PrismaClient<
     * ```
     */
   get mediaItem(): Prisma.MediaItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.mediaAsset`: Exposes CRUD operations for the **MediaAsset** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MediaAssets
+    * const mediaAssets = await prisma.mediaAsset.findMany()
+    * ```
+    */
+  get mediaAsset(): Prisma.MediaAssetDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.mediaTask`: Exposes CRUD operations for the **MediaTask** model.
@@ -1102,6 +1117,7 @@ export namespace Prisma {
     RawProduct: 'RawProduct',
     MediaMember: 'MediaMember',
     MediaItem: 'MediaItem',
+    MediaAsset: 'MediaAsset',
     MediaTask: 'MediaTask',
     MediaSettings: 'MediaSettings',
     MediaIdccReport: 'MediaIdccReport',
@@ -1126,7 +1142,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal"
+      modelProps: "user" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -2610,6 +2626,80 @@ export namespace Prisma {
           }
         }
       }
+      MediaAsset: {
+        payload: Prisma.$MediaAssetPayload<ExtArgs>
+        fields: Prisma.MediaAssetFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MediaAssetFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAssetPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MediaAssetFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAssetPayload>
+          }
+          findFirst: {
+            args: Prisma.MediaAssetFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAssetPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MediaAssetFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAssetPayload>
+          }
+          findMany: {
+            args: Prisma.MediaAssetFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAssetPayload>[]
+          }
+          create: {
+            args: Prisma.MediaAssetCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAssetPayload>
+          }
+          createMany: {
+            args: Prisma.MediaAssetCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MediaAssetCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAssetPayload>[]
+          }
+          delete: {
+            args: Prisma.MediaAssetDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAssetPayload>
+          }
+          update: {
+            args: Prisma.MediaAssetUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAssetPayload>
+          }
+          deleteMany: {
+            args: Prisma.MediaAssetDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MediaAssetUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MediaAssetUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAssetPayload>[]
+          }
+          upsert: {
+            args: Prisma.MediaAssetUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MediaAssetPayload>
+          }
+          aggregate: {
+            args: Prisma.MediaAssetAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMediaAsset>
+          }
+          groupBy: {
+            args: Prisma.MediaAssetGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MediaAssetGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MediaAssetCountArgs<ExtArgs>
+            result: $Utils.Optional<MediaAssetCountAggregateOutputType> | number
+          }
+        }
+      }
       MediaTask: {
         payload: Prisma.$MediaTaskPayload<ExtArgs>
         fields: Prisma.MediaTaskFieldRefs
@@ -3170,6 +3260,7 @@ export namespace Prisma {
     rawProduct?: RawProductOmit
     mediaMember?: MediaMemberOmit
     mediaItem?: MediaItemOmit
+    mediaAsset?: MediaAssetOmit
     mediaTask?: MediaTaskOmit
     mediaSettings?: MediaSettingsOmit
     mediaIdccReport?: MediaIdccReportOmit
@@ -3565,10 +3656,12 @@ export namespace Prisma {
 
   export type MediaItemCountOutputType = {
     tasks: number
+    assets: number
   }
 
   export type MediaItemCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     tasks?: boolean | MediaItemCountOutputTypeCountTasksArgs
+    assets?: boolean | MediaItemCountOutputTypeCountAssetsArgs
   }
 
   // Custom InputTypes
@@ -3587,6 +3680,13 @@ export namespace Prisma {
    */
   export type MediaItemCountOutputTypeCountTasksArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MediaTaskWhereInput
+  }
+
+  /**
+   * MediaItemCountOutputType without action
+   */
+  export type MediaItemCountOutputTypeCountAssetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaAssetWhereInput
   }
 
 
@@ -25811,6 +25911,7 @@ export namespace Prisma {
     updatedAt?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
     tasks?: boolean | MediaItem$tasksArgs<ExtArgs>
+    assets?: boolean | MediaItem$assetsArgs<ExtArgs>
     _count?: boolean | MediaItemCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mediaItem"]>
 
@@ -25880,6 +25981,7 @@ export namespace Prisma {
   export type MediaItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
     tasks?: boolean | MediaItem$tasksArgs<ExtArgs>
+    assets?: boolean | MediaItem$assetsArgs<ExtArgs>
     _count?: boolean | MediaItemCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type MediaItemIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -25894,6 +25996,7 @@ export namespace Prisma {
     objects: {
       createdBy: Prisma.$UserPayload<ExtArgs>
       tasks: Prisma.$MediaTaskPayload<ExtArgs>[]
+      assets: Prisma.$MediaAssetPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -26309,6 +26412,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     tasks<T extends MediaItem$tasksArgs<ExtArgs> = {}>(args?: Subset<T, MediaItem$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaTaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    assets<T extends MediaItem$assetsArgs<ExtArgs> = {}>(args?: Subset<T, MediaItem$assetsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -26775,6 +26879,30 @@ export namespace Prisma {
   }
 
   /**
+   * MediaItem.assets
+   */
+  export type MediaItem$assetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAsset
+     */
+    select?: MediaAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAsset
+     */
+    omit?: MediaAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAssetInclude<ExtArgs> | null
+    where?: MediaAssetWhereInput
+    orderBy?: MediaAssetOrderByWithRelationInput | MediaAssetOrderByWithRelationInput[]
+    cursor?: MediaAssetWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: MediaAssetScalarFieldEnum | MediaAssetScalarFieldEnum[]
+  }
+
+  /**
    * MediaItem without action
    */
   export type MediaItemDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -26790,6 +26918,1137 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: MediaItemInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MediaAsset
+   */
+
+  export type AggregateMediaAsset = {
+    _count: MediaAssetCountAggregateOutputType | null
+    _avg: MediaAssetAvgAggregateOutputType | null
+    _sum: MediaAssetSumAggregateOutputType | null
+    _min: MediaAssetMinAggregateOutputType | null
+    _max: MediaAssetMaxAggregateOutputType | null
+  }
+
+  export type MediaAssetAvgAggregateOutputType = {
+    size: number | null
+  }
+
+  export type MediaAssetSumAggregateOutputType = {
+    size: number | null
+  }
+
+  export type MediaAssetMinAggregateOutputType = {
+    id: string | null
+    itemId: string | null
+    name: string | null
+    key: string | null
+    mime: string | null
+    size: number | null
+    createdById: string | null
+    createdAt: Date | null
+  }
+
+  export type MediaAssetMaxAggregateOutputType = {
+    id: string | null
+    itemId: string | null
+    name: string | null
+    key: string | null
+    mime: string | null
+    size: number | null
+    createdById: string | null
+    createdAt: Date | null
+  }
+
+  export type MediaAssetCountAggregateOutputType = {
+    id: number
+    itemId: number
+    name: number
+    key: number
+    mime: number
+    size: number
+    createdById: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type MediaAssetAvgAggregateInputType = {
+    size?: true
+  }
+
+  export type MediaAssetSumAggregateInputType = {
+    size?: true
+  }
+
+  export type MediaAssetMinAggregateInputType = {
+    id?: true
+    itemId?: true
+    name?: true
+    key?: true
+    mime?: true
+    size?: true
+    createdById?: true
+    createdAt?: true
+  }
+
+  export type MediaAssetMaxAggregateInputType = {
+    id?: true
+    itemId?: true
+    name?: true
+    key?: true
+    mime?: true
+    size?: true
+    createdById?: true
+    createdAt?: true
+  }
+
+  export type MediaAssetCountAggregateInputType = {
+    id?: true
+    itemId?: true
+    name?: true
+    key?: true
+    mime?: true
+    size?: true
+    createdById?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type MediaAssetAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaAsset to aggregate.
+     */
+    where?: MediaAssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaAssets to fetch.
+     */
+    orderBy?: MediaAssetOrderByWithRelationInput | MediaAssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MediaAssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaAssets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaAssets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MediaAssets
+    **/
+    _count?: true | MediaAssetCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MediaAssetAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MediaAssetSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MediaAssetMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MediaAssetMaxAggregateInputType
+  }
+
+  export type GetMediaAssetAggregateType<T extends MediaAssetAggregateArgs> = {
+        [P in keyof T & keyof AggregateMediaAsset]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMediaAsset[P]>
+      : GetScalarType<T[P], AggregateMediaAsset[P]>
+  }
+
+
+
+
+  export type MediaAssetGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MediaAssetWhereInput
+    orderBy?: MediaAssetOrderByWithAggregationInput | MediaAssetOrderByWithAggregationInput[]
+    by: MediaAssetScalarFieldEnum[] | MediaAssetScalarFieldEnum
+    having?: MediaAssetScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MediaAssetCountAggregateInputType | true
+    _avg?: MediaAssetAvgAggregateInputType
+    _sum?: MediaAssetSumAggregateInputType
+    _min?: MediaAssetMinAggregateInputType
+    _max?: MediaAssetMaxAggregateInputType
+  }
+
+  export type MediaAssetGroupByOutputType = {
+    id: string
+    itemId: string
+    name: string
+    key: string
+    mime: string
+    size: number
+    createdById: string
+    createdAt: Date
+    _count: MediaAssetCountAggregateOutputType | null
+    _avg: MediaAssetAvgAggregateOutputType | null
+    _sum: MediaAssetSumAggregateOutputType | null
+    _min: MediaAssetMinAggregateOutputType | null
+    _max: MediaAssetMaxAggregateOutputType | null
+  }
+
+  type GetMediaAssetGroupByPayload<T extends MediaAssetGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MediaAssetGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MediaAssetGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MediaAssetGroupByOutputType[P]>
+            : GetScalarType<T[P], MediaAssetGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MediaAssetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    itemId?: boolean
+    name?: boolean
+    key?: boolean
+    mime?: boolean
+    size?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    item?: boolean | MediaItemDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaAsset"]>
+
+  export type MediaAssetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    itemId?: boolean
+    name?: boolean
+    key?: boolean
+    mime?: boolean
+    size?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    item?: boolean | MediaItemDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaAsset"]>
+
+  export type MediaAssetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    itemId?: boolean
+    name?: boolean
+    key?: boolean
+    mime?: boolean
+    size?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    item?: boolean | MediaItemDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["mediaAsset"]>
+
+  export type MediaAssetSelectScalar = {
+    id?: boolean
+    itemId?: boolean
+    name?: boolean
+    key?: boolean
+    mime?: boolean
+    size?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+  }
+
+  export type MediaAssetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "name" | "key" | "mime" | "size" | "createdById" | "createdAt", ExtArgs["result"]["mediaAsset"]>
+  export type MediaAssetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    item?: boolean | MediaItemDefaultArgs<ExtArgs>
+  }
+  export type MediaAssetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    item?: boolean | MediaItemDefaultArgs<ExtArgs>
+  }
+  export type MediaAssetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    item?: boolean | MediaItemDefaultArgs<ExtArgs>
+  }
+
+  export type $MediaAssetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MediaAsset"
+    objects: {
+      item: Prisma.$MediaItemPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      itemId: string
+      name: string
+      key: string
+      mime: string
+      size: number
+      createdById: string
+      createdAt: Date
+    }, ExtArgs["result"]["mediaAsset"]>
+    composites: {}
+  }
+
+  type MediaAssetGetPayload<S extends boolean | null | undefined | MediaAssetDefaultArgs> = $Result.GetResult<Prisma.$MediaAssetPayload, S>
+
+  type MediaAssetCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MediaAssetFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MediaAssetCountAggregateInputType | true
+    }
+
+  export interface MediaAssetDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MediaAsset'], meta: { name: 'MediaAsset' } }
+    /**
+     * Find zero or one MediaAsset that matches the filter.
+     * @param {MediaAssetFindUniqueArgs} args - Arguments to find a MediaAsset
+     * @example
+     * // Get one MediaAsset
+     * const mediaAsset = await prisma.mediaAsset.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MediaAssetFindUniqueArgs>(args: SelectSubset<T, MediaAssetFindUniqueArgs<ExtArgs>>): Prisma__MediaAssetClient<$Result.GetResult<Prisma.$MediaAssetPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MediaAsset that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MediaAssetFindUniqueOrThrowArgs} args - Arguments to find a MediaAsset
+     * @example
+     * // Get one MediaAsset
+     * const mediaAsset = await prisma.mediaAsset.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MediaAssetFindUniqueOrThrowArgs>(args: SelectSubset<T, MediaAssetFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MediaAssetClient<$Result.GetResult<Prisma.$MediaAssetPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaAsset that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAssetFindFirstArgs} args - Arguments to find a MediaAsset
+     * @example
+     * // Get one MediaAsset
+     * const mediaAsset = await prisma.mediaAsset.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MediaAssetFindFirstArgs>(args?: SelectSubset<T, MediaAssetFindFirstArgs<ExtArgs>>): Prisma__MediaAssetClient<$Result.GetResult<Prisma.$MediaAssetPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MediaAsset that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAssetFindFirstOrThrowArgs} args - Arguments to find a MediaAsset
+     * @example
+     * // Get one MediaAsset
+     * const mediaAsset = await prisma.mediaAsset.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MediaAssetFindFirstOrThrowArgs>(args?: SelectSubset<T, MediaAssetFindFirstOrThrowArgs<ExtArgs>>): Prisma__MediaAssetClient<$Result.GetResult<Prisma.$MediaAssetPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MediaAssets that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAssetFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MediaAssets
+     * const mediaAssets = await prisma.mediaAsset.findMany()
+     * 
+     * // Get first 10 MediaAssets
+     * const mediaAssets = await prisma.mediaAsset.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const mediaAssetWithIdOnly = await prisma.mediaAsset.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MediaAssetFindManyArgs>(args?: SelectSubset<T, MediaAssetFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAssetPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MediaAsset.
+     * @param {MediaAssetCreateArgs} args - Arguments to create a MediaAsset.
+     * @example
+     * // Create one MediaAsset
+     * const MediaAsset = await prisma.mediaAsset.create({
+     *   data: {
+     *     // ... data to create a MediaAsset
+     *   }
+     * })
+     * 
+     */
+    create<T extends MediaAssetCreateArgs>(args: SelectSubset<T, MediaAssetCreateArgs<ExtArgs>>): Prisma__MediaAssetClient<$Result.GetResult<Prisma.$MediaAssetPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MediaAssets.
+     * @param {MediaAssetCreateManyArgs} args - Arguments to create many MediaAssets.
+     * @example
+     * // Create many MediaAssets
+     * const mediaAsset = await prisma.mediaAsset.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MediaAssetCreateManyArgs>(args?: SelectSubset<T, MediaAssetCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MediaAssets and returns the data saved in the database.
+     * @param {MediaAssetCreateManyAndReturnArgs} args - Arguments to create many MediaAssets.
+     * @example
+     * // Create many MediaAssets
+     * const mediaAsset = await prisma.mediaAsset.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MediaAssets and only return the `id`
+     * const mediaAssetWithIdOnly = await prisma.mediaAsset.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MediaAssetCreateManyAndReturnArgs>(args?: SelectSubset<T, MediaAssetCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAssetPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MediaAsset.
+     * @param {MediaAssetDeleteArgs} args - Arguments to delete one MediaAsset.
+     * @example
+     * // Delete one MediaAsset
+     * const MediaAsset = await prisma.mediaAsset.delete({
+     *   where: {
+     *     // ... filter to delete one MediaAsset
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MediaAssetDeleteArgs>(args: SelectSubset<T, MediaAssetDeleteArgs<ExtArgs>>): Prisma__MediaAssetClient<$Result.GetResult<Prisma.$MediaAssetPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MediaAsset.
+     * @param {MediaAssetUpdateArgs} args - Arguments to update one MediaAsset.
+     * @example
+     * // Update one MediaAsset
+     * const mediaAsset = await prisma.mediaAsset.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MediaAssetUpdateArgs>(args: SelectSubset<T, MediaAssetUpdateArgs<ExtArgs>>): Prisma__MediaAssetClient<$Result.GetResult<Prisma.$MediaAssetPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MediaAssets.
+     * @param {MediaAssetDeleteManyArgs} args - Arguments to filter MediaAssets to delete.
+     * @example
+     * // Delete a few MediaAssets
+     * const { count } = await prisma.mediaAsset.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MediaAssetDeleteManyArgs>(args?: SelectSubset<T, MediaAssetDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaAssets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAssetUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MediaAssets
+     * const mediaAsset = await prisma.mediaAsset.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MediaAssetUpdateManyArgs>(args: SelectSubset<T, MediaAssetUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MediaAssets and returns the data updated in the database.
+     * @param {MediaAssetUpdateManyAndReturnArgs} args - Arguments to update many MediaAssets.
+     * @example
+     * // Update many MediaAssets
+     * const mediaAsset = await prisma.mediaAsset.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MediaAssets and only return the `id`
+     * const mediaAssetWithIdOnly = await prisma.mediaAsset.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MediaAssetUpdateManyAndReturnArgs>(args: SelectSubset<T, MediaAssetUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaAssetPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MediaAsset.
+     * @param {MediaAssetUpsertArgs} args - Arguments to update or create a MediaAsset.
+     * @example
+     * // Update or create a MediaAsset
+     * const mediaAsset = await prisma.mediaAsset.upsert({
+     *   create: {
+     *     // ... data to create a MediaAsset
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MediaAsset we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MediaAssetUpsertArgs>(args: SelectSubset<T, MediaAssetUpsertArgs<ExtArgs>>): Prisma__MediaAssetClient<$Result.GetResult<Prisma.$MediaAssetPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MediaAssets.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAssetCountArgs} args - Arguments to filter MediaAssets to count.
+     * @example
+     * // Count the number of MediaAssets
+     * const count = await prisma.mediaAsset.count({
+     *   where: {
+     *     // ... the filter for the MediaAssets we want to count
+     *   }
+     * })
+    **/
+    count<T extends MediaAssetCountArgs>(
+      args?: Subset<T, MediaAssetCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MediaAssetCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MediaAsset.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAssetAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MediaAssetAggregateArgs>(args: Subset<T, MediaAssetAggregateArgs>): Prisma.PrismaPromise<GetMediaAssetAggregateType<T>>
+
+    /**
+     * Group by MediaAsset.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MediaAssetGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MediaAssetGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MediaAssetGroupByArgs['orderBy'] }
+        : { orderBy?: MediaAssetGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MediaAssetGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMediaAssetGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MediaAsset model
+   */
+  readonly fields: MediaAssetFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MediaAsset.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MediaAssetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    item<T extends MediaItemDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MediaItemDefaultArgs<ExtArgs>>): Prisma__MediaItemClient<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MediaAsset model
+   */
+  interface MediaAssetFieldRefs {
+    readonly id: FieldRef<"MediaAsset", 'String'>
+    readonly itemId: FieldRef<"MediaAsset", 'String'>
+    readonly name: FieldRef<"MediaAsset", 'String'>
+    readonly key: FieldRef<"MediaAsset", 'String'>
+    readonly mime: FieldRef<"MediaAsset", 'String'>
+    readonly size: FieldRef<"MediaAsset", 'Int'>
+    readonly createdById: FieldRef<"MediaAsset", 'String'>
+    readonly createdAt: FieldRef<"MediaAsset", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MediaAsset findUnique
+   */
+  export type MediaAssetFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAsset
+     */
+    select?: MediaAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAsset
+     */
+    omit?: MediaAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaAsset to fetch.
+     */
+    where: MediaAssetWhereUniqueInput
+  }
+
+  /**
+   * MediaAsset findUniqueOrThrow
+   */
+  export type MediaAssetFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAsset
+     */
+    select?: MediaAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAsset
+     */
+    omit?: MediaAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaAsset to fetch.
+     */
+    where: MediaAssetWhereUniqueInput
+  }
+
+  /**
+   * MediaAsset findFirst
+   */
+  export type MediaAssetFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAsset
+     */
+    select?: MediaAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAsset
+     */
+    omit?: MediaAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaAsset to fetch.
+     */
+    where?: MediaAssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaAssets to fetch.
+     */
+    orderBy?: MediaAssetOrderByWithRelationInput | MediaAssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaAssets.
+     */
+    cursor?: MediaAssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaAssets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaAssets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaAssets.
+     */
+    distinct?: MediaAssetScalarFieldEnum | MediaAssetScalarFieldEnum[]
+  }
+
+  /**
+   * MediaAsset findFirstOrThrow
+   */
+  export type MediaAssetFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAsset
+     */
+    select?: MediaAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAsset
+     */
+    omit?: MediaAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaAsset to fetch.
+     */
+    where?: MediaAssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaAssets to fetch.
+     */
+    orderBy?: MediaAssetOrderByWithRelationInput | MediaAssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MediaAssets.
+     */
+    cursor?: MediaAssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaAssets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaAssets.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MediaAssets.
+     */
+    distinct?: MediaAssetScalarFieldEnum | MediaAssetScalarFieldEnum[]
+  }
+
+  /**
+   * MediaAsset findMany
+   */
+  export type MediaAssetFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAsset
+     */
+    select?: MediaAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAsset
+     */
+    omit?: MediaAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAssetInclude<ExtArgs> | null
+    /**
+     * Filter, which MediaAssets to fetch.
+     */
+    where?: MediaAssetWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MediaAssets to fetch.
+     */
+    orderBy?: MediaAssetOrderByWithRelationInput | MediaAssetOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MediaAssets.
+     */
+    cursor?: MediaAssetWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MediaAssets from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MediaAssets.
+     */
+    skip?: number
+    distinct?: MediaAssetScalarFieldEnum | MediaAssetScalarFieldEnum[]
+  }
+
+  /**
+   * MediaAsset create
+   */
+  export type MediaAssetCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAsset
+     */
+    select?: MediaAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAsset
+     */
+    omit?: MediaAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAssetInclude<ExtArgs> | null
+    /**
+     * The data needed to create a MediaAsset.
+     */
+    data: XOR<MediaAssetCreateInput, MediaAssetUncheckedCreateInput>
+  }
+
+  /**
+   * MediaAsset createMany
+   */
+  export type MediaAssetCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MediaAssets.
+     */
+    data: MediaAssetCreateManyInput | MediaAssetCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MediaAsset createManyAndReturn
+   */
+  export type MediaAssetCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAsset
+     */
+    select?: MediaAssetSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAsset
+     */
+    omit?: MediaAssetOmit<ExtArgs> | null
+    /**
+     * The data used to create many MediaAssets.
+     */
+    data: MediaAssetCreateManyInput | MediaAssetCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAssetIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MediaAsset update
+   */
+  export type MediaAssetUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAsset
+     */
+    select?: MediaAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAsset
+     */
+    omit?: MediaAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAssetInclude<ExtArgs> | null
+    /**
+     * The data needed to update a MediaAsset.
+     */
+    data: XOR<MediaAssetUpdateInput, MediaAssetUncheckedUpdateInput>
+    /**
+     * Choose, which MediaAsset to update.
+     */
+    where: MediaAssetWhereUniqueInput
+  }
+
+  /**
+   * MediaAsset updateMany
+   */
+  export type MediaAssetUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MediaAssets.
+     */
+    data: XOR<MediaAssetUpdateManyMutationInput, MediaAssetUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaAssets to update
+     */
+    where?: MediaAssetWhereInput
+    /**
+     * Limit how many MediaAssets to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaAsset updateManyAndReturn
+   */
+  export type MediaAssetUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAsset
+     */
+    select?: MediaAssetSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAsset
+     */
+    omit?: MediaAssetOmit<ExtArgs> | null
+    /**
+     * The data used to update MediaAssets.
+     */
+    data: XOR<MediaAssetUpdateManyMutationInput, MediaAssetUncheckedUpdateManyInput>
+    /**
+     * Filter which MediaAssets to update
+     */
+    where?: MediaAssetWhereInput
+    /**
+     * Limit how many MediaAssets to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAssetIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * MediaAsset upsert
+   */
+  export type MediaAssetUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAsset
+     */
+    select?: MediaAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAsset
+     */
+    omit?: MediaAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAssetInclude<ExtArgs> | null
+    /**
+     * The filter to search for the MediaAsset to update in case it exists.
+     */
+    where: MediaAssetWhereUniqueInput
+    /**
+     * In case the MediaAsset found by the `where` argument doesn't exist, create a new MediaAsset with this data.
+     */
+    create: XOR<MediaAssetCreateInput, MediaAssetUncheckedCreateInput>
+    /**
+     * In case the MediaAsset was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MediaAssetUpdateInput, MediaAssetUncheckedUpdateInput>
+  }
+
+  /**
+   * MediaAsset delete
+   */
+  export type MediaAssetDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAsset
+     */
+    select?: MediaAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAsset
+     */
+    omit?: MediaAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAssetInclude<ExtArgs> | null
+    /**
+     * Filter which MediaAsset to delete.
+     */
+    where: MediaAssetWhereUniqueInput
+  }
+
+  /**
+   * MediaAsset deleteMany
+   */
+  export type MediaAssetDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MediaAssets to delete
+     */
+    where?: MediaAssetWhereInput
+    /**
+     * Limit how many MediaAssets to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MediaAsset without action
+   */
+  export type MediaAssetDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaAsset
+     */
+    select?: MediaAssetSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaAsset
+     */
+    omit?: MediaAssetOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaAssetInclude<ExtArgs> | null
   }
 
 
@@ -33745,6 +35004,20 @@ export namespace Prisma {
   export type MediaItemScalarFieldEnum = (typeof MediaItemScalarFieldEnum)[keyof typeof MediaItemScalarFieldEnum]
 
 
+  export const MediaAssetScalarFieldEnum: {
+    id: 'id',
+    itemId: 'itemId',
+    name: 'name',
+    key: 'key',
+    mime: 'mime',
+    size: 'size',
+    createdById: 'createdById',
+    createdAt: 'createdAt'
+  };
+
+  export type MediaAssetScalarFieldEnum = (typeof MediaAssetScalarFieldEnum)[keyof typeof MediaAssetScalarFieldEnum]
+
+
   export const MediaTaskScalarFieldEnum: {
     id: 'id',
     itemId: 'itemId',
@@ -35617,6 +36890,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"MediaItem"> | Date | string
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
     tasks?: MediaTaskListRelationFilter
+    assets?: MediaAssetListRelationFilter
   }
 
   export type MediaItemOrderByWithRelationInput = {
@@ -35639,6 +36913,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     createdBy?: UserOrderByWithRelationInput
     tasks?: MediaTaskOrderByRelationAggregateInput
+    assets?: MediaAssetOrderByRelationAggregateInput
   }
 
   export type MediaItemWhereUniqueInput = Prisma.AtLeast<{
@@ -35664,6 +36939,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"MediaItem"> | Date | string
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
     tasks?: MediaTaskListRelationFilter
+    assets?: MediaAssetListRelationFilter
   }, "id" | "sourceRawId">
 
   export type MediaItemOrderByWithAggregationInput = {
@@ -35712,6 +36988,78 @@ export namespace Prisma {
     createdById?: StringWithAggregatesFilter<"MediaItem"> | string
     createdAt?: DateTimeWithAggregatesFilter<"MediaItem"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MediaItem"> | Date | string
+  }
+
+  export type MediaAssetWhereInput = {
+    AND?: MediaAssetWhereInput | MediaAssetWhereInput[]
+    OR?: MediaAssetWhereInput[]
+    NOT?: MediaAssetWhereInput | MediaAssetWhereInput[]
+    id?: StringFilter<"MediaAsset"> | string
+    itemId?: StringFilter<"MediaAsset"> | string
+    name?: StringFilter<"MediaAsset"> | string
+    key?: StringFilter<"MediaAsset"> | string
+    mime?: StringFilter<"MediaAsset"> | string
+    size?: IntFilter<"MediaAsset"> | number
+    createdById?: StringFilter<"MediaAsset"> | string
+    createdAt?: DateTimeFilter<"MediaAsset"> | Date | string
+    item?: XOR<MediaItemScalarRelationFilter, MediaItemWhereInput>
+  }
+
+  export type MediaAssetOrderByWithRelationInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    mime?: SortOrder
+    size?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    item?: MediaItemOrderByWithRelationInput
+  }
+
+  export type MediaAssetWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: MediaAssetWhereInput | MediaAssetWhereInput[]
+    OR?: MediaAssetWhereInput[]
+    NOT?: MediaAssetWhereInput | MediaAssetWhereInput[]
+    itemId?: StringFilter<"MediaAsset"> | string
+    name?: StringFilter<"MediaAsset"> | string
+    key?: StringFilter<"MediaAsset"> | string
+    mime?: StringFilter<"MediaAsset"> | string
+    size?: IntFilter<"MediaAsset"> | number
+    createdById?: StringFilter<"MediaAsset"> | string
+    createdAt?: DateTimeFilter<"MediaAsset"> | Date | string
+    item?: XOR<MediaItemScalarRelationFilter, MediaItemWhereInput>
+  }, "id">
+
+  export type MediaAssetOrderByWithAggregationInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    mime?: SortOrder
+    size?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    _count?: MediaAssetCountOrderByAggregateInput
+    _avg?: MediaAssetAvgOrderByAggregateInput
+    _max?: MediaAssetMaxOrderByAggregateInput
+    _min?: MediaAssetMinOrderByAggregateInput
+    _sum?: MediaAssetSumOrderByAggregateInput
+  }
+
+  export type MediaAssetScalarWhereWithAggregatesInput = {
+    AND?: MediaAssetScalarWhereWithAggregatesInput | MediaAssetScalarWhereWithAggregatesInput[]
+    OR?: MediaAssetScalarWhereWithAggregatesInput[]
+    NOT?: MediaAssetScalarWhereWithAggregatesInput | MediaAssetScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MediaAsset"> | string
+    itemId?: StringWithAggregatesFilter<"MediaAsset"> | string
+    name?: StringWithAggregatesFilter<"MediaAsset"> | string
+    key?: StringWithAggregatesFilter<"MediaAsset"> | string
+    mime?: StringWithAggregatesFilter<"MediaAsset"> | string
+    size?: IntWithAggregatesFilter<"MediaAsset"> | number
+    createdById?: StringWithAggregatesFilter<"MediaAsset"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"MediaAsset"> | Date | string
   }
 
   export type MediaTaskWhereInput = {
@@ -37865,6 +39213,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     createdBy: UserCreateNestedOneWithoutMediaItemsInput
     tasks?: MediaTaskCreateNestedManyWithoutItemInput
+    assets?: MediaAssetCreateNestedManyWithoutItemInput
   }
 
   export type MediaItemUncheckedCreateInput = {
@@ -37886,6 +39235,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     tasks?: MediaTaskUncheckedCreateNestedManyWithoutItemInput
+    assets?: MediaAssetUncheckedCreateNestedManyWithoutItemInput
   }
 
   export type MediaItemUpdateInput = {
@@ -37907,6 +39257,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdBy?: UserUpdateOneRequiredWithoutMediaItemsNestedInput
     tasks?: MediaTaskUpdateManyWithoutItemNestedInput
+    assets?: MediaAssetUpdateManyWithoutItemNestedInput
   }
 
   export type MediaItemUncheckedUpdateInput = {
@@ -37928,6 +39279,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: MediaTaskUncheckedUpdateManyWithoutItemNestedInput
+    assets?: MediaAssetUncheckedUpdateManyWithoutItemNestedInput
   }
 
   export type MediaItemCreateManyInput = {
@@ -37987,6 +39339,82 @@ export namespace Prisma {
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaAssetCreateInput = {
+    id?: string
+    name: string
+    key: string
+    mime: string
+    size: number
+    createdById: string
+    createdAt?: Date | string
+    item: MediaItemCreateNestedOneWithoutAssetsInput
+  }
+
+  export type MediaAssetUncheckedCreateInput = {
+    id?: string
+    itemId: string
+    name: string
+    key: string
+    mime: string
+    size: number
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type MediaAssetUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    mime?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    item?: MediaItemUpdateOneRequiredWithoutAssetsNestedInput
+  }
+
+  export type MediaAssetUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    mime?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaAssetCreateManyInput = {
+    id?: string
+    itemId: string
+    name: string
+    key: string
+    mime: string
+    size: number
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type MediaAssetUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    mime?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaAssetUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    mime?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MediaTaskCreateInput = {
@@ -39892,7 +41320,17 @@ export namespace Prisma {
     none?: MediaTaskWhereInput
   }
 
+  export type MediaAssetListRelationFilter = {
+    every?: MediaAssetWhereInput
+    some?: MediaAssetWhereInput
+    none?: MediaAssetWhereInput
+  }
+
   export type MediaTaskOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type MediaAssetOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -39972,6 +41410,52 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumMediaTierFilter<$PrismaModel>
     _max?: NestedEnumMediaTierFilter<$PrismaModel>
+  }
+
+  export type MediaItemScalarRelationFilter = {
+    is?: MediaItemWhereInput
+    isNot?: MediaItemWhereInput
+  }
+
+  export type MediaAssetCountOrderByAggregateInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    mime?: SortOrder
+    size?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MediaAssetAvgOrderByAggregateInput = {
+    size?: SortOrder
+  }
+
+  export type MediaAssetMaxOrderByAggregateInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    mime?: SortOrder
+    size?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MediaAssetMinOrderByAggregateInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    name?: SortOrder
+    key?: SortOrder
+    mime?: SortOrder
+    size?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type MediaAssetSumOrderByAggregateInput = {
+    size?: SortOrder
   }
 
   export type MediaItemNullableScalarRelationFilter = {
@@ -41684,11 +43168,25 @@ export namespace Prisma {
     connect?: MediaTaskWhereUniqueInput | MediaTaskWhereUniqueInput[]
   }
 
+  export type MediaAssetCreateNestedManyWithoutItemInput = {
+    create?: XOR<MediaAssetCreateWithoutItemInput, MediaAssetUncheckedCreateWithoutItemInput> | MediaAssetCreateWithoutItemInput[] | MediaAssetUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: MediaAssetCreateOrConnectWithoutItemInput | MediaAssetCreateOrConnectWithoutItemInput[]
+    createMany?: MediaAssetCreateManyItemInputEnvelope
+    connect?: MediaAssetWhereUniqueInput | MediaAssetWhereUniqueInput[]
+  }
+
   export type MediaTaskUncheckedCreateNestedManyWithoutItemInput = {
     create?: XOR<MediaTaskCreateWithoutItemInput, MediaTaskUncheckedCreateWithoutItemInput> | MediaTaskCreateWithoutItemInput[] | MediaTaskUncheckedCreateWithoutItemInput[]
     connectOrCreate?: MediaTaskCreateOrConnectWithoutItemInput | MediaTaskCreateOrConnectWithoutItemInput[]
     createMany?: MediaTaskCreateManyItemInputEnvelope
     connect?: MediaTaskWhereUniqueInput | MediaTaskWhereUniqueInput[]
+  }
+
+  export type MediaAssetUncheckedCreateNestedManyWithoutItemInput = {
+    create?: XOR<MediaAssetCreateWithoutItemInput, MediaAssetUncheckedCreateWithoutItemInput> | MediaAssetCreateWithoutItemInput[] | MediaAssetUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: MediaAssetCreateOrConnectWithoutItemInput | MediaAssetCreateOrConnectWithoutItemInput[]
+    createMany?: MediaAssetCreateManyItemInputEnvelope
+    connect?: MediaAssetWhereUniqueInput | MediaAssetWhereUniqueInput[]
   }
 
   export type EnumMediaTierFieldUpdateOperationsInput = {
@@ -41717,6 +43215,20 @@ export namespace Prisma {
     deleteMany?: MediaTaskScalarWhereInput | MediaTaskScalarWhereInput[]
   }
 
+  export type MediaAssetUpdateManyWithoutItemNestedInput = {
+    create?: XOR<MediaAssetCreateWithoutItemInput, MediaAssetUncheckedCreateWithoutItemInput> | MediaAssetCreateWithoutItemInput[] | MediaAssetUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: MediaAssetCreateOrConnectWithoutItemInput | MediaAssetCreateOrConnectWithoutItemInput[]
+    upsert?: MediaAssetUpsertWithWhereUniqueWithoutItemInput | MediaAssetUpsertWithWhereUniqueWithoutItemInput[]
+    createMany?: MediaAssetCreateManyItemInputEnvelope
+    set?: MediaAssetWhereUniqueInput | MediaAssetWhereUniqueInput[]
+    disconnect?: MediaAssetWhereUniqueInput | MediaAssetWhereUniqueInput[]
+    delete?: MediaAssetWhereUniqueInput | MediaAssetWhereUniqueInput[]
+    connect?: MediaAssetWhereUniqueInput | MediaAssetWhereUniqueInput[]
+    update?: MediaAssetUpdateWithWhereUniqueWithoutItemInput | MediaAssetUpdateWithWhereUniqueWithoutItemInput[]
+    updateMany?: MediaAssetUpdateManyWithWhereWithoutItemInput | MediaAssetUpdateManyWithWhereWithoutItemInput[]
+    deleteMany?: MediaAssetScalarWhereInput | MediaAssetScalarWhereInput[]
+  }
+
   export type MediaTaskUncheckedUpdateManyWithoutItemNestedInput = {
     create?: XOR<MediaTaskCreateWithoutItemInput, MediaTaskUncheckedCreateWithoutItemInput> | MediaTaskCreateWithoutItemInput[] | MediaTaskUncheckedCreateWithoutItemInput[]
     connectOrCreate?: MediaTaskCreateOrConnectWithoutItemInput | MediaTaskCreateOrConnectWithoutItemInput[]
@@ -41729,6 +43241,34 @@ export namespace Prisma {
     update?: MediaTaskUpdateWithWhereUniqueWithoutItemInput | MediaTaskUpdateWithWhereUniqueWithoutItemInput[]
     updateMany?: MediaTaskUpdateManyWithWhereWithoutItemInput | MediaTaskUpdateManyWithWhereWithoutItemInput[]
     deleteMany?: MediaTaskScalarWhereInput | MediaTaskScalarWhereInput[]
+  }
+
+  export type MediaAssetUncheckedUpdateManyWithoutItemNestedInput = {
+    create?: XOR<MediaAssetCreateWithoutItemInput, MediaAssetUncheckedCreateWithoutItemInput> | MediaAssetCreateWithoutItemInput[] | MediaAssetUncheckedCreateWithoutItemInput[]
+    connectOrCreate?: MediaAssetCreateOrConnectWithoutItemInput | MediaAssetCreateOrConnectWithoutItemInput[]
+    upsert?: MediaAssetUpsertWithWhereUniqueWithoutItemInput | MediaAssetUpsertWithWhereUniqueWithoutItemInput[]
+    createMany?: MediaAssetCreateManyItemInputEnvelope
+    set?: MediaAssetWhereUniqueInput | MediaAssetWhereUniqueInput[]
+    disconnect?: MediaAssetWhereUniqueInput | MediaAssetWhereUniqueInput[]
+    delete?: MediaAssetWhereUniqueInput | MediaAssetWhereUniqueInput[]
+    connect?: MediaAssetWhereUniqueInput | MediaAssetWhereUniqueInput[]
+    update?: MediaAssetUpdateWithWhereUniqueWithoutItemInput | MediaAssetUpdateWithWhereUniqueWithoutItemInput[]
+    updateMany?: MediaAssetUpdateManyWithWhereWithoutItemInput | MediaAssetUpdateManyWithWhereWithoutItemInput[]
+    deleteMany?: MediaAssetScalarWhereInput | MediaAssetScalarWhereInput[]
+  }
+
+  export type MediaItemCreateNestedOneWithoutAssetsInput = {
+    create?: XOR<MediaItemCreateWithoutAssetsInput, MediaItemUncheckedCreateWithoutAssetsInput>
+    connectOrCreate?: MediaItemCreateOrConnectWithoutAssetsInput
+    connect?: MediaItemWhereUniqueInput
+  }
+
+  export type MediaItemUpdateOneRequiredWithoutAssetsNestedInput = {
+    create?: XOR<MediaItemCreateWithoutAssetsInput, MediaItemUncheckedCreateWithoutAssetsInput>
+    connectOrCreate?: MediaItemCreateOrConnectWithoutAssetsInput
+    upsert?: MediaItemUpsertWithoutAssetsInput
+    connect?: MediaItemWhereUniqueInput
+    update?: XOR<XOR<MediaItemUpdateToOneWithWhereWithoutAssetsInput, MediaItemUpdateWithoutAssetsInput>, MediaItemUncheckedUpdateWithoutAssetsInput>
   }
 
   export type MediaItemCreateNestedOneWithoutTasksInput = {
@@ -42761,6 +44301,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     tasks?: MediaTaskCreateNestedManyWithoutItemInput
+    assets?: MediaAssetCreateNestedManyWithoutItemInput
   }
 
   export type MediaItemUncheckedCreateWithoutCreatedByInput = {
@@ -42781,6 +44322,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     tasks?: MediaTaskUncheckedCreateNestedManyWithoutItemInput
+    assets?: MediaAssetUncheckedCreateNestedManyWithoutItemInput
   }
 
   export type MediaItemCreateOrConnectWithoutCreatedByInput = {
@@ -46418,6 +47960,36 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type MediaAssetCreateWithoutItemInput = {
+    id?: string
+    name: string
+    key: string
+    mime: string
+    size: number
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type MediaAssetUncheckedCreateWithoutItemInput = {
+    id?: string
+    name: string
+    key: string
+    mime: string
+    size: number
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type MediaAssetCreateOrConnectWithoutItemInput = {
+    where: MediaAssetWhereUniqueInput
+    create: XOR<MediaAssetCreateWithoutItemInput, MediaAssetUncheckedCreateWithoutItemInput>
+  }
+
+  export type MediaAssetCreateManyItemInputEnvelope = {
+    data: MediaAssetCreateManyItemInput | MediaAssetCreateManyItemInput[]
+    skipDuplicates?: boolean
+  }
+
   export type UserUpsertWithoutMediaItemsInput = {
     update: XOR<UserUpdateWithoutMediaItemsInput, UserUncheckedUpdateWithoutMediaItemsInput>
     create: XOR<UserCreateWithoutMediaItemsInput, UserUncheckedCreateWithoutMediaItemsInput>
@@ -46550,6 +48122,136 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"MediaTask"> | Date | string
   }
 
+  export type MediaAssetUpsertWithWhereUniqueWithoutItemInput = {
+    where: MediaAssetWhereUniqueInput
+    update: XOR<MediaAssetUpdateWithoutItemInput, MediaAssetUncheckedUpdateWithoutItemInput>
+    create: XOR<MediaAssetCreateWithoutItemInput, MediaAssetUncheckedCreateWithoutItemInput>
+  }
+
+  export type MediaAssetUpdateWithWhereUniqueWithoutItemInput = {
+    where: MediaAssetWhereUniqueInput
+    data: XOR<MediaAssetUpdateWithoutItemInput, MediaAssetUncheckedUpdateWithoutItemInput>
+  }
+
+  export type MediaAssetUpdateManyWithWhereWithoutItemInput = {
+    where: MediaAssetScalarWhereInput
+    data: XOR<MediaAssetUpdateManyMutationInput, MediaAssetUncheckedUpdateManyWithoutItemInput>
+  }
+
+  export type MediaAssetScalarWhereInput = {
+    AND?: MediaAssetScalarWhereInput | MediaAssetScalarWhereInput[]
+    OR?: MediaAssetScalarWhereInput[]
+    NOT?: MediaAssetScalarWhereInput | MediaAssetScalarWhereInput[]
+    id?: StringFilter<"MediaAsset"> | string
+    itemId?: StringFilter<"MediaAsset"> | string
+    name?: StringFilter<"MediaAsset"> | string
+    key?: StringFilter<"MediaAsset"> | string
+    mime?: StringFilter<"MediaAsset"> | string
+    size?: IntFilter<"MediaAsset"> | number
+    createdById?: StringFilter<"MediaAsset"> | string
+    createdAt?: DateTimeFilter<"MediaAsset"> | Date | string
+  }
+
+  export type MediaItemCreateWithoutAssetsInput = {
+    id?: string
+    name: string
+    color?: string | null
+    cat?: string | null
+    gender?: string | null
+    qty?: number
+    arrived: Date | string
+    tier?: $Enums.MediaTier
+    seasonal?: boolean
+    old?: boolean
+    thumb?: string | null
+    photoKey?: string | null
+    sourceRawId?: string | null
+    scheduled?: boolean
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    createdBy: UserCreateNestedOneWithoutMediaItemsInput
+    tasks?: MediaTaskCreateNestedManyWithoutItemInput
+  }
+
+  export type MediaItemUncheckedCreateWithoutAssetsInput = {
+    id?: string
+    name: string
+    color?: string | null
+    cat?: string | null
+    gender?: string | null
+    qty?: number
+    arrived: Date | string
+    tier?: $Enums.MediaTier
+    seasonal?: boolean
+    old?: boolean
+    thumb?: string | null
+    photoKey?: string | null
+    sourceRawId?: string | null
+    scheduled?: boolean
+    createdById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    tasks?: MediaTaskUncheckedCreateNestedManyWithoutItemInput
+  }
+
+  export type MediaItemCreateOrConnectWithoutAssetsInput = {
+    where: MediaItemWhereUniqueInput
+    create: XOR<MediaItemCreateWithoutAssetsInput, MediaItemUncheckedCreateWithoutAssetsInput>
+  }
+
+  export type MediaItemUpsertWithoutAssetsInput = {
+    update: XOR<MediaItemUpdateWithoutAssetsInput, MediaItemUncheckedUpdateWithoutAssetsInput>
+    create: XOR<MediaItemCreateWithoutAssetsInput, MediaItemUncheckedCreateWithoutAssetsInput>
+    where?: MediaItemWhereInput
+  }
+
+  export type MediaItemUpdateToOneWithWhereWithoutAssetsInput = {
+    where?: MediaItemWhereInput
+    data: XOR<MediaItemUpdateWithoutAssetsInput, MediaItemUncheckedUpdateWithoutAssetsInput>
+  }
+
+  export type MediaItemUpdateWithoutAssetsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    arrived?: DateTimeFieldUpdateOperationsInput | Date | string
+    tier?: EnumMediaTierFieldUpdateOperationsInput | $Enums.MediaTier
+    seasonal?: BoolFieldUpdateOperationsInput | boolean
+    old?: BoolFieldUpdateOperationsInput | boolean
+    thumb?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduled?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneRequiredWithoutMediaItemsNestedInput
+    tasks?: MediaTaskUpdateManyWithoutItemNestedInput
+  }
+
+  export type MediaItemUncheckedUpdateWithoutAssetsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
+    gender?: NullableStringFieldUpdateOperationsInput | string | null
+    qty?: IntFieldUpdateOperationsInput | number
+    arrived?: DateTimeFieldUpdateOperationsInput | Date | string
+    tier?: EnumMediaTierFieldUpdateOperationsInput | $Enums.MediaTier
+    seasonal?: BoolFieldUpdateOperationsInput | boolean
+    old?: BoolFieldUpdateOperationsInput | boolean
+    thumb?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduled?: BoolFieldUpdateOperationsInput | boolean
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    tasks?: MediaTaskUncheckedUpdateManyWithoutItemNestedInput
+  }
+
   export type MediaItemCreateWithoutTasksInput = {
     id?: string
     name: string
@@ -46568,6 +48270,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     createdBy: UserCreateNestedOneWithoutMediaItemsInput
+    assets?: MediaAssetCreateNestedManyWithoutItemInput
   }
 
   export type MediaItemUncheckedCreateWithoutTasksInput = {
@@ -46588,6 +48291,7 @@ export namespace Prisma {
     createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
+    assets?: MediaAssetUncheckedCreateNestedManyWithoutItemInput
   }
 
   export type MediaItemCreateOrConnectWithoutTasksInput = {
@@ -46624,6 +48328,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdBy?: UserUpdateOneRequiredWithoutMediaItemsNestedInput
+    assets?: MediaAssetUpdateManyWithoutItemNestedInput
   }
 
   export type MediaItemUncheckedUpdateWithoutTasksInput = {
@@ -46644,6 +48349,7 @@ export namespace Prisma {
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    assets?: MediaAssetUncheckedUpdateManyWithoutItemNestedInput
   }
 
   export type UserCreateWithoutPersonalCalEventsInput = {
@@ -47706,6 +49412,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: MediaTaskUpdateManyWithoutItemNestedInput
+    assets?: MediaAssetUpdateManyWithoutItemNestedInput
   }
 
   export type MediaItemUncheckedUpdateWithoutCreatedByInput = {
@@ -47726,6 +49433,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: MediaTaskUncheckedUpdateManyWithoutItemNestedInput
+    assets?: MediaAssetUncheckedUpdateManyWithoutItemNestedInput
   }
 
   export type MediaItemUncheckedUpdateManyWithoutCreatedByInput = {
@@ -48097,6 +49805,16 @@ export namespace Prisma {
     updatedAt?: Date | string
   }
 
+  export type MediaAssetCreateManyItemInput = {
+    id?: string
+    name: string
+    key: string
+    mime: string
+    size: number
+    createdById: string
+    createdAt?: Date | string
+  }
+
   export type MediaTaskUpdateWithoutItemInput = {
     id?: StringFieldUpdateOperationsInput | string
     type?: StringFieldUpdateOperationsInput | string
@@ -48194,6 +49912,36 @@ export namespace Prisma {
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaAssetUpdateWithoutItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    mime?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaAssetUncheckedUpdateWithoutItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    mime?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MediaAssetUncheckedUpdateManyWithoutItemInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    mime?: StringFieldUpdateOperationsInput | string
+    size?: IntFieldUpdateOperationsInput | number
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

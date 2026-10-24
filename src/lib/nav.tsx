@@ -24,6 +24,7 @@ import {
   UsersRound,
   BarChart3,
   BookOpen,
+  FolderOpen,
   type LucideIcon,
 } from "lucide-react";
 import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, roleAttends, type RoleCode } from "./roles";
@@ -94,6 +95,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Barang", href: "/media/barang", icon: Package },
         { label: "Workflow Hub", href: "/media/workflow", icon: Clapperboard },
         { label: "Content Queue", href: "/media/queue", icon: LayoutList },
+        { label: "Hasil Konten", href: "/media/hasil", icon: FolderOpen },
         { label: "Kalender", href: "/media/kalender", icon: CalendarDays },
         { label: "Analisis IDCC", href: "/media/idcc", icon: Sparkles },
         { label: "Laporan", href: "/media/laporan", icon: BarChart3 },

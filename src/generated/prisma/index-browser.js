@@ -367,6 +367,17 @@ exports.Prisma.MediaItemScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.MediaAssetScalarFieldEnum = {
+  id: 'id',
+  itemId: 'itemId',
+  name: 'name',
+  key: 'key',
+  mime: 'mime',
+  size: 'size',
+  createdById: 'createdById',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.MediaTaskScalarFieldEnum = {
   id: 'id',
   itemId: 'itemId',
@@ -554,6 +565,7 @@ exports.Prisma.ModelName = {
   RawProduct: 'RawProduct',
   MediaMember: 'MediaMember',
   MediaItem: 'MediaItem',
+  MediaAsset: 'MediaAsset',
   MediaTask: 'MediaTask',
   MediaSettings: 'MediaSettings',
   MediaIdccReport: 'MediaIdccReport',

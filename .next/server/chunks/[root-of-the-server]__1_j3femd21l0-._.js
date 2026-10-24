@@ -1,0 +1,3 @@
+module.exports=[70729,e=>{e.v(e=>Promise.resolve().then(()=>e(66680)))},61137,e=>{"use strict";let s=["BOSS","HR"],i=["BOSS","FINANCE"],n=["BOSS","STOCK_ROOM"],l=["BOSS","MEDIA"];e.s(["f",0,{manageEmployees:e=>s.includes(e),manageBranchSchedule:e=>s.includes(e),approveRequest:e=>s.includes(e),viewAllAttendance:e=>s.includes(e),viewSessions:e=>s.includes(e),viewActivityLog:e=>s.includes(e),manageFinance:e=>i.includes(e),manageStock:e=>n.includes(e),manageMedia:e=>l.includes(e),assignRole:(e,s,i)=>"BOSS"===e.activeRole||"HR"===e.activeRole&&"BOSS"!==s&&"HR"!==s&&i!==e.userId}])}];
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__1_j3femd21l0-._.js.map

@@ -69,6 +69,12 @@
       "namedRegex": "^/api/file(?:/)?$"
     },
     {
+      "page": "/api/media/upload",
+      "regex": "^/api/media/upload(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/media/upload(?:/)?$"
+    },
+    {
       "page": "/beranda",
       "regex": "^/beranda(?:/)?$",
       "routeKeys": {},
@@ -163,6 +169,12 @@
       "regex": "^/media/barang(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/media/barang(?:/)?$"
+    },
+    {
+      "page": "/media/hasil",
+      "regex": "^/media/hasil(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/media/hasil(?:/)?$"
     },
     {
       "page": "/media/idcc",
