@@ -968,16 +968,6 @@
       "filename": "src/server/actions/media-personal.ts",
       "exportedName": "savePcal"
     },
-    "7f671cf7444889f1fa2db8ac1443d3fb13d6b0a71b": {
-      "workers": {
-        "app/(dash)/media/kalender/page": {
-          "moduleId": 61097,
-          "async": true
-        }
-      },
-      "filename": "src/server/actions/media-personal.ts",
-      "exportedName": "PCAL_COLORS"
-    },
     "408ea949550409108a15978b881ede0ca2de5acd05": {
       "workers": {
         "app/(dash)/media/panduan/page": {

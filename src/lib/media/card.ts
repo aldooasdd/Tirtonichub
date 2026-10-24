@@ -3,6 +3,8 @@
 import { IDX, POSTED, CATS, HAS_SCRIPT, toT, addDays, isOff, avail, pad, type Task } from "./schedule";
 
 export const MEMBER_STAGES = ["Terdata", "Diproduksi", "Editing", "Ready"];
+// Warna kalender pribadi (dipakai server action + client). Taruh di modul murni, bukan di file "use server".
+export const PCAL_COLORS = ["lime", "orange", "purple", "teal", "green", "pink"];
 
 export const REASONS: Record<string, { lbl: string; short: string }> = {
   lupa: { lbl: "Belum pernah / lupa diunggah", short: "Lupa unggah" },

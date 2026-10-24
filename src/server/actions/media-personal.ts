@@ -2,10 +2,10 @@
 
 import { prisma } from "@/server/db";
 import { requireMedia } from "@/server/auth/rbac";
+import { PCAL_COLORS } from "@/lib/media/card";
 
 export type ActionResult = { ok: boolean; message?: string; id?: string };
 
-export const PCAL_COLORS = ["lime", "orange", "purple", "teal", "green", "pink"];
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const TIME_RE = /^\d{2}:\d{2}$/;
 

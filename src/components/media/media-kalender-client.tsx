@@ -4,7 +4,8 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { addEvent, updateEvent, deleteEvent, savePcal, PCAL_COLORS } from "@/server/actions/media-personal";
+import { addEvent, updateEvent, deleteEvent, savePcal } from "@/server/actions/media-personal";
+import { PCAL_COLORS } from "@/lib/media/card";
 
 type Prod = { date: string; label: string; title: string };
 type Post = { date: string; time: string; label: string; title: string; sched: boolean };

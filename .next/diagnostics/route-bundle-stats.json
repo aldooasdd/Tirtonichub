@@ -84,7 +84,7 @@
   },
   {
     "route": "/media/workflow",
-    "firstLoadUncompressedJsBytes": 673131,
+    "firstLoadUncompressedJsBytes": 673414,
     "firstLoadChunkPaths": [
       ".next/static/chunks/218yun3xk1rsz.js",
       ".next/static/chunks/21ar0k0wldi5r.js",
@@ -93,7 +93,7 @@
       ".next/static/chunks/0g86ehmvuaub_.js",
       ".next/static/chunks/04_4kbgf5j9_p.js",
       ".next/static/chunks/2xir_f8fx68v5.js",
-      ".next/static/chunks/42ndrb8gvuwjo.js",
+      ".next/static/chunks/114nibpcashqy.js",
       ".next/static/chunks/06cza79ljre1d.js",
       ".next/static/chunks/1gw2br5gv7i-8.js",
       ".next/static/chunks/19rwnbr1_-u2m.js",
@@ -134,6 +134,26 @@
       ".next/static/chunks/04_4kbgf5j9_p.js",
       ".next/static/chunks/2xir_f8fx68v5.js",
       ".next/static/chunks/34_-qhchdp6dh.js",
+      ".next/static/chunks/06cza79ljre1d.js",
+      ".next/static/chunks/1gw2br5gv7i-8.js",
+      ".next/static/chunks/19rwnbr1_-u2m.js",
+      ".next/static/chunks/0rui9zuzd_lo_.js",
+      ".next/static/chunks/1rarcpn3295_h.js",
+      ".next/static/chunks/turbopack-2c3mg3r-05n1w.js"
+    ]
+  },
+  {
+    "route": "/media/kalender",
+    "firstLoadUncompressedJsBytes": 668459,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/218yun3xk1rsz.js",
+      ".next/static/chunks/21ar0k0wldi5r.js",
+      ".next/static/chunks/3ozln-8rkvx4u.js",
+      ".next/static/chunks/0ylsg_iazkkrv.js",
+      ".next/static/chunks/0g86ehmvuaub_.js",
+      ".next/static/chunks/04_4kbgf5j9_p.js",
+      ".next/static/chunks/2xir_f8fx68v5.js",
+      ".next/static/chunks/2o_747djpz938.js",
       ".next/static/chunks/06cza79ljre1d.js",
       ".next/static/chunks/1gw2br5gv7i-8.js",
       ".next/static/chunks/19rwnbr1_-u2m.js",
@@ -194,26 +214,6 @@
       ".next/static/chunks/04_4kbgf5j9_p.js",
       ".next/static/chunks/2xir_f8fx68v5.js",
       ".next/static/chunks/2bgs70n_iycdj.js",
-      ".next/static/chunks/06cza79ljre1d.js",
-      ".next/static/chunks/1gw2br5gv7i-8.js",
-      ".next/static/chunks/19rwnbr1_-u2m.js",
-      ".next/static/chunks/0rui9zuzd_lo_.js",
-      ".next/static/chunks/1rarcpn3295_h.js",
-      ".next/static/chunks/turbopack-2c3mg3r-05n1w.js"
-    ]
-  },
-  {
-    "route": "/media/kalender",
-    "firstLoadUncompressedJsBytes": 664665,
-    "firstLoadChunkPaths": [
-      ".next/static/chunks/218yun3xk1rsz.js",
-      ".next/static/chunks/21ar0k0wldi5r.js",
-      ".next/static/chunks/3ozln-8rkvx4u.js",
-      ".next/static/chunks/0ylsg_iazkkrv.js",
-      ".next/static/chunks/0g86ehmvuaub_.js",
-      ".next/static/chunks/04_4kbgf5j9_p.js",
-      ".next/static/chunks/2xir_f8fx68v5.js",
-      ".next/static/chunks/0sqhqyvq1pcm4.js",
       ".next/static/chunks/06cza79ljre1d.js",
       ".next/static/chunks/1gw2br5gv7i-8.js",
       ".next/static/chunks/19rwnbr1_-u2m.js",
