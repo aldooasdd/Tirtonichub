@@ -27,10 +27,21 @@ export function QcClient({ items }: { items: Item[] }) {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [pass, setPass] = useState<Record<string, string>>({});
+  const [sku, setSku] = useState<Record<string, string>>({});
 
-  function act(id: string, decision: "STOCK" | "REJECTED") {
+  function act(i: Item, decision: "STOCK" | "REJECTED") {
+    const skuVal = (sku[i.id] ?? i.sku ?? "").trim();
+    if (decision === "STOCK" && !skuVal) {
+      alert("Scan / isi SKU barcode dulu sebelum loloskan.");
+      return;
+    }
     start(async () => {
-      const r = await qcDecision(id, decision, decision === "STOCK" ? Number(pass[id]) || undefined : undefined);
+      const r = await qcDecision(
+        i.id,
+        decision,
+        decision === "STOCK" ? Number(pass[i.id]) || undefined : undefined,
+        decision === "STOCK" ? skuVal : undefined,
+      );
       if (!r.ok) alert(r.message);
       router.refresh();
     });
@@ -65,6 +76,15 @@ export function QcClient({ items }: { items: Item[] }) {
               {i.notaDate ? ` · nota ${i.notaDate}` : ""}
             </p>
             <label className="mt-3 block text-12 text-muted-foreground">
+              SKU barcode (scan produk)
+            </label>
+            <Input
+              className="mt-1"
+              placeholder="Scan / ketik SKU"
+              value={sku[i.id] ?? i.sku ?? ""}
+              onChange={(e) => setSku((n) => ({ ...n, [i.id]: e.target.value }))}
+            />
+            <label className="mt-3 block text-12 text-muted-foreground">
               Total lolos QC ({i.unit ?? "pcs"})
             </label>
             <Input
@@ -75,14 +95,14 @@ export function QcClient({ items }: { items: Item[] }) {
               onChange={(e) => setPass((n) => ({ ...n, [i.id]: e.target.value }))}
             />
             <div className="mt-3 flex gap-2">
-              <Button className="flex-1" disabled={pending} onClick={() => act(i.id, "STOCK")}>
+              <Button className="flex-1" disabled={pending} onClick={() => act(i, "STOCK")}>
                 Loloskan ke Stok
               </Button>
               <Button
                 variant="outline"
                 className="flex-1"
                 disabled={pending}
-                onClick={() => act(i.id, "REJECTED")}
+                onClick={() => act(i, "REJECTED")}
               >
                 Tolak
               </Button>

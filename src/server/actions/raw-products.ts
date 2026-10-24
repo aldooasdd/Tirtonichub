@@ -216,11 +216,13 @@ export async function qcDecision(
   id: string,
   decision: "STOCK" | "REJECTED",
   passQty?: number,
+  sku?: string,
 ): Promise<ActionResult> {
   const ctx = await requireStock();
   const p = await prisma.rawProduct.findUnique({ where: { id } });
   if (!p) return { ok: false, message: "Tidak ditemukan." };
   if (p.status !== "QC") return { ok: false, message: "Item tidak dalam antrean QC." };
+  if (decision === "STOCK" && !clean(sku, 60)) return { ok: false, message: "SKU barcode wajib diisi/scan." };
 
   const data =
     decision === "STOCK"
@@ -228,6 +230,7 @@ export async function qcDecision(
           status: "STOCK" as const,
           qcById: ctx.userId,
           qcAt: new Date(),
+          sku: clean(sku, 60),
           qty: Math.min(p.qty, Math.max(1, Math.round(passQty ?? p.qty) || 1)),
         }
       : { status: "REJECTED" as const, qcById: ctx.userId, qcAt: new Date() };
