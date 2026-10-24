@@ -16,7 +16,6 @@ import {
   Receipt,
   ClipboardCheck,
   Boxes,
-  CalendarDays,
   type LucideIcon,
 } from "lucide-react";
 import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, roleAttends, type RoleCode } from "./roles";
@@ -41,7 +40,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
   }
   umum.push({ label: "Pengajuan", href: "/pengajuan", icon: FileText });
   // Chat desktop pindah ke widget mengambang (FloatingChat); mobile tetap di bottom-nav.
-  umum.push({ label: "Kalender", href: "/kalender", icon: CalendarDays });
+  // Kalender pindah ke Beranda (tidak ada menu terpisah).
   umum.push({ label: "Notifikasi", href: "/notifikasi", icon: Bell });
   umum.push({ label: "Profil", href: "/profil", icon: User });
 

@@ -6,6 +6,8 @@ import { prisma } from "@/server/db";
 import { roleAttends } from "@/lib/roles";
 import { fmtWIB } from "@/lib/datetime";
 import { dateKeyWIB } from "@/server/attendance/logic";
+import { loadCalendarEvents } from "@/server/calendar-events";
+import { KalenderClient } from "@/components/kalender/kalender-client";
 
 function Kpi({ label, value, bg }: { label: string; value: string | number; bg: string }) {
   return (
@@ -40,6 +42,7 @@ export default async function BerandaPage() {
           <Kpi label="Hadir hari ini" value={hadirHariIni} bg="bg-kpi-2" />
           <Kpi label="Pengajuan pending" value={pending} bg="bg-kpi-1" />
         </section>
+        <KalenderClient events={await loadCalendarEvents()} />
       </div>
     );
   }
@@ -129,6 +132,8 @@ export default async function BerandaPage() {
           Belum ada tugas.
         </p>
       </section>
+
+      <KalenderClient events={await loadCalendarEvents()} />
     </div>
   );
 }

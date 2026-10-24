@@ -1,7 +1,5 @@
-import { requireAuth } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { REQ_TYPE_LABEL } from "@/lib/request-labels";
-import { KalenderClient } from "@/components/kalender/kalender-client";
 import type { Event } from "@/components/ui/event-manager";
 
 // Date @db.Date disimpan UTC midnight → bangun Date lokal pada hari yang sama.
@@ -21,9 +19,8 @@ function eachDay(start: Date, end: Date): Date[] {
 
 const REQ_COLOR: Record<string, string> = { LEAVE: "blue", PERMIT: "orange", SICK: "purple" };
 
-export default async function KalenderPage() {
-  await requireAuth();
-
+/** Gabungan event: manual (editable) + libur + cuti/izin/sakit (turunan, read-only). */
+export async function loadCalendarEvents(): Promise<Event[]> {
   const [manual, holidays, requests] = await Promise.all([
     prisma.calendarEvent.findMany({ orderBy: { startTime: "asc" } }),
     prisma.holiday.findMany(),
@@ -35,7 +32,6 @@ export default async function KalenderPage() {
 
   const events: Event[] = [];
 
-  // Event manual (editable)
   for (const e of manual) {
     events.push({
       id: e.id,
@@ -49,29 +45,25 @@ export default async function KalenderPage() {
     });
   }
 
-  // Hari libur (turunan, read-only)
   for (const h of holidays) {
-    const s = atDay(h.date);
     events.push({
       id: `hol_${h.id}`,
       title: h.name,
-      startTime: s,
+      startTime: atDay(h.date),
       endTime: atDay(h.date, 10),
       color: "red",
       category: "Libur",
     });
   }
 
-  // Cuti/Izin/Sakit — per hari dalam rentang (turunan, read-only)
   for (const r of requests) {
     const pending = r.status === "PENDING";
     for (const day of eachDay(r.startDate, r.endDate)) {
-      const s = atDay(day);
       events.push({
         id: `req_${r.id}_${day.toISOString().slice(0, 10)}`,
         title: `${REQ_TYPE_LABEL[r.type]} — ${r.user.fullName}${pending ? " (pending)" : ""}`,
         description: r.reason,
-        startTime: s,
+        startTime: atDay(day),
         endTime: atDay(day, 10),
         color: pending ? "pink" : (REQ_COLOR[r.type] ?? "blue"),
         category: pending ? "Pengajuan" : REQ_TYPE_LABEL[r.type],
@@ -79,5 +71,5 @@ export default async function KalenderPage() {
     }
   }
 
-  return <KalenderClient events={events} />;
+  return events;
 }
