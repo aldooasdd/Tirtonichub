@@ -548,7 +548,7 @@ export function EventManager({
               <Label htmlFor="title">Judul</Label>
               <Input
                 id="title"
-                value={isCreating ? newEvent.title : selectedEvent?.title}
+                value={(isCreating ? newEvent.title : selectedEvent?.title) ?? ""}
                 onChange={(e) =>
                   isCreating
                     ? setNewEvent((prev) => ({ ...prev, title: e.target.value }))
@@ -562,7 +562,7 @@ export function EventManager({
               <Label htmlFor="description">Deskripsi</Label>
               <Textarea
                 id="description"
-                value={isCreating ? newEvent.description : selectedEvent?.description}
+                value={(isCreating ? newEvent.description : selectedEvent?.description) ?? ""}
                 onChange={(e) =>
                   isCreating
                     ? setNewEvent((prev) => ({

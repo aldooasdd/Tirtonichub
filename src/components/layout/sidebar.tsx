@@ -20,7 +20,7 @@ export function Sidebar() {
         </div>
         <span className="font-semibold">Tirtonic</span>
       </div>
-      <ScrollArea className="flex-1 px-3 pb-4">
+      <ScrollArea className="min-h-0 flex-1 px-3 pb-4">
         {groups.map((group, i) => (
           <div key={i} className="mb-4">
             {group.title && (
