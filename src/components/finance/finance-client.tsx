@@ -13,6 +13,7 @@ import {
   saveRawBatch,
   updateRawProduct,
   deleteRawProduct,
+  submitItemToQc,
   submitBatchToQc,
 } from "@/server/actions/raw-products";
 
@@ -239,7 +240,13 @@ function DraftCard({ item }: { item: Item }) {
         supplier: supplier || null,
         notaDate: notaDate || null,
       });
-      if (!r.ok) alert(r.message);
+      if (!r.ok) {
+        alert(r.message);
+        return;
+      }
+      // Simpan sekalian kirim kartu ini ke QC.
+      const q = await submitItemToQc(item.id);
+      if (!q.ok) alert(q.message);
       router.refresh();
     });
   }
@@ -273,7 +280,7 @@ function DraftCard({ item }: { item: Item }) {
       </p>
       <div className="flex gap-2">
         <Button size="sm" variant="secondary" className="flex-1" disabled={pending} onClick={save}>
-          Simpan
+          Simpan & Kirim ke QC
         </Button>
         <Button size="sm" variant="ghost" disabled={pending} onClick={hapus}>
           <Trash2 className="h-4 w-4" />

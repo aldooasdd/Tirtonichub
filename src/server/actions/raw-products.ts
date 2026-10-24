@@ -137,6 +137,18 @@ export async function deleteRawProduct(id: string): Promise<ActionResult> {
   return { ok: true };
 }
 
+/** Kirim satu kartu DRAFT milik sendiri ke Quality Control. */
+export async function submitItemToQc(id: string): Promise<ActionResult> {
+  const ctx = await requireFinance();
+  const p = await prisma.rawProduct.findUnique({ where: { id } });
+  if (!p || p.createdById !== ctx.userId) return { ok: false, message: "Tidak ditemukan." };
+  if (p.status !== "DRAFT") return { ok: false, message: "Hanya draft bisa dikirim." };
+  await prisma.rawProduct.update({ where: { id }, data: { status: "QC" } });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "submit_qc", entity: "RawProduct", entityId: id });
+  return { ok: true };
+}
+
 /** Kirim seluruh batch DRAFT ke Quality Control (Stock Room). */
 export async function submitBatchToQc(batchId: string): Promise<ActionResult> {
   const ctx = await requireFinance();
