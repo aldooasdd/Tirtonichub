@@ -24,18 +24,26 @@ function toInt(v: unknown): number {
   return Number.isFinite(n) ? Math.round(n) : 0;
 }
 
+/** Harga satuan = (total ÷ qty) × 111%. Tanpa total, pakai harga satuan dari nota × 111%. */
+export function computeUnitPrice(qty: number, totalPrice: number, unitPriceOcr: number): number {
+  const q = Math.max(1, qty || 1);
+  const base = totalPrice > 0 ? totalPrice / q : unitPriceOcr;
+  return Math.max(0, Math.round(base * 1.11));
+}
+
 function normalize(raw: unknown): NotaItem {
   const o = (raw ?? {}) as Record<string, unknown>;
   const date = typeof o.notaDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(o.notaDate) ? o.notaDate : null;
+  const qty = Math.max(1, toInt(o.qty) || 1);
   return {
     name: String(o.name ?? "").slice(0, 200),
     brand: str(o.brand, 80),
     color: str(o.color, 40),
     size: str(o.size, 40),
     sku: str(o.sku, 60),
-    qty: Math.max(1, toInt(o.qty) || 1),
+    qty,
     unit: o.unit ? String(o.unit).slice(0, 20) : null,
-    unitPrice: Math.max(0, toInt(o.unitPrice)),
+    unitPrice: computeUnitPrice(qty, toInt(o.totalPrice), toInt(o.unitPrice)),
     supplier: o.supplier ? String(o.supplier).slice(0, 120) : null,
     notaDate: date,
   };
