@@ -45,12 +45,19 @@ export async function scanNota(imageBase64: string, mimeType: string): Promise<S
 
 type SaveItem = {
   name: string;
+  brand?: string | null;
+  color?: string | null;
+  size?: string | null;
+  sku?: string | null;
   qty: number;
   unit?: string | null;
   unitPrice: number;
   supplier?: string | null;
   notaDate?: string | null;
 };
+
+const clean = (v: string | null | undefined, max: number): string | null =>
+  v?.trim() ? v.trim().slice(0, max) : null;
 
 /** Simpan kartu produk mentah (status DRAFT). */
 export async function saveRawBatch(input: {
@@ -66,6 +73,10 @@ export async function saveRawBatch(input: {
     data: items.map((i) => ({
       batchId: input.batchId,
       name: i.name.trim().slice(0, 200),
+      brand: clean(i.brand, 80),
+      color: clean(i.color, 40),
+      size: clean(i.size, 40),
+      sku: clean(i.sku, 60),
       qty: Math.max(1, Math.round(i.qty) || 1),
       unit: i.unit?.trim() || null,
       unitPrice: Math.max(0, Math.round(i.unitPrice) || 0),
@@ -95,6 +106,10 @@ export async function updateRawProduct(id: string, fields: SaveItem): Promise<Ac
     where: { id },
     data: {
       name: fields.name.trim().slice(0, 200),
+      brand: clean(fields.brand, 80),
+      color: clean(fields.color, 40),
+      size: clean(fields.size, 40),
+      sku: clean(fields.sku, 60),
       qty: Math.max(1, Math.round(fields.qty) || 1),
       unit: fields.unit?.trim() || null,
       unitPrice: Math.max(0, Math.round(fields.unitPrice) || 0),

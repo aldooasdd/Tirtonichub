@@ -19,6 +19,10 @@ type Item = {
   id: string;
   batchId: string;
   name: string;
+  brand: string | null;
+  color: string | null;
+  size: string | null;
+  sku: string | null;
   qty: number;
   unit: string | null;
   unitPrice: number;
@@ -28,6 +32,8 @@ type Item = {
   qcNote: string | null;
   qcByName: string | null;
 };
+
+const EMPTY_ITEM = { name: "Produk 1", brand: null, color: null, size: null, sku: null, qty: 1, unit: null, unitPrice: 0, supplier: null, notaDate: null };
 
 const STATUS_LABEL: Record<Item["status"], string> = {
   DRAFT: "Draft",
@@ -71,7 +77,7 @@ export function FinanceClient({ items }: { items: Item[] }) {
         return;
       }
       const parsed = scan.items ?? [];
-      const toSave = parsed.length > 0 ? parsed : [{ name: "Produk 1", qty: 1, unit: null, unitPrice: 0, supplier: null, notaDate: null }];
+      const toSave = parsed.length > 0 ? parsed : [EMPTY_ITEM];
       const r = await saveRawBatch({ batchId: scan.batchId, notaPhotoKey: scan.notaPhotoKey, items: toSave });
       if (!r.ok) setMsg(r.message ?? "Gagal simpan.");
       else setMsg(scan.ocr ? `Nota terbaca: ${parsed.length} item. Cek & edit di bawah.` : "OCR belum aktif — kartu kosong dibuat, isi manual.");
@@ -90,7 +96,7 @@ export function FinanceClient({ items }: { items: Item[] }) {
     const r = await saveRawBatch({
       batchId,
       notaPhotoKey: null,
-      items: [{ name: "Produk baru", qty: 1, unit: null, unitPrice: 0, supplier: null, notaDate: null }],
+      items: [{ ...EMPTY_ITEM, name: "Produk baru" }],
     });
     if (!r.ok) setMsg(r.message ?? "Gagal.");
     router.refresh();
@@ -141,6 +147,11 @@ export function FinanceClient({ items }: { items: Item[] }) {
             <div key={i.id} className="flex items-start justify-between gap-2 rounded-lg border bg-card p-4">
               <div>
                 <p className="font-medium">{i.name}</p>
+                {(i.brand || i.color || i.size || i.sku) && (
+                  <p className="text-12 text-muted-foreground">
+                    {[i.brand, i.color, i.size, i.sku ? `SKU ${i.sku}` : null].filter(Boolean).join(" · ")}
+                  </p>
+                )}
                 <p className="text-14 text-muted-foreground">
                   {i.qty} {i.unit ?? "pcs"} · Rp {rupiah.format(i.unitPrice)}
                   {i.supplier ? ` · ${i.supplier}` : ""}
@@ -199,6 +210,10 @@ function DraftCard({ item }: { item: Item }) {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [name, setName] = useState(item.name);
+  const [brand, setBrand] = useState(item.brand ?? "");
+  const [color, setColor] = useState(item.color ?? "");
+  const [size, setSize] = useState(item.size ?? "");
+  const [sku, setSku] = useState(item.sku ?? "");
   const [qty, setQty] = useState(String(item.qty));
   const [unit, setUnit] = useState(item.unit ?? "");
   const [unitPrice, setUnitPrice] = useState(String(item.unitPrice));
@@ -209,6 +224,10 @@ function DraftCard({ item }: { item: Item }) {
     start(async () => {
       const r = await updateRawProduct(item.id, {
         name,
+        brand: brand || null,
+        color: color || null,
+        size: size || null,
+        sku: sku || null,
         qty: Number(qty),
         unit: unit || null,
         unitPrice: Number(unitPrice),
@@ -230,11 +249,17 @@ function DraftCard({ item }: { item: Item }) {
 
   return (
     <div className="space-y-2 rounded-md border p-3">
-      <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama produk" />
+      <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama barang" />
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+        <Input value={brand} onChange={(e) => setBrand(e.target.value)} placeholder="Merek" />
+        <Input value={color} onChange={(e) => setColor(e.target.value)} placeholder="Warna" />
+        <Input value={size} onChange={(e) => setSize(e.target.value)} placeholder="Ukuran" />
+        <Input value={sku} onChange={(e) => setSku(e.target.value)} placeholder="SKU" />
+      </div>
       <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
         <Input type="number" value={qty} onChange={(e) => setQty(e.target.value)} placeholder="Qty" />
-        <Input value={unit} onChange={(e) => setUnit(e.target.value)} placeholder="Satuan" />
-        <Input type="number" value={unitPrice} onChange={(e) => setUnitPrice(e.target.value)} placeholder="Harga satuan" />
+        <Input value={unit} onChange={(e) => setUnit(e.target.value)} placeholder="Satuan (pcs)" />
+        <Input type="number" value={unitPrice} onChange={(e) => setUnitPrice(e.target.value)} placeholder="Harga/unit" />
         <Input type="date" value={notaDate} onChange={(e) => setNotaDate(e.target.value)} />
       </div>
       <Input value={supplier} onChange={(e) => setSupplier(e.target.value)} placeholder="Supplier" />

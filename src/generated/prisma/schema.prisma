@@ -333,6 +333,10 @@ model RawProduct {
   id           String           @id @default(cuid())
   batchId      String // grup per nota (satu kali scan)
   name         String
+  brand        String? // merek
+  color        String? // warna
+  size         String? // ukuran
+  sku          String?
   qty          Int              @default(1)
   unit         String? // pcs, box, dst
   unitPrice    Int              @default(0) // rupiah, harga beli satuan

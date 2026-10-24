@@ -3,12 +3,21 @@
 
 export type NotaItem = {
   name: string;
+  brand: string | null;
+  color: string | null;
+  size: string | null;
+  sku: string | null;
   qty: number;
   unit: string | null;
   unitPrice: number;
   supplier: string | null;
   notaDate: string | null; // "YYYY-MM-DD"
 };
+
+function str(v: unknown, max: number): string | null {
+  const s = String(v ?? "").trim();
+  return s ? s.slice(0, max) : null;
+}
 
 function toInt(v: unknown): number {
   const n = Number(String(v ?? "").replace(/[^0-9.-]/g, ""));
@@ -20,6 +29,10 @@ function normalize(raw: unknown): NotaItem {
   const date = typeof o.notaDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(o.notaDate) ? o.notaDate : null;
   return {
     name: String(o.name ?? "").slice(0, 200),
+    brand: str(o.brand, 80),
+    color: str(o.color, 40),
+    size: str(o.size, 40),
+    sku: str(o.sku, 60),
     qty: Math.max(1, toInt(o.qty) || 1),
     unit: o.unit ? String(o.unit).slice(0, 20) : null,
     unitPrice: Math.max(0, toInt(o.unitPrice)),

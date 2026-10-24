@@ -9,6 +9,10 @@ import { qcDecision } from "@/server/actions/raw-products";
 type Item = {
   id: string;
   name: string;
+  brand: string | null;
+  color: string | null;
+  size: string | null;
+  sku: string | null;
   qty: number;
   unit: string | null;
   unitPrice: number;
@@ -49,6 +53,11 @@ export function QcClient({ items }: { items: Item[] }) {
         {items.map((i) => (
           <div key={i.id} className="rounded-lg border bg-card p-4">
             <p className="font-medium">{i.name}</p>
+            {(i.brand || i.color || i.size || i.sku) && (
+              <p className="text-12 text-muted-foreground">
+                {[i.brand, i.color, i.size, i.sku ? `SKU ${i.sku}` : null].filter(Boolean).join(" · ")}
+              </p>
+            )}
             <p className="text-14 text-muted-foreground">
               {i.qty} {i.unit ?? "pcs"} · Rp {rupiah.format(i.unitPrice)}
               {i.supplier ? ` · ${i.supplier}` : ""}

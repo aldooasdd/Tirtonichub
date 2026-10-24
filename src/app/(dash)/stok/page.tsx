@@ -27,6 +27,8 @@ export default async function StokPage() {
           <TableHeader>
             <TableRow>
               <TableHead>Produk</TableHead>
+              <TableHead>Varian</TableHead>
+              <TableHead>SKU</TableHead>
               <TableHead>Qty</TableHead>
               <TableHead>Harga satuan</TableHead>
               <TableHead>Supplier</TableHead>
@@ -36,7 +38,7 @@ export default async function StokPage() {
           <TableBody>
             {rows.length === 0 && (
               <TableRow>
-                <TableCell colSpan={5} className="py-10 text-center text-muted-foreground">
+                <TableCell colSpan={7} className="py-10 text-center text-muted-foreground">
                   Belum ada stok.
                 </TableCell>
               </TableRow>
@@ -44,6 +46,10 @@ export default async function StokPage() {
             {rows.map((r) => (
               <TableRow key={r.id}>
                 <TableCell className="font-medium">{r.name}</TableCell>
+                <TableCell className="text-muted-foreground">
+                  {[r.brand, r.color, r.size].filter(Boolean).join(" · ") || "—"}
+                </TableCell>
+                <TableCell className="text-muted-foreground">{r.sku ?? "—"}</TableCell>
                 <TableCell>
                   {r.qty} {r.unit ?? "pcs"}
                 </TableCell>

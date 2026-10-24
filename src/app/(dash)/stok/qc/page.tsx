@@ -15,6 +15,10 @@ export default async function QcPage() {
       items={rows.map((r) => ({
         id: r.id,
         name: r.name,
+        brand: r.brand,
+        color: r.color,
+        size: r.size,
+        sku: r.sku,
         qty: r.qty,
         unit: r.unit,
         unitPrice: r.unitPrice,

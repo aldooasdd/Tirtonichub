@@ -22096,6 +22096,10 @@ export namespace Prisma {
     id: string | null
     batchId: string | null
     name: string | null
+    brand: string | null
+    color: string | null
+    size: string | null
+    sku: string | null
     qty: number | null
     unit: string | null
     unitPrice: number | null
@@ -22115,6 +22119,10 @@ export namespace Prisma {
     id: string | null
     batchId: string | null
     name: string | null
+    brand: string | null
+    color: string | null
+    size: string | null
+    sku: string | null
     qty: number | null
     unit: string | null
     unitPrice: number | null
@@ -22134,6 +22142,10 @@ export namespace Prisma {
     id: number
     batchId: number
     name: number
+    brand: number
+    color: number
+    size: number
+    sku: number
     qty: number
     unit: number
     unitPrice: number
@@ -22165,6 +22177,10 @@ export namespace Prisma {
     id?: true
     batchId?: true
     name?: true
+    brand?: true
+    color?: true
+    size?: true
+    sku?: true
     qty?: true
     unit?: true
     unitPrice?: true
@@ -22184,6 +22200,10 @@ export namespace Prisma {
     id?: true
     batchId?: true
     name?: true
+    brand?: true
+    color?: true
+    size?: true
+    sku?: true
     qty?: true
     unit?: true
     unitPrice?: true
@@ -22203,6 +22223,10 @@ export namespace Prisma {
     id?: true
     batchId?: true
     name?: true
+    brand?: true
+    color?: true
+    size?: true
+    sku?: true
     qty?: true
     unit?: true
     unitPrice?: true
@@ -22309,6 +22333,10 @@ export namespace Prisma {
     id: string
     batchId: string
     name: string
+    brand: string | null
+    color: string | null
+    size: string | null
+    sku: string | null
     qty: number
     unit: string | null
     unitPrice: number
@@ -22347,6 +22375,10 @@ export namespace Prisma {
     id?: boolean
     batchId?: boolean
     name?: boolean
+    brand?: boolean
+    color?: boolean
+    size?: boolean
+    sku?: boolean
     qty?: boolean
     unit?: boolean
     unitPrice?: boolean
@@ -22368,6 +22400,10 @@ export namespace Prisma {
     id?: boolean
     batchId?: boolean
     name?: boolean
+    brand?: boolean
+    color?: boolean
+    size?: boolean
+    sku?: boolean
     qty?: boolean
     unit?: boolean
     unitPrice?: boolean
@@ -22389,6 +22425,10 @@ export namespace Prisma {
     id?: boolean
     batchId?: boolean
     name?: boolean
+    brand?: boolean
+    color?: boolean
+    size?: boolean
+    sku?: boolean
     qty?: boolean
     unit?: boolean
     unitPrice?: boolean
@@ -22410,6 +22450,10 @@ export namespace Prisma {
     id?: boolean
     batchId?: boolean
     name?: boolean
+    brand?: boolean
+    color?: boolean
+    size?: boolean
+    sku?: boolean
     qty?: boolean
     unit?: boolean
     unitPrice?: boolean
@@ -22425,7 +22469,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type RawProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "batchId" | "name" | "qty" | "unit" | "unitPrice" | "supplier" | "notaDate" | "notaPhotoKey" | "status" | "createdById" | "qcById" | "qcAt" | "qcNote" | "createdAt" | "updatedAt", ExtArgs["result"]["rawProduct"]>
+  export type RawProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "batchId" | "name" | "brand" | "color" | "size" | "sku" | "qty" | "unit" | "unitPrice" | "supplier" | "notaDate" | "notaPhotoKey" | "status" | "createdById" | "qcById" | "qcAt" | "qcNote" | "createdAt" | "updatedAt", ExtArgs["result"]["rawProduct"]>
   export type RawProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
     qcBy?: boolean | RawProduct$qcByArgs<ExtArgs>
@@ -22449,6 +22493,10 @@ export namespace Prisma {
       id: string
       batchId: string
       name: string
+      brand: string | null
+      color: string | null
+      size: string | null
+      sku: string | null
       qty: number
       unit: string | null
       unitPrice: number
@@ -22890,6 +22938,10 @@ export namespace Prisma {
     readonly id: FieldRef<"RawProduct", 'String'>
     readonly batchId: FieldRef<"RawProduct", 'String'>
     readonly name: FieldRef<"RawProduct", 'String'>
+    readonly brand: FieldRef<"RawProduct", 'String'>
+    readonly color: FieldRef<"RawProduct", 'String'>
+    readonly size: FieldRef<"RawProduct", 'String'>
+    readonly sku: FieldRef<"RawProduct", 'String'>
     readonly qty: FieldRef<"RawProduct", 'Int'>
     readonly unit: FieldRef<"RawProduct", 'String'>
     readonly unitPrice: FieldRef<"RawProduct", 'Int'>
@@ -23590,6 +23642,10 @@ export namespace Prisma {
     id: 'id',
     batchId: 'batchId',
     name: 'name',
+    brand: 'brand',
+    color: 'color',
+    size: 'size',
+    sku: 'sku',
     qty: 'qty',
     unit: 'unit',
     unitPrice: 'unitPrice',
@@ -25079,6 +25135,10 @@ export namespace Prisma {
     id?: StringFilter<"RawProduct"> | string
     batchId?: StringFilter<"RawProduct"> | string
     name?: StringFilter<"RawProduct"> | string
+    brand?: StringNullableFilter<"RawProduct"> | string | null
+    color?: StringNullableFilter<"RawProduct"> | string | null
+    size?: StringNullableFilter<"RawProduct"> | string | null
+    sku?: StringNullableFilter<"RawProduct"> | string | null
     qty?: IntFilter<"RawProduct"> | number
     unit?: StringNullableFilter<"RawProduct"> | string | null
     unitPrice?: IntFilter<"RawProduct"> | number
@@ -25100,6 +25160,10 @@ export namespace Prisma {
     id?: SortOrder
     batchId?: SortOrder
     name?: SortOrder
+    brand?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
+    size?: SortOrderInput | SortOrder
+    sku?: SortOrderInput | SortOrder
     qty?: SortOrder
     unit?: SortOrderInput | SortOrder
     unitPrice?: SortOrder
@@ -25124,6 +25188,10 @@ export namespace Prisma {
     NOT?: RawProductWhereInput | RawProductWhereInput[]
     batchId?: StringFilter<"RawProduct"> | string
     name?: StringFilter<"RawProduct"> | string
+    brand?: StringNullableFilter<"RawProduct"> | string | null
+    color?: StringNullableFilter<"RawProduct"> | string | null
+    size?: StringNullableFilter<"RawProduct"> | string | null
+    sku?: StringNullableFilter<"RawProduct"> | string | null
     qty?: IntFilter<"RawProduct"> | number
     unit?: StringNullableFilter<"RawProduct"> | string | null
     unitPrice?: IntFilter<"RawProduct"> | number
@@ -25145,6 +25213,10 @@ export namespace Prisma {
     id?: SortOrder
     batchId?: SortOrder
     name?: SortOrder
+    brand?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
+    size?: SortOrderInput | SortOrder
+    sku?: SortOrderInput | SortOrder
     qty?: SortOrder
     unit?: SortOrderInput | SortOrder
     unitPrice?: SortOrder
@@ -25172,6 +25244,10 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"RawProduct"> | string
     batchId?: StringWithAggregatesFilter<"RawProduct"> | string
     name?: StringWithAggregatesFilter<"RawProduct"> | string
+    brand?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
+    color?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
+    size?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
+    sku?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
     qty?: IntWithAggregatesFilter<"RawProduct"> | number
     unit?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
     unitPrice?: IntWithAggregatesFilter<"RawProduct"> | number
@@ -26548,6 +26624,10 @@ export namespace Prisma {
     id?: string
     batchId: string
     name: string
+    brand?: string | null
+    color?: string | null
+    size?: string | null
+    sku?: string | null
     qty?: number
     unit?: string | null
     unitPrice?: number
@@ -26567,6 +26647,10 @@ export namespace Prisma {
     id?: string
     batchId: string
     name: string
+    brand?: string | null
+    color?: string | null
+    size?: string | null
+    sku?: string | null
     qty?: number
     unit?: string | null
     unitPrice?: number
@@ -26586,6 +26670,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     batchId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: IntFieldUpdateOperationsInput | number
@@ -26605,6 +26693,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     batchId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: IntFieldUpdateOperationsInput | number
@@ -26624,6 +26716,10 @@ export namespace Prisma {
     id?: string
     batchId: string
     name: string
+    brand?: string | null
+    color?: string | null
+    size?: string | null
+    sku?: string | null
     qty?: number
     unit?: string | null
     unitPrice?: number
@@ -26643,6 +26739,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     batchId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: IntFieldUpdateOperationsInput | number
@@ -26660,6 +26760,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     batchId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: IntFieldUpdateOperationsInput | number
@@ -27801,6 +27905,10 @@ export namespace Prisma {
     id?: SortOrder
     batchId?: SortOrder
     name?: SortOrder
+    brand?: SortOrder
+    color?: SortOrder
+    size?: SortOrder
+    sku?: SortOrder
     qty?: SortOrder
     unit?: SortOrder
     unitPrice?: SortOrder
@@ -27825,6 +27933,10 @@ export namespace Prisma {
     id?: SortOrder
     batchId?: SortOrder
     name?: SortOrder
+    brand?: SortOrder
+    color?: SortOrder
+    size?: SortOrder
+    sku?: SortOrder
     qty?: SortOrder
     unit?: SortOrder
     unitPrice?: SortOrder
@@ -27844,6 +27956,10 @@ export namespace Prisma {
     id?: SortOrder
     batchId?: SortOrder
     name?: SortOrder
+    brand?: SortOrder
+    color?: SortOrder
+    size?: SortOrder
+    sku?: SortOrder
     qty?: SortOrder
     unit?: SortOrder
     unitPrice?: SortOrder
@@ -29798,6 +29914,10 @@ export namespace Prisma {
     id?: string
     batchId: string
     name: string
+    brand?: string | null
+    color?: string | null
+    size?: string | null
+    sku?: string | null
     qty?: number
     unit?: string | null
     unitPrice?: number
@@ -29816,6 +29936,10 @@ export namespace Prisma {
     id?: string
     batchId: string
     name: string
+    brand?: string | null
+    color?: string | null
+    size?: string | null
+    sku?: string | null
     qty?: number
     unit?: string | null
     unitPrice?: number
@@ -29844,6 +29968,10 @@ export namespace Prisma {
     id?: string
     batchId: string
     name: string
+    brand?: string | null
+    color?: string | null
+    size?: string | null
+    sku?: string | null
     qty?: number
     unit?: string | null
     unitPrice?: number
@@ -29862,6 +29990,10 @@ export namespace Prisma {
     id?: string
     batchId: string
     name: string
+    brand?: string | null
+    color?: string | null
+    size?: string | null
+    sku?: string | null
     qty?: number
     unit?: string | null
     unitPrice?: number
@@ -30281,6 +30413,10 @@ export namespace Prisma {
     id?: StringFilter<"RawProduct"> | string
     batchId?: StringFilter<"RawProduct"> | string
     name?: StringFilter<"RawProduct"> | string
+    brand?: StringNullableFilter<"RawProduct"> | string | null
+    color?: StringNullableFilter<"RawProduct"> | string | null
+    size?: StringNullableFilter<"RawProduct"> | string | null
+    sku?: StringNullableFilter<"RawProduct"> | string | null
     qty?: IntFilter<"RawProduct"> | number
     unit?: StringNullableFilter<"RawProduct"> | string | null
     unitPrice?: IntFilter<"RawProduct"> | number
@@ -32945,6 +33081,10 @@ export namespace Prisma {
     id?: string
     batchId: string
     name: string
+    brand?: string | null
+    color?: string | null
+    size?: string | null
+    sku?: string | null
     qty?: number
     unit?: string | null
     unitPrice?: number
@@ -32963,6 +33103,10 @@ export namespace Prisma {
     id?: string
     batchId: string
     name: string
+    brand?: string | null
+    color?: string | null
+    size?: string | null
+    sku?: string | null
     qty?: number
     unit?: string | null
     unitPrice?: number
@@ -33342,6 +33486,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     batchId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: IntFieldUpdateOperationsInput | number
@@ -33360,6 +33508,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     batchId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: IntFieldUpdateOperationsInput | number
@@ -33378,6 +33530,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     batchId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: IntFieldUpdateOperationsInput | number
@@ -33396,6 +33552,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     batchId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: IntFieldUpdateOperationsInput | number
@@ -33414,6 +33574,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     batchId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: IntFieldUpdateOperationsInput | number
@@ -33432,6 +33596,10 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     batchId?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
+    size?: NullableStringFieldUpdateOperationsInput | string | null
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
     unitPrice?: IntFieldUpdateOperationsInput | number
