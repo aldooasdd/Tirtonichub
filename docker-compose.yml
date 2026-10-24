@@ -1,6 +1,6 @@
 # Stack app Tirtonic di PC: Postgres + web (Next.js). Build di sini (mesin penuh, bukan cPanel).
 # cloudflared & minio jalan di compose-mu yang lain (host). web dipublish ke host:3000,
-# cloudflared route tirtonic.com -> http://host.docker.internal:3000 (lihat DEPLOY_PC.md).
+# cloudflared route tirtonichub.com -> http://host.docker.internal:3000 (lihat DEPLOY_PC.md).
 services:
   postgres:
     image: postgres:16

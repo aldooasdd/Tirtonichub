@@ -34,16 +34,26 @@ docker compose exec web pnpm db:seed     # 8 role, 2 Boss, 3 cabang
 Buka `http://localhost:3000` di PC → halaman login muncul = OK.
 
 ## 6. Sambungkan domain (Cloudflare Tunnel yang sudah ada)
-Cloudflare **Zero Trust → Networks → Tunnels → (tunnel kamu) → Public Hostname → Add**:
-- Subdomain/domain: `tirtonic.com` (atau subdomain yang mau).
+Cloudflare **Zero Trust → Networks → Tunnels & Mesh → Titonichub → Published application routes → Add**:
+- Subdomain kosong, domain: `tirtonichub.com`.
 - Service: **HTTP** `host.docker.internal:3000`.
 
-Simpan → buka `https://tirtonic.com`.
+Simpan → buka `https://tirtonichub.com`.
 
 > cloudflared dan web beda compose, jadi route pakai `host.docker.internal:3000`
-> (web dipublish ke host:3000). DNS `tirtonic.com` otomatis diurus tunnel.
+> (web dipublish ke host:3000). DNS `tirtonichub.com` otomatis diurus tunnel.
+
+> **Email:** root dulu A ke cPanel (`103.146.63.26`) dan MX menunjuk ke root. Sebelum root
+> dipindah ke tunnel: `mail` dijadikan A `103.146.63.26` (DNS only), MX → `mail.tirtonichub.com`,
+> baru A root dihapus. CNAME lain yang menunjuk root ikut pindah ke app.
+
+> Dari jaringan PC ini, IP Cloudflare `104.21.x`/`172.67.x` tidak terjangkau (ISP/router) —
+> tes domain dari HP pakai data seluler; di PC pakai `http://localhost:3000`.
 
 ## Update berikutnya
+Otomatis: push ke `main` → workflow `.github/workflows/deploy.yml` jalan di self-hosted runner PC
+(`C:\actions-runner`, jalan sebagai user Windows via Task Scheduler supaya bisa akses Docker Desktop;
+repo variable `DEPLOY_DIR` = folder clone ini). Manual:
 ```bash
 git pull
 docker compose up -d --build
