@@ -39,6 +39,7 @@ export function ResultFolder({
 
   const [preview, setPreview] = useState<AssetFile | null>(null);
   const [browser, setBrowser] = useState(false);
+  const [hover, setHover] = useState(false);
 
   const files: FolderFile[] = assets.map((a) => ({
     name: a.name,
@@ -69,7 +70,8 @@ export function ResultFolder({
   return (
     <>
       <input ref={inputRef} type="file" className="hidden" onChange={onPicked} />
-      {/* key berubah saat daftar file berubah → folder remount & tampilkan list baru */}
+      {/* hover → folder mengintip (open), klik → jendela Finder */}
+      <div onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
       <GlassFolder
         key={assets.map((a) => a.id).join(",") + (busy ? ":busy" : "")}
         label={name}
@@ -81,13 +83,14 @@ export function ResultFolder({
         appearDelay={appearDelay}
         files={files}
         action={canManage ? "add" : "none"}
-        open={false}
-        onOpenChange={(o) => o && setBrowser(true)}
+        open={hover}
+        onOpenChange={() => setBrowser(true)}
         onAdd={() => {
           inputRef.current?.click();
           return { name: "Mengunggah…", meta: "" }; // placeholder sementara
         }}
       />
+      </div>
 
       {browser && (
         <div
