@@ -119,6 +119,31 @@ export async function markMeta(id: string): Promise<ActionResult> {
   return { ok: true };
 }
 
+/** Buat caption Instagram dengan AI (admin). Simpan caption + deskripsi sumber. */
+export async function generateCaption(id: string, srcDesc: string): Promise<ActionResult & { caption?: string }> {
+  const { acc, task } = await ctxFor(id);
+  if (!task) return { ok: false, message: "Tugas tidak ditemukan." };
+  if (!acc.canManage) return { ok: false, message: "Hanya admin." };
+  const { aiCaption } = await import("@/server/media/ai");
+  const { TYPES, CATLBL, GENDERS } = await import("@/lib/media/schedule");
+  const item = task.itemId ? await prisma.mediaItem.findUnique({ where: { id: task.itemId } }) : null;
+  try {
+    const r = await aiCaption({
+      nama: task.title,
+      jenis_konten: TYPES[task.type]?.label ?? task.type,
+      kategori: task.cat ? CATLBL[task.cat] ?? task.cat : "",
+      gender: item?.gender ? GENDERS[item.gender] ?? "" : "",
+      catatan: task.note ?? "",
+      deskripsi: srcDesc,
+    });
+    const caption = r.hashtag.length ? `${r.caption}\n\n${r.hashtag.map((h) => "#" + h).join(" ")}` : r.caption;
+    await prisma.mediaTask.update({ where: { id }, data: { caption: caption.slice(0, 2200), srcDesc: srcDesc.slice(0, 4000) } });
+    return { ok: true, caption };
+  } catch (e) {
+    return { ok: false, message: e instanceof Error ? e.message : "AI gagal." };
+  }
+}
+
 /** Hapus konten (admin). */
 export async function deleteTask(id: string): Promise<ActionResult> {
   const { acc, task } = await ctxFor(id);

@@ -49,6 +49,7 @@ export default async function WorkflowPage() {
       meta: !!t.metaAt,
       driveUrl: t.driveUrl,
       caption: t.caption,
+      srcDesc: t.srcDesc,
       note: t.note,
       fileDue: sch.fileDue({ id: t.id, type: t.type, status: t.status, postAt: t.postAt, title: t.title, itemId: t.itemId, source: t.source }),
       history: (t.history as { at: number; name?: string; from?: string; to?: string }[]) ?? [],

@@ -9,7 +9,7 @@ import {
 } from "@/lib/media/schedule";
 import { deadlineFor, fileName, mine, canMove, late, MEMBER_STAGES, REASONS } from "@/lib/media/card";
 import type { Task } from "@/lib/media/schedule";
-import { setTaskStatus, updateTask, toggleCheck, markMeta, deleteTask } from "@/server/actions/media-tasks";
+import { setTaskStatus, updateTask, toggleCheck, markMeta, deleteTask, generateCaption } from "@/server/actions/media-tasks";
 
 export type WfTask = {
   id: string; itemId: string | null; type: string; title: string; cat: string | null; gender: string | null;
@@ -17,7 +17,7 @@ export type WfTask = {
   producer: string | null; editor: string | null; talent: string | null; script: string | null;
   shootPlan: string | null; editPlan: string | null; postAt: string | null; postTime: string | null; postTimeAuto: string;
   due: string | null; shotAt: string | null; readyAt: string | null;
-  locked: boolean; checked: boolean; meta: boolean; driveUrl: string | null; caption: string | null; note: string | null;
+  locked: boolean; checked: boolean; meta: boolean; driveUrl: string | null; caption: string | null; srcDesc: string | null; note: string | null;
   fileDue: string; history: { at: number; name?: string; from?: string; to?: string }[]; createdAt: number;
 };
 
@@ -189,6 +189,8 @@ function Card({ t, canManage, code, today, view }: { t: WfTask; canManage: boole
             </>
           )}
 
+          {canManage && POSTED.includes(t.type) && <CaptionBox t={t} />}
+
           <div className="flex items-center gap-2 text-11 text-muted-foreground">
             <code className="truncate rounded bg-muted px-1.5 py-0.5">{fileName(tt)}</code>
           </div>
@@ -212,6 +214,54 @@ function Card({ t, canManage, code, today, view }: { t: WfTask; canManage: boole
         </div>
       </details>
     </article>
+  );
+}
+
+function CaptionBox({ t }: { t: WfTask }) {
+  const router = useRouter();
+  const [pending, start] = useTransition();
+  const [src, setSrc] = useState(t.srcDesc ?? "");
+  const [caption, setCaption] = useState(t.caption ?? "");
+  const [msg, setMsg] = useState("");
+
+  function gen() {
+    if (src.trim().length < 20) {
+      setMsg("Tempel deskripsi barang dari toko online (min. 1-2 kalimat).");
+      return;
+    }
+    setMsg("AI menulis caption…");
+    start(async () => {
+      const r = await generateCaption(t.id, src);
+      if (!r.ok) {
+        setMsg(r.message ?? "Gagal.");
+        return;
+      }
+      setCaption(r.caption ?? "");
+      setMsg("");
+      router.refresh();
+    });
+  }
+  return (
+    <details className="rounded-md border p-2">
+      <summary className="cursor-pointer text-12">Caption Instagram {caption ? <span className="text-green-600">· siap</span> : <span className="text-muted-foreground">· belum</span>}</summary>
+      <div className="mt-2 space-y-2">
+        <label className="block space-y-1">
+          <span className="text-11 text-muted-foreground">Deskripsi barang dari toko online</span>
+          <textarea className="w-full rounded-md border bg-background p-2 text-14" rows={3} value={src} maxLength={4000} onChange={(e) => setSrc(e.target.value)} placeholder="Tempel deskripsi produk" />
+        </label>
+        <div className="flex items-center gap-2">
+          <Button size="sm" disabled={pending} onClick={gen}>{caption ? "Buat ulang" : "Buat caption AI"}</Button>
+          {msg && <span className="text-11 text-muted-foreground">{msg}</span>}
+        </div>
+        {caption && (
+          <label className="block space-y-1">
+            <span className="text-11 text-muted-foreground">Caption final</span>
+            <textarea className="w-full rounded-md border bg-background p-2 text-14" rows={6} value={caption} maxLength={2200} onChange={(e) => setCaption(e.target.value)} />
+            <button type="button" className="text-11 text-primary" onClick={() => navigator.clipboard?.writeText(caption)}>Salin caption</button>
+          </label>
+        )}
+      </div>
+    </details>
   );
 }
 
