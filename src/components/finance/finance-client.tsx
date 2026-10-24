@@ -286,7 +286,7 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
         <Badge variant="outline">Draft · {rows.length} item</Badge>
         <div className="flex gap-2">
           <Button size="sm" disabled={pending} onClick={saveAll}>
-            Simpan semua & Kirim ke QC
+            Kirim semua
           </Button>
           <Button size="sm" variant="ghost" disabled={pending} onClick={deleteAll}>
             <Trash2 className="mr-1 h-4 w-4" /> Hapus semua
