@@ -15,7 +15,6 @@ type Item = {
   sku: string | null;
   qty: number;
   unit: string | null;
-  unitPrice: number;
   sellPrice: number | null;
   supplier: string | null;
   notaDate: string | null;
@@ -27,16 +26,11 @@ const rupiah = new Intl.NumberFormat("id-ID");
 export function QcClient({ items }: { items: Item[] }) {
   const router = useRouter();
   const [pending, start] = useTransition();
-  const [notes, setNotes] = useState<Record<string, string>>({});
+  const [pass, setPass] = useState<Record<string, string>>({});
 
   function act(id: string, decision: "STOCK" | "REJECTED") {
-    const note = notes[id] ?? "";
-    if (decision === "REJECTED" && !note.trim()) {
-      alert("Penolakan wajib ada catatan.");
-      return;
-    }
     start(async () => {
-      const r = await qcDecision(id, decision, note);
+      const r = await qcDecision(id, decision, decision === "STOCK" ? Number(pass[id]) || undefined : undefined);
       if (!r.ok) alert(r.message);
       router.refresh();
     });
@@ -60,7 +54,7 @@ export function QcClient({ items }: { items: Item[] }) {
               </p>
             )}
             <p className="text-14 text-muted-foreground">
-              {i.qty} {i.unit ?? "pcs"} · Rp {rupiah.format(i.unitPrice)}
+              {i.qty} {i.unit ?? "pcs"}
               {i.supplier ? ` · ${i.supplier}` : ""}
             </p>
             {i.sellPrice != null && (
@@ -70,11 +64,15 @@ export function QcClient({ items }: { items: Item[] }) {
               Dari: {i.byName}
               {i.notaDate ? ` · nota ${i.notaDate}` : ""}
             </p>
+            <label className="mt-3 block text-12 text-muted-foreground">
+              Total lolos QC ({i.unit ?? "pcs"})
+            </label>
             <Input
-              className="mt-3"
-              placeholder="Catatan (wajib bila tolak)"
-              value={notes[i.id] ?? ""}
-              onChange={(e) => setNotes((n) => ({ ...n, [i.id]: e.target.value }))}
+              type="number"
+              className="mt-1"
+              placeholder={String(i.qty)}
+              value={pass[i.id] ?? String(i.qty)}
+              onChange={(e) => setPass((n) => ({ ...n, [i.id]: e.target.value }))}
             />
             <div className="mt-3 flex gap-2">
               <Button className="flex-1" disabled={pending} onClick={() => act(i.id, "STOCK")}>

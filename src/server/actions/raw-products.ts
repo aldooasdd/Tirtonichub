@@ -211,23 +211,27 @@ export async function submitBatchToQc(batchId: string): Promise<ActionResult> {
   return { ok: true };
 }
 
-/** Keputusan QC oleh Stock Room: lolos → STOCK, tolak → REJECTED. */
+/** Keputusan QC oleh Stock Room: lolos → STOCK (qty = total lolos), tolak → REJECTED. */
 export async function qcDecision(
   id: string,
   decision: "STOCK" | "REJECTED",
-  note: string,
+  passQty?: number,
 ): Promise<ActionResult> {
   const ctx = await requireStock();
-  if (decision === "REJECTED" && !note.trim())
-    return { ok: false, message: "Penolakan wajib ada catatan." };
   const p = await prisma.rawProduct.findUnique({ where: { id } });
   if (!p) return { ok: false, message: "Tidak ditemukan." };
   if (p.status !== "QC") return { ok: false, message: "Item tidak dalam antrean QC." };
 
-  await prisma.rawProduct.update({
-    where: { id },
-    data: { status: decision, qcById: ctx.userId, qcAt: new Date(), qcNote: note.trim() || null },
-  });
+  const data =
+    decision === "STOCK"
+      ? {
+          status: "STOCK" as const,
+          qcById: ctx.userId,
+          qcAt: new Date(),
+          qty: Math.min(p.qty, Math.max(1, Math.round(passQty ?? p.qty) || 1)),
+        }
+      : { status: "REJECTED" as const, qcById: ctx.userId, qcAt: new Date() };
+  await prisma.rawProduct.update({ where: { id }, data });
   const { ip } = await clientMeta();
   await logActivity(
     { ...ctx, ip },
