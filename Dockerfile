@@ -1,23 +1,22 @@
-# Build Next.js standalone untuk produksi (VPS).
-FROM node:24-alpine AS base
-RUN corepack enable
+# Build + run Next.js di PC (Docker). Mesin beneran → build di sini, bukan di-commit.
+FROM node:20-slim
+
+# openssl: dibutuhkan beberapa tooling. corepack: pnpm.
+RUN apt-get update && apt-get install -y --no-install-recommends openssl \
+  && rm -rf /var/lib/apt/lists/* \
+  && corepack enable
+
 WORKDIR /app
 
-FROM base AS deps
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+# Install deps dulu (layer cache). Postinstall @prisma/client generate jalan di sini — aman, RAM cukup.
+COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 
-FROM base AS build
-COPY --from=deps /app/node_modules ./node_modules
+# Sisa source + build.
 COPY . .
-RUN pnpm prisma generate && pnpm build
+RUN pnpm build
 
-FROM base AS runner
 ENV NODE_ENV=production
-COPY --from=build /app/public ./public
-COPY --from=build /app/.next/standalone ./
-COPY --from=build /app/.next/static ./.next/static
-COPY --from=build /app/prisma ./prisma
-COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
 EXPOSE 3000
-CMD ["node", "server.js"]
+# next start menyajikan .next hasil build (bukan standalone). Bind 0.0.0.0 default.
+CMD ["pnpm", "start"]

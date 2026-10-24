@@ -1,8 +1,11 @@
 node_modules
 .next
 .git
-.env*
+.env
+.env.*
+!.env.example
+*.log
 npm-debug.log*
-*.md
-Dockerfile
-docker-compose.yml
+.DS_Store
+DEPLOY_CPANEL.md
+server.js.cpanel

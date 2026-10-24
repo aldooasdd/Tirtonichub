@@ -1,19 +1,29 @@
-# Infra dev lokal: PostgreSQL saja.
-# MinIO: produksi jalan di PC server kantor (via Cloudflare Tunnel/Tailscale, lihat PRD §15/§17).
-# Dev tanpa S3 env → storage.ts fallback simpan ke .data/uploads (lihat src/server/storage.ts).
-# WAHA & n8n pakai instance yang sudah ada.
+# Deploy Tirtonichub di PC server (Docker Desktop + WSL2).
+# MinIO sudah jalan di host → set S3_ENDPOINT=http://host.docker.internal:9000 di .env.
 services:
-  postgres:
-    image: postgres:17-alpine
-    restart: unless-stopped
+  db:
+    image: postgres:16-alpine
     environment:
       POSTGRES_USER: tirtonic
-      POSTGRES_PASSWORD: tirtonic
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD di .env}
       POSTGRES_DB: tirtonichub
-    ports:
-      - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+      # Mau data Postgres di D:\server-data? ganti baris atas jadi:
+      #   - D:/server-data/postgres:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  app:
+    build: .
+    env_file: .env
+    environment:
+      # Override DATABASE_URL dari .env → arahkan ke service db.
+      DATABASE_URL: postgresql://tirtonic:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD di .env}@db:5432/tirtonichub
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+    restart: unless-stopped
 
 volumes:
   pgdata:
