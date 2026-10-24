@@ -19,6 +19,7 @@ type Item = {
   seasonal: boolean;
   scheduled: boolean;
   arrived: string;
+  photo: string | null;
 };
 
 const CAT_KEYS = Object.keys(CATLBL);
@@ -77,13 +78,26 @@ export function MediaBarangClient({ items, canManage, full }: { items: Item[]; c
         {pendingItems.length === 0 && (
           <p className="rounded-lg border bg-card py-8 text-center text-muted-foreground">Tidak ada barang menunggu.</p>
         )}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {pendingItems.map((i) => (
-          <div key={i.id} className="space-y-3 rounded-lg border bg-card p-4">
+          <div key={i.id} className="overflow-hidden rounded-lg border bg-card">
+            <div className="relative h-40 w-full bg-gradient-to-br from-sky-200 via-violet-200 to-fuchsia-200">
+              {i.photo && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={i.photo} alt={i.name} className="h-full w-full object-cover" />
+              )}
+              {i.color && (
+                <div className="absolute bottom-2 left-2 flex flex-wrap gap-1">
+                  <span className="rounded-md bg-white/85 px-2 py-0.5 text-12 font-medium text-foreground backdrop-blur">{i.color}</span>
+                </div>
+              )}
+            </div>
+            <div className="space-y-3 p-4">
             <div className="flex items-start justify-between gap-2">
               <div>
                 <p className="font-medium">{i.name}</p>
                 <p className="text-12 text-muted-foreground">
-                  {[i.color, `${i.qty} pcs`, `datang ${i.arrived}`].filter(Boolean).join(" · ")}
+                  {[`${i.qty} pcs`, `datang ${i.arrived}`].filter(Boolean).join(" · ")}
                 </p>
               </div>
             </div>
@@ -145,8 +159,10 @@ export function MediaBarangClient({ items, canManage, full }: { items: Item[]; c
             ) : (
               <p className="text-12 text-muted-foreground">Menunggu admin media mengkategorikan & menjadwalkan.</p>
             )}
+            </div>
           </div>
         ))}
+        </div>
       </section>
 
       {doneItems.length > 0 && (

@@ -279,6 +279,7 @@ export async function qcDecision(
         color: clean(edits?.color, 40),
         qty: Math.max(1, Math.round(edits?.qty ?? p.qty) || 1),
         arrived: dateKeyWIB(new Date()),
+        photoKey: qcPhotoKey, // foto dokumentasi QC jadi foto barang media
         sourceRawId: id,
         createdById: ctx.userId,
       },
