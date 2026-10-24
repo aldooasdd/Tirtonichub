@@ -1,29 +1,31 @@
-# Deploy Tirtonichub di PC server (Docker Desktop + WSL2).
-# MinIO sudah jalan di host → set S3_ENDPOINT=http://host.docker.internal:9000 di .env.
+# Stack app Tirtonic di PC: Postgres + web (Next.js). Build di sini (mesin penuh, bukan cPanel).
+# cloudflared & minio jalan di compose-mu yang lain (host). web dipublish ke host:3000,
+# cloudflared route tirtonic.com -> http://host.docker.internal:3000 (lihat DEPLOY_PC.md).
 services:
-  db:
-    image: postgres:16-alpine
+  postgres:
+    image: postgres:16
+    restart: unless-stopped
     environment:
-      POSTGRES_USER: tirtonic
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD di .env}
-      POSTGRES_DB: tirtonichub
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - pgdata:/var/lib/postgresql/data
-      # Mau data Postgres di D:\server-data? ganti baris atas jadi:
-      #   - D:/server-data/postgres:/var/lib/postgresql/data
-    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
-  app:
+  web:
     build: .
-    env_file: .env
-    environment:
-      # Override DATABASE_URL dari .env → arahkan ke service db.
-      DATABASE_URL: postgresql://tirtonic:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD di .env}@db:5432/tirtonichub
-    ports:
-      - "3000:3000"
-    depends_on:
-      - db
     restart: unless-stopped
+    env_file: .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "3000:3000" # cloudflared -> host.docker.internal:3000
 
 volumes:
   pgdata:
