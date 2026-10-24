@@ -1,7 +1,7 @@
 [
   {
     "route": "/beranda",
-    "firstLoadUncompressedJsBytes": 714271,
+    "firstLoadUncompressedJsBytes": 714197,
     "firstLoadChunkPaths": [
       ".next/static/chunks/218yun3xk1rsz.js",
       ".next/static/chunks/3w6cm4g5r0zk7.js",
@@ -10,7 +10,7 @@
       ".next/static/chunks/1uiu467ekqf1b.js",
       ".next/static/chunks/3n0drtgqxmx9m.js",
       ".next/static/chunks/0g86ehmvuaub_.js",
-      ".next/static/chunks/285l4hcy6vvbv.js",
+      ".next/static/chunks/048udmcz6ct5r.js",
       ".next/static/chunks/14ur5u_zxynx8.js",
       ".next/static/chunks/06cza79ljre1d.js",
       ".next/static/chunks/1xl97uaxttk17.js",
@@ -64,7 +64,7 @@
   },
   {
     "route": "/media/hasil",
-    "firstLoadUncompressedJsBytes": 691311,
+    "firstLoadUncompressedJsBytes": 691931,
     "firstLoadChunkPaths": [
       ".next/static/chunks/218yun3xk1rsz.js",
       ".next/static/chunks/3w6cm4g5r0zk7.js",
@@ -73,7 +73,7 @@
       ".next/static/chunks/1uiu467ekqf1b.js",
       ".next/static/chunks/3n0drtgqxmx9m.js",
       ".next/static/chunks/0g86ehmvuaub_.js",
-      ".next/static/chunks/0v2nvahsime09.js",
+      ".next/static/chunks/1yj0-2zy3q6et.js",
       ".next/static/chunks/06cza79ljre1d.js",
       ".next/static/chunks/1xl97uaxttk17.js",
       ".next/static/chunks/19rwnbr1_-u2m.js",
