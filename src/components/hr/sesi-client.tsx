@@ -47,7 +47,6 @@ export function SesiClient({ sessions }: { sessions: Row[] }) {
               <TableHead>Pengguna</TableHead>
               <TableHead>Role aktif</TableHead>
               <TableHead>Perangkat</TableHead>
-              <TableHead>IP</TableHead>
               <TableHead>Terakhir aktif</TableHead>
               <TableHead className="text-right">Aksi</TableHead>
             </TableRow>
@@ -55,7 +54,7 @@ export function SesiClient({ sessions }: { sessions: Row[] }) {
           <TableBody>
             {sessions.length === 0 && (
               <TableRow>
-                <TableCell colSpan={6} className="py-10 text-center text-muted-foreground">
+                <TableCell colSpan={5} className="py-10 text-center text-muted-foreground">
                   Tidak ada sesi aktif.
                 </TableCell>
               </TableRow>
@@ -70,7 +69,6 @@ export function SesiClient({ sessions }: { sessions: Row[] }) {
                 <TableCell className="max-w-48 truncate text-muted-foreground">
                   {s.userAgent ?? "—"}
                 </TableCell>
-                <TableCell className="text-muted-foreground">{s.ip ?? "—"}</TableCell>
                 <TableCell className="whitespace-nowrap text-muted-foreground">
                   {s.lastActive}
                 </TableCell>

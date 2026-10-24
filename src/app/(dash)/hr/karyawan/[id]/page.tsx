@@ -235,13 +235,12 @@ export default async function KaryawanDetailPage({
                   <TableHead>Waktu</TableHead>
                   <TableHead>Aksi</TableHead>
                   <TableHead>Entitas</TableHead>
-                  <TableHead>IP</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {logs.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={4} className="py-10 text-center text-muted-foreground">
+                    <TableCell colSpan={3} className="py-10 text-center text-muted-foreground">
                       Belum ada aktivitas.
                     </TableCell>
                   </TableRow>
@@ -256,7 +255,6 @@ export default async function KaryawanDetailPage({
                       {l.entity}
                       {l.entityId ? ` (${l.entityId.slice(0, 8)})` : ""}
                     </TableCell>
-                    <TableCell className="text-muted-foreground">{l.ip ?? "—"}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
