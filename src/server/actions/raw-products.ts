@@ -9,6 +9,7 @@ import { makeKey, putObject } from "@/server/storage";
 import { parseNotaViaN8n, type NotaItem } from "@/server/n8n-nota";
 import { computeSellPrice } from "@/lib/pricing";
 import { notifyBosses } from "@/server/notify";
+import { dateKeyWIB } from "@/server/attendance/logic";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -252,6 +253,21 @@ export async function qcDecision(
         }
       : { status: "REJECTED" as const, qcById: ctx.userId, qcAt: new Date() };
   await prisma.rawProduct.update({ where: { id }, data });
+  // Produk lolos QC otomatis masuk ke daftar barang media (konten). Media set kategori + tier lalu jadwalkan.
+  if (decision === "STOCK") {
+    await prisma.mediaItem.upsert({
+      where: { sourceRawId: id },
+      update: {}, // sudah ada: jangan timpa editan media
+      create: {
+        name: clean(edits?.name, 200) ?? p.name,
+        color: clean(edits?.color, 40),
+        qty: Math.max(1, Math.round(edits?.qty ?? p.qty) || 1),
+        arrived: dateKeyWIB(new Date()),
+        sourceRawId: id,
+        createdById: ctx.userId,
+      },
+    });
+  }
   const { ip } = await clientMeta();
   await logActivity(
     { ...ctx, ip },

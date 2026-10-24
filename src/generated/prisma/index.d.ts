@@ -25421,6 +25421,8 @@ export namespace Prisma {
     old: boolean | null
     thumb: string | null
     photoKey: string | null
+    sourceRawId: string | null
+    scheduled: boolean | null
     createdById: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -25439,6 +25441,8 @@ export namespace Prisma {
     old: boolean | null
     thumb: string | null
     photoKey: string | null
+    sourceRawId: string | null
+    scheduled: boolean | null
     createdById: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -25457,6 +25461,8 @@ export namespace Prisma {
     old: number
     thumb: number
     photoKey: number
+    sourceRawId: number
+    scheduled: number
     createdById: number
     createdAt: number
     updatedAt: number
@@ -25485,6 +25491,8 @@ export namespace Prisma {
     old?: true
     thumb?: true
     photoKey?: true
+    sourceRawId?: true
+    scheduled?: true
     createdById?: true
     createdAt?: true
     updatedAt?: true
@@ -25503,6 +25511,8 @@ export namespace Prisma {
     old?: true
     thumb?: true
     photoKey?: true
+    sourceRawId?: true
+    scheduled?: true
     createdById?: true
     createdAt?: true
     updatedAt?: true
@@ -25521,6 +25531,8 @@ export namespace Prisma {
     old?: true
     thumb?: true
     photoKey?: true
+    sourceRawId?: true
+    scheduled?: true
     createdById?: true
     createdAt?: true
     updatedAt?: true
@@ -25617,7 +25629,7 @@ export namespace Prisma {
     id: string
     name: string
     color: string | null
-    cat: string
+    cat: string | null
     gender: string | null
     qty: number
     arrived: Date
@@ -25626,6 +25638,8 @@ export namespace Prisma {
     old: boolean
     thumb: string | null
     photoKey: string | null
+    sourceRawId: string | null
+    scheduled: boolean
     createdById: string
     createdAt: Date
     updatedAt: Date
@@ -25663,6 +25677,8 @@ export namespace Prisma {
     old?: boolean
     thumb?: boolean
     photoKey?: boolean
+    sourceRawId?: boolean
+    scheduled?: boolean
     createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -25684,6 +25700,8 @@ export namespace Prisma {
     old?: boolean
     thumb?: boolean
     photoKey?: boolean
+    sourceRawId?: boolean
+    scheduled?: boolean
     createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -25703,6 +25721,8 @@ export namespace Prisma {
     old?: boolean
     thumb?: boolean
     photoKey?: boolean
+    sourceRawId?: boolean
+    scheduled?: boolean
     createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -25722,12 +25742,14 @@ export namespace Prisma {
     old?: boolean
     thumb?: boolean
     photoKey?: boolean
+    sourceRawId?: boolean
+    scheduled?: boolean
     createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type MediaItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "color" | "cat" | "gender" | "qty" | "arrived" | "tier" | "seasonal" | "old" | "thumb" | "photoKey" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaItem"]>
+  export type MediaItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "color" | "cat" | "gender" | "qty" | "arrived" | "tier" | "seasonal" | "old" | "thumb" | "photoKey" | "sourceRawId" | "scheduled" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaItem"]>
   export type MediaItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
     tasks?: boolean | MediaItem$tasksArgs<ExtArgs>
@@ -25750,7 +25772,7 @@ export namespace Prisma {
       id: string
       name: string
       color: string | null
-      cat: string
+      cat: string | null
       gender: string | null
       qty: number
       arrived: Date
@@ -25759,6 +25781,8 @@ export namespace Prisma {
       old: boolean
       thumb: string | null
       photoKey: string | null
+      sourceRawId: string | null
+      scheduled: boolean
       createdById: string
       createdAt: Date
       updatedAt: Date
@@ -26199,6 +26223,8 @@ export namespace Prisma {
     readonly old: FieldRef<"MediaItem", 'Boolean'>
     readonly thumb: FieldRef<"MediaItem", 'String'>
     readonly photoKey: FieldRef<"MediaItem", 'String'>
+    readonly sourceRawId: FieldRef<"MediaItem", 'String'>
+    readonly scheduled: FieldRef<"MediaItem", 'Boolean'>
     readonly createdById: FieldRef<"MediaItem", 'String'>
     readonly createdAt: FieldRef<"MediaItem", 'DateTime'>
     readonly updatedAt: FieldRef<"MediaItem", 'DateTime'>
@@ -32484,6 +32510,8 @@ export namespace Prisma {
     old: 'old',
     thumb: 'thumb',
     photoKey: 'photoKey',
+    sourceRawId: 'sourceRawId',
+    scheduled: 'scheduled',
     createdById: 'createdById',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -34326,7 +34354,7 @@ export namespace Prisma {
     id?: StringFilter<"MediaItem"> | string
     name?: StringFilter<"MediaItem"> | string
     color?: StringNullableFilter<"MediaItem"> | string | null
-    cat?: StringFilter<"MediaItem"> | string
+    cat?: StringNullableFilter<"MediaItem"> | string | null
     gender?: StringNullableFilter<"MediaItem"> | string | null
     qty?: IntFilter<"MediaItem"> | number
     arrived?: DateTimeFilter<"MediaItem"> | Date | string
@@ -34335,6 +34363,8 @@ export namespace Prisma {
     old?: BoolFilter<"MediaItem"> | boolean
     thumb?: StringNullableFilter<"MediaItem"> | string | null
     photoKey?: StringNullableFilter<"MediaItem"> | string | null
+    sourceRawId?: StringNullableFilter<"MediaItem"> | string | null
+    scheduled?: BoolFilter<"MediaItem"> | boolean
     createdById?: StringFilter<"MediaItem"> | string
     createdAt?: DateTimeFilter<"MediaItem"> | Date | string
     updatedAt?: DateTimeFilter<"MediaItem"> | Date | string
@@ -34346,7 +34376,7 @@ export namespace Prisma {
     id?: SortOrder
     name?: SortOrder
     color?: SortOrderInput | SortOrder
-    cat?: SortOrder
+    cat?: SortOrderInput | SortOrder
     gender?: SortOrderInput | SortOrder
     qty?: SortOrder
     arrived?: SortOrder
@@ -34355,6 +34385,8 @@ export namespace Prisma {
     old?: SortOrder
     thumb?: SortOrderInput | SortOrder
     photoKey?: SortOrderInput | SortOrder
+    sourceRawId?: SortOrderInput | SortOrder
+    scheduled?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -34364,12 +34396,13 @@ export namespace Prisma {
 
   export type MediaItemWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    sourceRawId?: string
     AND?: MediaItemWhereInput | MediaItemWhereInput[]
     OR?: MediaItemWhereInput[]
     NOT?: MediaItemWhereInput | MediaItemWhereInput[]
     name?: StringFilter<"MediaItem"> | string
     color?: StringNullableFilter<"MediaItem"> | string | null
-    cat?: StringFilter<"MediaItem"> | string
+    cat?: StringNullableFilter<"MediaItem"> | string | null
     gender?: StringNullableFilter<"MediaItem"> | string | null
     qty?: IntFilter<"MediaItem"> | number
     arrived?: DateTimeFilter<"MediaItem"> | Date | string
@@ -34378,18 +34411,19 @@ export namespace Prisma {
     old?: BoolFilter<"MediaItem"> | boolean
     thumb?: StringNullableFilter<"MediaItem"> | string | null
     photoKey?: StringNullableFilter<"MediaItem"> | string | null
+    scheduled?: BoolFilter<"MediaItem"> | boolean
     createdById?: StringFilter<"MediaItem"> | string
     createdAt?: DateTimeFilter<"MediaItem"> | Date | string
     updatedAt?: DateTimeFilter<"MediaItem"> | Date | string
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
     tasks?: MediaTaskListRelationFilter
-  }, "id">
+  }, "id" | "sourceRawId">
 
   export type MediaItemOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
     color?: SortOrderInput | SortOrder
-    cat?: SortOrder
+    cat?: SortOrderInput | SortOrder
     gender?: SortOrderInput | SortOrder
     qty?: SortOrder
     arrived?: SortOrder
@@ -34398,6 +34432,8 @@ export namespace Prisma {
     old?: SortOrder
     thumb?: SortOrderInput | SortOrder
     photoKey?: SortOrderInput | SortOrder
+    sourceRawId?: SortOrderInput | SortOrder
+    scheduled?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -34415,7 +34451,7 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"MediaItem"> | string
     name?: StringWithAggregatesFilter<"MediaItem"> | string
     color?: StringNullableWithAggregatesFilter<"MediaItem"> | string | null
-    cat?: StringWithAggregatesFilter<"MediaItem"> | string
+    cat?: StringNullableWithAggregatesFilter<"MediaItem"> | string | null
     gender?: StringNullableWithAggregatesFilter<"MediaItem"> | string | null
     qty?: IntWithAggregatesFilter<"MediaItem"> | number
     arrived?: DateTimeWithAggregatesFilter<"MediaItem"> | Date | string
@@ -34424,6 +34460,8 @@ export namespace Prisma {
     old?: BoolWithAggregatesFilter<"MediaItem"> | boolean
     thumb?: StringNullableWithAggregatesFilter<"MediaItem"> | string | null
     photoKey?: StringNullableWithAggregatesFilter<"MediaItem"> | string | null
+    sourceRawId?: StringNullableWithAggregatesFilter<"MediaItem"> | string | null
+    scheduled?: BoolWithAggregatesFilter<"MediaItem"> | boolean
     createdById?: StringWithAggregatesFilter<"MediaItem"> | string
     createdAt?: DateTimeWithAggregatesFilter<"MediaItem"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MediaItem"> | Date | string
@@ -36484,7 +36522,7 @@ export namespace Prisma {
     id?: string
     name: string
     color?: string | null
-    cat: string
+    cat?: string | null
     gender?: string | null
     qty?: number
     arrived: Date | string
@@ -36493,6 +36531,8 @@ export namespace Prisma {
     old?: boolean
     thumb?: string | null
     photoKey?: string | null
+    sourceRawId?: string | null
+    scheduled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     createdBy: UserCreateNestedOneWithoutMediaItemsInput
@@ -36503,7 +36543,7 @@ export namespace Prisma {
     id?: string
     name: string
     color?: string | null
-    cat: string
+    cat?: string | null
     gender?: string | null
     qty?: number
     arrived: Date | string
@@ -36512,6 +36552,8 @@ export namespace Prisma {
     old?: boolean
     thumb?: string | null
     photoKey?: string | null
+    sourceRawId?: string | null
+    scheduled?: boolean
     createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -36522,7 +36564,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
-    cat?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     arrived?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36531,6 +36573,8 @@ export namespace Prisma {
     old?: BoolFieldUpdateOperationsInput | boolean
     thumb?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdBy?: UserUpdateOneRequiredWithoutMediaItemsNestedInput
@@ -36541,7 +36585,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
-    cat?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     arrived?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36550,6 +36594,8 @@ export namespace Prisma {
     old?: BoolFieldUpdateOperationsInput | boolean
     thumb?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduled?: BoolFieldUpdateOperationsInput | boolean
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36560,7 +36606,7 @@ export namespace Prisma {
     id?: string
     name: string
     color?: string | null
-    cat: string
+    cat?: string | null
     gender?: string | null
     qty?: number
     arrived: Date | string
@@ -36569,6 +36615,8 @@ export namespace Prisma {
     old?: boolean
     thumb?: string | null
     photoKey?: string | null
+    sourceRawId?: string | null
+    scheduled?: boolean
     createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -36578,7 +36626,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
-    cat?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     arrived?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36587,6 +36635,8 @@ export namespace Prisma {
     old?: BoolFieldUpdateOperationsInput | boolean
     thumb?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -36595,7 +36645,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
-    cat?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     arrived?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -36604,6 +36654,8 @@ export namespace Prisma {
     old?: BoolFieldUpdateOperationsInput | boolean
     thumb?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduled?: BoolFieldUpdateOperationsInput | boolean
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -38445,6 +38497,8 @@ export namespace Prisma {
     old?: SortOrder
     thumb?: SortOrder
     photoKey?: SortOrder
+    sourceRawId?: SortOrder
+    scheduled?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -38467,6 +38521,8 @@ export namespace Prisma {
     old?: SortOrder
     thumb?: SortOrder
     photoKey?: SortOrder
+    sourceRawId?: SortOrder
+    scheduled?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -38485,6 +38541,8 @@ export namespace Prisma {
     old?: SortOrder
     thumb?: SortOrder
     photoKey?: SortOrder
+    sourceRawId?: SortOrder
+    scheduled?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -41194,7 +41252,7 @@ export namespace Prisma {
     id?: string
     name: string
     color?: string | null
-    cat: string
+    cat?: string | null
     gender?: string | null
     qty?: number
     arrived: Date | string
@@ -41203,6 +41261,8 @@ export namespace Prisma {
     old?: boolean
     thumb?: string | null
     photoKey?: string | null
+    sourceRawId?: string | null
+    scheduled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tasks?: MediaTaskCreateNestedManyWithoutItemInput
@@ -41212,7 +41272,7 @@ export namespace Prisma {
     id?: string
     name: string
     color?: string | null
-    cat: string
+    cat?: string | null
     gender?: string | null
     qty?: number
     arrived: Date | string
@@ -41221,6 +41281,8 @@ export namespace Prisma {
     old?: boolean
     thumb?: string | null
     photoKey?: string | null
+    sourceRawId?: string | null
+    scheduled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     tasks?: MediaTaskUncheckedCreateNestedManyWithoutItemInput
@@ -41760,7 +41822,7 @@ export namespace Prisma {
     id?: StringFilter<"MediaItem"> | string
     name?: StringFilter<"MediaItem"> | string
     color?: StringNullableFilter<"MediaItem"> | string | null
-    cat?: StringFilter<"MediaItem"> | string
+    cat?: StringNullableFilter<"MediaItem"> | string | null
     gender?: StringNullableFilter<"MediaItem"> | string | null
     qty?: IntFilter<"MediaItem"> | number
     arrived?: DateTimeFilter<"MediaItem"> | Date | string
@@ -41769,6 +41831,8 @@ export namespace Prisma {
     old?: BoolFilter<"MediaItem"> | boolean
     thumb?: StringNullableFilter<"MediaItem"> | string | null
     photoKey?: StringNullableFilter<"MediaItem"> | string | null
+    sourceRawId?: StringNullableFilter<"MediaItem"> | string | null
+    scheduled?: BoolFilter<"MediaItem"> | boolean
     createdById?: StringFilter<"MediaItem"> | string
     createdAt?: DateTimeFilter<"MediaItem"> | Date | string
     updatedAt?: DateTimeFilter<"MediaItem"> | Date | string
@@ -44876,7 +44940,7 @@ export namespace Prisma {
     id?: string
     name: string
     color?: string | null
-    cat: string
+    cat?: string | null
     gender?: string | null
     qty?: number
     arrived: Date | string
@@ -44885,6 +44949,8 @@ export namespace Prisma {
     old?: boolean
     thumb?: string | null
     photoKey?: string | null
+    sourceRawId?: string | null
+    scheduled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     createdBy: UserCreateNestedOneWithoutMediaItemsInput
@@ -44894,7 +44960,7 @@ export namespace Prisma {
     id?: string
     name: string
     color?: string | null
-    cat: string
+    cat?: string | null
     gender?: string | null
     qty?: number
     arrived: Date | string
@@ -44903,6 +44969,8 @@ export namespace Prisma {
     old?: boolean
     thumb?: string | null
     photoKey?: string | null
+    sourceRawId?: string | null
+    scheduled?: boolean
     createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -44928,7 +44996,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
-    cat?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     arrived?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44937,6 +45005,8 @@ export namespace Prisma {
     old?: BoolFieldUpdateOperationsInput | boolean
     thumb?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdBy?: UserUpdateOneRequiredWithoutMediaItemsNestedInput
@@ -44946,7 +45016,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
-    cat?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     arrived?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44955,6 +45025,8 @@ export namespace Prisma {
     old?: BoolFieldUpdateOperationsInput | boolean
     thumb?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduled?: BoolFieldUpdateOperationsInput | boolean
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45287,7 +45359,7 @@ export namespace Prisma {
     id?: string
     name: string
     color?: string | null
-    cat: string
+    cat?: string | null
     gender?: string | null
     qty?: number
     arrived: Date | string
@@ -45296,6 +45368,8 @@ export namespace Prisma {
     old?: boolean
     thumb?: string | null
     photoKey?: string | null
+    sourceRawId?: string | null
+    scheduled?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -45840,7 +45914,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
-    cat?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     arrived?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45849,6 +45923,8 @@ export namespace Prisma {
     old?: BoolFieldUpdateOperationsInput | boolean
     thumb?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: MediaTaskUpdateManyWithoutItemNestedInput
@@ -45858,7 +45934,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
-    cat?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     arrived?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45867,6 +45943,8 @@ export namespace Prisma {
     old?: BoolFieldUpdateOperationsInput | boolean
     thumb?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: MediaTaskUncheckedUpdateManyWithoutItemNestedInput
@@ -45876,7 +45954,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
     color?: NullableStringFieldUpdateOperationsInput | string | null
-    cat?: StringFieldUpdateOperationsInput | string
+    cat?: NullableStringFieldUpdateOperationsInput | string | null
     gender?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     arrived?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -45885,6 +45963,8 @@ export namespace Prisma {
     old?: BoolFieldUpdateOperationsInput | boolean
     thumb?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
+    scheduled?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

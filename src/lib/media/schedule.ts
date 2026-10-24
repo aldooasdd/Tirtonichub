@@ -7,7 +7,7 @@
 
 export type Item = {
   id: string;
-  cat: string;
+  cat?: string | null; // null = belum dikategorikan (auto-import dari QC)
   tier?: "EX" | "LS" | "JP" | null;
   qty?: number;
   seasonal?: boolean;
@@ -577,7 +577,10 @@ export function makeScheduler(ctx: Ctx): Sched {
   // urutan selang-seling antar kategori dari urutan acak
   function interleave(rows: Item[], order: number[]) {
     const g: Record<string, number[]> = {};
-    order.forEach((i) => (g[rows[i].cat] = g[rows[i].cat] || []).push(i));
+    order.forEach((i) => {
+      const c = rows[i].cat || "lainnya";
+      (g[c] = g[c] || []).push(i);
+    });
     const gs = Object.values(g).sort((a, b) => b.length - a.length);
     const out: number[] = [];
     while (gs.some((x) => x.length)) gs.forEach((x) => x.length && out.push(x.shift()!));
@@ -606,7 +609,7 @@ export function makeScheduler(ctx: Ctx): Sched {
         const due = ed.d > sla ? ed.d : sla;
         let pf = addDays(ed.d, postGap(rankOfItem(r)));
         if (slow && pf < addWork(base, JP_LOW.post)) pf = addWork(base, JP_LOW.post);
-        const post = POSTED.includes(t) ? pickPost(kindOf(t), pf, it.key, use, r.cat, false, t) : "";
+        const post = POSTED.includes(t) ? pickPost(kindOf(t), pf, it.key, use, r.cat || undefined, false, t) : "";
         it.tasks.push({ type: t, due, late: ed.d > sla, target: T.target == null ? "" : T.target === 0 ? b0 : addWork(base, T.target), producer: sh.prod, editor: ed.ed, talent: sh.tal, shootPlan: sh.d, editPlan: ed.d, postAt: post });
       }),
     );

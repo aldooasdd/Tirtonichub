@@ -400,7 +400,7 @@ model MediaItem {
   id          String    @id @default(cuid())
   name        String
   color       String?
-  cat         String // sepatu/raket/tas/baju/celana/aksesoris/lainnya
+  cat         String? // sepatu/raket/... (null = belum dikategorikan; diisi media sebelum dijadwalkan)
   gender      String? // men/women/unisex (hanya sepatu/baju/celana)
   qty         Int       @default(0)
   arrived     DateTime  @db.Date
@@ -409,6 +409,8 @@ model MediaItem {
   old         Boolean   @default(false) // stok lama (hasil IDCC)
   thumb       String? // thumbnail kecil (base64) untuk tampil cepat
   photoKey    String? // foto besar di storage
+  sourceRawId String?   @unique // RawProduct asal (auto dari QC lolos); anti-duplikat
+  scheduled   Boolean   @default(false) // sudah dibuatkan tugas konten
   createdById String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt

@@ -359,6 +359,8 @@ exports.Prisma.MediaItemScalarFieldEnum = {
   old: 'old',
   thumb: 'thumb',
   photoKey: 'photoKey',
+  sourceRawId: 'sourceRawId',
+  scheduled: 'scheduled',
   createdById: 'createdById',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
