@@ -1,5 +1,7 @@
+import type { Prisma } from "@/generated/prisma";
 import { requireStock } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
+import { Input } from "@/components/ui/input";
 import {
   Table,
   TableBody,
@@ -11,10 +13,21 @@ import {
 
 const rupiah = new Intl.NumberFormat("id-ID");
 
-export default async function StokPage() {
+export default async function StokPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ q?: string }>;
+}) {
   await requireStock();
+  const q = (await searchParams).q?.trim() ?? "";
+  const like: Prisma.StringFilter = { contains: q, mode: "insensitive" };
   const rows = await prisma.rawProduct.findMany({
-    where: { status: "STOCK" },
+    where: {
+      status: "STOCK",
+      ...(q
+        ? { OR: [{ name: like }, { sku: like }, { brand: like }, { color: like }, { supplier: like }] }
+        : {}),
+    },
     orderBy: { qcAt: "desc" },
     include: { qcBy: { select: { fullName: true } } },
   });
@@ -22,6 +35,9 @@ export default async function StokPage() {
   return (
     <div className="space-y-4">
       <h1 className="text-24 font-semibold">Stok</h1>
+      <form className="max-w-sm">
+        <Input name="q" defaultValue={q} placeholder="Cari nama / SKU / merek / supplier…" />
+      </form>
       <div className="rounded-lg border bg-card">
         <Table>
           <TableHeader>
