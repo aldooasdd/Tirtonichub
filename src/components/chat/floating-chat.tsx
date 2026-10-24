@@ -1,12 +1,13 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
-import { MessageSquare, X, ChevronLeft, Send } from "lucide-react";
+import { MessageSquare, X, ChevronLeft, Send, SquarePen } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { sendMessage, markRoomRead } from "@/server/actions/chat";
+import { sendMessage, markRoomRead, startDM } from "@/server/actions/chat";
 import type { RoomListItem } from "@/server/chat/queries";
 
 export type Presence = { id: string; name: string; late: boolean };
+type Member = { id: string; name: string };
 type Msg = {
   id: string;
   body: string | null;
@@ -29,14 +30,17 @@ function hhmm(iso: string) {
 export function FloatingChat({
   rooms,
   presence,
+  members,
   me,
 }: {
   rooms: RoomListItem[];
   presence: Presence[];
+  members: Member[];
   me: string;
 }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<RoomListItem | null>(null);
+  const [picking, setPicking] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [text, setText] = useState("");
   const afterRef = useRef<string | undefined>(undefined);
@@ -84,6 +88,13 @@ export function FloatingChat({
     poll(active.id, false);
   }
 
+  async function openDM(m: Member) {
+    const r = await startDM(m.id);
+    if (!r.ok || !r.id) return;
+    setPicking(false);
+    setActive({ id: r.id, type: "DM", name: m.name, lastBody: null, lastAt: null, unread: 0 });
+  }
+
   // Launcher (desktop only)
   if (!open) {
     return (
@@ -115,22 +126,37 @@ export function FloatingChat({
       {/* Header */}
       <div className="flex items-center justify-between border-b border-white/30 px-4 py-3 dark:border-white/10">
         <div className="flex items-center gap-2">
-          {active && (
-            <button onClick={() => setActive(null)} className="rounded-full p-1 hover:bg-black/5 dark:hover:bg-white/10">
+          {(active || picking) && (
+            <button
+              onClick={() => (picking ? setPicking(false) : setActive(null))}
+              className="rounded-full p-1 hover:bg-black/5 dark:hover:bg-white/10"
+            >
               <ChevronLeft className="h-5 w-5" />
             </button>
           )}
-          <span className="font-semibold">{active ? active.name : "Chat"}</span>
+          <span className="font-semibold">{active ? active.name : picking ? "Pesan baru" : "Chat"}</span>
         </div>
-        <button
-          onClick={() => {
-            setOpen(false);
-            setActive(null);
-          }}
-          className="rounded-full p-1 hover:bg-black/5 dark:hover:bg-white/10"
-        >
-          <X className="h-5 w-5" />
-        </button>
+        <div className="flex items-center gap-1">
+          {!active && !picking && (
+            <button
+              onClick={() => setPicking(true)}
+              title="Pesan baru"
+              className="rounded-full p-1 hover:bg-black/5 dark:hover:bg-white/10"
+            >
+              <SquarePen className="h-5 w-5" />
+            </button>
+          )}
+          <button
+            onClick={() => {
+              setOpen(false);
+              setActive(null);
+              setPicking(false);
+            }}
+            className="rounded-full p-1 hover:bg-black/5 dark:hover:bg-white/10"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        </div>
       </div>
 
       {active ? (
@@ -179,6 +205,29 @@ export function FloatingChat({
             </button>
           </div>
         </>
+      ) : picking ? (
+        <div className="flex-1 overflow-y-auto">
+          {members.filter((m) => m.id !== me).length === 0 ? (
+            <p className="px-4 py-10 text-center text-13 text-muted-foreground">Belum ada anggota lain.</p>
+          ) : (
+            <div className="divide-y divide-white/20 dark:divide-white/5">
+              {members
+                .filter((m) => m.id !== me)
+                .map((m) => (
+                  <button
+                    key={m.id}
+                    onClick={() => openDM(m)}
+                    className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-black/5 dark:hover:bg-white/5"
+                  >
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/15 text-13 font-semibold text-primary">
+                      {initials(m.name)}
+                    </div>
+                    <span className="truncate font-medium">{m.name}</span>
+                  </button>
+                ))}
+            </div>
+          )}
+        </div>
       ) : (
         <div className="flex-1 overflow-y-auto">
           {/* Hadir hari ini */}

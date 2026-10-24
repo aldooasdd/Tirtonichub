@@ -38,7 +38,7 @@ export function AppShell({
         </div>
       </div>
       <BottomNav />
-      <FloatingChat rooms={rooms} presence={presence} me={me} />
+      <FloatingChat rooms={rooms} presence={presence} members={members} me={me} />
     </div>
   );
 }
