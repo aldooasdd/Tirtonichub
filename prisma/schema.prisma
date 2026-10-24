@@ -89,6 +89,7 @@ model User {
   chatMessages  ChatMessage[]
   rawCreated    RawProduct[]   @relation("RawProductCreator")
   rawQc         RawProduct[]   @relation("RawProductQc")
+  calendarEvents CalendarEvent[] @relation("CalendarCreator")
 
   @@index([branchId])
 }
@@ -305,6 +306,25 @@ model ChatMessage {
   sender User     @relation(fields: [senderId], references: [id])
 
   @@index([roomId, createdAt])
+}
+
+// Event manual kalender (hari libur & cuti/izin diturunkan dari model lain, tak disimpan di sini).
+model CalendarEvent {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  color       String   @default("blue")
+  category    String?
+  tags        String[] @default([])
+  createdById String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  createdBy User @relation("CalendarCreator", fields: [createdById], references: [id])
+
+  @@index([startTime])
 }
 
 // --- Finance: produk mentah dari nota belanja ---

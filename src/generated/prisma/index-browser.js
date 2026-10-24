@@ -291,6 +291,20 @@ exports.Prisma.ChatMessageScalarFieldEnum = {
   deletedAt: 'deletedAt'
 };
 
+exports.Prisma.CalendarEventScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  description: 'description',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  color: 'color',
+  category: 'category',
+  tags: 'tags',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.RawProductScalarFieldEnum = {
   id: 'id',
   batchId: 'batchId',
@@ -399,6 +413,7 @@ exports.Prisma.ModelName = {
   ChatRoom: 'ChatRoom',
   ChatMember: 'ChatMember',
   ChatMessage: 'ChatMessage',
+  CalendarEvent: 'CalendarEvent',
   RawProduct: 'RawProduct'
 };
 

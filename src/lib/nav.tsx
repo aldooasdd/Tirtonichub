@@ -16,6 +16,7 @@ import {
   Receipt,
   ClipboardCheck,
   Boxes,
+  CalendarDays,
   type LucideIcon,
 } from "lucide-react";
 import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, roleAttends, type RoleCode } from "./roles";
@@ -40,6 +41,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
   }
   umum.push({ label: "Pengajuan", href: "/pengajuan", icon: FileText });
   umum.push({ label: "Chat", href: "/chat", icon: MessagesSquare });
+  umum.push({ label: "Kalender", href: "/kalender", icon: CalendarDays });
   umum.push({ label: "Notifikasi", href: "/notifikasi", icon: Bell });
   umum.push({ label: "Profil", href: "/profil", icon: User });
 
