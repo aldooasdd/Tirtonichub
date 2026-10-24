@@ -137,6 +137,52 @@ export async function deleteRawProduct(id: string): Promise<ActionResult> {
   return { ok: true };
 }
 
+/** Simpan banyak kartu DRAFT milik sendiri sekaligus. */
+export async function saveRawItems(items: Array<SaveItem & { id: string }>): Promise<ActionResult> {
+  const ctx = await requireFinance();
+  const own = await prisma.rawProduct.findMany({
+    where: { id: { in: items.map((i) => i.id) }, createdById: ctx.userId, status: "DRAFT" },
+    select: { id: true },
+  });
+  const allowed = new Set(own.map((o) => o.id));
+  await prisma.$transaction(
+    items
+      .filter((i) => allowed.has(i.id))
+      .map((i) => {
+        const unitPrice = Math.max(0, Math.round(i.unitPrice) || 0);
+        return prisma.rawProduct.update({
+          where: { id: i.id },
+          data: {
+            name: i.name.trim().slice(0, 200),
+            brand: clean(i.brand, 80),
+            color: clean(i.color, 40),
+            size: clean(i.size, 40),
+            sku: clean(i.sku, 60),
+            qty: Math.max(1, Math.round(i.qty) || 1),
+            unit: i.unit?.trim() || null,
+            unitPrice,
+            sellPrice: computeSellPrice(unitPrice),
+            supplier: i.supplier?.trim() || null,
+            notaDate: i.notaDate ? new Date(i.notaDate) : null,
+          },
+        });
+      }),
+  );
+  return { ok: true };
+}
+
+/** Hapus seluruh kartu DRAFT dalam satu batch milik sendiri. */
+export async function deleteBatch(batchId: string): Promise<ActionResult> {
+  const ctx = await requireFinance();
+  const r = await prisma.rawProduct.deleteMany({
+    where: { batchId, createdById: ctx.userId, status: "DRAFT" },
+  });
+  if (r.count === 0) return { ok: false, message: "Tidak ada draft untuk dihapus." };
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "delete", entity: "RawProduct", entityId: batchId });
+  return { ok: true };
+}
+
 /** Kirim satu kartu DRAFT milik sendiri ke Quality Control. */
 export async function submitItemToQc(id: string): Promise<ActionResult> {
   const ctx = await requireFinance();

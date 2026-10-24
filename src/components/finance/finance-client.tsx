@@ -11,8 +11,10 @@ import { computeSellPrice } from "@/lib/pricing";
 import {
   scanNota,
   saveRawBatch,
+  saveRawItems,
   updateRawProduct,
   deleteRawProduct,
+  deleteBatch,
   submitItemToQc,
   submitBatchToQc,
 } from "@/server/actions/raw-products";
@@ -138,9 +140,10 @@ export function FinanceClient({ items }: { items: Item[] }) {
       {msg && <p className="rounded-lg border bg-card p-3 text-14 text-muted-foreground">{msg}</p>}
 
       {/* Draft per batch — editable, bisa kirim ke QC */}
-      {draftBatches.map((bid) => (
-        <DraftBatch key={bid} batchId={bid} items={drafts.filter((d) => d.batchId === bid)} />
-      ))}
+      {draftBatches.map((bid) => {
+        const bi = drafts.filter((d) => d.batchId === bid);
+        return <DraftBatch key={bid + ":" + bi.map((i) => i.id).join(",")} batchId={bid} items={bi} />;
+      })}
 
       {/* Sudah dikirim / diproses */}
       {others.length > 0 && (
@@ -184,14 +187,94 @@ export function FinanceClient({ items }: { items: Item[] }) {
   );
 }
 
+type Row = {
+  id: string;
+  name: string;
+  brand: string;
+  color: string;
+  size: string;
+  sku: string;
+  qty: string;
+  unit: string;
+  unitPrice: string;
+  supplier: string;
+  notaDate: string;
+};
+function toRow(i: Item): Row {
+  return {
+    id: i.id,
+    name: i.name,
+    brand: i.brand ?? "",
+    color: i.color ?? "",
+    size: i.size ?? "",
+    sku: i.sku ?? "",
+    qty: String(i.qty),
+    unit: i.unit ?? "",
+    unitPrice: String(i.unitPrice),
+    supplier: i.supplier ?? "",
+    notaDate: i.notaDate ?? "",
+  };
+}
+function toFields(r: Row) {
+  return {
+    name: r.name,
+    brand: r.brand || null,
+    color: r.color || null,
+    size: r.size || null,
+    sku: r.sku || null,
+    qty: Number(r.qty),
+    unit: r.unit || null,
+    unitPrice: Number(r.unitPrice),
+    supplier: r.supplier || null,
+    notaDate: r.notaDate || null,
+  };
+}
+
 function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
   const router = useRouter();
   const [pending, start] = useTransition();
+  const [rows, setRows] = useState<Row[]>(() => items.map(toRow));
 
-  function kirim() {
-    if (!confirm("Kirim semua item batch ini ke Quality Control?")) return;
+  function setField(id: string, key: keyof Row, val: string) {
+    setRows((rs) => rs.map((r) => (r.id === id ? { ...r, [key]: val } : r)));
+  }
+
+  function saveAll() {
     start(async () => {
-      const r = await submitBatchToQc(batchId);
+      const r = await saveRawItems(rows.map((row) => ({ id: row.id, ...toFields(row) })));
+      if (!r.ok) {
+        alert(r.message);
+        return;
+      }
+      const q = await submitBatchToQc(batchId);
+      if (!q.ok) alert(q.message);
+      router.refresh();
+    });
+  }
+  function deleteAll() {
+    if (!confirm(`Hapus semua ${rows.length} kartu di batch ini?`)) return;
+    start(async () => {
+      const r = await deleteBatch(batchId);
+      if (!r.ok) alert(r.message);
+      router.refresh();
+    });
+  }
+  function saveOne(row: Row) {
+    start(async () => {
+      const r = await updateRawProduct(row.id, toFields(row));
+      if (!r.ok) {
+        alert(r.message);
+        return;
+      }
+      const q = await submitItemToQc(row.id);
+      if (!q.ok) alert(q.message);
+      router.refresh();
+    });
+  }
+  function deleteOne(id: string) {
+    if (!confirm("Hapus kartu ini?")) return;
+    start(async () => {
+      const r = await deleteRawProduct(id);
       if (!r.ok) alert(r.message);
       router.refresh();
     });
@@ -199,93 +282,46 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
 
   return (
     <div className="space-y-3 rounded-lg border bg-card p-4">
-      <div className="flex items-center justify-between">
-        <Badge variant="outline">Draft · {items.length} item</Badge>
-        <Button size="sm" disabled={pending} onClick={kirim}>
-          Kirim ke QC
-        </Button>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <Badge variant="outline">Draft · {rows.length} item</Badge>
+        <div className="flex gap-2">
+          <Button size="sm" disabled={pending} onClick={saveAll}>
+            Simpan semua & Kirim ke QC
+          </Button>
+          <Button size="sm" variant="ghost" disabled={pending} onClick={deleteAll}>
+            <Trash2 className="mr-1 h-4 w-4" /> Hapus semua
+          </Button>
+        </div>
       </div>
-      {items.map((i) => (
-        <DraftCard key={i.id} item={i} />
+      {rows.map((row) => (
+        <div key={row.id} className="space-y-2 rounded-md border p-3">
+          <Input value={row.name} onChange={(e) => setField(row.id, "name", e.target.value)} placeholder="Nama barang" />
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <Input value={row.brand} onChange={(e) => setField(row.id, "brand", e.target.value)} placeholder="Merek" />
+            <Input value={row.color} onChange={(e) => setField(row.id, "color", e.target.value)} placeholder="Warna" />
+            <Input value={row.size} onChange={(e) => setField(row.id, "size", e.target.value)} placeholder="Ukuran" />
+            <Input value={row.sku} onChange={(e) => setField(row.id, "sku", e.target.value)} placeholder="SKU" />
+          </div>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+            <Input type="number" value={row.qty} onChange={(e) => setField(row.id, "qty", e.target.value)} placeholder="Qty" />
+            <Input value={row.unit} onChange={(e) => setField(row.id, "unit", e.target.value)} placeholder="Satuan (pcs)" />
+            <Input type="number" value={row.unitPrice} onChange={(e) => setField(row.id, "unitPrice", e.target.value)} placeholder="Harga/unit" />
+            <Input type="date" value={row.notaDate} onChange={(e) => setField(row.id, "notaDate", e.target.value)} />
+          </div>
+          <Input value={row.supplier} onChange={(e) => setField(row.id, "supplier", e.target.value)} placeholder="Supplier" />
+          <p className="text-12 text-muted-foreground">
+            Harga jual (×135%×115%, bulat 5rb): Rp {rupiah.format(computeSellPrice(Number(row.unitPrice) || 0))}
+          </p>
+          <div className="flex gap-2">
+            <Button size="sm" variant="secondary" className="flex-1" disabled={pending} onClick={() => saveOne(row)}>
+              Simpan & Kirim ke QC
+            </Button>
+            <Button size="sm" variant="ghost" disabled={pending} onClick={() => deleteOne(row.id)}>
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
       ))}
-    </div>
-  );
-}
-
-function DraftCard({ item }: { item: Item }) {
-  const router = useRouter();
-  const [pending, start] = useTransition();
-  const [name, setName] = useState(item.name);
-  const [brand, setBrand] = useState(item.brand ?? "");
-  const [color, setColor] = useState(item.color ?? "");
-  const [size, setSize] = useState(item.size ?? "");
-  const [sku, setSku] = useState(item.sku ?? "");
-  const [qty, setQty] = useState(String(item.qty));
-  const [unit, setUnit] = useState(item.unit ?? "");
-  const [unitPrice, setUnitPrice] = useState(String(item.unitPrice));
-  const [supplier, setSupplier] = useState(item.supplier ?? "");
-  const [notaDate, setNotaDate] = useState(item.notaDate ?? "");
-
-  function save() {
-    start(async () => {
-      const r = await updateRawProduct(item.id, {
-        name,
-        brand: brand || null,
-        color: color || null,
-        size: size || null,
-        sku: sku || null,
-        qty: Number(qty),
-        unit: unit || null,
-        unitPrice: Number(unitPrice),
-        supplier: supplier || null,
-        notaDate: notaDate || null,
-      });
-      if (!r.ok) {
-        alert(r.message);
-        return;
-      }
-      // Simpan sekalian kirim kartu ini ke QC.
-      const q = await submitItemToQc(item.id);
-      if (!q.ok) alert(q.message);
-      router.refresh();
-    });
-  }
-  function hapus() {
-    if (!confirm("Hapus kartu ini?")) return;
-    start(async () => {
-      const r = await deleteRawProduct(item.id);
-      if (!r.ok) alert(r.message);
-      router.refresh();
-    });
-  }
-
-  return (
-    <div className="space-y-2 rounded-md border p-3">
-      <Input value={name} onChange={(e) => setName(e.target.value)} placeholder="Nama barang" />
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-        <Input value={brand} onChange={(e) => setBrand(e.target.value)} placeholder="Merek" />
-        <Input value={color} onChange={(e) => setColor(e.target.value)} placeholder="Warna" />
-        <Input value={size} onChange={(e) => setSize(e.target.value)} placeholder="Ukuran" />
-        <Input value={sku} onChange={(e) => setSku(e.target.value)} placeholder="SKU" />
-      </div>
-      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-        <Input type="number" value={qty} onChange={(e) => setQty(e.target.value)} placeholder="Qty" />
-        <Input value={unit} onChange={(e) => setUnit(e.target.value)} placeholder="Satuan (pcs)" />
-        <Input type="number" value={unitPrice} onChange={(e) => setUnitPrice(e.target.value)} placeholder="Harga/unit" />
-        <Input type="date" value={notaDate} onChange={(e) => setNotaDate(e.target.value)} />
-      </div>
-      <Input value={supplier} onChange={(e) => setSupplier(e.target.value)} placeholder="Supplier" />
-      <p className="text-12 text-muted-foreground">
-        Harga jual (×135%×115%, bulat 5rb): Rp {rupiah.format(computeSellPrice(Number(unitPrice) || 0))}
-      </p>
-      <div className="flex gap-2">
-        <Button size="sm" variant="secondary" className="flex-1" disabled={pending} onClick={save}>
-          Simpan & Kirim ke QC
-        </Button>
-        <Button size="sm" variant="ghost" disabled={pending} onClick={hapus}>
-          <Trash2 className="h-4 w-4" />
-        </Button>
-      </div>
     </div>
   );
 }
