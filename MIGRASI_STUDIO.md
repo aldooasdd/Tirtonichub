@@ -10,7 +10,7 @@ tampilan sama, tapi login, absen, akun, barang dari QC, foto, dan data memakai T
 - `src/server/studio/rules.ts` = aturan akses (port dari firestore.rules; ada test).
 - `src/server/studio/map.ts` = dokumen UI ⇄ tabel Media (MediaItem, MediaTask, MediaMember, …).
   Isian tanpa kolom disimpan di `extra` (JSON) supaya tidak ada yang hilang.
-- Wajib absen hari ini sebelum membuka /studio, kecuali BOSS, hari libur pribadi
+- (Saat ini DIMATIKAN; nyalakan dengan `STUDIO_WAJIB_ABSEN=1` di `.env` lalu restart container.) Wajib absen hari ini sebelum membuka /studio, kecuali BOSS, hari libur pribadi
   (`MediaMember.offDays`, 0=Min…6=Sab), atau tanggal merah (`Holiday`).
 - Menu sidebar Media → **Tirtonic Studio** membuka `/studio`.
 - Barang yang lolos QC masuk sebagai "Dari QC · belum dijadwalkan"; admin menekan
