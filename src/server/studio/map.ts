@@ -18,10 +18,10 @@ const createdOf = (d: Doc) => (n(d.createdAt) > 0 ? { createdAt: new Date(n(d.cr
 const extraOf = (v: unknown): Doc => (v && typeof v === "object" && !Array.isArray(v) ? (v as Doc) : {});
 
 // ---------- items ----------
-const ITEM_KEYS = ["name", "color", "cat", "gender", "qty", "arrived", "tier", "seasonal", "old", "thumb", "scheduled", "createdAt", "updatedAt"];
-type ItemRow = { name: string; color: string | null; cat: string | null; gender: string | null; qty: number; arrived: Date; tier: string; seasonal: boolean; old: boolean; thumb: string | null; scheduled: boolean; extra: unknown; createdAt: Date; updatedAt: Date };
+const ITEM_KEYS = ["name", "color", "cat", "gender", "qty", "arrived", "tier", "seasonal", "old", "thumb", "photo", "scheduled", "createdAt", "updatedAt"];
+type ItemRow = { name: string; color: string | null; cat: string | null; gender: string | null; qty: number; arrived: Date; tier: string; seasonal: boolean; old: boolean; thumb: string | null; photoKey?: string | null; scheduled: boolean; extra: unknown; createdAt: Date; updatedAt: Date };
 export function itemToDoc(r: ItemRow): Doc {
-  return { ...extraOf(r.extra), name: r.name, color: r.color ?? "", cat: r.cat ?? "", gender: r.gender ?? "", qty: r.qty, arrived: ymd(r.arrived), tier: r.tier, seasonal: r.seasonal, old: r.old, thumb: r.thumb ?? "", scheduled: r.scheduled, createdAt: ms(r.createdAt), updatedAt: ms(r.updatedAt) };
+  return { ...extraOf(r.extra), name: r.name, color: r.color ?? "", cat: r.cat ?? "", gender: r.gender ?? "", qty: r.qty, arrived: ymd(r.arrived), tier: r.tier, seasonal: r.seasonal, old: r.old, thumb: r.thumb ?? "", photo: r.photoKey ? "/api/file?key=" + encodeURIComponent(r.photoKey) : "", scheduled: r.scheduled, createdAt: ms(r.createdAt), updatedAt: ms(r.updatedAt) };
 }
 export function itemFromDoc(d: Doc) {
   const tier = ["EX", "LS", "JP"].includes(String(d.tier)) ? (d.tier as "EX" | "LS" | "JP") : "JP";

@@ -270,6 +270,20 @@ export async function uploadAsset(u: StudioUser, itemId: string, file: File) {
   const a = await prisma.mediaAsset.create({ data: { itemId, name: file.name.slice(0, 200) || "file", key, mime: file.type || "application/octet-stream", size: file.size, createdById: u.userId } });
   return { path: "assets/" + a.id, doc: assetToDoc(a, await userNames([u.userId])) };
 }
+/** Foto sampul barang (acuan kartu & folder Hasil Konten): disimpan apa adanya, maks 5 MB. Admin/Admin 2. */
+export const MAX_COVER = 5 * 1024 * 1024;
+const COVER_TYPES: Record<string, string> = { "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp" };
+export async function uploadCover(u: StudioUser, itemId: string, file: File) {
+  if (!u.staff) throw new StudioError("permission-denied", "Hanya admin yang bisa mengganti foto barang.");
+  const ext = COVER_TYPES[file.type];
+  if (!ext) throw new StudioError("invalid-argument", "Foto harus JPG, PNG, atau WEBP.");
+  if (file.size > MAX_COVER) throw new StudioError("invalid-argument", "Foto sampul maksimal 5 MB.");
+  const key = makeKey("barang", ext);
+  await putObject(key, Buffer.from(await file.arrayBuffer()), file.type);
+  const r = await prisma.mediaItem.updateMany({ where: { id: itemId }, data: { photoKey: key } });
+  if (!r.count) throw new StudioError("not-found", "Barang tidak ditemukan.");
+  return { path: "items/" + itemId, doc: await getRaw("items/" + itemId) };
+}
 // Cloudflare Tunnel menolak permintaan > 100 MB; sisakan ruang untuk header multipart.
 export const MAX_UPLOAD = 95 * 1024 * 1024;
 
