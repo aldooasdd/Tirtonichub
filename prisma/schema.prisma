@@ -430,7 +430,8 @@ model MediaItem {
 // File hasil konten (foto/video final) yang diunggah tim media per barang.
 model MediaAsset {
   id          String   @id @default(cuid())
-  itemId      String
+  itemId      String? // folder barang (null = file di folder buatan sendiri)
+  folderId    String? // folder buatan sendiri di File Konten (StudioDoc folders/{id})
   name        String
   key         String // objek di MinIO/S3
   mime        String
@@ -442,9 +443,10 @@ model MediaAsset {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now()) @updatedAt
 
-  item MediaItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
+  item MediaItem? @relation(fields: [itemId], references: [id], onDelete: Cascade)
 
   @@index([itemId])
+  @@index([folderId])
 }
 
 // Satu tugas konten (ktl/igf/vpr/vrv/idc/idf/evt/khs/cmp). Tanggal sbg string 'YYYY-MM-DD'

@@ -372,6 +372,7 @@ exports.Prisma.MediaItemScalarFieldEnum = {
 exports.Prisma.MediaAssetScalarFieldEnum = {
   id: 'id',
   itemId: 'itemId',
+  folderId: 'folderId',
   name: 'name',
   key: 'key',
   mime: 'mime',
