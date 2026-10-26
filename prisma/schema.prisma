@@ -391,6 +391,7 @@ model MediaMember {
   avPhotoKey String? // foto profil kecil di storage
   pcalColor  String    @default("lime") // warna kalender pribadi
   pcalNotes  String? // catatan pribadi
+  extra      Json? // isian UI Tirtonic Studio yang belum punya kolom (avPhoto, dst.)
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 
@@ -413,6 +414,7 @@ model MediaItem {
   photoKey    String? // foto besar di storage
   sourceRawId String?   @unique // RawProduct asal (auto dari QC lolos); anti-duplikat
   scheduled   Boolean   @default(false) // sudah dibuatkan tugas konten
+  extra       Json? // isian UI Tirtonic Studio tanpa kolom (arrivedAfter15, hot, desc, dst.)
   createdById String
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
@@ -473,6 +475,8 @@ model MediaTask {
   note      String?
   history   Json?
   eventKey  String?
+  readyBy   String? // Louis2: tanggal wajib Ready 'YYYY-MM-DD'
+  extra     Json? // isian UI Tirtonic Studio tanpa kolom (prio, updatedBy, checkedBy, dst.)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -491,6 +495,7 @@ model MediaSettings {
   idccQty         Int      @default(10)
   idccDays        Int      @default(90)
   captionTemplate String?
+  extra           Json?
   updatedAt       DateTime @updatedAt
 }
 
@@ -536,4 +541,24 @@ model MediaPcal {
   updatedAt DateTime @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+// --- Jembatan UI Tirtonic Studio (/studio) ---
+// Dokumen tanpa tabel khusus (laporan mingguan, riwayat IDCC versi UI, gambar login, kunci penyeimbang).
+model StudioDoc {
+  path      String   @id // mis. 'reports/w-2026-10-26'
+  coll      String
+  data      Json
+  updatedAt DateTime @updatedAt
+
+  @@index([coll])
+  @@index([updatedAt])
+}
+
+// Jejak dokumen yang dihapus, supaya semua layar yang terbuka ikut menghapus saat sinkron.
+model StudioTombstone {
+  path      String   @id
+  deletedAt DateTime @default(now())
+
+  @@index([deletedAt])
 }

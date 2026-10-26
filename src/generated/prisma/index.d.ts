@@ -148,6 +148,16 @@ export type PersonalCalEvent = $Result.DefaultSelection<Prisma.$PersonalCalEvent
  * 
  */
 export type MediaPcal = $Result.DefaultSelection<Prisma.$MediaPcalPayload>
+/**
+ * Model StudioDoc
+ * 
+ */
+export type StudioDoc = $Result.DefaultSelection<Prisma.$StudioDocPayload>
+/**
+ * Model StudioTombstone
+ * 
+ */
+export type StudioTombstone = $Result.DefaultSelection<Prisma.$StudioTombstonePayload>
 
 /**
  * Enums
@@ -656,6 +666,26 @@ export class PrismaClient<
     * ```
     */
   get mediaPcal(): Prisma.MediaPcalDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.studioDoc`: Exposes CRUD operations for the **StudioDoc** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StudioDocs
+    * const studioDocs = await prisma.studioDoc.findMany()
+    * ```
+    */
+  get studioDoc(): Prisma.StudioDocDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.studioTombstone`: Exposes CRUD operations for the **StudioTombstone** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StudioTombstones
+    * const studioTombstones = await prisma.studioTombstone.findMany()
+    * ```
+    */
+  get studioTombstone(): Prisma.StudioTombstoneDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1123,7 +1153,9 @@ export namespace Prisma {
     MediaIdccReport: 'MediaIdccReport',
     MediaBalanceLog: 'MediaBalanceLog',
     PersonalCalEvent: 'PersonalCalEvent',
-    MediaPcal: 'MediaPcal'
+    MediaPcal: 'MediaPcal',
+    StudioDoc: 'StudioDoc',
+    StudioTombstone: 'StudioTombstone'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1142,7 +1174,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal"
+      modelProps: "user" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3144,6 +3176,154 @@ export namespace Prisma {
           }
         }
       }
+      StudioDoc: {
+        payload: Prisma.$StudioDocPayload<ExtArgs>
+        fields: Prisma.StudioDocFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StudioDocFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioDocPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StudioDocFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioDocPayload>
+          }
+          findFirst: {
+            args: Prisma.StudioDocFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioDocPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StudioDocFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioDocPayload>
+          }
+          findMany: {
+            args: Prisma.StudioDocFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioDocPayload>[]
+          }
+          create: {
+            args: Prisma.StudioDocCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioDocPayload>
+          }
+          createMany: {
+            args: Prisma.StudioDocCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.StudioDocCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioDocPayload>[]
+          }
+          delete: {
+            args: Prisma.StudioDocDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioDocPayload>
+          }
+          update: {
+            args: Prisma.StudioDocUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioDocPayload>
+          }
+          deleteMany: {
+            args: Prisma.StudioDocDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StudioDocUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.StudioDocUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioDocPayload>[]
+          }
+          upsert: {
+            args: Prisma.StudioDocUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioDocPayload>
+          }
+          aggregate: {
+            args: Prisma.StudioDocAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStudioDoc>
+          }
+          groupBy: {
+            args: Prisma.StudioDocGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StudioDocGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StudioDocCountArgs<ExtArgs>
+            result: $Utils.Optional<StudioDocCountAggregateOutputType> | number
+          }
+        }
+      }
+      StudioTombstone: {
+        payload: Prisma.$StudioTombstonePayload<ExtArgs>
+        fields: Prisma.StudioTombstoneFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StudioTombstoneFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioTombstonePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StudioTombstoneFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioTombstonePayload>
+          }
+          findFirst: {
+            args: Prisma.StudioTombstoneFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioTombstonePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StudioTombstoneFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioTombstonePayload>
+          }
+          findMany: {
+            args: Prisma.StudioTombstoneFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioTombstonePayload>[]
+          }
+          create: {
+            args: Prisma.StudioTombstoneCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioTombstonePayload>
+          }
+          createMany: {
+            args: Prisma.StudioTombstoneCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.StudioTombstoneCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioTombstonePayload>[]
+          }
+          delete: {
+            args: Prisma.StudioTombstoneDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioTombstonePayload>
+          }
+          update: {
+            args: Prisma.StudioTombstoneUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioTombstonePayload>
+          }
+          deleteMany: {
+            args: Prisma.StudioTombstoneDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StudioTombstoneUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.StudioTombstoneUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioTombstonePayload>[]
+          }
+          upsert: {
+            args: Prisma.StudioTombstoneUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioTombstonePayload>
+          }
+          aggregate: {
+            args: Prisma.StudioTombstoneAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStudioTombstone>
+          }
+          groupBy: {
+            args: Prisma.StudioTombstoneGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StudioTombstoneGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StudioTombstoneCountArgs<ExtArgs>
+            result: $Utils.Optional<StudioTombstoneCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3267,6 +3447,8 @@ export namespace Prisma {
     mediaBalanceLog?: MediaBalanceLogOmit
     personalCalEvent?: PersonalCalEventOmit
     mediaPcal?: MediaPcalOmit
+    studioDoc?: StudioDocOmit
+    studioTombstone?: StudioTombstoneOmit
   }
 
   /* Types for Logging */
@@ -24485,6 +24667,7 @@ export namespace Prisma {
     avPhotoKey: number
     pcalColor: number
     pcalNotes: number
+    extra: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -24541,6 +24724,7 @@ export namespace Prisma {
     avPhotoKey?: true
     pcalColor?: true
     pcalNotes?: true
+    extra?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -24644,6 +24828,7 @@ export namespace Prisma {
     avPhotoKey: string | null
     pcalColor: string
     pcalNotes: string | null
+    extra: JsonValue | null
     createdAt: Date
     updatedAt: Date
     _count: MediaMemberCountAggregateOutputType | null
@@ -24679,6 +24864,7 @@ export namespace Prisma {
     avPhotoKey?: boolean
     pcalColor?: boolean
     pcalNotes?: boolean
+    extra?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -24696,6 +24882,7 @@ export namespace Prisma {
     avPhotoKey?: boolean
     pcalColor?: boolean
     pcalNotes?: boolean
+    extra?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -24713,6 +24900,7 @@ export namespace Prisma {
     avPhotoKey?: boolean
     pcalColor?: boolean
     pcalNotes?: boolean
+    extra?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -24730,11 +24918,12 @@ export namespace Prisma {
     avPhotoKey?: boolean
     pcalColor?: boolean
     pcalNotes?: boolean
+    extra?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type MediaMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "code" | "role" | "idcc" | "offDays" | "phone" | "avColor" | "avAnimal" | "avPhotoKey" | "pcalColor" | "pcalNotes" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaMember"]>
+  export type MediaMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "code" | "role" | "idcc" | "offDays" | "phone" | "avColor" | "avAnimal" | "avPhotoKey" | "pcalColor" | "pcalNotes" | "extra" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaMember"]>
   export type MediaMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -24762,6 +24951,7 @@ export namespace Prisma {
       avPhotoKey: string | null
       pcalColor: string
       pcalNotes: string | null
+      extra: Prisma.JsonValue | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["mediaMember"]>
@@ -25199,6 +25389,7 @@ export namespace Prisma {
     readonly avPhotoKey: FieldRef<"MediaMember", 'String'>
     readonly pcalColor: FieldRef<"MediaMember", 'String'>
     readonly pcalNotes: FieldRef<"MediaMember", 'String'>
+    readonly extra: FieldRef<"MediaMember", 'Json'>
     readonly createdAt: FieldRef<"MediaMember", 'DateTime'>
     readonly updatedAt: FieldRef<"MediaMember", 'DateTime'>
   }
@@ -25690,6 +25881,7 @@ export namespace Prisma {
     photoKey: number
     sourceRawId: number
     scheduled: number
+    extra: number
     createdById: number
     createdAt: number
     updatedAt: number
@@ -25760,6 +25952,7 @@ export namespace Prisma {
     photoKey?: true
     sourceRawId?: true
     scheduled?: true
+    extra?: true
     createdById?: true
     createdAt?: true
     updatedAt?: true
@@ -25867,6 +26060,7 @@ export namespace Prisma {
     photoKey: string | null
     sourceRawId: string | null
     scheduled: boolean
+    extra: JsonValue | null
     createdById: string
     createdAt: Date
     updatedAt: Date
@@ -25906,6 +26100,7 @@ export namespace Prisma {
     photoKey?: boolean
     sourceRawId?: boolean
     scheduled?: boolean
+    extra?: boolean
     createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -25930,6 +26125,7 @@ export namespace Prisma {
     photoKey?: boolean
     sourceRawId?: boolean
     scheduled?: boolean
+    extra?: boolean
     createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -25951,6 +26147,7 @@ export namespace Prisma {
     photoKey?: boolean
     sourceRawId?: boolean
     scheduled?: boolean
+    extra?: boolean
     createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -25972,12 +26169,13 @@ export namespace Prisma {
     photoKey?: boolean
     sourceRawId?: boolean
     scheduled?: boolean
+    extra?: boolean
     createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type MediaItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "color" | "cat" | "gender" | "qty" | "arrived" | "tier" | "seasonal" | "old" | "thumb" | "photoKey" | "sourceRawId" | "scheduled" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaItem"]>
+  export type MediaItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "color" | "cat" | "gender" | "qty" | "arrived" | "tier" | "seasonal" | "old" | "thumb" | "photoKey" | "sourceRawId" | "scheduled" | "extra" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaItem"]>
   export type MediaItemInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
     tasks?: boolean | MediaItem$tasksArgs<ExtArgs>
@@ -26013,6 +26211,7 @@ export namespace Prisma {
       photoKey: string | null
       sourceRawId: string | null
       scheduled: boolean
+      extra: Prisma.JsonValue | null
       createdById: string
       createdAt: Date
       updatedAt: Date
@@ -26456,6 +26655,7 @@ export namespace Prisma {
     readonly photoKey: FieldRef<"MediaItem", 'String'>
     readonly sourceRawId: FieldRef<"MediaItem", 'String'>
     readonly scheduled: FieldRef<"MediaItem", 'Boolean'>
+    readonly extra: FieldRef<"MediaItem", 'Json'>
     readonly createdById: FieldRef<"MediaItem", 'String'>
     readonly createdAt: FieldRef<"MediaItem", 'DateTime'>
     readonly updatedAt: FieldRef<"MediaItem", 'DateTime'>
@@ -28091,6 +28291,7 @@ export namespace Prisma {
     srcDesc: string | null
     note: string | null
     eventKey: string | null
+    readyBy: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -28124,6 +28325,7 @@ export namespace Prisma {
     srcDesc: string | null
     note: string | null
     eventKey: string | null
+    readyBy: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -28158,6 +28360,8 @@ export namespace Prisma {
     note: number
     history: number
     eventKey: number
+    readyBy: number
+    extra: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -28193,6 +28397,7 @@ export namespace Prisma {
     srcDesc?: true
     note?: true
     eventKey?: true
+    readyBy?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -28226,6 +28431,7 @@ export namespace Prisma {
     srcDesc?: true
     note?: true
     eventKey?: true
+    readyBy?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -28260,6 +28466,8 @@ export namespace Prisma {
     note?: true
     history?: true
     eventKey?: true
+    readyBy?: true
+    extra?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -28367,6 +28575,8 @@ export namespace Prisma {
     note: string | null
     history: JsonValue | null
     eventKey: string | null
+    readyBy: string | null
+    extra: JsonValue | null
     createdAt: Date
     updatedAt: Date
     _count: MediaTaskCountAggregateOutputType | null
@@ -28418,6 +28628,8 @@ export namespace Prisma {
     note?: boolean
     history?: boolean
     eventKey?: boolean
+    readyBy?: boolean
+    extra?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     item?: boolean | MediaTask$itemArgs<ExtArgs>
@@ -28453,6 +28665,8 @@ export namespace Prisma {
     note?: boolean
     history?: boolean
     eventKey?: boolean
+    readyBy?: boolean
+    extra?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     item?: boolean | MediaTask$itemArgs<ExtArgs>
@@ -28488,6 +28702,8 @@ export namespace Prisma {
     note?: boolean
     history?: boolean
     eventKey?: boolean
+    readyBy?: boolean
+    extra?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     item?: boolean | MediaTask$itemArgs<ExtArgs>
@@ -28523,11 +28739,13 @@ export namespace Prisma {
     note?: boolean
     history?: boolean
     eventKey?: boolean
+    readyBy?: boolean
+    extra?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type MediaTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "type" | "title" | "cat" | "status" | "source" | "reason" | "producer" | "editor" | "talent" | "script" | "shootPlan" | "editPlan" | "postAt" | "postTime" | "due" | "target" | "shotAt" | "readyAt" | "locked" | "checked" | "metaAt" | "driveUrl" | "caption" | "srcDesc" | "note" | "history" | "eventKey" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaTask"]>
+  export type MediaTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "type" | "title" | "cat" | "status" | "source" | "reason" | "producer" | "editor" | "talent" | "script" | "shootPlan" | "editPlan" | "postAt" | "postTime" | "due" | "target" | "shotAt" | "readyAt" | "locked" | "checked" | "metaAt" | "driveUrl" | "caption" | "srcDesc" | "note" | "history" | "eventKey" | "readyBy" | "extra" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaTask"]>
   export type MediaTaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     item?: boolean | MediaTask$itemArgs<ExtArgs>
   }
@@ -28573,6 +28791,8 @@ export namespace Prisma {
       note: string | null
       history: Prisma.JsonValue | null
       eventKey: string | null
+      readyBy: string | null
+      extra: Prisma.JsonValue | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["mediaTask"]>
@@ -29028,6 +29248,8 @@ export namespace Prisma {
     readonly note: FieldRef<"MediaTask", 'String'>
     readonly history: FieldRef<"MediaTask", 'Json'>
     readonly eventKey: FieldRef<"MediaTask", 'String'>
+    readonly readyBy: FieldRef<"MediaTask", 'String'>
+    readonly extra: FieldRef<"MediaTask", 'Json'>
     readonly createdAt: FieldRef<"MediaTask", 'DateTime'>
     readonly updatedAt: FieldRef<"MediaTask", 'DateTime'>
   }
@@ -29514,6 +29736,7 @@ export namespace Prisma {
     idccQty: number
     idccDays: number
     captionTemplate: number
+    extra: number
     updatedAt: number
     _all: number
   }
@@ -29558,6 +29781,7 @@ export namespace Prisma {
     idccQty?: true
     idccDays?: true
     captionTemplate?: true
+    extra?: true
     updatedAt?: true
     _all?: true
   }
@@ -29655,6 +29879,7 @@ export namespace Prisma {
     idccQty: number
     idccDays: number
     captionTemplate: string | null
+    extra: JsonValue | null
     updatedAt: Date
     _count: MediaSettingsCountAggregateOutputType | null
     _avg: MediaSettingsAvgAggregateOutputType | null
@@ -29684,6 +29909,7 @@ export namespace Prisma {
     idccQty?: boolean
     idccDays?: boolean
     captionTemplate?: boolean
+    extra?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["mediaSettings"]>
 
@@ -29694,6 +29920,7 @@ export namespace Prisma {
     idccQty?: boolean
     idccDays?: boolean
     captionTemplate?: boolean
+    extra?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["mediaSettings"]>
 
@@ -29704,6 +29931,7 @@ export namespace Prisma {
     idccQty?: boolean
     idccDays?: boolean
     captionTemplate?: boolean
+    extra?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["mediaSettings"]>
 
@@ -29714,10 +29942,11 @@ export namespace Prisma {
     idccQty?: boolean
     idccDays?: boolean
     captionTemplate?: boolean
+    extra?: boolean
     updatedAt?: boolean
   }
 
-  export type MediaSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "jobdesk" | "idccDay" | "idccQty" | "idccDays" | "captionTemplate" | "updatedAt", ExtArgs["result"]["mediaSettings"]>
+  export type MediaSettingsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "jobdesk" | "idccDay" | "idccQty" | "idccDays" | "captionTemplate" | "extra" | "updatedAt", ExtArgs["result"]["mediaSettings"]>
 
   export type $MediaSettingsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MediaSettings"
@@ -29729,6 +29958,7 @@ export namespace Prisma {
       idccQty: number
       idccDays: number
       captionTemplate: string | null
+      extra: Prisma.JsonValue | null
       updatedAt: Date
     }, ExtArgs["result"]["mediaSettings"]>
     composites: {}
@@ -30159,6 +30389,7 @@ export namespace Prisma {
     readonly idccQty: FieldRef<"MediaSettings", 'Int'>
     readonly idccDays: FieldRef<"MediaSettings", 'Int'>
     readonly captionTemplate: FieldRef<"MediaSettings", 'String'>
+    readonly extra: FieldRef<"MediaSettings", 'Json'>
     readonly updatedAt: FieldRef<"MediaSettings", 'DateTime'>
   }
     
@@ -34685,6 +34916,1940 @@ export namespace Prisma {
 
 
   /**
+   * Model StudioDoc
+   */
+
+  export type AggregateStudioDoc = {
+    _count: StudioDocCountAggregateOutputType | null
+    _min: StudioDocMinAggregateOutputType | null
+    _max: StudioDocMaxAggregateOutputType | null
+  }
+
+  export type StudioDocMinAggregateOutputType = {
+    path: string | null
+    coll: string | null
+    updatedAt: Date | null
+  }
+
+  export type StudioDocMaxAggregateOutputType = {
+    path: string | null
+    coll: string | null
+    updatedAt: Date | null
+  }
+
+  export type StudioDocCountAggregateOutputType = {
+    path: number
+    coll: number
+    data: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type StudioDocMinAggregateInputType = {
+    path?: true
+    coll?: true
+    updatedAt?: true
+  }
+
+  export type StudioDocMaxAggregateInputType = {
+    path?: true
+    coll?: true
+    updatedAt?: true
+  }
+
+  export type StudioDocCountAggregateInputType = {
+    path?: true
+    coll?: true
+    data?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type StudioDocAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StudioDoc to aggregate.
+     */
+    where?: StudioDocWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudioDocs to fetch.
+     */
+    orderBy?: StudioDocOrderByWithRelationInput | StudioDocOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StudioDocWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudioDocs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudioDocs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned StudioDocs
+    **/
+    _count?: true | StudioDocCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StudioDocMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StudioDocMaxAggregateInputType
+  }
+
+  export type GetStudioDocAggregateType<T extends StudioDocAggregateArgs> = {
+        [P in keyof T & keyof AggregateStudioDoc]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStudioDoc[P]>
+      : GetScalarType<T[P], AggregateStudioDoc[P]>
+  }
+
+
+
+
+  export type StudioDocGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudioDocWhereInput
+    orderBy?: StudioDocOrderByWithAggregationInput | StudioDocOrderByWithAggregationInput[]
+    by: StudioDocScalarFieldEnum[] | StudioDocScalarFieldEnum
+    having?: StudioDocScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StudioDocCountAggregateInputType | true
+    _min?: StudioDocMinAggregateInputType
+    _max?: StudioDocMaxAggregateInputType
+  }
+
+  export type StudioDocGroupByOutputType = {
+    path: string
+    coll: string
+    data: JsonValue
+    updatedAt: Date
+    _count: StudioDocCountAggregateOutputType | null
+    _min: StudioDocMinAggregateOutputType | null
+    _max: StudioDocMaxAggregateOutputType | null
+  }
+
+  type GetStudioDocGroupByPayload<T extends StudioDocGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StudioDocGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StudioDocGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StudioDocGroupByOutputType[P]>
+            : GetScalarType<T[P], StudioDocGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StudioDocSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    path?: boolean
+    coll?: boolean
+    data?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["studioDoc"]>
+
+  export type StudioDocSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    path?: boolean
+    coll?: boolean
+    data?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["studioDoc"]>
+
+  export type StudioDocSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    path?: boolean
+    coll?: boolean
+    data?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["studioDoc"]>
+
+  export type StudioDocSelectScalar = {
+    path?: boolean
+    coll?: boolean
+    data?: boolean
+    updatedAt?: boolean
+  }
+
+  export type StudioDocOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"path" | "coll" | "data" | "updatedAt", ExtArgs["result"]["studioDoc"]>
+
+  export type $StudioDocPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "StudioDoc"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      path: string
+      coll: string
+      data: Prisma.JsonValue
+      updatedAt: Date
+    }, ExtArgs["result"]["studioDoc"]>
+    composites: {}
+  }
+
+  type StudioDocGetPayload<S extends boolean | null | undefined | StudioDocDefaultArgs> = $Result.GetResult<Prisma.$StudioDocPayload, S>
+
+  type StudioDocCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StudioDocFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StudioDocCountAggregateInputType | true
+    }
+
+  export interface StudioDocDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StudioDoc'], meta: { name: 'StudioDoc' } }
+    /**
+     * Find zero or one StudioDoc that matches the filter.
+     * @param {StudioDocFindUniqueArgs} args - Arguments to find a StudioDoc
+     * @example
+     * // Get one StudioDoc
+     * const studioDoc = await prisma.studioDoc.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StudioDocFindUniqueArgs>(args: SelectSubset<T, StudioDocFindUniqueArgs<ExtArgs>>): Prisma__StudioDocClient<$Result.GetResult<Prisma.$StudioDocPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one StudioDoc that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StudioDocFindUniqueOrThrowArgs} args - Arguments to find a StudioDoc
+     * @example
+     * // Get one StudioDoc
+     * const studioDoc = await prisma.studioDoc.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StudioDocFindUniqueOrThrowArgs>(args: SelectSubset<T, StudioDocFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StudioDocClient<$Result.GetResult<Prisma.$StudioDocPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StudioDoc that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioDocFindFirstArgs} args - Arguments to find a StudioDoc
+     * @example
+     * // Get one StudioDoc
+     * const studioDoc = await prisma.studioDoc.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StudioDocFindFirstArgs>(args?: SelectSubset<T, StudioDocFindFirstArgs<ExtArgs>>): Prisma__StudioDocClient<$Result.GetResult<Prisma.$StudioDocPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StudioDoc that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioDocFindFirstOrThrowArgs} args - Arguments to find a StudioDoc
+     * @example
+     * // Get one StudioDoc
+     * const studioDoc = await prisma.studioDoc.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StudioDocFindFirstOrThrowArgs>(args?: SelectSubset<T, StudioDocFindFirstOrThrowArgs<ExtArgs>>): Prisma__StudioDocClient<$Result.GetResult<Prisma.$StudioDocPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more StudioDocs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioDocFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all StudioDocs
+     * const studioDocs = await prisma.studioDoc.findMany()
+     * 
+     * // Get first 10 StudioDocs
+     * const studioDocs = await prisma.studioDoc.findMany({ take: 10 })
+     * 
+     * // Only select the `path`
+     * const studioDocWithPathOnly = await prisma.studioDoc.findMany({ select: { path: true } })
+     * 
+     */
+    findMany<T extends StudioDocFindManyArgs>(args?: SelectSubset<T, StudioDocFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudioDocPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a StudioDoc.
+     * @param {StudioDocCreateArgs} args - Arguments to create a StudioDoc.
+     * @example
+     * // Create one StudioDoc
+     * const StudioDoc = await prisma.studioDoc.create({
+     *   data: {
+     *     // ... data to create a StudioDoc
+     *   }
+     * })
+     * 
+     */
+    create<T extends StudioDocCreateArgs>(args: SelectSubset<T, StudioDocCreateArgs<ExtArgs>>): Prisma__StudioDocClient<$Result.GetResult<Prisma.$StudioDocPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many StudioDocs.
+     * @param {StudioDocCreateManyArgs} args - Arguments to create many StudioDocs.
+     * @example
+     * // Create many StudioDocs
+     * const studioDoc = await prisma.studioDoc.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StudioDocCreateManyArgs>(args?: SelectSubset<T, StudioDocCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many StudioDocs and returns the data saved in the database.
+     * @param {StudioDocCreateManyAndReturnArgs} args - Arguments to create many StudioDocs.
+     * @example
+     * // Create many StudioDocs
+     * const studioDoc = await prisma.studioDoc.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many StudioDocs and only return the `path`
+     * const studioDocWithPathOnly = await prisma.studioDoc.createManyAndReturn({
+     *   select: { path: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends StudioDocCreateManyAndReturnArgs>(args?: SelectSubset<T, StudioDocCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudioDocPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a StudioDoc.
+     * @param {StudioDocDeleteArgs} args - Arguments to delete one StudioDoc.
+     * @example
+     * // Delete one StudioDoc
+     * const StudioDoc = await prisma.studioDoc.delete({
+     *   where: {
+     *     // ... filter to delete one StudioDoc
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StudioDocDeleteArgs>(args: SelectSubset<T, StudioDocDeleteArgs<ExtArgs>>): Prisma__StudioDocClient<$Result.GetResult<Prisma.$StudioDocPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one StudioDoc.
+     * @param {StudioDocUpdateArgs} args - Arguments to update one StudioDoc.
+     * @example
+     * // Update one StudioDoc
+     * const studioDoc = await prisma.studioDoc.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StudioDocUpdateArgs>(args: SelectSubset<T, StudioDocUpdateArgs<ExtArgs>>): Prisma__StudioDocClient<$Result.GetResult<Prisma.$StudioDocPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more StudioDocs.
+     * @param {StudioDocDeleteManyArgs} args - Arguments to filter StudioDocs to delete.
+     * @example
+     * // Delete a few StudioDocs
+     * const { count } = await prisma.studioDoc.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StudioDocDeleteManyArgs>(args?: SelectSubset<T, StudioDocDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StudioDocs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioDocUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many StudioDocs
+     * const studioDoc = await prisma.studioDoc.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StudioDocUpdateManyArgs>(args: SelectSubset<T, StudioDocUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StudioDocs and returns the data updated in the database.
+     * @param {StudioDocUpdateManyAndReturnArgs} args - Arguments to update many StudioDocs.
+     * @example
+     * // Update many StudioDocs
+     * const studioDoc = await prisma.studioDoc.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more StudioDocs and only return the `path`
+     * const studioDocWithPathOnly = await prisma.studioDoc.updateManyAndReturn({
+     *   select: { path: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends StudioDocUpdateManyAndReturnArgs>(args: SelectSubset<T, StudioDocUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudioDocPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one StudioDoc.
+     * @param {StudioDocUpsertArgs} args - Arguments to update or create a StudioDoc.
+     * @example
+     * // Update or create a StudioDoc
+     * const studioDoc = await prisma.studioDoc.upsert({
+     *   create: {
+     *     // ... data to create a StudioDoc
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the StudioDoc we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StudioDocUpsertArgs>(args: SelectSubset<T, StudioDocUpsertArgs<ExtArgs>>): Prisma__StudioDocClient<$Result.GetResult<Prisma.$StudioDocPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of StudioDocs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioDocCountArgs} args - Arguments to filter StudioDocs to count.
+     * @example
+     * // Count the number of StudioDocs
+     * const count = await prisma.studioDoc.count({
+     *   where: {
+     *     // ... the filter for the StudioDocs we want to count
+     *   }
+     * })
+    **/
+    count<T extends StudioDocCountArgs>(
+      args?: Subset<T, StudioDocCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StudioDocCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a StudioDoc.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioDocAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StudioDocAggregateArgs>(args: Subset<T, StudioDocAggregateArgs>): Prisma.PrismaPromise<GetStudioDocAggregateType<T>>
+
+    /**
+     * Group by StudioDoc.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioDocGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StudioDocGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StudioDocGroupByArgs['orderBy'] }
+        : { orderBy?: StudioDocGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StudioDocGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStudioDocGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the StudioDoc model
+   */
+  readonly fields: StudioDocFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for StudioDoc.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StudioDocClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the StudioDoc model
+   */
+  interface StudioDocFieldRefs {
+    readonly path: FieldRef<"StudioDoc", 'String'>
+    readonly coll: FieldRef<"StudioDoc", 'String'>
+    readonly data: FieldRef<"StudioDoc", 'Json'>
+    readonly updatedAt: FieldRef<"StudioDoc", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * StudioDoc findUnique
+   */
+  export type StudioDocFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioDoc
+     */
+    select?: StudioDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioDoc
+     */
+    omit?: StudioDocOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioDoc to fetch.
+     */
+    where: StudioDocWhereUniqueInput
+  }
+
+  /**
+   * StudioDoc findUniqueOrThrow
+   */
+  export type StudioDocFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioDoc
+     */
+    select?: StudioDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioDoc
+     */
+    omit?: StudioDocOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioDoc to fetch.
+     */
+    where: StudioDocWhereUniqueInput
+  }
+
+  /**
+   * StudioDoc findFirst
+   */
+  export type StudioDocFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioDoc
+     */
+    select?: StudioDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioDoc
+     */
+    omit?: StudioDocOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioDoc to fetch.
+     */
+    where?: StudioDocWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudioDocs to fetch.
+     */
+    orderBy?: StudioDocOrderByWithRelationInput | StudioDocOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StudioDocs.
+     */
+    cursor?: StudioDocWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudioDocs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudioDocs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StudioDocs.
+     */
+    distinct?: StudioDocScalarFieldEnum | StudioDocScalarFieldEnum[]
+  }
+
+  /**
+   * StudioDoc findFirstOrThrow
+   */
+  export type StudioDocFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioDoc
+     */
+    select?: StudioDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioDoc
+     */
+    omit?: StudioDocOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioDoc to fetch.
+     */
+    where?: StudioDocWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudioDocs to fetch.
+     */
+    orderBy?: StudioDocOrderByWithRelationInput | StudioDocOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StudioDocs.
+     */
+    cursor?: StudioDocWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudioDocs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudioDocs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StudioDocs.
+     */
+    distinct?: StudioDocScalarFieldEnum | StudioDocScalarFieldEnum[]
+  }
+
+  /**
+   * StudioDoc findMany
+   */
+  export type StudioDocFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioDoc
+     */
+    select?: StudioDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioDoc
+     */
+    omit?: StudioDocOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioDocs to fetch.
+     */
+    where?: StudioDocWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudioDocs to fetch.
+     */
+    orderBy?: StudioDocOrderByWithRelationInput | StudioDocOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing StudioDocs.
+     */
+    cursor?: StudioDocWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudioDocs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudioDocs.
+     */
+    skip?: number
+    distinct?: StudioDocScalarFieldEnum | StudioDocScalarFieldEnum[]
+  }
+
+  /**
+   * StudioDoc create
+   */
+  export type StudioDocCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioDoc
+     */
+    select?: StudioDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioDoc
+     */
+    omit?: StudioDocOmit<ExtArgs> | null
+    /**
+     * The data needed to create a StudioDoc.
+     */
+    data: XOR<StudioDocCreateInput, StudioDocUncheckedCreateInput>
+  }
+
+  /**
+   * StudioDoc createMany
+   */
+  export type StudioDocCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many StudioDocs.
+     */
+    data: StudioDocCreateManyInput | StudioDocCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StudioDoc createManyAndReturn
+   */
+  export type StudioDocCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioDoc
+     */
+    select?: StudioDocSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioDoc
+     */
+    omit?: StudioDocOmit<ExtArgs> | null
+    /**
+     * The data used to create many StudioDocs.
+     */
+    data: StudioDocCreateManyInput | StudioDocCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StudioDoc update
+   */
+  export type StudioDocUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioDoc
+     */
+    select?: StudioDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioDoc
+     */
+    omit?: StudioDocOmit<ExtArgs> | null
+    /**
+     * The data needed to update a StudioDoc.
+     */
+    data: XOR<StudioDocUpdateInput, StudioDocUncheckedUpdateInput>
+    /**
+     * Choose, which StudioDoc to update.
+     */
+    where: StudioDocWhereUniqueInput
+  }
+
+  /**
+   * StudioDoc updateMany
+   */
+  export type StudioDocUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update StudioDocs.
+     */
+    data: XOR<StudioDocUpdateManyMutationInput, StudioDocUncheckedUpdateManyInput>
+    /**
+     * Filter which StudioDocs to update
+     */
+    where?: StudioDocWhereInput
+    /**
+     * Limit how many StudioDocs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudioDoc updateManyAndReturn
+   */
+  export type StudioDocUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioDoc
+     */
+    select?: StudioDocSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioDoc
+     */
+    omit?: StudioDocOmit<ExtArgs> | null
+    /**
+     * The data used to update StudioDocs.
+     */
+    data: XOR<StudioDocUpdateManyMutationInput, StudioDocUncheckedUpdateManyInput>
+    /**
+     * Filter which StudioDocs to update
+     */
+    where?: StudioDocWhereInput
+    /**
+     * Limit how many StudioDocs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudioDoc upsert
+   */
+  export type StudioDocUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioDoc
+     */
+    select?: StudioDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioDoc
+     */
+    omit?: StudioDocOmit<ExtArgs> | null
+    /**
+     * The filter to search for the StudioDoc to update in case it exists.
+     */
+    where: StudioDocWhereUniqueInput
+    /**
+     * In case the StudioDoc found by the `where` argument doesn't exist, create a new StudioDoc with this data.
+     */
+    create: XOR<StudioDocCreateInput, StudioDocUncheckedCreateInput>
+    /**
+     * In case the StudioDoc was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StudioDocUpdateInput, StudioDocUncheckedUpdateInput>
+  }
+
+  /**
+   * StudioDoc delete
+   */
+  export type StudioDocDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioDoc
+     */
+    select?: StudioDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioDoc
+     */
+    omit?: StudioDocOmit<ExtArgs> | null
+    /**
+     * Filter which StudioDoc to delete.
+     */
+    where: StudioDocWhereUniqueInput
+  }
+
+  /**
+   * StudioDoc deleteMany
+   */
+  export type StudioDocDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StudioDocs to delete
+     */
+    where?: StudioDocWhereInput
+    /**
+     * Limit how many StudioDocs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudioDoc without action
+   */
+  export type StudioDocDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioDoc
+     */
+    select?: StudioDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioDoc
+     */
+    omit?: StudioDocOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model StudioTombstone
+   */
+
+  export type AggregateStudioTombstone = {
+    _count: StudioTombstoneCountAggregateOutputType | null
+    _min: StudioTombstoneMinAggregateOutputType | null
+    _max: StudioTombstoneMaxAggregateOutputType | null
+  }
+
+  export type StudioTombstoneMinAggregateOutputType = {
+    path: string | null
+    deletedAt: Date | null
+  }
+
+  export type StudioTombstoneMaxAggregateOutputType = {
+    path: string | null
+    deletedAt: Date | null
+  }
+
+  export type StudioTombstoneCountAggregateOutputType = {
+    path: number
+    deletedAt: number
+    _all: number
+  }
+
+
+  export type StudioTombstoneMinAggregateInputType = {
+    path?: true
+    deletedAt?: true
+  }
+
+  export type StudioTombstoneMaxAggregateInputType = {
+    path?: true
+    deletedAt?: true
+  }
+
+  export type StudioTombstoneCountAggregateInputType = {
+    path?: true
+    deletedAt?: true
+    _all?: true
+  }
+
+  export type StudioTombstoneAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StudioTombstone to aggregate.
+     */
+    where?: StudioTombstoneWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudioTombstones to fetch.
+     */
+    orderBy?: StudioTombstoneOrderByWithRelationInput | StudioTombstoneOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StudioTombstoneWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudioTombstones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudioTombstones.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned StudioTombstones
+    **/
+    _count?: true | StudioTombstoneCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StudioTombstoneMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StudioTombstoneMaxAggregateInputType
+  }
+
+  export type GetStudioTombstoneAggregateType<T extends StudioTombstoneAggregateArgs> = {
+        [P in keyof T & keyof AggregateStudioTombstone]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStudioTombstone[P]>
+      : GetScalarType<T[P], AggregateStudioTombstone[P]>
+  }
+
+
+
+
+  export type StudioTombstoneGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudioTombstoneWhereInput
+    orderBy?: StudioTombstoneOrderByWithAggregationInput | StudioTombstoneOrderByWithAggregationInput[]
+    by: StudioTombstoneScalarFieldEnum[] | StudioTombstoneScalarFieldEnum
+    having?: StudioTombstoneScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StudioTombstoneCountAggregateInputType | true
+    _min?: StudioTombstoneMinAggregateInputType
+    _max?: StudioTombstoneMaxAggregateInputType
+  }
+
+  export type StudioTombstoneGroupByOutputType = {
+    path: string
+    deletedAt: Date
+    _count: StudioTombstoneCountAggregateOutputType | null
+    _min: StudioTombstoneMinAggregateOutputType | null
+    _max: StudioTombstoneMaxAggregateOutputType | null
+  }
+
+  type GetStudioTombstoneGroupByPayload<T extends StudioTombstoneGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StudioTombstoneGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StudioTombstoneGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StudioTombstoneGroupByOutputType[P]>
+            : GetScalarType<T[P], StudioTombstoneGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StudioTombstoneSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    path?: boolean
+    deletedAt?: boolean
+  }, ExtArgs["result"]["studioTombstone"]>
+
+  export type StudioTombstoneSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    path?: boolean
+    deletedAt?: boolean
+  }, ExtArgs["result"]["studioTombstone"]>
+
+  export type StudioTombstoneSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    path?: boolean
+    deletedAt?: boolean
+  }, ExtArgs["result"]["studioTombstone"]>
+
+  export type StudioTombstoneSelectScalar = {
+    path?: boolean
+    deletedAt?: boolean
+  }
+
+  export type StudioTombstoneOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"path" | "deletedAt", ExtArgs["result"]["studioTombstone"]>
+
+  export type $StudioTombstonePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "StudioTombstone"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      path: string
+      deletedAt: Date
+    }, ExtArgs["result"]["studioTombstone"]>
+    composites: {}
+  }
+
+  type StudioTombstoneGetPayload<S extends boolean | null | undefined | StudioTombstoneDefaultArgs> = $Result.GetResult<Prisma.$StudioTombstonePayload, S>
+
+  type StudioTombstoneCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StudioTombstoneFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StudioTombstoneCountAggregateInputType | true
+    }
+
+  export interface StudioTombstoneDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StudioTombstone'], meta: { name: 'StudioTombstone' } }
+    /**
+     * Find zero or one StudioTombstone that matches the filter.
+     * @param {StudioTombstoneFindUniqueArgs} args - Arguments to find a StudioTombstone
+     * @example
+     * // Get one StudioTombstone
+     * const studioTombstone = await prisma.studioTombstone.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StudioTombstoneFindUniqueArgs>(args: SelectSubset<T, StudioTombstoneFindUniqueArgs<ExtArgs>>): Prisma__StudioTombstoneClient<$Result.GetResult<Prisma.$StudioTombstonePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one StudioTombstone that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StudioTombstoneFindUniqueOrThrowArgs} args - Arguments to find a StudioTombstone
+     * @example
+     * // Get one StudioTombstone
+     * const studioTombstone = await prisma.studioTombstone.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StudioTombstoneFindUniqueOrThrowArgs>(args: SelectSubset<T, StudioTombstoneFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StudioTombstoneClient<$Result.GetResult<Prisma.$StudioTombstonePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StudioTombstone that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioTombstoneFindFirstArgs} args - Arguments to find a StudioTombstone
+     * @example
+     * // Get one StudioTombstone
+     * const studioTombstone = await prisma.studioTombstone.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StudioTombstoneFindFirstArgs>(args?: SelectSubset<T, StudioTombstoneFindFirstArgs<ExtArgs>>): Prisma__StudioTombstoneClient<$Result.GetResult<Prisma.$StudioTombstonePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StudioTombstone that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioTombstoneFindFirstOrThrowArgs} args - Arguments to find a StudioTombstone
+     * @example
+     * // Get one StudioTombstone
+     * const studioTombstone = await prisma.studioTombstone.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StudioTombstoneFindFirstOrThrowArgs>(args?: SelectSubset<T, StudioTombstoneFindFirstOrThrowArgs<ExtArgs>>): Prisma__StudioTombstoneClient<$Result.GetResult<Prisma.$StudioTombstonePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more StudioTombstones that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioTombstoneFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all StudioTombstones
+     * const studioTombstones = await prisma.studioTombstone.findMany()
+     * 
+     * // Get first 10 StudioTombstones
+     * const studioTombstones = await prisma.studioTombstone.findMany({ take: 10 })
+     * 
+     * // Only select the `path`
+     * const studioTombstoneWithPathOnly = await prisma.studioTombstone.findMany({ select: { path: true } })
+     * 
+     */
+    findMany<T extends StudioTombstoneFindManyArgs>(args?: SelectSubset<T, StudioTombstoneFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudioTombstonePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a StudioTombstone.
+     * @param {StudioTombstoneCreateArgs} args - Arguments to create a StudioTombstone.
+     * @example
+     * // Create one StudioTombstone
+     * const StudioTombstone = await prisma.studioTombstone.create({
+     *   data: {
+     *     // ... data to create a StudioTombstone
+     *   }
+     * })
+     * 
+     */
+    create<T extends StudioTombstoneCreateArgs>(args: SelectSubset<T, StudioTombstoneCreateArgs<ExtArgs>>): Prisma__StudioTombstoneClient<$Result.GetResult<Prisma.$StudioTombstonePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many StudioTombstones.
+     * @param {StudioTombstoneCreateManyArgs} args - Arguments to create many StudioTombstones.
+     * @example
+     * // Create many StudioTombstones
+     * const studioTombstone = await prisma.studioTombstone.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StudioTombstoneCreateManyArgs>(args?: SelectSubset<T, StudioTombstoneCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many StudioTombstones and returns the data saved in the database.
+     * @param {StudioTombstoneCreateManyAndReturnArgs} args - Arguments to create many StudioTombstones.
+     * @example
+     * // Create many StudioTombstones
+     * const studioTombstone = await prisma.studioTombstone.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many StudioTombstones and only return the `path`
+     * const studioTombstoneWithPathOnly = await prisma.studioTombstone.createManyAndReturn({
+     *   select: { path: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends StudioTombstoneCreateManyAndReturnArgs>(args?: SelectSubset<T, StudioTombstoneCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudioTombstonePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a StudioTombstone.
+     * @param {StudioTombstoneDeleteArgs} args - Arguments to delete one StudioTombstone.
+     * @example
+     * // Delete one StudioTombstone
+     * const StudioTombstone = await prisma.studioTombstone.delete({
+     *   where: {
+     *     // ... filter to delete one StudioTombstone
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StudioTombstoneDeleteArgs>(args: SelectSubset<T, StudioTombstoneDeleteArgs<ExtArgs>>): Prisma__StudioTombstoneClient<$Result.GetResult<Prisma.$StudioTombstonePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one StudioTombstone.
+     * @param {StudioTombstoneUpdateArgs} args - Arguments to update one StudioTombstone.
+     * @example
+     * // Update one StudioTombstone
+     * const studioTombstone = await prisma.studioTombstone.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StudioTombstoneUpdateArgs>(args: SelectSubset<T, StudioTombstoneUpdateArgs<ExtArgs>>): Prisma__StudioTombstoneClient<$Result.GetResult<Prisma.$StudioTombstonePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more StudioTombstones.
+     * @param {StudioTombstoneDeleteManyArgs} args - Arguments to filter StudioTombstones to delete.
+     * @example
+     * // Delete a few StudioTombstones
+     * const { count } = await prisma.studioTombstone.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StudioTombstoneDeleteManyArgs>(args?: SelectSubset<T, StudioTombstoneDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StudioTombstones.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioTombstoneUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many StudioTombstones
+     * const studioTombstone = await prisma.studioTombstone.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StudioTombstoneUpdateManyArgs>(args: SelectSubset<T, StudioTombstoneUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StudioTombstones and returns the data updated in the database.
+     * @param {StudioTombstoneUpdateManyAndReturnArgs} args - Arguments to update many StudioTombstones.
+     * @example
+     * // Update many StudioTombstones
+     * const studioTombstone = await prisma.studioTombstone.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more StudioTombstones and only return the `path`
+     * const studioTombstoneWithPathOnly = await prisma.studioTombstone.updateManyAndReturn({
+     *   select: { path: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends StudioTombstoneUpdateManyAndReturnArgs>(args: SelectSubset<T, StudioTombstoneUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudioTombstonePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one StudioTombstone.
+     * @param {StudioTombstoneUpsertArgs} args - Arguments to update or create a StudioTombstone.
+     * @example
+     * // Update or create a StudioTombstone
+     * const studioTombstone = await prisma.studioTombstone.upsert({
+     *   create: {
+     *     // ... data to create a StudioTombstone
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the StudioTombstone we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StudioTombstoneUpsertArgs>(args: SelectSubset<T, StudioTombstoneUpsertArgs<ExtArgs>>): Prisma__StudioTombstoneClient<$Result.GetResult<Prisma.$StudioTombstonePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of StudioTombstones.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioTombstoneCountArgs} args - Arguments to filter StudioTombstones to count.
+     * @example
+     * // Count the number of StudioTombstones
+     * const count = await prisma.studioTombstone.count({
+     *   where: {
+     *     // ... the filter for the StudioTombstones we want to count
+     *   }
+     * })
+    **/
+    count<T extends StudioTombstoneCountArgs>(
+      args?: Subset<T, StudioTombstoneCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StudioTombstoneCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a StudioTombstone.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioTombstoneAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StudioTombstoneAggregateArgs>(args: Subset<T, StudioTombstoneAggregateArgs>): Prisma.PrismaPromise<GetStudioTombstoneAggregateType<T>>
+
+    /**
+     * Group by StudioTombstone.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioTombstoneGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StudioTombstoneGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StudioTombstoneGroupByArgs['orderBy'] }
+        : { orderBy?: StudioTombstoneGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StudioTombstoneGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStudioTombstoneGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the StudioTombstone model
+   */
+  readonly fields: StudioTombstoneFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for StudioTombstone.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StudioTombstoneClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the StudioTombstone model
+   */
+  interface StudioTombstoneFieldRefs {
+    readonly path: FieldRef<"StudioTombstone", 'String'>
+    readonly deletedAt: FieldRef<"StudioTombstone", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * StudioTombstone findUnique
+   */
+  export type StudioTombstoneFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioTombstone
+     */
+    select?: StudioTombstoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioTombstone
+     */
+    omit?: StudioTombstoneOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioTombstone to fetch.
+     */
+    where: StudioTombstoneWhereUniqueInput
+  }
+
+  /**
+   * StudioTombstone findUniqueOrThrow
+   */
+  export type StudioTombstoneFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioTombstone
+     */
+    select?: StudioTombstoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioTombstone
+     */
+    omit?: StudioTombstoneOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioTombstone to fetch.
+     */
+    where: StudioTombstoneWhereUniqueInput
+  }
+
+  /**
+   * StudioTombstone findFirst
+   */
+  export type StudioTombstoneFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioTombstone
+     */
+    select?: StudioTombstoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioTombstone
+     */
+    omit?: StudioTombstoneOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioTombstone to fetch.
+     */
+    where?: StudioTombstoneWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudioTombstones to fetch.
+     */
+    orderBy?: StudioTombstoneOrderByWithRelationInput | StudioTombstoneOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StudioTombstones.
+     */
+    cursor?: StudioTombstoneWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudioTombstones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudioTombstones.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StudioTombstones.
+     */
+    distinct?: StudioTombstoneScalarFieldEnum | StudioTombstoneScalarFieldEnum[]
+  }
+
+  /**
+   * StudioTombstone findFirstOrThrow
+   */
+  export type StudioTombstoneFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioTombstone
+     */
+    select?: StudioTombstoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioTombstone
+     */
+    omit?: StudioTombstoneOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioTombstone to fetch.
+     */
+    where?: StudioTombstoneWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudioTombstones to fetch.
+     */
+    orderBy?: StudioTombstoneOrderByWithRelationInput | StudioTombstoneOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StudioTombstones.
+     */
+    cursor?: StudioTombstoneWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudioTombstones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudioTombstones.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StudioTombstones.
+     */
+    distinct?: StudioTombstoneScalarFieldEnum | StudioTombstoneScalarFieldEnum[]
+  }
+
+  /**
+   * StudioTombstone findMany
+   */
+  export type StudioTombstoneFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioTombstone
+     */
+    select?: StudioTombstoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioTombstone
+     */
+    omit?: StudioTombstoneOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioTombstones to fetch.
+     */
+    where?: StudioTombstoneWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudioTombstones to fetch.
+     */
+    orderBy?: StudioTombstoneOrderByWithRelationInput | StudioTombstoneOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing StudioTombstones.
+     */
+    cursor?: StudioTombstoneWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudioTombstones from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudioTombstones.
+     */
+    skip?: number
+    distinct?: StudioTombstoneScalarFieldEnum | StudioTombstoneScalarFieldEnum[]
+  }
+
+  /**
+   * StudioTombstone create
+   */
+  export type StudioTombstoneCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioTombstone
+     */
+    select?: StudioTombstoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioTombstone
+     */
+    omit?: StudioTombstoneOmit<ExtArgs> | null
+    /**
+     * The data needed to create a StudioTombstone.
+     */
+    data: XOR<StudioTombstoneCreateInput, StudioTombstoneUncheckedCreateInput>
+  }
+
+  /**
+   * StudioTombstone createMany
+   */
+  export type StudioTombstoneCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many StudioTombstones.
+     */
+    data: StudioTombstoneCreateManyInput | StudioTombstoneCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StudioTombstone createManyAndReturn
+   */
+  export type StudioTombstoneCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioTombstone
+     */
+    select?: StudioTombstoneSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioTombstone
+     */
+    omit?: StudioTombstoneOmit<ExtArgs> | null
+    /**
+     * The data used to create many StudioTombstones.
+     */
+    data: StudioTombstoneCreateManyInput | StudioTombstoneCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StudioTombstone update
+   */
+  export type StudioTombstoneUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioTombstone
+     */
+    select?: StudioTombstoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioTombstone
+     */
+    omit?: StudioTombstoneOmit<ExtArgs> | null
+    /**
+     * The data needed to update a StudioTombstone.
+     */
+    data: XOR<StudioTombstoneUpdateInput, StudioTombstoneUncheckedUpdateInput>
+    /**
+     * Choose, which StudioTombstone to update.
+     */
+    where: StudioTombstoneWhereUniqueInput
+  }
+
+  /**
+   * StudioTombstone updateMany
+   */
+  export type StudioTombstoneUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update StudioTombstones.
+     */
+    data: XOR<StudioTombstoneUpdateManyMutationInput, StudioTombstoneUncheckedUpdateManyInput>
+    /**
+     * Filter which StudioTombstones to update
+     */
+    where?: StudioTombstoneWhereInput
+    /**
+     * Limit how many StudioTombstones to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudioTombstone updateManyAndReturn
+   */
+  export type StudioTombstoneUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioTombstone
+     */
+    select?: StudioTombstoneSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioTombstone
+     */
+    omit?: StudioTombstoneOmit<ExtArgs> | null
+    /**
+     * The data used to update StudioTombstones.
+     */
+    data: XOR<StudioTombstoneUpdateManyMutationInput, StudioTombstoneUncheckedUpdateManyInput>
+    /**
+     * Filter which StudioTombstones to update
+     */
+    where?: StudioTombstoneWhereInput
+    /**
+     * Limit how many StudioTombstones to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudioTombstone upsert
+   */
+  export type StudioTombstoneUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioTombstone
+     */
+    select?: StudioTombstoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioTombstone
+     */
+    omit?: StudioTombstoneOmit<ExtArgs> | null
+    /**
+     * The filter to search for the StudioTombstone to update in case it exists.
+     */
+    where: StudioTombstoneWhereUniqueInput
+    /**
+     * In case the StudioTombstone found by the `where` argument doesn't exist, create a new StudioTombstone with this data.
+     */
+    create: XOR<StudioTombstoneCreateInput, StudioTombstoneUncheckedCreateInput>
+    /**
+     * In case the StudioTombstone was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StudioTombstoneUpdateInput, StudioTombstoneUncheckedUpdateInput>
+  }
+
+  /**
+   * StudioTombstone delete
+   */
+  export type StudioTombstoneDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioTombstone
+     */
+    select?: StudioTombstoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioTombstone
+     */
+    omit?: StudioTombstoneOmit<ExtArgs> | null
+    /**
+     * Filter which StudioTombstone to delete.
+     */
+    where: StudioTombstoneWhereUniqueInput
+  }
+
+  /**
+   * StudioTombstone deleteMany
+   */
+  export type StudioTombstoneDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StudioTombstones to delete
+     */
+    where?: StudioTombstoneWhereInput
+    /**
+     * Limit how many StudioTombstones to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudioTombstone without action
+   */
+  export type StudioTombstoneDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioTombstone
+     */
+    select?: StudioTombstoneSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioTombstone
+     */
+    omit?: StudioTombstoneOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -34974,6 +37139,7 @@ export namespace Prisma {
     avPhotoKey: 'avPhotoKey',
     pcalColor: 'pcalColor',
     pcalNotes: 'pcalNotes',
+    extra: 'extra',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -34996,6 +37162,7 @@ export namespace Prisma {
     photoKey: 'photoKey',
     sourceRawId: 'sourceRawId',
     scheduled: 'scheduled',
+    extra: 'extra',
     createdById: 'createdById',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -35048,6 +37215,8 @@ export namespace Prisma {
     note: 'note',
     history: 'history',
     eventKey: 'eventKey',
+    readyBy: 'readyBy',
+    extra: 'extra',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -35062,6 +37231,7 @@ export namespace Prisma {
     idccQty: 'idccQty',
     idccDays: 'idccDays',
     captionTemplate: 'captionTemplate',
+    extra: 'extra',
     updatedAt: 'updatedAt'
   };
 
@@ -35112,6 +37282,24 @@ export namespace Prisma {
   };
 
   export type MediaPcalScalarFieldEnum = (typeof MediaPcalScalarFieldEnum)[keyof typeof MediaPcalScalarFieldEnum]
+
+
+  export const StudioDocScalarFieldEnum: {
+    path: 'path',
+    coll: 'coll',
+    data: 'data',
+    updatedAt: 'updatedAt'
+  };
+
+  export type StudioDocScalarFieldEnum = (typeof StudioDocScalarFieldEnum)[keyof typeof StudioDocScalarFieldEnum]
+
+
+  export const StudioTombstoneScalarFieldEnum: {
+    path: 'path',
+    deletedAt: 'deletedAt'
+  };
+
+  export type StudioTombstoneScalarFieldEnum = (typeof StudioTombstoneScalarFieldEnum)[keyof typeof StudioTombstoneScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -36785,6 +38973,7 @@ export namespace Prisma {
     avPhotoKey?: StringNullableFilter<"MediaMember"> | string | null
     pcalColor?: StringFilter<"MediaMember"> | string
     pcalNotes?: StringNullableFilter<"MediaMember"> | string | null
+    extra?: JsonNullableFilter<"MediaMember">
     createdAt?: DateTimeFilter<"MediaMember"> | Date | string
     updatedAt?: DateTimeFilter<"MediaMember"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -36802,6 +38991,7 @@ export namespace Prisma {
     avPhotoKey?: SortOrderInput | SortOrder
     pcalColor?: SortOrder
     pcalNotes?: SortOrderInput | SortOrder
+    extra?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -36822,6 +39012,7 @@ export namespace Prisma {
     avPhotoKey?: StringNullableFilter<"MediaMember"> | string | null
     pcalColor?: StringFilter<"MediaMember"> | string
     pcalNotes?: StringNullableFilter<"MediaMember"> | string | null
+    extra?: JsonNullableFilter<"MediaMember">
     createdAt?: DateTimeFilter<"MediaMember"> | Date | string
     updatedAt?: DateTimeFilter<"MediaMember"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -36839,6 +39030,7 @@ export namespace Prisma {
     avPhotoKey?: SortOrderInput | SortOrder
     pcalColor?: SortOrder
     pcalNotes?: SortOrderInput | SortOrder
+    extra?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: MediaMemberCountOrderByAggregateInput
@@ -36863,6 +39055,7 @@ export namespace Prisma {
     avPhotoKey?: StringNullableWithAggregatesFilter<"MediaMember"> | string | null
     pcalColor?: StringWithAggregatesFilter<"MediaMember"> | string
     pcalNotes?: StringNullableWithAggregatesFilter<"MediaMember"> | string | null
+    extra?: JsonNullableWithAggregatesFilter<"MediaMember">
     createdAt?: DateTimeWithAggregatesFilter<"MediaMember"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MediaMember"> | Date | string
   }
@@ -36885,6 +39078,7 @@ export namespace Prisma {
     photoKey?: StringNullableFilter<"MediaItem"> | string | null
     sourceRawId?: StringNullableFilter<"MediaItem"> | string | null
     scheduled?: BoolFilter<"MediaItem"> | boolean
+    extra?: JsonNullableFilter<"MediaItem">
     createdById?: StringFilter<"MediaItem"> | string
     createdAt?: DateTimeFilter<"MediaItem"> | Date | string
     updatedAt?: DateTimeFilter<"MediaItem"> | Date | string
@@ -36908,6 +39102,7 @@ export namespace Prisma {
     photoKey?: SortOrderInput | SortOrder
     sourceRawId?: SortOrderInput | SortOrder
     scheduled?: SortOrder
+    extra?: SortOrderInput | SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -36934,6 +39129,7 @@ export namespace Prisma {
     thumb?: StringNullableFilter<"MediaItem"> | string | null
     photoKey?: StringNullableFilter<"MediaItem"> | string | null
     scheduled?: BoolFilter<"MediaItem"> | boolean
+    extra?: JsonNullableFilter<"MediaItem">
     createdById?: StringFilter<"MediaItem"> | string
     createdAt?: DateTimeFilter<"MediaItem"> | Date | string
     updatedAt?: DateTimeFilter<"MediaItem"> | Date | string
@@ -36957,6 +39153,7 @@ export namespace Prisma {
     photoKey?: SortOrderInput | SortOrder
     sourceRawId?: SortOrderInput | SortOrder
     scheduled?: SortOrder
+    extra?: SortOrderInput | SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -36985,6 +39182,7 @@ export namespace Prisma {
     photoKey?: StringNullableWithAggregatesFilter<"MediaItem"> | string | null
     sourceRawId?: StringNullableWithAggregatesFilter<"MediaItem"> | string | null
     scheduled?: BoolWithAggregatesFilter<"MediaItem"> | boolean
+    extra?: JsonNullableWithAggregatesFilter<"MediaItem">
     createdById?: StringWithAggregatesFilter<"MediaItem"> | string
     createdAt?: DateTimeWithAggregatesFilter<"MediaItem"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MediaItem"> | Date | string
@@ -37095,6 +39293,8 @@ export namespace Prisma {
     note?: StringNullableFilter<"MediaTask"> | string | null
     history?: JsonNullableFilter<"MediaTask">
     eventKey?: StringNullableFilter<"MediaTask"> | string | null
+    readyBy?: StringNullableFilter<"MediaTask"> | string | null
+    extra?: JsonNullableFilter<"MediaTask">
     createdAt?: DateTimeFilter<"MediaTask"> | Date | string
     updatedAt?: DateTimeFilter<"MediaTask"> | Date | string
     item?: XOR<MediaItemNullableScalarRelationFilter, MediaItemWhereInput> | null
@@ -37130,6 +39330,8 @@ export namespace Prisma {
     note?: SortOrderInput | SortOrder
     history?: SortOrderInput | SortOrder
     eventKey?: SortOrderInput | SortOrder
+    readyBy?: SortOrderInput | SortOrder
+    extra?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     item?: MediaItemOrderByWithRelationInput
@@ -37168,6 +39370,8 @@ export namespace Prisma {
     note?: StringNullableFilter<"MediaTask"> | string | null
     history?: JsonNullableFilter<"MediaTask">
     eventKey?: StringNullableFilter<"MediaTask"> | string | null
+    readyBy?: StringNullableFilter<"MediaTask"> | string | null
+    extra?: JsonNullableFilter<"MediaTask">
     createdAt?: DateTimeFilter<"MediaTask"> | Date | string
     updatedAt?: DateTimeFilter<"MediaTask"> | Date | string
     item?: XOR<MediaItemNullableScalarRelationFilter, MediaItemWhereInput> | null
@@ -37203,6 +39407,8 @@ export namespace Prisma {
     note?: SortOrderInput | SortOrder
     history?: SortOrderInput | SortOrder
     eventKey?: SortOrderInput | SortOrder
+    readyBy?: SortOrderInput | SortOrder
+    extra?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: MediaTaskCountOrderByAggregateInput
@@ -37243,6 +39449,8 @@ export namespace Prisma {
     note?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
     history?: JsonNullableWithAggregatesFilter<"MediaTask">
     eventKey?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    readyBy?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    extra?: JsonNullableWithAggregatesFilter<"MediaTask">
     createdAt?: DateTimeWithAggregatesFilter<"MediaTask"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MediaTask"> | Date | string
   }
@@ -37257,6 +39465,7 @@ export namespace Prisma {
     idccQty?: IntFilter<"MediaSettings"> | number
     idccDays?: IntFilter<"MediaSettings"> | number
     captionTemplate?: StringNullableFilter<"MediaSettings"> | string | null
+    extra?: JsonNullableFilter<"MediaSettings">
     updatedAt?: DateTimeFilter<"MediaSettings"> | Date | string
   }
 
@@ -37267,6 +39476,7 @@ export namespace Prisma {
     idccQty?: SortOrder
     idccDays?: SortOrder
     captionTemplate?: SortOrderInput | SortOrder
+    extra?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
   }
 
@@ -37280,6 +39490,7 @@ export namespace Prisma {
     idccQty?: IntFilter<"MediaSettings"> | number
     idccDays?: IntFilter<"MediaSettings"> | number
     captionTemplate?: StringNullableFilter<"MediaSettings"> | string | null
+    extra?: JsonNullableFilter<"MediaSettings">
     updatedAt?: DateTimeFilter<"MediaSettings"> | Date | string
   }, "id">
 
@@ -37290,6 +39501,7 @@ export namespace Prisma {
     idccQty?: SortOrder
     idccDays?: SortOrder
     captionTemplate?: SortOrderInput | SortOrder
+    extra?: SortOrderInput | SortOrder
     updatedAt?: SortOrder
     _count?: MediaSettingsCountOrderByAggregateInput
     _avg?: MediaSettingsAvgOrderByAggregateInput
@@ -37308,6 +39520,7 @@ export namespace Prisma {
     idccQty?: IntWithAggregatesFilter<"MediaSettings"> | number
     idccDays?: IntWithAggregatesFilter<"MediaSettings"> | number
     captionTemplate?: StringNullableWithAggregatesFilter<"MediaSettings"> | string | null
+    extra?: JsonNullableWithAggregatesFilter<"MediaSettings">
     updatedAt?: DateTimeWithAggregatesFilter<"MediaSettings"> | Date | string
   }
 
@@ -37535,6 +39748,90 @@ export namespace Prisma {
     color?: StringWithAggregatesFilter<"MediaPcal"> | string
     notes?: StringNullableWithAggregatesFilter<"MediaPcal"> | string | null
     updatedAt?: DateTimeWithAggregatesFilter<"MediaPcal"> | Date | string
+  }
+
+  export type StudioDocWhereInput = {
+    AND?: StudioDocWhereInput | StudioDocWhereInput[]
+    OR?: StudioDocWhereInput[]
+    NOT?: StudioDocWhereInput | StudioDocWhereInput[]
+    path?: StringFilter<"StudioDoc"> | string
+    coll?: StringFilter<"StudioDoc"> | string
+    data?: JsonFilter<"StudioDoc">
+    updatedAt?: DateTimeFilter<"StudioDoc"> | Date | string
+  }
+
+  export type StudioDocOrderByWithRelationInput = {
+    path?: SortOrder
+    coll?: SortOrder
+    data?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StudioDocWhereUniqueInput = Prisma.AtLeast<{
+    path?: string
+    AND?: StudioDocWhereInput | StudioDocWhereInput[]
+    OR?: StudioDocWhereInput[]
+    NOT?: StudioDocWhereInput | StudioDocWhereInput[]
+    coll?: StringFilter<"StudioDoc"> | string
+    data?: JsonFilter<"StudioDoc">
+    updatedAt?: DateTimeFilter<"StudioDoc"> | Date | string
+  }, "path">
+
+  export type StudioDocOrderByWithAggregationInput = {
+    path?: SortOrder
+    coll?: SortOrder
+    data?: SortOrder
+    updatedAt?: SortOrder
+    _count?: StudioDocCountOrderByAggregateInput
+    _max?: StudioDocMaxOrderByAggregateInput
+    _min?: StudioDocMinOrderByAggregateInput
+  }
+
+  export type StudioDocScalarWhereWithAggregatesInput = {
+    AND?: StudioDocScalarWhereWithAggregatesInput | StudioDocScalarWhereWithAggregatesInput[]
+    OR?: StudioDocScalarWhereWithAggregatesInput[]
+    NOT?: StudioDocScalarWhereWithAggregatesInput | StudioDocScalarWhereWithAggregatesInput[]
+    path?: StringWithAggregatesFilter<"StudioDoc"> | string
+    coll?: StringWithAggregatesFilter<"StudioDoc"> | string
+    data?: JsonWithAggregatesFilter<"StudioDoc">
+    updatedAt?: DateTimeWithAggregatesFilter<"StudioDoc"> | Date | string
+  }
+
+  export type StudioTombstoneWhereInput = {
+    AND?: StudioTombstoneWhereInput | StudioTombstoneWhereInput[]
+    OR?: StudioTombstoneWhereInput[]
+    NOT?: StudioTombstoneWhereInput | StudioTombstoneWhereInput[]
+    path?: StringFilter<"StudioTombstone"> | string
+    deletedAt?: DateTimeFilter<"StudioTombstone"> | Date | string
+  }
+
+  export type StudioTombstoneOrderByWithRelationInput = {
+    path?: SortOrder
+    deletedAt?: SortOrder
+  }
+
+  export type StudioTombstoneWhereUniqueInput = Prisma.AtLeast<{
+    path?: string
+    AND?: StudioTombstoneWhereInput | StudioTombstoneWhereInput[]
+    OR?: StudioTombstoneWhereInput[]
+    NOT?: StudioTombstoneWhereInput | StudioTombstoneWhereInput[]
+    deletedAt?: DateTimeFilter<"StudioTombstone"> | Date | string
+  }, "path">
+
+  export type StudioTombstoneOrderByWithAggregationInput = {
+    path?: SortOrder
+    deletedAt?: SortOrder
+    _count?: StudioTombstoneCountOrderByAggregateInput
+    _max?: StudioTombstoneMaxOrderByAggregateInput
+    _min?: StudioTombstoneMinOrderByAggregateInput
+  }
+
+  export type StudioTombstoneScalarWhereWithAggregatesInput = {
+    AND?: StudioTombstoneScalarWhereWithAggregatesInput | StudioTombstoneScalarWhereWithAggregatesInput[]
+    OR?: StudioTombstoneScalarWhereWithAggregatesInput[]
+    NOT?: StudioTombstoneScalarWhereWithAggregatesInput | StudioTombstoneScalarWhereWithAggregatesInput[]
+    path?: StringWithAggregatesFilter<"StudioTombstone"> | string
+    deletedAt?: DateTimeWithAggregatesFilter<"StudioTombstone"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -39094,6 +41391,7 @@ export namespace Prisma {
     avPhotoKey?: string | null
     pcalColor?: string
     pcalNotes?: string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutMediaMemberInput
@@ -39111,6 +41409,7 @@ export namespace Prisma {
     avPhotoKey?: string | null
     pcalColor?: string
     pcalNotes?: string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -39126,6 +41425,7 @@ export namespace Prisma {
     avPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     pcalColor?: StringFieldUpdateOperationsInput | string
     pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutMediaMemberNestedInput
@@ -39143,6 +41443,7 @@ export namespace Prisma {
     avPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     pcalColor?: StringFieldUpdateOperationsInput | string
     pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39159,6 +41460,7 @@ export namespace Prisma {
     avPhotoKey?: string | null
     pcalColor?: string
     pcalNotes?: string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -39174,6 +41476,7 @@ export namespace Prisma {
     avPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     pcalColor?: StringFieldUpdateOperationsInput | string
     pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39190,6 +41493,7 @@ export namespace Prisma {
     avPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     pcalColor?: StringFieldUpdateOperationsInput | string
     pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39209,6 +41513,7 @@ export namespace Prisma {
     photoKey?: string | null
     sourceRawId?: string | null
     scheduled?: boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     createdBy: UserCreateNestedOneWithoutMediaItemsInput
@@ -39231,6 +41536,7 @@ export namespace Prisma {
     photoKey?: string | null
     sourceRawId?: string | null
     scheduled?: boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -39253,6 +41559,7 @@ export namespace Prisma {
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
     sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
     scheduled?: BoolFieldUpdateOperationsInput | boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdBy?: UserUpdateOneRequiredWithoutMediaItemsNestedInput
@@ -39275,6 +41582,7 @@ export namespace Prisma {
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
     sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
     scheduled?: BoolFieldUpdateOperationsInput | boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39297,6 +41605,7 @@ export namespace Prisma {
     photoKey?: string | null
     sourceRawId?: string | null
     scheduled?: boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -39317,6 +41626,7 @@ export namespace Prisma {
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
     sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
     scheduled?: BoolFieldUpdateOperationsInput | boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39336,6 +41646,7 @@ export namespace Prisma {
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
     sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
     scheduled?: BoolFieldUpdateOperationsInput | boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -39446,6 +41757,8 @@ export namespace Prisma {
     note?: string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
+    readyBy?: string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     item?: MediaItemCreateNestedOneWithoutTasksInput
@@ -39481,6 +41794,8 @@ export namespace Prisma {
     note?: string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
+    readyBy?: string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -39514,6 +41829,8 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
+    readyBy?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     item?: MediaItemUpdateOneWithoutTasksNestedInput
@@ -39549,6 +41866,8 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
+    readyBy?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39583,6 +41902,8 @@ export namespace Prisma {
     note?: string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
+    readyBy?: string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -39616,6 +41937,8 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
+    readyBy?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39650,6 +41973,8 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
+    readyBy?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -39661,6 +41986,7 @@ export namespace Prisma {
     idccQty?: number
     idccDays?: number
     captionTemplate?: string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: Date | string
   }
 
@@ -39671,6 +41997,7 @@ export namespace Prisma {
     idccQty?: number
     idccDays?: number
     captionTemplate?: string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: Date | string
   }
 
@@ -39681,6 +42008,7 @@ export namespace Prisma {
     idccQty?: IntFieldUpdateOperationsInput | number
     idccDays?: IntFieldUpdateOperationsInput | number
     captionTemplate?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -39691,6 +42019,7 @@ export namespace Prisma {
     idccQty?: IntFieldUpdateOperationsInput | number
     idccDays?: IntFieldUpdateOperationsInput | number
     captionTemplate?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -39701,6 +42030,7 @@ export namespace Prisma {
     idccQty?: number
     idccDays?: number
     captionTemplate?: string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: Date | string
   }
 
@@ -39711,6 +42041,7 @@ export namespace Prisma {
     idccQty?: IntFieldUpdateOperationsInput | number
     idccDays?: IntFieldUpdateOperationsInput | number
     captionTemplate?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -39721,6 +42052,7 @@ export namespace Prisma {
     idccQty?: IntFieldUpdateOperationsInput | number
     idccDays?: IntFieldUpdateOperationsInput | number
     captionTemplate?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -39958,6 +42290,90 @@ export namespace Prisma {
     color?: StringFieldUpdateOperationsInput | string
     notes?: NullableStringFieldUpdateOperationsInput | string | null
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudioDocCreateInput = {
+    path: string
+    coll: string
+    data: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+  }
+
+  export type StudioDocUncheckedCreateInput = {
+    path: string
+    coll: string
+    data: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+  }
+
+  export type StudioDocUpdateInput = {
+    path?: StringFieldUpdateOperationsInput | string
+    coll?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudioDocUncheckedUpdateInput = {
+    path?: StringFieldUpdateOperationsInput | string
+    coll?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudioDocCreateManyInput = {
+    path: string
+    coll: string
+    data: JsonNullValueInput | InputJsonValue
+    updatedAt?: Date | string
+  }
+
+  export type StudioDocUpdateManyMutationInput = {
+    path?: StringFieldUpdateOperationsInput | string
+    coll?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudioDocUncheckedUpdateManyInput = {
+    path?: StringFieldUpdateOperationsInput | string
+    coll?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudioTombstoneCreateInput = {
+    path: string
+    deletedAt?: Date | string
+  }
+
+  export type StudioTombstoneUncheckedCreateInput = {
+    path: string
+    deletedAt?: Date | string
+  }
+
+  export type StudioTombstoneUpdateInput = {
+    path?: StringFieldUpdateOperationsInput | string
+    deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudioTombstoneUncheckedUpdateInput = {
+    path?: StringFieldUpdateOperationsInput | string
+    deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudioTombstoneCreateManyInput = {
+    path: string
+    deletedAt?: Date | string
+  }
+
+  export type StudioTombstoneUpdateManyMutationInput = {
+    path?: StringFieldUpdateOperationsInput | string
+    deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudioTombstoneUncheckedUpdateManyInput = {
+    path?: StringFieldUpdateOperationsInput | string
+    deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -41255,6 +43671,7 @@ export namespace Prisma {
     avPhotoKey?: SortOrder
     pcalColor?: SortOrder
     pcalNotes?: SortOrder
+    extra?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -41349,6 +43766,7 @@ export namespace Prisma {
     photoKey?: SortOrder
     sourceRawId?: SortOrder
     scheduled?: SortOrder
+    extra?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -41493,6 +43911,8 @@ export namespace Prisma {
     note?: SortOrder
     history?: SortOrder
     eventKey?: SortOrder
+    readyBy?: SortOrder
+    extra?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -41526,6 +43946,7 @@ export namespace Prisma {
     srcDesc?: SortOrder
     note?: SortOrder
     eventKey?: SortOrder
+    readyBy?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -41559,6 +43980,7 @@ export namespace Prisma {
     srcDesc?: SortOrder
     note?: SortOrder
     eventKey?: SortOrder
+    readyBy?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -41570,6 +43992,7 @@ export namespace Prisma {
     idccQty?: SortOrder
     idccDays?: SortOrder
     captionTemplate?: SortOrder
+    extra?: SortOrder
     updatedAt?: SortOrder
   }
 
@@ -41758,6 +44181,40 @@ export namespace Prisma {
     color?: SortOrder
     notes?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type StudioDocCountOrderByAggregateInput = {
+    path?: SortOrder
+    coll?: SortOrder
+    data?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StudioDocMaxOrderByAggregateInput = {
+    path?: SortOrder
+    coll?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StudioDocMinOrderByAggregateInput = {
+    path?: SortOrder
+    coll?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type StudioTombstoneCountOrderByAggregateInput = {
+    path?: SortOrder
+    deletedAt?: SortOrder
+  }
+
+  export type StudioTombstoneMaxOrderByAggregateInput = {
+    path?: SortOrder
+    deletedAt?: SortOrder
+  }
+
+  export type StudioTombstoneMinOrderByAggregateInput = {
+    path?: SortOrder
+    deletedAt?: SortOrder
   }
 
   export type BranchCreateNestedOneWithoutUsersInput = {
@@ -44259,6 +46716,7 @@ export namespace Prisma {
     avPhotoKey?: string | null
     pcalColor?: string
     pcalNotes?: string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -44274,6 +46732,7 @@ export namespace Prisma {
     avPhotoKey?: string | null
     pcalColor?: string
     pcalNotes?: string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -44298,6 +46757,7 @@ export namespace Prisma {
     photoKey?: string | null
     sourceRawId?: string | null
     scheduled?: boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     tasks?: MediaTaskCreateNestedManyWithoutItemInput
@@ -44319,6 +46779,7 @@ export namespace Prisma {
     photoKey?: string | null
     sourceRawId?: string | null
     scheduled?: boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     tasks?: MediaTaskUncheckedCreateNestedManyWithoutItemInput
@@ -44835,6 +47296,7 @@ export namespace Prisma {
     avPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     pcalColor?: StringFieldUpdateOperationsInput | string
     pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -44850,6 +47312,7 @@ export namespace Prisma {
     avPhotoKey?: NullableStringFieldUpdateOperationsInput | string | null
     pcalColor?: StringFieldUpdateOperationsInput | string
     pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -44888,6 +47351,7 @@ export namespace Prisma {
     photoKey?: StringNullableFilter<"MediaItem"> | string | null
     sourceRawId?: StringNullableFilter<"MediaItem"> | string | null
     scheduled?: BoolFilter<"MediaItem"> | boolean
+    extra?: JsonNullableFilter<"MediaItem">
     createdById?: StringFilter<"MediaItem"> | string
     createdAt?: DateTimeFilter<"MediaItem"> | Date | string
     updatedAt?: DateTimeFilter<"MediaItem"> | Date | string
@@ -47913,6 +50377,8 @@ export namespace Prisma {
     note?: string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
+    readyBy?: string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -47946,6 +50412,8 @@ export namespace Prisma {
     note?: string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
+    readyBy?: string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -48118,6 +50586,8 @@ export namespace Prisma {
     note?: StringNullableFilter<"MediaTask"> | string | null
     history?: JsonNullableFilter<"MediaTask">
     eventKey?: StringNullableFilter<"MediaTask"> | string | null
+    readyBy?: StringNullableFilter<"MediaTask"> | string | null
+    extra?: JsonNullableFilter<"MediaTask">
     createdAt?: DateTimeFilter<"MediaTask"> | Date | string
     updatedAt?: DateTimeFilter<"MediaTask"> | Date | string
   }
@@ -48167,6 +50637,7 @@ export namespace Prisma {
     photoKey?: string | null
     sourceRawId?: string | null
     scheduled?: boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     createdBy: UserCreateNestedOneWithoutMediaItemsInput
@@ -48188,6 +50659,7 @@ export namespace Prisma {
     photoKey?: string | null
     sourceRawId?: string | null
     scheduled?: boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -48225,6 +50697,7 @@ export namespace Prisma {
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
     sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
     scheduled?: BoolFieldUpdateOperationsInput | boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdBy?: UserUpdateOneRequiredWithoutMediaItemsNestedInput
@@ -48246,6 +50719,7 @@ export namespace Prisma {
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
     sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
     scheduled?: BoolFieldUpdateOperationsInput | boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48267,6 +50741,7 @@ export namespace Prisma {
     photoKey?: string | null
     sourceRawId?: string | null
     scheduled?: boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
     createdBy: UserCreateNestedOneWithoutMediaItemsInput
@@ -48288,6 +50763,7 @@ export namespace Prisma {
     photoKey?: string | null
     sourceRawId?: string | null
     scheduled?: boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -48325,6 +50801,7 @@ export namespace Prisma {
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
     sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
     scheduled?: BoolFieldUpdateOperationsInput | boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdBy?: UserUpdateOneRequiredWithoutMediaItemsNestedInput
@@ -48346,6 +50823,7 @@ export namespace Prisma {
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
     sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
     scheduled?: BoolFieldUpdateOperationsInput | boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -48848,6 +51326,7 @@ export namespace Prisma {
     photoKey?: string | null
     sourceRawId?: string | null
     scheduled?: boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -49409,6 +51888,7 @@ export namespace Prisma {
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
     sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
     scheduled?: BoolFieldUpdateOperationsInput | boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: MediaTaskUpdateManyWithoutItemNestedInput
@@ -49430,6 +51910,7 @@ export namespace Prisma {
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
     sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
     scheduled?: BoolFieldUpdateOperationsInput | boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     tasks?: MediaTaskUncheckedUpdateManyWithoutItemNestedInput
@@ -49451,6 +51932,7 @@ export namespace Prisma {
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
     sourceRawId?: NullableStringFieldUpdateOperationsInput | string | null
     scheduled?: BoolFieldUpdateOperationsInput | boolean
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -49801,6 +52283,8 @@ export namespace Prisma {
     note?: string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
+    readyBy?: string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -49844,6 +52328,8 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
+    readyBy?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -49877,6 +52363,8 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
+    readyBy?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -49910,6 +52398,8 @@ export namespace Prisma {
     note?: NullableStringFieldUpdateOperationsInput | string | null
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
+    readyBy?: NullableStringFieldUpdateOperationsInput | string | null
+    extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

@@ -343,6 +343,7 @@ exports.Prisma.MediaMemberScalarFieldEnum = {
   avPhotoKey: 'avPhotoKey',
   pcalColor: 'pcalColor',
   pcalNotes: 'pcalNotes',
+  extra: 'extra',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -362,6 +363,7 @@ exports.Prisma.MediaItemScalarFieldEnum = {
   photoKey: 'photoKey',
   sourceRawId: 'sourceRawId',
   scheduled: 'scheduled',
+  extra: 'extra',
   createdById: 'createdById',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -408,6 +410,8 @@ exports.Prisma.MediaTaskScalarFieldEnum = {
   note: 'note',
   history: 'history',
   eventKey: 'eventKey',
+  readyBy: 'readyBy',
+  extra: 'extra',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -419,6 +423,7 @@ exports.Prisma.MediaSettingsScalarFieldEnum = {
   idccQty: 'idccQty',
   idccDays: 'idccDays',
   captionTemplate: 'captionTemplate',
+  extra: 'extra',
   updatedAt: 'updatedAt'
 };
 
@@ -454,6 +459,18 @@ exports.Prisma.MediaPcalScalarFieldEnum = {
   color: 'color',
   notes: 'notes',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.StudioDocScalarFieldEnum = {
+  path: 'path',
+  coll: 'coll',
+  data: 'data',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.StudioTombstoneScalarFieldEnum = {
+  path: 'path',
+  deletedAt: 'deletedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -571,7 +588,9 @@ exports.Prisma.ModelName = {
   MediaIdccReport: 'MediaIdccReport',
   MediaBalanceLog: 'MediaBalanceLog',
   PersonalCalEvent: 'PersonalCalEvent',
-  MediaPcal: 'MediaPcal'
+  MediaPcal: 'MediaPcal',
+  StudioDoc: 'StudioDoc',
+  StudioTombstone: 'StudioTombstone'
 };
 
 /**
