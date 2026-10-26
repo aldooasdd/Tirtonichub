@@ -58,6 +58,13 @@ test("File Konten: semua anggota boleh ganti nama/warna, folder berwarna", () =>
   assert.notEqual(canWrite(rayhan, "update", "assets/x", f, { ...f, color: "pink" }), null);
   assert.equal(canWrite(rayhan, "set", "folders/i", null, { color: "blue", updatedAt: 1 }), null);
   assert.notEqual(canWrite(rayhan, "set", "folders/i", null, { color: "blue", foo: 1 }), null);
+  // catatan (Docs)
+  const nd = { title: "Ide konten", body: "isi", parent: "", color: "", owner: rayhan.email, createdAt: 1, updatedAt: 1, updatedBy: "Rayhan" };
+  assert.equal(canRead(rayhan, "docs/d1"), true);
+  assert.equal(canWrite(rayhan, "set", "docs/d1", null, nd), null);
+  assert.notEqual(canWrite(rayhan, "set", "docs/d1", null, { ...nd, owner: "x@y.com" }), null);
+  assert.equal(canWrite(rayhan, "update", "docs/d1", { ...nd, owner: "x@y.com" }, { ...nd, owner: "x@y.com", body: "ubah" }), null);
+  assert.notEqual(canWrite(rayhan, "delete", "docs/d1", { ...nd, owner: "x@y.com" }, null), null);
   // folder buatan sendiri
   const nf = { name: "Campaign Desember", color: "", parent: "", custom: true, owner: rayhan.email, createdAt: 1, updatedAt: 1 };
   assert.equal(canWrite(rayhan, "set", "folders/f1", null, nf), null);

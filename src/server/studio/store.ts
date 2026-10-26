@@ -272,12 +272,13 @@ async function getPending(u: StudioUser, id: string) {
 }
 export async function bigStart(u: StudioUser, b: { itemId?: string; folderId?: string; name?: string; mime?: string; size?: number; section?: string; taskId?: string }) {
   // file masuk ke folder barang (itemId) atau folder buatan sendiri (folderId)
+  // keduanya kosong = file di halaman utama File Konten
   const folderId = b.folderId ? String(b.folderId).slice(0, 60) : null;
-  const itemId = folderId ? null : String(b.itemId ?? "");
+  const itemId = folderId || !b.itemId ? null : String(b.itemId);
   if (folderId) {
     const f = await prisma.studioDoc.findUnique({ where: { path: "folders/" + folderId }, select: { data: true } });
     if (!f || (f.data as Doc | null)?.custom !== true) throw new StudioError("not-found", "Folder tidak ditemukan.");
-  } else if (!(await prisma.mediaItem.findUnique({ where: { id: itemId! }, select: { id: true } }))) throw new StudioError("not-found", "Barang tidak ditemukan.");
+  } else if (itemId && !(await prisma.mediaItem.findUnique({ where: { id: itemId }, select: { id: true } }))) throw new StudioError("not-found", "Barang tidak ditemukan.");
   const size = Number(b.size) || 0;
   if (size <= 0 || size > MAX_BIG) throw new StudioError("invalid-argument", "Ukuran file maksimal 5 GB.");
   const name = String(b.name ?? "file").trim().replace(/[\\/]/g, "-").slice(0, 200) || "file";
@@ -301,7 +302,7 @@ export async function bigPart(u: StudioUser, id: string, n: number, body: Buffer
 export async function bigFinish(u: StudioUser, id: string) {
   const p = await getPending(u, id);
   await multipartFinish(p.key, p.s3, p.parts);
-  const a = await prisma.mediaAsset.create({ data: { itemId: p.itemId, folderId: p.folderId ?? null, name: p.name, key: p.key, mime: p.mime, size: p.size, section: p.folderId ? null : p.section, taskId: p.taskId, createdById: u.userId } });
+  const a = await prisma.mediaAsset.create({ data: { itemId: p.itemId, folderId: p.folderId ?? null, name: p.name, key: p.key, mime: p.mime, size: p.size, section: p.itemId ? p.section : null, taskId: p.taskId, createdById: u.userId } });
   await prisma.studioDoc.delete({ where: { path: pendingPath(id) } });
   return { path: "assets/" + a.id, doc: assetToDoc(a, await userNames([u.userId])) };
 }

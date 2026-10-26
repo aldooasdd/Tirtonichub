@@ -40,6 +40,7 @@ export function canRead(u: StudioUser, path: string): boolean {
     case "public":
     case "assets":
     case "folders":
+    case "docs":
     case "items":
     case "photos":
     case "tasks":
@@ -131,6 +132,16 @@ export function canWrite(
       if (!nm || nm.length > 80 || /[\\/]/.test(nm)) return deny("nama folder tidak valid");
       if (!before) return d.custom === true && d.owner === u.email ? null : deny("pembuat folder tidak cocok");
       return d.custom === true && d.owner === before.owner ? null : deny("pembuat folder tidak bisa diubah");
+    }
+    case "docs": {
+      // File Konten: catatan (Docs). Semua anggota boleh menulis; hapus = admin atau pembuat.
+      if (op === "delete") return u.staff || before?.owner === u.email ? null : deny("hanya admin atau pembuat catatan");
+      const d = after ?? {};
+      if (Object.keys(d).some((k) => !["title", "body", "parent", "color", "owner", "createdAt", "updatedAt", "updatedBy"].includes(k))) return deny("isian catatan tidak dikenal");
+      if (str(d.title).length > 120 || str(d.body).length > 200_000 || str(d.parent).length > 60) return deny("catatan terlalu panjang");
+      if (!FILE_COLORS.includes(str(d.color))) return deny("warna tidak dikenal");
+      if (!before) return d.owner === u.email ? null : deny("pembuat catatan tidak cocok");
+      return d.owner === before.owner ? null : deny("pembuat catatan tidak bisa diubah");
     }
     case "idcc":
       if (op === "set" && !before && u.idcc) return null;
