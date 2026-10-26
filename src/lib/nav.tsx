@@ -74,7 +74,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
     });
   }
 
-  if (SALES_ROLES.includes(role) && role !== "BOSS") {
+  if (SALES_ROLES.includes(role)) {
     groups.push({
       title: "Sales",
       items: [{ label: "Rekap Penjualan", href: "/sales", icon: Receipt }],
