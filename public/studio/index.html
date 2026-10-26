@@ -2092,6 +2092,7 @@ async function savePhoto(itemId,ph){
   await S.db.doc('photos/'+itemId).set({data:ph.full,updatedAt:Date.now()})}
 const itemOf=id=>S.items.find(i=>i.id===id);
 function thumbHtml(itemId,size,label){const i=itemId&&itemOf(itemId);
+  if(i&&!i.thumb&&i.photo)return'<button type="button" class="ph" style="--s:'+size+'px" data-photo="'+esc(itemId)+'" aria-label="Lihat foto '+esc(label||i.name)+'"><img src="'+esc(i.photo)+'" alt="" loading="lazy"></button>';   /* barang dari QC: baru ada foto asli */
   if(!i||!i.thumb)return size>=44?'<span class="ph none" style="--s:'+size+'px" title="Belum ada foto">'+CAM+'</span>':'';
   return'<button type="button" class="ph" style="--s:'+size+'px" data-photo="'+esc(itemId)+'" aria-label="Lihat foto '+esc(label||i.name)+'"><img src="'+i.thumb+'" alt=""></button>'}
 S.photoCache={};
@@ -2153,7 +2154,13 @@ $('itemForm').addEventListener('submit',async e=>{e.preventDefault();if(!S.db){t
 /* barang dari QC (Tirtonichub, scheduled:false) tampil di Barang masuk; dilengkapi lewat formulir Catat barang */
 S.qcFill='';
 const qcItems=()=>S.items.filter(i=>i.scheduled===false).sort((a,b)=>(a.arrived||'').localeCompare(b.arrived||'')||(a.createdAt||0)-(b.createdAt||0));
+/* foto QC (asli) dibuatkan foto kecil supaya tampil di semua kartu */
+S.thumbFix=new Set();
+async function fixQcThumb(i){if(S.thumbFix.has(i.id)||!S.canWrite)return;S.thumbFix.add(i.id);
+  try{const b=await (await fetch(i.photo,{credentials:'same-origin'})).blob();const img=await loadImg(new File([b],'qc.jpg',{type:b.type||'image/jpeg'}));
+    await S.db.doc('items/'+i.id).update({thumb:toJpeg(img,360,0.82,PHOTO_R)})}catch(e){}}
 function renderQcIn(){const L=qcItems();const box=$('qcBox');if(!box)return;box.hidden=!L.length||!S.isAdmin;
+  if(S.isAdmin)L.filter(i=>i.photo&&!i.thumb).forEach(fixQcThumb);
   if(S.qcFill&&!L.some(i=>i.id===S.qcFill))endQcFill();
   $('qcN').textContent=L.length||'';
   $('qcList').innerHTML=L.map(i=>'<div class="qci'+(S.qcFill===i.id?' on':'')+'">'+thumbHtml(i.id,52,i.name)+'<span class="qtx"><b data-noi18n>'+esc(i.name)+'</b><span>'+esc([i.color,CATLBL[i.cat]||'',i.qty+' pcs',i.arrived?'datang '+fmt(i.arrived):''].filter(Boolean).join(' · '))+'</span></span>'+
@@ -2162,7 +2169,7 @@ function startQcFill(id){const i=itemOf(id);if(!i)return;S.qcFill=id;
   $('entryMode').querySelector('[data-mode="single"]').click();
   $('fName').value=i.name||'';$('fColor').value=i.color||'';$('fCat').value=CATS[i.cat]?i.cat:'sepatu';$('fCat').dispatchEvent(new Event('change',{bubbles:true}));$('fGender').value=i.gender||'';
   $('fQty').value=String(Math.max(1,i.qty||1));$('fDate').value=i.arrived||today();$('fTime').value=i.arrivedAfter15?'late':'early';
-  S.fTier=S.full?'':'JP';renderTierPick();S.fPhoto=i.thumb?{thumb:i.thumb,keep:true}:null;renderFPhoto();
+  S.fTier=S.full?'':'JP';renderTierPick();S.fPhoto=(i.thumb||i.photo)?{thumb:i.thumb||i.photo,keep:true}:null;renderFPhoto();
   $('qcFillT').textContent='Melengkapi barang dari QC: '+i.name+(i.color?' · '+i.color:'');$('qcFill').hidden=false;$('fTitle').textContent='Lengkapi barang dari QC';$('fSubmit').textContent='Simpan & jadwalkan';
   renderQcIn();checkItemForm();$('singleBox').scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>$('fName').focus({preventScroll:true}),300)}
 function endQcFill(){S.qcFill='';$('qcFill').hidden=true;$('fTitle').textContent='Catat barang';$('fSubmit').textContent='Simpan & buat tugas konten'}
