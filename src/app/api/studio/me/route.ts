@@ -7,5 +7,5 @@ export async function GET() {
   const c = await studioCtx();
   if (!c.ok) return fail(c.status, c.code, c.code === "login" ? "Silakan masuk dulu." : "Akun ini belum terdaftar di Media.");
   const member = await getRaw("members/" + c.u.email);
-  return ok({ ok: true, now: Date.now(), member: { ...member, email: c.u.email }, attend: c.attend, absenUrl: "/absen" });
+  return ok({ ok: true, now: Date.now(), member: { ...member, email: c.u.email, uid: c.u.userId }, attend: c.attend, absenUrl: "/absen" });
 }

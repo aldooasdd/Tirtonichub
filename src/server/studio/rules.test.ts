@@ -41,3 +41,12 @@ test("profil sendiri: hanya avatar", () => {
   assert.equal(canWrite(rayhan, "update", "members/rayhan@tirtonichub.com", me, { ...me, avColor: "pink", avAnimal: "cat" }), null);
   assert.notEqual(canWrite(rayhan, "update", "members/rayhan@tirtonichub.com", me, { ...me, role: "admin" }), null);
 });
+
+test("file hasil konten: hapus oleh admin atau pengunggah saja", () => {
+  const f = { itemId: "i", name: "a.jpg", uploaderId: "u-rayhan" };
+  assert.equal(canRead(rayhan, "assets/x"), true);
+  assert.equal(canWrite(aulia, "delete", "assets/x", f, null), null);
+  assert.equal(canWrite({ ...rayhan, userId: "u-rayhan" }, "delete", "assets/x", f, null), null);
+  assert.notEqual(canWrite({ ...rayhan, userId: "u-lain" }, "delete", "assets/x", f, null), null);
+  assert.notEqual(canWrite(zaki, "set", "assets/x", null, f), null);
+});

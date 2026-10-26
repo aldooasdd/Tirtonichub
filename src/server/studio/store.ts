@@ -50,6 +50,10 @@ export async function getRaw(path: string): Promise<Doc | null> {
       const r = await prisma.mediaTask.findUnique({ where: { id } });
       return r ? M.taskToDoc(r) : null;
     }
+    case "assets": {
+      const r = await prisma.mediaAsset.findUnique({ where: { id } });
+      return r ? assetToDoc(r, await userNames([r.createdById])) : null;
+    }
     case "settings": {
       const r = await prisma.mediaSettings.findUnique({ where: { id: 1 } });
       return r ? M.settingsToDoc(r) : null;
@@ -183,6 +187,9 @@ async function removeDoc(col: string, id: string, sub: string | undefined, subId
     case "photos":
       await prisma.mediaItem.updateMany({ where: { id }, data: { photoKey: null } });
       return;
+    case "assets":
+      await prisma.mediaAsset.deleteMany({ where: { id } }); // ponytail: objek di storage dibiarkan (kunci acak, tak tertaut lagi)
+      return;
     case "tasks":
       await prisma.mediaTask.deleteMany({ where: { id } });
       return;
@@ -204,7 +211,7 @@ async function removeDoc(col: string, id: string, sub: string | undefined, subId
 export async function changes(u: StudioUser, since: number) {
   const gt = new Date(Math.max(0, since - 2000)); // tumpang-tindih 2 detik supaya tidak ada yang terlewat
   const docs: Record<string, Doc> = {};
-  const [items, tasks, settings, log, misc, pcal, events, tombs] = await Promise.all([
+  const [items, tasks, settings, log, misc, pcal, events, tombs, assets] = await Promise.all([
     prisma.mediaItem.findMany({ where: { updatedAt: { gt } } }),
     prisma.mediaTask.findMany({ where: { updatedAt: { gt } } }),
     prisma.mediaSettings.findFirst({ where: { id: 1, updatedAt: { gt } } }),
@@ -213,7 +220,10 @@ export async function changes(u: StudioUser, since: number) {
     prisma.mediaPcal.findFirst({ where: { userId: u.userId, updatedAt: { gt } } }),
     prisma.personalCalEvent.findMany({ where: { userId: u.userId, updatedAt: { gt } } }),
     since ? prisma.studioTombstone.findMany({ where: { deletedAt: { gt } } }) : Promise.resolve([]),
+    prisma.mediaAsset.findMany({ where: { createdAt: { gt } } }),
   ]);
+  const names = await userNames(assets.map((a) => a.createdById));
+  for (const a of assets) docs["assets/" + a.id] = assetToDoc(a, names);
   for (const r of items) docs["items/" + r.id] = M.itemToDoc(r);
   for (const r of tasks) docs["tasks/" + r.id] = M.taskToDoc(r);
   if (settings) docs["settings/main"] = M.settingsToDoc(settings);
@@ -234,6 +244,34 @@ export async function changes(u: StudioUser, since: number) {
   const deleted = tombs.map((t) => t.path).filter((p) => canRead(u, p) && !docs[p]);
   return { docs, deleted };
 }
+
+// ---------- file hasil konten (MediaAsset) ----------
+type AssetRow = { id: string; itemId: string; name: string; key: string; mime: string; size: number; createdById: string; createdAt: Date };
+async function userNames(ids: string[]) {
+  const us = ids.length ? await prisma.user.findMany({ where: { id: { in: [...new Set(ids)] } }, select: { id: true, fullName: true, nickname: true } }) : [];
+  return new Map(us.map((u) => [u.id, u.nickname || u.fullName]));
+}
+function assetToDoc(a: AssetRow, names: Map<string, string>): Doc {
+  return { itemId: a.itemId, name: a.name, url: "/api/file?key=" + encodeURIComponent(a.key), mime: a.mime, size: a.size, uploaderId: a.createdById, uploader: names.get(a.createdById) ?? "", createdAt: a.createdAt.getTime() };
+}
+
+/** Unggah file hasil konten: admin/Admin 2, atau anggota yang punya tugas di barang itu. */
+export async function uploadAsset(u: StudioUser, itemId: string, file: File) {
+  const item = await prisma.mediaItem.findUnique({ where: { id: itemId }, select: { id: true } });
+  if (!item) throw new StudioError("not-found", "Barang tidak ditemukan.");
+  if (!u.staff) {
+    const mine = await prisma.mediaTask.count({ where: { itemId, OR: [{ producer: u.code }, { editor: u.code }, { talent: u.code }, { script: u.code }] } });
+    if (!u.code || !mine) throw new StudioError("permission-denied", "Hanya admin atau tim yang mengerjakan barang ini yang bisa mengunggah.");
+  }
+  if (file.size > MAX_UPLOAD) throw new StudioError("invalid-argument", "File terlalu besar (maks " + Math.round(MAX_UPLOAD / 1048576) + " MB). Kecilkan dulu atau simpan di Google Drive.");
+  const ext = file.name.includes(".") ? file.name.split(".").pop()!.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 8) || "bin" : "bin";
+  const key = makeKey("hasil", ext);
+  await putObject(key, Buffer.from(await file.arrayBuffer()), file.type || "application/octet-stream");
+  const a = await prisma.mediaAsset.create({ data: { itemId, name: file.name.slice(0, 200) || "file", key, mime: file.type || "application/octet-stream", size: file.size, createdById: u.userId } });
+  return { path: "assets/" + a.id, doc: assetToDoc(a, await userNames([u.userId])) };
+}
+// Cloudflare Tunnel menolak permintaan > 100 MB; sisakan ruang untuk header multipart.
+export const MAX_UPLOAD = 95 * 1024 * 1024;
 
 /** Kunci penyeimbang otomatis (satu perangkat saja yang menulis dalam satu waktu). */
 export async function acquire(u: StudioUser, path: string, holder: string, ttlMs: number) {
