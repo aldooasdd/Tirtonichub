@@ -53,22 +53,38 @@ export function WorkflowClient({ tasks, canManage, code, today }: { tasks: WfTas
         )}
       </div>
 
-      <div className="flex gap-3 overflow-x-auto pb-2 lg:grid lg:grid-cols-5 lg:overflow-visible">
+      {/* ringkasan tiap tahap */}
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-5">
         {STAGES.map((stage) => {
-          const col = shown.filter((t) => t.status === stage);
+          const n = shown.filter((t) => t.status === stage).length;
           return (
-            <div key={stage} className="min-w-[270px] flex-1 space-y-2">
-              <div className="sticky top-0 rounded-md bg-muted px-3 py-2">
-                <p className="text-14 font-medium">{stage} <span className="text-muted-foreground">({col.length})</span></p>
-                <p className="text-11 text-muted-foreground">{STAGE_SUB[stage]}</p>
-              </div>
-              {col.map((t) => (
-                <Card key={t.id} t={t} canManage={canManage} code={code} today={today} view={view} />
-              ))}
+            <div key={stage} className={`rounded-md border px-3 py-2 ${n ? "bg-card" : "bg-muted/40 opacity-70"}`}>
+              <p className="text-14 font-medium">{stage} <span className="text-muted-foreground">({n})</span></p>
+              <p className="text-11 text-muted-foreground">{STAGE_SUB[stage]}</p>
             </div>
           );
         })}
       </div>
+
+      {/* kartu per tahap (hanya yang berisi), grid full-width */}
+      {STAGES.map((stage) => {
+        const col = shown.filter((t) => t.status === stage);
+        if (col.length === 0) return null;
+        return (
+          <section key={stage} className="space-y-2">
+            <h2 className="text-14 font-medium text-muted-foreground">{stage} · {STAGE_SUB[stage]} ({col.length})</h2>
+            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+              {col.map((t) => (
+                <Card key={t.id} t={t} canManage={canManage} code={code} today={today} view={view} />
+              ))}
+            </div>
+          </section>
+        );
+      })}
+
+      {shown.length === 0 && (
+        <p className="rounded-lg border bg-card py-12 text-center text-muted-foreground">Belum ada konten.</p>
+      )}
     </div>
   );
 }

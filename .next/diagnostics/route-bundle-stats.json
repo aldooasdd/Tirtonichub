@@ -104,7 +104,7 @@
   },
   {
     "route": "/media/workflow",
-    "firstLoadUncompressedJsBytes": 673362,
+    "firstLoadUncompressedJsBytes": 673756,
     "firstLoadChunkPaths": [
       ".next/static/chunks/218yun3xk1rsz.js",
       ".next/static/chunks/3w6cm4g5r0zk7.js",
@@ -113,7 +113,7 @@
       ".next/static/chunks/1uiu467ekqf1b.js",
       ".next/static/chunks/3n0drtgqxmx9m.js",
       ".next/static/chunks/0g86ehmvuaub_.js",
-      ".next/static/chunks/0_p_qd54-fs-7.js",
+      ".next/static/chunks/2cuvv33-4isra.js",
       ".next/static/chunks/06cza79ljre1d.js",
       ".next/static/chunks/1xl97uaxttk17.js",
       ".next/static/chunks/19rwnbr1_-u2m.js",
