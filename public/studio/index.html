@@ -463,6 +463,14 @@ table.t th{font:700 12.5px/1.2 var(--display);letter-spacing:0;color:var(--muted
 .emptyslot{border-style:dashed!important;background:transparent!important}
 @media (max-width:640px){.cell{min-height:70px;padding:4px}.slots .lbl{display:none}.tag{font-size:9.5px;padding:0 3px}.dn{font-size:13px}#calEvents{margin-left:0!important}}
 .grid2.solo{grid-template-columns:minmax(0,1fr)}
+/* Detail kartu Workflow Hub: tampil di tengah layar, latar buram */
+.kmodalbox{position:relative;width:min(560px,100%);max-height:calc(100vh - 32px);overflow:auto;border-radius:18px;animation:cdIn .18s ease-out;box-shadow:0 40px 90px -30px #000c}
+.kmodalbox .card.k{margin:0;border-radius:18px}
+.kmodalbox details.kmore>summary{pointer-events:none}
+.kmodalbox details.kmore>summary::before{display:none}
+.kmclose{all:unset;position:absolute;right:12px;top:12px;z-index:2;width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--chip);color:var(--ink);font-size:14px;cursor:pointer}
+.kmclose:hover,.kmclose:focus-visible{background:var(--crit);color:#fff}
+.kmodalbox .ktype{padding-right:40px}
 /* Hasil Konten: folder kaca per barang + jendela gaya Finder */
 main.wrap:has(#p-hasil:not([hidden])){width:100%;box-sizing:border-box}   /* main.wrap ber-margin auto → menyusut ke isi; folder perlu lebar penuh */
 #p-hasil{width:100%}
@@ -1180,6 +1188,7 @@ html[data-skin] .pccell{background:var(--glass);border-color:var(--glass-line)}
   <label class="l">Jam lain (opsional)<input type="time" id="sdTime"></label>
   <p class="status" id="sdWarn"></p>
   <div class="cdacts"><button type="button" class="ghost danger" id="sdOut" hidden>Keluarkan dari kalender</button><button type="button" class="ghost" id="sdCancel">Batal</button><button class="btn" type="submit">Simpan jadwal</button></div></form></div>
+<div class="cdlg kmodal" id="kmodal" hidden><div class="kmodalbox" role="dialog" aria-modal="true" aria-label="Detail kartu"><button type="button" class="kmclose" id="kmClose" aria-label="Tutup">✕</button><div id="kmBody"></div></div></div>
 <main class="wrap">
   <button type="button" class="backbtn" id="backBtn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg>Kembali</button>
   <div class="banner noprint" id="banner" hidden></div>
@@ -2471,7 +2480,7 @@ function renderBoard(){const el=$('board');
       g.sort((a,b)=>(deadlineFor(a).d||'9999').localeCompare(deadlineFor(b).d||'9999')||(a.prio-b.prio));const U=STAGE_UI[st];
       return'<section class="kcol" data-st="'+esc(st)+'" style="--sc:'+U.c+'"><header class="kch"><span class="kic">'+U.ic+'</span><span><b>'+esc(st)+'</b><small>'+esc(U.sub)+'</small></span><span class="kn num">'+g.length+'</span></header>'+
         '<div class="kbody">'+(!g.length?'<div class="kempty">Kosong</div>':st==='Terdata'?terdataGroups(g):g.map(card).join(''))+'</div></section>'}).join('')+'</div>';
-  const kb=$('kanban');if(kb&&S.kScroll)kb.scrollLeft=S.kScroll;}
+  const kb=$('kanban');if(kb&&S.kScroll)kb.scrollLeft=S.kScroll;renderCardModal()}
 /* Terdata dikelompokkan per tanggal produksi (syuting); jendela bisa dibuka-tutup, pilihan diingat selama sesi */
 S.kOpen={};
 function terdataGroups(g){const td=today(),tm=addDays(td,1);const by=new Map();
@@ -2479,7 +2488,7 @@ function terdataGroups(g){const td=today(),tm=addDays(td,1);const by=new Map();
   return[...by.entries()].map(([d,ts])=>{const op=d in S.kOpen?S.kOpen[d]:(!!d&&d<=tm);
     const lbl=!d?'Belum dijadwalkan':(d<td?'<span class="late">'+esc(fmt(d))+' · terlewat</span>':d===td?'<span class="now">Hari ini · '+esc(fmt(d))+'</span>':d===tm?'<span class="now">Besok · '+esc(fmt(d))+'</span>':esc(fmt(d)));
     return'<details class="kgrp" data-kd="'+esc(d)+'"'+(op?' open':'')+'><summary>Produksi '+lbl+' <b class="num">'+ts.length+'</b></summary><div class="kgrpb">'+ts.map(card).join('')+'</div></details>'}).join('')}
-$('board').addEventListener('toggle',e=>{const x=e.target;if(x.matches&&x.matches('details.kgrp'))S.kOpen[x.dataset.kd]=x.open},true);
+onBoard('toggle',e=>{const x=e.target;if(x.matches&&x.matches('details.kgrp'))S.kOpen[x.dataset.kd]=x.open},true);
 /* ---------- masa aktif pipeline: 1 bulan sejak konten dibuat, setelah itu hangus ---------- */
 const createdDay=t=>{if(!t.createdAt)return'';const c=new Date(t.createdAt);return c.getFullYear()+'-'+pad(c.getMonth()+1)+'-'+pad(c.getDate())};
 function expiryOf(t){const c=createdDay(t);if(!c)return'';let y=Number(c.slice(0,4)),m=Number(c.slice(5,7))+1,d=Number(c.slice(8));if(m>12){m=1;y++}
@@ -2606,15 +2615,27 @@ function cardInner(t){const me=S.me&&S.me.code;const adm=S.isAdmin;const canNote
     peopleHtml(t)+stagesHtml(t)+flagsHtml(t)+
     '<details class="kmore" data-more="'+esc(t.id)+'"'+(open?' open':'')+'><summary>Detail'+(hasNote?' ·':'')+'</summary>'+more+'</details></article>'}
 S.moreOpen=new Set();
+/* Detail kartu dibuka di tengah layar (bukan melebar ke bawah di papan) */
+function onBoard(type,fn,cap){$('board').addEventListener(type,fn,cap);$('kmodal').addEventListener(type,fn,cap)}
+S.kmId='';
+function renderCardModal(){const id=S.kmId;if(!id||$('kmodal').hidden)return;const t=(S.allTasks||S.tasks).find(x=>x.id===id);if(!t){closeCard();return}
+  const ae=document.activeElement;if(ae&&$('kmodal').contains(ae)&&(ae.tagName==='TEXTAREA'||(ae.tagName==='INPUT'&&ae.type!=='checkbox')||ae.tagName==='SELECT'))return;
+  const had=S.moreOpen.has(id);S.moreOpen.add(id);$('kmBody').innerHTML=card(t);if(!had)S.moreOpen.delete(id)}
+function openCard(id){S.kmId=id;$('kmodal').hidden=false;renderCardModal();$('kmClose').focus()}
+function closeCard(){$('kmodal').hidden=true;S.kmId='';$('kmBody').innerHTML=''}
+$('kmClose').addEventListener('click',closeCard);
+$('kmodal').addEventListener('click',e=>{if(e.target===$('kmodal'))closeCard()});$('kmodal').addEventListener('keydown',e=>{if(e.key==='Escape'&&$('cdlg').hidden)closeCard()});
+$('board').addEventListener('click',e=>{const sm=e.target.closest('details.kmore>summary');if(!sm)return;e.preventDefault();const c=sm.closest('.card');if(c)openCard(c.dataset.id)});
+
 async function setStatus(t,s2,c){if(s2===t.status)return;
-  if(s2==='Ready'&&POSTED.includes(t.type)&&!t.driveUrl){const inp=c&&c.querySelector('[data-act="driveUrl"]');if(c){S.moreOpen.add(t.id);const d=c.querySelector('details.kmore');if(d)d.open=true}
+  if(s2==='Ready'&&POSTED.includes(t.type)&&!t.driveUrl){if(S.kmId!==t.id)openCard(t.id);const inp=$('kmBody').querySelector('[data-act="driveUrl"]');
     toast('Tempel dulu link Google Drive file final, lalu pindahkan ke Ready.');if(inp)setTimeout(()=>inp.focus(),50);return}
   if(s2==='Tayang'&&!S.isAdmin)return;
   const patch={status:s2,updatedAt:Date.now(),updatedBy:S.me?S.me.name:''};
   if(IDX[s2]>=IDX['Diproduksi']&&!t.shotAt)patch.shotAt=today();if(IDX[s2]>=IDX['Ready']&&!t.readyAt)patch.readyAt=today();
   patch.history=(t.history||[]).concat([{at:Date.now(),by:S.me?(S.me.code||S.me.email):'',name:S.me?S.me.name:'',from:t.status,to:s2}]).slice(-30);
   try{await S.db.collection('tasks').doc(t.id).update(patch);queueBalance()}catch(err){toast(errMsg(err))}}
-$('board').addEventListener('change',async e=>{const el=e.target;const act=el.dataset.act;const c=el.closest('.card');if(!c||!act)return;const id=c.dataset.id;const t=S.tasks.find(x=>x.id===id);if(!t)return;
+onBoard('change',async e=>{const el=e.target;const act=el.dataset.act;const c=el.closest('.card');if(!c||!act)return;const id=c.dataset.id;const t=S.tasks.find(x=>x.id===id);if(!t)return;
   const patch={updatedAt:Date.now(),updatedBy:S.me?S.me.name:''};
   if(act==='status'){const s=el.value;if(s===t.status)return;patch.status=s;if(IDX[s]>=IDX['Diproduksi']&&!t.shotAt)patch.shotAt=today();if(IDX[s]>=IDX['Ready']&&!t.readyAt)patch.readyAt=today();
     patch.history=(t.history||[]).concat([{at:Date.now(),by:S.me?(S.me.code||S.me.email):'',name:S.me?S.me.name:'',from:t.status,to:s}]).slice(-30)}
@@ -2628,10 +2649,10 @@ $('board').addEventListener('change',async e=>{const el=e.target;const act=el.da
   else if(act==='srcDesc'){if((t.srcDesc||'')===el.value)return;patch.srcDesc=el.value.slice(0,4000);if(t.itemId&&S.isAdmin)S.db.collection('items').doc(t.itemId).update({desc:patch.srcDesc}).catch(()=>{})}
   else return;
   try{await S.db.collection('tasks').doc(id).update(patch);queueBalance()}catch(err){toast(errMsg(err))}});
-$('board').addEventListener('toggle',e=>{const d=e.target;if(d.matches&&d.matches('details.cap')){if(d.open)S.capOpen.add(d.dataset.cap);else S.capOpen.delete(d.dataset.cap)}if(d.matches&&d.matches('details.kmore')){if(d.open)S.moreOpen.add(d.dataset.more);else S.moreOpen.delete(d.dataset.more)}},true);
-$('board').addEventListener('scroll',e=>{if(e.target.id==='kanban')S.kScroll=e.target.scrollLeft},true);
-$('board').addEventListener('focusout',e=>{if((e.target.tagName==='TEXTAREA'||e.target.type==='url')&&S.boardDirty)setTimeout(()=>{if(!(document.activeElement&&document.activeElement.tagName==='TEXTAREA'))renderBoard()},50)});
-$('board').addEventListener('click',async e=>{const sb=e.target.closest('button[data-stage]');if(sb&&!sb.disabled){const c=sb.closest('.card');const t=(S.allTasks||S.tasks).find(x=>x.id===c.dataset.id);if(t)setStatus(t,sb.dataset.stage,c);return}
+onBoard('toggle',e=>{const d=e.target;if(d.matches&&d.matches('details.cap')){if(d.open)S.capOpen.add(d.dataset.cap);else S.capOpen.delete(d.dataset.cap)}if(d.matches&&d.matches('details.kmore')){if(d.open)S.moreOpen.add(d.dataset.more);else S.moreOpen.delete(d.dataset.more)}},true);
+onBoard('scroll',e=>{if(e.target.id==='kanban')S.kScroll=e.target.scrollLeft},true);
+onBoard('focusout',e=>{if((e.target.tagName==='TEXTAREA'||e.target.type==='url')&&S.boardDirty)setTimeout(()=>{if(!(document.activeElement&&document.activeElement.tagName==='TEXTAREA'))renderBoard()},50)});
+onBoard('click',async e=>{const sb=e.target.closest('button[data-stage]');if(sb&&!sb.disabled){const c=sb.closest('.card');const t=(S.allTasks||S.tasks).find(x=>x.id===c.dataset.id);if(t)setStatus(t,sb.dataset.stage,c);return}
   const b=e.target.closest('button[data-act]');if(!b)return;const c=b.closest('.card');const id=c.dataset.id;
   if(b.dataset.act==='check'){const t=S.tasks.find(x=>x.id===id);if(!t)return;try{await S.db.collection('tasks').doc(id).update({checked:!t.checked,checkedBy:S.me?S.me.name:'',updatedAt:Date.now()})}catch(err){toast(errMsg(err))}return}
   if(b.dataset.act==='cardPhoto'){const t=S.tasks.find(x=>x.id===id);if(!t||!t.itemId)return;S.photoTarget=t.itemId;$('photoPick').click();return}
@@ -2732,7 +2753,7 @@ async function metaAction(e){const b=e.target.closest('[data-meta]');if(!b)retur
   if(b.dataset.meta==='done'){b.disabled=true;try{await S.db.collection('tasks').doc(t.id).update({postTime:b.dataset.tm,metaAt:Date.now(),checked:true,checkedBy:S.me?S.me.name:'',updatedAt:Date.now(),updatedBy:S.me?S.me.name:''});
       toast('Terjadwal di Meta, '+fmt(t.postAt)+' pukul '+fmtTime(b.dataset.tm)+'. Kartu pindah ke Tayang otomatis setelah jam itu.')}
     catch(err){toast(errMsg(err));b.disabled=false}}}
-$('calDay').addEventListener('click',metaAction);$('board').addEventListener('click',metaAction);
+$('calDay').addEventListener('click',metaAction);onBoard('click',metaAction);
 function liT(t,pre){return'<li><span>'+(pre?'<span class="status">'+esc(pre)+' · </span>':'')+thumbHtml(t.itemId,30,t.title)+'<span class="chip ty ty-'+esc(t.type)+'">'+tyIc(t.type)+esc(TYPES[t.type].label)+'</span> '+esc(t.title)+'</span><span class="chip'+(sched(t)?' good':'')+'">'+esc(sched(t)?t.status:'Rencana tayang · '+t.status)+'</span></li>'}
 function metaState(t){if(t.status==='Tayang')return'<span class="chip good">Tayang</span>';if(t.status==='Ready'&&t.metaAt)return'<span class="chip good">Terjadwal di Meta</span>';
   if(t.status==='Ready')return'<span class="chip warn">Ready'+(t.checked?' · dicek Zaki':'')+' · siap dijadwalkan</span>';return'<span class="chip">'+esc(t.status)+'</span>'}
