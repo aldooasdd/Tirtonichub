@@ -1,0 +1,11 @@
+var R=require("../../../../chunks/[turbopack]_runtime.js")("server/app/api/studio/photo/route.js")
+R.c("server/chunks/[externals]__0i7aa77ha0kq6._.js")
+R.c("server/chunks/_1y_xmbjwqsudc._.js")
+R.c("server/chunks/src_server_storage_ts_1ajwf6qfl92c-._.js")
+R.c("server/chunks/src_server_0mgzovtc3xrqt._.js")
+R.c("server/chunks/_0plewitzb0qs8._.js")
+R.c("server/chunks/[root-of-the-server]__0wz2evfjc7ml1._.js")
+R.c("server/chunks/18de_next_0ppk3xwbn6jez._.js")
+R.c("server/chunks/_next-internal_server_app_api_studio_photo_route_actions_1kwfhy7-b9igy.js")
+R.m(14684)
+module.exports=R.m(14684).exports

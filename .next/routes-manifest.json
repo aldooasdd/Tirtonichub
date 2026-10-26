@@ -18,7 +18,13 @@
   "onMatchHeaders": [],
   "rewrites": {
     "beforeFiles": [],
-    "afterFiles": [],
+    "afterFiles": [
+      {
+        "source": "/studio",
+        "destination": "/studio/index.html",
+        "regex": "^/studio(?:/)?$"
+      }
+    ],
     "fallback": []
   },
   "dynamicRoutes": [
@@ -73,6 +79,78 @@
       "regex": "^/api/media/upload(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/api/media/upload(?:/)?$"
+    },
+    {
+      "page": "/api/studio/doc",
+      "regex": "^/api/studio/doc(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/studio/doc(?:/)?$"
+    },
+    {
+      "page": "/api/studio/lock",
+      "regex": "^/api/studio/lock(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/studio/lock(?:/)?$"
+    },
+    {
+      "page": "/api/studio/logout",
+      "regex": "^/api/studio/logout(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/studio/logout(?:/)?$"
+    },
+    {
+      "page": "/api/studio/me",
+      "regex": "^/api/studio/me(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/studio/me(?:/)?$"
+    },
+    {
+      "page": "/api/studio/photo",
+      "regex": "^/api/studio/photo(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/studio/photo(?:/)?$"
+    },
+    {
+      "page": "/api/studio/sync",
+      "regex": "^/api/studio/sync(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/studio/sync(?:/)?$"
+    },
+    {
+      "page": "/api/studio/upload",
+      "regex": "^/api/studio/upload(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/studio/upload(?:/)?$"
+    },
+    {
+      "page": "/api/studio/upload/abort",
+      "regex": "^/api/studio/upload/abort(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/studio/upload/abort(?:/)?$"
+    },
+    {
+      "page": "/api/studio/upload/finish",
+      "regex": "^/api/studio/upload/finish(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/studio/upload/finish(?:/)?$"
+    },
+    {
+      "page": "/api/studio/upload/part",
+      "regex": "^/api/studio/upload/part(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/studio/upload/part(?:/)?$"
+    },
+    {
+      "page": "/api/studio/upload/start",
+      "regex": "^/api/studio/upload/start(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/studio/upload/start(?:/)?$"
+    },
+    {
+      "page": "/api/studio/write",
+      "regex": "^/api/studio/write(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/studio/write(?:/)?$"
     },
     {
       "page": "/beranda",

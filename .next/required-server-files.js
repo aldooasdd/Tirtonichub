@@ -346,7 +346,17 @@ self.__SERVER_FILES_MANIFEST={
       "root": "/Users/a1/Tirtonic/Tirtonichub"
     },
     "repoRoot": "/Users/a1/Tirtonic/Tirtonichub",
-    "distDirRoot": ".next"
+    "distDirRoot": ".next",
+    "_originalRewrites": {
+      "beforeFiles": [],
+      "afterFiles": [
+        {
+          "source": "/studio",
+          "destination": "/studio/index.html"
+        }
+      ],
+      "fallback": []
+    }
   },
   "appDir": "/Users/a1/Tirtonic/Tirtonichub",
   "relativeAppDir": "",

@@ -619,6 +619,126 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../src/app/api/studio/doc/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/studio/doc">> = Specific
+  const handler = {} as typeof import("../../src/app/api/studio/doc/route.js")
+  type __Check = __IsExpected<typeof handler>
+  
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/studio/lock/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/studio/lock">> = Specific
+  const handler = {} as typeof import("../../src/app/api/studio/lock/route.js")
+  type __Check = __IsExpected<typeof handler>
+  
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/studio/logout/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/studio/logout">> = Specific
+  const handler = {} as typeof import("../../src/app/api/studio/logout/route.js")
+  type __Check = __IsExpected<typeof handler>
+  
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/studio/me/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/studio/me">> = Specific
+  const handler = {} as typeof import("../../src/app/api/studio/me/route.js")
+  type __Check = __IsExpected<typeof handler>
+  
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/studio/photo/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/studio/photo">> = Specific
+  const handler = {} as typeof import("../../src/app/api/studio/photo/route.js")
+  type __Check = __IsExpected<typeof handler>
+  
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/studio/sync/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/studio/sync">> = Specific
+  const handler = {} as typeof import("../../src/app/api/studio/sync/route.js")
+  type __Check = __IsExpected<typeof handler>
+  
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/studio/upload/abort/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/studio/upload/abort">> = Specific
+  const handler = {} as typeof import("../../src/app/api/studio/upload/abort/route.js")
+  type __Check = __IsExpected<typeof handler>
+  
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/studio/upload/finish/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/studio/upload/finish">> = Specific
+  const handler = {} as typeof import("../../src/app/api/studio/upload/finish/route.js")
+  type __Check = __IsExpected<typeof handler>
+  
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/studio/upload/part/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/studio/upload/part">> = Specific
+  const handler = {} as typeof import("../../src/app/api/studio/upload/part/route.js")
+  type __Check = __IsExpected<typeof handler>
+  
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/studio/upload/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/studio/upload">> = Specific
+  const handler = {} as typeof import("../../src/app/api/studio/upload/route.js")
+  type __Check = __IsExpected<typeof handler>
+  
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/studio/upload/start/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/studio/upload/start">> = Specific
+  const handler = {} as typeof import("../../src/app/api/studio/upload/start/route.js")
+  type __Check = __IsExpected<typeof handler>
+  
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../src/app/api/studio/write/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/studio/write">> = Specific
+  const handler = {} as typeof import("../../src/app/api/studio/write/route.js")
+  type __Check = __IsExpected<typeof handler>
+  
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 
 
 
