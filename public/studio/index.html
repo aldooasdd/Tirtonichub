@@ -516,7 +516,7 @@ main.wrap:has(#p-hasil:not([hidden])){width:100%;box-sizing:border-box}   /* mai
 .ft .ftdel{all:unset;position:absolute;right:10px;top:10px;width:22px;height:22px;border-radius:50%;display:none;place-items:center;background:var(--crit);color:#fff;font-size:12px;cursor:pointer}
 .ft:hover .ftdel,.ft:focus-within .ftdel{display:grid}
 :root{--fc-red:#e5484d;--fc-orange:#f08c2e;--fc-yellow:#e9b931;--fc-green:#46a758;--fc-blue:#3e7bfa;--fc-purple:#9b51e0;--fc-gray:#8e8e93}
-#fnd{z-index:96}.fsub{z-index:97}
+#fnd{z-index:96}.cdlg.fsub{z-index:97}
 .fadd{all:unset;box-sizing:border-box;display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;background:var(--navy);color:var(--on-navy);font:700 13px/1 var(--display);cursor:pointer;white-space:nowrap}
 .fadd input{position:absolute;width:1px;height:1px;opacity:0}.fadd[hidden]{display:none}.fadd:focus-within{outline:2px solid var(--navy);outline-offset:2px}
 .fcols{display:flex;gap:6px;align-items:center}
@@ -533,9 +533,12 @@ main.wrap:has(#p-hasil:not([hidden])){width:100%;box-sizing:border-box}   /* mai
 .ft .ftc{position:absolute;right:12px;bottom:46px;width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 2px var(--surface)}
 .ft .ftmore{all:unset;position:absolute;right:10px;top:10px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--surface);color:var(--ink);font-weight:900;cursor:pointer;box-shadow:0 2px 6px -2px #0006}
 .ft .ftsec{font-size:10px;color:var(--muted)}
-.uprows{display:grid;gap:8px;max-height:40vh;overflow:auto}
-.uprow{display:grid;gap:4px}.uprow input{width:100%;box-sizing:border-box}.uprow small{color:var(--muted)}
-.uprow progress{width:100%;height:6px}
+.uprows{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;max-height:52vh;overflow:auto;padding:2px}
+.uprow{display:grid;gap:5px;align-content:start;min-width:0}.uprow input{width:100%;box-sizing:border-box;font-size:12.5px}.uprow small{color:var(--muted);font-size:11.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.uprow .upth{position:relative;aspect-ratio:1;border-radius:12px;overflow:hidden;background:var(--chip);display:grid;place-items:center;color:var(--muted)}
+.uprow .upth img,.uprow .upth video{width:100%;height:100%;object-fit:cover;display:block}.uprow .upth svg{width:34%;height:34%}
+.uprow progress{position:absolute;left:8px;right:8px;bottom:8px;width:auto;height:6px}
+#upDlg .cdbox{width:min(620px,100%)}
 .fpvw{width:min(1000px,100%);max-height:calc(100vh - 32px);display:flex;flex-direction:column;border-radius:16px;overflow:hidden;background:#000;box-shadow:0 40px 90px -30px #000}
 .fpvbar{display:flex;align-items:center;gap:10px;padding:10px 12px;background:var(--surface);color:var(--ink)}.fpvbar b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .fpvbar .kmclose{position:static}
@@ -2681,19 +2684,22 @@ async function bigUpload(file,o,onProg){const st=await hubApi('/api/studio/uploa
     const f=await hubApi('/api/studio/upload/finish',{method:'POST',body:JSON.stringify({id:st.id})});if(S.db.put)S.db.put(f.path,f.doc);return f}
   catch(e){hubApi('/api/studio/upload/abort',{method:'POST',body:JSON.stringify({id:st.id})}).catch(()=>{});throw e}}
 /* dialog Tambah file: nama bisa diganti; nama awal memakai kode file konten (sama dengan Workflow Hub) */
-function openUp(files,o){if(!files.length)return;const secs=o.itemId?secsOf(o.itemId):[{k:'',l:'Lainnya'}];S.up={files,o};
+/* pratinjau di dialog unggah (alamat sementara, dilepas saat dialog ditutup) */
+S.upUrls=[];const upUrl=f=>{const u=URL.createObjectURL(f);S.upUrls.push(u);return u};
+function upFree(){S.upUrls.forEach(u=>URL.revokeObjectURL(u));S.upUrls=[]}
+function openUp(files,o){if(!files.length)return;upFree();const secs=o.itemId?secsOf(o.itemId):[{k:'',l:'Lainnya'}];S.up={files,o};
   $('upInfo').textContent=o.folderId||o.itemId?fName(o.folderId||o.itemId):'File Konten';$('upSecL').hidden=!o.itemId;
   $('upSec').innerHTML=secs.map(x=>'<option value="'+x.k+'"'+(x.k===(o.section||'')?' selected':'')+'>'+esc(x.l)+'</option>').join('');$('upSec').disabled=!!o.taskId;
   const nameFor=(f,k,sec)=>{const t=o.taskId?(S.tasks.find(x=>x.id===o.taskId)):sec?taskFor(o.itemId,sec):null;return t?fileName(t)+(files.length>1?'-'+(k+1):'')+extOf(f.name):f.name};
-  const fill=()=>{const sec=$('upSec').value;$('upRows').innerHTML=files.map((f,k)=>'<div class="uprow"><input data-upn="'+k+'" maxlength="200" value="'+esc(nameFor(f,k,sec))+'" aria-label="Nama file '+(k+1)+'" data-noi18n><small>'+esc(f.name)+' · '+fmtSize(f.size)+'</small><progress data-upp="'+k+'" max="1" value="0" hidden></progress></div>').join('')};
+  const fill=()=>{const sec=$('upSec').value;$('upRows').innerHTML=files.map((f,k)=>'<div class="uprow"><span class="upth">'+(/^image\//.test(f.type)?'<img src="'+upUrl(f)+'" alt="">':/^video\//.test(f.type)?'<video src="'+upUrl(f)+'#t=0.5" preload="metadata" muted playsinline></video>':FILE_IC)+'<progress data-upp="'+k+'" max="1" value="0" hidden></progress></span><input data-upn="'+k+'" maxlength="200" value="'+esc(nameFor(f,k,sec))+'" aria-label="Nama file '+(k+1)+'" data-noi18n><small data-noi18n>'+esc(f.name)+' · '+fmtSize(f.size)+'</small></div>').join('')};
   $('upSec').onchange=fill;fill();$('upGo').disabled=false;$('upDlg').hidden=false;const first=$('upRows').querySelector('input');if(first)first.focus()}
-$('upCancel').addEventListener('click',()=>{if(!S.upBusy){$('upDlg').hidden=true;S.up=null}});
+$('upCancel').addEventListener('click',()=>{if(!S.upBusy){$('upDlg').hidden=true;S.up=null;upFree()}});
 $('upForm').addEventListener('submit',async e=>{e.preventDefault();if(!S.up||S.upBusy)return;const {files,o}=S.up;const sec=$('upSec').value;S.upBusy=true;$('upGo').disabled=true;let n=0;
   for(let k=0;k<files.length;k++){const inp=$('upRows').querySelector('[data-upn="'+k+'"]');const name=(inp.value||files[k].name).trim().replace(/[\\/]/g,'-');const bar=$('upRows').querySelector('[data-upp="'+k+'"]');bar.hidden=false;
     try{const r=await bigUpload(files[k],{itemId:o.itemId,folderId:o.folderId,name,section:sec,taskId:o.taskId},p=>{bar.value=p});n++;
       if(o.taskId&&k===0){const t=S.tasks.find(x=>x.id===o.taskId);if(t&&r.doc)try{await S.db.collection('tasks').doc(t.id).update({driveUrl:r.doc.url,updatedAt:Date.now(),updatedBy:S.me?S.me.name:''})}catch(err){}}}
     catch(err){toast(errMsg(err));bar.hidden=true}}
-  S.upBusy=false;$('upDlg').hidden=true;S.up=null;if(n)toast(n+' file terunggah.');renderFinder();renderHasil();renderCardModal()});
+  S.upBusy=false;$('upDlg').hidden=true;S.up=null;upFree();if(n)toast(n+' file terunggah.');renderFinder();renderHasil();renderCardModal()});
 /* atur file: nama, warna, bagian, hapus */
 function openFileInfo(id){const a=S.assets.find(x=>x.id===id);if(!a)return;S.fiId=id;$('fiName').value=a.name;$('fiCol').innerHTML=colorBtns(a.color,'data-ficol');
   $('fiSecL').hidden=!a.itemId;$('fiSec').innerHTML=(a.itemId?secsOf(a.itemId):[{k:'',l:'Lainnya'}]).map(x=>'<option value="'+x.k+'"'+(x.k===(a.section||'')?' selected':'')+'>'+esc(x.l)+'</option>').join('');
@@ -2779,7 +2785,7 @@ $('fndBody').addEventListener('drop',e=>{if(!e.dataTransfer||!e.dataTransfer.fil
 $('fndDl').addEventListener('click',()=>{const fs=curFiles().filter(a=>!S.hfSel.size||S.hfSel.has(a.id));
   fs.forEach((a,k)=>setTimeout(()=>{const el=document.createElement('a');el.href=dlUrl(a);el.download=a.name;document.body.appendChild(el);el.click();el.remove()},k*400))});
 /* kartu Workflow Hub: file final langsung ke File Konten (bagian jenis konten itu, nama berkode) */
-function fileFinalHtml(t,canEdit){const fs=S.assets.filter(a=>a.itemId===t.itemId&&(a.taskId===t.id||a.section===t.type)).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+function fileFinalHtml(t,canEdit){const fs=finalFiles(t);
   return'<div class="ffin"><span class="l0">File final · '+esc(TYPES[t.type].label)+'</span>'+(fs.length?'<span class="ffl">'+fs.length+' file · terbaru <b data-noi18n>'+esc(fs[0].name)+'</b></span>':'<span class="ffl">Belum ada file. Nama file otomatis: <b data-noi18n>'+esc(fileName(t))+'</b></span>')+
     '<span class="ffacts">'+(canEdit?'<button type="button" class="btn sm" data-ffup="'+esc(t.id)+'">Unggah file final</button>':'')+'<button type="button" class="ghost sm" data-ffopen="'+esc(t.id)+'">Buka di File Konten</button></span></div>'}
 S.ffTask='';
@@ -3002,11 +3008,13 @@ $('kmClose').addEventListener('click',closeCard);
 $('kmodal').addEventListener('click',e=>{if(e.target===$('kmodal'))closeCard()});$('kmodal').addEventListener('keydown',e=>{if(e.key==='Escape'&&$('cdlg').hidden)closeCard()});
 $('board').addEventListener('click',e=>{const sm=e.target.closest('details.kmore>summary');if(!sm)return;e.preventDefault();const c=sm.closest('.card');if(c)openCard(c.dataset.id)});
 
-async function setStatus(t,s2,c){if(s2===t.status)return;
-  if(s2==='Ready'&&POSTED.includes(t.type)&&!t.driveUrl){if(S.kmId!==t.id)openCard(t.id);const inp=$('kmBody').querySelector('[data-act="driveUrl"]');
+/* file final yang sudah ada di File Konten (unggah dari kartu atau langsung ke bagian jenis konten ini) */
+const finalFiles=t=>S.hub&&t.itemId?S.assets.filter(a=>a.itemId===t.itemId&&(a.taskId===t.id||a.section===t.type)).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)):[];
+async function setStatus(t,s2,c){if(s2===t.status)return;const fin=!t.driveUrl&&finalFiles(t)[0];
+  if(s2==='Ready'&&POSTED.includes(t.type)&&!t.driveUrl&&!fin){if(S.kmId!==t.id)openCard(t.id);const inp=$('kmBody').querySelector('[data-act="driveUrl"]');
     toast(S.hub&&t.itemId?'Unggah dulu file final, lalu pindahkan ke Ready.':'Tempel dulu link Google Drive file final, lalu pindahkan ke Ready.');const fb=$('kmBody').querySelector('[data-ffup]');setTimeout(()=>{const x=inp||fb;if(x)x.focus()},50);return}
   if(s2==='Tayang'&&!S.isAdmin)return;
-  const patch={status:s2,updatedAt:Date.now(),updatedBy:S.me?S.me.name:''};
+  const patch={status:s2,updatedAt:Date.now(),updatedBy:S.me?S.me.name:''};if(fin&&IDX[s2]>=IDX['Ready'])patch.driveUrl=fin.url;
   if(IDX[s2]>=IDX['Diproduksi']&&!t.shotAt)patch.shotAt=today();if(IDX[s2]>=IDX['Ready']&&!t.readyAt)patch.readyAt=today();
   patch.history=(t.history||[]).concat([{at:Date.now(),by:S.me?(S.me.code||S.me.email):'',name:S.me?S.me.name:'',from:t.status,to:s2}]).slice(-30);
   try{await S.db.collection('tasks').doc(t.id).update(patch);queueBalance()}catch(err){toast(errMsg(err))}}
