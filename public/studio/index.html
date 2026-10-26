@@ -2785,7 +2785,7 @@ $('fndBody').addEventListener('drop',e=>{if(!e.dataTransfer||!e.dataTransfer.fil
 $('fndDl').addEventListener('click',()=>{const fs=curFiles().filter(a=>!S.hfSel.size||S.hfSel.has(a.id));
   fs.forEach((a,k)=>setTimeout(()=>{const el=document.createElement('a');el.href=dlUrl(a);el.download=a.name;document.body.appendChild(el);el.click();el.remove()},k*400))});
 /* kartu Workflow Hub: file final langsung ke File Konten (bagian jenis konten itu, nama berkode) */
-function fileFinalHtml(t,canEdit){const fs=S.assets.filter(a=>a.itemId===t.itemId&&(a.taskId===t.id||a.section===t.type)).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));
+function fileFinalHtml(t,canEdit){const fs=finalFiles(t);
   return'<div class="ffin"><span class="l0">File final · '+esc(TYPES[t.type].label)+'</span>'+(fs.length?'<span class="ffl">'+fs.length+' file · terbaru <b data-noi18n>'+esc(fs[0].name)+'</b></span>':'<span class="ffl">Belum ada file. Nama file otomatis: <b data-noi18n>'+esc(fileName(t))+'</b></span>')+
     '<span class="ffacts">'+(canEdit?'<button type="button" class="btn sm" data-ffup="'+esc(t.id)+'">Unggah file final</button>':'')+'<button type="button" class="ghost sm" data-ffopen="'+esc(t.id)+'">Buka di File Konten</button></span></div>'}
 S.ffTask='';
@@ -3008,11 +3008,13 @@ $('kmClose').addEventListener('click',closeCard);
 $('kmodal').addEventListener('click',e=>{if(e.target===$('kmodal'))closeCard()});$('kmodal').addEventListener('keydown',e=>{if(e.key==='Escape'&&$('cdlg').hidden)closeCard()});
 $('board').addEventListener('click',e=>{const sm=e.target.closest('details.kmore>summary');if(!sm)return;e.preventDefault();const c=sm.closest('.card');if(c)openCard(c.dataset.id)});
 
-async function setStatus(t,s2,c){if(s2===t.status)return;
-  if(s2==='Ready'&&POSTED.includes(t.type)&&!t.driveUrl){if(S.kmId!==t.id)openCard(t.id);const inp=$('kmBody').querySelector('[data-act="driveUrl"]');
+/* file final yang sudah ada di File Konten (unggah dari kartu atau langsung ke bagian jenis konten ini) */
+const finalFiles=t=>S.hub&&t.itemId?S.assets.filter(a=>a.itemId===t.itemId&&(a.taskId===t.id||a.section===t.type)).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)):[];
+async function setStatus(t,s2,c){if(s2===t.status)return;const fin=!t.driveUrl&&finalFiles(t)[0];
+  if(s2==='Ready'&&POSTED.includes(t.type)&&!t.driveUrl&&!fin){if(S.kmId!==t.id)openCard(t.id);const inp=$('kmBody').querySelector('[data-act="driveUrl"]');
     toast(S.hub&&t.itemId?'Unggah dulu file final, lalu pindahkan ke Ready.':'Tempel dulu link Google Drive file final, lalu pindahkan ke Ready.');const fb=$('kmBody').querySelector('[data-ffup]');setTimeout(()=>{const x=inp||fb;if(x)x.focus()},50);return}
   if(s2==='Tayang'&&!S.isAdmin)return;
-  const patch={status:s2,updatedAt:Date.now(),updatedBy:S.me?S.me.name:''};
+  const patch={status:s2,updatedAt:Date.now(),updatedBy:S.me?S.me.name:''};if(fin&&IDX[s2]>=IDX['Ready'])patch.driveUrl=fin.url;
   if(IDX[s2]>=IDX['Diproduksi']&&!t.shotAt)patch.shotAt=today();if(IDX[s2]>=IDX['Ready']&&!t.readyAt)patch.readyAt=today();
   patch.history=(t.history||[]).concat([{at:Date.now(),by:S.me?(S.me.code||S.me.email):'',name:S.me?S.me.name:'',from:t.status,to:s2}]).slice(-30);
   try{await S.db.collection('tasks').doc(t.id).update(patch);queueBalance()}catch(err){toast(errMsg(err))}}
