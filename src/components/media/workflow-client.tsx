@@ -98,15 +98,13 @@ function Card({ t, canManage, code, today, view }: { t: WfTask; canManage: boole
 
   return (
     <article className={`space-y-2 rounded-lg border bg-card p-3 ${isLate ? "border-red-400" : ""}`}>
-      <div className="flex items-start justify-between gap-2">
-        <span className="text-11 font-medium text-muted-foreground">{TYPES[t.type]?.label ?? t.type}</span>
-        {dl?.d && (
-          <span className={`text-11 ${dl.info ? "text-green-600" : dlRel.startsWith("terlambat") ? "text-red-600" : "text-muted-foreground"}`}>
-            {dl.lbl}{view === null && dl.who ? ` · ${nm(dl.who)}` : ""} · {fmt(dl.d)}{dlRel ? ` (${dlRel})` : ""}
-          </span>
-        )}
-      </div>
+      <span className="inline-block w-fit rounded bg-muted px-1.5 py-0.5 text-10 font-medium whitespace-nowrap text-muted-foreground">{TYPES[t.type]?.label ?? t.type}</span>
       <p className="font-medium leading-tight">{t.title}</p>
+      {dl?.d && (
+        <p className={`text-11 ${dl.info ? "text-green-600" : dlRel.startsWith("terlambat") ? "text-red-600" : "text-muted-foreground"}`}>
+          {dl.lbl}{view === null && dl.who ? ` · ${nm(dl.who)}` : ""} · {fmt(dl.d)}{dlRel ? ` (${dlRel})` : ""}
+        </p>
+      )}
       <div className="flex flex-wrap gap-1 text-11">
         {t.cat && <span className="rounded bg-muted px-1.5 py-0.5">{CATLBL[t.cat] ?? t.cat}</span>}
         {t.gender && GENDERS[t.gender] && <span className="rounded bg-muted px-1.5 py-0.5">{GENDERS[t.gender]}</span>}
