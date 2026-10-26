@@ -37,6 +37,7 @@ export function canRead(u: StudioUser, path: string): boolean {
     case "locks":
       return u.staff;
     case "public":
+    case "assets":
     case "items":
     case "photos":
     case "tasks":
@@ -105,6 +106,10 @@ export function canWrite(
     case "public":
     case "reports":
       return u.full ? null : deny("khusus admin");
+    case "assets":
+      // file hasil konten: unggah lewat /api/studio/upload; hapus = admin atau yang mengunggah
+      if (op !== "delete") return deny("unggah file lewat tombol Unggah");
+      return u.staff || before?.uploaderId === u.userId ? null : deny("hanya admin atau yang mengunggah");
     case "idcc":
       if (op === "set" && !before && u.idcc) return null;
       return u.staff ? null : deny("hanya admin");
