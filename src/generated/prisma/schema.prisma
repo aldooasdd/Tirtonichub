@@ -435,8 +435,12 @@ model MediaAsset {
   key         String // objek di MinIO/S3
   mime        String
   size        Int
+  section     String? // bagian di File Konten: jenis konten (ktl/igf/vpr/vrv/…) atau null = Lainnya
+  taskId      String? // tugas Workflow Hub asal unggahan (file final)
+  color       String? // label warna: red/orange/yellow/green/blue/purple/gray
   createdById String
   createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
 
   item MediaItem @relation(fields: [itemId], references: [id], onDelete: Cascade)
 

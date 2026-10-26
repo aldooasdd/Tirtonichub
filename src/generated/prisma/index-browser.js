@@ -376,8 +376,12 @@ exports.Prisma.MediaAssetScalarFieldEnum = {
   key: 'key',
   mime: 'mime',
   size: 'size',
+  section: 'section',
+  taskId: 'taskId',
+  color: 'color',
   createdById: 'createdById',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.MediaTaskScalarFieldEnum = {
