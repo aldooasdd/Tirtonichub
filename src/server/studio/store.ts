@@ -81,14 +81,14 @@ export async function getDoc(u: StudioUser, path: string): Promise<Doc | null> {
 }
 
 /** set = timpa, update = gabung, delete = hapus. Aturan akses dicek di sini. */
-export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", path: string, data: Doc | null): Promise<Doc | null> {
+export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", path: string, data: Doc | null, opts: { trusted?: boolean } = {}): Promise<Doc | null> {
   const parts = parse(path);
   const [col, id, sub, subId] = parts;
   const before = await getRaw(path);
   if (op === "update" && !before) throw new StudioError("not-found", "Data tidak ditemukan.");
   const after = op === "delete" ? null : op === "update" ? { ...before, ...(data ?? {}) } : { ...(data ?? {}) };
   if (after) delete after.id;
-  const why = canWrite(u, op, path, before, after);
+  const why = opts.trusted ? null : canWrite(u, op, path, before, after); // trusted: hanya skrip impor di server
   if (why) throw new StudioError("permission-denied", "Tidak diizinkan: " + why + ".");
 
   if (!after) {
@@ -153,8 +153,18 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
       }
       break;
     }
-    default:
+    default: {
+      // gambar besar (mis. latar login) disimpan di storage, dokumen cukup menyimpan alamatnya
+      for (const [k, v] of Object.entries(after)) {
+        const m = typeof v === "string" && v.length > 50_000 ? /^data:image\/(\w+);base64,(.+)$/.exec(v) : null;
+        if (m) {
+          const key = makeKey("studio", m[1] === "jpeg" ? "jpg" : m[1]);
+          await putObject(key, Buffer.from(m[2], "base64"), "image/" + m[1]);
+          after[k] = "/api/file?key=" + encodeURIComponent(key);
+        }
+      }
       await prisma.studioDoc.upsert({ where: { path }, create: { path, coll: col, data: json(after) }, update: { data: json(after) } });
+    }
   }
   await prisma.studioTombstone.deleteMany({ where: { path } });
   return getRaw(path);

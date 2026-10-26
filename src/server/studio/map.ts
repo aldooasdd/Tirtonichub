@@ -13,6 +13,8 @@ function split(doc: Doc, known: string[]) {
   for (const [k, v] of Object.entries(doc)) if (!known.includes(k) && k !== "id" && v !== undefined) extra[k] = v;
   return extra;
 }
+// createdAt dipertahankan (masa aktif konten 1 bulan dihitung dari sini; penting saat pindah data dari Firebase).
+const createdOf = (d: Doc) => (n(d.createdAt) > 0 ? { createdAt: new Date(n(d.createdAt)) } : {});
 const extraOf = (v: unknown): Doc => (v && typeof v === "object" && !Array.isArray(v) ? (v as Doc) : {});
 
 // ---------- items ----------
@@ -35,6 +37,7 @@ export function itemFromDoc(d: Doc) {
     old: !!d.old,
     thumb: d.thumb ? String(d.thumb) : null,
     scheduled: d.scheduled === undefined ? true : !!d.scheduled, // barang dari UI selalu langsung dijadwalkan
+    ...createdOf(d),
     extra: split(d, ITEM_KEYS),
   };
 }
@@ -66,6 +69,7 @@ export function taskFromDoc(d: Doc) {
   row.metaAt = d.metaAt ? new Date(n(d.metaAt)) : null;
   row.history = Array.isArray(d.history) ? d.history : undefined;
   row.extra = split(d, TASK_KEYS);
+  Object.assign(row, createdOf(d));
   return { row, itemId: d.itemId ? String(d.itemId) : null };
 }
 
