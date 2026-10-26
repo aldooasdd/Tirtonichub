@@ -118,11 +118,20 @@ export function canWrite(
       if (!FILE_COLORS.includes(str(after.color))) return deny("warna tidak dikenal");
       return null;
     }
-    case "folders":
-      // warna folder barang di File Konten: semua anggota
-      if (op === "delete") return null;
-      if (Object.keys(after ?? {}).some((k) => !["color", "updatedAt"].includes(k))) return deny("isian folder tidak dikenal");
-      return FILE_COLORS.includes(str(after?.color)) ? null : deny("warna tidak dikenal");
+    case "folders": {
+      // File Konten: folder barang (id = id barang; hanya warna & letak) dan folder buatan sendiri (custom). Semua anggota.
+      const custom = (before ?? after)?.custom === true;
+      if (op === "delete") return !custom || u.staff || before?.owner === u.email ? null : deny("hanya admin atau pembuat folder");
+      const d = after ?? {};
+      if (!FILE_COLORS.includes(str(d.color))) return deny("warna tidak dikenal");
+      if (str(d.parent).length > 60) return deny("letak folder tidak valid");
+      if (!custom) return Object.keys(d).some((k) => !["color", "parent", "updatedAt"].includes(k)) ? deny("isian folder tidak dikenal") : null;
+      if (Object.keys(d).some((k) => !["name", "color", "parent", "custom", "owner", "createdAt", "updatedAt"].includes(k))) return deny("isian folder tidak dikenal");
+      const nm = str(d.name).trim();
+      if (!nm || nm.length > 80 || /[\\/]/.test(nm)) return deny("nama folder tidak valid");
+      if (!before) return d.custom === true && d.owner === u.email ? null : deny("pembuat folder tidak cocok");
+      return d.custom === true && d.owner === before.owner ? null : deny("pembuat folder tidak bisa diubah");
+    }
     case "idcc":
       if (op === "set" && !before && u.idcc) return null;
       return u.staff ? null : deny("hanya admin");

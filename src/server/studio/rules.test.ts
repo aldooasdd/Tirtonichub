@@ -58,5 +58,14 @@ test("File Konten: semua anggota boleh ganti nama/warna, folder berwarna", () =>
   assert.notEqual(canWrite(rayhan, "update", "assets/x", f, { ...f, color: "pink" }), null);
   assert.equal(canWrite(rayhan, "set", "folders/i", null, { color: "blue", updatedAt: 1 }), null);
   assert.notEqual(canWrite(rayhan, "set", "folders/i", null, { color: "blue", foo: 1 }), null);
+  // folder buatan sendiri
+  const nf = { name: "Campaign Desember", color: "", parent: "", custom: true, owner: rayhan.email, createdAt: 1, updatedAt: 1 };
+  assert.equal(canWrite(rayhan, "set", "folders/f1", null, nf), null);
+  assert.notEqual(canWrite(rayhan, "set", "folders/f1", null, { ...nf, owner: "lain@x.com" }), null);
+  assert.notEqual(canWrite(rayhan, "set", "folders/f1", null, { ...nf, name: "a/b" }), null);
+  assert.equal(canWrite(rayhan, "update", "folders/f1", { ...nf, owner: "lain@x.com" }, { ...nf, owner: "lain@x.com", parent: "f2" }), null);
+  assert.notEqual(canWrite(rayhan, "delete", "folders/f1", { ...nf, owner: "lain@x.com" }, null), null);
+  assert.equal(canWrite(rayhan, "delete", "folders/f1", nf, null), null);
+  assert.equal(canWrite(rayhan, "set", "folders/i", null, { color: "", parent: "f1", updatedAt: 1 }), null);
   assert.equal(canRead(rayhan, "uploads/x"), false);
 });

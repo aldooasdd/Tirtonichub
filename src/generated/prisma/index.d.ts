@@ -27144,6 +27144,7 @@ export namespace Prisma {
   export type MediaAssetMinAggregateOutputType = {
     id: string | null
     itemId: string | null
+    folderId: string | null
     name: string | null
     key: string | null
     mime: string | null
@@ -27159,6 +27160,7 @@ export namespace Prisma {
   export type MediaAssetMaxAggregateOutputType = {
     id: string | null
     itemId: string | null
+    folderId: string | null
     name: string | null
     key: string | null
     mime: string | null
@@ -27174,6 +27176,7 @@ export namespace Prisma {
   export type MediaAssetCountAggregateOutputType = {
     id: number
     itemId: number
+    folderId: number
     name: number
     key: number
     mime: number
@@ -27199,6 +27202,7 @@ export namespace Prisma {
   export type MediaAssetMinAggregateInputType = {
     id?: true
     itemId?: true
+    folderId?: true
     name?: true
     key?: true
     mime?: true
@@ -27214,6 +27218,7 @@ export namespace Prisma {
   export type MediaAssetMaxAggregateInputType = {
     id?: true
     itemId?: true
+    folderId?: true
     name?: true
     key?: true
     mime?: true
@@ -27229,6 +27234,7 @@ export namespace Prisma {
   export type MediaAssetCountAggregateInputType = {
     id?: true
     itemId?: true
+    folderId?: true
     name?: true
     key?: true
     mime?: true
@@ -27330,7 +27336,8 @@ export namespace Prisma {
 
   export type MediaAssetGroupByOutputType = {
     id: string
-    itemId: string
+    itemId: string | null
+    folderId: string | null
     name: string
     key: string
     mime: string
@@ -27365,6 +27372,7 @@ export namespace Prisma {
   export type MediaAssetSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     itemId?: boolean
+    folderId?: boolean
     name?: boolean
     key?: boolean
     mime?: boolean
@@ -27375,12 +27383,13 @@ export namespace Prisma {
     createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    item?: boolean | MediaItemDefaultArgs<ExtArgs>
+    item?: boolean | MediaAsset$itemArgs<ExtArgs>
   }, ExtArgs["result"]["mediaAsset"]>
 
   export type MediaAssetSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     itemId?: boolean
+    folderId?: boolean
     name?: boolean
     key?: boolean
     mime?: boolean
@@ -27391,12 +27400,13 @@ export namespace Prisma {
     createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    item?: boolean | MediaItemDefaultArgs<ExtArgs>
+    item?: boolean | MediaAsset$itemArgs<ExtArgs>
   }, ExtArgs["result"]["mediaAsset"]>
 
   export type MediaAssetSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     itemId?: boolean
+    folderId?: boolean
     name?: boolean
     key?: boolean
     mime?: boolean
@@ -27407,12 +27417,13 @@ export namespace Prisma {
     createdById?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    item?: boolean | MediaItemDefaultArgs<ExtArgs>
+    item?: boolean | MediaAsset$itemArgs<ExtArgs>
   }, ExtArgs["result"]["mediaAsset"]>
 
   export type MediaAssetSelectScalar = {
     id?: boolean
     itemId?: boolean
+    folderId?: boolean
     name?: boolean
     key?: boolean
     mime?: boolean
@@ -27425,25 +27436,26 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type MediaAssetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "name" | "key" | "mime" | "size" | "section" | "taskId" | "color" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaAsset"]>
+  export type MediaAssetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "folderId" | "name" | "key" | "mime" | "size" | "section" | "taskId" | "color" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaAsset"]>
   export type MediaAssetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    item?: boolean | MediaItemDefaultArgs<ExtArgs>
+    item?: boolean | MediaAsset$itemArgs<ExtArgs>
   }
   export type MediaAssetIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    item?: boolean | MediaItemDefaultArgs<ExtArgs>
+    item?: boolean | MediaAsset$itemArgs<ExtArgs>
   }
   export type MediaAssetIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    item?: boolean | MediaItemDefaultArgs<ExtArgs>
+    item?: boolean | MediaAsset$itemArgs<ExtArgs>
   }
 
   export type $MediaAssetPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MediaAsset"
     objects: {
-      item: Prisma.$MediaItemPayload<ExtArgs>
+      item: Prisma.$MediaItemPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
-      itemId: string
+      itemId: string | null
+      folderId: string | null
       name: string
       key: string
       mime: string
@@ -27848,7 +27860,7 @@ export namespace Prisma {
    */
   export interface Prisma__MediaAssetClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    item<T extends MediaItemDefaultArgs<ExtArgs> = {}>(args?: Subset<T, MediaItemDefaultArgs<ExtArgs>>): Prisma__MediaItemClient<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    item<T extends MediaAsset$itemArgs<ExtArgs> = {}>(args?: Subset<T, MediaAsset$itemArgs<ExtArgs>>): Prisma__MediaItemClient<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -27880,6 +27892,7 @@ export namespace Prisma {
   interface MediaAssetFieldRefs {
     readonly id: FieldRef<"MediaAsset", 'String'>
     readonly itemId: FieldRef<"MediaAsset", 'String'>
+    readonly folderId: FieldRef<"MediaAsset", 'String'>
     readonly name: FieldRef<"MediaAsset", 'String'>
     readonly key: FieldRef<"MediaAsset", 'String'>
     readonly mime: FieldRef<"MediaAsset", 'String'>
@@ -28283,6 +28296,25 @@ export namespace Prisma {
      * Limit how many MediaAssets to delete.
      */
     limit?: number
+  }
+
+  /**
+   * MediaAsset.item
+   */
+  export type MediaAsset$itemArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MediaItem
+     */
+    select?: MediaItemSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MediaItem
+     */
+    omit?: MediaItemOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: MediaItemInclude<ExtArgs> | null
+    where?: MediaItemWhereInput
   }
 
   /**
@@ -37226,6 +37258,7 @@ export namespace Prisma {
   export const MediaAssetScalarFieldEnum: {
     id: 'id',
     itemId: 'itemId',
+    folderId: 'folderId',
     name: 'name',
     key: 'key',
     mime: 'mime',
@@ -39249,7 +39282,8 @@ export namespace Prisma {
     OR?: MediaAssetWhereInput[]
     NOT?: MediaAssetWhereInput | MediaAssetWhereInput[]
     id?: StringFilter<"MediaAsset"> | string
-    itemId?: StringFilter<"MediaAsset"> | string
+    itemId?: StringNullableFilter<"MediaAsset"> | string | null
+    folderId?: StringNullableFilter<"MediaAsset"> | string | null
     name?: StringFilter<"MediaAsset"> | string
     key?: StringFilter<"MediaAsset"> | string
     mime?: StringFilter<"MediaAsset"> | string
@@ -39260,12 +39294,13 @@ export namespace Prisma {
     createdById?: StringFilter<"MediaAsset"> | string
     createdAt?: DateTimeFilter<"MediaAsset"> | Date | string
     updatedAt?: DateTimeFilter<"MediaAsset"> | Date | string
-    item?: XOR<MediaItemScalarRelationFilter, MediaItemWhereInput>
+    item?: XOR<MediaItemNullableScalarRelationFilter, MediaItemWhereInput> | null
   }
 
   export type MediaAssetOrderByWithRelationInput = {
     id?: SortOrder
-    itemId?: SortOrder
+    itemId?: SortOrderInput | SortOrder
+    folderId?: SortOrderInput | SortOrder
     name?: SortOrder
     key?: SortOrder
     mime?: SortOrder
@@ -39284,7 +39319,8 @@ export namespace Prisma {
     AND?: MediaAssetWhereInput | MediaAssetWhereInput[]
     OR?: MediaAssetWhereInput[]
     NOT?: MediaAssetWhereInput | MediaAssetWhereInput[]
-    itemId?: StringFilter<"MediaAsset"> | string
+    itemId?: StringNullableFilter<"MediaAsset"> | string | null
+    folderId?: StringNullableFilter<"MediaAsset"> | string | null
     name?: StringFilter<"MediaAsset"> | string
     key?: StringFilter<"MediaAsset"> | string
     mime?: StringFilter<"MediaAsset"> | string
@@ -39295,12 +39331,13 @@ export namespace Prisma {
     createdById?: StringFilter<"MediaAsset"> | string
     createdAt?: DateTimeFilter<"MediaAsset"> | Date | string
     updatedAt?: DateTimeFilter<"MediaAsset"> | Date | string
-    item?: XOR<MediaItemScalarRelationFilter, MediaItemWhereInput>
+    item?: XOR<MediaItemNullableScalarRelationFilter, MediaItemWhereInput> | null
   }, "id">
 
   export type MediaAssetOrderByWithAggregationInput = {
     id?: SortOrder
-    itemId?: SortOrder
+    itemId?: SortOrderInput | SortOrder
+    folderId?: SortOrderInput | SortOrder
     name?: SortOrder
     key?: SortOrder
     mime?: SortOrder
@@ -39323,7 +39360,8 @@ export namespace Prisma {
     OR?: MediaAssetScalarWhereWithAggregatesInput[]
     NOT?: MediaAssetScalarWhereWithAggregatesInput | MediaAssetScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"MediaAsset"> | string
-    itemId?: StringWithAggregatesFilter<"MediaAsset"> | string
+    itemId?: StringNullableWithAggregatesFilter<"MediaAsset"> | string | null
+    folderId?: StringNullableWithAggregatesFilter<"MediaAsset"> | string | null
     name?: StringWithAggregatesFilter<"MediaAsset"> | string
     key?: StringWithAggregatesFilter<"MediaAsset"> | string
     mime?: StringWithAggregatesFilter<"MediaAsset"> | string
@@ -41730,6 +41768,7 @@ export namespace Prisma {
 
   export type MediaAssetCreateInput = {
     id?: string
+    folderId?: string | null
     name: string
     key: string
     mime: string
@@ -41740,12 +41779,13 @@ export namespace Prisma {
     createdById: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    item: MediaItemCreateNestedOneWithoutAssetsInput
+    item?: MediaItemCreateNestedOneWithoutAssetsInput
   }
 
   export type MediaAssetUncheckedCreateInput = {
     id?: string
-    itemId: string
+    itemId?: string | null
+    folderId?: string | null
     name: string
     key: string
     mime: string
@@ -41760,6 +41800,7 @@ export namespace Prisma {
 
   export type MediaAssetUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
     mime?: StringFieldUpdateOperationsInput | string
@@ -41770,12 +41811,13 @@ export namespace Prisma {
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    item?: MediaItemUpdateOneRequiredWithoutAssetsNestedInput
+    item?: MediaItemUpdateOneWithoutAssetsNestedInput
   }
 
   export type MediaAssetUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
-    itemId?: StringFieldUpdateOperationsInput | string
+    itemId?: NullableStringFieldUpdateOperationsInput | string | null
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
     mime?: StringFieldUpdateOperationsInput | string
@@ -41790,7 +41832,8 @@ export namespace Prisma {
 
   export type MediaAssetCreateManyInput = {
     id?: string
-    itemId: string
+    itemId?: string | null
+    folderId?: string | null
     name: string
     key: string
     mime: string
@@ -41805,6 +41848,7 @@ export namespace Prisma {
 
   export type MediaAssetUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
     mime?: StringFieldUpdateOperationsInput | string
@@ -41819,7 +41863,8 @@ export namespace Prisma {
 
   export type MediaAssetUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
-    itemId?: StringFieldUpdateOperationsInput | string
+    itemId?: NullableStringFieldUpdateOperationsInput | string | null
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
     mime?: StringFieldUpdateOperationsInput | string
@@ -43934,14 +43979,15 @@ export namespace Prisma {
     _max?: NestedEnumMediaTierFilter<$PrismaModel>
   }
 
-  export type MediaItemScalarRelationFilter = {
-    is?: MediaItemWhereInput
-    isNot?: MediaItemWhereInput
+  export type MediaItemNullableScalarRelationFilter = {
+    is?: MediaItemWhereInput | null
+    isNot?: MediaItemWhereInput | null
   }
 
   export type MediaAssetCountOrderByAggregateInput = {
     id?: SortOrder
     itemId?: SortOrder
+    folderId?: SortOrder
     name?: SortOrder
     key?: SortOrder
     mime?: SortOrder
@@ -43961,6 +44007,7 @@ export namespace Prisma {
   export type MediaAssetMaxOrderByAggregateInput = {
     id?: SortOrder
     itemId?: SortOrder
+    folderId?: SortOrder
     name?: SortOrder
     key?: SortOrder
     mime?: SortOrder
@@ -43976,6 +44023,7 @@ export namespace Prisma {
   export type MediaAssetMinOrderByAggregateInput = {
     id?: SortOrder
     itemId?: SortOrder
+    folderId?: SortOrder
     name?: SortOrder
     key?: SortOrder
     mime?: SortOrder
@@ -43990,11 +44038,6 @@ export namespace Prisma {
 
   export type MediaAssetSumOrderByAggregateInput = {
     size?: SortOrder
-  }
-
-  export type MediaItemNullableScalarRelationFilter = {
-    is?: MediaItemWhereInput | null
-    isNot?: MediaItemWhereInput | null
   }
 
   export type MediaTaskCountOrderByAggregateInput = {
@@ -45836,10 +45879,12 @@ export namespace Prisma {
     connect?: MediaItemWhereUniqueInput
   }
 
-  export type MediaItemUpdateOneRequiredWithoutAssetsNestedInput = {
+  export type MediaItemUpdateOneWithoutAssetsNestedInput = {
     create?: XOR<MediaItemCreateWithoutAssetsInput, MediaItemUncheckedCreateWithoutAssetsInput>
     connectOrCreate?: MediaItemCreateOrConnectWithoutAssetsInput
     upsert?: MediaItemUpsertWithoutAssetsInput
+    disconnect?: MediaItemWhereInput | boolean
+    delete?: MediaItemWhereInput | boolean
     connect?: MediaItemWhereUniqueInput
     update?: XOR<XOR<MediaItemUpdateToOneWithWhereWithoutAssetsInput, MediaItemUpdateWithoutAssetsInput>, MediaItemUncheckedUpdateWithoutAssetsInput>
   }
@@ -50546,6 +50591,7 @@ export namespace Prisma {
 
   export type MediaAssetCreateWithoutItemInput = {
     id?: string
+    folderId?: string | null
     name: string
     key: string
     mime: string
@@ -50560,6 +50606,7 @@ export namespace Prisma {
 
   export type MediaAssetUncheckedCreateWithoutItemInput = {
     id?: string
+    folderId?: string | null
     name: string
     key: string
     mime: string
@@ -50737,7 +50784,8 @@ export namespace Prisma {
     OR?: MediaAssetScalarWhereInput[]
     NOT?: MediaAssetScalarWhereInput | MediaAssetScalarWhereInput[]
     id?: StringFilter<"MediaAsset"> | string
-    itemId?: StringFilter<"MediaAsset"> | string
+    itemId?: StringNullableFilter<"MediaAsset"> | string | null
+    folderId?: StringNullableFilter<"MediaAsset"> | string | null
     name?: StringFilter<"MediaAsset"> | string
     key?: StringFilter<"MediaAsset"> | string
     mime?: StringFilter<"MediaAsset"> | string
@@ -52419,6 +52467,7 @@ export namespace Prisma {
 
   export type MediaAssetCreateManyItemInput = {
     id?: string
+    folderId?: string | null
     name: string
     key: string
     mime: string
@@ -52538,6 +52587,7 @@ export namespace Prisma {
 
   export type MediaAssetUpdateWithoutItemInput = {
     id?: StringFieldUpdateOperationsInput | string
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
     mime?: StringFieldUpdateOperationsInput | string
@@ -52552,6 +52602,7 @@ export namespace Prisma {
 
   export type MediaAssetUncheckedUpdateWithoutItemInput = {
     id?: StringFieldUpdateOperationsInput | string
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
     mime?: StringFieldUpdateOperationsInput | string
@@ -52566,6 +52617,7 @@ export namespace Prisma {
 
   export type MediaAssetUncheckedUpdateManyWithoutItemInput = {
     id?: StringFieldUpdateOperationsInput | string
+    folderId?: NullableStringFieldUpdateOperationsInput | string | null
     name?: StringFieldUpdateOperationsInput | string
     key?: StringFieldUpdateOperationsInput | string
     mime?: StringFieldUpdateOperationsInput | string
