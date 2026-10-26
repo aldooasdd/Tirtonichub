@@ -50,3 +50,13 @@ test("file hasil konten: hapus oleh admin atau pengunggah saja", () => {
   assert.notEqual(canWrite({ ...rayhan, userId: "u-lain" }, "delete", "assets/x", f, null), null);
   assert.notEqual(canWrite(zaki, "set", "assets/x", null, f), null);
 });
+
+test("File Konten: semua anggota boleh ganti nama/warna, folder berwarna", () => {
+  const f = { itemId: "i", name: "a.mp4", color: "", section: "vpr", uploaderId: "u-zaki", url: "/x" };
+  assert.equal(canWrite(rayhan, "update", "assets/x", f, { ...f, name: "b.mp4", color: "red" }), null);
+  assert.notEqual(canWrite(rayhan, "update", "assets/x", f, { ...f, url: "/lain" }), null);
+  assert.notEqual(canWrite(rayhan, "update", "assets/x", f, { ...f, color: "pink" }), null);
+  assert.equal(canWrite(rayhan, "set", "folders/i", null, { color: "blue", updatedAt: 1 }), null);
+  assert.notEqual(canWrite(rayhan, "set", "folders/i", null, { color: "blue", foo: 1 }), null);
+  assert.equal(canRead(rayhan, "uploads/x"), false);
+});

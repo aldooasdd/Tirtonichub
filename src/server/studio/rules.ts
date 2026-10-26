@@ -14,6 +14,7 @@ export type StudioUser = {
 };
 
 export const AV_COLORS = ["lime", "orange", "purple", "teal", "green", "pink"];
+export const FILE_COLORS = ["", "red", "orange", "yellow", "green", "blue", "purple", "gray"];
 export const AV_ANIMALS = ["", "cat", "dog", "panda", "fox", "rabbit", "koala", "tiger", "frog", "penguin", "monkey", "bear", "chick"];
 
 const str = (v: unknown) => (typeof v === "string" ? v : v == null ? "" : String(v));
@@ -38,6 +39,7 @@ export function canRead(u: StudioUser, path: string): boolean {
       return u.staff;
     case "public":
     case "assets":
+    case "folders":
     case "items":
     case "photos":
     case "tasks":
@@ -106,10 +108,21 @@ export function canWrite(
     case "public":
     case "reports":
       return u.full ? null : deny("khusus admin");
-    case "assets":
-      // file hasil konten: unggah lewat /api/studio/upload; hapus = admin atau yang mengunggah
-      if (op !== "delete") return deny("unggah file lewat tombol Unggah");
-      return u.staff || before?.uploaderId === u.userId ? null : deny("hanya admin atau yang mengunggah");
+    case "assets": {
+      // File Konten: unggah lewat /api/studio/upload/*; semua anggota boleh ganti nama/warna/bagian; hapus = admin atau pengunggah
+      if (op === "delete") return u.staff || before?.uploaderId === u.userId ? null : deny("hanya admin atau yang mengunggah");
+      if (!before || !after) return deny("unggah file lewat tombol + File");
+      if (changedKeys(before, after).some((k) => !["name", "color", "section", "updatedAt"].includes(k))) return deny("hanya nama, warna, dan bagian yang bisa diubah");
+      const nm = str(after.name).trim();
+      if (!nm || nm.length > 200 || /[\\/]/.test(nm)) return deny("nama file tidak valid");
+      if (!FILE_COLORS.includes(str(after.color))) return deny("warna tidak dikenal");
+      return null;
+    }
+    case "folders":
+      // warna folder barang di File Konten: semua anggota
+      if (op === "delete") return null;
+      if (Object.keys(after ?? {}).some((k) => !["color", "updatedAt"].includes(k))) return deny("isian folder tidak dikenal");
+      return FILE_COLORS.includes(str(after?.color)) ? null : deny("warna tidak dikenal");
     case "idcc":
       if (op === "set" && !before && u.idcc) return null;
       return u.staff ? null : deny("hanya admin");

@@ -4,7 +4,7 @@
 import { randomBytes } from "node:crypto";
 import type { Prisma } from "@/generated/prisma";
 import { prisma } from "@/server/db";
-import { makeKey, putObject } from "@/server/storage";
+import { makeKey, putObject, multipartStart, multipartPart, multipartFinish, multipartAbort } from "@/server/storage";
 import { canRead, canWrite, type Doc, type StudioUser } from "./rules";
 import * as M from "./map";
 
@@ -117,6 +117,10 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
       await prisma.mediaItem.upsert({ where: { id }, create: { id, ...data, createdById: u.userId }, update: data });
       break;
     }
+    case "assets": {
+      await prisma.mediaAsset.update({ where: { id }, data: { name: String(after.name).trim().slice(0, 200), color: after.color ? String(after.color) : null, section: after.section ? String(after.section) : null } });
+      break;
+    }
     case "photos": {
       const m = /^data:image\/(\w+);base64,(.+)$/.exec(String(after.data ?? ""));
       if (!m) throw new StudioError("invalid-argument", "Foto tidak valid.");
@@ -220,7 +224,7 @@ export async function changes(u: StudioUser, since: number) {
     prisma.mediaPcal.findFirst({ where: { userId: u.userId, updatedAt: { gt } } }),
     prisma.personalCalEvent.findMany({ where: { userId: u.userId, updatedAt: { gt } } }),
     since ? prisma.studioTombstone.findMany({ where: { deletedAt: { gt } } }) : Promise.resolve([]),
-    prisma.mediaAsset.findMany({ where: { createdAt: { gt } } }),
+    prisma.mediaAsset.findMany({ where: { updatedAt: { gt } } }),
   ]);
   const names = await userNames(assets.map((a) => a.createdById));
   for (const a of assets) docs["assets/" + a.id] = assetToDoc(a, names);
@@ -246,13 +250,61 @@ export async function changes(u: StudioUser, since: number) {
 }
 
 // ---------- file hasil konten (MediaAsset) ----------
-type AssetRow = { id: string; itemId: string; name: string; key: string; mime: string; size: number; createdById: string; createdAt: Date };
+type AssetRow = { id: string; itemId: string; name: string; key: string; mime: string; size: number; section: string | null; taskId: string | null; color: string | null; createdById: string; createdAt: Date; updatedAt: Date };
 async function userNames(ids: string[]) {
   const us = ids.length ? await prisma.user.findMany({ where: { id: { in: [...new Set(ids)] } }, select: { id: true, fullName: true, nickname: true } }) : [];
   return new Map(us.map((u) => [u.id, u.nickname || u.fullName]));
 }
 function assetToDoc(a: AssetRow, names: Map<string, string>): Doc {
-  return { itemId: a.itemId, name: a.name, url: "/api/file?key=" + encodeURIComponent(a.key), mime: a.mime, size: a.size, uploaderId: a.createdById, uploader: names.get(a.createdById) ?? "", createdAt: a.createdAt.getTime() };
+  return { itemId: a.itemId, name: a.name, url: "/api/file?key=" + encodeURIComponent(a.key), mime: a.mime, size: a.size, section: a.section ?? "", taskId: a.taskId ?? "", color: a.color ?? "", uploaderId: a.createdById, uploader: names.get(a.createdById) ?? "", createdAt: a.createdAt.getTime(), updatedAt: a.updatedAt.getTime() };
+}
+
+// ---------- unggah bertahap File Konten (semua anggota Media; maks 5 GB per file) ----------
+export const MAX_BIG = 5 * 1024 * 1024 * 1024;
+export const PART_SIZE = 16 * 1024 * 1024;
+type Pending = { key: string; s3: string; itemId: string; name: string; mime: string; size: number; section: string | null; taskId: string | null; userId: string; parts: { n: number; etag: string }[] };
+const pendingPath = (id: string) => "uploads/" + id;
+async function getPending(u: StudioUser, id: string) {
+  const r = await prisma.studioDoc.findUnique({ where: { path: pendingPath(id) } });
+  const p = r?.data as Pending | undefined;
+  if (!p || p.userId !== u.userId) throw new StudioError("not-found", "Unggahan tidak ditemukan. Ulangi unggah.");
+  return p;
+}
+export async function bigStart(u: StudioUser, b: { itemId?: string; name?: string; mime?: string; size?: number; section?: string; taskId?: string }) {
+  const itemId = String(b.itemId ?? "");
+  if (!(await prisma.mediaItem.findUnique({ where: { id: itemId }, select: { id: true } }))) throw new StudioError("not-found", "Barang tidak ditemukan.");
+  const size = Number(b.size) || 0;
+  if (size <= 0 || size > MAX_BIG) throw new StudioError("invalid-argument", "Ukuran file maksimal 5 GB.");
+  const name = String(b.name ?? "file").trim().replace(/[\\/]/g, "-").slice(0, 200) || "file";
+  const ext = name.includes(".") ? name.split(".").pop()!.toLowerCase().replace(/[^a-z0-9]/g, "").slice(0, 8) || "bin" : "bin";
+  const mime = String(b.mime || "application/octet-stream").slice(0, 100);
+  const key = makeKey("hasil", ext);
+  const s3 = await multipartStart(key, mime);
+  const id = newId();
+  const p: Pending = { key, s3, itemId, name, mime, size, section: b.section ? String(b.section).slice(0, 20) : null, taskId: b.taskId ? String(b.taskId).slice(0, 60) : null, userId: u.userId, parts: [] };
+  await prisma.studioDoc.create({ data: { path: pendingPath(id), coll: "uploads", data: json(p) } });
+  return { id, partSize: PART_SIZE };
+}
+export async function bigPart(u: StudioUser, id: string, n: number, body: Buffer) {
+  const p = await getPending(u, id);
+  if (!Number.isInteger(n) || n < 1 || n > 10000 || body.length > PART_SIZE + 1024) throw new StudioError("invalid-argument", "Potongan file tidak valid.");
+  const etag = await multipartPart(p.key, p.s3, n, body);
+  p.parts = p.parts.filter((x) => x.n !== n).concat({ n, etag });
+  await prisma.studioDoc.update({ where: { path: pendingPath(id) }, data: { data: json(p) } });
+  return { ok: true };
+}
+export async function bigFinish(u: StudioUser, id: string) {
+  const p = await getPending(u, id);
+  await multipartFinish(p.key, p.s3, p.parts);
+  const a = await prisma.mediaAsset.create({ data: { itemId: p.itemId, name: p.name, key: p.key, mime: p.mime, size: p.size, section: p.section, taskId: p.taskId, createdById: u.userId } });
+  await prisma.studioDoc.delete({ where: { path: pendingPath(id) } });
+  return { path: "assets/" + a.id, doc: assetToDoc(a, await userNames([u.userId])) };
+}
+export async function bigAbort(u: StudioUser, id: string) {
+  const p = await getPending(u, id).catch(() => null);
+  if (!p) return;
+  await multipartAbort(p.key, p.s3);
+  await prisma.studioDoc.delete({ where: { path: pendingPath(id) } });
 }
 
 /** Unggah file hasil konten: admin/Admin 2, atau anggota yang punya tugas di barang itu. */

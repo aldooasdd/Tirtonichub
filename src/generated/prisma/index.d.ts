@@ -27148,8 +27148,12 @@ export namespace Prisma {
     key: string | null
     mime: string | null
     size: number | null
+    section: string | null
+    taskId: string | null
+    color: string | null
     createdById: string | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type MediaAssetMaxAggregateOutputType = {
@@ -27159,8 +27163,12 @@ export namespace Prisma {
     key: string | null
     mime: string | null
     size: number | null
+    section: string | null
+    taskId: string | null
+    color: string | null
     createdById: string | null
     createdAt: Date | null
+    updatedAt: Date | null
   }
 
   export type MediaAssetCountAggregateOutputType = {
@@ -27170,8 +27178,12 @@ export namespace Prisma {
     key: number
     mime: number
     size: number
+    section: number
+    taskId: number
+    color: number
     createdById: number
     createdAt: number
+    updatedAt: number
     _all: number
   }
 
@@ -27191,8 +27203,12 @@ export namespace Prisma {
     key?: true
     mime?: true
     size?: true
+    section?: true
+    taskId?: true
+    color?: true
     createdById?: true
     createdAt?: true
+    updatedAt?: true
   }
 
   export type MediaAssetMaxAggregateInputType = {
@@ -27202,8 +27218,12 @@ export namespace Prisma {
     key?: true
     mime?: true
     size?: true
+    section?: true
+    taskId?: true
+    color?: true
     createdById?: true
     createdAt?: true
+    updatedAt?: true
   }
 
   export type MediaAssetCountAggregateInputType = {
@@ -27213,8 +27233,12 @@ export namespace Prisma {
     key?: true
     mime?: true
     size?: true
+    section?: true
+    taskId?: true
+    color?: true
     createdById?: true
     createdAt?: true
+    updatedAt?: true
     _all?: true
   }
 
@@ -27311,8 +27335,12 @@ export namespace Prisma {
     key: string
     mime: string
     size: number
+    section: string | null
+    taskId: string | null
+    color: string | null
     createdById: string
     createdAt: Date
+    updatedAt: Date
     _count: MediaAssetCountAggregateOutputType | null
     _avg: MediaAssetAvgAggregateOutputType | null
     _sum: MediaAssetSumAggregateOutputType | null
@@ -27341,8 +27369,12 @@ export namespace Prisma {
     key?: boolean
     mime?: boolean
     size?: boolean
+    section?: boolean
+    taskId?: boolean
+    color?: boolean
     createdById?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     item?: boolean | MediaItemDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mediaAsset"]>
 
@@ -27353,8 +27385,12 @@ export namespace Prisma {
     key?: boolean
     mime?: boolean
     size?: boolean
+    section?: boolean
+    taskId?: boolean
+    color?: boolean
     createdById?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     item?: boolean | MediaItemDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mediaAsset"]>
 
@@ -27365,8 +27401,12 @@ export namespace Prisma {
     key?: boolean
     mime?: boolean
     size?: boolean
+    section?: boolean
+    taskId?: boolean
+    color?: boolean
     createdById?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
     item?: boolean | MediaItemDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["mediaAsset"]>
 
@@ -27377,11 +27417,15 @@ export namespace Prisma {
     key?: boolean
     mime?: boolean
     size?: boolean
+    section?: boolean
+    taskId?: boolean
+    color?: boolean
     createdById?: boolean
     createdAt?: boolean
+    updatedAt?: boolean
   }
 
-  export type MediaAssetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "name" | "key" | "mime" | "size" | "createdById" | "createdAt", ExtArgs["result"]["mediaAsset"]>
+  export type MediaAssetOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "name" | "key" | "mime" | "size" | "section" | "taskId" | "color" | "createdById" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaAsset"]>
   export type MediaAssetInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     item?: boolean | MediaItemDefaultArgs<ExtArgs>
   }
@@ -27404,8 +27448,12 @@ export namespace Prisma {
       key: string
       mime: string
       size: number
+      section: string | null
+      taskId: string | null
+      color: string | null
       createdById: string
       createdAt: Date
+      updatedAt: Date
     }, ExtArgs["result"]["mediaAsset"]>
     composites: {}
   }
@@ -27836,8 +27884,12 @@ export namespace Prisma {
     readonly key: FieldRef<"MediaAsset", 'String'>
     readonly mime: FieldRef<"MediaAsset", 'String'>
     readonly size: FieldRef<"MediaAsset", 'Int'>
+    readonly section: FieldRef<"MediaAsset", 'String'>
+    readonly taskId: FieldRef<"MediaAsset", 'String'>
+    readonly color: FieldRef<"MediaAsset", 'String'>
     readonly createdById: FieldRef<"MediaAsset", 'String'>
     readonly createdAt: FieldRef<"MediaAsset", 'DateTime'>
+    readonly updatedAt: FieldRef<"MediaAsset", 'DateTime'>
   }
     
 
@@ -37178,8 +37230,12 @@ export namespace Prisma {
     key: 'key',
     mime: 'mime',
     size: 'size',
+    section: 'section',
+    taskId: 'taskId',
+    color: 'color',
     createdById: 'createdById',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   };
 
   export type MediaAssetScalarFieldEnum = (typeof MediaAssetScalarFieldEnum)[keyof typeof MediaAssetScalarFieldEnum]
@@ -39198,8 +39254,12 @@ export namespace Prisma {
     key?: StringFilter<"MediaAsset"> | string
     mime?: StringFilter<"MediaAsset"> | string
     size?: IntFilter<"MediaAsset"> | number
+    section?: StringNullableFilter<"MediaAsset"> | string | null
+    taskId?: StringNullableFilter<"MediaAsset"> | string | null
+    color?: StringNullableFilter<"MediaAsset"> | string | null
     createdById?: StringFilter<"MediaAsset"> | string
     createdAt?: DateTimeFilter<"MediaAsset"> | Date | string
+    updatedAt?: DateTimeFilter<"MediaAsset"> | Date | string
     item?: XOR<MediaItemScalarRelationFilter, MediaItemWhereInput>
   }
 
@@ -39210,8 +39270,12 @@ export namespace Prisma {
     key?: SortOrder
     mime?: SortOrder
     size?: SortOrder
+    section?: SortOrderInput | SortOrder
+    taskId?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     item?: MediaItemOrderByWithRelationInput
   }
 
@@ -39225,8 +39289,12 @@ export namespace Prisma {
     key?: StringFilter<"MediaAsset"> | string
     mime?: StringFilter<"MediaAsset"> | string
     size?: IntFilter<"MediaAsset"> | number
+    section?: StringNullableFilter<"MediaAsset"> | string | null
+    taskId?: StringNullableFilter<"MediaAsset"> | string | null
+    color?: StringNullableFilter<"MediaAsset"> | string | null
     createdById?: StringFilter<"MediaAsset"> | string
     createdAt?: DateTimeFilter<"MediaAsset"> | Date | string
+    updatedAt?: DateTimeFilter<"MediaAsset"> | Date | string
     item?: XOR<MediaItemScalarRelationFilter, MediaItemWhereInput>
   }, "id">
 
@@ -39237,8 +39305,12 @@ export namespace Prisma {
     key?: SortOrder
     mime?: SortOrder
     size?: SortOrder
+    section?: SortOrderInput | SortOrder
+    taskId?: SortOrderInput | SortOrder
+    color?: SortOrderInput | SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
     _count?: MediaAssetCountOrderByAggregateInput
     _avg?: MediaAssetAvgOrderByAggregateInput
     _max?: MediaAssetMaxOrderByAggregateInput
@@ -39256,8 +39328,12 @@ export namespace Prisma {
     key?: StringWithAggregatesFilter<"MediaAsset"> | string
     mime?: StringWithAggregatesFilter<"MediaAsset"> | string
     size?: IntWithAggregatesFilter<"MediaAsset"> | number
+    section?: StringNullableWithAggregatesFilter<"MediaAsset"> | string | null
+    taskId?: StringNullableWithAggregatesFilter<"MediaAsset"> | string | null
+    color?: StringNullableWithAggregatesFilter<"MediaAsset"> | string | null
     createdById?: StringWithAggregatesFilter<"MediaAsset"> | string
     createdAt?: DateTimeWithAggregatesFilter<"MediaAsset"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"MediaAsset"> | Date | string
   }
 
   export type MediaTaskWhereInput = {
@@ -41658,8 +41734,12 @@ export namespace Prisma {
     key: string
     mime: string
     size: number
+    section?: string | null
+    taskId?: string | null
+    color?: string | null
     createdById: string
     createdAt?: Date | string
+    updatedAt?: Date | string
     item: MediaItemCreateNestedOneWithoutAssetsInput
   }
 
@@ -41670,8 +41750,12 @@ export namespace Prisma {
     key: string
     mime: string
     size: number
+    section?: string | null
+    taskId?: string | null
+    color?: string | null
     createdById: string
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type MediaAssetUpdateInput = {
@@ -41680,8 +41764,12 @@ export namespace Prisma {
     key?: StringFieldUpdateOperationsInput | string
     mime?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
+    section?: NullableStringFieldUpdateOperationsInput | string | null
+    taskId?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     item?: MediaItemUpdateOneRequiredWithoutAssetsNestedInput
   }
 
@@ -41692,8 +41780,12 @@ export namespace Prisma {
     key?: StringFieldUpdateOperationsInput | string
     mime?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
+    section?: NullableStringFieldUpdateOperationsInput | string | null
+    taskId?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MediaAssetCreateManyInput = {
@@ -41703,8 +41795,12 @@ export namespace Prisma {
     key: string
     mime: string
     size: number
+    section?: string | null
+    taskId?: string | null
+    color?: string | null
     createdById: string
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type MediaAssetUpdateManyMutationInput = {
@@ -41713,8 +41809,12 @@ export namespace Prisma {
     key?: StringFieldUpdateOperationsInput | string
     mime?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
+    section?: NullableStringFieldUpdateOperationsInput | string | null
+    taskId?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MediaAssetUncheckedUpdateManyInput = {
@@ -41724,8 +41824,12 @@ export namespace Prisma {
     key?: StringFieldUpdateOperationsInput | string
     mime?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
+    section?: NullableStringFieldUpdateOperationsInput | string | null
+    taskId?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MediaTaskCreateInput = {
@@ -43842,8 +43946,12 @@ export namespace Prisma {
     key?: SortOrder
     mime?: SortOrder
     size?: SortOrder
+    section?: SortOrder
+    taskId?: SortOrder
+    color?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type MediaAssetAvgOrderByAggregateInput = {
@@ -43857,8 +43965,12 @@ export namespace Prisma {
     key?: SortOrder
     mime?: SortOrder
     size?: SortOrder
+    section?: SortOrder
+    taskId?: SortOrder
+    color?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type MediaAssetMinOrderByAggregateInput = {
@@ -43868,8 +43980,12 @@ export namespace Prisma {
     key?: SortOrder
     mime?: SortOrder
     size?: SortOrder
+    section?: SortOrder
+    taskId?: SortOrder
+    color?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type MediaAssetSumOrderByAggregateInput = {
@@ -50434,8 +50550,12 @@ export namespace Prisma {
     key: string
     mime: string
     size: number
+    section?: string | null
+    taskId?: string | null
+    color?: string | null
     createdById: string
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type MediaAssetUncheckedCreateWithoutItemInput = {
@@ -50444,8 +50564,12 @@ export namespace Prisma {
     key: string
     mime: string
     size: number
+    section?: string | null
+    taskId?: string | null
+    color?: string | null
     createdById: string
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type MediaAssetCreateOrConnectWithoutItemInput = {
@@ -50618,8 +50742,12 @@ export namespace Prisma {
     key?: StringFilter<"MediaAsset"> | string
     mime?: StringFilter<"MediaAsset"> | string
     size?: IntFilter<"MediaAsset"> | number
+    section?: StringNullableFilter<"MediaAsset"> | string | null
+    taskId?: StringNullableFilter<"MediaAsset"> | string | null
+    color?: StringNullableFilter<"MediaAsset"> | string | null
     createdById?: StringFilter<"MediaAsset"> | string
     createdAt?: DateTimeFilter<"MediaAsset"> | Date | string
+    updatedAt?: DateTimeFilter<"MediaAsset"> | Date | string
   }
 
   export type MediaItemCreateWithoutAssetsInput = {
@@ -52295,8 +52423,12 @@ export namespace Prisma {
     key: string
     mime: string
     size: number
+    section?: string | null
+    taskId?: string | null
+    color?: string | null
     createdById: string
     createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type MediaTaskUpdateWithoutItemInput = {
@@ -52410,8 +52542,12 @@ export namespace Prisma {
     key?: StringFieldUpdateOperationsInput | string
     mime?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
+    section?: NullableStringFieldUpdateOperationsInput | string | null
+    taskId?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MediaAssetUncheckedUpdateWithoutItemInput = {
@@ -52420,8 +52556,12 @@ export namespace Prisma {
     key?: StringFieldUpdateOperationsInput | string
     mime?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
+    section?: NullableStringFieldUpdateOperationsInput | string | null
+    taskId?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MediaAssetUncheckedUpdateManyWithoutItemInput = {
@@ -52430,8 +52570,12 @@ export namespace Prisma {
     key?: StringFieldUpdateOperationsInput | string
     mime?: StringFieldUpdateOperationsInput | string
     size?: IntFieldUpdateOperationsInput | number
+    section?: NullableStringFieldUpdateOperationsInput | string | null
+    taskId?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: NullableStringFieldUpdateOperationsInput | string | null
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 
