@@ -556,6 +556,8 @@ main.wrap:has(#p-hasil:not([hidden])){width:100%;box-sizing:border-box}   /* mai
 .qcfill[hidden]{display:none}
 @media (max-width:520px){.qci{flex-wrap:wrap}.qci .btn{width:100%}}
 .hfnew{display:inline-flex;align-items:center;gap:6px}.hfnew svg{width:17px;height:17px}
+.fndbody .fsubs{grid-column:1/-1;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:26px 18px;padding:12px 0 8px}
+@media (max-width:520px){.fndbody .fsubs{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 12px}}
 .hfw{position:relative;min-width:0}.hfw>.hf{width:100%}
 .hfw .hfmore{all:unset;position:absolute;right:8px;top:calc(9% + 8px);z-index:2;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--surface);color:var(--ink);font-weight:900;cursor:pointer;box-shadow:0 2px 6px -2px #0006;opacity:0;transition:opacity .15s}
 .hfw:hover .hfmore,.hfw:focus-within .hfmore{opacity:1}
@@ -2600,7 +2602,7 @@ function renderFinder(){const k=S.hfItem;if(!k||$('fnd').hidden)return;if(!fExis
   if(!cu)$('fndSec').innerHTML=[{k:'*',l:'Semua'}].concat(secs).map(x=>{const n=x.k==='*'?all.length:all.filter(a=>(a.section||'')===x.k).length;
     return'<button type="button" role="tab" data-fsec="'+x.k+'" aria-selected="'+(S.hfSec===x.k)+'">'+esc(x.l)+' <b>'+n+'</b></button>'}).join('');
   const subs=S.hfSec==='*'?subsOf(k):[];const fs=curFiles();const ds=S.hfSec==='*'?docsIn(k):[];
-  $('fndBody').innerHTML=(subs.length||fs.length||ds.length)?subs.map(d=>'<div class="ft fsub" data-dropk="'+esc(d)+'" draggable="true"><button type="button" class="ftbtn" data-fopen="'+esc(d)+'" title="Buka '+esc(fName(d))+'"><span class="fth fold"'+(fColor(d)?' style="--fcol:'+fcVar(fColor(d))+'"':'')+'>'+FOLD_IC+'</span><span class="ftn" data-noi18n>'+esc(fName(d))+'</span><span class="ftm">'+fCount(d)+'</span></button><button type="button" class="ftmore" data-fo="'+esc(d)+'" aria-label="Atur folder '+esc(fName(d))+'">⋯</button></div>').join('')+
+  $('fndBody').innerHTML=(subs.length||fs.length||ds.length)?(subs.length?'<div class="hfgrid fsubs">'+subs.map(hfTile).join('')+'</div>':'')+
     ds.map(docTile).join('')+fs.map(a=>fileTile(a,!cu&&S.hfSec==='*')).join('')
     :'<div class="fndempty">Folder ini masih kosong. Tekan tombol panah bawah untuk menambah file, atau tarik file ke sini.</div>';
   $('fndInfo').textContent=(subs.length?subs.length+' folder · ':'')+(ds.length?ds.length+' catatan · ':'')+fs.length+' file · '+fmtSize(fs.reduce((n,a)=>n+(a.size||0),0))+(S.hfSel.size?' · '+S.hfSel.size+' dipilih':'');
@@ -2751,7 +2753,7 @@ const upTo=k=>!k?{}:isCust(k)?{folderId:k}:{itemId:k,section:S.hfItem===k&&!$('f
 const upTarget=()=>upTo(S.hfItem);
 $('fndFile').addEventListener('change',e=>{const fs=[...e.target.files];e.target.value='';openUp(fs,upTarget())});
 $('fndBody').addEventListener('change',e=>{const c=e.target.closest('.ftsel');if(!c)return;const id=c.closest('[data-ft]').dataset.ft;if(c.checked)S.hfSel.add(id);else S.hfSel.delete(id);renderFinder()});
-$('fndBody').addEventListener('click',e=>{const dc=e.target.closest('[data-doc]');if(dc){openDoc(dc.dataset.doc);return}const fo=e.target.closest('[data-fo]');if(fo){openFolderDlg(fo.dataset.fo);return}const op=e.target.closest('[data-fopen]');if(op){openFinder(op.dataset.fopen);return}const m=e.target.closest('[data-fi]');if(m){openFileInfo(m.dataset.fi);return}const v=e.target.closest('[data-fpv]');if(v)openPreview(v.dataset.fpv)});
+$('fndBody').addEventListener('click',e=>{const hf=e.target.closest('[data-hf]');if(hf&&!e.target.closest('[data-fo]')){openFinder(hf.dataset.hf);return}const dc=e.target.closest('[data-doc]');if(dc){openDoc(dc.dataset.doc);return}const fo=e.target.closest('[data-fo]');if(fo){openFolderDlg(fo.dataset.fo);return}const op=e.target.closest('[data-fopen]');if(op){openFinder(op.dataset.fopen);return}const m=e.target.closest('[data-fi]');if(m){openFileInfo(m.dataset.fi);return}const v=e.target.closest('[data-fpv]');if(v)openPreview(v.dataset.fpv)});
 ['dragenter','dragover'].forEach(ev=>$('fndBody').addEventListener(ev,e=>{if(!e.dataTransfer||![...e.dataTransfer.types].includes('Files'))return;e.preventDefault();$('fndBody').classList.add('drop')}));
 ['dragleave','drop'].forEach(ev=>$('fndBody').addEventListener(ev,()=>$('fndBody').classList.remove('drop')));
 $('fndBody').addEventListener('drop',e=>{if(!e.dataTransfer||!e.dataTransfer.files.length)return;e.preventDefault();openUp([...e.dataTransfer.files],upTarget())});
