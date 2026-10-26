@@ -244,7 +244,7 @@
   },
   {
     "route": "/sales",
-    "firstLoadUncompressedJsBytes": 661777,
+    "firstLoadUncompressedJsBytes": 661798,
     "firstLoadChunkPaths": [
       ".next/static/chunks/36dds3_gamj6p.js",
       ".next/static/chunks/0_8l91a3zaamm.js",
@@ -253,7 +253,7 @@
       ".next/static/chunks/17ml9_6wcy12c.js",
       ".next/static/chunks/3n0drtgqxmx9m.js",
       ".next/static/chunks/0g86ehmvuaub_.js",
-      ".next/static/chunks/2i7y7n-uuvr34.js",
+      ".next/static/chunks/2gpqod9qacjsx.js",
       ".next/static/chunks/06cza79ljre1d.js",
       ".next/static/chunks/3dd7r6r-s_vhx.js",
       ".next/static/chunks/19rwnbr1_-u2m.js",

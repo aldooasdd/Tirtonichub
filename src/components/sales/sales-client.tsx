@@ -133,26 +133,28 @@ export function SalesClient({ reports, canViewAll }: { reports: SalesRow[]; canV
 
   return (
     <div className="space-y-5">
-      <div>
-        <h1 className="text-24 font-semibold">Rekap Penjualan</h1>
-        <p className="text-14 text-muted-foreground">Foto nota penjualan, AI isi datanya, lalu kirim ke Finance.</p>
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h1 className="text-24 font-semibold">Rekap Penjualan</h1>
+          <p className="text-14 text-muted-foreground">Foto nota penjualan, AI isi datanya, lalu kirim ke Finance.</p>
+        </div>
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          className="hidden"
+          onChange={(e) => e.target.files?.[0] && onCapture(e.target.files[0])}
+        />
+        {!draft && (
+          <Button disabled={busy} onClick={() => fileRef.current?.click()} className="shrink-0">
+            {busy ? "Memindai…" : "Foto nota penjualan"}
+          </Button>
+        )}
       </div>
 
       {!draft ? (
-        <div className="rounded-lg border bg-card p-6 text-center">
-          <input
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            capture="environment"
-            className="hidden"
-            onChange={(e) => e.target.files?.[0] && onCapture(e.target.files[0])}
-          />
-          <Button disabled={busy} onClick={() => fileRef.current?.click()}>
-            {busy ? "Memindai…" : "Foto nota penjualan"}
-          </Button>
-          {msg && <p className="mt-2 text-12 text-muted-foreground">{msg}</p>}
-        </div>
+        msg ? <p className="text-12 text-muted-foreground">{msg}</p> : null
       ) : (
         <div className="space-y-4 rounded-lg border bg-card p-4">
           {msg && <p className="text-12 text-muted-foreground">{msg}</p>}
