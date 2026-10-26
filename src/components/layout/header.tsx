@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { NavLink } from "./nav-link";
 import { usePathname } from "next/navigation";
 import { Bell, Menu, PanelRight, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -53,9 +54,10 @@ export function Header({ onTogglePanel }: { onTogglePanel: () => void }) {
                   pathname === item.href || pathname.startsWith(item.href + "/");
                 const Icon = item.icon;
                 return (
-                  <Link
+                  <NavLink
                     key={item.href}
                     href={item.href}
+                    external={item.external}
                     className={cn(
                       "flex items-center gap-3 rounded-md px-3 py-2 text-14",
                       active
@@ -65,7 +67,7 @@ export function Header({ onTogglePanel }: { onTogglePanel: () => void }) {
                   >
                     <Icon className="h-[18px] w-[18px]" />
                     {item.label}
-                  </Link>
+                  </NavLink>
                 );
               }),
             )}
