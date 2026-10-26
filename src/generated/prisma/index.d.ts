@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model SalesReport
+ * 
+ */
+export type SalesReport = $Result.DefaultSelection<Prisma.$SalesReportPayload>
+/**
  * Model Role
  * 
  */
@@ -406,6 +411,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.salesReport`: Exposes CRUD operations for the **SalesReport** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SalesReports
+    * const salesReports = await prisma.salesReport.findMany()
+    * ```
+    */
+  get salesReport(): Prisma.SalesReportDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.role`: Exposes CRUD operations for the **Role** model.
@@ -1128,6 +1143,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    SalesReport: 'SalesReport',
     Role: 'Role',
     UserRole: 'UserRole',
     Session: 'Session',
@@ -1174,7 +1190,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone"
+      modelProps: "user" | "salesReport" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1249,6 +1265,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      SalesReport: {
+        payload: Prisma.$SalesReportPayload<ExtArgs>
+        fields: Prisma.SalesReportFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SalesReportFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesReportPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SalesReportFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesReportPayload>
+          }
+          findFirst: {
+            args: Prisma.SalesReportFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesReportPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SalesReportFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesReportPayload>
+          }
+          findMany: {
+            args: Prisma.SalesReportFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesReportPayload>[]
+          }
+          create: {
+            args: Prisma.SalesReportCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesReportPayload>
+          }
+          createMany: {
+            args: Prisma.SalesReportCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SalesReportCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesReportPayload>[]
+          }
+          delete: {
+            args: Prisma.SalesReportDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesReportPayload>
+          }
+          update: {
+            args: Prisma.SalesReportUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesReportPayload>
+          }
+          deleteMany: {
+            args: Prisma.SalesReportDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SalesReportUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SalesReportUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesReportPayload>[]
+          }
+          upsert: {
+            args: Prisma.SalesReportUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SalesReportPayload>
+          }
+          aggregate: {
+            args: Prisma.SalesReportAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSalesReport>
+          }
+          groupBy: {
+            args: Prisma.SalesReportGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SalesReportGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SalesReportCountArgs<ExtArgs>
+            result: $Utils.Optional<SalesReportCountAggregateOutputType> | number
           }
         }
       }
@@ -3421,6 +3511,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    salesReport?: SalesReportOmit
     role?: RoleOmit
     userRole?: UserRoleOmit
     session?: SessionOmit
@@ -3545,6 +3636,7 @@ export namespace Prisma {
     calendarEvents: number
     mediaItems: number
     personalCalEvents: number
+    salesReports: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3564,6 +3656,7 @@ export namespace Prisma {
     calendarEvents?: boolean | UserCountOutputTypeCountCalendarEventsArgs
     mediaItems?: boolean | UserCountOutputTypeCountMediaItemsArgs
     personalCalEvents?: boolean | UserCountOutputTypeCountPersonalCalEventsArgs
+    salesReports?: boolean | UserCountOutputTypeCountSalesReportsArgs
   }
 
   // Custom InputTypes
@@ -3687,6 +3780,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountPersonalCalEventsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: PersonalCalEventWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountSalesReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SalesReportWhereInput
   }
 
 
@@ -4131,6 +4231,7 @@ export namespace Prisma {
     mediaItems?: boolean | User$mediaItemsArgs<ExtArgs>
     personalCalEvents?: boolean | User$personalCalEventsArgs<ExtArgs>
     mediaPcal?: boolean | User$mediaPcalArgs<ExtArgs>
+    salesReports?: boolean | User$salesReportsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4208,6 +4309,7 @@ export namespace Prisma {
     mediaItems?: boolean | User$mediaItemsArgs<ExtArgs>
     personalCalEvents?: boolean | User$personalCalEventsArgs<ExtArgs>
     mediaPcal?: boolean | User$mediaPcalArgs<ExtArgs>
+    salesReports?: boolean | User$salesReportsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4239,6 +4341,7 @@ export namespace Prisma {
       mediaItems: Prisma.$MediaItemPayload<ExtArgs>[]
       personalCalEvents: Prisma.$PersonalCalEventPayload<ExtArgs>[]
       mediaPcal: Prisma.$MediaPcalPayload<ExtArgs> | null
+      salesReports: Prisma.$SalesReportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4668,6 +4771,7 @@ export namespace Prisma {
     mediaItems<T extends User$mediaItemsArgs<ExtArgs> = {}>(args?: Subset<T, User$mediaItemsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MediaItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     personalCalEvents<T extends User$personalCalEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$personalCalEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     mediaPcal<T extends User$mediaPcalArgs<ExtArgs> = {}>(args?: Subset<T, User$mediaPcalArgs<ExtArgs>>): Prisma__MediaPcalClient<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    salesReports<T extends User$salesReportsArgs<ExtArgs> = {}>(args?: Subset<T, User$salesReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5548,6 +5652,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.salesReports
+   */
+  export type User$salesReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesReport
+     */
+    select?: SalesReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesReport
+     */
+    omit?: SalesReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesReportInclude<ExtArgs> | null
+    where?: SalesReportWhereInput
+    orderBy?: SalesReportOrderByWithRelationInput | SalesReportOrderByWithRelationInput[]
+    cursor?: SalesReportWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: SalesReportScalarFieldEnum | SalesReportScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5563,6 +5691,1215 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model SalesReport
+   */
+
+  export type AggregateSalesReport = {
+    _count: SalesReportCountAggregateOutputType | null
+    _avg: SalesReportAvgAggregateOutputType | null
+    _sum: SalesReportSumAggregateOutputType | null
+    _min: SalesReportMinAggregateOutputType | null
+    _max: SalesReportMaxAggregateOutputType | null
+  }
+
+  export type SalesReportAvgAggregateOutputType = {
+    subtotal: number | null
+    total: number | null
+    grandTotal: number | null
+  }
+
+  export type SalesReportSumAggregateOutputType = {
+    subtotal: number | null
+    total: number | null
+    grandTotal: number | null
+  }
+
+  export type SalesReportMinAggregateOutputType = {
+    id: string | null
+    notaNo: string | null
+    soldAt: Date | null
+    customer: string | null
+    salesman: string | null
+    employee: string | null
+    subtotal: number | null
+    total: number | null
+    grandTotal: number | null
+    photoKey: string | null
+    createdById: string | null
+    createdAt: Date | null
+  }
+
+  export type SalesReportMaxAggregateOutputType = {
+    id: string | null
+    notaNo: string | null
+    soldAt: Date | null
+    customer: string | null
+    salesman: string | null
+    employee: string | null
+    subtotal: number | null
+    total: number | null
+    grandTotal: number | null
+    photoKey: string | null
+    createdById: string | null
+    createdAt: Date | null
+  }
+
+  export type SalesReportCountAggregateOutputType = {
+    id: number
+    notaNo: number
+    soldAt: number
+    customer: number
+    salesman: number
+    employee: number
+    items: number
+    subtotal: number
+    total: number
+    grandTotal: number
+    payments: number
+    photoKey: number
+    createdById: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type SalesReportAvgAggregateInputType = {
+    subtotal?: true
+    total?: true
+    grandTotal?: true
+  }
+
+  export type SalesReportSumAggregateInputType = {
+    subtotal?: true
+    total?: true
+    grandTotal?: true
+  }
+
+  export type SalesReportMinAggregateInputType = {
+    id?: true
+    notaNo?: true
+    soldAt?: true
+    customer?: true
+    salesman?: true
+    employee?: true
+    subtotal?: true
+    total?: true
+    grandTotal?: true
+    photoKey?: true
+    createdById?: true
+    createdAt?: true
+  }
+
+  export type SalesReportMaxAggregateInputType = {
+    id?: true
+    notaNo?: true
+    soldAt?: true
+    customer?: true
+    salesman?: true
+    employee?: true
+    subtotal?: true
+    total?: true
+    grandTotal?: true
+    photoKey?: true
+    createdById?: true
+    createdAt?: true
+  }
+
+  export type SalesReportCountAggregateInputType = {
+    id?: true
+    notaNo?: true
+    soldAt?: true
+    customer?: true
+    salesman?: true
+    employee?: true
+    items?: true
+    subtotal?: true
+    total?: true
+    grandTotal?: true
+    payments?: true
+    photoKey?: true
+    createdById?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type SalesReportAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SalesReport to aggregate.
+     */
+    where?: SalesReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesReports to fetch.
+     */
+    orderBy?: SalesReportOrderByWithRelationInput | SalesReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SalesReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SalesReports
+    **/
+    _count?: true | SalesReportCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SalesReportAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SalesReportSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SalesReportMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SalesReportMaxAggregateInputType
+  }
+
+  export type GetSalesReportAggregateType<T extends SalesReportAggregateArgs> = {
+        [P in keyof T & keyof AggregateSalesReport]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSalesReport[P]>
+      : GetScalarType<T[P], AggregateSalesReport[P]>
+  }
+
+
+
+
+  export type SalesReportGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SalesReportWhereInput
+    orderBy?: SalesReportOrderByWithAggregationInput | SalesReportOrderByWithAggregationInput[]
+    by: SalesReportScalarFieldEnum[] | SalesReportScalarFieldEnum
+    having?: SalesReportScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SalesReportCountAggregateInputType | true
+    _avg?: SalesReportAvgAggregateInputType
+    _sum?: SalesReportSumAggregateInputType
+    _min?: SalesReportMinAggregateInputType
+    _max?: SalesReportMaxAggregateInputType
+  }
+
+  export type SalesReportGroupByOutputType = {
+    id: string
+    notaNo: string | null
+    soldAt: Date
+    customer: string | null
+    salesman: string | null
+    employee: string | null
+    items: JsonValue
+    subtotal: number
+    total: number
+    grandTotal: number
+    payments: JsonValue
+    photoKey: string
+    createdById: string
+    createdAt: Date
+    _count: SalesReportCountAggregateOutputType | null
+    _avg: SalesReportAvgAggregateOutputType | null
+    _sum: SalesReportSumAggregateOutputType | null
+    _min: SalesReportMinAggregateOutputType | null
+    _max: SalesReportMaxAggregateOutputType | null
+  }
+
+  type GetSalesReportGroupByPayload<T extends SalesReportGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SalesReportGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SalesReportGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SalesReportGroupByOutputType[P]>
+            : GetScalarType<T[P], SalesReportGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SalesReportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    notaNo?: boolean
+    soldAt?: boolean
+    customer?: boolean
+    salesman?: boolean
+    employee?: boolean
+    items?: boolean
+    subtotal?: boolean
+    total?: boolean
+    grandTotal?: boolean
+    payments?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["salesReport"]>
+
+  export type SalesReportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    notaNo?: boolean
+    soldAt?: boolean
+    customer?: boolean
+    salesman?: boolean
+    employee?: boolean
+    items?: boolean
+    subtotal?: boolean
+    total?: boolean
+    grandTotal?: boolean
+    payments?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["salesReport"]>
+
+  export type SalesReportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    notaNo?: boolean
+    soldAt?: boolean
+    customer?: boolean
+    salesman?: boolean
+    employee?: boolean
+    items?: boolean
+    subtotal?: boolean
+    total?: boolean
+    grandTotal?: boolean
+    payments?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["salesReport"]>
+
+  export type SalesReportSelectScalar = {
+    id?: boolean
+    notaNo?: boolean
+    soldAt?: boolean
+    customer?: boolean
+    salesman?: boolean
+    employee?: boolean
+    items?: boolean
+    subtotal?: boolean
+    total?: boolean
+    grandTotal?: boolean
+    payments?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+  }
+
+  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "photoKey" | "createdById" | "createdAt", ExtArgs["result"]["salesReport"]>
+  export type SalesReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SalesReportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type SalesReportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $SalesReportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SalesReport"
+    objects: {
+      createdBy: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      notaNo: string | null
+      soldAt: Date
+      customer: string | null
+      salesman: string | null
+      employee: string | null
+      items: Prisma.JsonValue
+      subtotal: number
+      total: number
+      grandTotal: number
+      payments: Prisma.JsonValue
+      photoKey: string
+      createdById: string
+      createdAt: Date
+    }, ExtArgs["result"]["salesReport"]>
+    composites: {}
+  }
+
+  type SalesReportGetPayload<S extends boolean | null | undefined | SalesReportDefaultArgs> = $Result.GetResult<Prisma.$SalesReportPayload, S>
+
+  type SalesReportCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SalesReportFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SalesReportCountAggregateInputType | true
+    }
+
+  export interface SalesReportDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SalesReport'], meta: { name: 'SalesReport' } }
+    /**
+     * Find zero or one SalesReport that matches the filter.
+     * @param {SalesReportFindUniqueArgs} args - Arguments to find a SalesReport
+     * @example
+     * // Get one SalesReport
+     * const salesReport = await prisma.salesReport.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SalesReportFindUniqueArgs>(args: SelectSubset<T, SalesReportFindUniqueArgs<ExtArgs>>): Prisma__SalesReportClient<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SalesReport that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SalesReportFindUniqueOrThrowArgs} args - Arguments to find a SalesReport
+     * @example
+     * // Get one SalesReport
+     * const salesReport = await prisma.salesReport.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SalesReportFindUniqueOrThrowArgs>(args: SelectSubset<T, SalesReportFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SalesReportClient<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SalesReport that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesReportFindFirstArgs} args - Arguments to find a SalesReport
+     * @example
+     * // Get one SalesReport
+     * const salesReport = await prisma.salesReport.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SalesReportFindFirstArgs>(args?: SelectSubset<T, SalesReportFindFirstArgs<ExtArgs>>): Prisma__SalesReportClient<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SalesReport that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesReportFindFirstOrThrowArgs} args - Arguments to find a SalesReport
+     * @example
+     * // Get one SalesReport
+     * const salesReport = await prisma.salesReport.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SalesReportFindFirstOrThrowArgs>(args?: SelectSubset<T, SalesReportFindFirstOrThrowArgs<ExtArgs>>): Prisma__SalesReportClient<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SalesReports that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesReportFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SalesReports
+     * const salesReports = await prisma.salesReport.findMany()
+     * 
+     * // Get first 10 SalesReports
+     * const salesReports = await prisma.salesReport.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const salesReportWithIdOnly = await prisma.salesReport.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SalesReportFindManyArgs>(args?: SelectSubset<T, SalesReportFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SalesReport.
+     * @param {SalesReportCreateArgs} args - Arguments to create a SalesReport.
+     * @example
+     * // Create one SalesReport
+     * const SalesReport = await prisma.salesReport.create({
+     *   data: {
+     *     // ... data to create a SalesReport
+     *   }
+     * })
+     * 
+     */
+    create<T extends SalesReportCreateArgs>(args: SelectSubset<T, SalesReportCreateArgs<ExtArgs>>): Prisma__SalesReportClient<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SalesReports.
+     * @param {SalesReportCreateManyArgs} args - Arguments to create many SalesReports.
+     * @example
+     * // Create many SalesReports
+     * const salesReport = await prisma.salesReport.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SalesReportCreateManyArgs>(args?: SelectSubset<T, SalesReportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SalesReports and returns the data saved in the database.
+     * @param {SalesReportCreateManyAndReturnArgs} args - Arguments to create many SalesReports.
+     * @example
+     * // Create many SalesReports
+     * const salesReport = await prisma.salesReport.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SalesReports and only return the `id`
+     * const salesReportWithIdOnly = await prisma.salesReport.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SalesReportCreateManyAndReturnArgs>(args?: SelectSubset<T, SalesReportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SalesReport.
+     * @param {SalesReportDeleteArgs} args - Arguments to delete one SalesReport.
+     * @example
+     * // Delete one SalesReport
+     * const SalesReport = await prisma.salesReport.delete({
+     *   where: {
+     *     // ... filter to delete one SalesReport
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SalesReportDeleteArgs>(args: SelectSubset<T, SalesReportDeleteArgs<ExtArgs>>): Prisma__SalesReportClient<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SalesReport.
+     * @param {SalesReportUpdateArgs} args - Arguments to update one SalesReport.
+     * @example
+     * // Update one SalesReport
+     * const salesReport = await prisma.salesReport.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SalesReportUpdateArgs>(args: SelectSubset<T, SalesReportUpdateArgs<ExtArgs>>): Prisma__SalesReportClient<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SalesReports.
+     * @param {SalesReportDeleteManyArgs} args - Arguments to filter SalesReports to delete.
+     * @example
+     * // Delete a few SalesReports
+     * const { count } = await prisma.salesReport.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SalesReportDeleteManyArgs>(args?: SelectSubset<T, SalesReportDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SalesReports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesReportUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SalesReports
+     * const salesReport = await prisma.salesReport.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SalesReportUpdateManyArgs>(args: SelectSubset<T, SalesReportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SalesReports and returns the data updated in the database.
+     * @param {SalesReportUpdateManyAndReturnArgs} args - Arguments to update many SalesReports.
+     * @example
+     * // Update many SalesReports
+     * const salesReport = await prisma.salesReport.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SalesReports and only return the `id`
+     * const salesReportWithIdOnly = await prisma.salesReport.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SalesReportUpdateManyAndReturnArgs>(args: SelectSubset<T, SalesReportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SalesReport.
+     * @param {SalesReportUpsertArgs} args - Arguments to update or create a SalesReport.
+     * @example
+     * // Update or create a SalesReport
+     * const salesReport = await prisma.salesReport.upsert({
+     *   create: {
+     *     // ... data to create a SalesReport
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SalesReport we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SalesReportUpsertArgs>(args: SelectSubset<T, SalesReportUpsertArgs<ExtArgs>>): Prisma__SalesReportClient<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SalesReports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesReportCountArgs} args - Arguments to filter SalesReports to count.
+     * @example
+     * // Count the number of SalesReports
+     * const count = await prisma.salesReport.count({
+     *   where: {
+     *     // ... the filter for the SalesReports we want to count
+     *   }
+     * })
+    **/
+    count<T extends SalesReportCountArgs>(
+      args?: Subset<T, SalesReportCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SalesReportCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SalesReport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesReportAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SalesReportAggregateArgs>(args: Subset<T, SalesReportAggregateArgs>): Prisma.PrismaPromise<GetSalesReportAggregateType<T>>
+
+    /**
+     * Group by SalesReport.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SalesReportGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SalesReportGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SalesReportGroupByArgs['orderBy'] }
+        : { orderBy?: SalesReportGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SalesReportGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSalesReportGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SalesReport model
+   */
+  readonly fields: SalesReportFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SalesReport.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SalesReportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SalesReport model
+   */
+  interface SalesReportFieldRefs {
+    readonly id: FieldRef<"SalesReport", 'String'>
+    readonly notaNo: FieldRef<"SalesReport", 'String'>
+    readonly soldAt: FieldRef<"SalesReport", 'DateTime'>
+    readonly customer: FieldRef<"SalesReport", 'String'>
+    readonly salesman: FieldRef<"SalesReport", 'String'>
+    readonly employee: FieldRef<"SalesReport", 'String'>
+    readonly items: FieldRef<"SalesReport", 'Json'>
+    readonly subtotal: FieldRef<"SalesReport", 'Int'>
+    readonly total: FieldRef<"SalesReport", 'Int'>
+    readonly grandTotal: FieldRef<"SalesReport", 'Int'>
+    readonly payments: FieldRef<"SalesReport", 'Json'>
+    readonly photoKey: FieldRef<"SalesReport", 'String'>
+    readonly createdById: FieldRef<"SalesReport", 'String'>
+    readonly createdAt: FieldRef<"SalesReport", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SalesReport findUnique
+   */
+  export type SalesReportFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesReport
+     */
+    select?: SalesReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesReport
+     */
+    omit?: SalesReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesReportInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesReport to fetch.
+     */
+    where: SalesReportWhereUniqueInput
+  }
+
+  /**
+   * SalesReport findUniqueOrThrow
+   */
+  export type SalesReportFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesReport
+     */
+    select?: SalesReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesReport
+     */
+    omit?: SalesReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesReportInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesReport to fetch.
+     */
+    where: SalesReportWhereUniqueInput
+  }
+
+  /**
+   * SalesReport findFirst
+   */
+  export type SalesReportFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesReport
+     */
+    select?: SalesReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesReport
+     */
+    omit?: SalesReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesReportInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesReport to fetch.
+     */
+    where?: SalesReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesReports to fetch.
+     */
+    orderBy?: SalesReportOrderByWithRelationInput | SalesReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SalesReports.
+     */
+    cursor?: SalesReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SalesReports.
+     */
+    distinct?: SalesReportScalarFieldEnum | SalesReportScalarFieldEnum[]
+  }
+
+  /**
+   * SalesReport findFirstOrThrow
+   */
+  export type SalesReportFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesReport
+     */
+    select?: SalesReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesReport
+     */
+    omit?: SalesReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesReportInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesReport to fetch.
+     */
+    where?: SalesReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesReports to fetch.
+     */
+    orderBy?: SalesReportOrderByWithRelationInput | SalesReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SalesReports.
+     */
+    cursor?: SalesReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesReports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SalesReports.
+     */
+    distinct?: SalesReportScalarFieldEnum | SalesReportScalarFieldEnum[]
+  }
+
+  /**
+   * SalesReport findMany
+   */
+  export type SalesReportFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesReport
+     */
+    select?: SalesReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesReport
+     */
+    omit?: SalesReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesReportInclude<ExtArgs> | null
+    /**
+     * Filter, which SalesReports to fetch.
+     */
+    where?: SalesReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SalesReports to fetch.
+     */
+    orderBy?: SalesReportOrderByWithRelationInput | SalesReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SalesReports.
+     */
+    cursor?: SalesReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SalesReports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SalesReports.
+     */
+    skip?: number
+    distinct?: SalesReportScalarFieldEnum | SalesReportScalarFieldEnum[]
+  }
+
+  /**
+   * SalesReport create
+   */
+  export type SalesReportCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesReport
+     */
+    select?: SalesReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesReport
+     */
+    omit?: SalesReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesReportInclude<ExtArgs> | null
+    /**
+     * The data needed to create a SalesReport.
+     */
+    data: XOR<SalesReportCreateInput, SalesReportUncheckedCreateInput>
+  }
+
+  /**
+   * SalesReport createMany
+   */
+  export type SalesReportCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SalesReports.
+     */
+    data: SalesReportCreateManyInput | SalesReportCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SalesReport createManyAndReturn
+   */
+  export type SalesReportCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesReport
+     */
+    select?: SalesReportSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesReport
+     */
+    omit?: SalesReportOmit<ExtArgs> | null
+    /**
+     * The data used to create many SalesReports.
+     */
+    data: SalesReportCreateManyInput | SalesReportCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesReportIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SalesReport update
+   */
+  export type SalesReportUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesReport
+     */
+    select?: SalesReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesReport
+     */
+    omit?: SalesReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesReportInclude<ExtArgs> | null
+    /**
+     * The data needed to update a SalesReport.
+     */
+    data: XOR<SalesReportUpdateInput, SalesReportUncheckedUpdateInput>
+    /**
+     * Choose, which SalesReport to update.
+     */
+    where: SalesReportWhereUniqueInput
+  }
+
+  /**
+   * SalesReport updateMany
+   */
+  export type SalesReportUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SalesReports.
+     */
+    data: XOR<SalesReportUpdateManyMutationInput, SalesReportUncheckedUpdateManyInput>
+    /**
+     * Filter which SalesReports to update
+     */
+    where?: SalesReportWhereInput
+    /**
+     * Limit how many SalesReports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SalesReport updateManyAndReturn
+   */
+  export type SalesReportUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesReport
+     */
+    select?: SalesReportSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesReport
+     */
+    omit?: SalesReportOmit<ExtArgs> | null
+    /**
+     * The data used to update SalesReports.
+     */
+    data: XOR<SalesReportUpdateManyMutationInput, SalesReportUncheckedUpdateManyInput>
+    /**
+     * Filter which SalesReports to update
+     */
+    where?: SalesReportWhereInput
+    /**
+     * Limit how many SalesReports to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesReportIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * SalesReport upsert
+   */
+  export type SalesReportUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesReport
+     */
+    select?: SalesReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesReport
+     */
+    omit?: SalesReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesReportInclude<ExtArgs> | null
+    /**
+     * The filter to search for the SalesReport to update in case it exists.
+     */
+    where: SalesReportWhereUniqueInput
+    /**
+     * In case the SalesReport found by the `where` argument doesn't exist, create a new SalesReport with this data.
+     */
+    create: XOR<SalesReportCreateInput, SalesReportUncheckedCreateInput>
+    /**
+     * In case the SalesReport was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SalesReportUpdateInput, SalesReportUncheckedUpdateInput>
+  }
+
+  /**
+   * SalesReport delete
+   */
+  export type SalesReportDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesReport
+     */
+    select?: SalesReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesReport
+     */
+    omit?: SalesReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesReportInclude<ExtArgs> | null
+    /**
+     * Filter which SalesReport to delete.
+     */
+    where: SalesReportWhereUniqueInput
+  }
+
+  /**
+   * SalesReport deleteMany
+   */
+  export type SalesReportDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SalesReports to delete
+     */
+    where?: SalesReportWhereInput
+    /**
+     * Limit how many SalesReports to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SalesReport without action
+   */
+  export type SalesReportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SalesReport
+     */
+    select?: SalesReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SalesReport
+     */
+    omit?: SalesReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: SalesReportInclude<ExtArgs> | null
   }
 
 
@@ -36967,6 +38304,26 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const SalesReportScalarFieldEnum: {
+    id: 'id',
+    notaNo: 'notaNo',
+    soldAt: 'soldAt',
+    customer: 'customer',
+    salesman: 'salesman',
+    employee: 'employee',
+    items: 'items',
+    subtotal: 'subtotal',
+    total: 'total',
+    grandTotal: 'grandTotal',
+    payments: 'payments',
+    photoKey: 'photoKey',
+    createdById: 'createdById',
+    createdAt: 'createdAt'
+  };
+
+  export type SalesReportScalarFieldEnum = (typeof SalesReportScalarFieldEnum)[keyof typeof SalesReportScalarFieldEnum]
+
+
   export const RoleScalarFieldEnum: {
     id: 'id',
     code: 'code',
@@ -37399,19 +38756,19 @@ export namespace Prisma {
   export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+  export const JsonNullValueInput: {
+    JsonNull: typeof JsonNull
+  };
+
+  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
   export const NullableJsonNullValueInput: {
     DbNull: typeof DbNull,
     JsonNull: typeof JsonNull
   };
 
   export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
-
-
-  export const JsonNullValueInput: {
-    JsonNull: typeof JsonNull
-  };
-
-  export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
 
 
   export const QueryMode: {
@@ -37480,16 +38837,16 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'RoleCode'
+   * Reference to a field of type 'Json'
    */
-  export type EnumRoleCodeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RoleCode'>
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
     
 
 
   /**
-   * Reference to a field of type 'RoleCode[]'
+   * Reference to a field of type 'QueryMode'
    */
-  export type ListEnumRoleCodeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RoleCode[]'>
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -37504,6 +38861,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'RoleCode'
+   */
+  export type EnumRoleCodeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RoleCode'>
+    
+
+
+  /**
+   * Reference to a field of type 'RoleCode[]'
+   */
+  export type ListEnumRoleCodeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RoleCode[]'>
     
 
 
@@ -37546,20 +38917,6 @@ export namespace Prisma {
    * Reference to a field of type 'RequestType[]'
    */
   export type ListEnumRequestTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RequestType[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'Json'
-   */
-  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-  /**
-   * Reference to a field of type 'QueryMode'
-   */
-  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -37673,6 +39030,7 @@ export namespace Prisma {
     mediaItems?: MediaItemListRelationFilter
     personalCalEvents?: PersonalCalEventListRelationFilter
     mediaPcal?: XOR<MediaPcalNullableScalarRelationFilter, MediaPcalWhereInput> | null
+    salesReports?: SalesReportListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -37709,6 +39067,7 @@ export namespace Prisma {
     mediaItems?: MediaItemOrderByRelationAggregateInput
     personalCalEvents?: PersonalCalEventOrderByRelationAggregateInput
     mediaPcal?: MediaPcalOrderByWithRelationInput
+    salesReports?: SalesReportOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -37748,6 +39107,7 @@ export namespace Prisma {
     mediaItems?: MediaItemListRelationFilter
     personalCalEvents?: PersonalCalEventListRelationFilter
     mediaPcal?: XOR<MediaPcalNullableScalarRelationFilter, MediaPcalWhereInput> | null
+    salesReports?: SalesReportListRelationFilter
   }, "id" | "email" | "waNumber">
 
   export type UserOrderByWithAggregationInput = {
@@ -37788,6 +39148,108 @@ export namespace Prisma {
     themePref?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type SalesReportWhereInput = {
+    AND?: SalesReportWhereInput | SalesReportWhereInput[]
+    OR?: SalesReportWhereInput[]
+    NOT?: SalesReportWhereInput | SalesReportWhereInput[]
+    id?: StringFilter<"SalesReport"> | string
+    notaNo?: StringNullableFilter<"SalesReport"> | string | null
+    soldAt?: DateTimeFilter<"SalesReport"> | Date | string
+    customer?: StringNullableFilter<"SalesReport"> | string | null
+    salesman?: StringNullableFilter<"SalesReport"> | string | null
+    employee?: StringNullableFilter<"SalesReport"> | string | null
+    items?: JsonFilter<"SalesReport">
+    subtotal?: IntFilter<"SalesReport"> | number
+    total?: IntFilter<"SalesReport"> | number
+    grandTotal?: IntFilter<"SalesReport"> | number
+    payments?: JsonFilter<"SalesReport">
+    photoKey?: StringFilter<"SalesReport"> | string
+    createdById?: StringFilter<"SalesReport"> | string
+    createdAt?: DateTimeFilter<"SalesReport"> | Date | string
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type SalesReportOrderByWithRelationInput = {
+    id?: SortOrder
+    notaNo?: SortOrderInput | SortOrder
+    soldAt?: SortOrder
+    customer?: SortOrderInput | SortOrder
+    salesman?: SortOrderInput | SortOrder
+    employee?: SortOrderInput | SortOrder
+    items?: SortOrder
+    subtotal?: SortOrder
+    total?: SortOrder
+    grandTotal?: SortOrder
+    payments?: SortOrder
+    photoKey?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    createdBy?: UserOrderByWithRelationInput
+  }
+
+  export type SalesReportWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: SalesReportWhereInput | SalesReportWhereInput[]
+    OR?: SalesReportWhereInput[]
+    NOT?: SalesReportWhereInput | SalesReportWhereInput[]
+    notaNo?: StringNullableFilter<"SalesReport"> | string | null
+    soldAt?: DateTimeFilter<"SalesReport"> | Date | string
+    customer?: StringNullableFilter<"SalesReport"> | string | null
+    salesman?: StringNullableFilter<"SalesReport"> | string | null
+    employee?: StringNullableFilter<"SalesReport"> | string | null
+    items?: JsonFilter<"SalesReport">
+    subtotal?: IntFilter<"SalesReport"> | number
+    total?: IntFilter<"SalesReport"> | number
+    grandTotal?: IntFilter<"SalesReport"> | number
+    payments?: JsonFilter<"SalesReport">
+    photoKey?: StringFilter<"SalesReport"> | string
+    createdById?: StringFilter<"SalesReport"> | string
+    createdAt?: DateTimeFilter<"SalesReport"> | Date | string
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type SalesReportOrderByWithAggregationInput = {
+    id?: SortOrder
+    notaNo?: SortOrderInput | SortOrder
+    soldAt?: SortOrder
+    customer?: SortOrderInput | SortOrder
+    salesman?: SortOrderInput | SortOrder
+    employee?: SortOrderInput | SortOrder
+    items?: SortOrder
+    subtotal?: SortOrder
+    total?: SortOrder
+    grandTotal?: SortOrder
+    payments?: SortOrder
+    photoKey?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    _count?: SalesReportCountOrderByAggregateInput
+    _avg?: SalesReportAvgOrderByAggregateInput
+    _max?: SalesReportMaxOrderByAggregateInput
+    _min?: SalesReportMinOrderByAggregateInput
+    _sum?: SalesReportSumOrderByAggregateInput
+  }
+
+  export type SalesReportScalarWhereWithAggregatesInput = {
+    AND?: SalesReportScalarWhereWithAggregatesInput | SalesReportScalarWhereWithAggregatesInput[]
+    OR?: SalesReportScalarWhereWithAggregatesInput[]
+    NOT?: SalesReportScalarWhereWithAggregatesInput | SalesReportScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SalesReport"> | string
+    notaNo?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
+    soldAt?: DateTimeWithAggregatesFilter<"SalesReport"> | Date | string
+    customer?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
+    salesman?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
+    employee?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
+    items?: JsonWithAggregatesFilter<"SalesReport">
+    subtotal?: IntWithAggregatesFilter<"SalesReport"> | number
+    total?: IntWithAggregatesFilter<"SalesReport"> | number
+    grandTotal?: IntWithAggregatesFilter<"SalesReport"> | number
+    payments?: JsonWithAggregatesFilter<"SalesReport">
+    photoKey?: StringWithAggregatesFilter<"SalesReport"> | string
+    createdById?: StringWithAggregatesFilter<"SalesReport"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"SalesReport"> | Date | string
   }
 
   export type RoleWhereInput = {
@@ -39981,6 +41443,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -40016,6 +41479,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUpdateInput = {
@@ -40051,6 +41515,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -40086,6 +41551,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -40136,6 +41602,124 @@ export namespace Prisma {
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesReportCreateInput = {
+    id?: string
+    notaNo?: string | null
+    soldAt: Date | string
+    customer?: string | null
+    salesman?: string | null
+    employee?: string | null
+    items: JsonNullValueInput | InputJsonValue
+    subtotal?: number
+    total?: number
+    grandTotal?: number
+    payments: JsonNullValueInput | InputJsonValue
+    photoKey: string
+    createdAt?: Date | string
+    createdBy: UserCreateNestedOneWithoutSalesReportsInput
+  }
+
+  export type SalesReportUncheckedCreateInput = {
+    id?: string
+    notaNo?: string | null
+    soldAt: Date | string
+    customer?: string | null
+    salesman?: string | null
+    employee?: string | null
+    items: JsonNullValueInput | InputJsonValue
+    subtotal?: number
+    total?: number
+    grandTotal?: number
+    payments: JsonNullValueInput | InputJsonValue
+    photoKey: string
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type SalesReportUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notaNo?: NullableStringFieldUpdateOperationsInput | string | null
+    soldAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer?: NullableStringFieldUpdateOperationsInput | string | null
+    salesman?: NullableStringFieldUpdateOperationsInput | string | null
+    employee?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: JsonNullValueInput | InputJsonValue
+    subtotal?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    grandTotal?: IntFieldUpdateOperationsInput | number
+    payments?: JsonNullValueInput | InputJsonValue
+    photoKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdBy?: UserUpdateOneRequiredWithoutSalesReportsNestedInput
+  }
+
+  export type SalesReportUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notaNo?: NullableStringFieldUpdateOperationsInput | string | null
+    soldAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer?: NullableStringFieldUpdateOperationsInput | string | null
+    salesman?: NullableStringFieldUpdateOperationsInput | string | null
+    employee?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: JsonNullValueInput | InputJsonValue
+    subtotal?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    grandTotal?: IntFieldUpdateOperationsInput | number
+    payments?: JsonNullValueInput | InputJsonValue
+    photoKey?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesReportCreateManyInput = {
+    id?: string
+    notaNo?: string | null
+    soldAt: Date | string
+    customer?: string | null
+    salesman?: string | null
+    employee?: string | null
+    items: JsonNullValueInput | InputJsonValue
+    subtotal?: number
+    total?: number
+    grandTotal?: number
+    payments: JsonNullValueInput | InputJsonValue
+    photoKey: string
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type SalesReportUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notaNo?: NullableStringFieldUpdateOperationsInput | string | null
+    soldAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer?: NullableStringFieldUpdateOperationsInput | string | null
+    salesman?: NullableStringFieldUpdateOperationsInput | string | null
+    employee?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: JsonNullValueInput | InputJsonValue
+    subtotal?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    grandTotal?: IntFieldUpdateOperationsInput | number
+    payments?: JsonNullValueInput | InputJsonValue
+    photoKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesReportUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notaNo?: NullableStringFieldUpdateOperationsInput | string | null
+    soldAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer?: NullableStringFieldUpdateOperationsInput | string | null
+    salesman?: NullableStringFieldUpdateOperationsInput | string | null
+    employee?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: JsonNullValueInput | InputJsonValue
+    subtotal?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    grandTotal?: IntFieldUpdateOperationsInput | number
+    payments?: JsonNullValueInput | InputJsonValue
+    photoKey?: StringFieldUpdateOperationsInput | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type RoleCreateInput = {
@@ -42675,6 +44259,12 @@ export namespace Prisma {
     isNot?: MediaPcalWhereInput | null
   }
 
+  export type SalesReportListRelationFilter = {
+    every?: SalesReportWhereInput
+    some?: SalesReportWhereInput
+    none?: SalesReportWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -42729,6 +44319,10 @@ export namespace Prisma {
   }
 
   export type PersonalCalEventOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type SalesReportOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -42854,6 +44448,146 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
+  export type JsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type SalesReportCountOrderByAggregateInput = {
+    id?: SortOrder
+    notaNo?: SortOrder
+    soldAt?: SortOrder
+    customer?: SortOrder
+    salesman?: SortOrder
+    employee?: SortOrder
+    items?: SortOrder
+    subtotal?: SortOrder
+    total?: SortOrder
+    grandTotal?: SortOrder
+    payments?: SortOrder
+    photoKey?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SalesReportAvgOrderByAggregateInput = {
+    subtotal?: SortOrder
+    total?: SortOrder
+    grandTotal?: SortOrder
+  }
+
+  export type SalesReportMaxOrderByAggregateInput = {
+    id?: SortOrder
+    notaNo?: SortOrder
+    soldAt?: SortOrder
+    customer?: SortOrder
+    salesman?: SortOrder
+    employee?: SortOrder
+    subtotal?: SortOrder
+    total?: SortOrder
+    grandTotal?: SortOrder
+    photoKey?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SalesReportMinOrderByAggregateInput = {
+    id?: SortOrder
+    notaNo?: SortOrder
+    soldAt?: SortOrder
+    customer?: SortOrder
+    salesman?: SortOrder
+    employee?: SortOrder
+    subtotal?: SortOrder
+    total?: SortOrder
+    grandTotal?: SortOrder
+    photoKey?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SalesReportSumOrderByAggregateInput = {
+    subtotal?: SortOrder
+    total?: SortOrder
+    grandTotal?: SortOrder
+  }
+  export type JsonWithAggregatesFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedJsonFilter<$PrismaModel>
+    _max?: NestedJsonFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
 
   export type EnumRoleCodeFilter<$PrismaModel = never> = {
     equals?: $Enums.RoleCode | EnumRoleCodeFieldRefInput<$PrismaModel>
@@ -42888,11 +44622,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRoleCodeFilter<$PrismaModel>
     _max?: NestedEnumRoleCodeFilter<$PrismaModel>
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type RoleScalarRelationFilter = {
@@ -42987,17 +44716,6 @@ export namespace Prisma {
     _max?: NestedEnumRoleCodeNullableFilter<$PrismaModel>
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type OtpChallengeCountOrderByAggregateInput = {
     id?: SortOrder
     email?: SortOrder
@@ -43045,22 +44763,6 @@ export namespace Prisma {
   export type OtpChallengeSumOrderByAggregateInput = {
     attempts?: SortOrder
     resendCount?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type FloatNullableFilter<$PrismaModel = never> = {
@@ -44186,29 +45888,6 @@ export namespace Prisma {
     idccQty?: SortOrder
     idccDays?: SortOrder
   }
-  export type JsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type MediaIdccReportCountOrderByAggregateInput = {
     id?: SortOrder
@@ -44233,32 +45912,6 @@ export namespace Prisma {
     summary?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
-  }
-  export type JsonWithAggregatesFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>,
-        Required<JsonWithAggregatesFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<JsonWithAggregatesFilterBase<$PrismaModel>>, 'path'>>
-
-  export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedJsonFilter<$PrismaModel>
-    _max?: NestedJsonFilter<$PrismaModel>
   }
 
   export type MediaBalanceLogCountOrderByAggregateInput = {
@@ -44506,6 +46159,13 @@ export namespace Prisma {
     connect?: MediaPcalWhereUniqueInput
   }
 
+  export type SalesReportCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<SalesReportCreateWithoutCreatedByInput, SalesReportUncheckedCreateWithoutCreatedByInput> | SalesReportCreateWithoutCreatedByInput[] | SalesReportUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: SalesReportCreateOrConnectWithoutCreatedByInput | SalesReportCreateOrConnectWithoutCreatedByInput[]
+    createMany?: SalesReportCreateManyCreatedByInputEnvelope
+    connect?: SalesReportWhereUniqueInput | SalesReportWhereUniqueInput[]
+  }
+
   export type UserRoleUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -44628,6 +46288,13 @@ export namespace Prisma {
     create?: XOR<MediaPcalCreateWithoutUserInput, MediaPcalUncheckedCreateWithoutUserInput>
     connectOrCreate?: MediaPcalCreateOrConnectWithoutUserInput
     connect?: MediaPcalWhereUniqueInput
+  }
+
+  export type SalesReportUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<SalesReportCreateWithoutCreatedByInput, SalesReportUncheckedCreateWithoutCreatedByInput> | SalesReportCreateWithoutCreatedByInput[] | SalesReportUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: SalesReportCreateOrConnectWithoutCreatedByInput | SalesReportCreateOrConnectWithoutCreatedByInput[]
+    createMany?: SalesReportCreateManyCreatedByInputEnvelope
+    connect?: SalesReportWhereUniqueInput | SalesReportWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -44904,6 +46571,20 @@ export namespace Prisma {
     update?: XOR<XOR<MediaPcalUpdateToOneWithWhereWithoutUserInput, MediaPcalUpdateWithoutUserInput>, MediaPcalUncheckedUpdateWithoutUserInput>
   }
 
+  export type SalesReportUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<SalesReportCreateWithoutCreatedByInput, SalesReportUncheckedCreateWithoutCreatedByInput> | SalesReportCreateWithoutCreatedByInput[] | SalesReportUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: SalesReportCreateOrConnectWithoutCreatedByInput | SalesReportCreateOrConnectWithoutCreatedByInput[]
+    upsert?: SalesReportUpsertWithWhereUniqueWithoutCreatedByInput | SalesReportUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: SalesReportCreateManyCreatedByInputEnvelope
+    set?: SalesReportWhereUniqueInput | SalesReportWhereUniqueInput[]
+    disconnect?: SalesReportWhereUniqueInput | SalesReportWhereUniqueInput[]
+    delete?: SalesReportWhereUniqueInput | SalesReportWhereUniqueInput[]
+    connect?: SalesReportWhereUniqueInput | SalesReportWhereUniqueInput[]
+    update?: SalesReportUpdateWithWhereUniqueWithoutCreatedByInput | SalesReportUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: SalesReportUpdateManyWithWhereWithoutCreatedByInput | SalesReportUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: SalesReportScalarWhereInput | SalesReportScalarWhereInput[]
+  }
+
   export type UserRoleUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -45148,6 +46829,42 @@ export namespace Prisma {
     update?: XOR<XOR<MediaPcalUpdateToOneWithWhereWithoutUserInput, MediaPcalUpdateWithoutUserInput>, MediaPcalUncheckedUpdateWithoutUserInput>
   }
 
+  export type SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<SalesReportCreateWithoutCreatedByInput, SalesReportUncheckedCreateWithoutCreatedByInput> | SalesReportCreateWithoutCreatedByInput[] | SalesReportUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: SalesReportCreateOrConnectWithoutCreatedByInput | SalesReportCreateOrConnectWithoutCreatedByInput[]
+    upsert?: SalesReportUpsertWithWhereUniqueWithoutCreatedByInput | SalesReportUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: SalesReportCreateManyCreatedByInputEnvelope
+    set?: SalesReportWhereUniqueInput | SalesReportWhereUniqueInput[]
+    disconnect?: SalesReportWhereUniqueInput | SalesReportWhereUniqueInput[]
+    delete?: SalesReportWhereUniqueInput | SalesReportWhereUniqueInput[]
+    connect?: SalesReportWhereUniqueInput | SalesReportWhereUniqueInput[]
+    update?: SalesReportUpdateWithWhereUniqueWithoutCreatedByInput | SalesReportUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: SalesReportUpdateManyWithWhereWithoutCreatedByInput | SalesReportUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: SalesReportScalarWhereInput | SalesReportScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutSalesReportsInput = {
+    create?: XOR<UserCreateWithoutSalesReportsInput, UserUncheckedCreateWithoutSalesReportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSalesReportsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutSalesReportsNestedInput = {
+    create?: XOR<UserCreateWithoutSalesReportsInput, UserUncheckedCreateWithoutSalesReportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSalesReportsInput
+    upsert?: UserUpsertWithoutSalesReportsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSalesReportsInput, UserUpdateWithoutSalesReportsInput>, UserUncheckedUpdateWithoutSalesReportsInput>
+  }
+
   export type UserRoleCreateNestedManyWithoutRoleInput = {
     create?: XOR<UserRoleCreateWithoutRoleInput, UserRoleUncheckedCreateWithoutRoleInput> | UserRoleCreateWithoutRoleInput[] | UserRoleUncheckedCreateWithoutRoleInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutRoleInput | UserRoleCreateOrConnectWithoutRoleInput[]
@@ -45254,14 +46971,6 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutSessionsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSessionsInput, UserUpdateWithoutSessionsInput>, UserUncheckedUpdateWithoutSessionsInput>
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type UserCreateNestedManyWithoutBranchInput = {
@@ -46079,6 +47788,56 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+  }
+
+  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type NestedFloatFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel>
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatFilter<$PrismaModel> | number
+  }
 
   export type NestedEnumRoleCodeFilter<$PrismaModel = never> = {
     equals?: $Enums.RoleCode | EnumRoleCodeFieldRefInput<$PrismaModel>
@@ -46112,33 +47871,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumRoleCodeNullableFilter<$PrismaModel>
     _max?: NestedEnumRoleCodeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
-  }
-
-  export type NestedFloatFilter<$PrismaModel = never> = {
-    equals?: number | FloatFieldRefInput<$PrismaModel>
-    in?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel>
-    lt?: number | FloatFieldRefInput<$PrismaModel>
-    lte?: number | FloatFieldRefInput<$PrismaModel>
-    gt?: number | FloatFieldRefInput<$PrismaModel>
-    gte?: number | FloatFieldRefInput<$PrismaModel>
-    not?: NestedFloatFilter<$PrismaModel> | number
   }
 
   export type NestedFloatNullableFilter<$PrismaModel = never> = {
@@ -46324,29 +48056,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumMediaTierFilter<$PrismaModel>
     _max?: NestedEnumMediaTierFilter<$PrismaModel>
-  }
-  export type NestedJsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<NestedJsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
-
-  export type NestedJsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type BranchCreateWithoutUsersInput = {
@@ -47006,6 +48715,48 @@ export namespace Prisma {
     create: XOR<MediaPcalCreateWithoutUserInput, MediaPcalUncheckedCreateWithoutUserInput>
   }
 
+  export type SalesReportCreateWithoutCreatedByInput = {
+    id?: string
+    notaNo?: string | null
+    soldAt: Date | string
+    customer?: string | null
+    salesman?: string | null
+    employee?: string | null
+    items: JsonNullValueInput | InputJsonValue
+    subtotal?: number
+    total?: number
+    grandTotal?: number
+    payments: JsonNullValueInput | InputJsonValue
+    photoKey: string
+    createdAt?: Date | string
+  }
+
+  export type SalesReportUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    notaNo?: string | null
+    soldAt: Date | string
+    customer?: string | null
+    salesman?: string | null
+    employee?: string | null
+    items: JsonNullValueInput | InputJsonValue
+    subtotal?: number
+    total?: number
+    grandTotal?: number
+    payments: JsonNullValueInput | InputJsonValue
+    photoKey: string
+    createdAt?: Date | string
+  }
+
+  export type SalesReportCreateOrConnectWithoutCreatedByInput = {
+    where: SalesReportWhereUniqueInput
+    create: XOR<SalesReportCreateWithoutCreatedByInput, SalesReportUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type SalesReportCreateManyCreatedByInputEnvelope = {
+    data: SalesReportCreateManyCreatedByInput | SalesReportCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BranchUpsertWithoutUsersInput = {
     update: XOR<BranchUpdateWithoutUsersInput, BranchUncheckedUpdateWithoutUsersInput>
     create: XOR<BranchCreateWithoutUsersInput, BranchUncheckedCreateWithoutUsersInput>
@@ -47572,6 +49323,198 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SalesReportUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: SalesReportWhereUniqueInput
+    update: XOR<SalesReportUpdateWithoutCreatedByInput, SalesReportUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<SalesReportCreateWithoutCreatedByInput, SalesReportUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type SalesReportUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: SalesReportWhereUniqueInput
+    data: XOR<SalesReportUpdateWithoutCreatedByInput, SalesReportUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type SalesReportUpdateManyWithWhereWithoutCreatedByInput = {
+    where: SalesReportScalarWhereInput
+    data: XOR<SalesReportUpdateManyMutationInput, SalesReportUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type SalesReportScalarWhereInput = {
+    AND?: SalesReportScalarWhereInput | SalesReportScalarWhereInput[]
+    OR?: SalesReportScalarWhereInput[]
+    NOT?: SalesReportScalarWhereInput | SalesReportScalarWhereInput[]
+    id?: StringFilter<"SalesReport"> | string
+    notaNo?: StringNullableFilter<"SalesReport"> | string | null
+    soldAt?: DateTimeFilter<"SalesReport"> | Date | string
+    customer?: StringNullableFilter<"SalesReport"> | string | null
+    salesman?: StringNullableFilter<"SalesReport"> | string | null
+    employee?: StringNullableFilter<"SalesReport"> | string | null
+    items?: JsonFilter<"SalesReport">
+    subtotal?: IntFilter<"SalesReport"> | number
+    total?: IntFilter<"SalesReport"> | number
+    grandTotal?: IntFilter<"SalesReport"> | number
+    payments?: JsonFilter<"SalesReport">
+    photoKey?: StringFilter<"SalesReport"> | string
+    createdById?: StringFilter<"SalesReport"> | string
+    createdAt?: DateTimeFilter<"SalesReport"> | Date | string
+  }
+
+  export type UserCreateWithoutSalesReportsInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    avatarKey?: string | null
+    bio?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    branch?: BranchCreateNestedOneWithoutUsersInput
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleCreateNestedManyWithoutUserInput
+    attendances?: AttendanceCreateNestedManyWithoutUserInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    reviewed?: RequestCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutSalesReportsInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    avatarKey?: string | null
+    bio?: string | null
+    branchId?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleUncheckedCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleUncheckedCreateNestedManyWithoutUserInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutUserInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutSalesReportsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutSalesReportsInput, UserUncheckedCreateWithoutSalesReportsInput>
+  }
+
+  export type UserUpsertWithoutSalesReportsInput = {
+    update: XOR<UserUpdateWithoutSalesReportsInput, UserUncheckedUpdateWithoutSalesReportsInput>
+    create: XOR<UserCreateWithoutSalesReportsInput, UserUncheckedCreateWithoutSalesReportsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutSalesReportsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutSalesReportsInput, UserUncheckedUpdateWithoutSalesReportsInput>
+  }
+
+  export type UserUpdateWithoutSalesReportsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branch?: BranchUpdateOneWithoutUsersNestedInput
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUpdateManyWithoutUserNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutSalesReportsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUncheckedUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUncheckedUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+  }
+
   export type UserRoleCreateWithoutRoleInput = {
     assignedAt?: Date | string
     user: UserCreateNestedOneWithoutRolesInput
@@ -47642,6 +49585,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutRolesInput = {
@@ -47676,6 +49620,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutRolesInput = {
@@ -47732,6 +49677,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAssignedRolesInput = {
@@ -47766,6 +49712,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAssignedRolesInput = {
@@ -47816,6 +49763,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRolesInput = {
@@ -47850,6 +49798,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type RoleUpsertWithoutUsersInput = {
@@ -47918,6 +49867,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedRolesInput = {
@@ -47952,6 +49902,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -47986,6 +49937,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -48020,6 +49972,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -48070,6 +50023,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -48104,6 +50058,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutBranchInput = {
@@ -48138,6 +50093,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutBranchInput = {
@@ -48172,6 +50128,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutBranchInput = {
@@ -48352,6 +50309,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSchedulesInput = {
@@ -48386,6 +50344,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSchedulesInput = {
@@ -48459,6 +50418,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSchedulesInput = {
@@ -48493,6 +50453,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type WorkScheduleUpsertWithoutUsersInput = {
@@ -48556,6 +50517,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAttendancesInput = {
@@ -48590,6 +50552,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAttendancesInput = {
@@ -48663,6 +50626,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAttendancesInput = {
@@ -48697,6 +50661,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type BranchUpsertWithoutAttendancesInput = {
@@ -48760,6 +50725,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutRequestsInput = {
@@ -48794,6 +50760,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutRequestsInput = {
@@ -48833,6 +50800,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutReviewedInput = {
@@ -48867,6 +50835,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutReviewedInput = {
@@ -48917,6 +50886,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRequestsInput = {
@@ -48951,6 +50921,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutReviewedInput = {
@@ -48996,6 +50967,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedInput = {
@@ -49030,6 +51002,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -49064,6 +51037,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -49098,6 +51072,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -49148,6 +51123,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -49182,6 +51158,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutActivityLogsInput = {
@@ -49216,6 +51193,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutActivityLogsInput = {
@@ -49250,6 +51228,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutActivityLogsInput = {
@@ -49300,6 +51279,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivityLogsInput = {
@@ -49334,6 +51314,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ChatMemberCreateWithoutRoomInput = {
@@ -49475,6 +51456,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutChatMembersInput = {
@@ -49509,6 +51491,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutChatMembersInput = {
@@ -49588,6 +51571,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMembersInput = {
@@ -49622,6 +51606,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ChatRoomCreateWithoutMessagesInput = {
@@ -49679,6 +51664,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutChatMessagesInput = {
@@ -49713,6 +51699,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutChatMessagesInput = {
@@ -49792,6 +51779,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMessagesInput = {
@@ -49826,6 +51814,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutCalendarEventsInput = {
@@ -49860,6 +51849,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutCalendarEventsInput = {
@@ -49894,6 +51884,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutCalendarEventsInput = {
@@ -49944,6 +51935,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCalendarEventsInput = {
@@ -49978,6 +51970,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutRawCreatedInput = {
@@ -50012,6 +52005,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutRawCreatedInput = {
@@ -50046,6 +52040,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutRawCreatedInput = {
@@ -50085,6 +52080,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutRawQcInput = {
@@ -50119,6 +52115,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutRawQcInput = {
@@ -50169,6 +52166,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRawCreatedInput = {
@@ -50203,6 +52201,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutRawQcInput = {
@@ -50248,6 +52247,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRawQcInput = {
@@ -50282,6 +52282,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutMediaMemberInput = {
@@ -50316,6 +52317,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMediaMemberInput = {
@@ -50350,6 +52352,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMediaMemberInput = {
@@ -50400,6 +52403,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaMemberInput = {
@@ -50434,6 +52438,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutMediaItemsInput = {
@@ -50468,6 +52473,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMediaItemsInput = {
@@ -50502,6 +52508,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMediaItemsInput = {
@@ -50672,6 +52679,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaItemsInput = {
@@ -50706,6 +52714,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type MediaTaskUpsertWithWhereUniqueWithoutItemInput = {
@@ -51038,6 +53047,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutPersonalCalEventsInput = {
@@ -51072,6 +53082,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutPersonalCalEventsInput = {
@@ -51122,6 +53133,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPersonalCalEventsInput = {
@@ -51156,6 +53168,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutMediaPcalInput = {
@@ -51190,6 +53203,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMediaPcalInput = {
@@ -51224,6 +53238,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMediaPcalInput = {
@@ -51274,6 +53289,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaPcalInput = {
@@ -51308,6 +53324,7 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserRoleCreateManyUserInput = {
@@ -51516,6 +53533,22 @@ export namespace Prisma {
     note?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
+  }
+
+  export type SalesReportCreateManyCreatedByInput = {
+    id?: string
+    notaNo?: string | null
+    soldAt: Date | string
+    customer?: string | null
+    salesman?: string | null
+    employee?: string | null
+    items: JsonNullValueInput | InputJsonValue
+    subtotal?: number
+    total?: number
+    grandTotal?: number
+    payments: JsonNullValueInput | InputJsonValue
+    photoKey: string
+    createdAt?: Date | string
   }
 
   export type UserRoleUpdateWithoutUserInput = {
@@ -52146,6 +54179,54 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SalesReportUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notaNo?: NullableStringFieldUpdateOperationsInput | string | null
+    soldAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer?: NullableStringFieldUpdateOperationsInput | string | null
+    salesman?: NullableStringFieldUpdateOperationsInput | string | null
+    employee?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: JsonNullValueInput | InputJsonValue
+    subtotal?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    grandTotal?: IntFieldUpdateOperationsInput | number
+    payments?: JsonNullValueInput | InputJsonValue
+    photoKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesReportUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notaNo?: NullableStringFieldUpdateOperationsInput | string | null
+    soldAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer?: NullableStringFieldUpdateOperationsInput | string | null
+    salesman?: NullableStringFieldUpdateOperationsInput | string | null
+    employee?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: JsonNullValueInput | InputJsonValue
+    subtotal?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    grandTotal?: IntFieldUpdateOperationsInput | number
+    payments?: JsonNullValueInput | InputJsonValue
+    photoKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SalesReportUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    notaNo?: NullableStringFieldUpdateOperationsInput | string | null
+    soldAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    customer?: NullableStringFieldUpdateOperationsInput | string | null
+    salesman?: NullableStringFieldUpdateOperationsInput | string | null
+    employee?: NullableStringFieldUpdateOperationsInput | string | null
+    items?: JsonNullValueInput | InputJsonValue
+    subtotal?: IntFieldUpdateOperationsInput | number
+    total?: IntFieldUpdateOperationsInput | number
+    grandTotal?: IntFieldUpdateOperationsInput | number
+    payments?: JsonNullValueInput | InputJsonValue
+    photoKey?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type UserRoleCreateManyRoleInput = {
     userId: string
     assignedById?: string | null
@@ -52236,6 +54317,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBranchInput = {
@@ -52270,6 +54352,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBranchInput = {

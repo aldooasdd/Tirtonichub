@@ -7,9 +7,9 @@ globalThis.__BUILD_MANIFEST = {
     "static/chunks/0cz1d0mv5g_q7.js"
   ],
   "lowPriorityFiles": [
-    "static/wSVxX--lVD7hVGKWD3eIh/_buildManifest.js",
-    "static/wSVxX--lVD7hVGKWD3eIh/_ssgManifest.js",
-    "static/wSVxX--lVD7hVGKWD3eIh/_clientMiddlewareManifest.js"
+    "static/vl1Ap4UqAiZdvGTyMdCUq/_buildManifest.js",
+    "static/vl1Ap4UqAiZdvGTyMdCUq/_ssgManifest.js",
+    "static/vl1Ap4UqAiZdvGTyMdCUq/_clientMiddlewareManifest.js"
   ],
   "rootMainFiles": [
     "static/chunks/06cza79ljre1d.js",
@@ -118,6 +118,18 @@ globalThis.__BUILD_MANIFEST = {
       ]
     },
     "/(dash)/finance/page": {
+      "otherChunks": [
+        "static/chunks/06cza79ljre1d.js",
+        "static/chunks/3dd7r6r-s_vhx.js",
+        "static/chunks/19rwnbr1_-u2m.js",
+        "static/chunks/27n5614c3xmhs.js",
+        "static/chunks/2b9jvpmc8yuzt.js"
+      ],
+      "runtimeModuleIds": [
+        10835
+      ]
+    },
+    "/(dash)/finance/penjualan/page": {
       "otherChunks": [
         "static/chunks/06cza79ljre1d.js",
         "static/chunks/3dd7r6r-s_vhx.js",
@@ -382,6 +394,18 @@ globalThis.__BUILD_MANIFEST = {
       ]
     },
     "/(dash)/riwayat-absen/page": {
+      "otherChunks": [
+        "static/chunks/06cza79ljre1d.js",
+        "static/chunks/3dd7r6r-s_vhx.js",
+        "static/chunks/19rwnbr1_-u2m.js",
+        "static/chunks/27n5614c3xmhs.js",
+        "static/chunks/2b9jvpmc8yuzt.js"
+      ],
+      "runtimeModuleIds": [
+        10835
+      ]
+    },
+    "/(dash)/sales/page": {
       "otherChunks": [
         "static/chunks/06cza79ljre1d.js",
         "static/chunks/3dd7r6r-s_vhx.js",

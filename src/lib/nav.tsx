@@ -18,7 +18,7 @@ import {
   Boxes,
   type LucideIcon,
 } from "lucide-react";
-import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, roleAttends, type RoleCode } from "./roles";
+import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, roleAttends, type RoleCode } from "./roles";
 
 export type NavItem = {
   label: string;
@@ -67,7 +67,17 @@ export function navForRole(role: RoleCode): NavGroup[] {
   if (FINANCE_ROLES.includes(role)) {
     groups.push({
       title: "Finance",
-      items: [{ label: "Produk Mentah", href: "/finance", icon: Receipt }],
+      items: [
+        { label: "Produk Mentah", href: "/finance", icon: Receipt },
+        { label: "Rekap Penjualan", href: "/finance/penjualan", icon: Receipt },
+      ],
+    });
+  }
+
+  if (SALES_ROLES.includes(role) && role !== "BOSS") {
+    groups.push({
+      title: "Sales",
+      items: [{ label: "Rekap Penjualan", href: "/sales", icon: Receipt }],
     });
   }
 

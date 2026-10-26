@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
   const key = req.nextUrl.searchParams.get("key");
   if (!key) return new Response("key wajib", { status: 400 });
 
-  const sensitive = key.startsWith("nota/");
+  const sensitive = key.startsWith("nota/") || key.startsWith("sales-nota/");
   if (sensitive) {
     const session = await getSession();
     if (!session) return new Response("Unauthorized", { status: 401 });

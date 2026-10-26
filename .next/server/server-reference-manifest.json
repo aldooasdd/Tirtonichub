@@ -42,6 +42,10 @@
           "moduleId": 58615,
           "async": true
         },
+        "app/(dash)/finance/penjualan/page": {
+          "moduleId": 96928,
+          "async": true
+        },
         "app/(dash)/hr/approval/page": {
           "moduleId": 11975,
           "async": true
@@ -128,6 +132,10 @@
         },
         "app/(dash)/riwayat-absen/page": {
           "moduleId": 54934,
+          "async": true
+        },
+        "app/(dash)/sales/page": {
+          "moduleId": 82806,
           "async": true
         },
         "app/(dash)/stok/page": {
@@ -160,6 +168,10 @@
           "moduleId": 58615,
           "async": true
         },
+        "app/(dash)/finance/penjualan/page": {
+          "moduleId": 96928,
+          "async": true
+        },
         "app/(dash)/hr/approval/page": {
           "moduleId": 11975,
           "async": true
@@ -246,6 +258,10 @@
         },
         "app/(dash)/riwayat-absen/page": {
           "moduleId": 54934,
+          "async": true
+        },
+        "app/(dash)/sales/page": {
+          "moduleId": 82806,
           "async": true
         },
         "app/(dash)/stok/page": {
@@ -278,6 +294,10 @@
           "moduleId": 58615,
           "async": true
         },
+        "app/(dash)/finance/penjualan/page": {
+          "moduleId": 96928,
+          "async": true
+        },
         "app/(dash)/hr/approval/page": {
           "moduleId": 11975,
           "async": true
@@ -364,6 +384,10 @@
         },
         "app/(dash)/riwayat-absen/page": {
           "moduleId": 54934,
+          "async": true
+        },
+        "app/(dash)/sales/page": {
+          "moduleId": 82806,
           "async": true
         },
         "app/(dash)/stok/page": {
@@ -396,6 +420,10 @@
           "moduleId": 58615,
           "async": true
         },
+        "app/(dash)/finance/penjualan/page": {
+          "moduleId": 96928,
+          "async": true
+        },
         "app/(dash)/hr/approval/page": {
           "moduleId": 11975,
           "async": true
@@ -482,6 +510,10 @@
         },
         "app/(dash)/riwayat-absen/page": {
           "moduleId": 54934,
+          "async": true
+        },
+        "app/(dash)/sales/page": {
+          "moduleId": 82806,
           "async": true
         },
         "app/(dash)/stok/page": {
@@ -514,6 +546,10 @@
           "moduleId": 58615,
           "async": true
         },
+        "app/(dash)/finance/penjualan/page": {
+          "moduleId": 96928,
+          "async": true
+        },
         "app/(dash)/hr/approval/page": {
           "moduleId": 11975,
           "async": true
@@ -600,6 +636,10 @@
         },
         "app/(dash)/riwayat-absen/page": {
           "moduleId": 54934,
+          "async": true
+        },
+        "app/(dash)/sales/page": {
+          "moduleId": 82806,
           "async": true
         },
         "app/(dash)/stok/page": {
@@ -1117,6 +1157,26 @@
       },
       "filename": "src/server/actions/profile.ts",
       "exportedName": "updateOwnProfile"
+    },
+    "604370ed7ad45d384bdd0acaf41906ace7f03eddea": {
+      "workers": {
+        "app/(dash)/sales/page": {
+          "moduleId": 82806,
+          "async": true
+        }
+      },
+      "filename": "src/server/actions/sales.ts",
+      "exportedName": "scanSalesNota"
+    },
+    "4073bbe82fd48008edba02dd70d2a8db9ff06b6f36": {
+      "workers": {
+        "app/(dash)/sales/page": {
+          "moduleId": 82806,
+          "async": true
+        }
+      },
+      "filename": "src/server/actions/sales.ts",
+      "exportedName": "saveSalesReport"
     },
     "7875a967cdb7cac29b61f8bd2cf268ce2d04836ec1": {
       "workers": {

@@ -138,6 +138,23 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.SalesReportScalarFieldEnum = {
+  id: 'id',
+  notaNo: 'notaNo',
+  soldAt: 'soldAt',
+  customer: 'customer',
+  salesman: 'salesman',
+  employee: 'employee',
+  items: 'items',
+  subtotal: 'subtotal',
+  total: 'total',
+  grandTotal: 'grandTotal',
+  payments: 'payments',
+  photoKey: 'photoKey',
+  createdById: 'createdById',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.RoleScalarFieldEnum = {
   id: 'id',
   code: 'code',
@@ -483,12 +500,12 @@ exports.Prisma.SortOrder = {
   desc: 'desc'
 };
 
-exports.Prisma.NullableJsonNullValueInput = {
-  DbNull: Prisma.DbNull,
+exports.Prisma.JsonNullValueInput = {
   JsonNull: Prisma.JsonNull
 };
 
-exports.Prisma.JsonNullValueInput = {
+exports.Prisma.NullableJsonNullValueInput = {
+  DbNull: Prisma.DbNull,
   JsonNull: Prisma.JsonNull
 };
 
@@ -568,6 +585,7 @@ exports.MediaTier = exports.$Enums.MediaTier = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  SalesReport: 'SalesReport',
   Role: 'Role',
   UserRole: 'UserRole',
   Session: 'Session',

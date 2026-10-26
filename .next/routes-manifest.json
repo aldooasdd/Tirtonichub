@@ -177,6 +177,12 @@
       "namedRegex": "^/finance(?:/)?$"
     },
     {
+      "page": "/finance/penjualan",
+      "regex": "^/finance/penjualan(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/finance/penjualan(?:/)?$"
+    },
+    {
       "page": "/hr/approval",
       "regex": "^/hr/approval(?:/)?$",
       "routeKeys": {},
@@ -325,6 +331,12 @@
       "regex": "^/riwayat\\-absen(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/riwayat\\-absen(?:/)?$"
+    },
+    {
+      "page": "/sales",
+      "regex": "^/sales(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/sales(?:/)?$"
     },
     {
       "page": "/stok",

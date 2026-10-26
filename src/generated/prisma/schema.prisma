@@ -95,8 +95,32 @@ model User {
   mediaItems        MediaItem[]        @relation("MediaItemCreator")
   personalCalEvents PersonalCalEvent[]
   mediaPcal         MediaPcal?
+  salesReports      SalesReport[]      @relation("SalesReportCreator")
 
   @@index([branchId])
+}
+
+// Nota penjualan difoto Sales → AI (n8n) ekstrak → masuk ke Finance (rekap harian).
+model SalesReport {
+  id          String   @id @default(cuid())
+  notaNo      String? // nomor nota di struk
+  soldAt      DateTime // waktu transaksi di struk
+  customer    String? // Pelanggan
+  salesman    String? // Salesman di struk
+  employee    String? // Karyawan di struk
+  items       Json // [{name, qty, price, total, note}]
+  subtotal    Int      @default(0)
+  total       Int      @default(0)
+  grandTotal  Int      @default(0)
+  payments    Json // [{method, amount}]
+  photoKey    String // foto nota di storage
+  createdById String // user Sales yang mengirim
+  createdAt   DateTime @default(now())
+
+  createdBy User @relation("SalesReportCreator", fields: [createdById], references: [id])
+
+  @@index([createdById])
+  @@index([soldAt])
 }
 
 model Role {

@@ -30,6 +30,8 @@ export const FINANCE_ROLES: RoleCode[] = ["BOSS", "FINANCE"];
 export const STOCK_ROLES: RoleCode[] = ["BOSS", "STOCK_ROOM"];
 /** Media: Tirtonic Studio (produksi konten). */
 export const MEDIA_ROLES: RoleCode[] = ["BOSS", "MEDIA"];
+/** Sales: kirim rekap penjualan (foto nota). */
+export const SALES_ROLES: RoleCode[] = ["BOSS", "SALES"];
 
 /** Boss tidak absen; role lain absen. (PRD §3) */
 export function roleAttends(role: RoleCode): boolean {

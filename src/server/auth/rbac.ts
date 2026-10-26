@@ -65,3 +65,10 @@ export async function requireMedia(): Promise<AuthContext> {
   assert(can.manageMedia(ctx.activeRole));
   return ctx;
 }
+
+/** Sales/Boss: kirim rekap penjualan (foto nota). */
+export async function requireSales(): Promise<AuthContext> {
+  const ctx = await requireAuth();
+  assert(can.manageSales(ctx.activeRole));
+  return ctx;
+}
