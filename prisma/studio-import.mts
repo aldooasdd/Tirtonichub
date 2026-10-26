@@ -69,6 +69,9 @@ for (const x of plan) {
     gagal.push(x.from + " → " + (e as Error).message);
   }
 }
+// hari libur mingguan per kode jobdesk (0=Min…6=Sab), hanya bila belum diisi
+const OFF: Record<string, number[]> = { Z: [4], R: [2, 4], A: [4, 5], S: [4, 5] };
+for (const [code, offDays] of Object.entries(OFF)) await prisma.mediaMember.updateMany({ where: { code, offDays: { isEmpty: true } }, data: { offDays } });
 console.log(`Selesai: ${ok} dokumen ditulis, ${gagal.length} gagal.`);
 for (const g of gagal) console.log("  gagal:", g);
 await prisma.$disconnect();

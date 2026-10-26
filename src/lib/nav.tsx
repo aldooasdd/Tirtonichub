@@ -33,6 +33,8 @@ export type NavItem = {
   label: string;
   href: string;
   icon: LucideIcon;
+  /** halaman di luar app Next (mis. UI statis /studio) → <a> biasa, muat ulang penuh */
+  external?: boolean;
 };
 
 export type NavGroup = {
@@ -92,6 +94,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
     groups.push({
       title: "Media",
       items: [
+        { label: "Tirtonic Studio", href: "/studio", icon: MonitorSmartphone, external: true },
         { label: "Barang", href: "/media/barang", icon: Package },
         { label: "Workflow Hub", href: "/media/workflow", icon: Clapperboard },
         { label: "Content Queue", href: "/media/queue", icon: LayoutList },

@@ -2,7 +2,7 @@
 
 import { prisma } from "@/server/db";
 import { getSession } from "@/server/auth/session";
-import { dateKeyWIB } from "@/server/attendance/logic";
+import { dateKeyWIB, wibWeekday } from "@/server/attendance/logic";
 import type { StudioUser } from "./rules";
 
 export type StudioCtx =
@@ -27,7 +27,11 @@ export async function studioCtx(): Promise<StudioCtx> {
     idcc: staff || !!m?.idcc,
   };
   // Wajib absen = punya peran selain BOSS (aturan sistem pusat). Cuti/sakit/izin/libur tercatat juga dianggap sudah.
-  const need = s.roles.some((r) => r !== "BOSS");
+  // Hari libur pribadi (MediaMember.offDays, 0=Min…6=Sab) dan tanggal merah (Holiday) tidak wajib absen.
+  const now = new Date();
+  const offToday = !!m && (m.offDays ?? []).includes(wibWeekday(now) % 7);
+  const holiday = !offToday && !!(await prisma.holiday.findUnique({ where: { date: dateKeyWIB(now) }, select: { id: true } }));
+  const need = s.roles.some((r) => r !== "BOSS") && !offToday && !holiday;
   let done = !need;
   if (need) {
     const a = await prisma.attendance.findUnique({ where: { userId_date: { userId: s.user.id, date: dateKeyWIB(new Date()) } }, select: { checkInAt: true, status: true } });
