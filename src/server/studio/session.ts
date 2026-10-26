@@ -31,7 +31,9 @@ export async function studioCtx(): Promise<StudioCtx> {
   const now = new Date();
   const offToday = !!m && (m.offDays ?? []).includes(wibWeekday(now) % 7);
   const holiday = !offToday && !!(await prisma.holiday.findUnique({ where: { date: dateKeyWIB(now) }, select: { id: true } }));
-  const need = s.roles.some((r) => r !== "BOSS") && !offToday && !holiday;
+  // Wajib absen sementara DIMATIKAN (permintaan Zaki, 26 Okt 2026). Nyalakan dengan STUDIO_WAJIB_ABSEN=1 di .env server.
+  const enforce = process.env.STUDIO_WAJIB_ABSEN === "1";
+  const need = enforce && s.roles.some((r) => r !== "BOSS") && !offToday && !holiday;
   let done = !need;
   if (need) {
     const a = await prisma.attendance.findUnique({ where: { userId_date: { userId: s.user.id, date: dateKeyWIB(new Date()) } }, select: { checkInAt: true, status: true } });
