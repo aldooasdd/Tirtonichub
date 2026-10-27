@@ -127,6 +127,7 @@ exports.Prisma.UserScalarFieldEnum = {
   nickname: 'nickname',
   email: 'email',
   waNumber: 'waNumber',
+  passwordHash: 'passwordHash',
   avatarKey: 'avatarKey',
   bio: 'bio',
   branchId: 'branchId',
@@ -196,19 +197,6 @@ exports.Prisma.SessionScalarFieldEnum = {
   expiresAt: 'expiresAt',
   lastActiveAt: 'lastActiveAt',
   revokedAt: 'revokedAt',
-  createdAt: 'createdAt'
-};
-
-exports.Prisma.OtpChallengeScalarFieldEnum = {
-  id: 'id',
-  email: 'email',
-  codeHash: 'codeHash',
-  expiresAt: 'expiresAt',
-  attempts: 'attempts',
-  resendCount: 'resendCount',
-  consumedAt: 'consumedAt',
-  lockedUntil: 'lockedUntil',
-  ip: 'ip',
   createdAt: 'createdAt'
 };
 
@@ -609,7 +597,6 @@ exports.Prisma.ModelName = {
   Role: 'Role',
   UserRole: 'UserRole',
   Session: 'Session',
-  OtpChallenge: 'OtpChallenge',
   Branch: 'Branch',
   WorkSchedule: 'WorkSchedule',
   UserSchedule: 'UserSchedule',

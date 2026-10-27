@@ -4,6 +4,7 @@ import type { Prisma, RoleCode } from "@/generated/prisma";
 import { prisma } from "@/server/db";
 import { requireHr, can } from "@/server/auth/rbac";
 import { revokeAllSessions } from "@/server/auth/session";
+import { hashPassword, DEFAULT_PASSWORD } from "@/server/auth/password";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { employeeSchema, type EmployeeInput } from "@/lib/validation";
@@ -54,6 +55,7 @@ export async function createEmployee(input: EmployeeInput): Promise<ActionResult
           fullName: data.fullName,
           email: data.email,
           waNumber: data.waNumber,
+          passwordHash: hashPassword(DEFAULT_PASSWORD),
           branchId: data.branchId ?? null,
           joinedAt: data.joinedAt ?? null,
         },

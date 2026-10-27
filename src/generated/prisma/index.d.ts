@@ -44,11 +44,6 @@ export type UserRole = $Result.DefaultSelection<Prisma.$UserRolePayload>
  */
 export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
 /**
- * Model OtpChallenge
- * 
- */
-export type OtpChallenge = $Result.DefaultSelection<Prisma.$OtpChallengePayload>
-/**
  * Model Branch
  * 
  */
@@ -467,16 +462,6 @@ export class PrismaClient<
     * ```
     */
   get session(): Prisma.SessionDelegate<ExtArgs, ClientOptions>;
-
-  /**
-   * `prisma.otpChallenge`: Exposes CRUD operations for the **OtpChallenge** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more OtpChallenges
-    * const otpChallenges = await prisma.otpChallenge.findMany()
-    * ```
-    */
-  get otpChallenge(): Prisma.OtpChallengeDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.branch`: Exposes CRUD operations for the **Branch** model.
@@ -1164,7 +1149,6 @@ export namespace Prisma {
     Role: 'Role',
     UserRole: 'UserRole',
     Session: 'Session',
-    OtpChallenge: 'OtpChallenge',
     Branch: 'Branch',
     WorkSchedule: 'WorkSchedule',
     UserSchedule: 'UserSchedule',
@@ -1207,7 +1191,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone"
+      modelProps: "user" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1652,80 +1636,6 @@ export namespace Prisma {
           count: {
             args: Prisma.SessionCountArgs<ExtArgs>
             result: $Utils.Optional<SessionCountAggregateOutputType> | number
-          }
-        }
-      }
-      OtpChallenge: {
-        payload: Prisma.$OtpChallengePayload<ExtArgs>
-        fields: Prisma.OtpChallengeFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.OtpChallengeFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OtpChallengePayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.OtpChallengeFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OtpChallengePayload>
-          }
-          findFirst: {
-            args: Prisma.OtpChallengeFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OtpChallengePayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.OtpChallengeFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OtpChallengePayload>
-          }
-          findMany: {
-            args: Prisma.OtpChallengeFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OtpChallengePayload>[]
-          }
-          create: {
-            args: Prisma.OtpChallengeCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OtpChallengePayload>
-          }
-          createMany: {
-            args: Prisma.OtpChallengeCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.OtpChallengeCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OtpChallengePayload>[]
-          }
-          delete: {
-            args: Prisma.OtpChallengeDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OtpChallengePayload>
-          }
-          update: {
-            args: Prisma.OtpChallengeUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OtpChallengePayload>
-          }
-          deleteMany: {
-            args: Prisma.OtpChallengeDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.OtpChallengeUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.OtpChallengeUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OtpChallengePayload>[]
-          }
-          upsert: {
-            args: Prisma.OtpChallengeUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$OtpChallengePayload>
-          }
-          aggregate: {
-            args: Prisma.OtpChallengeAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateOtpChallenge>
-          }
-          groupBy: {
-            args: Prisma.OtpChallengeGroupByArgs<ExtArgs>
-            result: $Utils.Optional<OtpChallengeGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.OtpChallengeCountArgs<ExtArgs>
-            result: $Utils.Optional<OtpChallengeCountAggregateOutputType> | number
           }
         }
       }
@@ -3607,7 +3517,6 @@ export namespace Prisma {
     role?: RoleOmit
     userRole?: UserRoleOmit
     session?: SessionOmit
-    otpChallenge?: OtpChallengeOmit
     branch?: BranchOmit
     workSchedule?: WorkScheduleOmit
     userSchedule?: UserScheduleOmit
@@ -4084,6 +3993,7 @@ export namespace Prisma {
     nickname: string | null
     email: string | null
     waNumber: string | null
+    passwordHash: string | null
     avatarKey: string | null
     bio: string | null
     branchId: string | null
@@ -4101,6 +4011,7 @@ export namespace Prisma {
     nickname: string | null
     email: string | null
     waNumber: string | null
+    passwordHash: string | null
     avatarKey: string | null
     bio: string | null
     branchId: string | null
@@ -4118,6 +4029,7 @@ export namespace Prisma {
     nickname: number
     email: number
     waNumber: number
+    passwordHash: number
     avatarKey: number
     bio: number
     branchId: number
@@ -4137,6 +4049,7 @@ export namespace Prisma {
     nickname?: true
     email?: true
     waNumber?: true
+    passwordHash?: true
     avatarKey?: true
     bio?: true
     branchId?: true
@@ -4154,6 +4067,7 @@ export namespace Prisma {
     nickname?: true
     email?: true
     waNumber?: true
+    passwordHash?: true
     avatarKey?: true
     bio?: true
     branchId?: true
@@ -4171,6 +4085,7 @@ export namespace Prisma {
     nickname?: true
     email?: true
     waNumber?: true
+    passwordHash?: true
     avatarKey?: true
     bio?: true
     branchId?: true
@@ -4261,6 +4176,7 @@ export namespace Prisma {
     nickname: string | null
     email: string
     waNumber: string
+    passwordHash: string | null
     avatarKey: string | null
     bio: string | null
     branchId: string | null
@@ -4295,6 +4211,7 @@ export namespace Prisma {
     nickname?: boolean
     email?: boolean
     waNumber?: boolean
+    passwordHash?: boolean
     avatarKey?: boolean
     bio?: boolean
     branchId?: boolean
@@ -4333,6 +4250,7 @@ export namespace Prisma {
     nickname?: boolean
     email?: boolean
     waNumber?: boolean
+    passwordHash?: boolean
     avatarKey?: boolean
     bio?: boolean
     branchId?: boolean
@@ -4351,6 +4269,7 @@ export namespace Prisma {
     nickname?: boolean
     email?: boolean
     waNumber?: boolean
+    passwordHash?: boolean
     avatarKey?: boolean
     bio?: boolean
     branchId?: boolean
@@ -4369,6 +4288,7 @@ export namespace Prisma {
     nickname?: boolean
     email?: boolean
     waNumber?: boolean
+    passwordHash?: boolean
     avatarKey?: boolean
     bio?: boolean
     branchId?: boolean
@@ -4380,7 +4300,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "nickname" | "email" | "waNumber" | "avatarKey" | "bio" | "branchId" | "joinedAt" | "birthDate" | "isActive" | "themePref" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "nickname" | "email" | "waNumber" | "passwordHash" | "avatarKey" | "bio" | "branchId" | "joinedAt" | "birthDate" | "isActive" | "themePref" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     branch?: boolean | User$branchArgs<ExtArgs>
     roles?: boolean | User$rolesArgs<ExtArgs>
@@ -4441,6 +4361,7 @@ export namespace Prisma {
       nickname: string | null
       email: string
       waNumber: string
+      passwordHash: string | null
       avatarKey: string | null
       bio: string | null
       branchId: string | null
@@ -4898,6 +4819,7 @@ export namespace Prisma {
     readonly nickname: FieldRef<"User", 'String'>
     readonly email: FieldRef<"User", 'String'>
     readonly waNumber: FieldRef<"User", 'String'>
+    readonly passwordHash: FieldRef<"User", 'String'>
     readonly avatarKey: FieldRef<"User", 'String'>
     readonly bio: FieldRef<"User", 'String'>
     readonly branchId: FieldRef<"User", 'String'>
@@ -11402,1104 +11324,6 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: SessionInclude<ExtArgs> | null
-  }
-
-
-  /**
-   * Model OtpChallenge
-   */
-
-  export type AggregateOtpChallenge = {
-    _count: OtpChallengeCountAggregateOutputType | null
-    _avg: OtpChallengeAvgAggregateOutputType | null
-    _sum: OtpChallengeSumAggregateOutputType | null
-    _min: OtpChallengeMinAggregateOutputType | null
-    _max: OtpChallengeMaxAggregateOutputType | null
-  }
-
-  export type OtpChallengeAvgAggregateOutputType = {
-    attempts: number | null
-    resendCount: number | null
-  }
-
-  export type OtpChallengeSumAggregateOutputType = {
-    attempts: number | null
-    resendCount: number | null
-  }
-
-  export type OtpChallengeMinAggregateOutputType = {
-    id: string | null
-    email: string | null
-    codeHash: string | null
-    expiresAt: Date | null
-    attempts: number | null
-    resendCount: number | null
-    consumedAt: Date | null
-    lockedUntil: Date | null
-    ip: string | null
-    createdAt: Date | null
-  }
-
-  export type OtpChallengeMaxAggregateOutputType = {
-    id: string | null
-    email: string | null
-    codeHash: string | null
-    expiresAt: Date | null
-    attempts: number | null
-    resendCount: number | null
-    consumedAt: Date | null
-    lockedUntil: Date | null
-    ip: string | null
-    createdAt: Date | null
-  }
-
-  export type OtpChallengeCountAggregateOutputType = {
-    id: number
-    email: number
-    codeHash: number
-    expiresAt: number
-    attempts: number
-    resendCount: number
-    consumedAt: number
-    lockedUntil: number
-    ip: number
-    createdAt: number
-    _all: number
-  }
-
-
-  export type OtpChallengeAvgAggregateInputType = {
-    attempts?: true
-    resendCount?: true
-  }
-
-  export type OtpChallengeSumAggregateInputType = {
-    attempts?: true
-    resendCount?: true
-  }
-
-  export type OtpChallengeMinAggregateInputType = {
-    id?: true
-    email?: true
-    codeHash?: true
-    expiresAt?: true
-    attempts?: true
-    resendCount?: true
-    consumedAt?: true
-    lockedUntil?: true
-    ip?: true
-    createdAt?: true
-  }
-
-  export type OtpChallengeMaxAggregateInputType = {
-    id?: true
-    email?: true
-    codeHash?: true
-    expiresAt?: true
-    attempts?: true
-    resendCount?: true
-    consumedAt?: true
-    lockedUntil?: true
-    ip?: true
-    createdAt?: true
-  }
-
-  export type OtpChallengeCountAggregateInputType = {
-    id?: true
-    email?: true
-    codeHash?: true
-    expiresAt?: true
-    attempts?: true
-    resendCount?: true
-    consumedAt?: true
-    lockedUntil?: true
-    ip?: true
-    createdAt?: true
-    _all?: true
-  }
-
-  export type OtpChallengeAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which OtpChallenge to aggregate.
-     */
-    where?: OtpChallengeWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of OtpChallenges to fetch.
-     */
-    orderBy?: OtpChallengeOrderByWithRelationInput | OtpChallengeOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: OtpChallengeWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` OtpChallenges from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` OtpChallenges.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned OtpChallenges
-    **/
-    _count?: true | OtpChallengeCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to average
-    **/
-    _avg?: OtpChallengeAvgAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to sum
-    **/
-    _sum?: OtpChallengeSumAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: OtpChallengeMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: OtpChallengeMaxAggregateInputType
-  }
-
-  export type GetOtpChallengeAggregateType<T extends OtpChallengeAggregateArgs> = {
-        [P in keyof T & keyof AggregateOtpChallenge]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateOtpChallenge[P]>
-      : GetScalarType<T[P], AggregateOtpChallenge[P]>
-  }
-
-
-
-
-  export type OtpChallengeGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: OtpChallengeWhereInput
-    orderBy?: OtpChallengeOrderByWithAggregationInput | OtpChallengeOrderByWithAggregationInput[]
-    by: OtpChallengeScalarFieldEnum[] | OtpChallengeScalarFieldEnum
-    having?: OtpChallengeScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: OtpChallengeCountAggregateInputType | true
-    _avg?: OtpChallengeAvgAggregateInputType
-    _sum?: OtpChallengeSumAggregateInputType
-    _min?: OtpChallengeMinAggregateInputType
-    _max?: OtpChallengeMaxAggregateInputType
-  }
-
-  export type OtpChallengeGroupByOutputType = {
-    id: string
-    email: string
-    codeHash: string
-    expiresAt: Date
-    attempts: number
-    resendCount: number
-    consumedAt: Date | null
-    lockedUntil: Date | null
-    ip: string | null
-    createdAt: Date
-    _count: OtpChallengeCountAggregateOutputType | null
-    _avg: OtpChallengeAvgAggregateOutputType | null
-    _sum: OtpChallengeSumAggregateOutputType | null
-    _min: OtpChallengeMinAggregateOutputType | null
-    _max: OtpChallengeMaxAggregateOutputType | null
-  }
-
-  type GetOtpChallengeGroupByPayload<T extends OtpChallengeGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<OtpChallengeGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof OtpChallengeGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], OtpChallengeGroupByOutputType[P]>
-            : GetScalarType<T[P], OtpChallengeGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type OtpChallengeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    email?: boolean
-    codeHash?: boolean
-    expiresAt?: boolean
-    attempts?: boolean
-    resendCount?: boolean
-    consumedAt?: boolean
-    lockedUntil?: boolean
-    ip?: boolean
-    createdAt?: boolean
-  }, ExtArgs["result"]["otpChallenge"]>
-
-  export type OtpChallengeSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    email?: boolean
-    codeHash?: boolean
-    expiresAt?: boolean
-    attempts?: boolean
-    resendCount?: boolean
-    consumedAt?: boolean
-    lockedUntil?: boolean
-    ip?: boolean
-    createdAt?: boolean
-  }, ExtArgs["result"]["otpChallenge"]>
-
-  export type OtpChallengeSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    email?: boolean
-    codeHash?: boolean
-    expiresAt?: boolean
-    attempts?: boolean
-    resendCount?: boolean
-    consumedAt?: boolean
-    lockedUntil?: boolean
-    ip?: boolean
-    createdAt?: boolean
-  }, ExtArgs["result"]["otpChallenge"]>
-
-  export type OtpChallengeSelectScalar = {
-    id?: boolean
-    email?: boolean
-    codeHash?: boolean
-    expiresAt?: boolean
-    attempts?: boolean
-    resendCount?: boolean
-    consumedAt?: boolean
-    lockedUntil?: boolean
-    ip?: boolean
-    createdAt?: boolean
-  }
-
-  export type OtpChallengeOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "codeHash" | "expiresAt" | "attempts" | "resendCount" | "consumedAt" | "lockedUntil" | "ip" | "createdAt", ExtArgs["result"]["otpChallenge"]>
-
-  export type $OtpChallengePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "OtpChallenge"
-    objects: {}
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      email: string
-      codeHash: string
-      expiresAt: Date
-      attempts: number
-      resendCount: number
-      consumedAt: Date | null
-      lockedUntil: Date | null
-      ip: string | null
-      createdAt: Date
-    }, ExtArgs["result"]["otpChallenge"]>
-    composites: {}
-  }
-
-  type OtpChallengeGetPayload<S extends boolean | null | undefined | OtpChallengeDefaultArgs> = $Result.GetResult<Prisma.$OtpChallengePayload, S>
-
-  type OtpChallengeCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<OtpChallengeFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: OtpChallengeCountAggregateInputType | true
-    }
-
-  export interface OtpChallengeDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OtpChallenge'], meta: { name: 'OtpChallenge' } }
-    /**
-     * Find zero or one OtpChallenge that matches the filter.
-     * @param {OtpChallengeFindUniqueArgs} args - Arguments to find a OtpChallenge
-     * @example
-     * // Get one OtpChallenge
-     * const otpChallenge = await prisma.otpChallenge.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends OtpChallengeFindUniqueArgs>(args: SelectSubset<T, OtpChallengeFindUniqueArgs<ExtArgs>>): Prisma__OtpChallengeClient<$Result.GetResult<Prisma.$OtpChallengePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one OtpChallenge that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {OtpChallengeFindUniqueOrThrowArgs} args - Arguments to find a OtpChallenge
-     * @example
-     * // Get one OtpChallenge
-     * const otpChallenge = await prisma.otpChallenge.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends OtpChallengeFindUniqueOrThrowArgs>(args: SelectSubset<T, OtpChallengeFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OtpChallengeClient<$Result.GetResult<Prisma.$OtpChallengePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first OtpChallenge that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {OtpChallengeFindFirstArgs} args - Arguments to find a OtpChallenge
-     * @example
-     * // Get one OtpChallenge
-     * const otpChallenge = await prisma.otpChallenge.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends OtpChallengeFindFirstArgs>(args?: SelectSubset<T, OtpChallengeFindFirstArgs<ExtArgs>>): Prisma__OtpChallengeClient<$Result.GetResult<Prisma.$OtpChallengePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first OtpChallenge that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {OtpChallengeFindFirstOrThrowArgs} args - Arguments to find a OtpChallenge
-     * @example
-     * // Get one OtpChallenge
-     * const otpChallenge = await prisma.otpChallenge.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends OtpChallengeFindFirstOrThrowArgs>(args?: SelectSubset<T, OtpChallengeFindFirstOrThrowArgs<ExtArgs>>): Prisma__OtpChallengeClient<$Result.GetResult<Prisma.$OtpChallengePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more OtpChallenges that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {OtpChallengeFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all OtpChallenges
-     * const otpChallenges = await prisma.otpChallenge.findMany()
-     * 
-     * // Get first 10 OtpChallenges
-     * const otpChallenges = await prisma.otpChallenge.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const otpChallengeWithIdOnly = await prisma.otpChallenge.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends OtpChallengeFindManyArgs>(args?: SelectSubset<T, OtpChallengeFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OtpChallengePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a OtpChallenge.
-     * @param {OtpChallengeCreateArgs} args - Arguments to create a OtpChallenge.
-     * @example
-     * // Create one OtpChallenge
-     * const OtpChallenge = await prisma.otpChallenge.create({
-     *   data: {
-     *     // ... data to create a OtpChallenge
-     *   }
-     * })
-     * 
-     */
-    create<T extends OtpChallengeCreateArgs>(args: SelectSubset<T, OtpChallengeCreateArgs<ExtArgs>>): Prisma__OtpChallengeClient<$Result.GetResult<Prisma.$OtpChallengePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many OtpChallenges.
-     * @param {OtpChallengeCreateManyArgs} args - Arguments to create many OtpChallenges.
-     * @example
-     * // Create many OtpChallenges
-     * const otpChallenge = await prisma.otpChallenge.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends OtpChallengeCreateManyArgs>(args?: SelectSubset<T, OtpChallengeCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many OtpChallenges and returns the data saved in the database.
-     * @param {OtpChallengeCreateManyAndReturnArgs} args - Arguments to create many OtpChallenges.
-     * @example
-     * // Create many OtpChallenges
-     * const otpChallenge = await prisma.otpChallenge.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many OtpChallenges and only return the `id`
-     * const otpChallengeWithIdOnly = await prisma.otpChallenge.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends OtpChallengeCreateManyAndReturnArgs>(args?: SelectSubset<T, OtpChallengeCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OtpChallengePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a OtpChallenge.
-     * @param {OtpChallengeDeleteArgs} args - Arguments to delete one OtpChallenge.
-     * @example
-     * // Delete one OtpChallenge
-     * const OtpChallenge = await prisma.otpChallenge.delete({
-     *   where: {
-     *     // ... filter to delete one OtpChallenge
-     *   }
-     * })
-     * 
-     */
-    delete<T extends OtpChallengeDeleteArgs>(args: SelectSubset<T, OtpChallengeDeleteArgs<ExtArgs>>): Prisma__OtpChallengeClient<$Result.GetResult<Prisma.$OtpChallengePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one OtpChallenge.
-     * @param {OtpChallengeUpdateArgs} args - Arguments to update one OtpChallenge.
-     * @example
-     * // Update one OtpChallenge
-     * const otpChallenge = await prisma.otpChallenge.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends OtpChallengeUpdateArgs>(args: SelectSubset<T, OtpChallengeUpdateArgs<ExtArgs>>): Prisma__OtpChallengeClient<$Result.GetResult<Prisma.$OtpChallengePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more OtpChallenges.
-     * @param {OtpChallengeDeleteManyArgs} args - Arguments to filter OtpChallenges to delete.
-     * @example
-     * // Delete a few OtpChallenges
-     * const { count } = await prisma.otpChallenge.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends OtpChallengeDeleteManyArgs>(args?: SelectSubset<T, OtpChallengeDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more OtpChallenges.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {OtpChallengeUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many OtpChallenges
-     * const otpChallenge = await prisma.otpChallenge.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends OtpChallengeUpdateManyArgs>(args: SelectSubset<T, OtpChallengeUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more OtpChallenges and returns the data updated in the database.
-     * @param {OtpChallengeUpdateManyAndReturnArgs} args - Arguments to update many OtpChallenges.
-     * @example
-     * // Update many OtpChallenges
-     * const otpChallenge = await prisma.otpChallenge.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more OtpChallenges and only return the `id`
-     * const otpChallengeWithIdOnly = await prisma.otpChallenge.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends OtpChallengeUpdateManyAndReturnArgs>(args: SelectSubset<T, OtpChallengeUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OtpChallengePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one OtpChallenge.
-     * @param {OtpChallengeUpsertArgs} args - Arguments to update or create a OtpChallenge.
-     * @example
-     * // Update or create a OtpChallenge
-     * const otpChallenge = await prisma.otpChallenge.upsert({
-     *   create: {
-     *     // ... data to create a OtpChallenge
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the OtpChallenge we want to update
-     *   }
-     * })
-     */
-    upsert<T extends OtpChallengeUpsertArgs>(args: SelectSubset<T, OtpChallengeUpsertArgs<ExtArgs>>): Prisma__OtpChallengeClient<$Result.GetResult<Prisma.$OtpChallengePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of OtpChallenges.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {OtpChallengeCountArgs} args - Arguments to filter OtpChallenges to count.
-     * @example
-     * // Count the number of OtpChallenges
-     * const count = await prisma.otpChallenge.count({
-     *   where: {
-     *     // ... the filter for the OtpChallenges we want to count
-     *   }
-     * })
-    **/
-    count<T extends OtpChallengeCountArgs>(
-      args?: Subset<T, OtpChallengeCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], OtpChallengeCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a OtpChallenge.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {OtpChallengeAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends OtpChallengeAggregateArgs>(args: Subset<T, OtpChallengeAggregateArgs>): Prisma.PrismaPromise<GetOtpChallengeAggregateType<T>>
-
-    /**
-     * Group by OtpChallenge.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {OtpChallengeGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends OtpChallengeGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: OtpChallengeGroupByArgs['orderBy'] }
-        : { orderBy?: OtpChallengeGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, OtpChallengeGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOtpChallengeGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the OtpChallenge model
-   */
-  readonly fields: OtpChallengeFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for OtpChallenge.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__OtpChallengeClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the OtpChallenge model
-   */
-  interface OtpChallengeFieldRefs {
-    readonly id: FieldRef<"OtpChallenge", 'String'>
-    readonly email: FieldRef<"OtpChallenge", 'String'>
-    readonly codeHash: FieldRef<"OtpChallenge", 'String'>
-    readonly expiresAt: FieldRef<"OtpChallenge", 'DateTime'>
-    readonly attempts: FieldRef<"OtpChallenge", 'Int'>
-    readonly resendCount: FieldRef<"OtpChallenge", 'Int'>
-    readonly consumedAt: FieldRef<"OtpChallenge", 'DateTime'>
-    readonly lockedUntil: FieldRef<"OtpChallenge", 'DateTime'>
-    readonly ip: FieldRef<"OtpChallenge", 'String'>
-    readonly createdAt: FieldRef<"OtpChallenge", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * OtpChallenge findUnique
-   */
-  export type OtpChallengeFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OtpChallenge
-     */
-    select?: OtpChallengeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the OtpChallenge
-     */
-    omit?: OtpChallengeOmit<ExtArgs> | null
-    /**
-     * Filter, which OtpChallenge to fetch.
-     */
-    where: OtpChallengeWhereUniqueInput
-  }
-
-  /**
-   * OtpChallenge findUniqueOrThrow
-   */
-  export type OtpChallengeFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OtpChallenge
-     */
-    select?: OtpChallengeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the OtpChallenge
-     */
-    omit?: OtpChallengeOmit<ExtArgs> | null
-    /**
-     * Filter, which OtpChallenge to fetch.
-     */
-    where: OtpChallengeWhereUniqueInput
-  }
-
-  /**
-   * OtpChallenge findFirst
-   */
-  export type OtpChallengeFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OtpChallenge
-     */
-    select?: OtpChallengeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the OtpChallenge
-     */
-    omit?: OtpChallengeOmit<ExtArgs> | null
-    /**
-     * Filter, which OtpChallenge to fetch.
-     */
-    where?: OtpChallengeWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of OtpChallenges to fetch.
-     */
-    orderBy?: OtpChallengeOrderByWithRelationInput | OtpChallengeOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for OtpChallenges.
-     */
-    cursor?: OtpChallengeWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` OtpChallenges from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` OtpChallenges.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of OtpChallenges.
-     */
-    distinct?: OtpChallengeScalarFieldEnum | OtpChallengeScalarFieldEnum[]
-  }
-
-  /**
-   * OtpChallenge findFirstOrThrow
-   */
-  export type OtpChallengeFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OtpChallenge
-     */
-    select?: OtpChallengeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the OtpChallenge
-     */
-    omit?: OtpChallengeOmit<ExtArgs> | null
-    /**
-     * Filter, which OtpChallenge to fetch.
-     */
-    where?: OtpChallengeWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of OtpChallenges to fetch.
-     */
-    orderBy?: OtpChallengeOrderByWithRelationInput | OtpChallengeOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for OtpChallenges.
-     */
-    cursor?: OtpChallengeWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` OtpChallenges from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` OtpChallenges.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of OtpChallenges.
-     */
-    distinct?: OtpChallengeScalarFieldEnum | OtpChallengeScalarFieldEnum[]
-  }
-
-  /**
-   * OtpChallenge findMany
-   */
-  export type OtpChallengeFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OtpChallenge
-     */
-    select?: OtpChallengeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the OtpChallenge
-     */
-    omit?: OtpChallengeOmit<ExtArgs> | null
-    /**
-     * Filter, which OtpChallenges to fetch.
-     */
-    where?: OtpChallengeWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of OtpChallenges to fetch.
-     */
-    orderBy?: OtpChallengeOrderByWithRelationInput | OtpChallengeOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing OtpChallenges.
-     */
-    cursor?: OtpChallengeWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` OtpChallenges from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` OtpChallenges.
-     */
-    skip?: number
-    distinct?: OtpChallengeScalarFieldEnum | OtpChallengeScalarFieldEnum[]
-  }
-
-  /**
-   * OtpChallenge create
-   */
-  export type OtpChallengeCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OtpChallenge
-     */
-    select?: OtpChallengeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the OtpChallenge
-     */
-    omit?: OtpChallengeOmit<ExtArgs> | null
-    /**
-     * The data needed to create a OtpChallenge.
-     */
-    data: XOR<OtpChallengeCreateInput, OtpChallengeUncheckedCreateInput>
-  }
-
-  /**
-   * OtpChallenge createMany
-   */
-  export type OtpChallengeCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many OtpChallenges.
-     */
-    data: OtpChallengeCreateManyInput | OtpChallengeCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * OtpChallenge createManyAndReturn
-   */
-  export type OtpChallengeCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OtpChallenge
-     */
-    select?: OtpChallengeSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the OtpChallenge
-     */
-    omit?: OtpChallengeOmit<ExtArgs> | null
-    /**
-     * The data used to create many OtpChallenges.
-     */
-    data: OtpChallengeCreateManyInput | OtpChallengeCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * OtpChallenge update
-   */
-  export type OtpChallengeUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OtpChallenge
-     */
-    select?: OtpChallengeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the OtpChallenge
-     */
-    omit?: OtpChallengeOmit<ExtArgs> | null
-    /**
-     * The data needed to update a OtpChallenge.
-     */
-    data: XOR<OtpChallengeUpdateInput, OtpChallengeUncheckedUpdateInput>
-    /**
-     * Choose, which OtpChallenge to update.
-     */
-    where: OtpChallengeWhereUniqueInput
-  }
-
-  /**
-   * OtpChallenge updateMany
-   */
-  export type OtpChallengeUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update OtpChallenges.
-     */
-    data: XOR<OtpChallengeUpdateManyMutationInput, OtpChallengeUncheckedUpdateManyInput>
-    /**
-     * Filter which OtpChallenges to update
-     */
-    where?: OtpChallengeWhereInput
-    /**
-     * Limit how many OtpChallenges to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * OtpChallenge updateManyAndReturn
-   */
-  export type OtpChallengeUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OtpChallenge
-     */
-    select?: OtpChallengeSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the OtpChallenge
-     */
-    omit?: OtpChallengeOmit<ExtArgs> | null
-    /**
-     * The data used to update OtpChallenges.
-     */
-    data: XOR<OtpChallengeUpdateManyMutationInput, OtpChallengeUncheckedUpdateManyInput>
-    /**
-     * Filter which OtpChallenges to update
-     */
-    where?: OtpChallengeWhereInput
-    /**
-     * Limit how many OtpChallenges to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * OtpChallenge upsert
-   */
-  export type OtpChallengeUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OtpChallenge
-     */
-    select?: OtpChallengeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the OtpChallenge
-     */
-    omit?: OtpChallengeOmit<ExtArgs> | null
-    /**
-     * The filter to search for the OtpChallenge to update in case it exists.
-     */
-    where: OtpChallengeWhereUniqueInput
-    /**
-     * In case the OtpChallenge found by the `where` argument doesn't exist, create a new OtpChallenge with this data.
-     */
-    create: XOR<OtpChallengeCreateInput, OtpChallengeUncheckedCreateInput>
-    /**
-     * In case the OtpChallenge was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<OtpChallengeUpdateInput, OtpChallengeUncheckedUpdateInput>
-  }
-
-  /**
-   * OtpChallenge delete
-   */
-  export type OtpChallengeDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OtpChallenge
-     */
-    select?: OtpChallengeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the OtpChallenge
-     */
-    omit?: OtpChallengeOmit<ExtArgs> | null
-    /**
-     * Filter which OtpChallenge to delete.
-     */
-    where: OtpChallengeWhereUniqueInput
-  }
-
-  /**
-   * OtpChallenge deleteMany
-   */
-  export type OtpChallengeDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which OtpChallenges to delete
-     */
-    where?: OtpChallengeWhereInput
-    /**
-     * Limit how many OtpChallenges to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * OtpChallenge without action
-   */
-  export type OtpChallengeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the OtpChallenge
-     */
-    select?: OtpChallengeSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the OtpChallenge
-     */
-    omit?: OtpChallengeOmit<ExtArgs> | null
   }
 
 
@@ -39545,6 +38369,7 @@ export namespace Prisma {
     nickname: 'nickname',
     email: 'email',
     waNumber: 'waNumber',
+    passwordHash: 'passwordHash',
     avatarKey: 'avatarKey',
     bio: 'bio',
     branchId: 'branchId',
@@ -39633,22 +38458,6 @@ export namespace Prisma {
   };
 
   export type SessionScalarFieldEnum = (typeof SessionScalarFieldEnum)[keyof typeof SessionScalarFieldEnum]
-
-
-  export const OtpChallengeScalarFieldEnum: {
-    id: 'id',
-    email: 'email',
-    codeHash: 'codeHash',
-    expiresAt: 'expiresAt',
-    attempts: 'attempts',
-    resendCount: 'resendCount',
-    consumedAt: 'consumedAt',
-    lockedUntil: 'lockedUntil',
-    ip: 'ip',
-    createdAt: 'createdAt'
-  };
-
-  export type OtpChallengeScalarFieldEnum = (typeof OtpChallengeScalarFieldEnum)[keyof typeof OtpChallengeScalarFieldEnum]
 
 
   export const BranchScalarFieldEnum: {
@@ -40278,6 +39087,7 @@ export namespace Prisma {
     nickname?: StringNullableFilter<"User"> | string | null
     email?: StringFilter<"User"> | string
     waNumber?: StringFilter<"User"> | string
+    passwordHash?: StringNullableFilter<"User"> | string | null
     avatarKey?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     branchId?: StringNullableFilter<"User"> | string | null
@@ -40315,6 +39125,7 @@ export namespace Prisma {
     nickname?: SortOrderInput | SortOrder
     email?: SortOrder
     waNumber?: SortOrder
+    passwordHash?: SortOrderInput | SortOrder
     avatarKey?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
     branchId?: SortOrderInput | SortOrder
@@ -40355,6 +39166,7 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     fullName?: StringFilter<"User"> | string
     nickname?: StringNullableFilter<"User"> | string | null
+    passwordHash?: StringNullableFilter<"User"> | string | null
     avatarKey?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     branchId?: StringNullableFilter<"User"> | string | null
@@ -40392,6 +39204,7 @@ export namespace Prisma {
     nickname?: SortOrderInput | SortOrder
     email?: SortOrder
     waNumber?: SortOrder
+    passwordHash?: SortOrderInput | SortOrder
     avatarKey?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
     branchId?: SortOrderInput | SortOrder
@@ -40415,6 +39228,7 @@ export namespace Prisma {
     nickname?: StringNullableWithAggregatesFilter<"User"> | string | null
     email?: StringWithAggregatesFilter<"User"> | string
     waNumber?: StringWithAggregatesFilter<"User"> | string
+    passwordHash?: StringNullableWithAggregatesFilter<"User"> | string | null
     avatarKey?: StringNullableWithAggregatesFilter<"User"> | string | null
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
     branchId?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -40812,85 +39626,6 @@ export namespace Prisma {
     lastActiveAt?: DateTimeWithAggregatesFilter<"Session"> | Date | string
     revokedAt?: DateTimeNullableWithAggregatesFilter<"Session"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Session"> | Date | string
-  }
-
-  export type OtpChallengeWhereInput = {
-    AND?: OtpChallengeWhereInput | OtpChallengeWhereInput[]
-    OR?: OtpChallengeWhereInput[]
-    NOT?: OtpChallengeWhereInput | OtpChallengeWhereInput[]
-    id?: StringFilter<"OtpChallenge"> | string
-    email?: StringFilter<"OtpChallenge"> | string
-    codeHash?: StringFilter<"OtpChallenge"> | string
-    expiresAt?: DateTimeFilter<"OtpChallenge"> | Date | string
-    attempts?: IntFilter<"OtpChallenge"> | number
-    resendCount?: IntFilter<"OtpChallenge"> | number
-    consumedAt?: DateTimeNullableFilter<"OtpChallenge"> | Date | string | null
-    lockedUntil?: DateTimeNullableFilter<"OtpChallenge"> | Date | string | null
-    ip?: StringNullableFilter<"OtpChallenge"> | string | null
-    createdAt?: DateTimeFilter<"OtpChallenge"> | Date | string
-  }
-
-  export type OtpChallengeOrderByWithRelationInput = {
-    id?: SortOrder
-    email?: SortOrder
-    codeHash?: SortOrder
-    expiresAt?: SortOrder
-    attempts?: SortOrder
-    resendCount?: SortOrder
-    consumedAt?: SortOrderInput | SortOrder
-    lockedUntil?: SortOrderInput | SortOrder
-    ip?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type OtpChallengeWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: OtpChallengeWhereInput | OtpChallengeWhereInput[]
-    OR?: OtpChallengeWhereInput[]
-    NOT?: OtpChallengeWhereInput | OtpChallengeWhereInput[]
-    email?: StringFilter<"OtpChallenge"> | string
-    codeHash?: StringFilter<"OtpChallenge"> | string
-    expiresAt?: DateTimeFilter<"OtpChallenge"> | Date | string
-    attempts?: IntFilter<"OtpChallenge"> | number
-    resendCount?: IntFilter<"OtpChallenge"> | number
-    consumedAt?: DateTimeNullableFilter<"OtpChallenge"> | Date | string | null
-    lockedUntil?: DateTimeNullableFilter<"OtpChallenge"> | Date | string | null
-    ip?: StringNullableFilter<"OtpChallenge"> | string | null
-    createdAt?: DateTimeFilter<"OtpChallenge"> | Date | string
-  }, "id">
-
-  export type OtpChallengeOrderByWithAggregationInput = {
-    id?: SortOrder
-    email?: SortOrder
-    codeHash?: SortOrder
-    expiresAt?: SortOrder
-    attempts?: SortOrder
-    resendCount?: SortOrder
-    consumedAt?: SortOrderInput | SortOrder
-    lockedUntil?: SortOrderInput | SortOrder
-    ip?: SortOrderInput | SortOrder
-    createdAt?: SortOrder
-    _count?: OtpChallengeCountOrderByAggregateInput
-    _avg?: OtpChallengeAvgOrderByAggregateInput
-    _max?: OtpChallengeMaxOrderByAggregateInput
-    _min?: OtpChallengeMinOrderByAggregateInput
-    _sum?: OtpChallengeSumOrderByAggregateInput
-  }
-
-  export type OtpChallengeScalarWhereWithAggregatesInput = {
-    AND?: OtpChallengeScalarWhereWithAggregatesInput | OtpChallengeScalarWhereWithAggregatesInput[]
-    OR?: OtpChallengeScalarWhereWithAggregatesInput[]
-    NOT?: OtpChallengeScalarWhereWithAggregatesInput | OtpChallengeScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"OtpChallenge"> | string
-    email?: StringWithAggregatesFilter<"OtpChallenge"> | string
-    codeHash?: StringWithAggregatesFilter<"OtpChallenge"> | string
-    expiresAt?: DateTimeWithAggregatesFilter<"OtpChallenge"> | Date | string
-    attempts?: IntWithAggregatesFilter<"OtpChallenge"> | number
-    resendCount?: IntWithAggregatesFilter<"OtpChallenge"> | number
-    consumedAt?: DateTimeNullableWithAggregatesFilter<"OtpChallenge"> | Date | string | null
-    lockedUntil?: DateTimeNullableWithAggregatesFilter<"OtpChallenge"> | Date | string | null
-    ip?: StringNullableWithAggregatesFilter<"OtpChallenge"> | string | null
-    createdAt?: DateTimeWithAggregatesFilter<"OtpChallenge"> | Date | string
   }
 
   export type BranchWhereInput = {
@@ -42796,6 +41531,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -42832,6 +41568,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -42868,6 +41605,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -42904,6 +41642,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -42940,6 +41679,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -42957,6 +41697,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -42973,6 +41714,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -43407,97 +42149,6 @@ export namespace Prisma {
     expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
     lastActiveAt?: DateTimeFieldUpdateOperationsInput | Date | string
     revokedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type OtpChallengeCreateInput = {
-    id?: string
-    email: string
-    codeHash: string
-    expiresAt: Date | string
-    attempts?: number
-    resendCount?: number
-    consumedAt?: Date | string | null
-    lockedUntil?: Date | string | null
-    ip?: string | null
-    createdAt?: Date | string
-  }
-
-  export type OtpChallengeUncheckedCreateInput = {
-    id?: string
-    email: string
-    codeHash: string
-    expiresAt: Date | string
-    attempts?: number
-    resendCount?: number
-    consumedAt?: Date | string | null
-    lockedUntil?: Date | string | null
-    ip?: string | null
-    createdAt?: Date | string
-  }
-
-  export type OtpChallengeUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    codeHash?: StringFieldUpdateOperationsInput | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    attempts?: IntFieldUpdateOperationsInput | number
-    resendCount?: IntFieldUpdateOperationsInput | number
-    consumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    ip?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type OtpChallengeUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    codeHash?: StringFieldUpdateOperationsInput | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    attempts?: IntFieldUpdateOperationsInput | number
-    resendCount?: IntFieldUpdateOperationsInput | number
-    consumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    ip?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type OtpChallengeCreateManyInput = {
-    id?: string
-    email: string
-    codeHash: string
-    expiresAt: Date | string
-    attempts?: number
-    resendCount?: number
-    consumedAt?: Date | string | null
-    lockedUntil?: Date | string | null
-    ip?: string | null
-    createdAt?: Date | string
-  }
-
-  export type OtpChallengeUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    codeHash?: StringFieldUpdateOperationsInput | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    attempts?: IntFieldUpdateOperationsInput | number
-    resendCount?: IntFieldUpdateOperationsInput | number
-    consumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    ip?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type OtpChallengeUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    codeHash?: StringFieldUpdateOperationsInput | string
-    expiresAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    attempts?: IntFieldUpdateOperationsInput | number
-    resendCount?: IntFieldUpdateOperationsInput | number
-    consumedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    lockedUntil?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    ip?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -45838,6 +44489,7 @@ export namespace Prisma {
     nickname?: SortOrder
     email?: SortOrder
     waNumber?: SortOrder
+    passwordHash?: SortOrder
     avatarKey?: SortOrder
     bio?: SortOrder
     branchId?: SortOrder
@@ -45855,6 +44507,7 @@ export namespace Prisma {
     nickname?: SortOrder
     email?: SortOrder
     waNumber?: SortOrder
+    passwordHash?: SortOrder
     avatarKey?: SortOrder
     bio?: SortOrder
     branchId?: SortOrder
@@ -45872,6 +44525,7 @@ export namespace Prisma {
     nickname?: SortOrder
     email?: SortOrder
     waNumber?: SortOrder
+    passwordHash?: SortOrder
     avatarKey?: SortOrder
     bio?: SortOrder
     branchId?: SortOrder
@@ -46284,55 +44938,6 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedEnumRoleCodeNullableFilter<$PrismaModel>
     _max?: NestedEnumRoleCodeNullableFilter<$PrismaModel>
-  }
-
-  export type OtpChallengeCountOrderByAggregateInput = {
-    id?: SortOrder
-    email?: SortOrder
-    codeHash?: SortOrder
-    expiresAt?: SortOrder
-    attempts?: SortOrder
-    resendCount?: SortOrder
-    consumedAt?: SortOrder
-    lockedUntil?: SortOrder
-    ip?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type OtpChallengeAvgOrderByAggregateInput = {
-    attempts?: SortOrder
-    resendCount?: SortOrder
-  }
-
-  export type OtpChallengeMaxOrderByAggregateInput = {
-    id?: SortOrder
-    email?: SortOrder
-    codeHash?: SortOrder
-    expiresAt?: SortOrder
-    attempts?: SortOrder
-    resendCount?: SortOrder
-    consumedAt?: SortOrder
-    lockedUntil?: SortOrder
-    ip?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type OtpChallengeMinOrderByAggregateInput = {
-    id?: SortOrder
-    email?: SortOrder
-    codeHash?: SortOrder
-    expiresAt?: SortOrder
-    attempts?: SortOrder
-    resendCount?: SortOrder
-    consumedAt?: SortOrder
-    lockedUntil?: SortOrder
-    ip?: SortOrder
-    createdAt?: SortOrder
-  }
-
-  export type OtpChallengeSumOrderByAggregateInput = {
-    attempts?: SortOrder
-    resendCount?: SortOrder
   }
 
   export type FloatNullableFilter<$PrismaModel = never> = {
@@ -50956,6 +49561,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -50991,6 +49597,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -51042,6 +49649,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -51077,6 +49685,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51150,6 +49759,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -51185,6 +49795,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -51242,6 +49853,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -51277,6 +49889,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -51328,6 +49941,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -51363,6 +49977,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51432,6 +50047,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -51467,6 +50083,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51502,6 +50119,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -51537,6 +50155,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -51588,6 +50207,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -51623,6 +50243,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -51658,6 +50279,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -51693,6 +50315,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -51803,6 +50426,7 @@ export namespace Prisma {
     nickname?: StringNullableFilter<"User"> | string | null
     email?: StringFilter<"User"> | string
     waNumber?: StringFilter<"User"> | string
+    passwordHash?: StringNullableFilter<"User"> | string | null
     avatarKey?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     branchId?: StringNullableFilter<"User"> | string | null
@@ -51874,6 +50498,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -51909,6 +50534,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -51983,6 +50609,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -52018,6 +50645,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52082,6 +50710,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -52117,6 +50746,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -52191,6 +50821,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -52226,6 +50857,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52290,6 +50922,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -52325,6 +50958,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -52365,6 +50999,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -52400,6 +51035,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -52451,6 +51087,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -52486,6 +51123,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52532,6 +51170,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -52567,6 +51206,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52602,6 +51242,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -52637,6 +51278,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -52688,6 +51330,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -52723,6 +51366,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52758,6 +51402,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -52793,6 +51438,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -52844,6 +51490,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -52879,6 +51526,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53021,6 +51669,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -53056,6 +51705,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -53136,6 +51786,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -53171,6 +51822,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53229,6 +51881,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -53264,6 +51917,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -53344,6 +51998,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -53379,6 +52034,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53414,6 +52070,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -53449,6 +52106,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -53500,6 +52158,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -53535,6 +52194,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53570,6 +52230,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -53605,6 +52266,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -53645,6 +52307,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -53680,6 +52343,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -53731,6 +52395,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -53766,6 +52431,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53812,6 +52478,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -53847,6 +52514,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -53882,6 +52550,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -53917,6 +52586,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -53968,6 +52638,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -54003,6 +52674,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54038,6 +52710,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -54073,6 +52746,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -54244,6 +52918,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -54279,6 +52954,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54612,6 +53288,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -54647,6 +53324,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -54698,6 +53376,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -54733,6 +53412,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54768,6 +53448,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -54803,6 +53484,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -54854,6 +53536,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -54889,6 +53572,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55876,6 +54560,7 @@ export namespace Prisma {
     nickname?: string | null
     email: string
     waNumber: string
+    passwordHash?: string | null
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -55910,6 +54595,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -55945,6 +54631,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -55980,6 +54667,7 @@ export namespace Prisma {
     nickname?: NullableStringFieldUpdateOperationsInput | string | null
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null

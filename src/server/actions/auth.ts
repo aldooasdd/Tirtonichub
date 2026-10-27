@@ -2,65 +2,57 @@
 
 import { redirect } from "next/navigation";
 import { prisma } from "@/server/db";
-import { emailSchema, otpSchema } from "@/lib/validation";
-import { requestOtp, verifyOtp } from "@/server/auth/otp";
+import { emailSchema, passwordSchema } from "@/lib/validation";
+import { hashPassword, verifyPassword, DEFAULT_PASSWORD } from "@/server/auth/password";
 import { createSession, destroyCurrentSession, setActiveRole } from "@/server/auth/session";
 import { getSession } from "@/server/auth/session";
-import { sendOtp } from "@/server/n8n";
+import { requireAuth } from "@/server/auth/rbac";
 import { rateLimit } from "@/server/rate-limit";
 import { clientMeta } from "@/server/request-meta";
 import { roleCodeSchema } from "@/lib/validation";
 
 export type ActionResult = { ok: boolean; message?: string };
 
-/** Minta/kirim-ulang OTP. Respon SELALU generik (anti enumerasi email). */
-export async function requestOtpAction(email: string): Promise<ActionResult> {
-  const parsed = emailSchema.safeParse(email);
+/** Login email + password → buat sesi → redirect. Pesan gagal generik. */
+export async function loginAction(email: string, password: string): Promise<ActionResult> {
   const { ip } = await clientMeta();
-
-  // rate limit per IP + per email (walau email tak valid, tetap batasi IP)
-  if (!rateLimit(`otp:ip:${ip ?? "x"}`, 10, 60)) {
-    return { ok: false, message: "Terlalu banyak permintaan. Coba lagi nanti." };
+  if (!rateLimit(`login:ip:${ip ?? "x"}`, 10, 60)) {
+    return { ok: false, message: "Terlalu banyak percobaan. Coba lagi nanti." };
   }
-  if (!parsed.success) {
-    return { ok: true, message: "Jika email terdaftar, OTP sudah dikirim." };
-  }
-  const emailValue = parsed.data;
-  rateLimit(`otp:email:${emailValue}`, 10, 300);
-
-  const user = await prisma.user.findUnique({ where: { email: emailValue } });
-  if (user?.isActive) {
-    const res = await requestOtp(emailValue, ip ?? undefined);
-    if (res.ok) {
-      await sendOtp(user.waNumber, user.email, res.code);
-    }
-  }
-  return { ok: true, message: "Jika email terdaftar, OTP sudah dikirim." };
-}
-
-/** Verifikasi OTP → buat sesi → redirect. */
-export async function verifyOtpAction(email: string, code: string): Promise<ActionResult> {
   const e = emailSchema.safeParse(email);
-  const c = otpSchema.safeParse(code);
-  if (!e.success || !c.success) return { ok: false, message: "Kode tidak valid." };
-
-  const res = await verifyOtp(e.data, c.data);
-  if (!res.ok) {
-    const msg =
-      res.reason === "locked"
-        ? "Terlalu banyak percobaan. Coba lagi dalam 15 menit."
-        : res.reason === "expired"
-          ? "Kode kedaluwarsa. Minta kode baru."
-          : "Kode salah.";
-    return { ok: false, message: msg };
-  }
+  if (!e.success || !password) return { ok: false, message: "Email atau password salah." };
+  rateLimit(`login:email:${e.data}`, 10, 300);
 
   const user = await prisma.user.findUnique({ where: { email: e.data } });
-  if (!user?.isActive) return { ok: false, message: "Akun tidak aktif." };
+  if (!user?.isActive) return { ok: false, message: "Email atau password salah." };
+
+  // Akun lama belum punya password → backfill ke DEFAULT_PASSWORD saat login pertama.
+  let hash = user.passwordHash;
+  if (!hash) {
+    hash = hashPassword(DEFAULT_PASSWORD);
+    await prisma.user.update({ where: { id: user.id }, data: { passwordHash: hash } });
+  }
+  if (!verifyPassword(password, hash)) {
+    return { ok: false, message: "Email atau password salah." };
+  }
 
   const meta = await clientMeta();
   const { activeRole } = await createSession(user.id, meta);
   redirect(activeRole ? "/beranda" : "/pilih-role");
+}
+
+/** Ganti password sendiri (dari profil). */
+export async function changePasswordAction(current: string, next: string): Promise<ActionResult> {
+  const ctx = await requireAuth();
+  const p = passwordSchema.safeParse(next);
+  if (!p.success) return { ok: false, message: p.error.issues[0]?.message ?? "Password tidak valid." };
+
+  const user = await prisma.user.findUniqueOrThrow({ where: { id: ctx.userId }, select: { passwordHash: true } });
+  if (!verifyPassword(current, user.passwordHash)) {
+    return { ok: false, message: "Password sekarang salah." };
+  }
+  await prisma.user.update({ where: { id: ctx.userId }, data: { passwordHash: hashPassword(p.data) } });
+  return { ok: true, message: "Password berhasil diganti." };
 }
 
 /** Pilih/ganti role aktif. */

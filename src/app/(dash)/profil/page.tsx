@@ -2,6 +2,7 @@ import { requireAuth } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { ROLE_LABELS } from "@/lib/roles";
 import { ProfilForm } from "@/components/profil-form";
+import { PasswordForm } from "@/components/profil-password";
 import { Badge } from "@/components/ui/badge";
 
 export default async function ProfilPage() {
@@ -41,6 +42,8 @@ export default async function ProfilPage() {
         birthDate={user.birthDate ? user.birthDate.toISOString().slice(0, 10) : ""}
         themePref={user.themePref as "light" | "dark" | "system"}
       />
+
+      <PasswordForm />
     </div>
   );
 }

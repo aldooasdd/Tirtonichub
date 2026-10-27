@@ -22,7 +22,7 @@ export const emailSchema = z
   .email("Email tidak valid")
   .refine(isAllowedEmail, "Domain email tidak diizinkan");
 
-export const otpSchema = z.string().trim().regex(/^\d{6}$/, "Kode OTP 6 digit");
+export const passwordSchema = z.string().min(6, "Password minimal 6 karakter").max(100);
 
 const e164 = z.string().trim().regex(/^\+[1-9]\d{7,14}$/, "Nomor WA harus format +62…");
 

@@ -1,5 +1,6 @@
 import { PrismaClient, type RoleCode } from "../src/generated/prisma";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { hashPassword, DEFAULT_PASSWORD } from "../src/server/auth/password";
 
 // engineType "client" wajib driver adapter (sama seperti src/server/db.ts).
 const prisma = new PrismaClient({
@@ -70,7 +71,7 @@ async function main() {
     const user = await prisma.user.upsert({
       where: { email: b.email },
       update: { fullName: b.name, waNumber: b.wa, isActive: true },
-      create: { email: b.email, fullName: b.name, waNumber: b.wa },
+      create: { email: b.email, fullName: b.name, waNumber: b.wa, passwordHash: hashPassword(DEFAULT_PASSWORD) },
     });
     await prisma.userRole.upsert({
       where: { userId_roleId: { userId: user.id, roleId: bossRole.id } },
