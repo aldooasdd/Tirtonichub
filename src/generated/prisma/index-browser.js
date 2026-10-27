@@ -157,7 +157,9 @@ exports.Prisma.SalesReportScalarFieldEnum = {
   createdById: 'createdById',
   createdAt: 'createdAt',
   approvedAt: 'approvedAt',
-  approvedById: 'approvedById'
+  approvedById: 'approvedById',
+  accurateSyncedAt: 'accurateSyncedAt',
+  accurateRef: 'accurateRef'
 };
 
 exports.Prisma.RoleScalarFieldEnum = {

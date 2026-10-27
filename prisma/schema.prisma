@@ -126,6 +126,10 @@ model SalesReport {
   approvedAt   DateTime?
   approvedById String?
 
+  // Sinkronisasi Accurate: cocok (no nota+tanggal+total) → tersinkron.
+  accurateSyncedAt DateTime?
+  accurateRef      String? // no invoice Accurate yang cocok
+
   createdBy User @relation("SalesReportCreator", fields: [createdById], references: [id])
 
   @@index([createdById])

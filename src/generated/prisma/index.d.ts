@@ -5737,6 +5737,8 @@ export namespace Prisma {
     createdAt: Date | null
     approvedAt: Date | null
     approvedById: string | null
+    accurateSyncedAt: Date | null
+    accurateRef: string | null
   }
 
   export type SalesReportMaxAggregateOutputType = {
@@ -5757,6 +5759,8 @@ export namespace Prisma {
     createdAt: Date | null
     approvedAt: Date | null
     approvedById: string | null
+    accurateSyncedAt: Date | null
+    accurateRef: string | null
   }
 
   export type SalesReportCountAggregateOutputType = {
@@ -5779,6 +5783,8 @@ export namespace Prisma {
     createdAt: number
     approvedAt: number
     approvedById: number
+    accurateSyncedAt: number
+    accurateRef: number
     _all: number
   }
 
@@ -5813,6 +5819,8 @@ export namespace Prisma {
     createdAt?: true
     approvedAt?: true
     approvedById?: true
+    accurateSyncedAt?: true
+    accurateRef?: true
   }
 
   export type SalesReportMaxAggregateInputType = {
@@ -5833,6 +5841,8 @@ export namespace Prisma {
     createdAt?: true
     approvedAt?: true
     approvedById?: true
+    accurateSyncedAt?: true
+    accurateRef?: true
   }
 
   export type SalesReportCountAggregateInputType = {
@@ -5855,6 +5865,8 @@ export namespace Prisma {
     createdAt?: true
     approvedAt?: true
     approvedById?: true
+    accurateSyncedAt?: true
+    accurateRef?: true
     _all?: true
   }
 
@@ -5964,6 +5976,8 @@ export namespace Prisma {
     createdAt: Date
     approvedAt: Date | null
     approvedById: string | null
+    accurateSyncedAt: Date | null
+    accurateRef: string | null
     _count: SalesReportCountAggregateOutputType | null
     _avg: SalesReportAvgAggregateOutputType | null
     _sum: SalesReportSumAggregateOutputType | null
@@ -6005,6 +6019,8 @@ export namespace Prisma {
     createdAt?: boolean
     approvedAt?: boolean
     approvedById?: boolean
+    accurateSyncedAt?: boolean
+    accurateRef?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["salesReport"]>
 
@@ -6028,6 +6044,8 @@ export namespace Prisma {
     createdAt?: boolean
     approvedAt?: boolean
     approvedById?: boolean
+    accurateSyncedAt?: boolean
+    accurateRef?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["salesReport"]>
 
@@ -6051,6 +6069,8 @@ export namespace Prisma {
     createdAt?: boolean
     approvedAt?: boolean
     approvedById?: boolean
+    accurateSyncedAt?: boolean
+    accurateRef?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["salesReport"]>
 
@@ -6074,9 +6094,11 @@ export namespace Prisma {
     createdAt?: boolean
     approvedAt?: boolean
     approvedById?: boolean
+    accurateSyncedAt?: boolean
+    accurateRef?: boolean
   }
 
-  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "branchName" | "branchId" | "photoKey" | "createdById" | "createdAt" | "approvedAt" | "approvedById", ExtArgs["result"]["salesReport"]>
+  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "branchName" | "branchId" | "photoKey" | "createdById" | "createdAt" | "approvedAt" | "approvedById" | "accurateSyncedAt" | "accurateRef", ExtArgs["result"]["salesReport"]>
   export type SalesReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -6112,6 +6134,8 @@ export namespace Prisma {
       createdAt: Date
       approvedAt: Date | null
       approvedById: string | null
+      accurateSyncedAt: Date | null
+      accurateRef: string | null
     }, ExtArgs["result"]["salesReport"]>
     composites: {}
   }
@@ -6555,6 +6579,8 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"SalesReport", 'DateTime'>
     readonly approvedAt: FieldRef<"SalesReport", 'DateTime'>
     readonly approvedById: FieldRef<"SalesReport", 'String'>
+    readonly accurateSyncedAt: FieldRef<"SalesReport", 'DateTime'>
+    readonly accurateRef: FieldRef<"SalesReport", 'String'>
   }
     
 
@@ -38389,7 +38415,9 @@ export namespace Prisma {
     createdById: 'createdById',
     createdAt: 'createdAt',
     approvedAt: 'approvedAt',
-    approvedById: 'approvedById'
+    approvedById: 'approvedById',
+    accurateSyncedAt: 'accurateSyncedAt',
+    accurateRef: 'accurateRef'
   };
 
   export type SalesReportScalarFieldEnum = (typeof SalesReportScalarFieldEnum)[keyof typeof SalesReportScalarFieldEnum]
@@ -39244,6 +39272,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
     approvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
     approvedById?: StringNullableFilter<"SalesReport"> | string | null
+    accurateSyncedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
+    accurateRef?: StringNullableFilter<"SalesReport"> | string | null
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -39267,6 +39297,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     approvedAt?: SortOrderInput | SortOrder
     approvedById?: SortOrderInput | SortOrder
+    accurateSyncedAt?: SortOrderInput | SortOrder
+    accurateRef?: SortOrderInput | SortOrder
     createdBy?: UserOrderByWithRelationInput
   }
 
@@ -39293,6 +39325,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
     approvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
     approvedById?: StringNullableFilter<"SalesReport"> | string | null
+    accurateSyncedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
+    accurateRef?: StringNullableFilter<"SalesReport"> | string | null
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
@@ -39316,6 +39350,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     approvedAt?: SortOrderInput | SortOrder
     approvedById?: SortOrderInput | SortOrder
+    accurateSyncedAt?: SortOrderInput | SortOrder
+    accurateRef?: SortOrderInput | SortOrder
     _count?: SalesReportCountOrderByAggregateInput
     _avg?: SalesReportAvgOrderByAggregateInput
     _max?: SalesReportMaxOrderByAggregateInput
@@ -39346,6 +39382,8 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"SalesReport"> | Date | string
     approvedAt?: DateTimeNullableWithAggregatesFilter<"SalesReport"> | Date | string | null
     approvedById?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
+    accurateSyncedAt?: DateTimeNullableWithAggregatesFilter<"SalesReport"> | Date | string | null
+    accurateRef?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
   }
 
   export type RoleWhereInput = {
@@ -41719,6 +41757,8 @@ export namespace Prisma {
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
+    accurateSyncedAt?: Date | string | null
+    accurateRef?: string | null
     createdBy: UserCreateNestedOneWithoutSalesReportsInput
   }
 
@@ -41742,6 +41782,8 @@ export namespace Prisma {
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
+    accurateSyncedAt?: Date | string | null
+    accurateRef?: string | null
   }
 
   export type SalesReportUpdateInput = {
@@ -41763,6 +41805,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
     createdBy?: UserUpdateOneRequiredWithoutSalesReportsNestedInput
   }
 
@@ -41786,6 +41830,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SalesReportCreateManyInput = {
@@ -41808,6 +41854,8 @@ export namespace Prisma {
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
+    accurateSyncedAt?: Date | string | null
+    accurateRef?: string | null
   }
 
   export type SalesReportUpdateManyMutationInput = {
@@ -41829,6 +41877,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SalesReportUncheckedUpdateManyInput = {
@@ -41851,6 +41901,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type RoleCreateInput = {
@@ -44639,6 +44691,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     approvedAt?: SortOrder
     approvedById?: SortOrder
+    accurateSyncedAt?: SortOrder
+    accurateRef?: SortOrder
   }
 
   export type SalesReportAvgOrderByAggregateInput = {
@@ -44665,6 +44719,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     approvedAt?: SortOrder
     approvedById?: SortOrder
+    accurateSyncedAt?: SortOrder
+    accurateRef?: SortOrder
   }
 
   export type SalesReportMinOrderByAggregateInput = {
@@ -44685,6 +44741,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     approvedAt?: SortOrder
     approvedById?: SortOrder
+    accurateSyncedAt?: SortOrder
+    accurateRef?: SortOrder
   }
 
   export type SalesReportSumOrderByAggregateInput = {
@@ -48880,6 +48938,8 @@ export namespace Prisma {
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
+    accurateSyncedAt?: Date | string | null
+    accurateRef?: string | null
   }
 
   export type SalesReportUncheckedCreateWithoutCreatedByInput = {
@@ -48901,6 +48961,8 @@ export namespace Prisma {
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
+    accurateSyncedAt?: Date | string | null
+    accurateRef?: string | null
   }
 
   export type SalesReportCreateOrConnectWithoutCreatedByInput = {
@@ -49518,6 +49580,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
     approvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
     approvedById?: StringNullableFilter<"SalesReport"> | string | null
+    accurateSyncedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
+    accurateRef?: StringNullableFilter<"SalesReport"> | string | null
   }
 
   export type UserCreateWithoutSalesReportsInput = {
@@ -53715,6 +53779,8 @@ export namespace Prisma {
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
+    accurateSyncedAt?: Date | string | null
+    accurateRef?: string | null
   }
 
   export type UserRoleUpdateWithoutUserInput = {
@@ -54364,6 +54430,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SalesReportUncheckedUpdateWithoutCreatedByInput = {
@@ -54385,6 +54453,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SalesReportUncheckedUpdateManyWithoutCreatedByInput = {
@@ -54406,6 +54476,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserRoleCreateManyRoleInput = {
