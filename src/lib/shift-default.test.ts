@@ -13,6 +13,9 @@ assert.equal(defaultShift("A Taufiq", 1), "P");
 // Denta baru masuk → sebagian bulan kosong.
 assert.equal(defaultShift("Denta", 3), "CUTI");
 assert.equal(defaultShift("Denta", 11), "");
+// Alias: nama DB beda dgn PDF.
+assert.equal(defaultShift("Aldi", 1), defaultShift("Aldy", 1));
+assert.equal(defaultShift("Indy", 1), defaultShift("Siti Indira", 1));
 // Nama tak dikenal → kosong.
 assert.equal(defaultShift("Orang Asing", 1), "");
 
