@@ -19,6 +19,7 @@ import {
   Globe,
   ClipboardCheck,
   Boxes,
+  Warehouse,
   type LucideIcon,
 } from "lucide-react";
 import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, ADMIN_ROLES, roleAttends, type RoleCode } from "./roles";
@@ -99,7 +100,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
   if (STOCK_ROLES.includes(role)) {
     groups.push({
       title: "Stok",
-      icon: Boxes,
+      icon: Warehouse,
       items: [
         { label: "Quality Control", href: "/stok/qc", icon: ClipboardCheck },
         { label: "Stok", href: "/stok", icon: Boxes },
