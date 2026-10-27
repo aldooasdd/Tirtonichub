@@ -65,7 +65,6 @@ export function PenjualanTable({ rows }: { rows: PenjualanRow[] }) {
                 <th className="px-3 py-2 font-medium text-right">Penjualan</th>
                 <th className="px-3 py-2 font-medium text-right">Cash</th>
                 <th className="px-3 py-2 font-medium">Saluran</th>
-                <th className="px-3 py-2 font-medium">Keterangan</th>
                 <th className="px-3 py-2 font-medium"></th>
               </tr>
             </thead>
@@ -80,7 +79,6 @@ export function PenjualanTable({ rows }: { rows: PenjualanRow[] }) {
                   <td className="px-3 py-2">
                     <span className="rounded-full bg-muted px-2 py-0.5 text-11">{r.saluran}</span>
                   </td>
-                  <td className="px-3 py-2 text-12 text-muted-foreground">{r.ket}</td>
                   <td className="px-3 py-2 whitespace-nowrap">
                     {r.first && (
                       <a href={`/api/file?key=${encodeURIComponent(r.photoKey)}`} target="_blank" rel="noopener" className="text-12 text-primary">Nota</a>

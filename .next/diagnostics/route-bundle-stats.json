@@ -423,26 +423,6 @@
     ]
   },
   {
-    "route": "/finance/penjualan",
-    "firstLoadUncompressedJsBytes": 656831,
-    "firstLoadChunkPaths": [
-      ".next/static/chunks/36dds3_gamj6p.js",
-      ".next/static/chunks/0_8l91a3zaamm.js",
-      ".next/static/chunks/0ylsg_iazkkrv.js",
-      ".next/static/chunks/3ozln-8rkvx4u.js",
-      ".next/static/chunks/17ml9_6wcy12c.js",
-      ".next/static/chunks/3n0drtgqxmx9m.js",
-      ".next/static/chunks/0g86ehmvuaub_.js",
-      ".next/static/chunks/3d605hfesefys.js",
-      ".next/static/chunks/06cza79ljre1d.js",
-      ".next/static/chunks/3dd7r6r-s_vhx.js",
-      ".next/static/chunks/19rwnbr1_-u2m.js",
-      ".next/static/chunks/27n5614c3xmhs.js",
-      ".next/static/chunks/2b9jvpmc8yuzt.js",
-      ".next/static/chunks/turbopack-2c3mg3r-05n1w.js"
-    ]
-  },
-  {
     "route": "/hr/sesi",
     "firstLoadUncompressedJsBytes": 656733,
     "firstLoadChunkPaths": [
@@ -454,6 +434,26 @@
       ".next/static/chunks/3n0drtgqxmx9m.js",
       ".next/static/chunks/0g86ehmvuaub_.js",
       ".next/static/chunks/3wc28ngj1zo5e.js",
+      ".next/static/chunks/06cza79ljre1d.js",
+      ".next/static/chunks/3dd7r6r-s_vhx.js",
+      ".next/static/chunks/19rwnbr1_-u2m.js",
+      ".next/static/chunks/27n5614c3xmhs.js",
+      ".next/static/chunks/2b9jvpmc8yuzt.js",
+      ".next/static/chunks/turbopack-2c3mg3r-05n1w.js"
+    ]
+  },
+  {
+    "route": "/finance/penjualan",
+    "firstLoadUncompressedJsBytes": 656672,
+    "firstLoadChunkPaths": [
+      ".next/static/chunks/36dds3_gamj6p.js",
+      ".next/static/chunks/0_8l91a3zaamm.js",
+      ".next/static/chunks/0ylsg_iazkkrv.js",
+      ".next/static/chunks/3ozln-8rkvx4u.js",
+      ".next/static/chunks/17ml9_6wcy12c.js",
+      ".next/static/chunks/3n0drtgqxmx9m.js",
+      ".next/static/chunks/0g86ehmvuaub_.js",
+      ".next/static/chunks/2fj2v34hvc7os.js",
       ".next/static/chunks/06cza79ljre1d.js",
       ".next/static/chunks/3dd7r6r-s_vhx.js",
       ".next/static/chunks/19rwnbr1_-u2m.js",
