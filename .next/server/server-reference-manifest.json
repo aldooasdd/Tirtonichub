@@ -43,7 +43,7 @@
           "async": true
         },
         "app/(dash)/finance/penjualan/page": {
-          "moduleId": 96928,
+          "moduleId": 72705,
           "async": true
         },
         "app/(dash)/hr/approval/page": {
@@ -169,7 +169,7 @@
           "async": true
         },
         "app/(dash)/finance/penjualan/page": {
-          "moduleId": 96928,
+          "moduleId": 72705,
           "async": true
         },
         "app/(dash)/hr/approval/page": {
@@ -295,7 +295,7 @@
           "async": true
         },
         "app/(dash)/finance/penjualan/page": {
-          "moduleId": 96928,
+          "moduleId": 72705,
           "async": true
         },
         "app/(dash)/hr/approval/page": {
@@ -421,7 +421,7 @@
           "async": true
         },
         "app/(dash)/finance/penjualan/page": {
-          "moduleId": 96928,
+          "moduleId": 72705,
           "async": true
         },
         "app/(dash)/hr/approval/page": {
@@ -547,7 +547,7 @@
           "async": true
         },
         "app/(dash)/finance/penjualan/page": {
-          "moduleId": 96928,
+          "moduleId": 72705,
           "async": true
         },
         "app/(dash)/hr/approval/page": {
@@ -803,6 +803,34 @@
       },
       "filename": "src/server/actions/raw-products.ts",
       "exportedName": "submitBatchToQc"
+    },
+    "604370ed7ad45d384bdd0acaf41906ace7f03eddea": {
+      "workers": {
+        "app/(dash)/finance/penjualan/page": {
+          "moduleId": 72705,
+          "async": true
+        },
+        "app/(dash)/sales/page": {
+          "moduleId": 82806,
+          "async": true
+        }
+      },
+      "filename": "src/server/actions/sales.ts",
+      "exportedName": "scanSalesNota"
+    },
+    "4073bbe82fd48008edba02dd70d2a8db9ff06b6f36": {
+      "workers": {
+        "app/(dash)/finance/penjualan/page": {
+          "moduleId": 72705,
+          "async": true
+        },
+        "app/(dash)/sales/page": {
+          "moduleId": 82806,
+          "async": true
+        }
+      },
+      "filename": "src/server/actions/sales.ts",
+      "exportedName": "saveSalesReport"
     },
     "7029561b4ea2b73a54bdeb057a6cf6e33ab6124250": {
       "workers": {
@@ -1157,26 +1185,6 @@
       },
       "filename": "src/server/actions/profile.ts",
       "exportedName": "updateOwnProfile"
-    },
-    "604370ed7ad45d384bdd0acaf41906ace7f03eddea": {
-      "workers": {
-        "app/(dash)/sales/page": {
-          "moduleId": 82806,
-          "async": true
-        }
-      },
-      "filename": "src/server/actions/sales.ts",
-      "exportedName": "scanSalesNota"
-    },
-    "4073bbe82fd48008edba02dd70d2a8db9ff06b6f36": {
-      "workers": {
-        "app/(dash)/sales/page": {
-          "moduleId": 82806,
-          "async": true
-        }
-      },
-      "filename": "src/server/actions/sales.ts",
-      "exportedName": "saveSalesReport"
     },
     "7875a967cdb7cac29b61f8bd2cf268ce2d04836ec1": {
       "workers": {

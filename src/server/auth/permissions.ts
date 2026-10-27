@@ -4,7 +4,7 @@ const HR_ROLES: RoleCode[] = ["BOSS", "HR"];
 const FINANCE_ROLES: RoleCode[] = ["BOSS", "FINANCE"];
 const STOCK_ROLES: RoleCode[] = ["BOSS", "STOCK_ROOM"]; // Stock Room juga pegang QC
 const MEDIA_ROLES: RoleCode[] = ["BOSS", "MEDIA"]; // Tirtonic Studio (produksi konten)
-const SALES_ROLES: RoleCode[] = ["BOSS", "SALES"]; // kirim rekap penjualan (foto nota)
+const SALES_ROLES: RoleCode[] = ["BOSS", "SALES", "FINANCE"]; // kirim rekap penjualan (foto nota); Finance juga bisa input
 
 /** Izin murni (tanpa DB/next) — bisa diuji langsung. */
 export const can = {

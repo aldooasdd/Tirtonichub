@@ -56,7 +56,7 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
   </label>
 );
 
-export function SalesClient({ reports, canViewAll }: { reports: SalesRow[]; canViewAll: boolean }) {
+export function SalesClient({ reports, canViewAll, showList = true }: { reports: SalesRow[]; canViewAll: boolean; showList?: boolean }) {
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
@@ -205,6 +205,7 @@ export function SalesClient({ reports, canViewAll }: { reports: SalesRow[]; canV
         </div>
       )}
 
+      {showList && (
       <section className="space-y-2">
         <h2 className="text-14 font-medium text-muted-foreground">{canViewAll ? "Penjualan terbaru" : "Rekap saya"}</h2>
         {reports.length === 0 ? (
@@ -222,6 +223,7 @@ export function SalesClient({ reports, canViewAll }: { reports: SalesRow[]; canV
           </div>
         )}
       </section>
+      )}
     </div>
   );
 }
