@@ -15,9 +15,8 @@ export function Sidebar() {
   return (
     <aside className="hidden w-64 shrink-0 border-r bg-background md:flex md:flex-col">
       <div className="flex h-16 items-center gap-2 px-6">
-        <div className="flex h-8 w-8 items-center justify-center rounded-md bg-primary text-primary-foreground text-sm font-semibold">
-          T
-        </div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo-ball.png" alt="Tirtonic" className="h-8 w-8 object-contain" />
         <span className="font-semibold">Tirtonic</span>
       </div>
       <ScrollArea className="min-h-0 flex-1 px-3 pb-4">
