@@ -5730,6 +5730,7 @@ export namespace Prisma {
     total: number | null
     grandTotal: number | null
     channel: string | null
+    branchName: string | null
     photoKey: string | null
     createdById: string | null
     createdAt: Date | null
@@ -5746,6 +5747,7 @@ export namespace Prisma {
     total: number | null
     grandTotal: number | null
     channel: string | null
+    branchName: string | null
     photoKey: string | null
     createdById: string | null
     createdAt: Date | null
@@ -5764,6 +5766,7 @@ export namespace Prisma {
     grandTotal: number
     payments: number
     channel: number
+    branchName: number
     photoKey: number
     createdById: number
     createdAt: number
@@ -5794,6 +5797,7 @@ export namespace Prisma {
     total?: true
     grandTotal?: true
     channel?: true
+    branchName?: true
     photoKey?: true
     createdById?: true
     createdAt?: true
@@ -5810,6 +5814,7 @@ export namespace Prisma {
     total?: true
     grandTotal?: true
     channel?: true
+    branchName?: true
     photoKey?: true
     createdById?: true
     createdAt?: true
@@ -5828,6 +5833,7 @@ export namespace Prisma {
     grandTotal?: true
     payments?: true
     channel?: true
+    branchName?: true
     photoKey?: true
     createdById?: true
     createdAt?: true
@@ -5933,6 +5939,7 @@ export namespace Prisma {
     grandTotal: number
     payments: JsonValue
     channel: string
+    branchName: string | null
     photoKey: string
     createdById: string
     createdAt: Date
@@ -5970,6 +5977,7 @@ export namespace Prisma {
     grandTotal?: boolean
     payments?: boolean
     channel?: boolean
+    branchName?: boolean
     photoKey?: boolean
     createdById?: boolean
     createdAt?: boolean
@@ -5989,6 +5997,7 @@ export namespace Prisma {
     grandTotal?: boolean
     payments?: boolean
     channel?: boolean
+    branchName?: boolean
     photoKey?: boolean
     createdById?: boolean
     createdAt?: boolean
@@ -6008,6 +6017,7 @@ export namespace Prisma {
     grandTotal?: boolean
     payments?: boolean
     channel?: boolean
+    branchName?: boolean
     photoKey?: boolean
     createdById?: boolean
     createdAt?: boolean
@@ -6027,12 +6037,13 @@ export namespace Prisma {
     grandTotal?: boolean
     payments?: boolean
     channel?: boolean
+    branchName?: boolean
     photoKey?: boolean
     createdById?: boolean
     createdAt?: boolean
   }
 
-  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "photoKey" | "createdById" | "createdAt", ExtArgs["result"]["salesReport"]>
+  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "branchName" | "photoKey" | "createdById" | "createdAt", ExtArgs["result"]["salesReport"]>
   export type SalesReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -6061,6 +6072,7 @@ export namespace Prisma {
       grandTotal: number
       payments: Prisma.JsonValue
       channel: string
+      branchName: string | null
       photoKey: string
       createdById: string
       createdAt: Date
@@ -6500,6 +6512,7 @@ export namespace Prisma {
     readonly grandTotal: FieldRef<"SalesReport", 'Int'>
     readonly payments: FieldRef<"SalesReport", 'Json'>
     readonly channel: FieldRef<"SalesReport", 'String'>
+    readonly branchName: FieldRef<"SalesReport", 'String'>
     readonly photoKey: FieldRef<"SalesReport", 'String'>
     readonly createdById: FieldRef<"SalesReport", 'String'>
     readonly createdAt: FieldRef<"SalesReport", 'DateTime'>
@@ -38331,6 +38344,7 @@ export namespace Prisma {
     grandTotal: 'grandTotal',
     payments: 'payments',
     channel: 'channel',
+    branchName: 'branchName',
     photoKey: 'photoKey',
     createdById: 'createdById',
     createdAt: 'createdAt'
@@ -39181,6 +39195,7 @@ export namespace Prisma {
     grandTotal?: IntFilter<"SalesReport"> | number
     payments?: JsonFilter<"SalesReport">
     channel?: StringFilter<"SalesReport"> | string
+    branchName?: StringNullableFilter<"SalesReport"> | string | null
     photoKey?: StringFilter<"SalesReport"> | string
     createdById?: StringFilter<"SalesReport"> | string
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
@@ -39200,6 +39215,7 @@ export namespace Prisma {
     grandTotal?: SortOrder
     payments?: SortOrder
     channel?: SortOrder
+    branchName?: SortOrderInput | SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
@@ -39222,6 +39238,7 @@ export namespace Prisma {
     grandTotal?: IntFilter<"SalesReport"> | number
     payments?: JsonFilter<"SalesReport">
     channel?: StringFilter<"SalesReport"> | string
+    branchName?: StringNullableFilter<"SalesReport"> | string | null
     photoKey?: StringFilter<"SalesReport"> | string
     createdById?: StringFilter<"SalesReport"> | string
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
@@ -39241,6 +39258,7 @@ export namespace Prisma {
     grandTotal?: SortOrder
     payments?: SortOrder
     channel?: SortOrder
+    branchName?: SortOrderInput | SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
@@ -39267,6 +39285,7 @@ export namespace Prisma {
     grandTotal?: IntWithAggregatesFilter<"SalesReport"> | number
     payments?: JsonWithAggregatesFilter<"SalesReport">
     channel?: StringWithAggregatesFilter<"SalesReport"> | string
+    branchName?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
     photoKey?: StringWithAggregatesFilter<"SalesReport"> | string
     createdById?: StringWithAggregatesFilter<"SalesReport"> | string
     createdAt?: DateTimeWithAggregatesFilter<"SalesReport"> | Date | string
@@ -41637,6 +41656,7 @@ export namespace Prisma {
     grandTotal?: number
     payments: JsonNullValueInput | InputJsonValue
     channel?: string
+    branchName?: string | null
     photoKey: string
     createdAt?: Date | string
     createdBy: UserCreateNestedOneWithoutSalesReportsInput
@@ -41655,6 +41675,7 @@ export namespace Prisma {
     grandTotal?: number
     payments: JsonNullValueInput | InputJsonValue
     channel?: string
+    branchName?: string | null
     photoKey: string
     createdById: string
     createdAt?: Date | string
@@ -41673,6 +41694,7 @@ export namespace Prisma {
     grandTotal?: IntFieldUpdateOperationsInput | number
     payments?: JsonNullValueInput | InputJsonValue
     channel?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdBy?: UserUpdateOneRequiredWithoutSalesReportsNestedInput
@@ -41691,6 +41713,7 @@ export namespace Prisma {
     grandTotal?: IntFieldUpdateOperationsInput | number
     payments?: JsonNullValueInput | InputJsonValue
     channel?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41709,6 +41732,7 @@ export namespace Prisma {
     grandTotal?: number
     payments: JsonNullValueInput | InputJsonValue
     channel?: string
+    branchName?: string | null
     photoKey: string
     createdById: string
     createdAt?: Date | string
@@ -41727,6 +41751,7 @@ export namespace Prisma {
     grandTotal?: IntFieldUpdateOperationsInput | number
     payments?: JsonNullValueInput | InputJsonValue
     channel?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -41744,6 +41769,7 @@ export namespace Prisma {
     grandTotal?: IntFieldUpdateOperationsInput | number
     payments?: JsonNullValueInput | InputJsonValue
     channel?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44528,6 +44554,7 @@ export namespace Prisma {
     grandTotal?: SortOrder
     payments?: SortOrder
     channel?: SortOrder
+    branchName?: SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
@@ -44550,6 +44577,7 @@ export namespace Prisma {
     total?: SortOrder
     grandTotal?: SortOrder
     channel?: SortOrder
+    branchName?: SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
@@ -44566,6 +44594,7 @@ export namespace Prisma {
     total?: SortOrder
     grandTotal?: SortOrder
     channel?: SortOrder
+    branchName?: SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
@@ -48758,6 +48787,7 @@ export namespace Prisma {
     grandTotal?: number
     payments: JsonNullValueInput | InputJsonValue
     channel?: string
+    branchName?: string | null
     photoKey: string
     createdAt?: Date | string
   }
@@ -48775,6 +48805,7 @@ export namespace Prisma {
     grandTotal?: number
     payments: JsonNullValueInput | InputJsonValue
     channel?: string
+    branchName?: string | null
     photoKey: string
     createdAt?: Date | string
   }
@@ -49387,6 +49418,7 @@ export namespace Prisma {
     grandTotal?: IntFilter<"SalesReport"> | number
     payments?: JsonFilter<"SalesReport">
     channel?: StringFilter<"SalesReport"> | string
+    branchName?: StringNullableFilter<"SalesReport"> | string | null
     photoKey?: StringFilter<"SalesReport"> | string
     createdById?: StringFilter<"SalesReport"> | string
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
@@ -53581,6 +53613,7 @@ export namespace Prisma {
     grandTotal?: number
     payments: JsonNullValueInput | InputJsonValue
     channel?: string
+    branchName?: string | null
     photoKey: string
     createdAt?: Date | string
   }
@@ -54226,6 +54259,7 @@ export namespace Prisma {
     grandTotal?: IntFieldUpdateOperationsInput | number
     payments?: JsonNullValueInput | InputJsonValue
     channel?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -54243,6 +54277,7 @@ export namespace Prisma {
     grandTotal?: IntFieldUpdateOperationsInput | number
     payments?: JsonNullValueInput | InputJsonValue
     channel?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -54260,6 +54295,7 @@ export namespace Prisma {
     grandTotal?: IntFieldUpdateOperationsInput | number
     payments?: JsonNullValueInput | InputJsonValue
     channel?: StringFieldUpdateOperationsInput | string
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

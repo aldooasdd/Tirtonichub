@@ -151,6 +151,7 @@ exports.Prisma.SalesReportScalarFieldEnum = {
   grandTotal: 'grandTotal',
   payments: 'payments',
   channel: 'channel',
+  branchName: 'branchName',
   photoKey: 'photoKey',
   createdById: 'createdById',
   createdAt: 'createdAt'

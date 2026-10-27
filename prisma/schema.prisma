@@ -115,6 +115,7 @@ model SalesReport {
   grandTotal  Int      @default(0)
   payments    Json // [{method, amount}]
   channel     String   @default("offline") // offline=nota Sales, online=input Admin dari marketplace
+  branchName  String? // cabang asal (dari user pengirim)
   photoKey    String // foto nota / screenshot di storage
   createdById String // user yang mengirim (Sales / Admin)
   createdAt   DateTime @default(now())

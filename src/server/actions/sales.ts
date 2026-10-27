@@ -76,6 +76,12 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
   const ctx = await requireSalesInput();
   if (!input.photoKey) return { ok: false, message: "Foto nota wajib." };
   const channel = input.channel === "online" ? "online" : "offline";
+  // cabang asal: dari user pengirim (offline). Online = tanpa cabang toko.
+  let branchName: string | null = null;
+  if (channel === "offline" && ctx.branchId) {
+    const br = await prisma.branch.findUnique({ where: { id: ctx.branchId }, select: { name: true } });
+    branchName = br?.name ?? null;
+  }
   const items = (input.items ?? []).filter((i) => i.name?.trim());
   if (items.length === 0 && input.grandTotal <= 0) return { ok: false, message: "Isi minimal 1 item atau total." };
 
@@ -102,6 +108,7 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
         .filter((p) => int(p.amount) > 0)
         .map((p) => ({ method: (p.method || "-").slice(0, 60), amount: int(p.amount) })),
       channel,
+      branchName,
       photoKey: input.photoKey,
       createdById: ctx.userId,
     },

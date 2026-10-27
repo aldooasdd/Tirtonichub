@@ -2,6 +2,13 @@ import { requireFinance } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { PenjualanTable } from "@/components/sales/penjualan-table";
 
+const HARI = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
+const BULAN = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+function fmtTgl(key: string) {
+  const d = new Date(key + "T00:00:00Z");
+  return `${HARI[d.getUTCDay()]} ${d.getUTCDate()} ${BULAN[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+}
+
 type Pay = { method: string; amount: number };
 type Item = { name: string; qty: number; price: number; total: number; note: string | null };
 
@@ -12,27 +19,30 @@ export default async function FinancePenjualanPage() {
     take: 500,
   });
 
-  // satu baris per item (seperti spreadsheet). Cash = nota dibayar tunai.
-  // ponytail: "cash" ditandai bila ada metode bayar mengandung tunai/cash; cukup utk rekap.
-  const rows = reports.flatMap((r) => {
+  // satu kartu per nota + total per nota. Cash = nota dibayar tunai.
+  // ponytail: "cash" ditandai bila ada metode bayar mengandung tunai/cash.
+  const notas = reports.map((r) => {
     const items = (Array.isArray(r.items) ? r.items : []) as Item[];
     const pays = (Array.isArray(r.payments) ? r.payments : []) as Pay[];
     const isCash = pays.some((p) => /tunai|cash/i.test(p.method || ""));
     const dateKey = new Date(r.soldAt.getTime() + 7 * 3600_000).toISOString().slice(0, 10); // WIB
-    return items.map((it, i) => ({
-      key: r.id + "-" + i,
+    return {
+      id: r.id,
       dateKey,
-      pelanggan: r.customer || "-",
-      nama: it.name || "-",
-      qty: it.qty || 1,
-      jual: it.total || it.price * (it.qty || 1),
-      cash: isCash ? it.total || it.price * (it.qty || 1) : 0,
+      tgl: fmtTgl(dateKey),
+      customer: r.customer || "-",
+      branch: r.branchName || (r.channel === "online" ? "Online" : "-"),
       saluran: r.channel === "online" ? "Online" : "Offline",
-      ket: it.note || "",
+      grandTotal: r.grandTotal,
       photoKey: r.photoKey,
-      first: i === 0,
-    }));
+      items: items.map((it) => ({
+        name: it.name || "-",
+        qty: it.qty || 1,
+        jual: it.total || it.price * (it.qty || 1),
+        cash: isCash ? it.total || it.price * (it.qty || 1) : 0,
+      })),
+    };
   });
 
-  return <PenjualanTable rows={rows} />;
+  return <PenjualanTable notas={notas} />;
 }
