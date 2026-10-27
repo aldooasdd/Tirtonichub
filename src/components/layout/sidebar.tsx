@@ -32,6 +32,7 @@ export function Sidebar() {
 
   const [closed, setClosed] = useState<Record<string, boolean>>({});
   const toggle = (t: string) => setClosed((c) => ({ ...c, [t]: !c[t] }));
+  const [menuOpen, setMenuOpen] = useState(false);
 
   return (
     <aside className="hidden w-64 shrink-0 border-r bg-background md:flex md:flex-col">
@@ -67,22 +68,24 @@ export function Sidebar() {
         })}
       </ScrollArea>
 
-      {/* Footer: fitur umum + akun */}
+      {/* Footer: akun (klik nama → buka fitur umum) */}
       <div className="border-t p-3">
-        {umum && (
+        {menuOpen && umum && (
           <nav className="mb-2 flex flex-col gap-0.5">
             {umum.items.map((item) => (
               <ItemLink key={item.href} item={item} active={isActive(item.href)} withIcon />
             ))}
           </nav>
         )}
-        <div className="flex items-center gap-2 rounded-md border-t px-1 py-1 pt-2">
+        <div className="flex items-center gap-2 rounded-md px-1 py-1">
           <Avatar className="h-8 w-8">
             <AvatarFallback>{initials(user.fullName)}</AvatarFallback>
           </Avatar>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5">
-              <p className="truncate text-14 font-medium">{user.fullName}</p>
+              <button onClick={() => setMenuOpen((v) => !v)} className="truncate text-left text-14 font-medium hover:underline">
+                {user.fullName}
+              </button>
               <RoleSwitcher compact />
             </div>
             <p className="truncate text-12 text-muted-foreground">{user.email}</p>
