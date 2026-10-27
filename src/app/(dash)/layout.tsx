@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/server/auth/session";
 import { SessionProvider } from "@/components/layout/active-role-context";
 import { AppShell } from "@/components/layout/app-shell";
+import { Presence } from "@/components/presence";
 import { prisma } from "@/server/db";
 import { timeAgo } from "@/lib/datetime";
 import { listRooms } from "@/server/chat/queries";
@@ -26,7 +27,7 @@ export default async function DashLayout({ children }: LayoutProps<"/">) {
     }),
     prisma.session.findMany({
       where: { revokedAt: null, expiresAt: { gt: new Date() } },
-      select: { userId: true, activeRoleCode: true },
+      select: { userId: true, activeRoleCode: true, lastActiveAt: true },
     }),
     listRooms(s.user.id),
     prisma.attendance.findMany({
@@ -50,8 +51,14 @@ export default async function DashLayout({ children }: LayoutProps<"/">) {
     time: timeAgo(n.createdAt),
   }));
 
-  // Anggota: role dari sesi aktif bila online, selain itu role pertama. Aktif → paling atas.
-  const liveByUser = new Map(liveSessions.map((v) => [v.userId, v.activeRoleCode]));
+  // Anggota: online = sesi dengan lastActiveAt < 150 dtk (heartbeat dari tab terbuka).
+  // Role dari sesi aktif bila online, selain itu role pertama. Aktif → paling atas.
+  const onlineSince = Date.now() - 150_000;
+  const liveByUser = new Map(
+    liveSessions
+      .filter((v) => v.lastActiveAt.getTime() > onlineSince)
+      .map((v) => [v.userId, v.activeRoleCode]),
+  );
   const members = memberRows
     .map((u) => ({
       id: u.id,
@@ -77,6 +84,7 @@ export default async function DashLayout({ children }: LayoutProps<"/">) {
       >
         {children}
       </AppShell>
+      <Presence />
     </SessionProvider>
   );
 }
