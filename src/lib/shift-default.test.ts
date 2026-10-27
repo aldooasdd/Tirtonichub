@@ -1,5 +1,5 @@
 import { strict as assert } from "node:assert";
-import { defaultShift } from "./shift-default";
+import { defaultShift, hasShiftRow } from "./shift-default";
 
 // Beberapa sel kunci dari PDF.
 assert.equal(defaultShift("Kiki Admin", 1), "P");
@@ -16,7 +16,13 @@ assert.equal(defaultShift("Denta", 11), "");
 // Alias: nama DB beda dgn PDF.
 assert.equal(defaultShift("Aldi", 1), defaultShift("Aldy", 1));
 assert.equal(defaultShift("Indy", 1), defaultShift("Siti Indira", 1));
+assert.equal(defaultShift("Irfan", 17), defaultShift("Irfan S", 17));
+assert.equal(defaultShift("Jose", 1), defaultShift("Josephira", 1));
+assert.equal(defaultShift("Mawa", 10), defaultShift("Erina", 10));
 // Nama tak dikenal → kosong.
 assert.equal(defaultShift("Orang Asing", 1), "");
+// hasShiftRow: Aldo (Sales) tak ada di PDF.
+assert.equal(hasShiftRow("Aldo"), false);
+assert.equal(hasShiftRow("Mawa"), true);
 
 console.log("shift-default ok");

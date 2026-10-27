@@ -36,11 +36,25 @@ const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
 const table = ROWS.map((r) => ({ match: r.match, days: r.codes.trim().split(/\s+/) }));
 
 // Nama di DB beda dgn nama di PDF → petakan ke baris PDF yang benar.
-const ALIAS: Record<string, string> = { aldi: "aldy", indy: "siti indira" };
+const ALIAS: Record<string, string> = {
+  aldi: "aldy",
+  indy: "siti indira",
+  irfan: "irfan s",
+  jose: "josephira",
+  mawa: "erina",
+};
+
+const rowFor = (fullName: string) => {
+  const n = ALIAS[norm(fullName)] ?? norm(fullName);
+  return table.find((r) => n.startsWith(r.match));
+};
 
 /** Kode shift default utk nama + tanggal (1..31). "" bila tak ada. */
 export function defaultShift(fullName: string, day: number): string {
-  const n = ALIAS[norm(fullName)] ?? norm(fullName);
-  const row = table.find((r) => n.startsWith(r.match));
-  return row?.days[day - 1] ?? "";
+  return rowFor(fullName)?.days[day - 1] ?? "";
+}
+
+/** True bila nama punya pola jadwal di PDF. */
+export function hasShiftRow(fullName: string): boolean {
+  return !!rowFor(fullName);
 }
