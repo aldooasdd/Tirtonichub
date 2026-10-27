@@ -111,22 +111,23 @@
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
 
-  --text-12: 12px;
-  --text-12--line-height: 16px;
-  --text-14: 14px;
-  --text-14--line-height: 20px;
-  --text-16: 16px;
-  --text-16--line-height: 24px;
-  --text-18: 18px;
-  --text-18--line-height: 28px;
-  --text-24: 24px;
-  --text-24--line-height: 32px;
-  --text-32: 32px;
-  --text-32--line-height: 40px;
-  --text-48: 48px;
-  --text-48--line-height: 56px;
-  --text-64: 64px;
-  --text-64--line-height: 72px;
+  /* Skala diturunkan 1 tingkat (gaya Clay, lebih padat). Nama class tetap. */
+  --text-12: 11px;
+  --text-12--line-height: 15px;
+  --text-14: 13px;
+  --text-14--line-height: 18px;
+  --text-16: 14px;
+  --text-16--line-height: 20px;
+  --text-18: 16px;
+  --text-18--line-height: 24px;
+  --text-24: 20px;
+  --text-24--line-height: 28px;
+  --text-32: 28px;
+  --text-32--line-height: 36px;
+  --text-48: 40px;
+  --text-48--line-height: 48px;
+  --text-64: 56px;
+  --text-64--line-height: 64px;
 
   /* Jangan definisikan --spacing-N: menimpa skala angka Tailwind (w-80, p-4, dst). */
 
