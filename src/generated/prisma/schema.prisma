@@ -98,8 +98,23 @@ model User {
   personalCalEvents PersonalCalEvent[]
   mediaPcal         MediaPcal?
   salesReports      SalesReport[]      @relation("SalesReportCreator")
+  shifts            Shift[]
 
   @@index([branchId])
+}
+
+// Jadwal kerja bulanan: 1 kode shift per karyawan per tanggal (dibuat HR).
+// Kode: P, S, OH (kerja) · O, WFH, CUTI, SAKIT, IZIN (non-kerja). Lihat src/lib/shift.ts.
+model Shift {
+  id     String   @id @default(cuid())
+  userId String
+  date   DateTime @db.Date
+  code   String
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
+  @@index([date])
 }
 
 // Nota penjualan difoto Sales → AI (n8n) ekstrak → masuk ke Finance (rekap harian).

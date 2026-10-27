@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model Shift
+ * 
+ */
+export type Shift = $Result.DefaultSelection<Prisma.$ShiftPayload>
+/**
  * Model SalesReport
  * 
  */
@@ -412,6 +417,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.shift`: Exposes CRUD operations for the **Shift** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Shifts
+    * const shifts = await prisma.shift.findMany()
+    * ```
+    */
+  get shift(): Prisma.ShiftDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.salesReport`: Exposes CRUD operations for the **SalesReport** model.
@@ -1144,6 +1159,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    Shift: 'Shift',
     SalesReport: 'SalesReport',
     AccurateCompare: 'AccurateCompare',
     Role: 'Role',
@@ -1191,7 +1207,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone"
+      modelProps: "user" | "shift" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1266,6 +1282,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Shift: {
+        payload: Prisma.$ShiftPayload<ExtArgs>
+        fields: Prisma.ShiftFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ShiftFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ShiftPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ShiftFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ShiftPayload>
+          }
+          findFirst: {
+            args: Prisma.ShiftFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ShiftPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ShiftFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ShiftPayload>
+          }
+          findMany: {
+            args: Prisma.ShiftFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ShiftPayload>[]
+          }
+          create: {
+            args: Prisma.ShiftCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ShiftPayload>
+          }
+          createMany: {
+            args: Prisma.ShiftCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ShiftCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ShiftPayload>[]
+          }
+          delete: {
+            args: Prisma.ShiftDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ShiftPayload>
+          }
+          update: {
+            args: Prisma.ShiftUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ShiftPayload>
+          }
+          deleteMany: {
+            args: Prisma.ShiftDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ShiftUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ShiftUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ShiftPayload>[]
+          }
+          upsert: {
+            args: Prisma.ShiftUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ShiftPayload>
+          }
+          aggregate: {
+            args: Prisma.ShiftAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateShift>
+          }
+          groupBy: {
+            args: Prisma.ShiftGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ShiftGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ShiftCountArgs<ExtArgs>
+            result: $Utils.Optional<ShiftCountAggregateOutputType> | number
           }
         }
       }
@@ -3512,6 +3602,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    shift?: ShiftOmit
     salesReport?: SalesReportOmit
     accurateCompare?: AccurateCompareOmit
     role?: RoleOmit
@@ -3638,6 +3729,7 @@ export namespace Prisma {
     mediaItems: number
     personalCalEvents: number
     salesReports: number
+    shifts: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3658,6 +3750,7 @@ export namespace Prisma {
     mediaItems?: boolean | UserCountOutputTypeCountMediaItemsArgs
     personalCalEvents?: boolean | UserCountOutputTypeCountPersonalCalEventsArgs
     salesReports?: boolean | UserCountOutputTypeCountSalesReportsArgs
+    shifts?: boolean | UserCountOutputTypeCountShiftsArgs
   }
 
   // Custom InputTypes
@@ -3788,6 +3881,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountSalesReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: SalesReportWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountShiftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ShiftWhereInput
   }
 
 
@@ -4241,6 +4341,7 @@ export namespace Prisma {
     personalCalEvents?: boolean | User$personalCalEventsArgs<ExtArgs>
     mediaPcal?: boolean | User$mediaPcalArgs<ExtArgs>
     salesReports?: boolean | User$salesReportsArgs<ExtArgs>
+    shifts?: boolean | User$shiftsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4322,6 +4423,7 @@ export namespace Prisma {
     personalCalEvents?: boolean | User$personalCalEventsArgs<ExtArgs>
     mediaPcal?: boolean | User$mediaPcalArgs<ExtArgs>
     salesReports?: boolean | User$salesReportsArgs<ExtArgs>
+    shifts?: boolean | User$shiftsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4354,6 +4456,7 @@ export namespace Prisma {
       personalCalEvents: Prisma.$PersonalCalEventPayload<ExtArgs>[]
       mediaPcal: Prisma.$MediaPcalPayload<ExtArgs> | null
       salesReports: Prisma.$SalesReportPayload<ExtArgs>[]
+      shifts: Prisma.$ShiftPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4785,6 +4888,7 @@ export namespace Prisma {
     personalCalEvents<T extends User$personalCalEventsArgs<ExtArgs> = {}>(args?: Subset<T, User$personalCalEventsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PersonalCalEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     mediaPcal<T extends User$mediaPcalArgs<ExtArgs> = {}>(args?: Subset<T, User$mediaPcalArgs<ExtArgs>>): Prisma__MediaPcalClient<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     salesReports<T extends User$salesReportsArgs<ExtArgs> = {}>(args?: Subset<T, User$salesReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    shifts<T extends User$shiftsArgs<ExtArgs> = {}>(args?: Subset<T, User$shiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5690,6 +5794,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.shifts
+   */
+  export type User$shiftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shift
+     */
+    select?: ShiftSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shift
+     */
+    omit?: ShiftOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShiftInclude<ExtArgs> | null
+    where?: ShiftWhereInput
+    orderBy?: ShiftOrderByWithRelationInput | ShiftOrderByWithRelationInput[]
+    cursor?: ShiftWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ShiftScalarFieldEnum | ShiftScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5705,6 +5833,1051 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Shift
+   */
+
+  export type AggregateShift = {
+    _count: ShiftCountAggregateOutputType | null
+    _min: ShiftMinAggregateOutputType | null
+    _max: ShiftMaxAggregateOutputType | null
+  }
+
+  export type ShiftMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    date: Date | null
+    code: string | null
+  }
+
+  export type ShiftMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    date: Date | null
+    code: string | null
+  }
+
+  export type ShiftCountAggregateOutputType = {
+    id: number
+    userId: number
+    date: number
+    code: number
+    _all: number
+  }
+
+
+  export type ShiftMinAggregateInputType = {
+    id?: true
+    userId?: true
+    date?: true
+    code?: true
+  }
+
+  export type ShiftMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    date?: true
+    code?: true
+  }
+
+  export type ShiftCountAggregateInputType = {
+    id?: true
+    userId?: true
+    date?: true
+    code?: true
+    _all?: true
+  }
+
+  export type ShiftAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Shift to aggregate.
+     */
+    where?: ShiftWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Shifts to fetch.
+     */
+    orderBy?: ShiftOrderByWithRelationInput | ShiftOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ShiftWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Shifts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Shifts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Shifts
+    **/
+    _count?: true | ShiftCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ShiftMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ShiftMaxAggregateInputType
+  }
+
+  export type GetShiftAggregateType<T extends ShiftAggregateArgs> = {
+        [P in keyof T & keyof AggregateShift]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateShift[P]>
+      : GetScalarType<T[P], AggregateShift[P]>
+  }
+
+
+
+
+  export type ShiftGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ShiftWhereInput
+    orderBy?: ShiftOrderByWithAggregationInput | ShiftOrderByWithAggregationInput[]
+    by: ShiftScalarFieldEnum[] | ShiftScalarFieldEnum
+    having?: ShiftScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ShiftCountAggregateInputType | true
+    _min?: ShiftMinAggregateInputType
+    _max?: ShiftMaxAggregateInputType
+  }
+
+  export type ShiftGroupByOutputType = {
+    id: string
+    userId: string
+    date: Date
+    code: string
+    _count: ShiftCountAggregateOutputType | null
+    _min: ShiftMinAggregateOutputType | null
+    _max: ShiftMaxAggregateOutputType | null
+  }
+
+  type GetShiftGroupByPayload<T extends ShiftGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ShiftGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ShiftGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ShiftGroupByOutputType[P]>
+            : GetScalarType<T[P], ShiftGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ShiftSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    date?: boolean
+    code?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["shift"]>
+
+  export type ShiftSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    date?: boolean
+    code?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["shift"]>
+
+  export type ShiftSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    date?: boolean
+    code?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["shift"]>
+
+  export type ShiftSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    date?: boolean
+    code?: boolean
+  }
+
+  export type ShiftOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "date" | "code", ExtArgs["result"]["shift"]>
+  export type ShiftInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ShiftIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ShiftIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ShiftPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Shift"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      date: Date
+      code: string
+    }, ExtArgs["result"]["shift"]>
+    composites: {}
+  }
+
+  type ShiftGetPayload<S extends boolean | null | undefined | ShiftDefaultArgs> = $Result.GetResult<Prisma.$ShiftPayload, S>
+
+  type ShiftCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ShiftFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ShiftCountAggregateInputType | true
+    }
+
+  export interface ShiftDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Shift'], meta: { name: 'Shift' } }
+    /**
+     * Find zero or one Shift that matches the filter.
+     * @param {ShiftFindUniqueArgs} args - Arguments to find a Shift
+     * @example
+     * // Get one Shift
+     * const shift = await prisma.shift.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ShiftFindUniqueArgs>(args: SelectSubset<T, ShiftFindUniqueArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Shift that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ShiftFindUniqueOrThrowArgs} args - Arguments to find a Shift
+     * @example
+     * // Get one Shift
+     * const shift = await prisma.shift.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ShiftFindUniqueOrThrowArgs>(args: SelectSubset<T, ShiftFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Shift that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShiftFindFirstArgs} args - Arguments to find a Shift
+     * @example
+     * // Get one Shift
+     * const shift = await prisma.shift.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ShiftFindFirstArgs>(args?: SelectSubset<T, ShiftFindFirstArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Shift that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShiftFindFirstOrThrowArgs} args - Arguments to find a Shift
+     * @example
+     * // Get one Shift
+     * const shift = await prisma.shift.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ShiftFindFirstOrThrowArgs>(args?: SelectSubset<T, ShiftFindFirstOrThrowArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Shifts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShiftFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Shifts
+     * const shifts = await prisma.shift.findMany()
+     * 
+     * // Get first 10 Shifts
+     * const shifts = await prisma.shift.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const shiftWithIdOnly = await prisma.shift.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ShiftFindManyArgs>(args?: SelectSubset<T, ShiftFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Shift.
+     * @param {ShiftCreateArgs} args - Arguments to create a Shift.
+     * @example
+     * // Create one Shift
+     * const Shift = await prisma.shift.create({
+     *   data: {
+     *     // ... data to create a Shift
+     *   }
+     * })
+     * 
+     */
+    create<T extends ShiftCreateArgs>(args: SelectSubset<T, ShiftCreateArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Shifts.
+     * @param {ShiftCreateManyArgs} args - Arguments to create many Shifts.
+     * @example
+     * // Create many Shifts
+     * const shift = await prisma.shift.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ShiftCreateManyArgs>(args?: SelectSubset<T, ShiftCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Shifts and returns the data saved in the database.
+     * @param {ShiftCreateManyAndReturnArgs} args - Arguments to create many Shifts.
+     * @example
+     * // Create many Shifts
+     * const shift = await prisma.shift.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Shifts and only return the `id`
+     * const shiftWithIdOnly = await prisma.shift.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ShiftCreateManyAndReturnArgs>(args?: SelectSubset<T, ShiftCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Shift.
+     * @param {ShiftDeleteArgs} args - Arguments to delete one Shift.
+     * @example
+     * // Delete one Shift
+     * const Shift = await prisma.shift.delete({
+     *   where: {
+     *     // ... filter to delete one Shift
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ShiftDeleteArgs>(args: SelectSubset<T, ShiftDeleteArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Shift.
+     * @param {ShiftUpdateArgs} args - Arguments to update one Shift.
+     * @example
+     * // Update one Shift
+     * const shift = await prisma.shift.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ShiftUpdateArgs>(args: SelectSubset<T, ShiftUpdateArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Shifts.
+     * @param {ShiftDeleteManyArgs} args - Arguments to filter Shifts to delete.
+     * @example
+     * // Delete a few Shifts
+     * const { count } = await prisma.shift.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ShiftDeleteManyArgs>(args?: SelectSubset<T, ShiftDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Shifts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShiftUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Shifts
+     * const shift = await prisma.shift.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ShiftUpdateManyArgs>(args: SelectSubset<T, ShiftUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Shifts and returns the data updated in the database.
+     * @param {ShiftUpdateManyAndReturnArgs} args - Arguments to update many Shifts.
+     * @example
+     * // Update many Shifts
+     * const shift = await prisma.shift.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Shifts and only return the `id`
+     * const shiftWithIdOnly = await prisma.shift.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ShiftUpdateManyAndReturnArgs>(args: SelectSubset<T, ShiftUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Shift.
+     * @param {ShiftUpsertArgs} args - Arguments to update or create a Shift.
+     * @example
+     * // Update or create a Shift
+     * const shift = await prisma.shift.upsert({
+     *   create: {
+     *     // ... data to create a Shift
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Shift we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ShiftUpsertArgs>(args: SelectSubset<T, ShiftUpsertArgs<ExtArgs>>): Prisma__ShiftClient<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Shifts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShiftCountArgs} args - Arguments to filter Shifts to count.
+     * @example
+     * // Count the number of Shifts
+     * const count = await prisma.shift.count({
+     *   where: {
+     *     // ... the filter for the Shifts we want to count
+     *   }
+     * })
+    **/
+    count<T extends ShiftCountArgs>(
+      args?: Subset<T, ShiftCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ShiftCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Shift.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShiftAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ShiftAggregateArgs>(args: Subset<T, ShiftAggregateArgs>): Prisma.PrismaPromise<GetShiftAggregateType<T>>
+
+    /**
+     * Group by Shift.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ShiftGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ShiftGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ShiftGroupByArgs['orderBy'] }
+        : { orderBy?: ShiftGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ShiftGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetShiftGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Shift model
+   */
+  readonly fields: ShiftFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Shift.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ShiftClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Shift model
+   */
+  interface ShiftFieldRefs {
+    readonly id: FieldRef<"Shift", 'String'>
+    readonly userId: FieldRef<"Shift", 'String'>
+    readonly date: FieldRef<"Shift", 'DateTime'>
+    readonly code: FieldRef<"Shift", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Shift findUnique
+   */
+  export type ShiftFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shift
+     */
+    select?: ShiftSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shift
+     */
+    omit?: ShiftOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShiftInclude<ExtArgs> | null
+    /**
+     * Filter, which Shift to fetch.
+     */
+    where: ShiftWhereUniqueInput
+  }
+
+  /**
+   * Shift findUniqueOrThrow
+   */
+  export type ShiftFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shift
+     */
+    select?: ShiftSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shift
+     */
+    omit?: ShiftOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShiftInclude<ExtArgs> | null
+    /**
+     * Filter, which Shift to fetch.
+     */
+    where: ShiftWhereUniqueInput
+  }
+
+  /**
+   * Shift findFirst
+   */
+  export type ShiftFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shift
+     */
+    select?: ShiftSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shift
+     */
+    omit?: ShiftOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShiftInclude<ExtArgs> | null
+    /**
+     * Filter, which Shift to fetch.
+     */
+    where?: ShiftWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Shifts to fetch.
+     */
+    orderBy?: ShiftOrderByWithRelationInput | ShiftOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Shifts.
+     */
+    cursor?: ShiftWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Shifts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Shifts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Shifts.
+     */
+    distinct?: ShiftScalarFieldEnum | ShiftScalarFieldEnum[]
+  }
+
+  /**
+   * Shift findFirstOrThrow
+   */
+  export type ShiftFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shift
+     */
+    select?: ShiftSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shift
+     */
+    omit?: ShiftOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShiftInclude<ExtArgs> | null
+    /**
+     * Filter, which Shift to fetch.
+     */
+    where?: ShiftWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Shifts to fetch.
+     */
+    orderBy?: ShiftOrderByWithRelationInput | ShiftOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Shifts.
+     */
+    cursor?: ShiftWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Shifts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Shifts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Shifts.
+     */
+    distinct?: ShiftScalarFieldEnum | ShiftScalarFieldEnum[]
+  }
+
+  /**
+   * Shift findMany
+   */
+  export type ShiftFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shift
+     */
+    select?: ShiftSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shift
+     */
+    omit?: ShiftOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShiftInclude<ExtArgs> | null
+    /**
+     * Filter, which Shifts to fetch.
+     */
+    where?: ShiftWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Shifts to fetch.
+     */
+    orderBy?: ShiftOrderByWithRelationInput | ShiftOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Shifts.
+     */
+    cursor?: ShiftWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Shifts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Shifts.
+     */
+    skip?: number
+    distinct?: ShiftScalarFieldEnum | ShiftScalarFieldEnum[]
+  }
+
+  /**
+   * Shift create
+   */
+  export type ShiftCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shift
+     */
+    select?: ShiftSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shift
+     */
+    omit?: ShiftOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShiftInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Shift.
+     */
+    data: XOR<ShiftCreateInput, ShiftUncheckedCreateInput>
+  }
+
+  /**
+   * Shift createMany
+   */
+  export type ShiftCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Shifts.
+     */
+    data: ShiftCreateManyInput | ShiftCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Shift createManyAndReturn
+   */
+  export type ShiftCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shift
+     */
+    select?: ShiftSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shift
+     */
+    omit?: ShiftOmit<ExtArgs> | null
+    /**
+     * The data used to create many Shifts.
+     */
+    data: ShiftCreateManyInput | ShiftCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShiftIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Shift update
+   */
+  export type ShiftUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shift
+     */
+    select?: ShiftSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shift
+     */
+    omit?: ShiftOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShiftInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Shift.
+     */
+    data: XOR<ShiftUpdateInput, ShiftUncheckedUpdateInput>
+    /**
+     * Choose, which Shift to update.
+     */
+    where: ShiftWhereUniqueInput
+  }
+
+  /**
+   * Shift updateMany
+   */
+  export type ShiftUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Shifts.
+     */
+    data: XOR<ShiftUpdateManyMutationInput, ShiftUncheckedUpdateManyInput>
+    /**
+     * Filter which Shifts to update
+     */
+    where?: ShiftWhereInput
+    /**
+     * Limit how many Shifts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Shift updateManyAndReturn
+   */
+  export type ShiftUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shift
+     */
+    select?: ShiftSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shift
+     */
+    omit?: ShiftOmit<ExtArgs> | null
+    /**
+     * The data used to update Shifts.
+     */
+    data: XOR<ShiftUpdateManyMutationInput, ShiftUncheckedUpdateManyInput>
+    /**
+     * Filter which Shifts to update
+     */
+    where?: ShiftWhereInput
+    /**
+     * Limit how many Shifts to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShiftIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Shift upsert
+   */
+  export type ShiftUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shift
+     */
+    select?: ShiftSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shift
+     */
+    omit?: ShiftOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShiftInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Shift to update in case it exists.
+     */
+    where: ShiftWhereUniqueInput
+    /**
+     * In case the Shift found by the `where` argument doesn't exist, create a new Shift with this data.
+     */
+    create: XOR<ShiftCreateInput, ShiftUncheckedCreateInput>
+    /**
+     * In case the Shift was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ShiftUpdateInput, ShiftUncheckedUpdateInput>
+  }
+
+  /**
+   * Shift delete
+   */
+  export type ShiftDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shift
+     */
+    select?: ShiftSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shift
+     */
+    omit?: ShiftOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShiftInclude<ExtArgs> | null
+    /**
+     * Filter which Shift to delete.
+     */
+    where: ShiftWhereUniqueInput
+  }
+
+  /**
+   * Shift deleteMany
+   */
+  export type ShiftDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Shifts to delete
+     */
+    where?: ShiftWhereInput
+    /**
+     * Limit how many Shifts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Shift without action
+   */
+  export type ShiftDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Shift
+     */
+    select?: ShiftSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Shift
+     */
+    omit?: ShiftOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ShiftInclude<ExtArgs> | null
   }
 
 
@@ -38384,6 +39557,16 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const ShiftScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    date: 'date',
+    code: 'code'
+  };
+
+  export type ShiftScalarFieldEnum = (typeof ShiftScalarFieldEnum)[keyof typeof ShiftScalarFieldEnum]
+
+
   export const SalesReportScalarFieldEnum: {
     id: 'id',
     notaNo: 'notaNo',
@@ -39117,6 +40300,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventListRelationFilter
     mediaPcal?: XOR<MediaPcalNullableScalarRelationFilter, MediaPcalWhereInput> | null
     salesReports?: SalesReportListRelationFilter
+    shifts?: ShiftListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -39155,6 +40339,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventOrderByRelationAggregateInput
     mediaPcal?: MediaPcalOrderByWithRelationInput
     salesReports?: SalesReportOrderByRelationAggregateInput
+    shifts?: ShiftOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -39196,6 +40381,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventListRelationFilter
     mediaPcal?: XOR<MediaPcalNullableScalarRelationFilter, MediaPcalWhereInput> | null
     salesReports?: SalesReportListRelationFilter
+    shifts?: ShiftListRelationFilter
   }, "id" | "email" | "waNumber">
 
   export type UserOrderByWithAggregationInput = {
@@ -39238,6 +40424,57 @@ export namespace Prisma {
     themePref?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type ShiftWhereInput = {
+    AND?: ShiftWhereInput | ShiftWhereInput[]
+    OR?: ShiftWhereInput[]
+    NOT?: ShiftWhereInput | ShiftWhereInput[]
+    id?: StringFilter<"Shift"> | string
+    userId?: StringFilter<"Shift"> | string
+    date?: DateTimeFilter<"Shift"> | Date | string
+    code?: StringFilter<"Shift"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ShiftOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    code?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type ShiftWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    userId_date?: ShiftUserIdDateCompoundUniqueInput
+    AND?: ShiftWhereInput | ShiftWhereInput[]
+    OR?: ShiftWhereInput[]
+    NOT?: ShiftWhereInput | ShiftWhereInput[]
+    userId?: StringFilter<"Shift"> | string
+    date?: DateTimeFilter<"Shift"> | Date | string
+    code?: StringFilter<"Shift"> | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "userId_date">
+
+  export type ShiftOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    code?: SortOrder
+    _count?: ShiftCountOrderByAggregateInput
+    _max?: ShiftMaxOrderByAggregateInput
+    _min?: ShiftMinOrderByAggregateInput
+  }
+
+  export type ShiftScalarWhereWithAggregatesInput = {
+    AND?: ShiftScalarWhereWithAggregatesInput | ShiftScalarWhereWithAggregatesInput[]
+    OR?: ShiftScalarWhereWithAggregatesInput[]
+    NOT?: ShiftScalarWhereWithAggregatesInput | ShiftScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Shift"> | string
+    userId?: StringWithAggregatesFilter<"Shift"> | string
+    date?: DateTimeWithAggregatesFilter<"Shift"> | Date | string
+    code?: StringWithAggregatesFilter<"Shift"> | string
   }
 
   export type SalesReportWhereInput = {
@@ -41560,6 +42797,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -41597,6 +42835,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserUpdateInput = {
@@ -41634,6 +42873,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -41671,6 +42911,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -41724,6 +42965,54 @@ export namespace Prisma {
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ShiftCreateInput = {
+    id?: string
+    date: Date | string
+    code: string
+    user: UserCreateNestedOneWithoutShiftsInput
+  }
+
+  export type ShiftUncheckedCreateInput = {
+    id?: string
+    userId: string
+    date: Date | string
+    code: string
+  }
+
+  export type ShiftUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    code?: StringFieldUpdateOperationsInput | string
+    user?: UserUpdateOneRequiredWithoutShiftsNestedInput
+  }
+
+  export type ShiftUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    code?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ShiftCreateManyInput = {
+    id?: string
+    userId: string
+    date: Date | string
+    code: string
+  }
+
+  export type ShiftUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    code?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ShiftUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    code?: StringFieldUpdateOperationsInput | string
   }
 
   export type SalesReportCreateInput = {
@@ -44422,6 +45711,12 @@ export namespace Prisma {
     none?: SalesReportWhereInput
   }
 
+  export type ShiftListRelationFilter = {
+    every?: ShiftWhereInput
+    some?: ShiftWhereInput
+    none?: ShiftWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -44480,6 +45775,10 @@ export namespace Prisma {
   }
 
   export type SalesReportOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ShiftOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -44608,6 +45907,37 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
+
+  export type UserScalarRelationFilter = {
+    is?: UserWhereInput
+    isNot?: UserWhereInput
+  }
+
+  export type ShiftUserIdDateCompoundUniqueInput = {
+    userId: string
+    date: Date | string
+  }
+
+  export type ShiftCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    code?: SortOrder
+  }
+
+  export type ShiftMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    code?: SortOrder
+  }
+
+  export type ShiftMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    date?: SortOrder
+    code?: SortOrder
+  }
   export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -44641,11 +45971,6 @@ export namespace Prisma {
     gt?: number | IntFieldRefInput<$PrismaModel>
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
-  }
-
-  export type UserScalarRelationFilter = {
-    is?: UserWhereInput
-    isNot?: UserWhereInput
   }
 
   export type SalesReportCountOrderByAggregateInput = {
@@ -46341,6 +47666,13 @@ export namespace Prisma {
     connect?: SalesReportWhereUniqueInput | SalesReportWhereUniqueInput[]
   }
 
+  export type ShiftCreateNestedManyWithoutUserInput = {
+    create?: XOR<ShiftCreateWithoutUserInput, ShiftUncheckedCreateWithoutUserInput> | ShiftCreateWithoutUserInput[] | ShiftUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ShiftCreateOrConnectWithoutUserInput | ShiftCreateOrConnectWithoutUserInput[]
+    createMany?: ShiftCreateManyUserInputEnvelope
+    connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+  }
+
   export type UserRoleUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -46470,6 +47802,13 @@ export namespace Prisma {
     connectOrCreate?: SalesReportCreateOrConnectWithoutCreatedByInput | SalesReportCreateOrConnectWithoutCreatedByInput[]
     createMany?: SalesReportCreateManyCreatedByInputEnvelope
     connect?: SalesReportWhereUniqueInput | SalesReportWhereUniqueInput[]
+  }
+
+  export type ShiftUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<ShiftCreateWithoutUserInput, ShiftUncheckedCreateWithoutUserInput> | ShiftCreateWithoutUserInput[] | ShiftUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ShiftCreateOrConnectWithoutUserInput | ShiftCreateOrConnectWithoutUserInput[]
+    createMany?: ShiftCreateManyUserInputEnvelope
+    connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -46760,6 +48099,20 @@ export namespace Prisma {
     deleteMany?: SalesReportScalarWhereInput | SalesReportScalarWhereInput[]
   }
 
+  export type ShiftUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ShiftCreateWithoutUserInput, ShiftUncheckedCreateWithoutUserInput> | ShiftCreateWithoutUserInput[] | ShiftUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ShiftCreateOrConnectWithoutUserInput | ShiftCreateOrConnectWithoutUserInput[]
+    upsert?: ShiftUpsertWithWhereUniqueWithoutUserInput | ShiftUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ShiftCreateManyUserInputEnvelope
+    set?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    disconnect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    delete?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    update?: ShiftUpdateWithWhereUniqueWithoutUserInput | ShiftUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ShiftUpdateManyWithWhereWithoutUserInput | ShiftUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+  }
+
   export type UserRoleUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -47016,6 +48369,34 @@ export namespace Prisma {
     update?: SalesReportUpdateWithWhereUniqueWithoutCreatedByInput | SalesReportUpdateWithWhereUniqueWithoutCreatedByInput[]
     updateMany?: SalesReportUpdateManyWithWhereWithoutCreatedByInput | SalesReportUpdateManyWithWhereWithoutCreatedByInput[]
     deleteMany?: SalesReportScalarWhereInput | SalesReportScalarWhereInput[]
+  }
+
+  export type ShiftUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<ShiftCreateWithoutUserInput, ShiftUncheckedCreateWithoutUserInput> | ShiftCreateWithoutUserInput[] | ShiftUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: ShiftCreateOrConnectWithoutUserInput | ShiftCreateOrConnectWithoutUserInput[]
+    upsert?: ShiftUpsertWithWhereUniqueWithoutUserInput | ShiftUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: ShiftCreateManyUserInputEnvelope
+    set?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    disconnect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    delete?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+    update?: ShiftUpdateWithWhereUniqueWithoutUserInput | ShiftUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: ShiftUpdateManyWithWhereWithoutUserInput | ShiftUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutShiftsInput = {
+    create?: XOR<UserCreateWithoutShiftsInput, UserUncheckedCreateWithoutShiftsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutShiftsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutShiftsNestedInput = {
+    create?: XOR<UserCreateWithoutShiftsInput, UserUncheckedCreateWithoutShiftsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutShiftsInput
+    upsert?: UserUpsertWithoutShiftsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutShiftsInput, UserUpdateWithoutShiftsInput>, UserUncheckedUpdateWithoutShiftsInput>
   }
 
   export type UserCreateNestedOneWithoutSalesReportsInput = {
@@ -48946,6 +50327,28 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ShiftCreateWithoutUserInput = {
+    id?: string
+    date: Date | string
+    code: string
+  }
+
+  export type ShiftUncheckedCreateWithoutUserInput = {
+    id?: string
+    date: Date | string
+    code: string
+  }
+
+  export type ShiftCreateOrConnectWithoutUserInput = {
+    where: ShiftWhereUniqueInput
+    create: XOR<ShiftCreateWithoutUserInput, ShiftUncheckedCreateWithoutUserInput>
+  }
+
+  export type ShiftCreateManyUserInputEnvelope = {
+    data: ShiftCreateManyUserInput | ShiftCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BranchUpsertWithoutUsersInput = {
     update: XOR<BranchUpdateWithoutUsersInput, BranchUncheckedUpdateWithoutUsersInput>
     create: XOR<BranchCreateWithoutUsersInput, BranchUncheckedCreateWithoutUsersInput>
@@ -49555,6 +50958,196 @@ export namespace Prisma {
     accurateRef?: StringNullableFilter<"SalesReport"> | string | null
   }
 
+  export type ShiftUpsertWithWhereUniqueWithoutUserInput = {
+    where: ShiftWhereUniqueInput
+    update: XOR<ShiftUpdateWithoutUserInput, ShiftUncheckedUpdateWithoutUserInput>
+    create: XOR<ShiftCreateWithoutUserInput, ShiftUncheckedCreateWithoutUserInput>
+  }
+
+  export type ShiftUpdateWithWhereUniqueWithoutUserInput = {
+    where: ShiftWhereUniqueInput
+    data: XOR<ShiftUpdateWithoutUserInput, ShiftUncheckedUpdateWithoutUserInput>
+  }
+
+  export type ShiftUpdateManyWithWhereWithoutUserInput = {
+    where: ShiftScalarWhereInput
+    data: XOR<ShiftUpdateManyMutationInput, ShiftUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type ShiftScalarWhereInput = {
+    AND?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+    OR?: ShiftScalarWhereInput[]
+    NOT?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
+    id?: StringFilter<"Shift"> | string
+    userId?: StringFilter<"Shift"> | string
+    date?: DateTimeFilter<"Shift"> | Date | string
+    code?: StringFilter<"Shift"> | string
+  }
+
+  export type UserCreateWithoutShiftsInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    passwordHash?: string | null
+    avatarKey?: string | null
+    bio?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    branch?: BranchCreateNestedOneWithoutUsersInput
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleCreateNestedManyWithoutUserInput
+    attendances?: AttendanceCreateNestedManyWithoutUserInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    reviewed?: RequestCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutShiftsInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    passwordHash?: string | null
+    avatarKey?: string | null
+    bio?: string | null
+    branchId?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleUncheckedCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleUncheckedCreateNestedManyWithoutUserInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutUserInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutShiftsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutShiftsInput, UserUncheckedCreateWithoutShiftsInput>
+  }
+
+  export type UserUpsertWithoutShiftsInput = {
+    update: XOR<UserUpdateWithoutShiftsInput, UserUncheckedUpdateWithoutShiftsInput>
+    create: XOR<UserCreateWithoutShiftsInput, UserUncheckedCreateWithoutShiftsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutShiftsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutShiftsInput, UserUncheckedUpdateWithoutShiftsInput>
+  }
+
+  export type UserUpdateWithoutShiftsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branch?: BranchUpdateOneWithoutUsersNestedInput
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUpdateManyWithoutUserNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutShiftsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUncheckedUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUncheckedUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
   export type UserCreateWithoutSalesReportsInput = {
     id?: string
     fullName: string
@@ -49589,6 +51182,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSalesReportsInput = {
@@ -49625,6 +51219,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSalesReportsInput = {
@@ -49677,6 +51272,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSalesReportsInput = {
@@ -49713,6 +51309,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserRoleCreateWithoutRoleInput = {
@@ -49787,6 +51384,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRolesInput = {
@@ -49823,6 +51421,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRolesInput = {
@@ -49881,6 +51480,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAssignedRolesInput = {
@@ -49917,6 +51517,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAssignedRolesInput = {
@@ -49969,6 +51570,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRolesInput = {
@@ -50005,6 +51607,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type RoleUpsertWithoutUsersInput = {
@@ -50075,6 +51678,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedRolesInput = {
@@ -50111,6 +51715,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -50147,6 +51752,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -50183,6 +51789,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -50235,6 +51842,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -50271,6 +51879,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutBranchInput = {
@@ -50307,6 +51916,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutBranchInput = {
@@ -50343,6 +51953,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutBranchInput = {
@@ -50526,6 +52137,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutSchedulesInput = {
@@ -50562,6 +52174,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutSchedulesInput = {
@@ -50637,6 +52250,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSchedulesInput = {
@@ -50673,6 +52287,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type WorkScheduleUpsertWithoutUsersInput = {
@@ -50738,6 +52353,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutAttendancesInput = {
@@ -50774,6 +52390,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutAttendancesInput = {
@@ -50849,6 +52466,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAttendancesInput = {
@@ -50885,6 +52503,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type BranchUpsertWithoutAttendancesInput = {
@@ -50950,6 +52569,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRequestsInput = {
@@ -50986,6 +52606,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRequestsInput = {
@@ -51027,6 +52648,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutReviewedInput = {
@@ -51063,6 +52685,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutReviewedInput = {
@@ -51115,6 +52738,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRequestsInput = {
@@ -51151,6 +52775,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutReviewedInput = {
@@ -51198,6 +52823,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedInput = {
@@ -51234,6 +52860,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -51270,6 +52897,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -51306,6 +52934,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -51358,6 +52987,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -51394,6 +53024,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutActivityLogsInput = {
@@ -51430,6 +53061,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutActivityLogsInput = {
@@ -51466,6 +53098,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutActivityLogsInput = {
@@ -51518,6 +53151,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivityLogsInput = {
@@ -51554,6 +53188,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ChatMemberCreateWithoutRoomInput = {
@@ -51697,6 +53332,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChatMembersInput = {
@@ -51733,6 +53369,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChatMembersInput = {
@@ -51814,6 +53451,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMembersInput = {
@@ -51850,6 +53488,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type ChatRoomCreateWithoutMessagesInput = {
@@ -51909,6 +53548,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutChatMessagesInput = {
@@ -51945,6 +53585,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutChatMessagesInput = {
@@ -52026,6 +53667,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMessagesInput = {
@@ -52062,6 +53704,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutCalendarEventsInput = {
@@ -52098,6 +53741,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutCalendarEventsInput = {
@@ -52134,6 +53778,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutCalendarEventsInput = {
@@ -52186,6 +53831,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCalendarEventsInput = {
@@ -52222,6 +53868,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutRawCreatedInput = {
@@ -52258,6 +53905,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRawCreatedInput = {
@@ -52294,6 +53942,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRawCreatedInput = {
@@ -52335,6 +53984,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutRawQcInput = {
@@ -52371,6 +54021,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutRawQcInput = {
@@ -52423,6 +54074,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRawCreatedInput = {
@@ -52459,6 +54111,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUpsertWithoutRawQcInput = {
@@ -52506,6 +54159,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRawQcInput = {
@@ -52542,6 +54196,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutMediaMemberInput = {
@@ -52578,6 +54233,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMediaMemberInput = {
@@ -52614,6 +54270,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMediaMemberInput = {
@@ -52666,6 +54323,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaMemberInput = {
@@ -52702,6 +54360,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutMediaItemsInput = {
@@ -52738,6 +54397,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMediaItemsInput = {
@@ -52774,6 +54434,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMediaItemsInput = {
@@ -52946,6 +54607,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaItemsInput = {
@@ -52982,6 +54644,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type MediaTaskUpsertWithWhereUniqueWithoutItemInput = {
@@ -53316,6 +54979,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutPersonalCalEventsInput = {
@@ -53352,6 +55016,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutPersonalCalEventsInput = {
@@ -53404,6 +55069,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPersonalCalEventsInput = {
@@ -53440,6 +55106,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutMediaPcalInput = {
@@ -53476,6 +55143,7 @@ export namespace Prisma {
     mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
   }
 
   export type UserUncheckedCreateWithoutMediaPcalInput = {
@@ -53512,6 +55180,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
   }
 
   export type UserCreateOrConnectWithoutMediaPcalInput = {
@@ -53564,6 +55233,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaPcalInput = {
@@ -53600,6 +55270,7 @@ export namespace Prisma {
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserRoleCreateManyUserInput = {
@@ -53831,6 +55502,12 @@ export namespace Prisma {
     approvedById?: string | null
     accurateSyncedAt?: Date | string | null
     accurateRef?: string | null
+  }
+
+  export type ShiftCreateManyUserInput = {
+    id?: string
+    date: Date | string
+    code: string
   }
 
   export type UserRoleUpdateWithoutUserInput = {
@@ -54530,6 +56207,24 @@ export namespace Prisma {
     accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type ShiftUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    code?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ShiftUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    code?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type ShiftUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    date?: DateTimeFieldUpdateOperationsInput | Date | string
+    code?: StringFieldUpdateOperationsInput | string
+  }
+
   export type UserRoleCreateManyRoleInput = {
     userId: string
     assignedById?: string | null
@@ -54623,6 +56318,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBranchInput = {
@@ -54659,6 +56355,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBranchInput = {

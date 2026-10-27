@@ -139,6 +139,13 @@ exports.Prisma.UserScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.ShiftScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  date: 'date',
+  code: 'code'
+};
+
 exports.Prisma.SalesReportScalarFieldEnum = {
   id: 'id',
   notaNo: 'notaNo',
@@ -592,6 +599,7 @@ exports.MediaTier = exports.$Enums.MediaTier = {
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Shift: 'Shift',
   SalesReport: 'SalesReport',
   AccurateCompare: 'AccurateCompare',
   Role: 'Role',
