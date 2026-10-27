@@ -137,6 +137,20 @@ model SalesReport {
   @@index([channel, approvedAt])
 }
 
+// Snapshot hasil sinkronisasi Accurate (disimpan Finance utk arsip).
+model AccurateCompare {
+  id            String   @id @default(cuid())
+  createdAt     DateTime @default(now())
+  createdById   String
+  createdByName String // nama penyimpan (biar tak perlu join)
+  totalAccurate Int      @default(0)
+  cocokCount    Int      @default(0)
+  selisihCount  Int      @default(0)
+  report        Json // { cocok, selisih, hanyaAccurate, hanyaRekap, markedCount, totalAccurate }
+
+  @@index([createdAt])
+}
+
 model Role {
   id    String     @id @default(cuid())
   code  RoleCode   @unique

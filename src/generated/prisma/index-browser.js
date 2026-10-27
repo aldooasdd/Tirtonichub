@@ -162,6 +162,17 @@ exports.Prisma.SalesReportScalarFieldEnum = {
   accurateRef: 'accurateRef'
 };
 
+exports.Prisma.AccurateCompareScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  createdById: 'createdById',
+  createdByName: 'createdByName',
+  totalAccurate: 'totalAccurate',
+  cocokCount: 'cocokCount',
+  selisihCount: 'selisihCount',
+  report: 'report'
+};
+
 exports.Prisma.RoleScalarFieldEnum = {
   id: 'id',
   code: 'code',
@@ -594,6 +605,7 @@ exports.MediaTier = exports.$Enums.MediaTier = {
 exports.Prisma.ModelName = {
   User: 'User',
   SalesReport: 'SalesReport',
+  AccurateCompare: 'AccurateCompare',
   Role: 'Role',
   UserRole: 'UserRole',
   Session: 'Session',

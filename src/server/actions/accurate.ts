@@ -46,3 +46,22 @@ export async function syncAccurate(pdfBase64: string): Promise<SyncResult> {
   await logActivity({ ...ctx, ip }, { action: "accurate_sync", entity: "SalesReport", entityId: `sync:${rec.marks.length}` });
   return { ok: true, report: { ...rec, markedCount: rec.marks.length, totalAccurate: sales.length } };
 }
+
+type Report = NonNullable<SyncResult["report"]>;
+
+/** Simpan snapshot hasil compare untuk arsip. */
+export async function saveAccurateCompare(report: Report): Promise<{ ok: boolean }> {
+  const ctx = await requireFinance();
+  const u = await prisma.user.findUnique({ where: { id: ctx.userId }, select: { fullName: true } });
+  await prisma.accurateCompare.create({
+    data: {
+      createdById: ctx.userId,
+      createdByName: u?.fullName ?? "-",
+      totalAccurate: report.totalAccurate,
+      cocokCount: report.cocok.length,
+      selisihCount: report.selisih.length,
+      report: JSON.parse(JSON.stringify(report)),
+    },
+  });
+  return { ok: true };
+}

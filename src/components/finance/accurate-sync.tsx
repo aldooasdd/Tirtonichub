@@ -1,9 +1,9 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { FileUp, Loader2, Check, AlertTriangle, FileWarning } from "lucide-react";
+import { FileUp, Loader2, Check, AlertTriangle, FileWarning, Save, History } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { syncAccurate, type SyncResult } from "@/server/actions/accurate";
+import { syncAccurate, saveAccurateCompare, type SyncResult } from "@/server/actions/accurate";
 
 const rupiah = (n: number) => `Rp ${new Intl.NumberFormat("id-ID").format(n)}`;
 
@@ -18,11 +18,39 @@ function fileToBase64(file: File): Promise<string> {
 
 type Report = NonNullable<SyncResult["report"]>;
 
-export function AccurateSync() {
+export type Saved = {
+  id: string;
+  at: string;
+  by: string;
+  totalAccurate: number;
+  cocokCount: number;
+  selisihCount: number;
+  report: Report;
+};
+
+const fmtAt = (iso: string) =>
+  new Date(iso).toLocaleString("id-ID", { day: "2-digit", month: "short", year: "numeric", hour: "2-digit", minute: "2-digit" });
+
+export function AccurateSync({ saved }: { saved: Saved[] }) {
   const fileRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [savedMsg, setSavedMsg] = useState<string | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
   const [report, setReport] = useState<Report | null>(null);
+
+  async function onSave() {
+    if (!report) return;
+    setSaving(true);
+    try {
+      await saveAccurateCompare(report);
+      setSavedMsg("Tersimpan. Muat ulang halaman untuk lihat di daftar.");
+    } catch {
+      setSavedMsg("Gagal simpan.");
+    } finally {
+      setSaving(false);
+    }
+  }
 
   async function onPick(file: File) {
     setBusy(true);
@@ -73,6 +101,12 @@ export function AccurateSync() {
 
       {report && (
         <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <Button variant="outline" size="sm" disabled={saving} onClick={onSave}>
+              {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />} Simpan hasil
+            </Button>
+            {savedMsg && <span className="text-13 text-muted-foreground">{savedMsg}</span>}
+          </div>
           <Section
             icon={<Check className="h-4 w-4 text-success" />}
             title={`Cocok (${report.cocok.length})`}
@@ -104,6 +138,33 @@ export function AccurateSync() {
             empty="Tak ada."
             rows={report.hanyaRekap.map((r) => ({ a: r.customer ?? "-", b: r.date ?? "-", c: rupiah(r.total) }))}
           />
+        </div>
+      )}
+
+      {saved.length > 0 && (
+        <div className="rounded-lg border bg-card">
+          <div className="flex items-center gap-2 border-b px-4 py-2.5">
+            <History className="h-4 w-4 text-muted-foreground" />
+            <span className="text-14 font-medium">Tersimpan ({saved.length})</span>
+          </div>
+          <div className="divide-y">
+            {saved.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => {
+                  setReport(s.report);
+                  setMsg(`Snapshot ${fmtAt(s.at)} · ${s.totalAccurate} faktur.`);
+                  setSavedMsg(null);
+                }}
+                className="flex w-full flex-wrap items-center justify-between gap-x-3 gap-y-0.5 px-4 py-2.5 text-left text-14 hover:bg-muted/50"
+              >
+                <span className="font-medium">{fmtAt(s.at)}</span>
+                <span className="text-12 text-muted-foreground">
+                  {s.by} · {s.totalAccurate} faktur · {s.cocokCount} cocok · {s.selisihCount} selisih
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
       )}
     </div>

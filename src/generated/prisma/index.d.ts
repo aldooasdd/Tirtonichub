@@ -24,6 +24,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type SalesReport = $Result.DefaultSelection<Prisma.$SalesReportPayload>
 /**
+ * Model AccurateCompare
+ * 
+ */
+export type AccurateCompare = $Result.DefaultSelection<Prisma.$AccurateComparePayload>
+/**
  * Model Role
  * 
  */
@@ -422,6 +427,16 @@ export class PrismaClient<
     * ```
     */
   get salesReport(): Prisma.SalesReportDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.accurateCompare`: Exposes CRUD operations for the **AccurateCompare** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AccurateCompares
+    * const accurateCompares = await prisma.accurateCompare.findMany()
+    * ```
+    */
+  get accurateCompare(): Prisma.AccurateCompareDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.role`: Exposes CRUD operations for the **Role** model.
@@ -1145,6 +1160,7 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     SalesReport: 'SalesReport',
+    AccurateCompare: 'AccurateCompare',
     Role: 'Role',
     UserRole: 'UserRole',
     Session: 'Session',
@@ -1191,7 +1207,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "salesReport" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone"
+      modelProps: "user" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "otpChallenge" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1340,6 +1356,80 @@ export namespace Prisma {
           count: {
             args: Prisma.SalesReportCountArgs<ExtArgs>
             result: $Utils.Optional<SalesReportCountAggregateOutputType> | number
+          }
+        }
+      }
+      AccurateCompare: {
+        payload: Prisma.$AccurateComparePayload<ExtArgs>
+        fields: Prisma.AccurateCompareFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AccurateCompareFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccurateComparePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AccurateCompareFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccurateComparePayload>
+          }
+          findFirst: {
+            args: Prisma.AccurateCompareFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccurateComparePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AccurateCompareFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccurateComparePayload>
+          }
+          findMany: {
+            args: Prisma.AccurateCompareFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccurateComparePayload>[]
+          }
+          create: {
+            args: Prisma.AccurateCompareCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccurateComparePayload>
+          }
+          createMany: {
+            args: Prisma.AccurateCompareCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AccurateCompareCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccurateComparePayload>[]
+          }
+          delete: {
+            args: Prisma.AccurateCompareDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccurateComparePayload>
+          }
+          update: {
+            args: Prisma.AccurateCompareUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccurateComparePayload>
+          }
+          deleteMany: {
+            args: Prisma.AccurateCompareDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AccurateCompareUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AccurateCompareUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccurateComparePayload>[]
+          }
+          upsert: {
+            args: Prisma.AccurateCompareUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AccurateComparePayload>
+          }
+          aggregate: {
+            args: Prisma.AccurateCompareAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAccurateCompare>
+          }
+          groupBy: {
+            args: Prisma.AccurateCompareGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AccurateCompareGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AccurateCompareCountArgs<ExtArgs>
+            result: $Utils.Optional<AccurateCompareCountAggregateOutputType> | number
           }
         }
       }
@@ -3513,6 +3603,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     salesReport?: SalesReportOmit
+    accurateCompare?: AccurateCompareOmit
     role?: RoleOmit
     userRole?: UserRoleOmit
     session?: SessionOmit
@@ -6992,6 +7083,1078 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: SalesReportInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AccurateCompare
+   */
+
+  export type AggregateAccurateCompare = {
+    _count: AccurateCompareCountAggregateOutputType | null
+    _avg: AccurateCompareAvgAggregateOutputType | null
+    _sum: AccurateCompareSumAggregateOutputType | null
+    _min: AccurateCompareMinAggregateOutputType | null
+    _max: AccurateCompareMaxAggregateOutputType | null
+  }
+
+  export type AccurateCompareAvgAggregateOutputType = {
+    totalAccurate: number | null
+    cocokCount: number | null
+    selisihCount: number | null
+  }
+
+  export type AccurateCompareSumAggregateOutputType = {
+    totalAccurate: number | null
+    cocokCount: number | null
+    selisihCount: number | null
+  }
+
+  export type AccurateCompareMinAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    createdById: string | null
+    createdByName: string | null
+    totalAccurate: number | null
+    cocokCount: number | null
+    selisihCount: number | null
+  }
+
+  export type AccurateCompareMaxAggregateOutputType = {
+    id: string | null
+    createdAt: Date | null
+    createdById: string | null
+    createdByName: string | null
+    totalAccurate: number | null
+    cocokCount: number | null
+    selisihCount: number | null
+  }
+
+  export type AccurateCompareCountAggregateOutputType = {
+    id: number
+    createdAt: number
+    createdById: number
+    createdByName: number
+    totalAccurate: number
+    cocokCount: number
+    selisihCount: number
+    report: number
+    _all: number
+  }
+
+
+  export type AccurateCompareAvgAggregateInputType = {
+    totalAccurate?: true
+    cocokCount?: true
+    selisihCount?: true
+  }
+
+  export type AccurateCompareSumAggregateInputType = {
+    totalAccurate?: true
+    cocokCount?: true
+    selisihCount?: true
+  }
+
+  export type AccurateCompareMinAggregateInputType = {
+    id?: true
+    createdAt?: true
+    createdById?: true
+    createdByName?: true
+    totalAccurate?: true
+    cocokCount?: true
+    selisihCount?: true
+  }
+
+  export type AccurateCompareMaxAggregateInputType = {
+    id?: true
+    createdAt?: true
+    createdById?: true
+    createdByName?: true
+    totalAccurate?: true
+    cocokCount?: true
+    selisihCount?: true
+  }
+
+  export type AccurateCompareCountAggregateInputType = {
+    id?: true
+    createdAt?: true
+    createdById?: true
+    createdByName?: true
+    totalAccurate?: true
+    cocokCount?: true
+    selisihCount?: true
+    report?: true
+    _all?: true
+  }
+
+  export type AccurateCompareAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AccurateCompare to aggregate.
+     */
+    where?: AccurateCompareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccurateCompares to fetch.
+     */
+    orderBy?: AccurateCompareOrderByWithRelationInput | AccurateCompareOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AccurateCompareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccurateCompares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccurateCompares.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AccurateCompares
+    **/
+    _count?: true | AccurateCompareCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AccurateCompareAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AccurateCompareSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AccurateCompareMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AccurateCompareMaxAggregateInputType
+  }
+
+  export type GetAccurateCompareAggregateType<T extends AccurateCompareAggregateArgs> = {
+        [P in keyof T & keyof AggregateAccurateCompare]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAccurateCompare[P]>
+      : GetScalarType<T[P], AggregateAccurateCompare[P]>
+  }
+
+
+
+
+  export type AccurateCompareGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AccurateCompareWhereInput
+    orderBy?: AccurateCompareOrderByWithAggregationInput | AccurateCompareOrderByWithAggregationInput[]
+    by: AccurateCompareScalarFieldEnum[] | AccurateCompareScalarFieldEnum
+    having?: AccurateCompareScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AccurateCompareCountAggregateInputType | true
+    _avg?: AccurateCompareAvgAggregateInputType
+    _sum?: AccurateCompareSumAggregateInputType
+    _min?: AccurateCompareMinAggregateInputType
+    _max?: AccurateCompareMaxAggregateInputType
+  }
+
+  export type AccurateCompareGroupByOutputType = {
+    id: string
+    createdAt: Date
+    createdById: string
+    createdByName: string
+    totalAccurate: number
+    cocokCount: number
+    selisihCount: number
+    report: JsonValue
+    _count: AccurateCompareCountAggregateOutputType | null
+    _avg: AccurateCompareAvgAggregateOutputType | null
+    _sum: AccurateCompareSumAggregateOutputType | null
+    _min: AccurateCompareMinAggregateOutputType | null
+    _max: AccurateCompareMaxAggregateOutputType | null
+  }
+
+  type GetAccurateCompareGroupByPayload<T extends AccurateCompareGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AccurateCompareGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AccurateCompareGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AccurateCompareGroupByOutputType[P]>
+            : GetScalarType<T[P], AccurateCompareGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AccurateCompareSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    createdById?: boolean
+    createdByName?: boolean
+    totalAccurate?: boolean
+    cocokCount?: boolean
+    selisihCount?: boolean
+    report?: boolean
+  }, ExtArgs["result"]["accurateCompare"]>
+
+  export type AccurateCompareSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    createdById?: boolean
+    createdByName?: boolean
+    totalAccurate?: boolean
+    cocokCount?: boolean
+    selisihCount?: boolean
+    report?: boolean
+  }, ExtArgs["result"]["accurateCompare"]>
+
+  export type AccurateCompareSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    createdAt?: boolean
+    createdById?: boolean
+    createdByName?: boolean
+    totalAccurate?: boolean
+    cocokCount?: boolean
+    selisihCount?: boolean
+    report?: boolean
+  }, ExtArgs["result"]["accurateCompare"]>
+
+  export type AccurateCompareSelectScalar = {
+    id?: boolean
+    createdAt?: boolean
+    createdById?: boolean
+    createdByName?: boolean
+    totalAccurate?: boolean
+    cocokCount?: boolean
+    selisihCount?: boolean
+    report?: boolean
+  }
+
+  export type AccurateCompareOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "createdAt" | "createdById" | "createdByName" | "totalAccurate" | "cocokCount" | "selisihCount" | "report", ExtArgs["result"]["accurateCompare"]>
+
+  export type $AccurateComparePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AccurateCompare"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      createdAt: Date
+      createdById: string
+      createdByName: string
+      totalAccurate: number
+      cocokCount: number
+      selisihCount: number
+      report: Prisma.JsonValue
+    }, ExtArgs["result"]["accurateCompare"]>
+    composites: {}
+  }
+
+  type AccurateCompareGetPayload<S extends boolean | null | undefined | AccurateCompareDefaultArgs> = $Result.GetResult<Prisma.$AccurateComparePayload, S>
+
+  type AccurateCompareCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AccurateCompareFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AccurateCompareCountAggregateInputType | true
+    }
+
+  export interface AccurateCompareDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AccurateCompare'], meta: { name: 'AccurateCompare' } }
+    /**
+     * Find zero or one AccurateCompare that matches the filter.
+     * @param {AccurateCompareFindUniqueArgs} args - Arguments to find a AccurateCompare
+     * @example
+     * // Get one AccurateCompare
+     * const accurateCompare = await prisma.accurateCompare.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AccurateCompareFindUniqueArgs>(args: SelectSubset<T, AccurateCompareFindUniqueArgs<ExtArgs>>): Prisma__AccurateCompareClient<$Result.GetResult<Prisma.$AccurateComparePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AccurateCompare that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AccurateCompareFindUniqueOrThrowArgs} args - Arguments to find a AccurateCompare
+     * @example
+     * // Get one AccurateCompare
+     * const accurateCompare = await prisma.accurateCompare.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AccurateCompareFindUniqueOrThrowArgs>(args: SelectSubset<T, AccurateCompareFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AccurateCompareClient<$Result.GetResult<Prisma.$AccurateComparePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AccurateCompare that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccurateCompareFindFirstArgs} args - Arguments to find a AccurateCompare
+     * @example
+     * // Get one AccurateCompare
+     * const accurateCompare = await prisma.accurateCompare.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AccurateCompareFindFirstArgs>(args?: SelectSubset<T, AccurateCompareFindFirstArgs<ExtArgs>>): Prisma__AccurateCompareClient<$Result.GetResult<Prisma.$AccurateComparePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AccurateCompare that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccurateCompareFindFirstOrThrowArgs} args - Arguments to find a AccurateCompare
+     * @example
+     * // Get one AccurateCompare
+     * const accurateCompare = await prisma.accurateCompare.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AccurateCompareFindFirstOrThrowArgs>(args?: SelectSubset<T, AccurateCompareFindFirstOrThrowArgs<ExtArgs>>): Prisma__AccurateCompareClient<$Result.GetResult<Prisma.$AccurateComparePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AccurateCompares that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccurateCompareFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AccurateCompares
+     * const accurateCompares = await prisma.accurateCompare.findMany()
+     * 
+     * // Get first 10 AccurateCompares
+     * const accurateCompares = await prisma.accurateCompare.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const accurateCompareWithIdOnly = await prisma.accurateCompare.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AccurateCompareFindManyArgs>(args?: SelectSubset<T, AccurateCompareFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccurateComparePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AccurateCompare.
+     * @param {AccurateCompareCreateArgs} args - Arguments to create a AccurateCompare.
+     * @example
+     * // Create one AccurateCompare
+     * const AccurateCompare = await prisma.accurateCompare.create({
+     *   data: {
+     *     // ... data to create a AccurateCompare
+     *   }
+     * })
+     * 
+     */
+    create<T extends AccurateCompareCreateArgs>(args: SelectSubset<T, AccurateCompareCreateArgs<ExtArgs>>): Prisma__AccurateCompareClient<$Result.GetResult<Prisma.$AccurateComparePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AccurateCompares.
+     * @param {AccurateCompareCreateManyArgs} args - Arguments to create many AccurateCompares.
+     * @example
+     * // Create many AccurateCompares
+     * const accurateCompare = await prisma.accurateCompare.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AccurateCompareCreateManyArgs>(args?: SelectSubset<T, AccurateCompareCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AccurateCompares and returns the data saved in the database.
+     * @param {AccurateCompareCreateManyAndReturnArgs} args - Arguments to create many AccurateCompares.
+     * @example
+     * // Create many AccurateCompares
+     * const accurateCompare = await prisma.accurateCompare.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AccurateCompares and only return the `id`
+     * const accurateCompareWithIdOnly = await prisma.accurateCompare.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AccurateCompareCreateManyAndReturnArgs>(args?: SelectSubset<T, AccurateCompareCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccurateComparePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AccurateCompare.
+     * @param {AccurateCompareDeleteArgs} args - Arguments to delete one AccurateCompare.
+     * @example
+     * // Delete one AccurateCompare
+     * const AccurateCompare = await prisma.accurateCompare.delete({
+     *   where: {
+     *     // ... filter to delete one AccurateCompare
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AccurateCompareDeleteArgs>(args: SelectSubset<T, AccurateCompareDeleteArgs<ExtArgs>>): Prisma__AccurateCompareClient<$Result.GetResult<Prisma.$AccurateComparePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AccurateCompare.
+     * @param {AccurateCompareUpdateArgs} args - Arguments to update one AccurateCompare.
+     * @example
+     * // Update one AccurateCompare
+     * const accurateCompare = await prisma.accurateCompare.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AccurateCompareUpdateArgs>(args: SelectSubset<T, AccurateCompareUpdateArgs<ExtArgs>>): Prisma__AccurateCompareClient<$Result.GetResult<Prisma.$AccurateComparePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AccurateCompares.
+     * @param {AccurateCompareDeleteManyArgs} args - Arguments to filter AccurateCompares to delete.
+     * @example
+     * // Delete a few AccurateCompares
+     * const { count } = await prisma.accurateCompare.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AccurateCompareDeleteManyArgs>(args?: SelectSubset<T, AccurateCompareDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AccurateCompares.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccurateCompareUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AccurateCompares
+     * const accurateCompare = await prisma.accurateCompare.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AccurateCompareUpdateManyArgs>(args: SelectSubset<T, AccurateCompareUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AccurateCompares and returns the data updated in the database.
+     * @param {AccurateCompareUpdateManyAndReturnArgs} args - Arguments to update many AccurateCompares.
+     * @example
+     * // Update many AccurateCompares
+     * const accurateCompare = await prisma.accurateCompare.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AccurateCompares and only return the `id`
+     * const accurateCompareWithIdOnly = await prisma.accurateCompare.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AccurateCompareUpdateManyAndReturnArgs>(args: SelectSubset<T, AccurateCompareUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AccurateComparePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AccurateCompare.
+     * @param {AccurateCompareUpsertArgs} args - Arguments to update or create a AccurateCompare.
+     * @example
+     * // Update or create a AccurateCompare
+     * const accurateCompare = await prisma.accurateCompare.upsert({
+     *   create: {
+     *     // ... data to create a AccurateCompare
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AccurateCompare we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AccurateCompareUpsertArgs>(args: SelectSubset<T, AccurateCompareUpsertArgs<ExtArgs>>): Prisma__AccurateCompareClient<$Result.GetResult<Prisma.$AccurateComparePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AccurateCompares.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccurateCompareCountArgs} args - Arguments to filter AccurateCompares to count.
+     * @example
+     * // Count the number of AccurateCompares
+     * const count = await prisma.accurateCompare.count({
+     *   where: {
+     *     // ... the filter for the AccurateCompares we want to count
+     *   }
+     * })
+    **/
+    count<T extends AccurateCompareCountArgs>(
+      args?: Subset<T, AccurateCompareCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AccurateCompareCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AccurateCompare.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccurateCompareAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AccurateCompareAggregateArgs>(args: Subset<T, AccurateCompareAggregateArgs>): Prisma.PrismaPromise<GetAccurateCompareAggregateType<T>>
+
+    /**
+     * Group by AccurateCompare.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AccurateCompareGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AccurateCompareGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AccurateCompareGroupByArgs['orderBy'] }
+        : { orderBy?: AccurateCompareGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AccurateCompareGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAccurateCompareGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AccurateCompare model
+   */
+  readonly fields: AccurateCompareFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AccurateCompare.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AccurateCompareClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AccurateCompare model
+   */
+  interface AccurateCompareFieldRefs {
+    readonly id: FieldRef<"AccurateCompare", 'String'>
+    readonly createdAt: FieldRef<"AccurateCompare", 'DateTime'>
+    readonly createdById: FieldRef<"AccurateCompare", 'String'>
+    readonly createdByName: FieldRef<"AccurateCompare", 'String'>
+    readonly totalAccurate: FieldRef<"AccurateCompare", 'Int'>
+    readonly cocokCount: FieldRef<"AccurateCompare", 'Int'>
+    readonly selisihCount: FieldRef<"AccurateCompare", 'Int'>
+    readonly report: FieldRef<"AccurateCompare", 'Json'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AccurateCompare findUnique
+   */
+  export type AccurateCompareFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccurateCompare
+     */
+    select?: AccurateCompareSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccurateCompare
+     */
+    omit?: AccurateCompareOmit<ExtArgs> | null
+    /**
+     * Filter, which AccurateCompare to fetch.
+     */
+    where: AccurateCompareWhereUniqueInput
+  }
+
+  /**
+   * AccurateCompare findUniqueOrThrow
+   */
+  export type AccurateCompareFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccurateCompare
+     */
+    select?: AccurateCompareSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccurateCompare
+     */
+    omit?: AccurateCompareOmit<ExtArgs> | null
+    /**
+     * Filter, which AccurateCompare to fetch.
+     */
+    where: AccurateCompareWhereUniqueInput
+  }
+
+  /**
+   * AccurateCompare findFirst
+   */
+  export type AccurateCompareFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccurateCompare
+     */
+    select?: AccurateCompareSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccurateCompare
+     */
+    omit?: AccurateCompareOmit<ExtArgs> | null
+    /**
+     * Filter, which AccurateCompare to fetch.
+     */
+    where?: AccurateCompareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccurateCompares to fetch.
+     */
+    orderBy?: AccurateCompareOrderByWithRelationInput | AccurateCompareOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AccurateCompares.
+     */
+    cursor?: AccurateCompareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccurateCompares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccurateCompares.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccurateCompares.
+     */
+    distinct?: AccurateCompareScalarFieldEnum | AccurateCompareScalarFieldEnum[]
+  }
+
+  /**
+   * AccurateCompare findFirstOrThrow
+   */
+  export type AccurateCompareFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccurateCompare
+     */
+    select?: AccurateCompareSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccurateCompare
+     */
+    omit?: AccurateCompareOmit<ExtArgs> | null
+    /**
+     * Filter, which AccurateCompare to fetch.
+     */
+    where?: AccurateCompareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccurateCompares to fetch.
+     */
+    orderBy?: AccurateCompareOrderByWithRelationInput | AccurateCompareOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AccurateCompares.
+     */
+    cursor?: AccurateCompareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccurateCompares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccurateCompares.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AccurateCompares.
+     */
+    distinct?: AccurateCompareScalarFieldEnum | AccurateCompareScalarFieldEnum[]
+  }
+
+  /**
+   * AccurateCompare findMany
+   */
+  export type AccurateCompareFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccurateCompare
+     */
+    select?: AccurateCompareSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccurateCompare
+     */
+    omit?: AccurateCompareOmit<ExtArgs> | null
+    /**
+     * Filter, which AccurateCompares to fetch.
+     */
+    where?: AccurateCompareWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AccurateCompares to fetch.
+     */
+    orderBy?: AccurateCompareOrderByWithRelationInput | AccurateCompareOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AccurateCompares.
+     */
+    cursor?: AccurateCompareWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AccurateCompares from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AccurateCompares.
+     */
+    skip?: number
+    distinct?: AccurateCompareScalarFieldEnum | AccurateCompareScalarFieldEnum[]
+  }
+
+  /**
+   * AccurateCompare create
+   */
+  export type AccurateCompareCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccurateCompare
+     */
+    select?: AccurateCompareSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccurateCompare
+     */
+    omit?: AccurateCompareOmit<ExtArgs> | null
+    /**
+     * The data needed to create a AccurateCompare.
+     */
+    data: XOR<AccurateCompareCreateInput, AccurateCompareUncheckedCreateInput>
+  }
+
+  /**
+   * AccurateCompare createMany
+   */
+  export type AccurateCompareCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AccurateCompares.
+     */
+    data: AccurateCompareCreateManyInput | AccurateCompareCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AccurateCompare createManyAndReturn
+   */
+  export type AccurateCompareCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccurateCompare
+     */
+    select?: AccurateCompareSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccurateCompare
+     */
+    omit?: AccurateCompareOmit<ExtArgs> | null
+    /**
+     * The data used to create many AccurateCompares.
+     */
+    data: AccurateCompareCreateManyInput | AccurateCompareCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AccurateCompare update
+   */
+  export type AccurateCompareUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccurateCompare
+     */
+    select?: AccurateCompareSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccurateCompare
+     */
+    omit?: AccurateCompareOmit<ExtArgs> | null
+    /**
+     * The data needed to update a AccurateCompare.
+     */
+    data: XOR<AccurateCompareUpdateInput, AccurateCompareUncheckedUpdateInput>
+    /**
+     * Choose, which AccurateCompare to update.
+     */
+    where: AccurateCompareWhereUniqueInput
+  }
+
+  /**
+   * AccurateCompare updateMany
+   */
+  export type AccurateCompareUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AccurateCompares.
+     */
+    data: XOR<AccurateCompareUpdateManyMutationInput, AccurateCompareUncheckedUpdateManyInput>
+    /**
+     * Filter which AccurateCompares to update
+     */
+    where?: AccurateCompareWhereInput
+    /**
+     * Limit how many AccurateCompares to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccurateCompare updateManyAndReturn
+   */
+  export type AccurateCompareUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccurateCompare
+     */
+    select?: AccurateCompareSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccurateCompare
+     */
+    omit?: AccurateCompareOmit<ExtArgs> | null
+    /**
+     * The data used to update AccurateCompares.
+     */
+    data: XOR<AccurateCompareUpdateManyMutationInput, AccurateCompareUncheckedUpdateManyInput>
+    /**
+     * Filter which AccurateCompares to update
+     */
+    where?: AccurateCompareWhereInput
+    /**
+     * Limit how many AccurateCompares to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccurateCompare upsert
+   */
+  export type AccurateCompareUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccurateCompare
+     */
+    select?: AccurateCompareSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccurateCompare
+     */
+    omit?: AccurateCompareOmit<ExtArgs> | null
+    /**
+     * The filter to search for the AccurateCompare to update in case it exists.
+     */
+    where: AccurateCompareWhereUniqueInput
+    /**
+     * In case the AccurateCompare found by the `where` argument doesn't exist, create a new AccurateCompare with this data.
+     */
+    create: XOR<AccurateCompareCreateInput, AccurateCompareUncheckedCreateInput>
+    /**
+     * In case the AccurateCompare was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AccurateCompareUpdateInput, AccurateCompareUncheckedUpdateInput>
+  }
+
+  /**
+   * AccurateCompare delete
+   */
+  export type AccurateCompareDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccurateCompare
+     */
+    select?: AccurateCompareSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccurateCompare
+     */
+    omit?: AccurateCompareOmit<ExtArgs> | null
+    /**
+     * Filter which AccurateCompare to delete.
+     */
+    where: AccurateCompareWhereUniqueInput
+  }
+
+  /**
+   * AccurateCompare deleteMany
+   */
+  export type AccurateCompareDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AccurateCompares to delete
+     */
+    where?: AccurateCompareWhereInput
+    /**
+     * Limit how many AccurateCompares to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AccurateCompare without action
+   */
+  export type AccurateCompareDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AccurateCompare
+     */
+    select?: AccurateCompareSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AccurateCompare
+     */
+    omit?: AccurateCompareOmit<ExtArgs> | null
   }
 
 
@@ -38423,6 +39586,20 @@ export namespace Prisma {
   export type SalesReportScalarFieldEnum = (typeof SalesReportScalarFieldEnum)[keyof typeof SalesReportScalarFieldEnum]
 
 
+  export const AccurateCompareScalarFieldEnum: {
+    id: 'id',
+    createdAt: 'createdAt',
+    createdById: 'createdById',
+    createdByName: 'createdByName',
+    totalAccurate: 'totalAccurate',
+    cocokCount: 'cocokCount',
+    selisihCount: 'selisihCount',
+    report: 'report'
+  };
+
+  export type AccurateCompareScalarFieldEnum = (typeof AccurateCompareScalarFieldEnum)[keyof typeof AccurateCompareScalarFieldEnum]
+
+
   export const RoleScalarFieldEnum: {
     id: 'id',
     code: 'code',
@@ -39384,6 +40561,75 @@ export namespace Prisma {
     approvedById?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
     accurateSyncedAt?: DateTimeNullableWithAggregatesFilter<"SalesReport"> | Date | string | null
     accurateRef?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
+  }
+
+  export type AccurateCompareWhereInput = {
+    AND?: AccurateCompareWhereInput | AccurateCompareWhereInput[]
+    OR?: AccurateCompareWhereInput[]
+    NOT?: AccurateCompareWhereInput | AccurateCompareWhereInput[]
+    id?: StringFilter<"AccurateCompare"> | string
+    createdAt?: DateTimeFilter<"AccurateCompare"> | Date | string
+    createdById?: StringFilter<"AccurateCompare"> | string
+    createdByName?: StringFilter<"AccurateCompare"> | string
+    totalAccurate?: IntFilter<"AccurateCompare"> | number
+    cocokCount?: IntFilter<"AccurateCompare"> | number
+    selisihCount?: IntFilter<"AccurateCompare"> | number
+    report?: JsonFilter<"AccurateCompare">
+  }
+
+  export type AccurateCompareOrderByWithRelationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    createdById?: SortOrder
+    createdByName?: SortOrder
+    totalAccurate?: SortOrder
+    cocokCount?: SortOrder
+    selisihCount?: SortOrder
+    report?: SortOrder
+  }
+
+  export type AccurateCompareWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AccurateCompareWhereInput | AccurateCompareWhereInput[]
+    OR?: AccurateCompareWhereInput[]
+    NOT?: AccurateCompareWhereInput | AccurateCompareWhereInput[]
+    createdAt?: DateTimeFilter<"AccurateCompare"> | Date | string
+    createdById?: StringFilter<"AccurateCompare"> | string
+    createdByName?: StringFilter<"AccurateCompare"> | string
+    totalAccurate?: IntFilter<"AccurateCompare"> | number
+    cocokCount?: IntFilter<"AccurateCompare"> | number
+    selisihCount?: IntFilter<"AccurateCompare"> | number
+    report?: JsonFilter<"AccurateCompare">
+  }, "id">
+
+  export type AccurateCompareOrderByWithAggregationInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    createdById?: SortOrder
+    createdByName?: SortOrder
+    totalAccurate?: SortOrder
+    cocokCount?: SortOrder
+    selisihCount?: SortOrder
+    report?: SortOrder
+    _count?: AccurateCompareCountOrderByAggregateInput
+    _avg?: AccurateCompareAvgOrderByAggregateInput
+    _max?: AccurateCompareMaxOrderByAggregateInput
+    _min?: AccurateCompareMinOrderByAggregateInput
+    _sum?: AccurateCompareSumOrderByAggregateInput
+  }
+
+  export type AccurateCompareScalarWhereWithAggregatesInput = {
+    AND?: AccurateCompareScalarWhereWithAggregatesInput | AccurateCompareScalarWhereWithAggregatesInput[]
+    OR?: AccurateCompareScalarWhereWithAggregatesInput[]
+    NOT?: AccurateCompareScalarWhereWithAggregatesInput | AccurateCompareScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AccurateCompare"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"AccurateCompare"> | Date | string
+    createdById?: StringWithAggregatesFilter<"AccurateCompare"> | string
+    createdByName?: StringWithAggregatesFilter<"AccurateCompare"> | string
+    totalAccurate?: IntWithAggregatesFilter<"AccurateCompare"> | number
+    cocokCount?: IntWithAggregatesFilter<"AccurateCompare"> | number
+    selisihCount?: IntWithAggregatesFilter<"AccurateCompare"> | number
+    report?: JsonWithAggregatesFilter<"AccurateCompare">
   }
 
   export type RoleWhereInput = {
@@ -41903,6 +43149,83 @@ export namespace Prisma {
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
     accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AccurateCompareCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    createdById: string
+    createdByName: string
+    totalAccurate?: number
+    cocokCount?: number
+    selisihCount?: number
+    report: JsonNullValueInput | InputJsonValue
+  }
+
+  export type AccurateCompareUncheckedCreateInput = {
+    id?: string
+    createdAt?: Date | string
+    createdById: string
+    createdByName: string
+    totalAccurate?: number
+    cocokCount?: number
+    selisihCount?: number
+    report: JsonNullValueInput | InputJsonValue
+  }
+
+  export type AccurateCompareUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByName?: StringFieldUpdateOperationsInput | string
+    totalAccurate?: IntFieldUpdateOperationsInput | number
+    cocokCount?: IntFieldUpdateOperationsInput | number
+    selisihCount?: IntFieldUpdateOperationsInput | number
+    report?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type AccurateCompareUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByName?: StringFieldUpdateOperationsInput | string
+    totalAccurate?: IntFieldUpdateOperationsInput | number
+    cocokCount?: IntFieldUpdateOperationsInput | number
+    selisihCount?: IntFieldUpdateOperationsInput | number
+    report?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type AccurateCompareCreateManyInput = {
+    id?: string
+    createdAt?: Date | string
+    createdById: string
+    createdByName: string
+    totalAccurate?: number
+    cocokCount?: number
+    selisihCount?: number
+    report: JsonNullValueInput | InputJsonValue
+  }
+
+  export type AccurateCompareUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByName?: StringFieldUpdateOperationsInput | string
+    totalAccurate?: IntFieldUpdateOperationsInput | number
+    cocokCount?: IntFieldUpdateOperationsInput | number
+    selisihCount?: IntFieldUpdateOperationsInput | number
+    report?: JsonNullValueInput | InputJsonValue
+  }
+
+  export type AccurateCompareUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdByName?: StringFieldUpdateOperationsInput | string
+    totalAccurate?: IntFieldUpdateOperationsInput | number
+    cocokCount?: IntFieldUpdateOperationsInput | number
+    selisihCount?: IntFieldUpdateOperationsInput | number
+    report?: JsonNullValueInput | InputJsonValue
   }
 
   export type RoleCreateInput = {
@@ -44791,6 +46114,49 @@ export namespace Prisma {
     _sum?: NestedIntFilter<$PrismaModel>
     _min?: NestedIntFilter<$PrismaModel>
     _max?: NestedIntFilter<$PrismaModel>
+  }
+
+  export type AccurateCompareCountOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    createdById?: SortOrder
+    createdByName?: SortOrder
+    totalAccurate?: SortOrder
+    cocokCount?: SortOrder
+    selisihCount?: SortOrder
+    report?: SortOrder
+  }
+
+  export type AccurateCompareAvgOrderByAggregateInput = {
+    totalAccurate?: SortOrder
+    cocokCount?: SortOrder
+    selisihCount?: SortOrder
+  }
+
+  export type AccurateCompareMaxOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    createdById?: SortOrder
+    createdByName?: SortOrder
+    totalAccurate?: SortOrder
+    cocokCount?: SortOrder
+    selisihCount?: SortOrder
+  }
+
+  export type AccurateCompareMinOrderByAggregateInput = {
+    id?: SortOrder
+    createdAt?: SortOrder
+    createdById?: SortOrder
+    createdByName?: SortOrder
+    totalAccurate?: SortOrder
+    cocokCount?: SortOrder
+    selisihCount?: SortOrder
+  }
+
+  export type AccurateCompareSumOrderByAggregateInput = {
+    totalAccurate?: SortOrder
+    cocokCount?: SortOrder
+    selisihCount?: SortOrder
   }
 
   export type EnumRoleCodeFilter<$PrismaModel = never> = {
