@@ -38,6 +38,17 @@ export type NavGroup = {
   items: NavItem[];
 };
 
+/** Warna ikon header grup (biar tak hitam-putih). Dipakai sidebar & menu HP. */
+export const GROUP_COLOR: Record<string, string> = {
+  HR: "text-pink-500",
+  Finance: "text-blue-500",
+  Sales: "text-emerald-500",
+  Admin: "text-violet-500",
+  Cabang: "text-indigo-500",
+  Stok: "text-amber-500",
+  Media: "text-cyan-500",
+};
+
 /** Menu sidebar sesuai role aktif. (PRD §6.1) */
 export function navForRole(role: RoleCode): NavGroup[] {
   const umum: NavItem[] = [{ label: "Beranda", href: "/beranda", icon: Home }];

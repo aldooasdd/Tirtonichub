@@ -6,7 +6,7 @@ import { useState } from "react";
 import { ChevronDown, LogOut, Bell, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
-import { navForRole, type NavItem } from "@/lib/nav";
+import { navForRole, GROUP_COLOR, type NavItem } from "@/lib/nav";
 import { useActiveRole, useSessionUser } from "./active-role-context";
 import { RoleSwitcher } from "./role-switcher";
 import { logoutAction } from "@/server/actions/auth";
@@ -27,16 +27,6 @@ function initials(name: string) {
   return name.trim().split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase()).join("") || "?";
 }
 
-// Warna ikon grup role (biar tak hitam-putih).
-const GROUP_COLOR: Record<string, string> = {
-  HR: "text-pink-500",
-  Finance: "text-blue-500",
-  Sales: "text-emerald-500",
-  Admin: "text-violet-500",
-  Cabang: "text-indigo-500",
-  Stok: "text-amber-500",
-  Media: "text-cyan-500",
-};
 
 export function Sidebar({ notifCount, notifications }: { notifCount: number; notifications: RightNotif[] }) {
   const pathname = usePathname();
