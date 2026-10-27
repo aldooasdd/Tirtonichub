@@ -13,7 +13,11 @@ export function Sidebar() {
   const pathname = usePathname();
   const { role } = useActiveRole();
   const groups = navForRole(role);
-  const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
+  // item aktif = href cocok DAN paling spesifik (prefix terpanjang), biar /finance tak ikut aktif di /finance/penjualan.
+  const matches = (href: string) => pathname === href || pathname.startsWith(href + "/");
+  let activeHref = "";
+  for (const g of groups) for (const it of g.items) if (matches(it.href) && it.href.length > activeHref.length) activeHref = it.href;
+  const isActive = (href: string) => href === activeHref;
 
   // grup role bisa dilipat; default terbuka. Key = judul grup.
   const [closed, setClosed] = useState<Record<string, boolean>>({});
