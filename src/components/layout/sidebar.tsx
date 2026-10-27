@@ -61,7 +61,9 @@ export function Sidebar({ notifCount, notifications }: { notifCount: number; not
     <aside className="hidden w-64 shrink-0 md:flex md:flex-col">
       <div className="flex h-16 items-center gap-2 px-6">
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src="/logo-ball.png" alt="Tirtonic" className="h-8 w-8 object-contain" />
+        <img src="/logo-ball.png" alt="Tirtonic" className="h-8 w-8 object-contain dark:hidden" />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo-ball-dark.png" alt="Tirtonic" className="hidden h-8 w-8 object-contain dark:block" />
         <span className="font-semibold">Tirtonichub.</span>
       </div>
 
