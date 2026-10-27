@@ -50,7 +50,7 @@ export function AccurateSync() {
         <div>
           <h1 className="text-24 font-semibold">Sinkronisasi Accurate</h1>
           <p className="text-14 text-muted-foreground">
-            Upload PDF penjualan dari Accurate. AI membacanya lalu dicocokkan dengan Rekap Penjualan (no nota + tanggal + total).
+            Upload PDF penjualan dari Accurate. AI membacanya lalu dicocokkan dengan Rekap Penjualan (tanggal + nama + total).
           </p>
         </div>
         <input
@@ -77,17 +77,17 @@ export function AccurateSync() {
             icon={<Check className="h-4 w-4 text-success" />}
             title={`Cocok (${report.cocok.length})`}
             empty="Belum ada yang cocok."
-            rows={report.cocok.map((r) => ({ a: r.notaNo ?? "-", b: `${r.date ?? "-"}${r.customer ? ` · ${r.customer}` : ""}`, c: rupiah(r.total) }))}
+            rows={report.cocok.map((r) => ({ a: r.customer ?? "-", b: r.date ?? "-", c: rupiah(r.total) }))}
           />
           <Section
             icon={<AlertTriangle className="h-4 w-4 text-warning" />}
             title={`Selisih (${report.selisih.length})`}
-            hint="No nota sama, tapi tanggal/total beda."
+            hint="Nama + tanggal sama, tapi total beda."
             empty="Tak ada selisih."
             rows={report.selisih.map((r) => ({
-              a: r.notaNo ?? "-",
-              b: `Accurate: ${r.accDate ?? "-"} · ${rupiah(r.accTotal)}`,
-              c: `Rekap: ${r.appDate ?? "-"} · ${rupiah(r.appTotal)}`,
+              a: `${r.customer ?? "-"} · ${r.date ?? "-"}`,
+              b: `Accurate: ${rupiah(r.accTotal)}`,
+              c: `Rekap: ${rupiah(r.appTotal)}`,
             }))}
           />
           <Section
@@ -95,14 +95,14 @@ export function AccurateSync() {
             title={`Hanya di Accurate (${report.hanyaAccurate.length})`}
             hint="Ada di Accurate, belum ada di Rekap."
             empty="Tak ada."
-            rows={report.hanyaAccurate.map((r) => ({ a: r.notaNo ?? "-", b: `${r.date ?? "-"}${r.customer ? ` · ${r.customer}` : ""}`, c: rupiah(r.total) }))}
+            rows={report.hanyaAccurate.map((r) => ({ a: r.customer ?? "-", b: r.date ?? "-", c: rupiah(r.total) }))}
           />
           <Section
             icon={<FileWarning className="h-4 w-4 text-muted-foreground" />}
             title={`Hanya di Rekap (${report.hanyaRekap.length})`}
             hint="Ada di Rekap, tak ada di Accurate (dalam rentang tanggal PDF)."
             empty="Tak ada."
-            rows={report.hanyaRekap.map((r) => ({ a: r.notaNo ?? "-", b: `${r.date ?? "-"}${r.customer ? ` · ${r.customer}` : ""}`, c: rupiah(r.total) }))}
+            rows={report.hanyaRekap.map((r) => ({ a: r.customer ?? "-", b: r.date ?? "-", c: rupiah(r.total) }))}
           />
         </div>
       )}
