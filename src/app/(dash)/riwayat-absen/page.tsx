@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { ABSEN_ON } from "@/lib/flags";
 import { requireAuth } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { roleAttends } from "@/lib/roles";
@@ -29,6 +31,7 @@ export default async function RiwayatPage({
 }: {
   searchParams: Promise<{ m?: string }>;
 }) {
+  if (!ABSEN_ON) redirect("/beranda");
   const ctx = await requireAuth();
   if (!roleAttends(ctx.activeRole)) {
     return (

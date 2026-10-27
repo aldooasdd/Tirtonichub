@@ -1,11 +1,14 @@
+import { redirect } from "next/navigation";
 import { requireAuth } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
+import { ABSEN_ON } from "@/lib/flags";
 import { roleAttends } from "@/lib/roles";
 import { dateKeyWIB } from "@/server/attendance/logic";
 import { fmtWIB } from "@/lib/datetime";
 import { AbsenCapture } from "@/components/absen/absen-capture";
 
 export default async function AbsenPage() {
+  if (!ABSEN_ON) redirect("/beranda");
   const ctx = await requireAuth();
 
   if (!roleAttends(ctx.activeRole)) {

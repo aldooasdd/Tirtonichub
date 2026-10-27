@@ -23,6 +23,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, ADMIN_ROLES, HEAD_BRANCH_ROLES, roleAttends, type RoleCode } from "./roles";
+import { ABSEN_ON } from "./flags";
 
 export type NavItem = {
   label: string;
@@ -52,7 +53,7 @@ export const GROUP_COLOR: Record<string, string> = {
 /** Menu sidebar sesuai role aktif. (PRD §6.1) */
 export function navForRole(role: RoleCode): NavGroup[] {
   const umum: NavItem[] = [{ label: "Beranda", href: "/beranda", icon: Home }];
-  if (roleAttends(role)) {
+  if (ABSEN_ON && roleAttends(role)) {
     umum.push({ label: "Absen", href: "/absen", icon: Clock });
     umum.push({ label: "Riwayat Absen", href: "/riwayat-absen", icon: ClipboardList });
   }
@@ -73,7 +74,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Cabang", href: "/hr/cabang", icon: Building2 },
         { label: "Jadwal Kerja", href: "/hr/jadwal", icon: CalendarClock },
         { label: "Hari Libur", href: "/hr/hari-libur", icon: CalendarOff },
-        { label: "Rekap Absen", href: "/hr/rekap", icon: ClipboardList },
+        ...(ABSEN_ON ? [{ label: "Rekap Absen", href: "/hr/rekap", icon: ClipboardList }] : []),
         { label: "Pengajuan Masuk", href: "/hr/approval", icon: CheckSquare },
         { label: "Log Aktivitas", href: "/hr/log", icon: ScrollText },
         { label: "Sesi Aktif", href: "/hr/sesi", icon: MonitorSmartphone },
@@ -144,7 +145,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
 /** Bottom nav HP: 5 item. (PRD §6.1) */
 export function bottomNavForRole(role: RoleCode): NavItem[] {
   const items: NavItem[] = [{ label: "Beranda", href: "/beranda", icon: Home }];
-  if (roleAttends(role)) items.push({ label: "Absen", href: "/absen", icon: Clock });
+  if (ABSEN_ON && roleAttends(role)) items.push({ label: "Absen", href: "/absen", icon: Clock });
   items.push({ label: "Pengajuan", href: "/pengajuan", icon: FileText });
   items.push({ label: "Chat", href: "/chat", icon: MessagesSquare });
   items.push({ label: "Profil", href: "/profil", icon: User });

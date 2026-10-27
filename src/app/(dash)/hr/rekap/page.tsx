@@ -1,3 +1,5 @@
+import { redirect } from "next/navigation";
+import { ABSEN_ON } from "@/lib/flags";
 import { requireHr } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
@@ -25,6 +27,7 @@ export default async function RekapPage({
 }: {
   searchParams: Promise<{ date?: string; branch?: string; view?: string; m?: string }>;
 }) {
+  if (!ABSEN_ON) redirect("/beranda");
   await requireHr();
   const sp = await searchParams;
   const view = sp.view === "bulanan" ? "bulanan" : "harian";

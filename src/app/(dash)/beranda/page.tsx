@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { requireAuth } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { roleAttends } from "@/lib/roles";
+import { ABSEN_ON } from "@/lib/flags";
 import { fmtWIB } from "@/lib/datetime";
 import { dateKeyWIB } from "@/server/attendance/logic";
 import { loadCalendarEvents } from "@/server/calendar-events";
@@ -102,29 +103,31 @@ export default async function BerandaPage() {
         <Kpi label="Pengajuan pending" value={pending} bg="bg-kpi-2" />
       </section>
 
-      <section className="rounded-2xl border bg-card p-6">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-muted">
-              <Clock className="h-5 w-5" />
+      {ABSEN_ON && (
+        <section className="rounded-2xl border bg-card p-6">
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-muted">
+                <Clock className="h-5 w-5" />
+              </div>
+              <div>
+                <p className="text-12 text-muted-foreground">Status hari ini</p>
+                <p className="text-14 font-semibold">
+                  {!att?.checkInAt
+                    ? "Belum absen masuk"
+                    : `Masuk ${fmtWIB(att.checkInAt)}${att.status === "LATE" ? ` (telat ${att.lateMinutes}m)` : ""}`}
+                  {att?.checkOutAt ? ` · Pulang ${fmtWIB(att.checkOutAt)}` : ""}
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="text-12 text-muted-foreground">Status hari ini</p>
-              <p className="text-14 font-semibold">
-                {!att?.checkInAt
-                  ? "Belum absen masuk"
-                  : `Masuk ${fmtWIB(att.checkInAt)}${att.status === "LATE" ? ` (telat ${att.lateMinutes}m)` : ""}`}
-                {att?.checkOutAt ? ` · Pulang ${fmtWIB(att.checkOutAt)}` : ""}
-              </p>
-            </div>
+            {absenPhase !== "done" && (
+              <Button asChild className="w-full sm:w-auto">
+                <Link href="/absen">{absenPhase === "in" ? "Absen Masuk" : "Absen Pulang"}</Link>
+              </Button>
+            )}
           </div>
-          {absenPhase !== "done" && (
-            <Button asChild className="w-full sm:w-auto">
-              <Link href="/absen">{absenPhase === "in" ? "Absen Masuk" : "Absen Pulang"}</Link>
-            </Button>
-          )}
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="rounded-2xl border bg-card p-6">
         <h2 className="mb-3 text-14 font-semibold">Tugas harian</h2>

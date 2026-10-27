@@ -4,6 +4,7 @@ import { getSession } from "@/server/auth/session";
 import { can } from "@/server/auth/permissions";
 import { fmtWIB } from "@/lib/datetime";
 import { dailyRekap, monthlyRekap } from "@/server/attendance/rekap";
+import { ABSEN_ON } from "@/lib/flags";
 
 const STATUS_LABEL: Record<string, string> = {
   ON_TIME: "Tepat waktu",
@@ -16,6 +17,7 @@ const STATUS_LABEL: Record<string, string> = {
 };
 
 export async function GET(req: NextRequest) {
+  if (!ABSEN_ON) return new Response("Fitur absen nonaktif", { status: 404 });
   const s = await getSession();
   if (!s || !s.activeRole || !can.manageEmployees(s.activeRole)) {
     return new Response("Forbidden", { status: 403 });
