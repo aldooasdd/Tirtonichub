@@ -1,6 +1,7 @@
 import { requireHr } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { ROLE_LABELS, roleAttends } from "@/lib/roles";
+import { defaultShift } from "@/lib/shift-default";
 import { JadwalGrid } from "@/components/hr/jadwal-grid";
 
 function curYm() {
@@ -38,9 +39,18 @@ export default async function JadwalPage({
       })
     : [];
 
-  // map "userId:day" → code
+  // saved: "userId:day" → code (hasil edit HR, menimpa default)
   const cells: Record<string, string> = {};
   for (const s of shifts) cells[`${s.userId}:${s.date.getUTCDate()}`] = s.code;
+
+  // default: pola PDF per karyawan per tanggal (sama tiap bulan)
+  const defaults: Record<string, string> = {};
+  for (const e of employees) {
+    for (let d = 1; d <= dim; d++) {
+      const c = defaultShift(e.fullName, d);
+      if (c) defaults[`${e.id}:${d}`] = c;
+    }
+  }
 
   return (
     <JadwalGrid
@@ -50,6 +60,7 @@ export default async function JadwalPage({
       branches={branches}
       employees={employees.map((e) => ({ id: e.id, name: e.fullName, role: ROLE_LABELS[e.roles[0]?.role.code ?? "SALES"] ?? "" }))}
       initialCells={cells}
+      defaults={defaults}
     />
   );
 }

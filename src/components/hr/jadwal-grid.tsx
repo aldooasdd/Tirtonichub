@@ -24,6 +24,7 @@ export function JadwalGrid({
   branches,
   employees,
   initialCells,
+  defaults = {},
 }: {
   ym: string;
   days: number;
@@ -31,6 +32,7 @@ export function JadwalGrid({
   branches: { id: string; name: string }[];
   employees: Emp[];
   initialCells: Record<string, string>;
+  defaults?: Record<string, string>;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -47,9 +49,11 @@ export function JadwalGrid({
     router.push(`${pathname}?${p.toString()}`);
   }
 
+  const shown = (k: string) => cells[k] ?? defaults[k] ?? "";
+
   function clickCell(empId: string, day: number) {
     const k = `${empId}:${day}`;
-    setCells((c) => ({ ...c, [k]: nextCode(c[k] ?? "") }));
+    setCells((c) => ({ ...c, [k]: nextCode(c[k] ?? defaults[k] ?? "") }));
     setDirty((d) => new Set(d).add(k));
   }
 
@@ -138,7 +142,7 @@ export function JadwalGrid({
                     <div className="text-[10px] text-muted-foreground">{e.role}</div>
                   </td>
                   {Array.from({ length: days }, (_, i) => i + 1).map((d) => {
-                    const code = cells[`${e.id}:${d}`] ?? "";
+                    const code = shown(`${e.id}:${d}`);
                     const def = code ? SHIFTS[code as ShiftCode] : null;
                     return (
                       <td key={d} className="border-b border-l p-0 text-center">
