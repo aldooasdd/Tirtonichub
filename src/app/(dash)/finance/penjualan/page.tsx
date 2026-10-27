@@ -25,7 +25,8 @@ export default async function FinancePenjualanPage() {
     const items = (Array.isArray(r.items) ? r.items : []) as Item[];
     const pays = (Array.isArray(r.payments) ? r.payments : []) as Pay[];
     const isCash = pays.some((p) => /tunai|cash/i.test(p.method || ""));
-    const dateKey = new Date(r.soldAt.getTime() + 7 * 3600_000).toISOString().slice(0, 10); // WIB
+    const wib = new Date(r.soldAt.getTime() + 7 * 3600_000);
+    const dateKey = wib.toISOString().slice(0, 10); // WIB
     return {
       id: r.id,
       dateKey,
@@ -39,6 +40,19 @@ export default async function FinancePenjualanPage() {
         const jual = it.total ?? it.price * (it.qty || 1); // total net eksplisit (0 utk diskon 100%) dihormati
         return { name: it.name || "-", qty: it.qty || 1, jual, cash: isCash ? jual : 0 };
       }),
+      // data mentah utk edit
+      edit: {
+        notaNo: r.notaNo ?? "",
+        soldAt: wib.toISOString().slice(0, 16), // datetime-local (WIB)
+        customer: r.customer ?? "",
+        salesman: r.salesman ?? "",
+        employee: r.employee ?? "",
+        subtotal: r.subtotal,
+        total: r.total,
+        grandTotal: r.grandTotal,
+        items: items.map((it) => ({ name: it.name ?? "", qty: it.qty || 1, price: it.price || 0, total: it.total ?? 0, note: it.note ?? null })),
+        payments: pays.map((p) => ({ method: p.method || "", amount: p.amount || 0 })),
+      },
     };
   });
 

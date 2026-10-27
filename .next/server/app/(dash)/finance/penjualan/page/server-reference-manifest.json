@@ -59,6 +59,16 @@
       },
       "exportedName": "deleteSalesReport",
       "filename": "src/server/actions/sales.ts"
+    },
+    "40fcae9b8720cbb77c7562a2293d22d407b6cdddd7": {
+      "workers": {
+        "app/(dash)/finance/penjualan/page": {
+          "moduleId": 72705,
+          "async": true
+        }
+      },
+      "exportedName": "updateSalesReport",
+      "filename": "src/server/actions/sales.ts"
     }
   },
   "edge": {}

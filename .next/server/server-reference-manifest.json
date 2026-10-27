@@ -834,6 +834,16 @@
       "filename": "src/server/actions/sales.ts",
       "exportedName": "deleteSalesReport"
     },
+    "40fcae9b8720cbb77c7562a2293d22d407b6cdddd7": {
+      "workers": {
+        "app/(dash)/finance/penjualan/page": {
+          "moduleId": 72705,
+          "async": true
+        }
+      },
+      "filename": "src/server/actions/sales.ts",
+      "exportedName": "updateSalesReport"
+    },
     "7029561b4ea2b73a54bdeb057a6cf6e33ab6124250": {
       "workers": {
         "app/(dash)/hr/approval/page": {

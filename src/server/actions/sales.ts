@@ -70,6 +70,18 @@ type SaveInput = {
 
 const clean = (v: string | null | undefined, max: number) => (v?.trim() ? v.trim().slice(0, max) : null);
 const int = (v: number) => Math.max(0, Math.round(v) || 0);
+const mapItems = (items: SalesItem[]) =>
+  (items ?? [])
+    .filter((i) => i.name?.trim())
+    .map((i) => ({
+      name: i.name.trim().slice(0, 200),
+      qty: Math.max(1, Math.round(i.qty) || 1),
+      price: int(i.price),
+      total: int(i.total), // net; 0 utk diskon 100%
+      note: clean(i.note, 300),
+    }));
+const mapPayments = (pays: SalesPayment[]) =>
+  (pays ?? []).filter((p) => int(p.amount) > 0).map((p) => ({ method: (p.method || "-").slice(0, 60), amount: int(p.amount) }));
 
 /** Simpan rekap penjualan → masuk ke Finance. */
 export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
@@ -121,6 +133,52 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
     title: `Penjualan masuk: Rp ${new Intl.NumberFormat("id-ID").format(rep.grandTotal)}${rep.salesman ? ` · ${rep.salesman}` : ""}`,
     link: "/finance/penjualan",
   });
+  return { ok: true };
+}
+
+type UpdateInput = {
+  id: string;
+  notaNo?: string | null;
+  soldAt?: string | null;
+  customer?: string | null;
+  salesman?: string | null;
+  employee?: string | null;
+  items: SalesItem[];
+  subtotal: number;
+  total: number;
+  grandTotal: number;
+  payments: SalesPayment[];
+};
+
+/** Edit satu nota penjualan (Finance/Boss). */
+export async function updateSalesReport(input: UpdateInput): Promise<ActionResult> {
+  const ctx = await requireFinance();
+  if (!input.id) return { ok: false, message: "ID kosong." };
+  const exists = await prisma.salesReport.findUnique({ where: { id: input.id }, select: { id: true } });
+  if (!exists) return { ok: false, message: "Nota tidak ditemukan." };
+
+  const items = mapItems(input.items);
+  if (items.length === 0 && input.grandTotal <= 0) return { ok: false, message: "Isi minimal 1 item atau total." };
+  const soldAt = input.soldAt && !Number.isNaN(Date.parse(input.soldAt)) ? new Date(input.soldAt) : undefined;
+
+  await prisma.salesReport.update({
+    where: { id: input.id },
+    data: {
+      notaNo: clean(input.notaNo, 60),
+      ...(soldAt ? { soldAt } : {}),
+      customer: clean(input.customer, 120),
+      salesman: clean(input.salesman, 120),
+      employee: clean(input.employee, 120),
+      items,
+      subtotal: int(input.subtotal),
+      total: int(input.total),
+      grandTotal: int(input.grandTotal) || int(input.total),
+      payments: mapPayments(input.payments),
+    },
+  });
+
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "sales_report_edit", entity: "SalesReport", entityId: input.id });
   return { ok: true };
 }
 

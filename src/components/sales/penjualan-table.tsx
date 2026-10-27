@@ -2,9 +2,24 @@
 
 import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { deleteSalesReport } from "@/server/actions/sales";
+import { deleteSalesReport, updateSalesReport } from "@/server/actions/sales";
 
 const rupiah = (n: number) => `Rp ${new Intl.NumberFormat("id-ID").format(n)}`;
+
+type EditItem = { name: string; qty: number; price: number; total: number; note: string | null };
+type EditPay = { method: string; amount: number };
+export type NotaEdit = {
+  notaNo: string;
+  soldAt: string;
+  customer: string;
+  salesman: string;
+  employee: string;
+  subtotal: number;
+  total: number;
+  grandTotal: number;
+  items: EditItem[];
+  payments: EditPay[];
+};
 
 export type NotaItem = { name: string; qty: number; jual: number; cash: number };
 export type NotaRow = {
@@ -17,6 +32,7 @@ export type NotaRow = {
   grandTotal: number;
   photoKey: string;
   items: NotaItem[];
+  edit: NotaEdit;
 };
 
 const todayWIB = () => new Date(Date.now() + 7 * 3600_000).toISOString().slice(0, 10);
@@ -26,6 +42,7 @@ export function PenjualanTable({ notas }: { notas: NotaRow[] }) {
   const [pending, startTransition] = useTransition();
   const [tgl, setTgl] = useState(todayWIB); // default: hari ini (WIB)
   const [cabang, setCabang] = useState(""); // "" = semua
+  const [editId, setEditId] = useState<string | null>(null);
 
   function hapus(id: string) {
     if (!confirm("Hapus nota ini? Tidak bisa dibatalkan.")) return;
@@ -88,6 +105,7 @@ export function PenjualanTable({ notas }: { notas: NotaRow[] }) {
                 </div>
                 <div className="flex shrink-0 items-center gap-3">
                   <p className="text-14 font-semibold">{rupiah(n.grandTotal)}</p>
+                  <button onClick={() => setEditId(n.id)} className="text-12 text-primary hover:underline">Edit</button>
                   <button
                     onClick={() => hapus(n.id)}
                     disabled={pending}
@@ -121,6 +139,110 @@ export function PenjualanTable({ notas }: { notas: NotaRow[] }) {
           ))}
         </div>
       )}
+
+      {editId && (() => {
+        const n = notas.find((x) => x.id === editId);
+        return n ? <EditNotaModal id={n.id} init={n.edit} onClose={() => setEditId(null)} /> : null;
+      })()}
+    </div>
+  );
+}
+
+function EditNotaModal({ id, init, onClose }: { id: string; init: NotaEdit; onClose: () => void }) {
+  const router = useRouter();
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [d, setD] = useState<NotaEdit>(() => ({
+    ...init,
+    items: init.items.map((it) => ({ ...it })),
+    payments: init.payments.map((p) => ({ ...p })),
+  }));
+
+  const setItem = (i: number, patch: Partial<EditItem>) =>
+    setD((x) => ({ ...x, items: x.items.map((it, j) => (j === i ? { ...it, ...patch } : it)) }));
+  const setPay = (i: number, patch: Partial<EditPay>) =>
+    setD((x) => ({ ...x, payments: x.payments.map((p, j) => (j === i ? { ...p, ...patch } : p)) }));
+
+  async function save() {
+    setBusy(true);
+    const r = await updateSalesReport({
+      id,
+      notaNo: d.notaNo,
+      soldAt: d.soldAt || null,
+      customer: d.customer,
+      salesman: d.salesman,
+      employee: d.employee,
+      items: d.items,
+      subtotal: d.subtotal,
+      total: d.total,
+      grandTotal: d.grandTotal,
+      payments: d.payments,
+    });
+    setBusy(false);
+    if (!r.ok) {
+      setMsg(r.message ?? "Gagal simpan.");
+      return;
+    }
+    onClose();
+    router.refresh();
+  }
+
+  const inp = "w-full rounded-md border bg-card px-2 py-1 text-14";
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 p-4" onClick={onClose}>
+      <div className="my-8 w-full max-w-2xl space-y-4 rounded-lg border bg-card p-4" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between">
+          <h2 className="text-16 font-semibold">Edit Nota</h2>
+          <button onClick={onClose} className="text-14 text-muted-foreground">Tutup</button>
+        </div>
+        {msg && <p className="text-12 text-red-500">{msg}</p>}
+
+        <div className="grid gap-3 sm:grid-cols-2">
+          <label className="block space-y-1"><span className="text-12 text-muted-foreground">No. nota</span><input className={inp} value={d.notaNo} onChange={(e) => setD({ ...d, notaNo: e.target.value })} /></label>
+          <label className="block space-y-1"><span className="text-12 text-muted-foreground">Waktu transaksi</span><input type="datetime-local" className={inp} value={d.soldAt} onChange={(e) => setD({ ...d, soldAt: e.target.value })} /></label>
+          <label className="block space-y-1"><span className="text-12 text-muted-foreground">Pelanggan</span><input className={inp} value={d.customer} onChange={(e) => setD({ ...d, customer: e.target.value })} /></label>
+          <label className="block space-y-1"><span className="text-12 text-muted-foreground">Salesman</span><input className={inp} value={d.salesman} onChange={(e) => setD({ ...d, salesman: e.target.value })} /></label>
+          <label className="block space-y-1"><span className="text-12 text-muted-foreground">Karyawan</span><input className={inp} value={d.employee} onChange={(e) => setD({ ...d, employee: e.target.value })} /></label>
+        </div>
+
+        <div className="space-y-2">
+          <p className="text-12 font-medium text-muted-foreground">Item</p>
+          {d.items.map((it, i) => (
+            <div key={i} className="grid gap-2 sm:grid-cols-[1fr_60px_100px_100px_auto]">
+              <input className={inp} placeholder="Nama" value={it.name} onChange={(e) => setItem(i, { name: e.target.value })} />
+              <input className={inp} type="number" placeholder="Qty" value={it.qty} onChange={(e) => setItem(i, { qty: Number(e.target.value) })} />
+              <input className={inp} type="number" placeholder="Harga" value={it.price} onChange={(e) => setItem(i, { price: Number(e.target.value) })} />
+              <input className={inp} type="number" placeholder="Total" value={it.total} onChange={(e) => setItem(i, { total: Number(e.target.value) })} />
+              <button className="text-12 text-red-500" onClick={() => setD({ ...d, items: d.items.filter((_, j) => j !== i) })}>Hapus</button>
+            </div>
+          ))}
+          <button className="text-12 text-primary" onClick={() => setD({ ...d, items: [...d.items, { name: "", qty: 1, price: 0, total: 0, note: null }] })}>+ Item</button>
+        </div>
+
+        <div className="space-y-2">
+          <p className="text-12 font-medium text-muted-foreground">Pembayaran</p>
+          {d.payments.map((p, i) => (
+            <div key={i} className="grid gap-2 sm:grid-cols-[1fr_120px_auto]">
+              <input className={inp} placeholder="Metode" value={p.method} onChange={(e) => setPay(i, { method: e.target.value })} />
+              <input className={inp} type="number" placeholder="Jumlah" value={p.amount} onChange={(e) => setPay(i, { amount: Number(e.target.value) })} />
+              <button className="text-12 text-red-500" onClick={() => setD({ ...d, payments: d.payments.filter((_, j) => j !== i) })}>Hapus</button>
+            </div>
+          ))}
+          <button className="text-12 text-primary" onClick={() => setD({ ...d, payments: [...d.payments, { method: "", amount: 0 }] })}>+ Pembayaran</button>
+        </div>
+
+        <div className="grid gap-3 sm:grid-cols-3">
+          <label className="block space-y-1"><span className="text-12 text-muted-foreground">Subtotal</span><input className={inp} type="number" value={d.subtotal} onChange={(e) => setD({ ...d, subtotal: Number(e.target.value) })} /></label>
+          <label className="block space-y-1"><span className="text-12 text-muted-foreground">Total</span><input className={inp} type="number" value={d.total} onChange={(e) => setD({ ...d, total: Number(e.target.value) })} /></label>
+          <label className="block space-y-1"><span className="text-12 text-muted-foreground">Grand total</span><input className={inp} type="number" value={d.grandTotal} onChange={(e) => setD({ ...d, grandTotal: Number(e.target.value) })} /></label>
+        </div>
+
+        <div className="flex justify-end gap-2">
+          <button onClick={onClose} className="rounded-md border px-3 py-1.5 text-14">Batal</button>
+          <button onClick={save} disabled={busy} className="rounded-md bg-primary px-3 py-1.5 text-14 text-primary-foreground disabled:opacity-50">{busy ? "Menyimpan…" : "Simpan"}</button>
+        </div>
+      </div>
     </div>
   );
 }
