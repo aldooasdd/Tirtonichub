@@ -205,7 +205,8 @@ export const RequestType: {
   LEAVE: 'LEAVE',
   PERMIT: 'PERMIT',
   SICK: 'SICK',
-  ATTENDANCE_CORRECTION: 'ATTENDANCE_CORRECTION'
+  ATTENDANCE_CORRECTION: 'ATTENDANCE_CORRECTION',
+  SHIFT_SWAP: 'SHIFT_SWAP'
 };
 
 export type RequestType = (typeof RequestType)[keyof typeof RequestType]

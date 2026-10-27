@@ -75,7 +75,7 @@ export const holidaySchema = z.object({
 });
 
 export const requestSchema = z.object({
-  type: z.enum(["LEAVE", "PERMIT", "SICK", "ATTENDANCE_CORRECTION"]),
+  type: z.enum(["LEAVE", "PERMIT", "SICK", "ATTENDANCE_CORRECTION", "SHIFT_SWAP"]),
   startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
   reason: z.string().trim().min(3, "Alasan wajib diisi"),

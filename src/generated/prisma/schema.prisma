@@ -39,6 +39,7 @@ enum RequestType {
   PERMIT
   SICK
   ATTENDANCE_CORRECTION
+  SHIFT_SWAP
 }
 
 enum RequestStatus {

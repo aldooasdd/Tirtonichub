@@ -1,8 +1,9 @@
 export const REQ_TYPE_LABEL: Record<string, string> = {
   LEAVE: "Cuti",
-  PERMIT: "Izin",
-  SICK: "Sakit",
+  PERMIT: "Izin Acara",
+  SICK: "Izin Sakit",
   ATTENDANCE_CORRECTION: "Koreksi Absen",
+  SHIFT_SWAP: "Tukar Shift",
 };
 
 export const REQ_STATUS_LABEL: Record<string, string> = {

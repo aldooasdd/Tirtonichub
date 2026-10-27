@@ -24,6 +24,9 @@ import {
 } from "@/components/ui/select";
 import { REQ_TYPE_LABEL, REQ_STATUS_LABEL, statusBadgeVariant } from "@/lib/request-labels";
 import { createRequest, cancelRequest } from "@/server/actions/requests";
+import { SHIFTS } from "@/lib/shift";
+
+const SWAP_CODES = ["P", "S", "OH"] as const; // shift kerja tujuan tukar
 
 type Row = {
   id: string;
@@ -35,7 +38,7 @@ type Row = {
   reviewNote: string | null;
 };
 
-const TYPES = ["LEAVE", "PERMIT", "SICK", "ATTENDANCE_CORRECTION"] as const;
+const TYPES = ["LEAVE", "PERMIT", "SICK", "SHIFT_SWAP", "ATTENDANCE_CORRECTION"] as const;
 
 export function PengajuanClient({ requests }: { requests: Row[] }) {
   const [open, setOpen] = useState(false);
@@ -124,19 +127,24 @@ function AjukanDialog({
   const [reason, setReason] = useState("");
   const [jamMasuk, setJamMasuk] = useState("");
   const [jamPulang, setJamPulang] = useState("");
+  const [toCode, setToCode] = useState<string>("P");
   const [msg, setMsg] = useState<string | null>(null);
   const [pending, start] = useTransition();
 
   const isKoreksi = type === "ATTENDANCE_CORRECTION";
+  const isSwap = type === "SHIFT_SWAP";
+  const singleDay = isKoreksi || isSwap;
 
   function submit() {
     setMsg(null);
-    const end = isKoreksi ? startDate : endDate || startDate;
+    const end = singleDay ? startDate : endDate || startDate;
     let payload: Record<string, unknown> | undefined;
     if (isKoreksi) {
       payload = {};
       if (jamMasuk) payload.checkInAt = `${startDate}T${jamMasuk}:00+07:00`;
       if (jamPulang) payload.checkOutAt = `${startDate}T${jamPulang}:00+07:00`;
+    } else if (isSwap) {
+      payload = { toCode };
     }
     start(async () => {
       const r = await createRequest({ type, startDate, endDate: end, reason, payload });
@@ -169,16 +177,33 @@ function AjukanDialog({
           </div>
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-2">
-              <Label>{isKoreksi ? "Tanggal" : "Mulai"}</Label>
+              <Label>{singleDay ? "Tanggal" : "Mulai"}</Label>
               <Input type="date" value={startDate} onChange={(e) => setStart(e.target.value)} />
             </div>
-            {!isKoreksi && (
+            {!singleDay && (
               <div className="space-y-2">
                 <Label>Selesai</Label>
                 <Input type="date" value={endDate} onChange={(e) => setEnd(e.target.value)} />
               </div>
             )}
           </div>
+          {isSwap && (
+            <div className="space-y-2">
+              <Label>Shift tujuan</Label>
+              <Select value={toCode} onValueChange={setToCode}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {SWAP_CODES.map((c) => (
+                    <SelectItem key={c} value={c}>
+                      {c} · {SHIFTS[c].label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
           {isKoreksi && (
             <div className="grid grid-cols-2 gap-3">
               <div className="space-y-2">

@@ -563,7 +563,8 @@ exports.RequestType = exports.$Enums.RequestType = {
   LEAVE: 'LEAVE',
   PERMIT: 'PERMIT',
   SICK: 'SICK',
-  ATTENDANCE_CORRECTION: 'ATTENDANCE_CORRECTION'
+  ATTENDANCE_CORRECTION: 'ATTENDANCE_CORRECTION',
+  SHIFT_SWAP: 'SHIFT_SWAP'
 };
 
 exports.RequestStatus = exports.$Enums.RequestStatus = {

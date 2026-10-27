@@ -9,6 +9,7 @@ import { clientMeta } from "@/server/request-meta";
 import { notifyBosses } from "@/server/notify";
 import { REQ_TYPE_LABEL } from "@/lib/request-labels";
 import { requestSchema, type RequestInput } from "@/lib/validation";
+import { isShiftCode } from "@/lib/shift";
 
 export type ActionResult = { ok: boolean; message?: string; id?: string };
 
@@ -42,6 +43,10 @@ export async function createRequest(input: RequestInput): Promise<ActionResult> 
     return { ok: false, message: parsed.error.issues[0]?.message ?? "Input tidak valid" };
   const d = parsed.data;
   if (d.endDate < d.startDate) return { ok: false, message: "Tanggal selesai sebelum mulai." };
+  if (d.type === "SHIFT_SWAP") {
+    const toCode = (d.payload as { toCode?: string } | null)?.toCode;
+    if (!toCode || !isShiftCode(toCode)) return { ok: false, message: "Pilih shift tujuan." };
+  }
 
   const r = await prisma.request.create({
     data: {
@@ -104,6 +109,16 @@ export async function reviewRequest(
             where: { userId_date: { userId: req.userId, date } },
             update: { status },
             create: { userId: req.userId, date, status },
+          });
+        }
+      } else if (req.type === "SHIFT_SWAP") {
+        // tukar shift: set kode shift baru di tanggal itu (menimpa pola/jadwal)
+        const toCode = (req.payload as { toCode?: string } | null)?.toCode;
+        if (toCode && isShiftCode(toCode)) {
+          await tx.shift.upsert({
+            where: { userId_date: { userId: req.userId, date: req.startDate } },
+            update: { code: toCode },
+            create: { userId: req.userId, date: req.startDate, code: toCode },
           });
         }
       } else if (req.type === "ATTENDANCE_CORRECTION") {
