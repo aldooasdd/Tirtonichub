@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import type { Prisma } from "@/generated/prisma";
 import { prisma } from "@/server/db";
 import { requireAuth, can, assert } from "@/server/auth/rbac";
@@ -159,5 +160,6 @@ export async function reviewRequest(
     );
   });
 
+  revalidatePath("/beranda"); // jadwal/absen karyawan ikut keputusan terbaru
   return { ok: true };
 }

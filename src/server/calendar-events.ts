@@ -1,6 +1,6 @@
 import { prisma } from "@/server/db";
 import { REQ_TYPE_LABEL } from "@/lib/request-labels";
-import { SHIFTS, type ShiftCode } from "@/lib/shift";
+import { SHIFTS, isShiftCode, type ShiftCode } from "@/lib/shift";
 import { defaultShift } from "@/lib/shift-default";
 import type { Event } from "@/components/ui/event-manager";
 
@@ -29,34 +29,43 @@ function atTime(y: number, mo: number, day: number, hhmm: string): Date {
   return new Date(y, mo, day, h, m, 0, 0);
 }
 
-/** Event jadwal shift bulan berjalan utk satu karyawan (saved Shift timpa pola PDF). */
+const SHIFT_MONTHS = 3; // bulan berjalan + 2 ke depan (biar navigasi kalender tetap terisi)
+
+/** Event jadwal shift utk satu karyawan, 3 bulan ke depan (saved Shift timpa pola PDF). */
 async function shiftEvents(userId: string, fullName: string): Promise<Event[]> {
   const wib = new Date(Date.now() + 7 * 3600_000);
-  const y = wib.getUTCFullYear();
-  const mo = wib.getUTCMonth();
-  const dim = new Date(Date.UTC(y, mo + 1, 0)).getUTCDate();
+  const y0 = wib.getUTCFullYear();
+  const m0 = wib.getUTCMonth();
+  const start = new Date(Date.UTC(y0, m0, 1));
+  const end = new Date(Date.UTC(y0, m0 + SHIFT_MONTHS, 0)); // akhir bulan terakhir
 
   const rows = await prisma.shift.findMany({
-    where: { userId, date: { gte: new Date(Date.UTC(y, mo, 1)), lte: new Date(Date.UTC(y, mo, dim)) } },
+    where: { userId, date: { gte: start, lte: end } },
     select: { date: true, code: true },
   });
-  const saved: Record<number, string> = {};
-  for (const r of rows) saved[r.date.getUTCDate()] = r.code;
+  const saved = new Map<string, string>(); // "y-mo-day" (mo 0-based)
+  for (const r of rows) saved.set(`${r.date.getUTCFullYear()}-${r.date.getUTCMonth()}-${r.date.getUTCDate()}`, r.code);
 
   const out: Event[] = [];
-  for (let day = 1; day <= dim; day++) {
-    const code = saved[day] ?? defaultShift(fullName, day);
-    if (!code) continue;
-    const def = SHIFTS[code as ShiftCode];
-    out.push({
-      id: `shift_${y}-${mo + 1}-${day}`,
-      title: def.label.split(" ")[0], // kata singkat: Pagi/Siang/Office/Libur/WFH/Cuti/Sakit/Izin
-      description: def.label, // lengkap + jam, tampil saat di-tap
-      startTime: atTime(y, mo, day, def.start ?? "00:00"),
-      endTime: atTime(y, mo, day, def.end ?? "23:59"),
-      color: SHIFT_COLOR[code as ShiftCode] ?? "blue",
-      category: "Jadwal",
-    });
+  for (let k = 0; k < SHIFT_MONTHS; k++) {
+    const d0 = new Date(Date.UTC(y0, m0 + k, 1));
+    const y = d0.getUTCFullYear();
+    const mo = d0.getUTCMonth();
+    const dim = new Date(Date.UTC(y, mo + 1, 0)).getUTCDate();
+    for (let day = 1; day <= dim; day++) {
+      const code = saved.get(`${y}-${mo}-${day}`) ?? defaultShift(fullName, day);
+      if (!code || !isShiftCode(code)) continue;
+      const def = SHIFTS[code as ShiftCode];
+      out.push({
+        id: `shift_${y}-${mo + 1}-${day}`,
+        title: def.label.split(" ")[0], // kata singkat: Pagi/Siang/Office/Libur/WFH/Cuti/Sakit/Izin
+        description: def.label, // lengkap + jam, tampil saat di-tap
+        startTime: atTime(y, mo, day, def.start ?? "00:00"),
+        endTime: atTime(y, mo, day, def.end ?? "23:59"),
+        color: SHIFT_COLOR[code as ShiftCode] ?? "blue",
+        category: "Jadwal",
+      });
+    }
   }
   return out;
 }

@@ -1,5 +1,6 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
 import { prisma } from "@/server/db";
 import { requireHr } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
@@ -50,6 +51,8 @@ export async function saveShifts(ym: string, cells: Cell[]): Promise<ActionResul
 
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "shift_save", entity: "Shift", entityId: `${ym}:${ops.length}` });
+  revalidatePath("/beranda"); // dashboard karyawan ikut jadwal terbaru
+  revalidatePath("/hr/jadwal");
   return { ok: true };
 }
 
