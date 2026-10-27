@@ -74,7 +74,7 @@ function blobToBase64(blob: Blob): Promise<string> {
   });
 }
 
-export function FinanceClient({ items }: { items: Item[] }) {
+export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolean }) {
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
@@ -102,6 +102,14 @@ export function FinanceClient({ items }: { items: Item[] }) {
     } finally {
       setBusy(false);
     }
+  }
+
+  function delHistory(id: string) {
+    if (!confirm("Hapus item riwayat ini? Tidak bisa dibatalkan.")) return;
+    deleteRawProduct(id).then((r) => {
+      if (!r.ok) alert(r.message ?? "Gagal hapus.");
+      router.refresh();
+    });
   }
 
   async function addManual() {
@@ -182,7 +190,14 @@ export function FinanceClient({ items }: { items: Item[] }) {
                   </p>
                 )}
               </div>
-              <Badge variant={statusVariant(i.status)}>{STATUS_LABEL[i.status]}</Badge>
+              <div className="flex shrink-0 flex-col items-end gap-2">
+                <Badge variant={statusVariant(i.status)}>{STATUS_LABEL[i.status]}</Badge>
+                {isBoss && (
+                  <Button size="sm" variant="ghost" onClick={() => delHistory(i.id)}>
+                    <Trash2 className="h-4 w-4" /> Hapus
+                  </Button>
+                )}
+              </div>
             </div>
           ))}
         </div>

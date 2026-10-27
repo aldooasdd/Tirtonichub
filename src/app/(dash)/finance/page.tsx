@@ -13,6 +13,7 @@ export default async function FinancePage() {
 
   return (
     <FinanceClient
+      isBoss={ctx.activeRole === "BOSS"}
       items={rows.map((r) => ({
         id: r.id,
         batchId: r.batchId,

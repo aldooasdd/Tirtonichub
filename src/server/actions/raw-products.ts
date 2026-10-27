@@ -141,7 +141,8 @@ export async function deleteRawProduct(id: string): Promise<ActionResult> {
   const ctx = await requireFinance();
   const p = await prisma.rawProduct.findUnique({ where: { id } });
   if (!p || !owns(ctx, p.createdById)) return { ok: false, message: "Tidak ditemukan." };
-  if (p.status !== "DRAFT") return { ok: false, message: "Hanya draft bisa dihapus." };
+  // Non-BOSS cuma boleh hapus draft; BOSS boleh hapus riwayat (QC/stok/ditolak).
+  if (p.status !== "DRAFT" && ctx.activeRole !== "BOSS") return { ok: false, message: "Hanya draft bisa dihapus." };
   await prisma.rawProduct.delete({ where: { id } });
   return { ok: true };
 }
