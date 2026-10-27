@@ -2,7 +2,6 @@ import { requireFinance } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
 import { dateKeyWIB } from "@/server/attendance/logic";
-import { SalesClient } from "@/components/sales/sales-client";
 
 const rupiah = (n: number) => `Rp ${new Intl.NumberFormat("id-ID").format(n)}`;
 const HARI = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
@@ -29,7 +28,10 @@ export default async function FinancePenjualanPage() {
 
   return (
     <div className="space-y-5">
-      <SalesClient reports={[]} canViewAll showList={false} />
+      <div>
+        <h1 className="text-24 font-semibold">Rekap Penjualan</h1>
+        <p className="text-14 text-muted-foreground">Masuk otomatis dari nota yang dikirim Sales.</p>
+      </div>
 
       {rows.length === 0 ? (
         <p className="rounded-lg border bg-card py-12 text-center text-muted-foreground">Belum ada penjualan.</p>
