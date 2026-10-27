@@ -24,11 +24,15 @@ function toInt(v: unknown): number {
   return Number.isFinite(n) ? Math.round(n) : 0;
 }
 
-/** Harga satuan = (total ÷ qty) × 111%. Tanpa total, pakai harga satuan dari nota × 111%. */
+/**
+ * Harga satuan = harga net dibayar per unit, sesuai nota (sudah termasuk diskon
+ * & PPN). Prefer total ÷ qty; tanpa total pakai harga satuan dari OCR.
+ * PPN TIDAK ditambah di sini — prompt OCR yang gross-up bila nota PPN-exclusive.
+ */
 export function computeUnitPrice(qty: number, totalPrice: number, unitPriceOcr: number): number {
   const q = Math.max(1, qty || 1);
   const base = totalPrice > 0 ? totalPrice / q : unitPriceOcr;
-  return Math.max(0, Math.round(base * 1.11));
+  return Math.max(0, Math.round(base));
 }
 
 function normalize(raw: unknown): NotaItem {
