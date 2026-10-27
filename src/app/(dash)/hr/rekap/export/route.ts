@@ -14,6 +14,7 @@ const STATUS_LABEL: Record<string, string> = {
   SICK: "Sakit",
   PERMIT: "Izin",
   HOLIDAY: "Libur",
+  OFF: "Libur (jadwal)",
 };
 
 export async function GET(req: NextRequest) {

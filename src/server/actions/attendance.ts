@@ -7,11 +7,14 @@ import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
 import { dateKeyWIB, computeCheckInStatus, withinRadius } from "@/server/attendance/logic";
+import { SHIFTS, isShiftCode, type ShiftCode } from "@/lib/shift";
+import { defaultShift } from "@/lib/shift-default";
 
 export type ActionResult = { ok: boolean; message?: string };
 
 const MAX_PHOTO = 500 * 1024; // 500 KB
 const RADIUS_M = Number(process.env.ATTENDANCE_RADIUS_METERS) || 0;
+const LATE_TOLERANCE_MIN = Number(process.env.ATTENDANCE_LATE_TOLERANCE_MIN) || 5;
 
 type Geo = { lat: number; lng: number; accuracy: number };
 
@@ -28,13 +31,21 @@ function parseForm(form: FormData): { photo: File; geo: Geo } | { error: string 
   return { photo, geo: { lat, lng, accuracy } };
 }
 
-async function resolveSchedule(userId: string, at: Date) {
-  const us = await prisma.userSchedule.findFirst({
-    where: { userId, effectiveFrom: { lte: at } },
-    orderBy: { effectiveFrom: "desc" },
-    include: { schedule: true },
+// Jam masuk dari jadwal shift hari itu (saved Shift timpa pola PDF).
+// null → hari non-kerja (libur/WFH/cuti/sakit/izin) atau tak terjadwal → tak perlu absen.
+async function resolveShiftSchedule(
+  user: { id: string; fullName: string },
+  dateKey: Date,
+): Promise<{ startTime: string; lateToleranceMin: number } | null> {
+  const row = await prisma.shift.findUnique({
+    where: { userId_date: { userId: user.id, date: dateKey } },
+    select: { code: true },
   });
-  return us?.schedule ?? null;
+  const code = row?.code ?? defaultShift(user.fullName, dateKey.getUTCDate());
+  if (!code || !isShiftCode(code)) return null;
+  const def = SHIFTS[code as ShiftCode];
+  if (!def.working || !def.start) return null;
+  return { startTime: def.start, lateToleranceMin: LATE_TOLERANCE_MIN };
 }
 
 async function checkRadiusOrFail(branchId: string | null, geo: Geo): Promise<string | null> {
@@ -63,8 +74,9 @@ export async function checkIn(form: FormData): Promise<ActionResult> {
   });
   if (existing?.checkInAt) return { ok: false, message: "Kamu sudah absen masuk hari ini." };
 
-  const schedule = await resolveSchedule(ctx.userId, now);
-  if (!schedule) return { ok: false, message: "Belum ada jadwal kerja. Hubungi HR." };
+  const schedule = await resolveShiftSchedule(user, dateKey);
+  if (!schedule)
+    return { ok: false, message: "Hari ini kamu tidak ada jadwal kerja (libur/cuti/WFH). Tak perlu absen." };
 
   const radiusErr = await checkRadiusOrFail(user.branchId, geo);
   if (radiusErr) return { ok: false, message: radiusErr };

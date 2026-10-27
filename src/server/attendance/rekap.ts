@@ -1,4 +1,6 @@
 import { prisma } from "@/server/db";
+import { SHIFTS, isShiftCode, type ShiftCode } from "@/lib/shift";
+import { defaultShift } from "@/lib/shift-default";
 
 export type DailyRow = {
   userId: string;
@@ -25,15 +27,25 @@ export async function dailyRekap(date: Date, branchId?: string) {
     include: { branch: true },
     orderBy: { fullName: "asc" },
   });
-  const [atts, holiday] = await Promise.all([
-    prisma.attendance.findMany({ where: { date, userId: { in: users.map((u) => u.id) } } }),
+  const ids = users.map((u) => u.id);
+  const [atts, holiday, shifts] = await Promise.all([
+    prisma.attendance.findMany({ where: { date, userId: { in: ids } } }),
     prisma.holiday.findUnique({ where: { date } }),
+    prisma.shift.findMany({ where: { date, userId: { in: ids } }, select: { userId: true, code: true } }),
   ]);
   const byUser = new Map(atts.map((a) => [a.userId, a]));
+  const shiftByUser = new Map(shifts.map((s) => [s.userId, s.code]));
+  const day = date.getUTCDate();
+
+  // Shift kerja (P/S/OH) tanpa absen → ABSENT (alpa). Non-kerja/tak terjadwal → OFF.
+  const worksToday = (u: { id: string; fullName: string }) => {
+    const code = shiftByUser.get(u.id) ?? defaultShift(u.fullName, day);
+    return !!code && isShiftCode(code) && SHIFTS[code as ShiftCode].working;
+  };
 
   const rows: DailyRow[] = users.map((u) => {
     const a = byUser.get(u.id);
-    const status = a?.status ?? (holiday ? "HOLIDAY" : "ABSENT");
+    const status = a?.status ?? (holiday ? "HOLIDAY" : worksToday(u) ? "ABSENT" : "OFF");
     return {
       userId: u.id,
       name: u.fullName,
