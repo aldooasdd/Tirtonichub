@@ -33,6 +33,7 @@ function blobToBase64(blob: Blob): Promise<string> {
 type Draft = {
   notaNo: string;
   soldAt: string; // datetime-local
+  branch: string; // cabang dari nota
   customer: string;
   salesman: string;
   employee: string;
@@ -44,7 +45,7 @@ type Draft = {
 };
 
 const emptyDraft = (): Draft => ({
-  notaNo: "", soldAt: "", customer: "", salesman: "", employee: "",
+  notaNo: "", soldAt: "", branch: "", customer: "", salesman: "", employee: "",
   items: [{ name: "", qty: 1, price: 0, total: 0, note: null }],
   payments: [{ method: "", amount: 0 }],
   subtotal: 0, total: 0, grandTotal: 0,
@@ -89,6 +90,7 @@ export function SalesClient({
       setDraft({
         notaNo: p.notaNo ?? "",
         soldAt: p.soldAt ? p.soldAt.slice(0, 16) : "",
+        branch: p.branch ?? "",
         customer: p.customer ?? "",
         salesman: p.salesman ?? "",
         employee: p.employee ?? "",
@@ -132,6 +134,7 @@ export function SalesClient({
       grandTotal: draft.grandTotal,
       payments: draft.payments,
       channel,
+      branch: draft.branch,
     });
     setBusy(false);
     if (!r.ok) {
@@ -176,6 +179,9 @@ export function SalesClient({
           <div className="grid gap-3 sm:grid-cols-2">
             <Field label="No. nota"><Input value={draft.notaNo} onChange={(e) => upd({ notaNo: e.target.value })} /></Field>
             <Field label="Waktu transaksi"><Input type="datetime-local" value={draft.soldAt} onChange={(e) => upd({ soldAt: e.target.value })} /></Field>
+            {!online && (
+              <Field label="Cabang (dari nota)"><Input value={draft.branch} onChange={(e) => upd({ branch: e.target.value })} placeholder="mis. Semarang" /></Field>
+            )}
             <Field label="Pelanggan"><Input value={draft.customer} onChange={(e) => upd({ customer: e.target.value })} /></Field>
             <Field label="Salesman"><Input value={draft.salesman} onChange={(e) => upd({ salesman: e.target.value })} /></Field>
             <Field label="Karyawan"><Input value={draft.employee} onChange={(e) => upd({ employee: e.target.value })} /></Field>

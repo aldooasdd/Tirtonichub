@@ -7,6 +7,7 @@ export type SalesPayment = { method: string; amount: number };
 export type SalesParsed = {
   notaNo: string | null;
   soldAt: string | null; // ISO "YYYY-MM-DDTHH:mm" atau null
+  branch: string | null; // cabang/toko dari header nota (mis. "Semarang")
   customer: string | null;
   salesman: string | null;
   employee: string | null;
@@ -62,6 +63,7 @@ export async function parseSalesNotaViaN8n(imageBase64: string, mimeType: string
     return {
       notaNo: str(d.notaNo, 60),
       soldAt,
+      branch: str(d.branch, 120),
       customer: str(d.customer, 120),
       salesman: str(d.salesman, 120),
       employee: str(d.employee, 120),

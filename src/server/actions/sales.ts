@@ -17,6 +17,7 @@ export type SalesScan = {
   parsed?: {
     notaNo: string | null;
     soldAt: string | null;
+    branch: string | null;
     customer: string | null;
     salesman: string | null;
     employee: string | null;
@@ -46,7 +47,7 @@ export async function scanSalesNota(imageBase64: string, mimeType: string): Prom
     ok: true,
     photoKey: key,
     parsed: parsed ?? {
-      notaNo: null, soldAt: null, customer: null, salesman: null, employee: null,
+      notaNo: null, soldAt: null, branch: null, customer: null, salesman: null, employee: null,
       items: [], subtotal: 0, total: 0, grandTotal: 0, payments: [],
     },
     ocr: parsed !== null,
@@ -66,7 +67,20 @@ type SaveInput = {
   grandTotal: number;
   payments: SalesPayment[];
   channel?: "online" | "offline";
+  branch?: string | null; // cabang dari nota (hasil OCR / edit)
 };
+
+// Cocokkan teks cabang dari nota ke Branch. "Yogyakarta" → Jogja. "Office" tak dirutekan.
+async function resolveBranchFromText(text: string | null): Promise<{ id: string | null; name: string | null }> {
+  if (!text?.trim()) return { id: null, name: null };
+  const t = text.toLowerCase().replace(/yogyakarta|yogya/g, "jogja");
+  const branches = await prisma.branch.findMany({ select: { id: true, name: true } });
+  for (const b of branches) {
+    const city = b.name.toLowerCase().split(/\s+/).pop() ?? "";
+    if (city && city !== "office" && t.includes(city)) return { id: b.id, name: b.name };
+  }
+  return { id: null, name: null };
+}
 
 const clean = (v: string | null | undefined, max: number) => (v?.trim() ? v.trim().slice(0, max) : null);
 const int = (v: number) => Math.max(0, Math.round(v) || 0);
@@ -88,12 +102,22 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
   const ctx = await requireSalesInput();
   if (!input.photoKey) return { ok: false, message: "Foto nota wajib." };
   const channel = input.channel === "online" ? "online" : "offline";
-  // cabang asal: dari user pengirim (offline). Online = tanpa cabang toko.
+  // Cabang offline dari nota (OCR/edit). Cocok → routing Kepala Cabang cabang itu.
+  // Tak cocok → fallback cabang user pengirim; tetap gagal → simpan teks mentah (hanya Direksi bisa ACC).
+  let branchId: string | null = null;
   let branchName: string | null = null;
-  const branchId = channel === "offline" ? ctx.branchId : null;
-  if (branchId) {
-    const br = await prisma.branch.findUnique({ where: { id: branchId }, select: { name: true } });
-    branchName = br?.name ?? null;
+  if (channel === "offline") {
+    const det = await resolveBranchFromText(input.branch ?? null);
+    if (det.id) {
+      branchId = det.id;
+      branchName = det.name;
+    } else if (ctx.branchId) {
+      const br = await prisma.branch.findUnique({ where: { id: ctx.branchId }, select: { name: true } });
+      branchId = ctx.branchId;
+      branchName = br?.name ?? null;
+    } else {
+      branchName = clean(input.branch, 120);
+    }
   }
   // Offline wajib ACC Kepala Cabang dulu (approvedAt null). Online auto-approve.
   const approvedAt = channel === "online" ? new Date() : null;
