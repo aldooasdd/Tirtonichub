@@ -27,6 +27,7 @@
   "/(dash)/media/workflow/page": "app/(dash)/media/workflow/page.js",
   "/(dash)/notifikasi/page": "app/(dash)/notifikasi/page.js",
   "/(dash)/pengajuan/page": "app/(dash)/pengajuan/page.js",
+  "/(dash)/penjualan-online/page": "app/(dash)/penjualan-online/page.js",
   "/(dash)/profil/page": "app/(dash)/profil/page.js",
   "/(dash)/riwayat-absen/page": "app/(dash)/riwayat-absen/page.js",
   "/(dash)/sales/page": "app/(dash)/sales/page.js",

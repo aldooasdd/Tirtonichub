@@ -27,7 +27,7 @@ export default async function FinancePenjualanPage() {
       qty: it.qty || 1,
       jual: it.total || it.price * (it.qty || 1),
       cash: isCash ? it.total || it.price * (it.qty || 1) : 0,
-      saluran: "Offline", // sales nota = offline; online diinput admin (menyusul)
+      saluran: r.channel === "online" ? "Online" : "Offline",
       ket: it.note || "",
       photoKey: r.photoKey,
       first: i === 0,

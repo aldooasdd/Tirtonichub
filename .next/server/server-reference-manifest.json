@@ -126,6 +126,10 @@
           "moduleId": 51768,
           "async": true
         },
+        "app/(dash)/penjualan-online/page": {
+          "moduleId": 62072,
+          "async": true
+        },
         "app/(dash)/profil/page": {
           "moduleId": 7598,
           "async": true
@@ -250,6 +254,10 @@
         },
         "app/(dash)/pengajuan/page": {
           "moduleId": 51768,
+          "async": true
+        },
+        "app/(dash)/penjualan-online/page": {
+          "moduleId": 62072,
           "async": true
         },
         "app/(dash)/profil/page": {
@@ -378,6 +386,10 @@
           "moduleId": 51768,
           "async": true
         },
+        "app/(dash)/penjualan-online/page": {
+          "moduleId": 62072,
+          "async": true
+        },
         "app/(dash)/profil/page": {
           "moduleId": 7598,
           "async": true
@@ -504,6 +516,10 @@
           "moduleId": 51768,
           "async": true
         },
+        "app/(dash)/penjualan-online/page": {
+          "moduleId": 62072,
+          "async": true
+        },
         "app/(dash)/profil/page": {
           "moduleId": 7598,
           "async": true
@@ -628,6 +644,10 @@
         },
         "app/(dash)/pengajuan/page": {
           "moduleId": 51768,
+          "async": true
+        },
+        "app/(dash)/penjualan-online/page": {
+          "moduleId": 62072,
           "async": true
         },
         "app/(dash)/profil/page": {
@@ -1148,18 +1168,12 @@
       "filename": "src/server/actions/requests.ts",
       "exportedName": "cancelRequest"
     },
-    "40c5614302a309dbaf8a90c5b735f9123d445987fa": {
-      "workers": {
-        "app/(dash)/profil/page": {
-          "moduleId": 7598,
-          "async": true
-        }
-      },
-      "filename": "src/server/actions/profile.ts",
-      "exportedName": "updateOwnProfile"
-    },
     "604370ed7ad45d384bdd0acaf41906ace7f03eddea": {
       "workers": {
+        "app/(dash)/penjualan-online/page": {
+          "moduleId": 62072,
+          "async": true
+        },
         "app/(dash)/sales/page": {
           "moduleId": 82806,
           "async": true
@@ -1170,6 +1184,10 @@
     },
     "4073bbe82fd48008edba02dd70d2a8db9ff06b6f36": {
       "workers": {
+        "app/(dash)/penjualan-online/page": {
+          "moduleId": 62072,
+          "async": true
+        },
         "app/(dash)/sales/page": {
           "moduleId": 82806,
           "async": true
@@ -1177,6 +1195,16 @@
       },
       "filename": "src/server/actions/sales.ts",
       "exportedName": "saveSalesReport"
+    },
+    "40c5614302a309dbaf8a90c5b735f9123d445987fa": {
+      "workers": {
+        "app/(dash)/profil/page": {
+          "moduleId": 7598,
+          "async": true
+        }
+      },
+      "filename": "src/server/actions/profile.ts",
+      "exportedName": "updateOwnProfile"
     },
     "7875a967cdb7cac29b61f8bd2cf268ce2d04836ec1": {
       "workers": {

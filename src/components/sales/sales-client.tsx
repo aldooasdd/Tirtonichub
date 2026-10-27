@@ -56,7 +56,16 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
   </label>
 );
 
-export function SalesClient({ reports, canViewAll }: { reports: SalesRow[]; canViewAll: boolean }) {
+export function SalesClient({
+  reports,
+  canViewAll,
+  channel = "offline",
+}: {
+  reports: SalesRow[];
+  canViewAll: boolean;
+  channel?: "online" | "offline";
+}) {
+  const online = channel === "online";
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
@@ -66,7 +75,7 @@ export function SalesClient({ reports, canViewAll }: { reports: SalesRow[]; canV
 
   async function onCapture(file: File) {
     setBusy(true);
-    setMsg("Memindai nota…");
+    setMsg(online ? "Memindai screenshot…" : "Memindai nota…");
     try {
       const b64 = await blobToBase64(await compressImage(file));
       const r = await scanSalesNota(b64, "image/jpeg");
@@ -121,6 +130,7 @@ export function SalesClient({ reports, canViewAll }: { reports: SalesRow[]; canV
       total: draft.total,
       grandTotal: draft.grandTotal,
       payments: draft.payments,
+      channel,
     });
     setBusy(false);
     if (!r.ok) {
@@ -135,20 +145,24 @@ export function SalesClient({ reports, canViewAll }: { reports: SalesRow[]; canV
     <div className="space-y-5">
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="text-24 font-semibold">Rekap Penjualan</h1>
-          <p className="text-14 text-muted-foreground">Foto nota penjualan, AI isi datanya, lalu kirim ke Finance.</p>
+          <h1 className="text-24 font-semibold">{online ? "Penjualan Online" : "Rekap Penjualan"}</h1>
+          <p className="text-14 text-muted-foreground">
+            {online
+              ? "Upload screenshot marketplace, AI isi datanya, lalu kirim ke Finance."
+              : "Foto nota penjualan, AI isi datanya, lalu kirim ke Finance."}
+          </p>
         </div>
         <input
           ref={fileRef}
           type="file"
           accept="image/*"
-          capture="environment"
+          {...(online ? {} : { capture: "environment" as const })}
           className="hidden"
           onChange={(e) => e.target.files?.[0] && onCapture(e.target.files[0])}
         />
         {!draft && (
           <Button disabled={busy} onClick={() => fileRef.current?.click()} className="shrink-0">
-            {busy ? "Memindai…" : "Foto nota penjualan"}
+            {busy ? "Memindai…" : online ? "Upload screenshot" : "Foto nota penjualan"}
           </Button>
         )}
       </div>

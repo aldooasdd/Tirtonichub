@@ -150,6 +150,7 @@ exports.Prisma.SalesReportScalarFieldEnum = {
   total: 'total',
   grandTotal: 'grandTotal',
   payments: 'payments',
+  channel: 'channel',
   photoKey: 'photoKey',
   createdById: 'createdById',
   createdAt: 'createdAt'
@@ -532,7 +533,8 @@ exports.RoleCode = exports.$Enums.RoleCode = {
   HR: 'HR',
   HEAD_BRANCH: 'HEAD_BRANCH',
   SALES: 'SALES',
-  ORDER_SPECIALIST: 'ORDER_SPECIALIST'
+  ORDER_SPECIALIST: 'ORDER_SPECIALIST',
+  ADMIN: 'ADMIN'
 };
 
 exports.AttendanceStatus = exports.$Enums.AttendanceStatus = {

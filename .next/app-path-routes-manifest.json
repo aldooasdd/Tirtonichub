@@ -27,6 +27,7 @@
   "/(dash)/media/workflow/page": "/media/workflow",
   "/(dash)/notifikasi/page": "/notifikasi",
   "/(dash)/pengajuan/page": "/pengajuan",
+  "/(dash)/penjualan-online/page": "/penjualan-online",
   "/(dash)/profil/page": "/profil",
   "/(dash)/riwayat-absen/page": "/riwayat-absen",
   "/(dash)/sales/page": "/sales",

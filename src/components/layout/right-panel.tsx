@@ -29,6 +29,7 @@ const ROLE_ICONS: Record<RoleCode, LucideIcon> = {
   HEAD_BRANCH: Building2,
   SALES: TrendingUp,
   ORDER_SPECIALIST: ClipboardList,
+  ADMIN: User,
 };
 
 // Panel kanan: Notifikasi + Anggota (aktif di atas). Data dari layout.

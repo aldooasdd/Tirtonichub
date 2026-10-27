@@ -321,6 +321,12 @@
       "namedRegex": "^/pengajuan(?:/)?$"
     },
     {
+      "page": "/penjualan-online",
+      "regex": "^/penjualan\\-online(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/penjualan\\-online(?:/)?$"
+    },
+    {
       "page": "/pilih-role",
       "regex": "^/pilih\\-role(?:/)?$",
       "routeKeys": {},

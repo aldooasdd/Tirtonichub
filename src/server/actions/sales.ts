@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/server/db";
-import { requireSales } from "@/server/auth/rbac";
+import { requireSalesInput } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
@@ -31,7 +31,7 @@ export type SalesScan = {
 
 /** Upload foto nota penjualan + ekstrak via n8n. Belum simpan DB (diedit dulu). */
 export async function scanSalesNota(imageBase64: string, mimeType: string): Promise<SalesScan> {
-  await requireSales();
+  await requireSalesInput();
   if (!imageBase64) return { ok: false, message: "Foto nota kosong." };
 
   const key = makeKey("sales-nota", mimeType.includes("png") ? "png" : "jpg");
@@ -65,6 +65,7 @@ type SaveInput = {
   total: number;
   grandTotal: number;
   payments: SalesPayment[];
+  channel?: "online" | "offline";
 };
 
 const clean = (v: string | null | undefined, max: number) => (v?.trim() ? v.trim().slice(0, max) : null);
@@ -72,8 +73,9 @@ const int = (v: number) => Math.max(0, Math.round(v) || 0);
 
 /** Simpan rekap penjualan → masuk ke Finance. */
 export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
-  const ctx = await requireSales();
+  const ctx = await requireSalesInput();
   if (!input.photoKey) return { ok: false, message: "Foto nota wajib." };
+  const channel = input.channel === "online" ? "online" : "offline";
   const items = (input.items ?? []).filter((i) => i.name?.trim());
   if (items.length === 0 && input.grandTotal <= 0) return { ok: false, message: "Isi minimal 1 item atau total." };
 
@@ -99,6 +101,7 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
       payments: (input.payments ?? [])
         .filter((p) => int(p.amount) > 0)
         .map((p) => ({ method: (p.method || "-").slice(0, 60), amount: int(p.amount) })),
+      channel,
       photoKey: input.photoKey,
       createdById: ctx.userId,
     },

@@ -72,3 +72,17 @@ export async function requireSales(): Promise<AuthContext> {
   assert(can.manageSales(ctx.activeRole));
   return ctx;
 }
+
+/** Admin/Boss: input penjualan online (screenshot marketplace). */
+export async function requireOnlineSales(): Promise<AuthContext> {
+  const ctx = await requireAuth();
+  assert(can.manageOnlineSales(ctx.activeRole));
+  return ctx;
+}
+
+/** Sales/Admin/Boss: boleh input penjualan (dipakai action scan/simpan). */
+export async function requireSalesInput(): Promise<AuthContext> {
+  const ctx = await requireAuth();
+  assert(can.inputSales(ctx.activeRole));
+  return ctx;
+}

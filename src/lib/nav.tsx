@@ -18,7 +18,7 @@ import {
   Boxes,
   type LucideIcon,
 } from "lucide-react";
-import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, roleAttends, type RoleCode } from "./roles";
+import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, ADMIN_ROLES, roleAttends, type RoleCode } from "./roles";
 
 export type NavItem = {
   label: string;
@@ -78,6 +78,13 @@ export function navForRole(role: RoleCode): NavGroup[] {
     groups.push({
       title: "Sales",
       items: [{ label: "Rekap Penjualan", href: "/sales", icon: Receipt }],
+    });
+  }
+
+  if (ADMIN_ROLES.includes(role)) {
+    groups.push({
+      title: "Admin",
+      items: [{ label: "Penjualan Online", href: "/penjualan-online", icon: Receipt }],
     });
   }
 

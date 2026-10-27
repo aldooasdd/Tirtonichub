@@ -21,6 +21,7 @@ enum RoleCode {
   HEAD_BRANCH
   SALES
   ORDER_SPECIALIST
+  ADMIN
 }
 
 enum AttendanceStatus {
@@ -113,8 +114,9 @@ model SalesReport {
   total       Int      @default(0)
   grandTotal  Int      @default(0)
   payments    Json // [{method, amount}]
-  photoKey    String // foto nota di storage
-  createdById String // user Sales yang mengirim
+  channel     String   @default("offline") // offline=nota Sales, online=input Admin dari marketplace
+  photoKey    String // foto nota / screenshot di storage
+  createdById String // user yang mengirim (Sales / Admin)
   createdAt   DateTime @default(now())
 
   createdBy User @relation("SalesReportCreator", fields: [createdById], references: [id])

@@ -176,7 +176,8 @@ export namespace $Enums {
   HR: 'HR',
   HEAD_BRANCH: 'HEAD_BRANCH',
   SALES: 'SALES',
-  ORDER_SPECIALIST: 'ORDER_SPECIALIST'
+  ORDER_SPECIALIST: 'ORDER_SPECIALIST',
+  ADMIN: 'ADMIN'
 };
 
 export type RoleCode = (typeof RoleCode)[keyof typeof RoleCode]
@@ -5728,6 +5729,7 @@ export namespace Prisma {
     subtotal: number | null
     total: number | null
     grandTotal: number | null
+    channel: string | null
     photoKey: string | null
     createdById: string | null
     createdAt: Date | null
@@ -5743,6 +5745,7 @@ export namespace Prisma {
     subtotal: number | null
     total: number | null
     grandTotal: number | null
+    channel: string | null
     photoKey: string | null
     createdById: string | null
     createdAt: Date | null
@@ -5760,6 +5763,7 @@ export namespace Prisma {
     total: number
     grandTotal: number
     payments: number
+    channel: number
     photoKey: number
     createdById: number
     createdAt: number
@@ -5789,6 +5793,7 @@ export namespace Prisma {
     subtotal?: true
     total?: true
     grandTotal?: true
+    channel?: true
     photoKey?: true
     createdById?: true
     createdAt?: true
@@ -5804,6 +5809,7 @@ export namespace Prisma {
     subtotal?: true
     total?: true
     grandTotal?: true
+    channel?: true
     photoKey?: true
     createdById?: true
     createdAt?: true
@@ -5821,6 +5827,7 @@ export namespace Prisma {
     total?: true
     grandTotal?: true
     payments?: true
+    channel?: true
     photoKey?: true
     createdById?: true
     createdAt?: true
@@ -5925,6 +5932,7 @@ export namespace Prisma {
     total: number
     grandTotal: number
     payments: JsonValue
+    channel: string
     photoKey: string
     createdById: string
     createdAt: Date
@@ -5961,6 +5969,7 @@ export namespace Prisma {
     total?: boolean
     grandTotal?: boolean
     payments?: boolean
+    channel?: boolean
     photoKey?: boolean
     createdById?: boolean
     createdAt?: boolean
@@ -5979,6 +5988,7 @@ export namespace Prisma {
     total?: boolean
     grandTotal?: boolean
     payments?: boolean
+    channel?: boolean
     photoKey?: boolean
     createdById?: boolean
     createdAt?: boolean
@@ -5997,6 +6007,7 @@ export namespace Prisma {
     total?: boolean
     grandTotal?: boolean
     payments?: boolean
+    channel?: boolean
     photoKey?: boolean
     createdById?: boolean
     createdAt?: boolean
@@ -6015,12 +6026,13 @@ export namespace Prisma {
     total?: boolean
     grandTotal?: boolean
     payments?: boolean
+    channel?: boolean
     photoKey?: boolean
     createdById?: boolean
     createdAt?: boolean
   }
 
-  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "photoKey" | "createdById" | "createdAt", ExtArgs["result"]["salesReport"]>
+  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "photoKey" | "createdById" | "createdAt", ExtArgs["result"]["salesReport"]>
   export type SalesReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -6048,6 +6060,7 @@ export namespace Prisma {
       total: number
       grandTotal: number
       payments: Prisma.JsonValue
+      channel: string
       photoKey: string
       createdById: string
       createdAt: Date
@@ -6486,6 +6499,7 @@ export namespace Prisma {
     readonly total: FieldRef<"SalesReport", 'Int'>
     readonly grandTotal: FieldRef<"SalesReport", 'Int'>
     readonly payments: FieldRef<"SalesReport", 'Json'>
+    readonly channel: FieldRef<"SalesReport", 'String'>
     readonly photoKey: FieldRef<"SalesReport", 'String'>
     readonly createdById: FieldRef<"SalesReport", 'String'>
     readonly createdAt: FieldRef<"SalesReport", 'DateTime'>
@@ -38316,6 +38330,7 @@ export namespace Prisma {
     total: 'total',
     grandTotal: 'grandTotal',
     payments: 'payments',
+    channel: 'channel',
     photoKey: 'photoKey',
     createdById: 'createdById',
     createdAt: 'createdAt'
@@ -39165,6 +39180,7 @@ export namespace Prisma {
     total?: IntFilter<"SalesReport"> | number
     grandTotal?: IntFilter<"SalesReport"> | number
     payments?: JsonFilter<"SalesReport">
+    channel?: StringFilter<"SalesReport"> | string
     photoKey?: StringFilter<"SalesReport"> | string
     createdById?: StringFilter<"SalesReport"> | string
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
@@ -39183,6 +39199,7 @@ export namespace Prisma {
     total?: SortOrder
     grandTotal?: SortOrder
     payments?: SortOrder
+    channel?: SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
@@ -39204,6 +39221,7 @@ export namespace Prisma {
     total?: IntFilter<"SalesReport"> | number
     grandTotal?: IntFilter<"SalesReport"> | number
     payments?: JsonFilter<"SalesReport">
+    channel?: StringFilter<"SalesReport"> | string
     photoKey?: StringFilter<"SalesReport"> | string
     createdById?: StringFilter<"SalesReport"> | string
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
@@ -39222,6 +39240,7 @@ export namespace Prisma {
     total?: SortOrder
     grandTotal?: SortOrder
     payments?: SortOrder
+    channel?: SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
@@ -39247,6 +39266,7 @@ export namespace Prisma {
     total?: IntWithAggregatesFilter<"SalesReport"> | number
     grandTotal?: IntWithAggregatesFilter<"SalesReport"> | number
     payments?: JsonWithAggregatesFilter<"SalesReport">
+    channel?: StringWithAggregatesFilter<"SalesReport"> | string
     photoKey?: StringWithAggregatesFilter<"SalesReport"> | string
     createdById?: StringWithAggregatesFilter<"SalesReport"> | string
     createdAt?: DateTimeWithAggregatesFilter<"SalesReport"> | Date | string
@@ -41616,6 +41636,7 @@ export namespace Prisma {
     total?: number
     grandTotal?: number
     payments: JsonNullValueInput | InputJsonValue
+    channel?: string
     photoKey: string
     createdAt?: Date | string
     createdBy: UserCreateNestedOneWithoutSalesReportsInput
@@ -41633,6 +41654,7 @@ export namespace Prisma {
     total?: number
     grandTotal?: number
     payments: JsonNullValueInput | InputJsonValue
+    channel?: string
     photoKey: string
     createdById: string
     createdAt?: Date | string
@@ -41650,6 +41672,7 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     grandTotal?: IntFieldUpdateOperationsInput | number
     payments?: JsonNullValueInput | InputJsonValue
+    channel?: StringFieldUpdateOperationsInput | string
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     createdBy?: UserUpdateOneRequiredWithoutSalesReportsNestedInput
@@ -41667,6 +41690,7 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     grandTotal?: IntFieldUpdateOperationsInput | number
     payments?: JsonNullValueInput | InputJsonValue
+    channel?: StringFieldUpdateOperationsInput | string
     photoKey?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -41684,6 +41708,7 @@ export namespace Prisma {
     total?: number
     grandTotal?: number
     payments: JsonNullValueInput | InputJsonValue
+    channel?: string
     photoKey: string
     createdById: string
     createdAt?: Date | string
@@ -41701,6 +41726,7 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     grandTotal?: IntFieldUpdateOperationsInput | number
     payments?: JsonNullValueInput | InputJsonValue
+    channel?: StringFieldUpdateOperationsInput | string
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -41717,6 +41743,7 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     grandTotal?: IntFieldUpdateOperationsInput | number
     payments?: JsonNullValueInput | InputJsonValue
+    channel?: StringFieldUpdateOperationsInput | string
     photoKey?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -44500,6 +44527,7 @@ export namespace Prisma {
     total?: SortOrder
     grandTotal?: SortOrder
     payments?: SortOrder
+    channel?: SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
@@ -44521,6 +44549,7 @@ export namespace Prisma {
     subtotal?: SortOrder
     total?: SortOrder
     grandTotal?: SortOrder
+    channel?: SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
@@ -44536,6 +44565,7 @@ export namespace Prisma {
     subtotal?: SortOrder
     total?: SortOrder
     grandTotal?: SortOrder
+    channel?: SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
@@ -48727,6 +48757,7 @@ export namespace Prisma {
     total?: number
     grandTotal?: number
     payments: JsonNullValueInput | InputJsonValue
+    channel?: string
     photoKey: string
     createdAt?: Date | string
   }
@@ -48743,6 +48774,7 @@ export namespace Prisma {
     total?: number
     grandTotal?: number
     payments: JsonNullValueInput | InputJsonValue
+    channel?: string
     photoKey: string
     createdAt?: Date | string
   }
@@ -49354,6 +49386,7 @@ export namespace Prisma {
     total?: IntFilter<"SalesReport"> | number
     grandTotal?: IntFilter<"SalesReport"> | number
     payments?: JsonFilter<"SalesReport">
+    channel?: StringFilter<"SalesReport"> | string
     photoKey?: StringFilter<"SalesReport"> | string
     createdById?: StringFilter<"SalesReport"> | string
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
@@ -53547,6 +53580,7 @@ export namespace Prisma {
     total?: number
     grandTotal?: number
     payments: JsonNullValueInput | InputJsonValue
+    channel?: string
     photoKey: string
     createdAt?: Date | string
   }
@@ -54191,6 +54225,7 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     grandTotal?: IntFieldUpdateOperationsInput | number
     payments?: JsonNullValueInput | InputJsonValue
+    channel?: StringFieldUpdateOperationsInput | string
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -54207,6 +54242,7 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     grandTotal?: IntFieldUpdateOperationsInput | number
     payments?: JsonNullValueInput | InputJsonValue
+    channel?: StringFieldUpdateOperationsInput | string
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -54223,6 +54259,7 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     grandTotal?: IntFieldUpdateOperationsInput | number
     payments?: JsonNullValueInput | InputJsonValue
+    channel?: StringFieldUpdateOperationsInput | string
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

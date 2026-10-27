@@ -7,9 +7,9 @@ globalThis.__BUILD_MANIFEST = {
     "static/chunks/0cz1d0mv5g_q7.js"
   ],
   "lowPriorityFiles": [
-    "static/Z76Wyai5eaKiE6950BGtG/_buildManifest.js",
-    "static/Z76Wyai5eaKiE6950BGtG/_ssgManifest.js",
-    "static/Z76Wyai5eaKiE6950BGtG/_clientMiddlewareManifest.js"
+    "static/c6KMDsLt4gVYBk19ldOR0/_buildManifest.js",
+    "static/c6KMDsLt4gVYBk19ldOR0/_ssgManifest.js",
+    "static/c6KMDsLt4gVYBk19ldOR0/_clientMiddlewareManifest.js"
   ],
   "rootMainFiles": [
     "static/chunks/06cza79ljre1d.js",
@@ -370,6 +370,18 @@ globalThis.__BUILD_MANIFEST = {
       ]
     },
     "/(dash)/pengajuan/page": {
+      "otherChunks": [
+        "static/chunks/06cza79ljre1d.js",
+        "static/chunks/3dd7r6r-s_vhx.js",
+        "static/chunks/19rwnbr1_-u2m.js",
+        "static/chunks/27n5614c3xmhs.js",
+        "static/chunks/2b9jvpmc8yuzt.js"
+      ],
+      "runtimeModuleIds": [
+        10835
+      ]
+    },
+    "/(dash)/penjualan-online/page": {
       "otherChunks": [
         "static/chunks/06cza79ljre1d.js",
         "static/chunks/3dd7r6r-s_vhx.js",

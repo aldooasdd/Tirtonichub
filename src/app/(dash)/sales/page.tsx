@@ -7,7 +7,7 @@ export default async function SalesPage() {
   const ctx = await requireSales();
   const canViewAll = ctx.activeRole === "BOSS";
   const rows = await prisma.salesReport.findMany({
-    where: canViewAll ? {} : { createdById: ctx.userId },
+    where: { channel: "offline", ...(canViewAll ? {} : { createdById: ctx.userId }) },
     orderBy: { soldAt: "desc" },
     take: 50,
     include: { createdBy: { select: { fullName: true } } },

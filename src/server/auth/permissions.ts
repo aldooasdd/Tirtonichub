@@ -5,6 +5,8 @@ const FINANCE_ROLES: RoleCode[] = ["BOSS", "FINANCE"];
 const STOCK_ROLES: RoleCode[] = ["BOSS", "STOCK_ROOM"]; // Stock Room juga pegang QC
 const MEDIA_ROLES: RoleCode[] = ["BOSS", "MEDIA"]; // Tirtonic Studio (produksi konten)
 const SALES_ROLES: RoleCode[] = ["BOSS", "SALES"]; // kirim rekap penjualan (foto nota)
+const ADMIN_ROLES: RoleCode[] = ["BOSS", "ADMIN"]; // input penjualan online (screenshot marketplace)
+const SALES_INPUT_ROLES: RoleCode[] = ["BOSS", "SALES", "ADMIN"]; // boleh input penjualan (offline/online)
 
 /** Izin murni (tanpa DB/next) — bisa diuji langsung. */
 export const can = {
@@ -20,6 +22,8 @@ export const can = {
   manageStock: (role: RoleCode) => STOCK_ROLES.includes(role),
   manageMedia: (role: RoleCode) => MEDIA_ROLES.includes(role),
   manageSales: (role: RoleCode) => SALES_ROLES.includes(role),
+  manageOnlineSales: (role: RoleCode) => ADMIN_ROLES.includes(role),
+  inputSales: (role: RoleCode) => SALES_INPUT_ROLES.includes(role),
 
   /** Atur role tertentu di akun targetUserId. Anti-eskalasi (PRD §3). */
   assignRole(
