@@ -24,7 +24,7 @@ export function wibMinutesOfDay(date: Date): number {
   return w.getUTCHours() * 60 + w.getUTCMinutes();
 }
 
-function parseHHMM(s: string): number {
+export function parseHHMM(s: string): number {
   const [h, m] = s.split(":").map(Number);
   return h * 60 + m;
 }

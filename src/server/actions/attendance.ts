@@ -6,9 +6,8 @@ import { roleAttends } from "@/lib/roles";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
-import { dateKeyWIB, computeCheckInStatus, withinRadius } from "@/server/attendance/logic";
-import { SHIFTS, isShiftCode, type ShiftCode } from "@/lib/shift";
-import { defaultShift } from "@/lib/shift-default";
+import { dateKeyWIB, computeCheckInStatus, withinRadius, wibMinutesOfDay, parseHHMM } from "@/server/attendance/logic";
+import { shiftScheduleFor } from "@/server/attendance/shift-schedule";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -29,23 +28,6 @@ function parseForm(form: FormData): { photo: File; geo: Geo } | { error: string 
   if (!Number.isFinite(lat) || !Number.isFinite(lng) || !Number.isFinite(accuracy))
     return { error: "Lokasi wajib." };
   return { photo, geo: { lat, lng, accuracy } };
-}
-
-// Jam masuk dari jadwal shift hari itu (saved Shift timpa pola PDF).
-// null → hari non-kerja (libur/WFH/cuti/sakit/izin) atau tak terjadwal → tak perlu absen.
-async function resolveShiftSchedule(
-  user: { id: string; fullName: string },
-  dateKey: Date,
-): Promise<{ startTime: string; lateToleranceMin: number } | null> {
-  const row = await prisma.shift.findUnique({
-    where: { userId_date: { userId: user.id, date: dateKey } },
-    select: { code: true },
-  });
-  const code = row?.code ?? defaultShift(user.fullName, dateKey.getUTCDate());
-  if (!code || !isShiftCode(code)) return null;
-  const def = SHIFTS[code as ShiftCode];
-  if (!def.working || !def.start) return null;
-  return { startTime: def.start, lateToleranceMin: LATE_TOLERANCE_MIN };
 }
 
 async function checkRadiusOrFail(branchId: string | null, geo: Geo): Promise<string | null> {
@@ -74,7 +56,7 @@ export async function checkIn(form: FormData): Promise<ActionResult> {
   });
   if (existing?.checkInAt) return { ok: false, message: "Kamu sudah absen masuk hari ini." };
 
-  const schedule = await resolveShiftSchedule(user, dateKey);
+  const schedule = await shiftScheduleFor(user, dateKey);
   if (!schedule)
     return { ok: false, message: "Hari ini kamu tidak ada jadwal kerja (libur/cuti/WFH). Tak perlu absen." };
 
@@ -84,7 +66,10 @@ export async function checkIn(form: FormData): Promise<ActionResult> {
   const key = makeKey(`attendance/${ctx.userId}`, "jpg");
   await putObject(key, Buffer.from(await photo.arrayBuffer()), photo.type);
 
-  const { status, lateMinutes } = computeCheckInStatus(now, schedule);
+  const { status, lateMinutes } = computeCheckInStatus(now, {
+    startTime: schedule.start,
+    lateToleranceMin: LATE_TOLERANCE_MIN,
+  });
   const { ip } = await clientMeta();
 
   await prisma.attendance.upsert({
@@ -134,6 +119,10 @@ export async function checkOut(form: FormData): Promise<ActionResult> {
   if (!existing?.checkInAt)
     return { ok: false, message: "Belum absen masuk. Pakai pengajuan koreksi bila lupa." };
   if (existing.checkOutAt) return { ok: false, message: "Kamu sudah absen pulang hari ini." };
+
+  const schedule = await shiftScheduleFor(user, dateKey);
+  if (schedule && wibMinutesOfDay(now) < parseHHMM(schedule.end))
+    return { ok: false, message: `Absen pulang bisa setelah shift berakhir (${schedule.end}).` };
 
   const radiusErr = await checkRadiusOrFail(user.branchId, geo);
   if (radiusErr) return { ok: false, message: radiusErr };

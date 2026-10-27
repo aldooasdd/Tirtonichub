@@ -6,7 +6,8 @@ import { prisma } from "@/server/db";
 import { roleAttends } from "@/lib/roles";
 import { ABSEN_ON } from "@/lib/flags";
 import { fmtWIB } from "@/lib/datetime";
-import { dateKeyWIB } from "@/server/attendance/logic";
+import { dateKeyWIB, wibMinutesOfDay, parseHHMM } from "@/server/attendance/logic";
+import { shiftScheduleFor } from "@/server/attendance/shift-schedule";
 import { loadCalendarEvents } from "@/server/calendar-events";
 import { KalenderClient } from "@/components/kalender/kalender-client";
 
@@ -88,6 +89,12 @@ export default async function BerandaPage() {
   const sisaCuti = tenureOk ? Math.max(0, 12 - cutiTerpakai) : 0;
 
   const absenPhase = !att?.checkInAt ? "in" : !att.checkOutAt ? "out" : "done";
+  // Tombol pulang baru muncul setelah shift berakhir.
+  const shiftSched =
+    ABSEN_ON && absenPhase === "out"
+      ? await shiftScheduleFor({ id: ctx.userId, fullName: user.fullName }, today)
+      : null;
+  const canCheckOut = !shiftSched || wibMinutesOfDay(now) >= parseHHMM(shiftSched.end);
 
   return (
     <div className="space-y-6">
@@ -120,21 +127,24 @@ export default async function BerandaPage() {
                 </p>
               </div>
             </div>
-            {absenPhase !== "done" && (
+            {absenPhase === "in" && (
               <Button asChild className="w-full sm:w-auto">
-                <Link href="/absen">{absenPhase === "in" ? "Absen Masuk" : "Absen Pulang"}</Link>
+                <Link href="/absen">Absen Masuk</Link>
               </Button>
             )}
+            {absenPhase === "out" &&
+              (canCheckOut ? (
+                <Button asChild className="w-full sm:w-auto">
+                  <Link href="/absen">Absen Pulang</Link>
+                </Button>
+              ) : (
+                <p className="text-12 text-muted-foreground">
+                  Absen pulang tersedia setelah shift berakhir{shiftSched ? ` (${shiftSched.end})` : ""}.
+                </p>
+              ))}
           </div>
         </section>
       )}
-
-      <section className="rounded-2xl border bg-card p-6">
-        <h2 className="mb-3 text-14 font-semibold">Tugas harian</h2>
-        <p className="rounded-xl bg-muted p-6 text-center text-14 text-muted-foreground">
-          Belum ada tugas.
-        </p>
-      </section>
 
       <KalenderClient events={await loadCalendarEvents({ userId: ctx.userId, fullName: user.fullName })} />
     </div>

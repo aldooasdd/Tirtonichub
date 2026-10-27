@@ -3,7 +3,8 @@ import { requireAuth } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { ABSEN_ON } from "@/lib/flags";
 import { roleAttends } from "@/lib/roles";
-import { dateKeyWIB } from "@/server/attendance/logic";
+import { dateKeyWIB, wibMinutesOfDay, parseHHMM } from "@/server/attendance/logic";
+import { shiftScheduleFor } from "@/server/attendance/shift-schedule";
 import { fmtWIB } from "@/lib/datetime";
 import { AbsenCapture } from "@/components/absen/absen-capture";
 
@@ -30,6 +31,11 @@ export default async function AbsenPage() {
       ? "out"
       : "done";
 
+  // Tombol pulang baru aktif setelah shift berakhir.
+  const user = await prisma.user.findUniqueOrThrow({ where: { id: ctx.userId }, select: { fullName: true } });
+  const shiftSched = phase === "out" ? await shiftScheduleFor({ id: ctx.userId, fullName: user.fullName }, today) : null;
+  const tooEarly = phase === "out" && !!shiftSched && wibMinutesOfDay(new Date()) < parseHHMM(shiftSched.end);
+
   return (
     <div className="mx-auto max-w-md space-y-4">
       <h1 className="text-24 font-semibold">Absen</h1>
@@ -46,6 +52,10 @@ export default async function AbsenPage() {
       {phase === "done" ? (
         <div className="rounded-lg bg-card p-6 text-center text-muted-foreground">
           Absen hari ini sudah lengkap. Sampai jumpa besok.
+        </div>
+      ) : tooEarly ? (
+        <div className="rounded-lg bg-card p-6 text-center text-muted-foreground">
+          Absen pulang tersedia setelah shift berakhir ({shiftSched!.end}).
         </div>
       ) : (
         <AbsenCapture mode={phase} />
