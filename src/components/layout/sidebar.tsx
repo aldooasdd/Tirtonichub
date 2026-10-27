@@ -12,6 +12,7 @@ import { RoleSwitcher } from "./role-switcher";
 import { logoutAction } from "@/server/actions/auth";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { avatarColor } from "@/lib/avatar-color";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -25,6 +26,16 @@ import type { RightNotif } from "./right-panel";
 function initials(name: string) {
   return name.trim().split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase()).join("") || "?";
 }
+
+// Warna ikon grup role (biar tak hitam-putih).
+const GROUP_COLOR: Record<string, string> = {
+  HR: "text-pink-500",
+  Finance: "text-blue-500",
+  Sales: "text-emerald-500",
+  Admin: "text-violet-500",
+  Stok: "text-amber-500",
+  Media: "text-cyan-500",
+};
 
 export function Sidebar({ notifCount, notifications }: { notifCount: number; notifications: RightNotif[] }) {
   const pathname = usePathname();
@@ -64,7 +75,7 @@ export function Sidebar({ notifCount, notifications }: { notifCount: number; not
                 onClick={() => toggle(group.title!)}
                 className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-14 font-medium text-foreground transition-colors hover:bg-accent"
               >
-                {Icon && <Icon className="h-[18px] w-[18px]" />}
+                {Icon && <Icon className={cn("h-[18px] w-[18px]", GROUP_COLOR[group.title!])} />}
                 <span className="flex-1 text-left">{group.title}</span>
                 <ChevronDown className={cn("h-4 w-4 text-muted-foreground transition-transform", !open && "-rotate-90")} />
               </button>
@@ -104,7 +115,7 @@ export function Sidebar({ notifCount, notifications }: { notifCount: number; not
         )}
         <div className="flex items-center gap-2 rounded-2xl border bg-card px-2 py-2 shadow-lg">
           <Avatar className="h-8 w-8">
-            <AvatarFallback>{initials(user.fullName)}</AvatarFallback>
+            <AvatarFallback className={cn("font-semibold", avatarColor(user.fullName))}>{initials(user.fullName)}</AvatarFallback>
           </Avatar>
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-1.5">

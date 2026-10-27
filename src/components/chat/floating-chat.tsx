@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MessageSquare, X, ChevronLeft, Send, SquarePen } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { avatarColor } from "@/lib/avatar-color";
 import { sendMessage, markRoomRead, startDM } from "@/server/actions/chat";
 import type { RoomListItem } from "@/server/chat/queries";
 import { ROLE_LABELS, type RoleCode } from "@/lib/roles";
@@ -220,7 +221,7 @@ export function FloatingChat({
                     onClick={() => openDM(m)}
                     className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-black/5 dark:hover:bg-white/5"
                   >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/15 text-13 font-semibold text-primary">
+                    <div className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-13 font-semibold", avatarColor(m.name))}>
                       {initials(m.name)}
                     </div>
                     <span className="truncate font-medium">{m.name}</span>
@@ -240,7 +241,7 @@ export function FloatingChat({
               <div className="flex gap-3 overflow-x-auto pb-1">
                 {presence.map((p) => (
                   <div key={p.id} className="flex w-14 shrink-0 flex-col items-center gap-1">
-                    <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-primary/15 text-13 font-semibold text-primary">
+                    <div className={cn("relative flex h-10 w-10 items-center justify-center rounded-full text-13 font-semibold", avatarColor(p.name))}>
                       {initials(p.name)}
                       <span
                         className={cn(
@@ -274,7 +275,7 @@ export function FloatingChat({
                       onClick={() => openDM(m)}
                       className="-mx-1 flex items-center gap-3 rounded-lg px-1 py-1.5 text-left hover:bg-black/5 dark:hover:bg-white/5"
                     >
-                      <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-12 font-semibold text-primary">
+                      <div className={cn("relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-12 font-semibold", avatarColor(m.name))}>
                         {initials(m.name)}
                         {m.active && (
                           <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-green-500 dark:border-zinc-900" />
@@ -301,7 +302,7 @@ export function FloatingChat({
                   onClick={() => setActive(r)}
                   className="flex w-full items-center gap-3 px-4 py-3 text-left hover:bg-black/5 dark:hover:bg-white/5"
                 >
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary/15 text-13 font-semibold text-primary">
+                  <div className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-13 font-semibold", r.type === "GROUP" ? "bg-primary/15 text-primary" : avatarColor(r.name))}>
                     {r.type === "GROUP" ? "#" : initials(r.name)}
                   </div>
                   <div className="min-w-0 flex-1">

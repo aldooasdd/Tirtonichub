@@ -50,7 +50,7 @@ export default async function StokPage({
                   {chips.length > 0 && (
                     <div className="absolute bottom-2 left-2 flex flex-wrap gap-1">
                       {chips.map((c) => (
-                        <span key={c} className="rounded-md bg-white/85 px-2 py-0.5 text-12 font-medium text-foreground backdrop-blur">
+                        <span key={c} className="rounded-md bg-background/85 px-2 py-0.5 text-12 font-medium text-foreground backdrop-blur">
                           {c}
                         </span>
                       ))}

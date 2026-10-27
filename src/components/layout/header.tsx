@@ -21,6 +21,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { avatarColor } from "@/lib/avatar-color";
 import { navForRole } from "@/lib/nav";
 import { useActiveRole, useSessionUser } from "./active-role-context";
 import { RoleSwitcher } from "./role-switcher";
@@ -90,7 +91,7 @@ export function Header() {
             <DropdownMenuTrigger asChild>
               <button aria-label="Akun" className="ml-1">
                 <Avatar className="h-8 w-8">
-                  <AvatarFallback>{initials(user.fullName)}</AvatarFallback>
+                  <AvatarFallback className={cn("font-semibold", avatarColor(user.fullName))}>{initials(user.fullName)}</AvatarFallback>
                 </Avatar>
               </button>
             </DropdownMenuTrigger>

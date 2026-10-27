@@ -88,7 +88,7 @@ export function MediaBarangClient({ items, canManage, full }: { items: Item[]; c
               )}
               {i.color && (
                 <div className="absolute bottom-2 left-2 flex flex-wrap gap-1">
-                  <span className="rounded-md bg-white/85 px-2 py-0.5 text-12 font-medium text-foreground backdrop-blur">{i.color}</span>
+                  <span className="rounded-md bg-background/85 px-2 py-0.5 text-12 font-medium text-foreground backdrop-blur">{i.color}</span>
                 </div>
               )}
             </div>
