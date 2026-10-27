@@ -10,13 +10,6 @@ import { saveShifts, type Cell } from "@/server/actions/shifts";
 type Emp = { id: string; name: string; role: string };
 const DOW = ["Mg", "Sn", "Sl", "Rb", "Km", "Jm", "Sb"];
 
-// kode berikut saat sel diklik: "" → P → … → IZIN → "".
-function nextCode(cur: string): string {
-  if (!cur) return SHIFT_ORDER[0];
-  const i = SHIFT_ORDER.indexOf(cur as ShiftCode);
-  return i < 0 || i === SHIFT_ORDER.length - 1 ? "" : SHIFT_ORDER[i + 1];
-}
-
 export function JadwalGrid({
   ym,
   days,
@@ -51,9 +44,9 @@ export function JadwalGrid({
 
   const shown = (k: string) => cells[k] ?? defaults[k] ?? "";
 
-  function clickCell(empId: string, day: number) {
+  function setCell(empId: string, day: number, code: string) {
     const k = `${empId}:${day}`;
-    setCells((c) => ({ ...c, [k]: nextCode(c[k] ?? defaults[k] ?? "") }));
+    setCells((c) => ({ ...c, [k]: code }));
     setDirty((d) => new Set(d).add(k));
   }
 
@@ -146,12 +139,16 @@ export function JadwalGrid({
                     const def = code ? SHIFTS[code as ShiftCode] : null;
                     return (
                       <td key={d} className="border-b border-l p-0 text-center">
-                        <button
-                          onClick={() => clickCell(e.id, d)}
-                          className={cn("h-9 w-9 text-[11px] font-semibold transition-colors hover:bg-accent", def?.cls)}
+                        <select
+                          value={code}
+                          onChange={(ev) => setCell(e.id, d, ev.target.value)}
+                          className={cn("h-9 w-11 cursor-pointer appearance-none text-center text-[11px] font-semibold outline-none", def?.cls)}
                         >
-                          {code}
-                        </button>
+                          <option value="">—</option>
+                          {SHIFT_ORDER.map((c) => (
+                            <option key={c} value={c}>{c}</option>
+                          ))}
+                        </select>
                       </td>
                     );
                   })}
