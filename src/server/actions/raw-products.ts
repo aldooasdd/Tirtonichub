@@ -103,11 +103,18 @@ export async function saveRawBatch(input: {
   return { ok: true };
 }
 
-/** Edit satu kartu DRAFT milik sendiri. */
+// Filter kepemilikan: BOSS boleh semua draft, Finance biasa hanya miliknya.
+// (Page /finance menampilkan semua draft utk BOSS, jadi mutasi harus sejalan.)
+const ownerWhere = (ctx: { activeRole: string; userId: string }) =>
+  ctx.activeRole === "BOSS" ? {} : { createdById: ctx.userId };
+const owns = (ctx: { activeRole: string; userId: string }, createdById: string) =>
+  ctx.activeRole === "BOSS" || createdById === ctx.userId;
+
+/** Edit satu kartu DRAFT milik sendiri (BOSS: semua). */
 export async function updateRawProduct(id: string, fields: SaveItem): Promise<ActionResult> {
   const ctx = await requireFinance();
   const p = await prisma.rawProduct.findUnique({ where: { id } });
-  if (!p || p.createdById !== ctx.userId) return { ok: false, message: "Tidak ditemukan." };
+  if (!p || !owns(ctx, p.createdById)) return { ok: false, message: "Tidak ditemukan." };
   if (p.status !== "DRAFT") return { ok: false, message: "Hanya draft bisa diedit." };
   const unitPrice = Math.max(0, Math.round(fields.unitPrice) || 0);
   await prisma.rawProduct.update({
@@ -133,7 +140,7 @@ export async function updateRawProduct(id: string, fields: SaveItem): Promise<Ac
 export async function deleteRawProduct(id: string): Promise<ActionResult> {
   const ctx = await requireFinance();
   const p = await prisma.rawProduct.findUnique({ where: { id } });
-  if (!p || p.createdById !== ctx.userId) return { ok: false, message: "Tidak ditemukan." };
+  if (!p || !owns(ctx, p.createdById)) return { ok: false, message: "Tidak ditemukan." };
   if (p.status !== "DRAFT") return { ok: false, message: "Hanya draft bisa dihapus." };
   await prisma.rawProduct.delete({ where: { id } });
   return { ok: true };
@@ -143,7 +150,7 @@ export async function deleteRawProduct(id: string): Promise<ActionResult> {
 export async function saveRawItems(items: Array<SaveItem & { id: string }>): Promise<ActionResult> {
   const ctx = await requireFinance();
   const own = await prisma.rawProduct.findMany({
-    where: { id: { in: items.map((i) => i.id) }, createdById: ctx.userId, status: "DRAFT" },
+    where: { id: { in: items.map((i) => i.id) }, ...ownerWhere(ctx), status: "DRAFT" },
     select: { id: true },
   });
   const allowed = new Set(own.map((o) => o.id));
@@ -177,7 +184,7 @@ export async function saveRawItems(items: Array<SaveItem & { id: string }>): Pro
 export async function deleteBatch(batchId: string): Promise<ActionResult> {
   const ctx = await requireFinance();
   const r = await prisma.rawProduct.deleteMany({
-    where: { batchId, createdById: ctx.userId, status: "DRAFT" },
+    where: { batchId, ...ownerWhere(ctx), status: "DRAFT" },
   });
   if (r.count === 0) return { ok: false, message: "Tidak ada draft untuk dihapus." };
   const { ip } = await clientMeta();
@@ -189,7 +196,7 @@ export async function deleteBatch(batchId: string): Promise<ActionResult> {
 export async function submitItemToQc(id: string): Promise<ActionResult> {
   const ctx = await requireFinance();
   const p = await prisma.rawProduct.findUnique({ where: { id } });
-  if (!p || p.createdById !== ctx.userId) return { ok: false, message: "Tidak ditemukan." };
+  if (!p || !owns(ctx, p.createdById)) return { ok: false, message: "Tidak ditemukan." };
   if (p.status !== "DRAFT") return { ok: false, message: "Hanya draft bisa dikirim." };
   await prisma.rawProduct.update({ where: { id }, data: { status: "QC" } });
   const { ip } = await clientMeta();
@@ -202,7 +209,7 @@ export async function submitItemToQc(id: string): Promise<ActionResult> {
 export async function submitBatchToQc(batchId: string): Promise<ActionResult> {
   const ctx = await requireFinance();
   const r = await prisma.rawProduct.updateMany({
-    where: { batchId, createdById: ctx.userId, status: "DRAFT" },
+    where: { batchId, ...ownerWhere(ctx), status: "DRAFT" },
     data: { status: "QC" },
   });
   if (r.count === 0) return { ok: false, message: "Tidak ada draft untuk dikirim." };
