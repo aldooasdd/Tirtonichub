@@ -21,7 +21,19 @@ type Row = {
   items: Item[];
 };
 
-export function CabangApproval({ pending }: { pending: Row[] }) {
+export function CabangApproval({
+  pending,
+  approveFn = approveSalesReport,
+  rejectFn = rejectSalesReport,
+  title = "Approval Penjualan",
+  desc = "Setujui penjualan offline cabang sebelum masuk Finance.",
+}: {
+  pending: Row[];
+  approveFn?: (id: string) => Promise<{ ok: boolean; message?: string }>;
+  rejectFn?: (id: string) => Promise<{ ok: boolean; message?: string }>;
+  title?: string;
+  desc?: string;
+}) {
   const router = useRouter();
   const [busyId, setBusyId] = useState<string | null>(null);
   const [, start] = useTransition();
@@ -40,8 +52,8 @@ export function CabangApproval({ pending }: { pending: Row[] }) {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-24 font-semibold">Approval Penjualan</h1>
-        <p className="text-14 text-muted-foreground">Setujui penjualan offline cabang sebelum masuk Finance.</p>
+        <h1 className="text-24 font-semibold">{title}</h1>
+        <p className="text-14 text-muted-foreground">{desc}</p>
       </div>
 
       {pending.length === 0 ? (
@@ -84,14 +96,14 @@ export function CabangApproval({ pending }: { pending: Row[] }) {
                 )}
 
                 <div className="flex gap-2">
-                  <Button size="sm" className="flex-1" disabled={busy} onClick={() => act(r.id, approveSalesReport)}>
+                  <Button size="sm" className="flex-1" disabled={busy} onClick={() => act(r.id, approveFn)}>
                     {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />} Setujui
                   </Button>
                   <Button
                     size="sm"
                     variant="ghost"
                     disabled={busy}
-                    onClick={() => act(r.id, rejectSalesReport, "Tolak & hapus nota ini?")}
+                    onClick={() => act(r.id, rejectFn, "Tolak & hapus nota ini?")}
                   >
                     <X className="h-4 w-4" /> Tolak
                   </Button>

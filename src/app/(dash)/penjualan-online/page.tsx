@@ -1,31 +1,43 @@
 import { requireOnlineSales } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
-import { SalesClient } from "@/components/sales/sales-client";
+import { CabangApproval } from "@/components/sales/cabang-approval";
+import { approveOnlineSales, rejectOnlineSales } from "@/server/actions/sales";
+
+type Item = { name: string; qty: number; price: number; total: number; note: string | null };
 
 export default async function PenjualanOnlinePage() {
-  const ctx = await requireOnlineSales();
-  const canViewAll = ctx.activeRole === "BOSS";
+  await requireOnlineSales();
+  // Penjualan online yang belum disetujui Admin.
   const rows = await prisma.salesReport.findMany({
-    where: { channel: "online", ...(canViewAll ? {} : { createdById: ctx.userId }) },
+    where: { channel: "online", approvedAt: null },
     orderBy: { soldAt: "desc" },
-    take: 50,
+    take: 200,
     include: { createdBy: { select: { fullName: true } } },
   });
 
+  const pending = rows.map((r) => {
+    const items = (Array.isArray(r.items) ? r.items : []) as Item[];
+    return {
+      id: r.id,
+      soldAt: fmtWIB(r.soldAt),
+      customer: r.customer || "-",
+      salesman: r.salesman || "-",
+      branch: "Online",
+      by: r.createdBy.fullName,
+      grandTotal: r.grandTotal,
+      photoKey: r.photoKey,
+      items: items.map((it) => ({ name: it.name, qty: it.qty || 1, jual: it.total ?? it.price * (it.qty || 1) })),
+    };
+  });
+
   return (
-    <SalesClient
-      channel="online"
-      canViewAll={canViewAll}
-      reports={rows.map((r) => ({
-        id: r.id,
-        soldAt: fmtWIB(r.soldAt),
-        salesman: r.salesman,
-        customer: r.customer,
-        grandTotal: r.grandTotal,
-        itemCount: Array.isArray(r.items) ? (r.items as unknown[]).length : 0,
-        by: r.createdBy.fullName,
-      }))}
+    <CabangApproval
+      pending={pending}
+      approveFn={approveOnlineSales}
+      rejectFn={rejectOnlineSales}
+      title="Approval Penjualan Online"
+      desc="Setujui penjualan online dari Sales sebelum masuk Finance."
     />
   );
 }

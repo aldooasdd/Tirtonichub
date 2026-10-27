@@ -60,14 +60,16 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
 
 export function SalesClient({
   reports,
+  reportsOnline = [],
   canViewAll,
-  channel = "offline",
 }: {
   reports: SalesRow[];
+  reportsOnline?: SalesRow[];
   canViewAll: boolean;
-  channel?: "online" | "offline";
 }) {
+  const [channel, setChannel] = useState<"online" | "offline">("offline");
   const online = channel === "online";
+  const list = online ? reportsOnline : reports;
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
@@ -145,14 +147,35 @@ export function SalesClient({
     router.refresh();
   }
 
+  function switchChannel(c: "online" | "offline") {
+    if (c === channel) return;
+    reset();
+    setChannel(c);
+  }
+
   return (
     <div className="space-y-5">
+      <div className="inline-flex rounded-lg border bg-card p-0.5 text-14">
+        <button
+          onClick={() => switchChannel("offline")}
+          className={`rounded-md px-4 py-1.5 font-medium transition-colors ${!online ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+        >
+          Rekap Offline
+        </button>
+        <button
+          onClick={() => switchChannel("online")}
+          className={`rounded-md px-4 py-1.5 font-medium transition-colors ${online ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+        >
+          Rekap Online
+        </button>
+      </div>
+
       <div className="flex items-start justify-between gap-3">
         <div>
-          <h1 className="text-24 font-semibold">{online ? "Penjualan Online" : "Rekap Penjualan"}</h1>
+          <h1 className="text-24 font-semibold">{online ? "Rekap Penjualan Online" : "Rekap Penjualan Offline"}</h1>
           <p className="text-14 text-muted-foreground">
             {online
-              ? "Upload screenshot marketplace, AI isi datanya, lalu kirim ke Finance."
+              ? "Upload screenshot marketplace, AI isi datanya, lalu kirim ke Admin untuk disetujui."
               : "Foto nota penjualan, AI isi datanya, lalu kirim ke Kepala Cabang untuk disetujui."}
           </p>
         </div>
@@ -220,19 +243,19 @@ export function SalesClient({
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <Button disabled={busy} onClick={submit}>{busy ? "Menyimpan…" : online ? "Kirim ke Finance" : "Kirim ke Cabang"}</Button>
+            <Button disabled={busy} onClick={submit}>{busy ? "Menyimpan…" : online ? "Kirim ke Admin" : "Kirim ke Cabang"}</Button>
             <Button variant="outline" disabled={busy} onClick={reset}>Batal</Button>
           </div>
         </div>
       )}
 
       <section className="space-y-2">
-        <h2 className="text-14 font-medium text-muted-foreground">{canViewAll ? "Penjualan terbaru" : "Rekap saya"}</h2>
-        {reports.length === 0 ? (
+        <h2 className="text-14 font-medium text-muted-foreground">{canViewAll ? "Penjualan terbaru" : "Rekap saya"} · {online ? "online" : "offline"}</h2>
+        {list.length === 0 ? (
           <p className="rounded-lg border bg-card py-8 text-center text-muted-foreground">Belum ada.</p>
         ) : (
           <div className="rounded-lg border bg-card divide-y">
-            {reports.map((r) => (
+            {list.map((r) => (
               <div key={r.id} className="flex items-center justify-between gap-2 px-4 py-2">
                 <div className="min-w-0">
                   <p className="truncate font-medium">{rupiah(r.grandTotal)} <span className="text-12 font-normal text-muted-foreground">· {r.itemCount} item</span></p>

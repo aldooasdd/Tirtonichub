@@ -23,6 +23,18 @@ export async function notifyBosses(n: {
   });
 }
 
+/** Kirim notifikasi ke semua Admin aktif (ACC penjualan online). */
+export async function notifyAdmins(n: { type: string; title: string; body?: string; link?: string }): Promise<void> {
+  const admins = await prisma.userRole.findMany({
+    where: { role: { code: "ADMIN" }, user: { isActive: true } },
+    select: { userId: true },
+  });
+  if (admins.length === 0) return;
+  await prisma.notification.createMany({
+    data: admins.map((a) => ({ userId: a.userId, type: n.type, title: n.title, body: n.body ?? null, link: n.link ?? null })),
+  });
+}
+
 /** Kirim notifikasi ke Kepala Cabang aktif di cabang tertentu. */
 export async function notifyBranchHeads(
   branchId: string | null,

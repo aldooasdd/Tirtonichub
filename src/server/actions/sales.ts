@@ -1,11 +1,11 @@
 "use server";
 
 import { prisma } from "@/server/db";
-import { requireSalesInput, requireFinance, requireHeadBranch } from "@/server/auth/rbac";
+import { requireSalesInput, requireFinance, requireHeadBranch, requireOnlineSales } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
-import { notifyBosses, notifyBranchHeads } from "@/server/notify";
+import { notifyBosses, notifyBranchHeads, notifyAdmins } from "@/server/notify";
 import { parseSalesNotaViaN8n, type SalesItem, type SalesPayment } from "@/server/n8n-sales";
 
 export type ActionResult = { ok: boolean; message?: string };
@@ -119,8 +119,8 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
       branchName = clean(input.branch, 120);
     }
   }
-  // Offline wajib ACC Kepala Cabang dulu (approvedAt null). Online auto-approve.
-  const approvedAt = channel === "online" ? new Date() : null;
+  // Offline wajib ACC Kepala Cabang; online wajib ACC Admin. Dua-duanya approvedAt null dulu.
+  const approvedAt = null;
   const items = (input.items ?? []).filter((i) => i.name?.trim());
   if (items.length === 0 && input.grandTotal <= 0) return { ok: false, message: "Isi minimal 1 item atau total." };
 
@@ -166,12 +166,54 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
       link: "/cabang/penjualan",
     });
   } else {
-    await notifyBosses({
-      type: "sales_report",
-      title: `Penjualan online masuk: Rp ${rupiah}`,
-      link: "/finance/penjualan",
+    // Online: minta ACC Admin dulu (belum masuk Finance).
+    await notifyAdmins({
+      type: "sales_pending",
+      title: `Penjualan online perlu ACC: Rp ${rupiah}${rep.salesman ? ` · ${rep.salesman}` : ""}`,
+      link: "/penjualan-online",
     });
   }
+  return { ok: true };
+}
+
+/** Admin/Boss: setujui penjualan online → masuk Finance. */
+export async function approveOnlineSales(id: string): Promise<ActionResult> {
+  const ctx = await requireOnlineSales();
+  if (!id) return { ok: false, message: "ID kosong." };
+  const rep = await prisma.salesReport.findUnique({
+    where: { id },
+    select: { id: true, channel: true, approvedAt: true, grandTotal: true },
+  });
+  if (!rep) return { ok: false, message: "Nota tidak ditemukan." };
+  if (rep.channel !== "online") return { ok: false, message: "Hanya penjualan online." };
+  if (rep.approvedAt) return { ok: false, message: "Sudah disetujui." };
+
+  await prisma.salesReport.update({ where: { id }, data: { approvedAt: new Date(), approvedById: ctx.userId } });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "sales_online_approve", entity: "SalesReport", entityId: id });
+  await notifyBosses({
+    type: "sales_report",
+    title: `Penjualan online disetujui: Rp ${new Intl.NumberFormat("id-ID").format(rep.grandTotal)}`,
+    link: "/finance/penjualan",
+  });
+  return { ok: true };
+}
+
+/** Admin/Boss: tolak penjualan online (hapus, belum masuk Finance). */
+export async function rejectOnlineSales(id: string): Promise<ActionResult> {
+  const ctx = await requireOnlineSales();
+  if (!id) return { ok: false, message: "ID kosong." };
+  const rep = await prisma.salesReport.findUnique({
+    where: { id },
+    select: { id: true, channel: true, approvedAt: true },
+  });
+  if (!rep) return { ok: false, message: "Nota tidak ditemukan." };
+  if (rep.channel !== "online") return { ok: false, message: "Hanya penjualan online." };
+  if (rep.approvedAt) return { ok: false, message: "Sudah disetujui, tak bisa ditolak." };
+
+  await prisma.salesReport.delete({ where: { id } });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "sales_online_reject", entity: "SalesReport", entityId: id });
   return { ok: true };
 }
 

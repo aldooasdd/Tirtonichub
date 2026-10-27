@@ -105,7 +105,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
     groups.push({
       title: "Admin",
       icon: Globe,
-      items: [{ label: "Penjualan Online", href: "/penjualan-online", icon: Receipt }],
+      items: [{ label: "Approval Online", href: "/penjualan-online", icon: ClipboardCheck }],
     });
   }
 
