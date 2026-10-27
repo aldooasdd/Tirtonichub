@@ -30,6 +30,7 @@ export type NavItem = {
 
 export type NavGroup = {
   title?: string;
+  icon?: LucideIcon; // ikon di header grup (role)
   items: NavItem[];
 };
 
@@ -51,6 +52,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
   if (HR_ROLES.includes(role)) {
     groups.push({
       title: "HR",
+      icon: Users,
       items: [
         { label: "Karyawan", href: "/hr/karyawan", icon: Users },
         { label: "Cabang", href: "/hr/cabang", icon: Building2 },
@@ -67,6 +69,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
   if (FINANCE_ROLES.includes(role)) {
     groups.push({
       title: "Finance",
+      icon: Receipt,
       items: [
         { label: "Produk Mentah", href: "/finance", icon: Receipt },
         { label: "Rekap Penjualan", href: "/finance/penjualan", icon: Receipt },
@@ -77,6 +80,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
   if (SALES_ROLES.includes(role)) {
     groups.push({
       title: "Sales",
+      icon: Receipt,
       items: [{ label: "Rekap Penjualan", href: "/sales", icon: Receipt }],
     });
   }
@@ -84,6 +88,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
   if (ADMIN_ROLES.includes(role)) {
     groups.push({
       title: "Admin",
+      icon: Receipt,
       items: [{ label: "Penjualan Online", href: "/penjualan-online", icon: Receipt }],
     });
   }
@@ -91,6 +96,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
   if (STOCK_ROLES.includes(role)) {
     groups.push({
       title: "Stok",
+      icon: Boxes,
       items: [
         { label: "Quality Control", href: "/stok/qc", icon: ClipboardCheck },
         { label: "Stok", href: "/stok", icon: Boxes },
@@ -101,6 +107,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
   if (MEDIA_ROLES.includes(role)) {
     groups.push({
       title: "Media",
+      icon: MonitorSmartphone,
       items: [
         { label: "Tirtonic Studio", href: "/studio", icon: MonitorSmartphone, external: true },
       ],
