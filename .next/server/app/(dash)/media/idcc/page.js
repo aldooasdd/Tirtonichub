@@ -1,6 +1,6 @@
 var R=require("../../../../chunks/ssr/[turbopack]_runtime.js")("server/app/(dash)/media/idcc/page.js")
-R.c("server/chunks/ssr/[root-of-the-server]__0tnkll-oxufii._.js")
-R.c("server/chunks/ssr/18de_next_dist_esm_build_templates_app-page_0d33ngc6a-abj.js")
+R.c("server/chunks/ssr/[root-of-the-server]__14j8i1h8fks7l._.js")
+R.c("server/chunks/ssr/18de_next_dist_esm_build_templates_app-page_1k-qa9uwobcqs.js")
 R.c("server/chunks/ssr/18de_next_dist_1km_c5h54l7_m._.js")
 R.c("server/chunks/ssr/18de_next_dist_1-o1w9ph_84-i._.js")
 R.c("server/chunks/ssr/[root-of-the-server]__1ttp_mx0k15u8._.js")
@@ -22,5 +22,5 @@ R.c("server/chunks/ssr/_06fk727zhe03v._.js")
 R.c("server/chunks/ssr/src_lib_media_schedule_ts_1y_hksbzwebj0._.js")
 R.c("server/chunks/ssr/src_server_164temy3tzedn._.js")
 R.c("server/chunks/ssr/src_server_media_08e5d0ts2vv8l._.js")
-R.m(96750)
-module.exports=R.m(96750).exports
+R.m(63870)
+module.exports=R.m(63870).exports

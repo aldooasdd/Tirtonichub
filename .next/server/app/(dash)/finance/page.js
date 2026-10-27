@@ -1,6 +1,6 @@
 var R=require("../../../chunks/ssr/[turbopack]_runtime.js")("server/app/(dash)/finance/page.js")
-R.c("server/chunks/ssr/[root-of-the-server]__203vaacb07g9o._.js")
-R.c("server/chunks/ssr/18de_next_dist_esm_build_templates_app-page_0cwgawqy61thg.js")
+R.c("server/chunks/ssr/[root-of-the-server]__0t6s3w3glx1p2._.js")
+R.c("server/chunks/ssr/18de_next_dist_esm_build_templates_app-page_0su9yq04_q3l8.js")
 R.c("server/chunks/ssr/18de_next_dist_1km_c5h54l7_m._.js")
 R.c("server/chunks/ssr/18de_next_dist_1-o1w9ph_84-i._.js")
 R.c("server/chunks/ssr/[root-of-the-server]__1ttp_mx0k15u8._.js")
@@ -20,5 +20,5 @@ R.c("server/chunks/ssr/src_1l7ajbtpud3hh._.js")
 R.c("server/chunks/ssr/src_1fqraw4kzn84c._.js")
 R.c("server/chunks/ssr/_06fk727zhe03v._.js")
 R.c("server/chunks/ssr/src_server_164temy3tzedn._.js")
-R.m(84780)
-module.exports=R.m(84780).exports
+R.m(36001)
+module.exports=R.m(36001).exports

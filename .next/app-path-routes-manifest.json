@@ -51,7 +51,7 @@
   "/api/studio/upload/route": "/api/studio/upload",
   "/api/studio/upload/start/route": "/api/studio/upload/start",
   "/api/studio/write/route": "/api/studio/write",
-  "/favicon.ico/route": "/favicon.ico",
+  "/icon.png/route": "/icon.png",
   "/manifest.webmanifest/route": "/manifest.webmanifest",
   "/page": "/"
 }

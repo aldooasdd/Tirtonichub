@@ -171,12 +171,6 @@
       "namedRegex": "^/chat(?:/)?$"
     },
     {
-      "page": "/favicon.ico",
-      "regex": "^/favicon\\.ico(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/favicon\\.ico(?:/)?$"
-    },
-    {
       "page": "/finance",
       "regex": "^/finance(?:/)?$",
       "routeKeys": {},
@@ -241,6 +235,12 @@
       "regex": "^/hr/sesi(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/hr/sesi(?:/)?$"
+    },
+    {
+      "page": "/icon.png",
+      "regex": "^/icon\\.png(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/icon\\.png(?:/)?$"
     },
     {
       "page": "/login",

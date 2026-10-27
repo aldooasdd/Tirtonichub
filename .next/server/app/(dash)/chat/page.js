@@ -1,6 +1,6 @@
 var R=require("../../../chunks/ssr/[turbopack]_runtime.js")("server/app/(dash)/chat/page.js")
-R.c("server/chunks/ssr/[root-of-the-server]__0lznc713xc0rz._.js")
-R.c("server/chunks/ssr/18de_next_dist_esm_build_templates_app-page_0dcbd0t83yjj2.js")
+R.c("server/chunks/ssr/[root-of-the-server]__0oan0x35au60a._.js")
+R.c("server/chunks/ssr/18de_next_dist_esm_build_templates_app-page_1rlrvj67kpquo.js")
 R.c("server/chunks/ssr/18de_next_dist_1km_c5h54l7_m._.js")
 R.c("server/chunks/ssr/18de_next_dist_1-o1w9ph_84-i._.js")
 R.c("server/chunks/ssr/[root-of-the-server]__1ttp_mx0k15u8._.js")
@@ -19,5 +19,5 @@ R.c("server/chunks/ssr/_171b5nowd14yb._.js")
 R.c("server/chunks/ssr/src_1l7ajbtpud3hh._.js")
 R.c("server/chunks/ssr/src_server_164temy3tzedn._.js")
 R.c("server/chunks/ssr/_06fk727zhe03v._.js")
-R.m(92554)
-module.exports=R.m(92554).exports
+R.m(38126)
+module.exports=R.m(38126).exports
