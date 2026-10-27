@@ -30,7 +30,9 @@ function normItem(raw: unknown): SalesItem {
   const o = (raw ?? {}) as Record<string, unknown>;
   const qty = Math.max(1, toInt(o.qty) || 1);
   const price = toInt(o.price);
-  const total = toInt(o.total) || price * qty;
+  // total eksplisit (termasuk 0 utk diskon 100%) dihormati; fallback price*qty hanya bila kosong.
+  const hasTotal = o.total !== undefined && o.total !== null && String(o.total).trim() !== "";
+  const total = hasTotal ? toInt(o.total) : price * qty;
   return { name: String(o.name ?? "").slice(0, 200), qty, price, total, note: str(o.note, 300) };
 }
 function normPayment(raw: unknown): SalesPayment {
