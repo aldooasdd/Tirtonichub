@@ -14,6 +14,9 @@ import {
   ScrollText,
   MonitorSmartphone,
   Receipt,
+  Wallet,
+  ShoppingCart,
+  Globe,
   ClipboardCheck,
   Boxes,
   type LucideIcon,
@@ -69,7 +72,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
   if (FINANCE_ROLES.includes(role)) {
     groups.push({
       title: "Finance",
-      icon: Receipt,
+      icon: Wallet,
       items: [
         { label: "Produk Mentah", href: "/finance", icon: Receipt },
         { label: "Rekap Penjualan", href: "/finance/penjualan", icon: Receipt },
@@ -80,7 +83,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
   if (SALES_ROLES.includes(role)) {
     groups.push({
       title: "Sales",
-      icon: Receipt,
+      icon: ShoppingCart,
       items: [{ label: "Rekap Penjualan", href: "/sales", icon: Receipt }],
     });
   }
@@ -88,7 +91,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
   if (ADMIN_ROLES.includes(role)) {
     groups.push({
       title: "Admin",
-      icon: Receipt,
+      icon: Globe,
       items: [{ label: "Penjualan Online", href: "/penjualan-online", icon: Receipt }],
     });
   }
