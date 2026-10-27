@@ -14,7 +14,9 @@ type Item = { name: string; qty: number; price: number; total: number; note: str
 
 export default async function FinancePenjualanPage() {
   await requireFinance();
+  // Hanya yang sudah disetujui (offline di-ACC Kepala Cabang; online auto).
   const reports = await prisma.salesReport.findMany({
+    where: { approvedAt: { not: null } },
     orderBy: { soldAt: "desc" },
     take: 500,
   });

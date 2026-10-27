@@ -86,3 +86,10 @@ export async function requireSalesInput(): Promise<AuthContext> {
   assert(can.inputSales(ctx.activeRole));
   return ctx;
 }
+
+/** Kepala Cabang/Boss: ACC penjualan offline cabang sebelum masuk Finance. */
+export async function requireHeadBranch(): Promise<AuthContext> {
+  const ctx = await requireAuth();
+  assert(can.approveBranchSales(ctx.activeRole));
+  return ctx;
+}

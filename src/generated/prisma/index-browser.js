@@ -152,9 +152,12 @@ exports.Prisma.SalesReportScalarFieldEnum = {
   payments: 'payments',
   channel: 'channel',
   branchName: 'branchName',
+  branchId: 'branchId',
   photoKey: 'photoKey',
   createdById: 'createdById',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  approvedAt: 'approvedAt',
+  approvedById: 'approvedById'
 };
 
 exports.Prisma.RoleScalarFieldEnum = {

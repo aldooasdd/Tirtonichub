@@ -16,6 +16,7 @@ export type SalesRow = {
   grandTotal: number;
   itemCount: number;
   by: string;
+  pending?: boolean; // offline belum di-ACC Kepala Cabang
 };
 
 const rupiah = (n: number) => `Rp ${new Intl.NumberFormat("id-ID").format(n)}`;
@@ -149,7 +150,7 @@ export function SalesClient({
           <p className="text-14 text-muted-foreground">
             {online
               ? "Upload screenshot marketplace, AI isi datanya, lalu kirim ke Finance."
-              : "Foto nota penjualan, AI isi datanya, lalu kirim ke Finance."}
+              : "Foto nota penjualan, AI isi datanya, lalu kirim ke Kepala Cabang untuk disetujui."}
           </p>
         </div>
         <input
@@ -213,7 +214,7 @@ export function SalesClient({
           </div>
 
           <div className="flex flex-wrap gap-2">
-            <Button disabled={busy} onClick={submit}>{busy ? "Menyimpan…" : "Kirim ke Finance"}</Button>
+            <Button disabled={busy} onClick={submit}>{busy ? "Menyimpan…" : online ? "Kirim ke Finance" : "Kirim ke Cabang"}</Button>
             <Button variant="outline" disabled={busy} onClick={reset}>Batal</Button>
           </div>
         </div>
@@ -231,6 +232,11 @@ export function SalesClient({
                   <p className="truncate font-medium">{rupiah(r.grandTotal)} <span className="text-12 font-normal text-muted-foreground">· {r.itemCount} item</span></p>
                   <p className="text-11 text-muted-foreground">{r.soldAt}{r.salesman ? ` · ${r.salesman}` : ""}{canViewAll ? ` · ${r.by}` : ""}</p>
                 </div>
+                {r.pending && (
+                  <span className="shrink-0 rounded-full bg-warning/15 px-2 py-0.5 text-11 font-medium text-warning">
+                    Menunggu ACC
+                  </span>
+                )}
               </div>
             ))}
           </div>

@@ -12,6 +12,7 @@ export default async function SalesPage() {
     take: 50,
     include: { createdBy: { select: { fullName: true } } },
   });
+  // pending = belum di-ACC Kepala Cabang
 
   return (
     <SalesClient
@@ -24,6 +25,7 @@ export default async function SalesPage() {
         grandTotal: r.grandTotal,
         itemCount: Array.isArray(r.items) ? (r.items as unknown[]).length : 0,
         by: r.createdBy.fullName,
+        pending: r.approvedAt == null,
       }))}
     />
   );

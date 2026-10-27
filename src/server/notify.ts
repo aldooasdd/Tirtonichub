@@ -22,3 +22,25 @@ export async function notifyBosses(n: {
     })),
   });
 }
+
+/** Kirim notifikasi ke Kepala Cabang aktif di cabang tertentu. */
+export async function notifyBranchHeads(
+  branchId: string | null,
+  n: { type: string; title: string; body?: string; link?: string },
+): Promise<void> {
+  if (!branchId) return;
+  const heads = await prisma.userRole.findMany({
+    where: { role: { code: "HEAD_BRANCH" }, user: { isActive: true, branchId } },
+    select: { userId: true },
+  });
+  if (heads.length === 0) return;
+  await prisma.notification.createMany({
+    data: heads.map((h) => ({
+      userId: h.userId,
+      type: n.type,
+      title: n.title,
+      body: n.body ?? null,
+      link: n.link ?? null,
+    })),
+  });
+}

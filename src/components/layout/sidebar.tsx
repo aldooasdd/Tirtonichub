@@ -33,6 +33,7 @@ const GROUP_COLOR: Record<string, string> = {
   Finance: "text-blue-500",
   Sales: "text-emerald-500",
   Admin: "text-violet-500",
+  Cabang: "text-indigo-500",
   Stok: "text-amber-500",
   Media: "text-cyan-500",
 };

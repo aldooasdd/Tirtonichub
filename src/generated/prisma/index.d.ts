@@ -5731,9 +5731,12 @@ export namespace Prisma {
     grandTotal: number | null
     channel: string | null
     branchName: string | null
+    branchId: string | null
     photoKey: string | null
     createdById: string | null
     createdAt: Date | null
+    approvedAt: Date | null
+    approvedById: string | null
   }
 
   export type SalesReportMaxAggregateOutputType = {
@@ -5748,9 +5751,12 @@ export namespace Prisma {
     grandTotal: number | null
     channel: string | null
     branchName: string | null
+    branchId: string | null
     photoKey: string | null
     createdById: string | null
     createdAt: Date | null
+    approvedAt: Date | null
+    approvedById: string | null
   }
 
   export type SalesReportCountAggregateOutputType = {
@@ -5767,9 +5773,12 @@ export namespace Prisma {
     payments: number
     channel: number
     branchName: number
+    branchId: number
     photoKey: number
     createdById: number
     createdAt: number
+    approvedAt: number
+    approvedById: number
     _all: number
   }
 
@@ -5798,9 +5807,12 @@ export namespace Prisma {
     grandTotal?: true
     channel?: true
     branchName?: true
+    branchId?: true
     photoKey?: true
     createdById?: true
     createdAt?: true
+    approvedAt?: true
+    approvedById?: true
   }
 
   export type SalesReportMaxAggregateInputType = {
@@ -5815,9 +5827,12 @@ export namespace Prisma {
     grandTotal?: true
     channel?: true
     branchName?: true
+    branchId?: true
     photoKey?: true
     createdById?: true
     createdAt?: true
+    approvedAt?: true
+    approvedById?: true
   }
 
   export type SalesReportCountAggregateInputType = {
@@ -5834,9 +5849,12 @@ export namespace Prisma {
     payments?: true
     channel?: true
     branchName?: true
+    branchId?: true
     photoKey?: true
     createdById?: true
     createdAt?: true
+    approvedAt?: true
+    approvedById?: true
     _all?: true
   }
 
@@ -5940,9 +5958,12 @@ export namespace Prisma {
     payments: JsonValue
     channel: string
     branchName: string | null
+    branchId: string | null
     photoKey: string
     createdById: string
     createdAt: Date
+    approvedAt: Date | null
+    approvedById: string | null
     _count: SalesReportCountAggregateOutputType | null
     _avg: SalesReportAvgAggregateOutputType | null
     _sum: SalesReportSumAggregateOutputType | null
@@ -5978,9 +5999,12 @@ export namespace Prisma {
     payments?: boolean
     channel?: boolean
     branchName?: boolean
+    branchId?: boolean
     photoKey?: boolean
     createdById?: boolean
     createdAt?: boolean
+    approvedAt?: boolean
+    approvedById?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["salesReport"]>
 
@@ -5998,9 +6022,12 @@ export namespace Prisma {
     payments?: boolean
     channel?: boolean
     branchName?: boolean
+    branchId?: boolean
     photoKey?: boolean
     createdById?: boolean
     createdAt?: boolean
+    approvedAt?: boolean
+    approvedById?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["salesReport"]>
 
@@ -6018,9 +6045,12 @@ export namespace Prisma {
     payments?: boolean
     channel?: boolean
     branchName?: boolean
+    branchId?: boolean
     photoKey?: boolean
     createdById?: boolean
     createdAt?: boolean
+    approvedAt?: boolean
+    approvedById?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["salesReport"]>
 
@@ -6038,12 +6068,15 @@ export namespace Prisma {
     payments?: boolean
     channel?: boolean
     branchName?: boolean
+    branchId?: boolean
     photoKey?: boolean
     createdById?: boolean
     createdAt?: boolean
+    approvedAt?: boolean
+    approvedById?: boolean
   }
 
-  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "branchName" | "photoKey" | "createdById" | "createdAt", ExtArgs["result"]["salesReport"]>
+  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "branchName" | "branchId" | "photoKey" | "createdById" | "createdAt" | "approvedAt" | "approvedById", ExtArgs["result"]["salesReport"]>
   export type SalesReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -6073,9 +6106,12 @@ export namespace Prisma {
       payments: Prisma.JsonValue
       channel: string
       branchName: string | null
+      branchId: string | null
       photoKey: string
       createdById: string
       createdAt: Date
+      approvedAt: Date | null
+      approvedById: string | null
     }, ExtArgs["result"]["salesReport"]>
     composites: {}
   }
@@ -6513,9 +6549,12 @@ export namespace Prisma {
     readonly payments: FieldRef<"SalesReport", 'Json'>
     readonly channel: FieldRef<"SalesReport", 'String'>
     readonly branchName: FieldRef<"SalesReport", 'String'>
+    readonly branchId: FieldRef<"SalesReport", 'String'>
     readonly photoKey: FieldRef<"SalesReport", 'String'>
     readonly createdById: FieldRef<"SalesReport", 'String'>
     readonly createdAt: FieldRef<"SalesReport", 'DateTime'>
+    readonly approvedAt: FieldRef<"SalesReport", 'DateTime'>
+    readonly approvedById: FieldRef<"SalesReport", 'String'>
   }
     
 
@@ -38345,9 +38384,12 @@ export namespace Prisma {
     payments: 'payments',
     channel: 'channel',
     branchName: 'branchName',
+    branchId: 'branchId',
     photoKey: 'photoKey',
     createdById: 'createdById',
-    createdAt: 'createdAt'
+    createdAt: 'createdAt',
+    approvedAt: 'approvedAt',
+    approvedById: 'approvedById'
   };
 
   export type SalesReportScalarFieldEnum = (typeof SalesReportScalarFieldEnum)[keyof typeof SalesReportScalarFieldEnum]
@@ -39196,9 +39238,12 @@ export namespace Prisma {
     payments?: JsonFilter<"SalesReport">
     channel?: StringFilter<"SalesReport"> | string
     branchName?: StringNullableFilter<"SalesReport"> | string | null
+    branchId?: StringNullableFilter<"SalesReport"> | string | null
     photoKey?: StringFilter<"SalesReport"> | string
     createdById?: StringFilter<"SalesReport"> | string
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
+    approvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
+    approvedById?: StringNullableFilter<"SalesReport"> | string | null
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -39216,9 +39261,12 @@ export namespace Prisma {
     payments?: SortOrder
     channel?: SortOrder
     branchName?: SortOrderInput | SortOrder
+    branchId?: SortOrderInput | SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
+    approvedAt?: SortOrderInput | SortOrder
+    approvedById?: SortOrderInput | SortOrder
     createdBy?: UserOrderByWithRelationInput
   }
 
@@ -39239,9 +39287,12 @@ export namespace Prisma {
     payments?: JsonFilter<"SalesReport">
     channel?: StringFilter<"SalesReport"> | string
     branchName?: StringNullableFilter<"SalesReport"> | string | null
+    branchId?: StringNullableFilter<"SalesReport"> | string | null
     photoKey?: StringFilter<"SalesReport"> | string
     createdById?: StringFilter<"SalesReport"> | string
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
+    approvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
+    approvedById?: StringNullableFilter<"SalesReport"> | string | null
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
@@ -39259,9 +39310,12 @@ export namespace Prisma {
     payments?: SortOrder
     channel?: SortOrder
     branchName?: SortOrderInput | SortOrder
+    branchId?: SortOrderInput | SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
+    approvedAt?: SortOrderInput | SortOrder
+    approvedById?: SortOrderInput | SortOrder
     _count?: SalesReportCountOrderByAggregateInput
     _avg?: SalesReportAvgOrderByAggregateInput
     _max?: SalesReportMaxOrderByAggregateInput
@@ -39286,9 +39340,12 @@ export namespace Prisma {
     payments?: JsonWithAggregatesFilter<"SalesReport">
     channel?: StringWithAggregatesFilter<"SalesReport"> | string
     branchName?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
+    branchId?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
     photoKey?: StringWithAggregatesFilter<"SalesReport"> | string
     createdById?: StringWithAggregatesFilter<"SalesReport"> | string
     createdAt?: DateTimeWithAggregatesFilter<"SalesReport"> | Date | string
+    approvedAt?: DateTimeNullableWithAggregatesFilter<"SalesReport"> | Date | string | null
+    approvedById?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
   }
 
   export type RoleWhereInput = {
@@ -41657,8 +41714,11 @@ export namespace Prisma {
     payments: JsonNullValueInput | InputJsonValue
     channel?: string
     branchName?: string | null
+    branchId?: string | null
     photoKey: string
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    approvedById?: string | null
     createdBy: UserCreateNestedOneWithoutSalesReportsInput
   }
 
@@ -41676,9 +41736,12 @@ export namespace Prisma {
     payments: JsonNullValueInput | InputJsonValue
     channel?: string
     branchName?: string | null
+    branchId?: string | null
     photoKey: string
     createdById: string
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    approvedById?: string | null
   }
 
   export type SalesReportUpdateInput = {
@@ -41695,8 +41758,11 @@ export namespace Prisma {
     payments?: JsonNullValueInput | InputJsonValue
     channel?: StringFieldUpdateOperationsInput | string
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
     createdBy?: UserUpdateOneRequiredWithoutSalesReportsNestedInput
   }
 
@@ -41714,9 +41780,12 @@ export namespace Prisma {
     payments?: JsonNullValueInput | InputJsonValue
     channel?: StringFieldUpdateOperationsInput | string
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SalesReportCreateManyInput = {
@@ -41733,9 +41802,12 @@ export namespace Prisma {
     payments: JsonNullValueInput | InputJsonValue
     channel?: string
     branchName?: string | null
+    branchId?: string | null
     photoKey: string
     createdById: string
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    approvedById?: string | null
   }
 
   export type SalesReportUpdateManyMutationInput = {
@@ -41752,8 +41824,11 @@ export namespace Prisma {
     payments?: JsonNullValueInput | InputJsonValue
     channel?: StringFieldUpdateOperationsInput | string
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SalesReportUncheckedUpdateManyInput = {
@@ -41770,9 +41845,12 @@ export namespace Prisma {
     payments?: JsonNullValueInput | InputJsonValue
     channel?: StringFieldUpdateOperationsInput | string
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type RoleCreateInput = {
@@ -44555,9 +44633,12 @@ export namespace Prisma {
     payments?: SortOrder
     channel?: SortOrder
     branchName?: SortOrder
+    branchId?: SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
+    approvedAt?: SortOrder
+    approvedById?: SortOrder
   }
 
   export type SalesReportAvgOrderByAggregateInput = {
@@ -44578,9 +44659,12 @@ export namespace Prisma {
     grandTotal?: SortOrder
     channel?: SortOrder
     branchName?: SortOrder
+    branchId?: SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
+    approvedAt?: SortOrder
+    approvedById?: SortOrder
   }
 
   export type SalesReportMinOrderByAggregateInput = {
@@ -44595,9 +44679,12 @@ export namespace Prisma {
     grandTotal?: SortOrder
     channel?: SortOrder
     branchName?: SortOrder
+    branchId?: SortOrder
     photoKey?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
+    approvedAt?: SortOrder
+    approvedById?: SortOrder
   }
 
   export type SalesReportSumOrderByAggregateInput = {
@@ -48788,8 +48875,11 @@ export namespace Prisma {
     payments: JsonNullValueInput | InputJsonValue
     channel?: string
     branchName?: string | null
+    branchId?: string | null
     photoKey: string
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    approvedById?: string | null
   }
 
   export type SalesReportUncheckedCreateWithoutCreatedByInput = {
@@ -48806,8 +48896,11 @@ export namespace Prisma {
     payments: JsonNullValueInput | InputJsonValue
     channel?: string
     branchName?: string | null
+    branchId?: string | null
     photoKey: string
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    approvedById?: string | null
   }
 
   export type SalesReportCreateOrConnectWithoutCreatedByInput = {
@@ -49419,9 +49512,12 @@ export namespace Prisma {
     payments?: JsonFilter<"SalesReport">
     channel?: StringFilter<"SalesReport"> | string
     branchName?: StringNullableFilter<"SalesReport"> | string | null
+    branchId?: StringNullableFilter<"SalesReport"> | string | null
     photoKey?: StringFilter<"SalesReport"> | string
     createdById?: StringFilter<"SalesReport"> | string
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
+    approvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
+    approvedById?: StringNullableFilter<"SalesReport"> | string | null
   }
 
   export type UserCreateWithoutSalesReportsInput = {
@@ -53614,8 +53710,11 @@ export namespace Prisma {
     payments: JsonNullValueInput | InputJsonValue
     channel?: string
     branchName?: string | null
+    branchId?: string | null
     photoKey: string
     createdAt?: Date | string
+    approvedAt?: Date | string | null
+    approvedById?: string | null
   }
 
   export type UserRoleUpdateWithoutUserInput = {
@@ -54260,8 +54359,11 @@ export namespace Prisma {
     payments?: JsonNullValueInput | InputJsonValue
     channel?: StringFieldUpdateOperationsInput | string
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SalesReportUncheckedUpdateWithoutCreatedByInput = {
@@ -54278,8 +54380,11 @@ export namespace Prisma {
     payments?: JsonNullValueInput | InputJsonValue
     channel?: StringFieldUpdateOperationsInput | string
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SalesReportUncheckedUpdateManyWithoutCreatedByInput = {
@@ -54296,8 +54401,11 @@ export namespace Prisma {
     payments?: JsonNullValueInput | InputJsonValue
     channel?: StringFieldUpdateOperationsInput | string
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type UserRoleCreateManyRoleInput = {

@@ -36,6 +36,8 @@ export const MEDIA_ROLES: RoleCode[] = ["BOSS", "MEDIA"];
 export const SALES_ROLES: RoleCode[] = ["BOSS", "SALES"];
 /** Admin: input penjualan online (screenshot marketplace). */
 export const ADMIN_ROLES: RoleCode[] = ["BOSS", "ADMIN"];
+/** Kepala Cabang: ACC penjualan offline cabang sebelum masuk Finance. */
+export const HEAD_BRANCH_ROLES: RoleCode[] = ["BOSS", "HEAD_BRANCH"];
 
 /** Boss tidak absen; role lain absen. (PRD §3) */
 export function roleAttends(role: RoleCode): boolean {

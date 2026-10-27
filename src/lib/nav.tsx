@@ -22,7 +22,7 @@ import {
   Warehouse,
   type LucideIcon,
 } from "lucide-react";
-import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, ADMIN_ROLES, roleAttends, type RoleCode } from "./roles";
+import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, ADMIN_ROLES, HEAD_BRANCH_ROLES, roleAttends, type RoleCode } from "./roles";
 
 export type NavItem = {
   label: string;
@@ -94,6 +94,14 @@ export function navForRole(role: RoleCode): NavGroup[] {
       title: "Admin",
       icon: Globe,
       items: [{ label: "Penjualan Online", href: "/penjualan-online", icon: Receipt }],
+    });
+  }
+
+  if (HEAD_BRANCH_ROLES.includes(role)) {
+    groups.push({
+      title: "Cabang",
+      icon: Building2,
+      items: [{ label: "Approval Penjualan", href: "/cabang/penjualan", icon: ClipboardCheck }],
     });
   }
 

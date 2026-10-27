@@ -1,11 +1,11 @@
 "use server";
 
 import { prisma } from "@/server/db";
-import { requireSalesInput, requireFinance } from "@/server/auth/rbac";
+import { requireSalesInput, requireFinance, requireHeadBranch } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
-import { notifyBosses } from "@/server/notify";
+import { notifyBosses, notifyBranchHeads } from "@/server/notify";
 import { parseSalesNotaViaN8n, type SalesItem, type SalesPayment } from "@/server/n8n-sales";
 
 export type ActionResult = { ok: boolean; message?: string };
@@ -90,10 +90,13 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
   const channel = input.channel === "online" ? "online" : "offline";
   // cabang asal: dari user pengirim (offline). Online = tanpa cabang toko.
   let branchName: string | null = null;
-  if (channel === "offline" && ctx.branchId) {
-    const br = await prisma.branch.findUnique({ where: { id: ctx.branchId }, select: { name: true } });
+  const branchId = channel === "offline" ? ctx.branchId : null;
+  if (branchId) {
+    const br = await prisma.branch.findUnique({ where: { id: branchId }, select: { name: true } });
     branchName = br?.name ?? null;
   }
+  // Offline wajib ACC Kepala Cabang dulu (approvedAt null). Online auto-approve.
+  const approvedAt = channel === "online" ? new Date() : null;
   const items = (input.items ?? []).filter((i) => i.name?.trim());
   if (items.length === 0 && input.grandTotal <= 0) return { ok: false, message: "Isi minimal 1 item atau total." };
 
@@ -121,6 +124,8 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
         .map((p) => ({ method: (p.method || "-").slice(0, 60), amount: int(p.amount) })),
       channel,
       branchName,
+      branchId,
+      approvedAt,
       photoKey: input.photoKey,
       createdById: ctx.userId,
     },
@@ -128,11 +133,68 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
 
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "sales_report", entity: "SalesReport", entityId: rep.id });
+  const rupiah = new Intl.NumberFormat("id-ID").format(rep.grandTotal);
+  if (channel === "offline") {
+    // Minta ACC Kepala Cabang cabang tsb (belum masuk Finance).
+    await notifyBranchHeads(branchId, {
+      type: "sales_pending",
+      title: `Penjualan perlu ACC: Rp ${rupiah}${rep.salesman ? ` · ${rep.salesman}` : ""}`,
+      link: "/cabang/penjualan",
+    });
+  } else {
+    await notifyBosses({
+      type: "sales_report",
+      title: `Penjualan online masuk: Rp ${rupiah}`,
+      link: "/finance/penjualan",
+    });
+  }
+  return { ok: true };
+}
+
+/** Kepala Cabang (cabangnya) / Boss: setujui penjualan offline → masuk Finance. */
+export async function approveSalesReport(id: string): Promise<ActionResult> {
+  const ctx = await requireHeadBranch();
+  if (!id) return { ok: false, message: "ID kosong." };
+  const rep = await prisma.salesReport.findUnique({
+    where: { id },
+    select: { id: true, channel: true, branchId: true, approvedAt: true, grandTotal: true },
+  });
+  if (!rep) return { ok: false, message: "Nota tidak ditemukan." };
+  if (rep.channel !== "offline") return { ok: false, message: "Hanya penjualan offline yang perlu ACC." };
+  if (rep.approvedAt) return { ok: false, message: "Sudah disetujui." };
+  // Kepala Cabang hanya cabangnya sendiri; Boss semua.
+  if (ctx.activeRole !== "BOSS" && rep.branchId !== ctx.branchId) return { ok: false, message: "Bukan cabang Anda." };
+
+  await prisma.salesReport.update({
+    where: { id },
+    data: { approvedAt: new Date(), approvedById: ctx.userId },
+  });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "sales_report_approve", entity: "SalesReport", entityId: id });
   await notifyBosses({
     type: "sales_report",
-    title: `Penjualan masuk: Rp ${new Intl.NumberFormat("id-ID").format(rep.grandTotal)}${rep.salesman ? ` · ${rep.salesman}` : ""}`,
+    title: `Penjualan disetujui cabang: Rp ${new Intl.NumberFormat("id-ID").format(rep.grandTotal)}`,
     link: "/finance/penjualan",
   });
+  return { ok: true };
+}
+
+/** Kepala Cabang (cabangnya) / Boss: tolak penjualan offline (hapus, belum masuk Finance). */
+export async function rejectSalesReport(id: string): Promise<ActionResult> {
+  const ctx = await requireHeadBranch();
+  if (!id) return { ok: false, message: "ID kosong." };
+  const rep = await prisma.salesReport.findUnique({
+    where: { id },
+    select: { id: true, channel: true, branchId: true, approvedAt: true },
+  });
+  if (!rep) return { ok: false, message: "Nota tidak ditemukan." };
+  if (rep.channel !== "offline") return { ok: false, message: "Hanya penjualan offline." };
+  if (rep.approvedAt) return { ok: false, message: "Sudah disetujui, tak bisa ditolak." };
+  if (ctx.activeRole !== "BOSS" && rep.branchId !== ctx.branchId) return { ok: false, message: "Bukan cabang Anda." };
+
+  await prisma.salesReport.delete({ where: { id } });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "sales_report_reject", entity: "SalesReport", entityId: id });
   return { ok: true };
 }
 
