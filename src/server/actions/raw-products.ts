@@ -147,6 +147,17 @@ export async function deleteRawProduct(id: string): Promise<ActionResult> {
   return { ok: true };
 }
 
+/** BOSS: hapus semua item Riwayat (status QC/STOCK/REJECTED). */
+export async function deleteAllHistory(): Promise<ActionResult> {
+  const ctx = await requireFinance();
+  if (ctx.activeRole !== "BOSS") return { ok: false, message: "Hanya Direksi." };
+  const r = await prisma.rawProduct.deleteMany({ where: { status: { not: "DRAFT" } } });
+  if (r.count === 0) return { ok: false, message: "Tidak ada riwayat." };
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "delete", entity: "RawProduct", entityId: `history:${r.count}` });
+  return { ok: true };
+}
+
 /** Simpan banyak kartu DRAFT milik sendiri sekaligus. */
 export async function saveRawItems(items: Array<SaveItem & { id: string }>): Promise<ActionResult> {
   const ctx = await requireFinance();

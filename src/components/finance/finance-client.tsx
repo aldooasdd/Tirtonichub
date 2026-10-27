@@ -15,6 +15,7 @@ import {
   saveRawItems,
   updateRawProduct,
   deleteRawProduct,
+  deleteAllHistory,
   deleteBatch,
   submitItemToQc,
   submitBatchToQc,
@@ -111,6 +112,13 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
       router.refresh();
     });
   }
+  function delAllHistory() {
+    if (!confirm("Hapus SEMUA item riwayat? Tidak bisa dibatalkan.")) return;
+    deleteAllHistory().then((r) => {
+      if (!r.ok) alert(r.message ?? "Gagal hapus.");
+      router.refresh();
+    });
+  }
 
   async function addManual() {
     setBusy(true);
@@ -166,7 +174,14 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
       {/* Sudah dikirim / diproses */}
       {others.length > 0 && (
         <div className="space-y-2">
-          <h2 className="text-16 font-semibold">Riwayat</h2>
+          <div className="flex items-center justify-between gap-2">
+            <h2 className="text-16 font-semibold">Riwayat</h2>
+            {isBoss && (
+              <Button size="sm" variant="ghost" onClick={delAllHistory}>
+                <Trash2 className="mr-1 h-4 w-4" /> Hapus semua
+              </Button>
+            )}
+          </div>
           {others.map((i) => (
             <div key={i.id} className="flex items-start justify-between gap-2 rounded-lg border bg-card p-4">
               <div>
