@@ -55,7 +55,7 @@ export async function createEmployee(input: EmployeeInput): Promise<ActionResult
           fullName: data.fullName,
           email: data.email,
           waNumber: data.waNumber,
-          passwordHash: hashPassword(DEFAULT_PASSWORD),
+          passwordHash: DEFAULT_PASSWORD ? hashPassword(DEFAULT_PASSWORD) : null,
           branchId: data.branchId ?? null,
           joinedAt: data.joinedAt ?? null,
         },

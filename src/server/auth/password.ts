@@ -1,7 +1,8 @@
 import { randomBytes, scryptSync, timingSafeEqual } from "node:crypto";
 
-// Password awal akun baru (HR create / seed). Nilainya di .env server, bukan repo.
-export const DEFAULT_PASSWORD = process.env.DEFAULT_PASSWORD || "ganti-dulu";
+// Password awal akun baru (HR create / seed) + backfill akun lama. Nilainya di
+// .env server, bukan repo. Kosong → fitur default password nonaktif (tak backfill).
+export const DEFAULT_PASSWORD = process.env.DEFAULT_PASSWORD || "";
 
 // Hash password: scrypt (stdlib, no dep). Format "saltHex:hashHex".
 export function hashPassword(pw: string): string {

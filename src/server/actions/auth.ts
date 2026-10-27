@@ -27,12 +27,13 @@ export async function loginAction(email: string, password: string): Promise<Acti
   if (!user?.isActive) return { ok: false, message: "Email atau password salah." };
 
   // Akun lama belum punya password → backfill ke DEFAULT_PASSWORD saat login pertama.
+  // Hanya kalau DEFAULT_PASSWORD terisi (biar tak ter-set ke nilai fallback salah).
   let hash = user.passwordHash;
-  if (!hash) {
+  if (!hash && DEFAULT_PASSWORD) {
     hash = hashPassword(DEFAULT_PASSWORD);
     await prisma.user.update({ where: { id: user.id }, data: { passwordHash: hash } });
   }
-  if (!verifyPassword(password, hash)) {
+  if (!hash || !verifyPassword(password, hash)) {
     return { ok: false, message: "Email atau password salah." };
   }
 
