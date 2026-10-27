@@ -1,6 +1,5 @@
 var R=require("../../../../chunks/ssr/[turbopack]_runtime.js")("server/app/(dash)/finance/penjualan/page.js")
-R.c("server/chunks/ssr/[root-of-the-server]__10n_9jd1sl09a._.js")
-R.c("server/chunks/ssr/src_app_(dash)_finance_penjualan_page_tsx_1_7rqi36wjxt5._.js")
+R.c("server/chunks/ssr/[root-of-the-server]__19_t3t7qyw7t-._.js")
 R.c("server/chunks/ssr/18de_next_dist_esm_build_templates_app-page_1r_kxeottjx83.js")
 R.c("server/chunks/ssr/18de_next_dist_1km_c5h54l7_m._.js")
 R.c("server/chunks/ssr/18de_next_dist_1-o1w9ph_84-i._.js")
