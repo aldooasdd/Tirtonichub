@@ -24,16 +24,16 @@ export function BottomNav() {
   const col = 100 / items.length;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-40 md:hidden">
-      <div className="relative flex border-t border-white/10 bg-background/70 pb-[env(safe-area-inset-bottom)] backdrop-blur-xl">
+    <div className="fixed inset-x-0 bottom-0 z-40 px-4 pb-[calc(env(safe-area-inset-bottom)+10px)] md:hidden">
+      <div className="relative flex rounded-full border border-white/15 bg-background/70 shadow-[0_8px_30px_rgba(0,0,0,0.18)] backdrop-blur-xl">
         {/* overlay distorsi kaca */}
         <div
-          className="pointer-events-none absolute inset-0 isolate -z-0 overflow-hidden"
+          className="pointer-events-none absolute inset-0 isolate -z-0 overflow-hidden rounded-full"
           style={{ filter: 'url("#radio-glass")' }}
         />
         {/* pill geser di belakang item aktif */}
         <div
-          className="pointer-events-none absolute top-1 bottom-1 rounded-2xl bg-background/80 shadow-[0_0_6px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3px_rgba(0,0,0,0.9),inset_-3px_-3px_0.5px_-3px_rgba(0,0,0,0.85),inset_1px_1px_1px_-0.5px_rgba(0,0,0,0.6),inset_-1px_-1px_1px_-0.5px_rgba(0,0,0,0.6),inset_0_0_6px_6px_rgba(0,0,0,0.12),inset_0_0_2px_2px_rgba(0,0,0,0.06),0_0_12px_rgba(255,255,255,0.15)] transition-[left] duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] dark:shadow-[0_0_8px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3.5px_rgba(255,255,255,0.09),inset_-3px_-3px_0.5px_-3.5px_rgba(255,255,255,0.85),inset_1px_1px_1px_-0.5px_rgba(255,255,255,0.6),inset_-1px_-1px_1px_-0.5px_rgba(255,255,255,0.6),inset_0_0_6px_6px_rgba(255,255,255,0.12),inset_0_0_2px_2px_rgba(255,255,255,0.06),0_0_12px_rgba(0,0,0,0.15)]"
+          className="pointer-events-none absolute top-1 bottom-1 rounded-full bg-background/80 shadow-[0_0_6px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3px_rgba(0,0,0,0.9),inset_-3px_-3px_0.5px_-3px_rgba(0,0,0,0.85),inset_1px_1px_1px_-0.5px_rgba(0,0,0,0.6),inset_-1px_-1px_1px_-0.5px_rgba(0,0,0,0.6),inset_0_0_6px_6px_rgba(0,0,0,0.12),inset_0_0_2px_2px_rgba(0,0,0,0.06),0_0_12px_rgba(255,255,255,0.15)] transition-[left] duration-300 [transition-timing-function:cubic-bezier(0.16,1,0.3,1)] dark:shadow-[0_0_8px_rgba(0,0,0,0.03),0_2px_6px_rgba(0,0,0,0.08),inset_3px_3px_0.5px_-3.5px_rgba(255,255,255,0.09),inset_-3px_-3px_0.5px_-3.5px_rgba(255,255,255,0.85),inset_1px_1px_1px_-0.5px_rgba(255,255,255,0.6),inset_-1px_-1px_1px_-0.5px_rgba(255,255,255,0.6),inset_0_0_6px_6px_rgba(255,255,255,0.12),inset_0_0_2px_2px_rgba(255,255,255,0.06),0_0_12px_rgba(0,0,0,0.15)]"
           style={{ left: `calc(${activeIdx * col}% + 4px)`, width: `calc(${col}% - 8px)` }}
         />
         {items.map((it, i) => {
