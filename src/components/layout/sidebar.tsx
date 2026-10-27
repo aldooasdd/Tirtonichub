@@ -2,7 +2,7 @@
 
 import { NavLink } from "./nav-link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { ChevronDown, LogOut, Bell, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
@@ -48,6 +48,17 @@ export function Sidebar({ notifCount, notifications }: { notifCount: number; not
   const { resolvedTheme, setTheme } = useTheme();
   const isDark = resolvedTheme === "dark";
 
+  // Auto-close popup akun saat klik di luar footer.
+  const footerRef = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onDown = (e: MouseEvent) => {
+      if (footerRef.current && !footerRef.current.contains(e.target as Node)) setMenuOpen(false);
+    };
+    document.addEventListener("mousedown", onDown);
+    return () => document.removeEventListener("mousedown", onDown);
+  }, [menuOpen]);
+
   return (
     <aside className="hidden w-64 shrink-0 md:flex md:flex-col">
       <div className="flex h-16 items-center gap-2 px-6">
@@ -82,10 +93,13 @@ export function Sidebar({ notifCount, notifications }: { notifCount: number; not
         })}
       </ScrollArea>
 
-      {/* Footer: kapsul akun terbang (klik nama → buka fitur umum) */}
-      <div className="p-3">
+      {/* Footer: kapsul akun terbang (klik kapsul → buka fitur umum) */}
+      <div ref={footerRef} className="p-3">
         {menuOpen && umum && (
-          <nav className="mb-2 flex flex-col gap-0.5 rounded-2xl border bg-card p-2 shadow-lg">
+          <nav
+            onClick={() => setMenuOpen(false)}
+            className="mb-2 flex flex-col gap-0.5 rounded-2xl border bg-card p-2 shadow-lg"
+          >
             {umum.items.map((item) => (
               <ItemLink key={item.href} item={item} active={isActive(item.href)} withIcon />
             ))}
@@ -105,17 +119,30 @@ export function Sidebar({ notifCount, notifications }: { notifCount: number; not
           </nav>
         )}
         <div className="flex items-center gap-2 rounded-2xl border bg-card px-2 py-2 shadow-lg">
-          <Avatar className="h-8 w-8">
-            <AvatarFallback className={cn("font-semibold", avatarColor(user.fullName))}>{initials(user.fullName)}</AvatarFallback>
-          </Avatar>
-          <div className="min-w-0 flex-1">
-            <div className="flex items-center gap-1.5">
-              <button onClick={() => setMenuOpen((v) => !v)} className="truncate text-left text-14 font-medium hover:underline">
-                {user.fullName}
-              </button>
-              <RoleSwitcher compact />
+          <div
+            role="button"
+            tabIndex={0}
+            onClick={() => setMenuOpen((v) => !v)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setMenuOpen((v) => !v);
+              }
+            }}
+            className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 rounded-xl transition-colors hover:bg-accent/50"
+          >
+            <Avatar className="h-8 w-8">
+              <AvatarFallback className={cn("font-semibold", avatarColor(user.fullName))}>{initials(user.fullName)}</AvatarFallback>
+            </Avatar>
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-1.5">
+                <span className="truncate text-14 font-medium">{user.fullName}</span>
+                <span onClick={(e) => e.stopPropagation()}>
+                  <RoleSwitcher compact />
+                </span>
+              </div>
+              <p className="truncate text-12 text-muted-foreground">{user.email}</p>
             </div>
-            <p className="truncate text-12 text-muted-foreground">{user.email}</p>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
