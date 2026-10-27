@@ -17,7 +17,7 @@ const ROLES: { code: RoleCode; name: string }[] = [
   { code: "ORDER_SPECIALIST", name: "Order Specialist" },
 ];
 
-const BRANCHES = ["Tirtonic Jogja", "Tirtonic Solo", "Tirtonic Semarang"];
+const BRANCHES = ["Tirtonic Jogja", "Tirtonic Solo", "Tirtonic Semarang", "Tirtonic Office"];
 
 // 2 akun Boss (recovery) — §5.4. Override via env.
 const BOSSES = [
