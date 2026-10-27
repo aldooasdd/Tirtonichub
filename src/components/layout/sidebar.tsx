@@ -77,10 +77,10 @@ export function Sidebar({ notifCount, notifications }: { notifCount: number; not
         })}
       </ScrollArea>
 
-      {/* Footer: akun (klik nama → buka fitur umum) */}
-      <div className="border-t p-3">
+      {/* Footer: kapsul akun terbang (klik nama → buka fitur umum) */}
+      <div className="p-3">
         {menuOpen && umum && (
-          <nav className="mb-2 flex flex-col gap-0.5">
+          <nav className="mb-2 flex flex-col gap-0.5 rounded-2xl border bg-card p-2 shadow-lg">
             {umum.items.map((item) => (
               <ItemLink key={item.href} item={item} active={isActive(item.href)} withIcon />
             ))}
@@ -92,7 +92,7 @@ export function Sidebar({ notifCount, notifications }: { notifCount: number; not
             </button>
           </nav>
         )}
-        <div className="flex items-center gap-2 rounded-md px-1 py-1">
+        <div className="flex items-center gap-2 rounded-2xl border bg-card px-2 py-2 shadow-lg">
           <Avatar className="h-8 w-8">
             <AvatarFallback>{initials(user.fullName)}</AvatarFallback>
           </Avatar>
