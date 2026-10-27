@@ -36,6 +36,7 @@
   "/_not-found/page": "app/_not-found/page.js",
   "/api/chat/messages/route": "app/api/chat/messages/route.js",
   "/api/file/route": "app/api/file/route.js",
+  "/api/idcc-ai/route": "app/api/idcc-ai/route.js",
   "/api/media/upload/route": "app/api/media/upload/route.js",
   "/api/studio/doc/route": "app/api/studio/doc/route.js",
   "/api/studio/lock/route": "app/api/studio/lock/route.js",

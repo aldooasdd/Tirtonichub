@@ -75,6 +75,12 @@
       "namedRegex": "^/api/file(?:/)?$"
     },
     {
+      "page": "/api/idcc-ai",
+      "regex": "^/api/idcc\\-ai(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/idcc\\-ai(?:/)?$"
+    },
+    {
       "page": "/api/media/upload",
       "regex": "^/api/media/upload(?:/)?$",
       "routeKeys": {},

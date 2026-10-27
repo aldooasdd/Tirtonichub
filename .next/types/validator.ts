@@ -643,6 +643,16 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../src/app/api/idcc-ai/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/idcc-ai">> = Specific
+  const handler = {} as typeof import("../../src/app/api/idcc-ai/route.js")
+  type __Check = __IsExpected<typeof handler>
+  
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../src/app/api/media/upload/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/media/upload">> = Specific
