@@ -17,7 +17,7 @@ export function Sidebar() {
       <div className="flex h-16 items-center gap-2 px-6">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/logo-ball.png" alt="Tirtonic" className="h-8 w-8 object-contain" />
-        <span className="font-semibold">Tirtonic</span>
+        <span className="font-semibold">Tirtonichub</span>
       </div>
       <ScrollArea className="min-h-0 flex-1 px-3 pb-4">
         {groups.map((group, i) => (
