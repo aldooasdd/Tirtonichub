@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { NavLink } from "./nav-link";
 import { usePathname } from "next/navigation";
-import { Bell, Menu, PanelRight, LogOut, User } from "lucide-react";
+import { Bell, Menu, LogOut, User } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -30,7 +30,7 @@ function initials(name: string) {
   return name.trim().split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase()).join("") || "?";
 }
 
-export function Header({ onTogglePanel }: { onTogglePanel: () => void }) {
+export function Header() {
   const pathname = usePathname();
   const { role } = useActiveRole();
   const user = useSessionUser();
@@ -112,15 +112,6 @@ export function Header({ onTogglePanel }: { onTogglePanel: () => void }) {
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
-        <Button
-          variant="ghost"
-          size="icon"
-          aria-label="Panel kanan"
-          className="hidden lg:inline-flex"
-          onClick={onTogglePanel}
-        >
-          <PanelRight className="h-5 w-5" />
-        </Button>
       </div>
     </header>
   );
