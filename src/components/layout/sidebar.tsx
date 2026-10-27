@@ -76,15 +76,15 @@ export function Sidebar() {
             ))}
           </nav>
         )}
-        <div className="flex items-center justify-between gap-2 border-t pt-2">
-          <RoleSwitcher />
-        </div>
-        <div className="mt-2 flex items-center gap-2 rounded-md px-1 py-1">
+        <div className="flex items-center gap-2 rounded-md border-t px-1 py-1 pt-2">
           <Avatar className="h-8 w-8">
             <AvatarFallback>{initials(user.fullName)}</AvatarFallback>
           </Avatar>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-14 font-medium">{user.fullName}</p>
+            <div className="flex items-center gap-1.5">
+              <p className="truncate text-14 font-medium">{user.fullName}</p>
+              <RoleSwitcher compact />
+            </div>
             <p className="truncate text-12 text-muted-foreground">{user.email}</p>
           </div>
           <button

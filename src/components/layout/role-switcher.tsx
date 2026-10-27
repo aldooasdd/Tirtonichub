@@ -13,11 +13,17 @@ import {
 import { ROLE_LABELS } from "@/lib/roles";
 import { useActiveRole } from "./active-role-context";
 
-export function RoleSwitcher() {
+export function RoleSwitcher({ compact }: { compact?: boolean } = {}) {
   const { role, roles, setRole } = useActiveRole();
   if (roles.length <= 1) {
     return (
-      <span className="rounded-md bg-secondary px-3 py-1.5 text-14 font-medium text-secondary-foreground">
+      <span
+        className={
+          compact
+            ? "shrink-0 rounded bg-secondary px-1.5 py-0.5 text-12 font-medium text-secondary-foreground"
+            : "rounded-md bg-secondary px-3 py-1.5 text-14 font-medium text-secondary-foreground"
+        }
+      >
         {ROLE_LABELS[role]}
       </span>
     );
@@ -25,9 +31,9 @@ export function RoleSwitcher() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="secondary" size="sm" className="gap-2">
+        <Button variant="secondary" size="sm" className={compact ? "h-6 gap-1 px-1.5 text-12" : "gap-2"}>
           {ROLE_LABELS[role]}
-          <ChevronsUpDown className="h-4 w-4 opacity-60" />
+          <ChevronsUpDown className={compact ? "h-3 w-3 opacity-60" : "h-4 w-4 opacity-60"} />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
