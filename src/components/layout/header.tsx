@@ -24,6 +24,7 @@ import { cn } from "@/lib/utils";
 import { navForRole } from "@/lib/nav";
 import { useActiveRole, useSessionUser } from "./active-role-context";
 import { RoleSwitcher } from "./role-switcher";
+import { ThemeToggle } from "./theme-toggle";
 import { logoutAction } from "@/server/actions/auth";
 
 function initials(name: string) {
@@ -78,6 +79,7 @@ export function Header() {
       <div className="ml-auto flex items-center gap-1">
         {/* desktop: role/notif/akun pindah ke footer sidebar → ini mobile saja */}
         <div className="flex items-center gap-1 md:hidden">
+          <ThemeToggle />
           <RoleSwitcher />
           <Button asChild variant="ghost" size="icon" aria-label="Notifikasi">
             <Link href="/notifikasi">

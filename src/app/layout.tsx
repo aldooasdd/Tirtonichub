@@ -22,12 +22,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full" suppressHydrationWarning>
-        {/* sementara fokus mode light; dark ditunda — hapus forcedTheme utk aktifkan lagi */}
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
-          forcedTheme="light"
-          enableSystem={false}
+          defaultTheme="system"
+          enableSystem
           disableTransitionOnChange
         >
           {children}
