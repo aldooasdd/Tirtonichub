@@ -1,0 +1,3 @@
+module.exports=[50821,a=>{"use strict";var b=a.i(54921);a.s(["default",0,function(){return(0,b.jsxs)("div",{className:"space-y-4",children:[(0,b.jsx)("div",{className:"h-7 w-48 animate-pulse rounded bg-muted"}),(0,b.jsx)("div",{className:"h-4 w-72 animate-pulse rounded bg-muted"}),(0,b.jsx)("div",{className:"h-36 animate-pulse rounded-lg bg-muted"}),(0,b.jsx)("div",{className:"h-36 animate-pulse rounded-lg bg-muted"})]})}])},27315,function(a){a.n(a.i(50821))}];
+
+//# sourceMappingURL=src_app_%28dash%29_loading_tsx_0u0gngraiuwoq._.js.map
