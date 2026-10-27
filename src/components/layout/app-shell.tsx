@@ -30,7 +30,7 @@ export function AppShell({
 
   return (
     <div className="flex h-dvh overflow-hidden">
-      <Sidebar notifCount={notifCount} />
+      <Sidebar notifCount={notifCount} notifications={notifications} />
       <div className="flex min-w-0 flex-1 flex-col">
         <Header onTogglePanel={() => setPanelOpen((v) => !v)} />
         <div className="flex min-h-0 flex-1">

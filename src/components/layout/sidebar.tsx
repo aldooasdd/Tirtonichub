@@ -11,12 +11,21 @@ import { RoleSwitcher } from "./role-switcher";
 import { logoutAction } from "@/server/actions/auth";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import type { RightNotif } from "./right-panel";
 
 function initials(name: string) {
   return name.trim().split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase()).join("") || "?";
 }
 
-export function Sidebar({ notifCount }: { notifCount: number }) {
+export function Sidebar({ notifCount, notifications }: { notifCount: number; notifications: RightNotif[] }) {
   const pathname = usePathname();
   const { role } = useActiveRole();
   const user = useSessionUser();
@@ -96,18 +105,43 @@ export function Sidebar({ notifCount }: { notifCount: number }) {
             </div>
             <p className="truncate text-12 text-muted-foreground">{user.email}</p>
           </div>
-          <NavLink
-            href="/notifikasi"
-            aria-label="Notifikasi"
-            className="relative shrink-0 rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-foreground"
-          >
-            <Bell className="h-[18px] w-[18px]" />
-            {notifCount > 0 && (
-              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-medium text-destructive-foreground">
-                {notifCount > 99 ? "99+" : notifCount}
-              </span>
-            )}
-          </NavLink>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                aria-label="Notifikasi"
+                className="relative shrink-0 rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-foreground"
+              >
+                <Bell className="h-[18px] w-[18px]" />
+                {notifCount > 0 && (
+                  <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-medium text-destructive-foreground">
+                    {notifCount > 99 ? "99+" : notifCount}
+                  </span>
+                )}
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="right" align="end" className="w-80">
+              <DropdownMenuLabel>Notifikasi</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              {notifications.length === 0 ? (
+                <p className="px-2 py-4 text-center text-14 text-muted-foreground">Belum ada notifikasi.</p>
+              ) : (
+                notifications.map((n) => (
+                  <DropdownMenuItem key={n.id} asChild>
+                    <NavLink href={n.link ?? "/notifikasi"} className="flex flex-col items-start gap-0.5">
+                      <span className="line-clamp-2 text-14">{n.title}</span>
+                      <span className="text-12 text-muted-foreground">{n.time}</span>
+                    </NavLink>
+                  </DropdownMenuItem>
+                ))
+              )}
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <NavLink href="/notifikasi" className="justify-center text-14 font-medium">
+                  Lihat semua
+                </NavLink>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </div>
     </aside>
