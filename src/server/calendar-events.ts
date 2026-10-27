@@ -50,7 +50,8 @@ async function shiftEvents(userId: string, fullName: string): Promise<Event[]> {
     const def = SHIFTS[code as ShiftCode];
     out.push({
       id: `shift_${y}-${mo + 1}-${day}`,
-      title: `${code} · ${def.label}`,
+      title: def.label.split(" ")[0], // kata singkat: Pagi/Siang/Office/Libur/WFH/Cuti/Sakit/Izin
+      description: def.label, // lengkap + jam, tampil saat di-tap
       startTime: atTime(y, mo, day, def.start ?? "00:00"),
       endTime: atTime(y, mo, day, def.end ?? "23:59"),
       color: SHIFT_COLOR[code as ShiftCode] ?? "blue",
