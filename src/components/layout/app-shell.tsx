@@ -26,7 +26,6 @@ export function AppShell({
   notifCount: number;
 }) {
   const [panelOpen, setPanelOpen] = useState(true);
-  const [dmTarget, setDmTarget] = useState<{ id: string; name: string } | null>(null);
 
   return (
     <div className="flex h-dvh overflow-hidden">
@@ -37,18 +36,11 @@ export function AppShell({
           <main className="min-w-0 flex-1 overflow-y-auto p-4 pb-20 md:p-6 md:pb-6">
             {children}
           </main>
-          {panelOpen && <RightPanel notifications={notifications} members={members} onChat={setDmTarget} />}
+          {panelOpen && <RightPanel notifications={notifications} />}
         </div>
       </div>
       <BottomNav />
-      <FloatingChat
-        rooms={rooms}
-        presence={presence}
-        members={members}
-        me={me}
-        requestDM={dmTarget}
-        onDmHandled={() => setDmTarget(null)}
-      />
+      <FloatingChat rooms={rooms} presence={presence} members={members} me={me} />
     </div>
   );
 }

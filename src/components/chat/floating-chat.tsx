@@ -5,9 +5,10 @@ import { MessageSquare, X, ChevronLeft, Send, SquarePen } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { sendMessage, markRoomRead, startDM } from "@/server/actions/chat";
 import type { RoomListItem } from "@/server/chat/queries";
+import { ROLE_LABELS, type RoleCode } from "@/lib/roles";
 
 export type Presence = { id: string; name: string; late: boolean };
-type Member = { id: string; name: string };
+type Member = { id: string; name: string; active?: boolean; role?: RoleCode | null };
 type Msg = {
   id: string;
   body: string | null;
@@ -32,15 +33,11 @@ export function FloatingChat({
   presence,
   members,
   me,
-  requestDM,
-  onDmHandled,
 }: {
   rooms: RoomListItem[];
   presence: Presence[];
   members: Member[];
   me: string;
-  requestDM?: Member | null;
-  onDmHandled?: () => void;
 }) {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState<RoomListItem | null>(null);
@@ -83,16 +80,6 @@ export function FloatingChat({
   useEffect(() => {
     scrollRef.current?.scrollTo({ top: scrollRef.current.scrollHeight });
   }, [msgs]);
-
-  // Dipicu dari panel kanan: buka widget + DM orang terpilih.
-  useEffect(() => {
-    if (!requestDM) return;
-    setOpen(true);
-    setPicking(false);
-    openDM(requestDM);
-    onDmHandled?.();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [requestDM]);
 
   async function send() {
     if (!active || !text.trim()) return;
@@ -267,6 +254,38 @@ export function FloatingChat({
                     </span>
                   </div>
                 ))}
+              </div>
+            )}
+          </div>
+
+          {/* Anggota — online di atas, klik untuk DM */}
+          <div className="border-b border-white/30 px-4 py-3 dark:border-white/10">
+            <p className="mb-2 text-12 font-semibold text-muted-foreground">Anggota</p>
+            {members.filter((m) => m.id !== me).length === 0 ? (
+              <p className="text-13 text-muted-foreground">Belum ada anggota lain.</p>
+            ) : (
+              <div className="flex flex-col">
+                {[...members]
+                  .filter((m) => m.id !== me)
+                  .sort((a, b) => Number(!!b.active) - Number(!!a.active))
+                  .map((m) => (
+                    <button
+                      key={m.id}
+                      onClick={() => openDM(m)}
+                      className="-mx-1 flex items-center gap-3 rounded-lg px-1 py-1.5 text-left hover:bg-black/5 dark:hover:bg-white/5"
+                    >
+                      <div className="relative flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary/15 text-12 font-semibold text-primary">
+                        {initials(m.name)}
+                        {m.active && (
+                          <span className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full border-2 border-white bg-green-500 dark:border-zinc-900" />
+                        )}
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-14">{m.name}</p>
+                        <p className="text-11 text-muted-foreground">{m.role ? ROLE_LABELS[m.role] : "Tanpa role"}</p>
+                      </div>
+                    </button>
+                  ))}
               </div>
             )}
           </div>
