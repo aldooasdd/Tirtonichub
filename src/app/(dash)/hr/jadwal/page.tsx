@@ -1,6 +1,6 @@
 import { requireHr } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
-import { ROLE_LABELS } from "@/lib/roles";
+import { ROLE_LABELS, roleAttends } from "@/lib/roles";
 import { JadwalGrid } from "@/components/hr/jadwal-grid";
 
 function curYm() {
@@ -22,11 +22,13 @@ export default async function JadwalPage({
   const branches = await prisma.branch.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true } });
   const branchId = sp.branch || branches[0]?.id || "";
 
-  const employees = await prisma.user.findMany({
+  const all = await prisma.user.findMany({
     where: { isActive: true, branchId },
     orderBy: { fullName: "asc" },
     select: { id: true, fullName: true, roles: { select: { role: { select: { code: true } } } } },
   });
+  // Hanya yang kerja shift (punya role selain Direksi/BOSS) yang masuk jadwal.
+  const employees = all.filter((e) => e.roles.some((r) => roleAttends(r.role.code)));
   const ids = employees.map((e) => e.id);
 
   const shifts = ids.length
