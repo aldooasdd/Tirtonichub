@@ -3,7 +3,6 @@ import {
   Clock,
   FileText,
   Bell,
-  MessagesSquare,
   User,
   Users,
   Building2,
@@ -149,7 +148,7 @@ export function bottomNavForRole(role: RoleCode): NavItem[] {
   // Sales: ganti Pengajuan jadi Rekap Penjualan (akses cepat input nota).
   if (role === "SALES") items.push({ label: "Rekap Penjualan", href: "/sales", icon: Receipt });
   else items.push({ label: "Pengajuan", href: "/pengajuan", icon: FileText });
-  items.push({ label: "Chat", href: "/chat", icon: MessagesSquare });
+  // Chat diganti Absen di bottom nav (uji coba). Chat tetap via widget mengambang desktop.
   items.push({ label: "Profil", href: "/profil", icon: User });
   return items; // Notifikasi via bell di header (hemat slot bottom nav)
 }
