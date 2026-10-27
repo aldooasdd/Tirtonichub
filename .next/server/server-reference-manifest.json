@@ -43,7 +43,7 @@
           "async": true
         },
         "app/(dash)/finance/penjualan/page": {
-          "moduleId": 96928,
+          "moduleId": 72705,
           "async": true
         },
         "app/(dash)/hr/approval/page": {
@@ -173,7 +173,7 @@
           "async": true
         },
         "app/(dash)/finance/penjualan/page": {
-          "moduleId": 96928,
+          "moduleId": 72705,
           "async": true
         },
         "app/(dash)/hr/approval/page": {
@@ -303,7 +303,7 @@
           "async": true
         },
         "app/(dash)/finance/penjualan/page": {
-          "moduleId": 96928,
+          "moduleId": 72705,
           "async": true
         },
         "app/(dash)/hr/approval/page": {
@@ -433,7 +433,7 @@
           "async": true
         },
         "app/(dash)/finance/penjualan/page": {
-          "moduleId": 96928,
+          "moduleId": 72705,
           "async": true
         },
         "app/(dash)/hr/approval/page": {
@@ -563,7 +563,7 @@
           "async": true
         },
         "app/(dash)/finance/penjualan/page": {
-          "moduleId": 96928,
+          "moduleId": 72705,
           "async": true
         },
         "app/(dash)/hr/approval/page": {
@@ -823,6 +823,16 @@
       },
       "filename": "src/server/actions/raw-products.ts",
       "exportedName": "submitBatchToQc"
+    },
+    "4075866146e70902be3cefd11c24c18effead983bc": {
+      "workers": {
+        "app/(dash)/finance/penjualan/page": {
+          "moduleId": 72705,
+          "async": true
+        }
+      },
+      "filename": "src/server/actions/sales.ts",
+      "exportedName": "deleteSalesReport"
     },
     "7029561b4ea2b73a54bdeb057a6cf6e33ab6124250": {
       "workers": {

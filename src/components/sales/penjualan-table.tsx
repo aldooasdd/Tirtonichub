@@ -1,6 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useTransition } from "react";
+import { useRouter } from "next/navigation";
+import { deleteSalesReport } from "@/server/actions/sales";
 
 const rupiah = (n: number) => `Rp ${new Intl.NumberFormat("id-ID").format(n)}`;
 
@@ -20,8 +22,19 @@ export type NotaRow = {
 const todayWIB = () => new Date(Date.now() + 7 * 3600_000).toISOString().slice(0, 10);
 
 export function PenjualanTable({ notas }: { notas: NotaRow[] }) {
+  const router = useRouter();
+  const [pending, startTransition] = useTransition();
   const [tgl, setTgl] = useState(todayWIB); // default: hari ini (WIB)
   const [cabang, setCabang] = useState(""); // "" = semua
+
+  function hapus(id: string) {
+    if (!confirm("Hapus nota ini? Tidak bisa dibatalkan.")) return;
+    startTransition(async () => {
+      const r = await deleteSalesReport(id);
+      if (!r.ok) alert(r.message ?? "Gagal hapus.");
+      router.refresh();
+    });
+  }
 
   const cabangOpts = useMemo(
     () => Array.from(new Set(notas.map((n) => n.branch).filter((b) => b && b !== "-"))).sort(),
@@ -73,7 +86,16 @@ export function PenjualanTable({ notas }: { notas: NotaRow[] }) {
                     <a href={`/api/file?key=${encodeURIComponent(n.photoKey)}`} target="_blank" rel="noopener" className="text-primary">Lihat nota</a>
                   </p>
                 </div>
-                <p className="shrink-0 text-14 font-semibold">{rupiah(n.grandTotal)}</p>
+                <div className="flex shrink-0 items-center gap-3">
+                  <p className="text-14 font-semibold">{rupiah(n.grandTotal)}</p>
+                  <button
+                    onClick={() => hapus(n.id)}
+                    disabled={pending}
+                    className="text-12 text-red-500 hover:underline disabled:opacity-50"
+                  >
+                    Hapus
+                  </button>
+                </div>
               </div>
               <table className="w-full text-14 border-collapse">
                 <thead>

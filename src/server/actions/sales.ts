@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/server/db";
-import { requireSalesInput } from "@/server/auth/rbac";
+import { requireSalesInput, requireFinance } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
@@ -121,5 +121,17 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
     title: `Penjualan masuk: Rp ${new Intl.NumberFormat("id-ID").format(rep.grandTotal)}${rep.salesman ? ` · ${rep.salesman}` : ""}`,
     link: "/finance/penjualan",
   });
+  return { ok: true };
+}
+
+/** Hapus satu nota penjualan (Finance/Boss). Foto di storage dibiarkan (dibersihkan terpisah bila perlu). */
+export async function deleteSalesReport(id: string): Promise<ActionResult> {
+  const ctx = await requireFinance();
+  if (!id) return { ok: false, message: "ID kosong." };
+  const rep = await prisma.salesReport.findUnique({ where: { id }, select: { id: true } });
+  if (!rep) return { ok: false, message: "Nota tidak ditemukan." };
+  await prisma.salesReport.delete({ where: { id } });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "sales_report_delete", entity: "SalesReport", entityId: id });
   return { ok: true };
 }
