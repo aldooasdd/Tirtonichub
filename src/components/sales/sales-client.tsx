@@ -189,7 +189,7 @@ export function SalesClient({
         />
         {!draft && (
           <Button disabled={busy} onClick={() => fileRef.current?.click()} className="shrink-0">
-            {busy ? "Memindai…" : online ? "Upload screenshot" : "Foto nota penjualan"}
+            {busy ? "Memindai…" : "Foto nota penjualan"}
           </Button>
         )}
       </div>
