@@ -12,7 +12,7 @@ export default async function DashLayout({ children }: LayoutProps<"/">) {
   if (!s) redirect("/login");
   if (!s.activeRole) redirect("/pilih-role");
 
-  const [notifRows, memberRows, liveSessions, rooms, presenceRows] = await Promise.all([
+  const [notifRows, memberRows, liveSessions, rooms, presenceRows, unreadCount] = await Promise.all([
     prisma.notification.findMany({
       where: { userId: s.user.id },
       orderBy: { createdAt: "desc" },
@@ -34,6 +34,7 @@ export default async function DashLayout({ children }: LayoutProps<"/">) {
       orderBy: { checkInAt: "asc" },
       include: { user: { select: { id: true, fullName: true } } },
     }),
+    prisma.notification.count({ where: { userId: s.user.id, readAt: null } }),
   ]);
 
   const presence = presenceRows.map((a) => ({
@@ -72,6 +73,7 @@ export default async function DashLayout({ children }: LayoutProps<"/">) {
         rooms={rooms}
         presence={presence}
         me={s.user.id}
+        notifCount={unreadCount}
       >
         {children}
       </AppShell>

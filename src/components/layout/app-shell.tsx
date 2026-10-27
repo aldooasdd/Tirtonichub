@@ -15,6 +15,7 @@ export function AppShell({
   rooms,
   presence,
   me,
+  notifCount,
 }: {
   children: React.ReactNode;
   notifications: RightNotif[];
@@ -22,13 +23,14 @@ export function AppShell({
   rooms: RoomListItem[];
   presence: Presence[];
   me: string;
+  notifCount: number;
 }) {
   const [panelOpen, setPanelOpen] = useState(true);
   const [dmTarget, setDmTarget] = useState<{ id: string; name: string } | null>(null);
 
   return (
     <div className="flex h-dvh overflow-hidden">
-      <Sidebar />
+      <Sidebar notifCount={notifCount} />
       <div className="flex min-w-0 flex-1 flex-col">
         <Header onTogglePanel={() => setPanelOpen((v) => !v)} />
         <div className="flex min-h-0 flex-1">

@@ -3,7 +3,7 @@
 import { NavLink } from "./nav-link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { ChevronDown, LogOut } from "lucide-react";
+import { ChevronDown, LogOut, Bell } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { navForRole, type NavItem } from "@/lib/nav";
 import { useActiveRole, useSessionUser } from "./active-role-context";
@@ -16,7 +16,7 @@ function initials(name: string) {
   return name.trim().split(/\s+/).slice(0, 2).map((w) => w[0]?.toUpperCase()).join("") || "?";
 }
 
-export function Sidebar() {
+export function Sidebar({ notifCount }: { notifCount: number }) {
   const pathname = usePathname();
   const { role } = useActiveRole();
   const user = useSessionUser();
@@ -75,6 +75,12 @@ export function Sidebar() {
             {umum.items.map((item) => (
               <ItemLink key={item.href} item={item} active={isActive(item.href)} withIcon />
             ))}
+            <button
+              onClick={() => logoutAction()}
+              className="flex items-center gap-3 rounded-md px-3 py-2 text-14 text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+            >
+              <LogOut className="h-[18px] w-[18px]" /> Keluar
+            </button>
           </nav>
         )}
         <div className="flex items-center gap-2 rounded-md px-1 py-1">
@@ -90,13 +96,18 @@ export function Sidebar() {
             </div>
             <p className="truncate text-12 text-muted-foreground">{user.email}</p>
           </div>
-          <button
-            onClick={() => logoutAction()}
-            aria-label="Keluar"
-            className="shrink-0 rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-foreground"
+          <NavLink
+            href="/notifikasi"
+            aria-label="Notifikasi"
+            className="relative shrink-0 rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-foreground"
           >
-            <LogOut className="h-[18px] w-[18px]" />
-          </button>
+            <Bell className="h-[18px] w-[18px]" />
+            {notifCount > 0 && (
+              <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-destructive px-1 text-[10px] font-medium text-destructive-foreground">
+                {notifCount > 99 ? "99+" : notifCount}
+              </span>
+            )}
+          </NavLink>
         </div>
       </div>
     </aside>
