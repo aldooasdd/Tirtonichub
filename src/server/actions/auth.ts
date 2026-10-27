@@ -28,8 +28,11 @@ export async function loginAction(email: string, password: string): Promise<Acti
 
   // Akun lama belum punya password → backfill ke DEFAULT_PASSWORD saat login pertama.
   // Hanya kalau DEFAULT_PASSWORD terisi (biar tak ter-set ke nilai fallback salah).
+  // ponytail: shim — sebagian akun sempat ke-set ke fallback "ganti-dulu" saat
+  // DEFAULT_PASSWORD belum ada; anggap itu belum ter-set. Hapus setelah semua login.
   let hash = user.passwordHash;
-  if (!hash && DEFAULT_PASSWORD) {
+  const corrupt = !!hash && verifyPassword("ganti-dulu", hash);
+  if ((!hash || corrupt) && DEFAULT_PASSWORD) {
     hash = hashPassword(DEFAULT_PASSWORD);
     await prisma.user.update({ where: { id: user.id }, data: { passwordHash: hash } });
   }
