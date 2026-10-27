@@ -76,13 +76,42 @@ export function Header({ onTogglePanel }: { onTogglePanel: () => void }) {
       </Sheet>
 
       <div className="ml-auto flex items-center gap-1">
-        <RoleSwitcher />
-        {/* ThemeToggle ditunda (fokus light) */}
-        <Button asChild variant="ghost" size="icon" aria-label="Notifikasi">
-          <Link href="/notifikasi">
-            <Bell className="h-5 w-5" />
-          </Link>
-        </Button>
+        {/* desktop: role/notif/akun pindah ke footer sidebar → ini mobile saja */}
+        <div className="flex items-center gap-1 md:hidden">
+          <RoleSwitcher />
+          <Button asChild variant="ghost" size="icon" aria-label="Notifikasi">
+            <Link href="/notifikasi">
+              <Bell className="h-5 w-5" />
+            </Link>
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button aria-label="Akun" className="ml-1">
+                <Avatar className="h-8 w-8">
+                  <AvatarFallback>{initials(user.fullName)}</AvatarFallback>
+                </Avatar>
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuLabel>
+                <div className="flex flex-col">
+                  <span>{user.fullName}</span>
+                  <span className="text-12 font-normal text-muted-foreground">{user.email}</span>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem asChild>
+                <Link href="/profil">
+                  <User className="h-4 w-4" /> Profil
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem onClick={() => logoutAction()}>
+                <LogOut className="h-4 w-4" /> Keluar
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
         <Button
           variant="ghost"
           size="icon"
@@ -92,33 +121,6 @@ export function Header({ onTogglePanel }: { onTogglePanel: () => void }) {
         >
           <PanelRight className="h-5 w-5" />
         </Button>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <button aria-label="Akun" className="ml-1">
-              <Avatar className="h-8 w-8">
-                <AvatarFallback>{initials(user.fullName)}</AvatarFallback>
-              </Avatar>
-            </button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-56">
-            <DropdownMenuLabel>
-              <div className="flex flex-col">
-                <span>{user.fullName}</span>
-                <span className="text-12 font-normal text-muted-foreground">{user.email}</span>
-              </div>
-            </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem asChild>
-              <Link href="/profil">
-                <User className="h-4 w-4" /> Profil
-              </Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => logoutAction()}>
-              <LogOut className="h-4 w-4" /> Keluar
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
       </div>
     </header>
   );
