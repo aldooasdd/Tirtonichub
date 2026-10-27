@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { ScanLine, Plus, Trash2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { compressImage } from "@/lib/image";
 import { computeSellPrice } from "@/lib/pricing";
+import { stripSize, groupKey } from "@/lib/raw-group";
 import {
   scanNota,
   saveRawBatch,
@@ -242,9 +243,27 @@ function toFields(r: Row) {
 function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
   const router = useRouter();
   const [pending, start] = useTransition();
-  const [rows, setRows] = useState<Row[]>(() => items.map(toRow));
+  // Normalisasi: nama tanpa ukuran, supaya baris model+warna sama tergabung.
+  const [rows, setRows] = useState<Row[]>(() =>
+    items.map((i) => ({ ...toRow(i), name: stripSize(i.name, i.size) })),
+  );
 
-  function setField(id: string, key: keyof Row, val: string) {
+  // Grup per model+warna; baris data tetap per ukuran.
+  const groups = useMemo(() => {
+    const m = new Map<string, Row[]>();
+    for (const r of rows) {
+      const k = groupKey(r);
+      (m.get(k) ?? m.set(k, []).get(k)!).push(r);
+    }
+    return [...m.values()];
+  }, [rows]);
+
+  // Edit field bersama → terapkan ke semua baris di grup.
+  function setShared(ids: Set<string>, key: keyof Row, val: string) {
+    setRows((rs) => rs.map((r) => (ids.has(r.id) ? { ...r, [key]: val } : r)));
+  }
+  // Edit per ukuran (size/qty/sku) → satu baris.
+  function setSize(id: string, key: keyof Row, val: string) {
     setRows((rs) => rs.map((r) => (r.id === id ? { ...r, [key]: val } : r)));
   }
 
@@ -261,38 +280,45 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
     });
   }
   function deleteAll() {
-    if (!confirm(`Hapus semua ${rows.length} kartu di batch ini?`)) return;
+    if (!confirm(`Hapus semua ${rows.length} item di batch ini?`)) return;
     start(async () => {
       const r = await deleteBatch(batchId);
       if (!r.ok) alert(r.message);
       router.refresh();
     });
   }
-  function saveOne(row: Row) {
+  function saveGroup(g: Row[]) {
     start(async () => {
-      const r = await updateRawProduct(row.id, toFields(row));
+      const r = await saveRawItems(g.map((row) => ({ id: row.id, ...toFields(row) })));
       if (!r.ok) {
         alert(r.message);
         return;
       }
-      const q = await submitItemToQc(row.id);
-      if (!q.ok) alert(q.message);
+      for (const row of g) {
+        const q = await submitItemToQc(row.id);
+        if (!q.ok) {
+          alert(q.message);
+          break;
+        }
+      }
       router.refresh();
     });
   }
-  function deleteOne(id: string) {
-    if (!confirm("Hapus kartu ini?")) return;
+  function deleteSize(id: string) {
     start(async () => {
       const r = await deleteRawProduct(id);
-      if (!r.ok) alert(r.message);
-      router.refresh();
+      if (!r.ok) {
+        alert(r.message);
+        return;
+      }
+      setRows((rs) => rs.filter((x) => x.id !== id));
     });
   }
 
   return (
     <div className="space-y-3 rounded-lg border bg-card p-4">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <Badge variant="outline">Draft · {rows.length} item</Badge>
+        <Badge variant="outline">Draft · {groups.length} model · {rows.length} item</Badge>
         <div className="flex gap-2">
           <Button size="sm" disabled={pending} onClick={saveAll}>
             Kirim semua
@@ -302,55 +328,61 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
           </Button>
         </div>
       </div>
-      {rows.map((row) => (
-        <div key={row.id} className="space-y-2 rounded-md border p-3">
-          <Field label="Nama barang">
-            <Input value={row.name} onChange={(e) => setField(row.id, "name", e.target.value)} placeholder="Nama barang" />
-          </Field>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            <Field label="Merek">
-              <Input value={row.brand} onChange={(e) => setField(row.id, "brand", e.target.value)} placeholder="Merek" />
+      {groups.map((g) => {
+        const head = g[0];
+        const ids = new Set(g.map((r) => r.id));
+        const totalQty = g.reduce((s, r) => s + (Number(r.qty) || 0), 0);
+        return (
+          <div key={g.map((r) => r.id).sort().join(",")} className="space-y-2 rounded-md border p-3">
+            <Field label="Nama barang">
+              <Input value={head.name} onChange={(e) => setShared(ids, "name", e.target.value)} placeholder="Nama barang" />
             </Field>
-            <Field label="Warna">
-              <Input value={row.color} onChange={(e) => setField(row.id, "color", e.target.value)} placeholder="Warna" />
-            </Field>
-            <Field label="Ukuran">
-              <Input value={row.size} onChange={(e) => setField(row.id, "size", e.target.value)} placeholder="Ukuran" />
-            </Field>
-            <Field label="SKU">
-              <Input value={row.sku} onChange={(e) => setField(row.id, "sku", e.target.value)} placeholder="SKU" />
-            </Field>
-          </div>
-          <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
-            <Field label="Qty">
-              <Input type="number" value={row.qty} onChange={(e) => setField(row.id, "qty", e.target.value)} placeholder="Qty" />
-            </Field>
-            <Field label="Satuan">
-              <Input value={row.unit} onChange={(e) => setField(row.id, "unit", e.target.value)} placeholder="pcs" />
-            </Field>
-            <Field label="Harga/unit">
-              <Input type="number" value={row.unitPrice} onChange={(e) => setField(row.id, "unitPrice", e.target.value)} placeholder="Harga/unit" />
-            </Field>
-            <Field label="Tanggal nota">
-              <Input type="date" value={row.notaDate} onChange={(e) => setField(row.id, "notaDate", e.target.value)} />
-            </Field>
-          </div>
-          <Field label="Supplier">
-            <Input value={row.supplier} onChange={(e) => setField(row.id, "supplier", e.target.value)} placeholder="Supplier" />
-          </Field>
-          <p className="text-12 text-muted-foreground">
-            Harga jual (×135%×115%, bulat 5rb): Rp {rupiah.format(computeSellPrice(Number(row.unitPrice) || 0))}
-          </p>
-          <div className="flex gap-2">
-            <Button size="sm" variant="secondary" className="flex-1" disabled={pending} onClick={() => saveOne(row)}>
+            <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+              <Field label="Merek">
+                <Input value={head.brand} onChange={(e) => setShared(ids, "brand", e.target.value)} placeholder="Merek" />
+              </Field>
+              <Field label="Warna">
+                <Input value={head.color} onChange={(e) => setShared(ids, "color", e.target.value)} placeholder="Warna" />
+              </Field>
+              <Field label="Satuan">
+                <Input value={head.unit} onChange={(e) => setShared(ids, "unit", e.target.value)} placeholder="pcs" />
+              </Field>
+              <Field label="Harga/unit">
+                <Input type="number" value={head.unitPrice} onChange={(e) => setShared(ids, "unitPrice", e.target.value)} placeholder="Harga/unit" />
+              </Field>
+            </div>
+            <div className="grid grid-cols-2 gap-2">
+              <Field label="Supplier">
+                <Input value={head.supplier} onChange={(e) => setShared(ids, "supplier", e.target.value)} placeholder="Supplier" />
+              </Field>
+              <Field label="Tanggal nota">
+                <Input type="date" value={head.notaDate} onChange={(e) => setShared(ids, "notaDate", e.target.value)} />
+              </Field>
+            </div>
+
+            <div className="space-y-1">
+              <span className="block text-12 text-muted-foreground">Ukuran masuk ({totalQty} pcs)</span>
+              {g.map((row) => (
+                <div key={row.id} className="grid grid-cols-[1fr_auto_1.2fr_auto] items-center gap-2">
+                  <Input value={row.size} onChange={(e) => setSize(row.id, "size", e.target.value)} placeholder="Ukuran" />
+                  <Input type="number" className="w-20" value={row.qty} onChange={(e) => setSize(row.id, "qty", e.target.value)} placeholder="Qty" />
+                  <Input value={row.sku} onChange={(e) => setSize(row.id, "sku", e.target.value)} placeholder="SKU" />
+                  <Button size="icon" variant="ghost" disabled={pending} onClick={() => deleteSize(row.id)} aria-label="Hapus ukuran">
+                    <Trash2 className="h-4 w-4" />
+                  </Button>
+                </div>
+              ))}
+            </div>
+
+            <p className="text-12 text-muted-foreground">
+              Harga jual (×135%×115%, bulat 5rb): Rp {rupiah.format(computeSellPrice(Number(head.unitPrice) || 0))}
+            </p>
+            <Button size="sm" variant="secondary" className="w-full" disabled={pending} onClick={() => saveGroup(g)}>
               Simpan & Kirim ke QC
             </Button>
-            <Button size="sm" variant="ghost" disabled={pending} onClick={() => deleteOne(row.id)}>
-              <Trash2 className="h-4 w-4" />
-            </Button>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
