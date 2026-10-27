@@ -30,10 +30,10 @@ export function LoginForm() {
   }
 
   return (
-    <Card>
+    <Card className="dark border-white/10 bg-white/10 text-white shadow-2xl backdrop-blur-2xl">
       <CardHeader>
-        <CardTitle>Masuk Tirtonic</CardTitle>
-        <CardDescription>Masukkan email kantor dan password.</CardDescription>
+        <CardTitle>Masuk Tirtonichub.</CardTitle>
+        <CardDescription className="text-white/60">Masukkan email kantor dan password.</CardDescription>
       </CardHeader>
       <CardContent>
         <form onSubmit={submit} className="space-y-4">
