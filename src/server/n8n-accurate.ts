@@ -24,7 +24,7 @@ function norm(raw: unknown): AccurateSale {
 
 /** Kirim PDF Accurate (base64) ke n8n, terima daftar faktur. null bila gagal. */
 export async function parseAccurateViaN8n(pdfBase64: string): Promise<AccurateSale[] | null> {
-  const url = process.env.N8N_ACCURATE_WEBHOOK_URL;
+  const url = process.env.N8N_ACCURATE_WEBHOOK_URL?.trim();
   if (!url) return null;
   try {
     const res = await fetch(url, {
