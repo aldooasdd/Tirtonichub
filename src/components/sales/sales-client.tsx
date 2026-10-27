@@ -175,7 +175,7 @@ export function SalesClient({
           <h1 className="text-24 font-semibold">{online ? "Rekap Penjualan Online" : "Rekap Penjualan Offline"}</h1>
           <p className="text-14 text-muted-foreground">
             {online
-              ? "Upload screenshot marketplace, AI isi datanya, lalu kirim ke Admin untuk disetujui."
+              ? "Scan screenshot marketplace, AI isi datanya, lalu kirim ke Admin untuk disetujui."
               : "Foto nota penjualan, AI isi datanya, lalu kirim ke Kepala Cabang untuk disetujui."}
           </p>
         </div>
@@ -183,13 +183,13 @@ export function SalesClient({
           ref={fileRef}
           type="file"
           accept="image/*"
-          {...(online ? {} : { capture: "environment" as const })}
+          capture="environment"
           className="hidden"
           onChange={(e) => e.target.files?.[0] && onCapture(e.target.files[0])}
         />
         {!draft && (
           <Button disabled={busy} onClick={() => fileRef.current?.click()} className="shrink-0">
-            {busy ? "Memindai…" : online ? "Upload screenshot" : "Foto nota penjualan"}
+            {busy ? "Memindai…" : online ? "Scan screenshot" : "Foto nota penjualan"}
           </Button>
         )}
       </div>
