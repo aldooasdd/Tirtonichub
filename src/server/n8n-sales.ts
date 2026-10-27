@@ -50,7 +50,7 @@ export async function parseSalesNotaViaN8n(imageBase64: string, mimeType: string
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "x-webhook-secret": process.env.N8N_SALES_OCR_SECRET ?? process.env.N8N_NOTA_OCR_SECRET ?? "",
+        "x-webhook-secret": process.env.N8N_SALES_OCR_SECRET || process.env.N8N_NOTA_OCR_SECRET || "",
       },
       body: JSON.stringify({ imageBase64, mimeType }),
     });

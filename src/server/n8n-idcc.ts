@@ -13,7 +13,7 @@ export async function analyzeIdccViaN8n(body: unknown): Promise<IdccResult> {
       method: "POST",
       headers: {
         "content-type": "application/json",
-        "x-webhook-secret": process.env.N8N_IDCC_SECRET ?? process.env.N8N_NOTA_OCR_SECRET ?? "",
+        "x-webhook-secret": process.env.N8N_IDCC_SECRET || process.env.N8N_NOTA_OCR_SECRET || "",
       },
       body: JSON.stringify(body),
     });
