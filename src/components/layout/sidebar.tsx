@@ -44,7 +44,7 @@ export function Sidebar({ notifCount, notifications }: { notifCount: number; not
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <aside className="hidden w-64 shrink-0 border-r bg-background md:flex md:flex-col">
+    <aside className="hidden w-64 shrink-0 md:flex md:flex-col">
       <div className="flex h-16 items-center gap-2 px-6">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/logo-ball.png" alt="Tirtonic" className="h-8 w-8 object-contain" />
