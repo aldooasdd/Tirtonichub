@@ -183,7 +183,7 @@ export function SalesClient({
           ref={fileRef}
           type="file"
           accept="image/*"
-          {...(online ? {} : { capture: "environment" as const })}
+          capture="environment"
           className="hidden"
           onChange={(e) => e.target.files?.[0] && onCapture(e.target.files[0])}
         />
