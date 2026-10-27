@@ -146,7 +146,9 @@ export function navForRole(role: RoleCode): NavGroup[] {
 export function bottomNavForRole(role: RoleCode): NavItem[] {
   const items: NavItem[] = [{ label: "Beranda", href: "/beranda", icon: Home }];
   if (ABSEN_ON && roleAttends(role)) items.push({ label: "Absen", href: "/absen", icon: Clock });
-  items.push({ label: "Pengajuan", href: "/pengajuan", icon: FileText });
+  // Sales: ganti Pengajuan jadi Rekap Penjualan (akses cepat input nota).
+  if (role === "SALES") items.push({ label: "Rekap Penjualan", href: "/sales", icon: Receipt });
+  else items.push({ label: "Pengajuan", href: "/pengajuan", icon: FileText });
   items.push({ label: "Chat", href: "/chat", icon: MessagesSquare });
   items.push({ label: "Profil", href: "/profil", icon: User });
   return items; // Notifikasi via bell di header (hemat slot bottom nav)
