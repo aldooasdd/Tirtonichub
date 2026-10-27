@@ -13,7 +13,7 @@ export const ROLE_CODES = [
 export type RoleCode = (typeof ROLE_CODES)[number];
 
 export const ROLE_LABELS: Record<RoleCode, string> = {
-  BOSS: "Boss",
+  BOSS: "Direksi",
   MEDIA: "Media",
   FINANCE: "Finance",
   STOCK_ROOM: "Stok Room",
