@@ -424,7 +424,7 @@
   },
   {
     "route": "/finance/penjualan",
-    "firstLoadUncompressedJsBytes": 656773,
+    "firstLoadUncompressedJsBytes": 656831,
     "firstLoadChunkPaths": [
       ".next/static/chunks/36dds3_gamj6p.js",
       ".next/static/chunks/0_8l91a3zaamm.js",
@@ -433,7 +433,7 @@
       ".next/static/chunks/17ml9_6wcy12c.js",
       ".next/static/chunks/3n0drtgqxmx9m.js",
       ".next/static/chunks/0g86ehmvuaub_.js",
-      ".next/static/chunks/3kpjsue_a3mab.js",
+      ".next/static/chunks/3d605hfesefys.js",
       ".next/static/chunks/06cza79ljre1d.js",
       ".next/static/chunks/3dd7r6r-s_vhx.js",
       ".next/static/chunks/19rwnbr1_-u2m.js",

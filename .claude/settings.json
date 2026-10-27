@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ssh tirto@100.100.205.73:*)"
+    ]
+  }
+}

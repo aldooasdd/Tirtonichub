@@ -18,8 +18,10 @@ export type PenjualanRow = {
   first: boolean;
 };
 
+const todayWIB = () => new Date(Date.now() + 7 * 3600_000).toISOString().slice(0, 10);
+
 export function PenjualanTable({ rows }: { rows: PenjualanRow[] }) {
-  const [tgl, setTgl] = useState("");
+  const [tgl, setTgl] = useState(todayWIB); // default: hari ini (WIB)
   const shown = tgl ? rows.filter((r) => r.dateKey === tgl) : rows;
   const total = shown.reduce((s, r) => s + r.jual, 0);
 
