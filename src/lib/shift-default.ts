@@ -1,51 +1,41 @@
-// Jadwal default per karyawan per tanggal (1..31), dari PDF "Jadwal Tirtonic - OKT".
-// Pola sama tiap bulan; grid HR menampilkannya otomatis, edit HR menimpanya (jadi row Shift).
-// "" = kosong (mis. karyawan baru yang belum penuh sebulan). "PS"→P, "I"→IZIN, "ijin sakit"→SAKIT.
+// Jadwal default per karyawan per tanggal (1..30), dari PDF "Jadwal Tirtonic - NOV".
+// Pola sama tiap bulan (berlaku sekarang & ke depan); grid HR menampilkannya otomatis,
+// edit HR / approve tukar shift menimpanya (jadi row Shift). match = awalan nama (lowercase),
+// sudah sinkron dengan nama di DB. Bulan 31 hari → tgl 31 kosong (HR isi manual).
 
 type Row = { match: string; codes: string };
 
-// 31 token per baris (dipisah spasi). match = awalan nama (lowercase).
+// 30 token per baris (dipisah spasi).
 const ROWS: Row[] = [
   // Jogja
-  { match: "kiki", codes: "P S P S P O S P S P S P WFH O P S P S WFH O S P S CUTI S P O S P CUTI CUTI" },
-  { match: "wimas", codes: "S P S P O S P S P S P S WFH P S O S CUTI O WFH P S P S P S WFH O S P S" },
-  { match: "yopi", codes: "O S P S P P O S S P S P S P O S P S P S P O S P S P P P O S P" },
-  { match: "aldy", codes: "S P S P S S P O P S P S P O S P S P S S O S P S P S CUTI O S P S" },
-  { match: "siti indira", codes: "P P S P S P S P P S O S P S P O S P S P S P P S O S P S P O S" },
-  { match: "edo", codes: "S P S S S S P S P O P O S P S P S P O S P S P S P O S P S P S" },
-  { match: "delfia", codes: "P S P CUTI P O S P S P S P O S P S P S P O S P S P S P O S P S P" },
-  { match: "dea", codes: "OH OH OH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH" },
-  { match: "karim", codes: "OH OH OH OH OH OH OH OH OH O WFH OH OH OH OH OH O WFH OH OH OH OH OH O WFH OH OH OH OH OH O" },
-  { match: "andhin", codes: "OH OH OH OH OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH" },
+  { match: "delfia", codes: "S WFH O S P S P S WFH O S P S P S WFH O S P S P S WFH O S P S P S WFH" },
+  { match: "wimas", codes: "P O WFH P S P S P O WFH P S P S P O WFH P S P S P O WFH P S P S P O" },
+  { match: "yopi", codes: "S P S P O S P S P S P O S P S P S P O S P S P S P O S P S P" },
+  { match: "aldi", codes: "P S P O S P S P S P O S P S P S P O S P S P S P O S P S P S" },
+  { match: "indy", codes: "P S P S P O S P S P S P O S P S P S P O S P S P S P O S P S" },
+  { match: "edo", codes: "P P O S P S P S P O S P S P S P O S P S P S P O S P S P S P" },
+  { match: "junita", codes: "S O S P S P S P O S P S P S P O S P S P S P O S P S P S P O" },
+  { match: "dea", codes: "O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH" },
+  { match: "andhin", codes: "O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH" },
   // Solo
-  { match: "denta", codes: "O P CUTI CUTI P S P O S P" },
-  { match: "lala", codes: "S S SAKIT P S P O S P S P S O S P P S P S P O S P S P S P O S P S" },
-  { match: "mutia", codes: "P O S P S P S P O S P S P S P O S P S P S P O S P S P S P O S" },
-  { match: "ghifari", codes: "S P P S O S P S P S P O S P S P S P O S P S P S P O S P S P IZIN" },
-  { match: "erina", codes: "P S P S P O S P S SAKIT S P P O S S P S P O S P S P S P O S P S P" },
-  { match: "afi", codes: "P O S P S P S P O P S P S P O S P S P S P O S P S P S P O S P" },
+  { match: "lala", codes: "S O S P P S P S O S P P S P S O S P P S P S O S P P S P S O" },
+  { match: "mutia", codes: "S P S P O S P S P S P O S P S P S P O S P S P S P O S P S P" },
+  { match: "ghifari", codes: "O S P S P S P O S P S P S P O S P S P S P O S P S P S P O S" },
+  { match: "mawa", codes: "P P O S S P S P P O S S P S P P O S S P S P P O S S P S P P" },
+  { match: "afi", codes: "P S P O S P S P S P O S P S P S P O S P S P S P O S P S P S" },
   // Semarang
-  { match: "josephira", codes: "P P P S O S S P P P S O S S P P P S O S S P P P S O S S P P P" },
-  { match: "nur", codes: "S S S P P P O S S S P P P O S S S P P P O S S S P P P O S S S" },
-  { match: "rahma", codes: "O P S P S S P O P S P S S P O S S P S S P O P S P S S P O P S" },
-  { match: "a taufiq", codes: "P O S S S P P P O S S S P P P O P S S P P P O S S S P P P O S" },
-  { match: "irfan s", codes: "S S P P P O S S S P P P O S S P CUTI P P O S S S P P P O S S S P" },
+  { match: "jose", codes: "S O S S P P P S O S S P P P S O S S P P P S O S S P P P S O" },
+  { match: "nur taufiq", codes: "P P P O S S S P P P O S S S P P P O S S S P P P O S S S P P" },
+  { match: "rahma", codes: "P S S P O P S P S S P O P S P S S P O P S P S S P O P S P S" },
+  { match: "a taufiq", codes: "S S P P P O S S S P P P O S S S P P P O S S S P P P O S S S" },
+  { match: "irfan", codes: "P P O S S S P P P O S S S P P P O S S S P P P O S S S P P P" },
 ];
 
 const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
 const table = ROWS.map((r) => ({ match: r.match, days: r.codes.trim().split(/\s+/) }));
 
-// Nama di DB beda dgn nama di PDF → petakan ke baris PDF yang benar.
-const ALIAS: Record<string, string> = {
-  aldi: "aldy",
-  indy: "siti indira",
-  irfan: "irfan s",
-  jose: "josephira",
-  mawa: "erina",
-};
-
 const rowFor = (fullName: string) => {
-  const n = ALIAS[norm(fullName)] ?? norm(fullName);
+  const n = norm(fullName);
   return table.find((r) => n.startsWith(r.match));
 };
 
