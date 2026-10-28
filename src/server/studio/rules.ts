@@ -24,6 +24,17 @@ const changedKeys = (before: Doc, after: Doc) =>
   );
 const jpOnly = (d: Doc | null) => !d || ((str(d.tier) || "JP") === "JP" && !d.seasonal);
 
+const PEOPLE = ["Z", "R", "A", "S"];
+function shareWhy(s: unknown): string | null {
+  if (s === undefined || s === null) return null;
+  if (typeof s !== "object" || Array.isArray(s)) return "pengaturan bagikan tidak valid";
+  const o = s as Doc;
+  if (Object.keys(o).some((k) => !["all", "codes"].includes(k))) return "pengaturan bagikan tidak valid";
+  if (o.all !== undefined && typeof o.all !== "boolean") return "pengaturan bagikan tidak valid";
+  if (o.codes !== undefined && (!Array.isArray(o.codes) || o.codes.some((c) => !PEOPLE.includes(str(c))))) return "nama tidak dikenal";
+  return null;
+}
+
 export function canRead(u: StudioUser, path: string): boolean {
   const [col, id, sub] = path.split("/");
   switch (col) {
@@ -31,6 +42,8 @@ export function canRead(u: StudioUser, path: string): boolean {
       return id === u.email || u.full;
     case "pcal":
       return id === u.email && (!sub || sub === "events");
+    case "pins":
+      return id === u.email;
     case "reports":
       return u.full;
     case "idcc":
@@ -121,17 +134,32 @@ export function canWrite(
     }
     case "folders": {
       // File Konten: folder barang (id = id barang; hanya warna & letak) dan folder buatan sendiri (custom). Semua anggota.
+      // Folder barang & kategori (cat:…) diatur admin/Admin 2; folder buatan sendiri diatur pembuatnya.
       const custom = (before ?? after)?.custom === true;
-      if (op === "delete") return !custom || u.staff || before?.owner === u.email ? null : deny("hanya admin atau pembuat folder");
+      if (op === "delete") return custom ? (before?.owner === u.email ? null : deny("hanya pembuat folder")) : u.staff ? null : deny("hanya admin");
       const d = after ?? {};
       if (!FILE_COLORS.includes(str(d.color))) return deny("warna tidak dikenal");
       if (str(d.parent).length > 60) return deny("letak folder tidak valid");
-      if (!custom) return Object.keys(d).some((k) => !["color", "parent", "updatedAt"].includes(k)) ? deny("isian folder tidak dikenal") : null;
-      if (Object.keys(d).some((k) => !["name", "color", "parent", "custom", "owner", "createdAt", "updatedAt"].includes(k))) return deny("isian folder tidak dikenal");
+      const sh = shareWhy(d.share);
+      if (sh) return deny(sh);
+      if (!custom) {
+        if (!u.staff) return deny("folder barang hanya diatur admin");
+        return Object.keys(d).some((k) => !["color", "parent", "share", "updatedAt"].includes(k)) ? deny("isian folder tidak dikenal") : null;
+      }
+      if (before && before.owner !== u.email && changedKeys(before, d).some((k) => !["parent", "updatedAt"].includes(k))) return deny("hanya pembuat folder yang bisa mengubah");
+      if (Object.keys(d).some((k) => !["name", "color", "parent", "custom", "owner", "share", "createdAt", "updatedAt"].includes(k))) return deny("isian folder tidak dikenal");
       const nm = str(d.name).trim();
       if (!nm || nm.length > 80 || /[\\/]/.test(nm)) return deny("nama folder tidak valid");
       if (!before) return d.custom === true && d.owner === u.email ? null : deny("pembuat folder tidak cocok");
       return d.custom === true && d.owner === before.owner ? null : deny("pembuat folder tidak bisa diubah");
+    }
+    case "pins": {
+      // Akses cepat di Beranda: milik masing-masing
+      if (id !== u.email) return deny("hanya milik sendiri");
+      if (op === "delete") return null;
+      const it = after?.items;
+      if (Object.keys(after ?? {}).some((k) => !["items", "updatedAt"].includes(k)) || !Array.isArray(it) || it.length > 40) return deny("isian tidak dikenal");
+      return it.every((x) => x && typeof x === "object" && ["f", "a", "d"].includes(str((x as Doc).t)) && str((x as Doc).id).length > 0 && str((x as Doc).id).length <= 80) ? null : deny("isian tidak dikenal");
     }
     case "docs": {
       // File Konten: catatan (Docs). Semua anggota boleh menulis; hapus = admin atau pembuat.

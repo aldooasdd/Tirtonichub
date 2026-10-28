@@ -56,8 +56,12 @@ test("File Konten: semua anggota boleh ganti nama/warna, folder berwarna", () =>
   assert.equal(canWrite(rayhan, "update", "assets/x", f, { ...f, name: "b.mp4", color: "red" }), null);
   assert.notEqual(canWrite(rayhan, "update", "assets/x", f, { ...f, url: "/lain" }), null);
   assert.notEqual(canWrite(rayhan, "update", "assets/x", f, { ...f, color: "pink" }), null);
-  assert.equal(canWrite(rayhan, "set", "folders/i", null, { color: "blue", updatedAt: 1 }), null);
-  assert.notEqual(canWrite(rayhan, "set", "folders/i", null, { color: "blue", foo: 1 }), null);
+  // folder barang & kategori: hanya admin/Admin 2
+  assert.notEqual(canWrite(rayhan, "set", "folders/i", null, { color: "blue", updatedAt: 1 }), null);
+  assert.equal(canWrite(aulia, "set", "folders/i", null, { color: "blue", updatedAt: 1 }), null);
+  assert.notEqual(canWrite(aulia, "set", "folders/i", null, { color: "blue", foo: 1 }), null);
+  assert.equal(canWrite(aulia, "set", "folders/cat:sepatu", null, { color: "", share: { all: false, codes: ["R", "S"] }, updatedAt: 1 }), null);
+  assert.notEqual(canWrite(aulia, "set", "folders/cat:sepatu", null, { color: "", share: { codes: ["X"] }, updatedAt: 1 }), null);
   // catatan (Docs)
   const nd = { title: "Ide konten", body: "isi", parent: "", color: "", owner: rayhan.email, createdAt: 1, updatedAt: 1, updatedBy: "Rayhan" };
   assert.equal(canRead(rayhan, "docs/d1"), true);
@@ -71,8 +75,14 @@ test("File Konten: semua anggota boleh ganti nama/warna, folder berwarna", () =>
   assert.notEqual(canWrite(rayhan, "set", "folders/f1", null, { ...nf, owner: "lain@x.com" }), null);
   assert.notEqual(canWrite(rayhan, "set", "folders/f1", null, { ...nf, name: "a/b" }), null);
   assert.equal(canWrite(rayhan, "update", "folders/f1", { ...nf, owner: "lain@x.com" }, { ...nf, owner: "lain@x.com", parent: "f2" }), null);
+  assert.notEqual(canWrite(rayhan, "update", "folders/f1", { ...nf, owner: "lain@x.com" }, { ...nf, owner: "lain@x.com", share: { all: true } }), null);
+  assert.equal(canWrite(rayhan, "update", "folders/f1", nf, { ...nf, share: { all: false, codes: ["A"] } }), null);
+  // akses cepat Beranda
+  assert.equal(canRead(rayhan, "pins/" + rayhan.email), true);
+  assert.equal(canRead(rayhan, "pins/" + zaki.email), false);
+  assert.equal(canWrite(rayhan, "set", "pins/" + rayhan.email, null, { items: [{ t: "f", id: "f1" }], updatedAt: 1 }), null);
+  assert.notEqual(canWrite(rayhan, "set", "pins/" + zaki.email, null, { items: [], updatedAt: 1 }), null);
   assert.notEqual(canWrite(rayhan, "delete", "folders/f1", { ...nf, owner: "lain@x.com" }, null), null);
   assert.equal(canWrite(rayhan, "delete", "folders/f1", nf, null), null);
-  assert.equal(canWrite(rayhan, "set", "folders/i", null, { color: "", parent: "f1", updatedAt: 1 }), null);
   assert.equal(canRead(rayhan, "uploads/x"), false);
 });

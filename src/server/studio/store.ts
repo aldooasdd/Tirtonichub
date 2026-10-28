@@ -6,6 +6,7 @@ import type { Prisma } from "@/generated/prisma";
 import { prisma } from "@/server/db";
 import { makeKey, putObject, multipartStart, multipartPart, multipartFinish, multipartAbort } from "@/server/storage";
 import { canRead, canWrite, type Doc, type StudioUser } from "./rules";
+import { loadAccess } from "./access";
 import * as M from "./map";
 
 export class StudioError extends Error {
@@ -81,7 +82,34 @@ export async function getRaw(path: string): Promise<Doc | null> {
 
 export async function getDoc(u: StudioUser, path: string): Promise<Doc | null> {
   if (!canRead(u, path)) throw new StudioError("permission-denied", "Tidak diizinkan membaca data ini.");
-  return getRaw(path);
+  const d = await getRaw(path);
+  const col = path.split("/")[0];
+  if (d && (col === "folders" || col === "docs" || col === "assets")) {
+    const acc = await loadAccess(u);
+    const id = path.split("/")[1];
+    const ok = col === "docs" ? acc.docVisible(d) : col === "assets" ? acc.assetVisible(assetRef(d)) : d.custom === true ? acc.folder(id) : true;
+    if (!ok) throw new StudioError("permission-denied", "Tidak diizinkan membaca data ini.");
+  }
+  return d;
+}
+
+const assetRef = (d: Doc) => ({ itemId: d.itemId ? String(d.itemId) : null, folderId: d.folderId ? String(d.folderId) : null, createdById: String(d.uploaderId ?? "") });
+
+/** File Konten pribadi: tulis hanya ke folder/catatan/file yang boleh dilihat, dan hanya memindah ke folder yang boleh dilihat. */
+async function checkFileAccess(u: StudioUser, col: string, id: string, before: Doc | null, after: Doc | null) {
+  const acc = await loadAccess(u);
+  const deny = () => {
+    throw new StudioError("permission-denied", "Tidak diizinkan: folder ini tidak dibagikan ke Anda.");
+  };
+  if (col === "assets") {
+    if (before && !acc.assetVisible(assetRef(before))) deny();
+    return;
+  }
+  if (col === "docs") {
+    if (before && !acc.docVisible(before)) deny();
+  } else if (before?.custom === true && !acc.folder(id)) deny();
+  const p = after?.parent ? String(after.parent) : "";
+  if (p && p !== String(before?.parent ?? "") && !acc.folder(p)) deny();
 }
 
 /** set = timpa, update = gabung, delete = hapus. Aturan akses dicek di sini. */
@@ -94,6 +122,7 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
   if (after) delete after.id;
   const why = opts.trusted ? null : canWrite(u, op, path, before, after); // trusted: hanya skrip impor di server
   if (why) throw new StudioError("permission-denied", "Tidak diizinkan: " + why + ".");
+  if (!opts.trusted && (col === "folders" || col === "docs" || col === "assets")) await checkFileAccess(u, col, id, before, after);
 
   if (!after) {
     await removeDoc(col, id, sub, subId, path);
@@ -227,12 +256,24 @@ export async function changes(u: StudioUser, since: number) {
     prisma.mediaAsset.findMany({ where: { updatedAt: { gt } } }),
   ]);
   const names = await userNames(assets.map((a) => a.createdById));
-  for (const a of assets) docs["assets/" + a.id] = assetToDoc(a, names);
+  // File Konten pribadi: folder buatan sendiri, catatan, dan file hanya untuk yang berhak; yang tidak berhak lagi dihapus dari layar
+  const gone: string[] = [];
+  const acc = assets.length || misc.some((r) => r.coll === "folders" || r.coll === "docs") ? await loadAccess(u) : null;
+  for (const a of assets) {
+    if (acc!.assetVisible(a)) docs["assets/" + a.id] = assetToDoc(a, names);
+    else gone.push("assets/" + a.id);
+  }
   for (const r of items) docs["items/" + r.id] = M.itemToDoc(r);
   for (const r of tasks) docs["tasks/" + r.id] = M.taskToDoc(r);
   if (settings) docs["settings/main"] = M.settingsToDoc(settings);
   if (log) docs["logs/balance"] = { entries: log.entries, updatedAt: log.updatedAt.getTime() };
-  for (const r of misc) if (canRead(u, r.path)) docs[r.path] = r.data as Doc;
+  for (const r of misc) {
+    if (!canRead(u, r.path)) continue;
+    const d = r.data as Doc;
+    const ok = r.coll === "docs" ? acc!.docVisible(d) : r.coll === "folders" && d?.custom === true ? acc!.folder(r.path.slice("folders/".length)) : true;
+    if (ok) docs[r.path] = d;
+    else gone.push(r.path);
+  }
   if (pcal) docs["pcal/" + u.email] = M.pcalToDoc(pcal);
   for (const e of events) docs["pcal/" + u.email + "/events/" + e.id] = M.pcalEventToDoc(e);
 
@@ -245,7 +286,7 @@ export async function changes(u: StudioUser, since: number) {
     if (!usr.mediaMember && !boss) continue;
     docs["members/" + usr.email] = M.memberToDoc({ email: usr.email, fullName: usr.fullName, nickname: usr.nickname, createdAt: usr.createdAt, boss, m: usr.mediaMember });
   }
-  const deleted = tombs.map((t) => t.path).filter((p) => canRead(u, p) && !docs[p]);
+  const deleted = tombs.map((t) => t.path).filter((p) => canRead(u, p) && !docs[p]).concat(gone);
   return { docs, deleted };
 }
 
@@ -279,6 +320,7 @@ export async function bigStart(u: StudioUser, b: { itemId?: string; folderId?: s
     const f = await prisma.studioDoc.findUnique({ where: { path: "folders/" + folderId }, select: { data: true } });
     if (!f || (f.data as Doc | null)?.custom !== true) throw new StudioError("not-found", "Folder tidak ditemukan.");
   } else if (itemId && !(await prisma.mediaItem.findUnique({ where: { id: itemId }, select: { id: true } }))) throw new StudioError("not-found", "Barang tidak ditemukan.");
+  if ((folderId || itemId) && !(await loadAccess(u)).folder((folderId || itemId)!)) throw new StudioError("permission-denied", "Folder ini tidak dibagikan ke Anda.");
   const size = Number(b.size) || 0;
   if (size <= 0 || size > MAX_BIG) throw new StudioError("invalid-argument", "Ukuran file maksimal 5 GB.");
   const name = String(b.name ?? "file").trim().replace(/[\\/]/g, "-").slice(0, 200) || "file";
