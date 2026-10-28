@@ -20,6 +20,7 @@ import {
   Warehouse,
   AlertCircle,
   Inbox,
+  ScanLine,
   type LucideIcon,
 } from "lucide-react";
 import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, ORDER_SPECIALIST_ROLES, HEAD_BRANCH_ROLES, ADMIN_ROLES, roleAttends, type RoleCode } from "./roles";
@@ -114,6 +115,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
       items: [
         { label: "Input Penjualan", href: "/sales", icon: Receipt },
         { label: "Input Pembelian", href: "/pembelian", icon: Wallet },
+        { label: "Scan Stringing", href: "/stringing", icon: ScanLine },
       ],
     });
   }
@@ -141,6 +143,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
       items: [
         { label: "Quality Control", href: "/stok/qc", icon: ClipboardCheck },
         { label: "Stok", href: "/stok", icon: Boxes },
+        { label: "Scan Stringing", href: "/stringing", icon: ScanLine },
       ],
     });
   }
