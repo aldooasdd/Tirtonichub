@@ -17,6 +17,7 @@ export function StringingScanClient({
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const timerRef = useRef<number | null>(null);
+  const photoRef = useRef<HTMLInputElement>(null);
   const [scanning, setScanning] = useState(false);
   const [busy, setBusy] = useState(false);
   const [manual, setManual] = useState("");
@@ -43,8 +44,36 @@ export function StringingScanClient({
     if (r.ok) onDone?.(r.resultCode);
   }
 
+  // Fallback: ambil 1 foto barcode lalu decode (buat browser yang blokir kamera live).
+  async function decodePhoto(file: File) {
+    setMsg(null);
+    setBusy(true);
+    try {
+      const bmp = await createImageBitmap(file);
+      const canvas = (canvasRef.current ??= document.createElement("canvas"));
+      canvas.width = bmp.width;
+      canvas.height = bmp.height;
+      const ctx = canvas.getContext("2d", { willReadFrequently: true });
+      if (!ctx) throw new Error("no ctx");
+      ctx.drawImage(bmp, 0, 0);
+      const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const code = jsQR(img.data, img.width, img.height);
+      setBusy(false);
+      if (code?.data) return submit(code.data);
+      setMsg({ ok: false, text: "QR tak terbaca dari foto. Coba lagi / isi manual." });
+    } catch {
+      setBusy(false);
+      setMsg({ ok: false, text: "Gagal baca foto. Isi manual." });
+    }
+  }
+
   async function startScan() {
     setMsg(null);
+    if (!navigator.mediaDevices?.getUserMedia) {
+      // Browser tanpa kamera live → pakai ambil foto.
+      photoRef.current?.click();
+      return;
+    }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
       streamRef.current = stream;
@@ -69,8 +98,9 @@ export function StringingScanClient({
         if (code?.data) submit(code.data);
       }, 250);
     } catch {
-      setMsg({ ok: false, text: "Gagal buka kamera. Pakai input manual." });
+      // Kamera ditolak/diblokir → fallback ambil foto.
       stop();
+      photoRef.current?.click();
     }
   }
 
@@ -95,12 +125,25 @@ export function StringingScanClient({
           )}
         </div>
 
+        <input
+          ref={photoRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          className="hidden"
+          onChange={(e) => e.target.files?.[0] && decodePhoto(e.target.files[0])}
+        />
         {scanning ? (
           <Button variant="outline" className="w-full" onClick={stop}>Stop</Button>
         ) : (
-          <Button className="w-full" disabled={busy} onClick={startScan}>
-            {busy ? "Memproses…" : "Scan barcode raket"}
-          </Button>
+          <div className="flex gap-2">
+            <Button className="flex-1" disabled={busy} onClick={startScan}>
+              {busy ? "Memproses…" : "Scan barcode raket"}
+            </Button>
+            <Button variant="outline" disabled={busy} onClick={() => photoRef.current?.click()}>
+              Foto barcode
+            </Button>
+          </div>
         )}
 
         <div className="space-y-1">
