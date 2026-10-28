@@ -136,7 +136,10 @@ export async function generateCaption(id: string, srcDesc: string): Promise<Acti
       catatan: task.note ?? "",
       deskripsi: srcDesc,
     });
-    const caption = r.hashtag.length ? `${r.caption}\n\n${r.hashtag.map((h) => "#" + h).join(" ")}` : r.caption;
+    const base = r.hashtag.length ? `${r.caption}\n\n${r.hashtag.map((h) => "#" + h).join(" ")}` : r.caption;
+    const { captionTemplate } = await import("@/lib/media/caption-templates");
+    const tpl = captionTemplate(task.type, task.cat);
+    const caption = tpl ? `${base}\n\n${tpl}` : base;
     await prisma.mediaTask.update({ where: { id }, data: { caption: caption.slice(0, 2200), srcDesc: srcDesc.slice(0, 4000) } });
     return { ok: true, caption };
   } catch (e) {
