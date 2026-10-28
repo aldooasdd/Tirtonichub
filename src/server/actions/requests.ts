@@ -20,6 +20,9 @@ const TYPE_TO_STATUS = {
   SICK: "SICK",
 } as const;
 
+// Pengajuan yang butuh pengganti setuju dulu (koreksi absen tak perlu).
+const NEEDS_COVER: string[] = ["LEAVE", "PERMIT", "SICK", "SHIFT_SWAP"];
+
 function dayRange(start: Date, end: Date): Date[] {
   const out: Date[] = [];
   for (let t = start.getTime(); t <= end.getTime(); t += 86_400_000) {
@@ -45,16 +48,16 @@ export async function createRequest(input: RequestInput): Promise<ActionResult> 
   const d = parsed.data;
   if (d.endDate < d.startDate) return { ok: false, message: "Tanggal selesai sebelum mulai." };
 
-  // Tukar shift wajib ada pengganti; pengganti harus setuju dulu sebelum HR approve.
+  // Semua pengajuan (cuti/izin/sakit/tukar) wajib ada pengganti; pengganti setuju dulu baru HR approve.
   let payload = (d.payload ?? undefined) as Prisma.InputJsonValue | undefined;
   let counterpartId: string | null = null;
-  if (d.type === "SHIFT_SWAP") {
+  if (NEEDS_COVER.includes(d.type)) {
     const cid = (d.payload as { counterpartId?: string } | null)?.counterpartId;
     if (!cid || cid === ctx.userId) return { ok: false, message: "Pilih karyawan pengganti." };
     const cp = await prisma.user.findFirst({ where: { id: cid, isActive: true }, select: { id: true } });
     if (!cp) return { ok: false, message: "Pengganti tidak ditemukan." };
     counterpartId = cid;
-    payload = { counterpartId, counterpartApproved: false };
+    payload = { ...((d.payload as object) ?? {}), counterpartId, counterpartApproved: false };
   }
 
   const r = await prisma.request.create({
@@ -73,7 +76,7 @@ export async function createRequest(input: RequestInput): Promise<ActionResult> 
   if (counterpartId) {
     // minta persetujuan pengganti dulu (bukan HR)
     await prisma.notification.create({
-      data: { userId: counterpartId, type: "request", title: "Permintaan tukar shift", body: `Tanggal ${d.startDate}`, link: "/pengajuan" },
+      data: { userId: counterpartId, type: "request", title: `Minta jadi pengganti: ${REQ_TYPE_LABEL[d.type]}`, body: `Tanggal ${d.startDate}`, link: "/pengajuan" },
     });
   } else {
     await notifyBosses({ type: "request", title: `Pengajuan ${REQ_TYPE_LABEL[d.type]} baru masuk`, link: "/hr/approval" });
@@ -81,11 +84,11 @@ export async function createRequest(input: RequestInput): Promise<ActionResult> 
   return { ok: true, id: r.id };
 }
 
-/** Pengganti menyetujui / menolak permintaan tukar shift. Setuju → lanjut ke HR. */
-export async function respondShiftSwap(id: string, agree: boolean): Promise<ActionResult> {
+/** Pengganti menyetujui / menolak permintaan (cuti/izin/sakit/tukar). Setuju → lanjut ke HR. */
+export async function respondRequest(id: string, agree: boolean): Promise<ActionResult> {
   const ctx = await requireAuth();
   const r = await prisma.request.findUnique({ where: { id } });
-  if (!r || r.type !== "SHIFT_SWAP") return { ok: false, message: "Tidak ditemukan." };
+  if (!r) return { ok: false, message: "Tidak ditemukan." };
   if (r.status !== "PENDING") return { ok: false, message: "Sudah diproses." };
   const p = (r.payload ?? {}) as { counterpartId?: string; counterpartApproved?: boolean };
   if (p.counterpartId !== ctx.userId) return { ok: false, message: "Bukan permintaan untukmu." };
@@ -93,12 +96,12 @@ export async function respondShiftSwap(id: string, agree: boolean): Promise<Acti
 
   if (!agree) {
     await prisma.request.update({ where: { id }, data: { status: "REJECTED", reviewNote: "Pengganti menolak" } });
-    await prisma.notification.create({ data: { userId: r.userId, type: "request", title: "Tukar shift ditolak pengganti", link: "/pengajuan" } });
+    await prisma.notification.create({ data: { userId: r.userId, type: "request", title: "Pengajuan ditolak pengganti", link: "/pengajuan" } });
     return { ok: true };
   }
   await prisma.request.update({ where: { id }, data: { payload: { ...p, counterpartApproved: true } as Prisma.InputJsonValue } });
   await prisma.notification.create({ data: { userId: r.userId, type: "request", title: "Pengganti setuju, menunggu HR", link: "/pengajuan" } });
-  await notifyBosses({ type: "request", title: "Tukar shift siap di-approve (pengganti setuju)", link: "/hr/approval" });
+  await notifyBosses({ type: "request", title: "Pengajuan siap di-approve (pengganti setuju)", link: "/hr/approval" });
   return { ok: true };
 }
 
@@ -124,9 +127,10 @@ export async function reviewRequest(
   const req = await prisma.request.findUnique({ where: { id } });
   if (!req) return { ok: false, message: "Tidak ditemukan." };
   if (req.status !== "PENDING") return { ok: false, message: "Pengajuan sudah diproses." };
-  if (decision === "APPROVED" && req.type === "SHIFT_SWAP") {
-    const p = (req.payload ?? {}) as { counterpartApproved?: boolean };
-    if (!p.counterpartApproved) return { ok: false, message: "Pengganti belum setuju. Tak bisa di-approve." };
+  if (decision === "APPROVED") {
+    const p = (req.payload ?? {}) as { counterpartId?: string; counterpartApproved?: boolean };
+    if (p.counterpartId && !p.counterpartApproved)
+      return { ok: false, message: "Pengganti belum setuju. Tak bisa di-approve." };
   }
 
   const { ip } = await clientMeta();

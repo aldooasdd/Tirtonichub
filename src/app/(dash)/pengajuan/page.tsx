@@ -2,6 +2,7 @@ import { requireAuth } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { roleAttends } from "@/lib/roles";
 import { PengajuanClient } from "@/components/pengajuan/pengajuan-client";
+import { REQ_TYPE_LABEL } from "@/lib/request-labels";
 
 type Payload = { counterpartId?: string; counterpartApproved?: boolean };
 
@@ -23,7 +24,7 @@ export default async function PengajuanPage() {
       orderBy: { fullName: "asc" },
     }),
     prisma.request.findMany({
-      where: { type: "SHIFT_SWAP", status: "PENDING", payload: { path: ["counterpartId"], equals: ctx.userId } },
+      where: { status: "PENDING", payload: { path: ["counterpartId"], equals: ctx.userId } },
       include: { user: { select: { fullName: true } } },
       orderBy: { createdAt: "desc" },
     }),
@@ -32,7 +33,7 @@ export default async function PengajuanPage() {
   const empName = new Map(employees.map((e) => [e.id, e.fullName]));
   const incoming = incomingRaw
     .filter((r) => !(r.payload as Payload)?.counterpartApproved)
-    .map((r) => ({ id: r.id, requester: r.user.fullName, date: r.startDate.toISOString().slice(0, 10), reason: r.reason }));
+    .map((r) => ({ id: r.id, requester: r.user.fullName, label: REQ_TYPE_LABEL[r.type], date: r.startDate.toISOString().slice(0, 10), reason: r.reason }));
 
   return (
     <PengajuanClient
@@ -48,10 +49,9 @@ export default async function PengajuanPage() {
           reason: r.reason,
           status: r.status,
           reviewNote: r.reviewNote,
-          swap:
-            r.type === "SHIFT_SWAP"
-              ? { counterpart: empName.get(p.counterpartId ?? "") ?? "-", approved: !!p.counterpartApproved }
-              : null,
+          swap: p.counterpartId
+            ? { counterpart: empName.get(p.counterpartId) ?? "-", approved: !!p.counterpartApproved }
+            : null,
         };
       })}
     />

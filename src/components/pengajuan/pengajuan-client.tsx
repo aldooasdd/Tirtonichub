@@ -23,10 +23,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { REQ_TYPE_LABEL, REQ_STATUS_LABEL, statusBadgeVariant } from "@/lib/request-labels";
-import { createRequest, cancelRequest, respondShiftSwap } from "@/server/actions/requests";
+import { createRequest, cancelRequest, respondRequest } from "@/server/actions/requests";
 
 type Emp = { id: string; fullName: string };
-type Incoming = { id: string; requester: string; date: string; reason: string };
+type Incoming = { id: string; requester: string; label: string; date: string; reason: string };
 
 type Row = {
   id: string;
@@ -65,7 +65,7 @@ export function PengajuanClient({
 
   function respond(id: string, agree: boolean) {
     start(async () => {
-      const r = await respondShiftSwap(id, agree);
+      const r = await respondRequest(id, agree);
       if (!r.ok) alert(r.message);
       router.refresh();
     });
@@ -82,11 +82,11 @@ export function PengajuanClient({
 
       {incoming.length > 0 && (
         <div className="space-y-2 rounded-lg border bg-card p-4">
-          <p className="text-14 font-medium">Perlu persetujuanmu (tukar shift)</p>
+          <p className="text-14 font-medium">Perlu persetujuanmu (jadi pengganti)</p>
           {incoming.map((it) => (
             <div key={it.id} className="rounded-md border p-3">
               <p className="text-14">
-                <span className="font-medium">{it.requester}</span> minta tukar shift tgl {it.date}
+                <span className="font-medium">{it.requester}</span> minta kamu jadi pengganti ({it.label}) tgl {it.date}
               </p>
               <p className="text-13 text-muted-foreground">{it.reason}</p>
               <div className="mt-2 flex gap-2">
@@ -185,6 +185,7 @@ function AjukanDialog({
 
   const isKoreksi = type === "ATTENDANCE_CORRECTION";
   const isSwap = type === "SHIFT_SWAP";
+  const needsCover = !isKoreksi; // cuti/izin/sakit/tukar wajib ada pengganti
   const singleDay = isKoreksi || isSwap;
 
   function submit() {
@@ -195,7 +196,7 @@ function AjukanDialog({
       payload = {};
       if (jamMasuk) payload.checkInAt = `${startDate}T${jamMasuk}:00+07:00`;
       if (jamPulang) payload.checkOutAt = `${startDate}T${jamPulang}:00+07:00`;
-    } else if (isSwap) {
+    } else if (needsCover) {
       payload = { counterpartId };
     }
     start(async () => {
@@ -239,9 +240,9 @@ function AjukanDialog({
               </div>
             )}
           </div>
-          {isSwap && (
+          {needsCover && (
             <div className="space-y-2">
-              <Label>Pengganti (tukar shift dgn)</Label>
+              <Label>{isSwap ? "Pengganti (tukar shift dgn)" : "Pengganti yang menggantikan"}</Label>
               <Select value={counterpartId} onValueChange={setCounterpart}>
                 <SelectTrigger>
                   <SelectValue placeholder="Pilih karyawan" />
@@ -278,7 +279,7 @@ function AjukanDialog({
           <Button variant="secondary" onClick={() => onOpenChange(false)}>
             Batal
           </Button>
-          <Button onClick={submit} disabled={pending || !startDate || !reason || (isSwap && !counterpartId)}>
+          <Button onClick={submit} disabled={pending || !startDate || !reason || (needsCover && !counterpartId)}>
             {pending ? "Mengirim…" : "Kirim"}
           </Button>
         </DialogFooter>

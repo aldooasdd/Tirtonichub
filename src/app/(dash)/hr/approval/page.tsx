@@ -12,9 +12,8 @@ export default async function ApprovalPage() {
     include: { user: { select: { fullName: true } } },
   });
 
-  // Nama pengganti utk tukar shift.
+  // Nama pengganti utk semua pengajuan yang punya pengganti.
   const cpIds = rows
-    .filter((r) => r.type === "SHIFT_SWAP")
     .map((r) => (r.payload as Payload)?.counterpartId)
     .filter((v): v is string => !!v);
   const cps = cpIds.length
@@ -33,10 +32,9 @@ export default async function ApprovalPage() {
           startDate: r.startDate.toISOString().slice(0, 10),
           endDate: r.endDate.toISOString().slice(0, 10),
           reason: r.reason,
-          swap:
-            r.type === "SHIFT_SWAP"
-              ? { counterpart: cpName.get(p.counterpartId ?? "") ?? "-", approved: !!p.counterpartApproved }
-              : null,
+          swap: p.counterpartId
+            ? { counterpart: cpName.get(p.counterpartId) ?? "-", approved: !!p.counterpartApproved }
+            : null,
         };
       })}
     />
