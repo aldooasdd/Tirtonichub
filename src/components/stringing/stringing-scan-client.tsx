@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import jsQR from "jsqr";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { finishStringingScan } from "@/server/actions/stringing";
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
 
 export function StringingScanClient({
   embedded = false,
@@ -15,18 +14,17 @@ export function StringingScanClient({
   onDone?: (resultCode?: string) => void;
 } = {}) {
   const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const streamRef = useRef<MediaStream | null>(null);
-  const loopRef = useRef<number | null>(null);
+  const timerRef = useRef<number | null>(null);
   const [scanning, setScanning] = useState(false);
   const [busy, setBusy] = useState(false);
   const [manual, setManual] = useState("");
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
-  const hasDetector = typeof window !== "undefined" && "BarcodeDetector" in window;
-
   function stop() {
-    if (loopRef.current) cancelAnimationFrame(loopRef.current);
-    loopRef.current = null;
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = null;
     streamRef.current?.getTracks().forEach((t) => t.stop());
     streamRef.current = null;
     setScanning(false);
@@ -47,35 +45,31 @@ export function StringingScanClient({
 
   async function startScan() {
     setMsg(null);
-    if (!hasDetector) {
-      setMsg({ ok: false, text: "Kamera scan tak didukung browser ini. Pakai input manual." });
-      return;
-    }
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
       streamRef.current = stream;
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        await videoRef.current.play();
+      const video = videoRef.current;
+      if (video) {
+        video.srcObject = stream;
+        await video.play();
       }
       setScanning(true);
-      const detector = new (window as any).BarcodeDetector({ formats: ["qr_code"] });
-      const tick = async () => {
-        if (!videoRef.current || !streamRef.current) return;
-        try {
-          const codes = await detector.detect(videoRef.current);
-          if (codes[0]?.rawValue) {
-            submit(codes[0].rawValue);
-            return;
-          }
-        } catch {
-          /* frame belum siap */
-        }
-        loopRef.current = requestAnimationFrame(tick);
-      };
-      loopRef.current = requestAnimationFrame(tick);
+      // Decode QR tiap 250ms dari frame video (jsQR — jalan di semua browser).
+      timerRef.current = window.setInterval(() => {
+        const v = videoRef.current;
+        if (!v || !v.videoWidth) return;
+        const canvas = (canvasRef.current ??= document.createElement("canvas"));
+        canvas.width = v.videoWidth;
+        canvas.height = v.videoHeight;
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        if (!ctx) return;
+        ctx.drawImage(v, 0, 0, canvas.width, canvas.height);
+        const img = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(img.data, img.width, img.height);
+        if (code?.data) submit(code.data);
+      }, 250);
     } catch {
-      setMsg({ ok: false, text: "Gagal buka kamera." });
+      setMsg({ ok: false, text: "Gagal buka kamera. Pakai input manual." });
       stop();
     }
   }
