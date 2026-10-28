@@ -1,12 +1,11 @@
 "use server";
 
 import { prisma } from "@/server/db";
-import { requireSalesInput, requireHeadBranch } from "@/server/auth/rbac";
-import { isSuperRole } from "@/lib/roles";
+import { requireSalesInput, requireFinance } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
-import { notifyBranchHeads, notifyBosses } from "@/server/notify";
+import { notifyBosses, notifyRole } from "@/server/notify";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -61,7 +60,7 @@ export async function saveCashout(input: SaveInput): Promise<ActionResult> {
 
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "cashout_input", entity: "Cashout", entityId: row.id });
-  await notifyBranchHeads(ctx.branchId ?? null, {
+  await notifyRole("FINANCE", {
     type: "cashout_pending",
     title: `Pengeluaran perlu ACC: Rp ${rupiah(amount)}`,
     link: "/cabang/pembelian",
@@ -69,9 +68,9 @@ export async function saveCashout(input: SaveInput): Promise<ActionResult> {
   return { ok: true };
 }
 
-/** Kepala Cabang (cabangnya) / Boss/Admin: setujui pengeluaran → masuk Finance. */
+/** Finance/Boss/Admin: setujui pengeluaran → masuk rekap pembelian Finance. */
 export async function approveCashout(id: string): Promise<ActionResult> {
-  const ctx = await requireHeadBranch();
+  const ctx = await requireFinance();
   if (!id) return { ok: false, message: "ID kosong." };
   const row = await prisma.cashout.findUnique({
     where: { id },
@@ -79,7 +78,6 @@ export async function approveCashout(id: string): Promise<ActionResult> {
   });
   if (!row) return { ok: false, message: "Tidak ditemukan." };
   if (row.approvedAt) return { ok: false, message: "Sudah disetujui." };
-  if (!isSuperRole(ctx.activeRole) && row.branchId !== ctx.branchId) return { ok: false, message: "Bukan cabang Anda." };
 
   await prisma.cashout.update({ where: { id }, data: { approvedAt: new Date(), approvedById: ctx.userId } });
   const { ip } = await clientMeta();
@@ -88,14 +86,13 @@ export async function approveCashout(id: string): Promise<ActionResult> {
   return { ok: true };
 }
 
-/** Kepala Cabang (cabangnya) / Boss/Admin: tolak pengeluaran (hapus). */
+/** Finance/Boss/Admin: tolak pengeluaran (hapus). */
 export async function rejectCashout(id: string): Promise<ActionResult> {
-  const ctx = await requireHeadBranch();
+  const ctx = await requireFinance();
   if (!id) return { ok: false, message: "ID kosong." };
-  const row = await prisma.cashout.findUnique({ where: { id }, select: { id: true, branchId: true, approvedAt: true } });
+  const row = await prisma.cashout.findUnique({ where: { id }, select: { id: true, approvedAt: true } });
   if (!row) return { ok: false, message: "Tidak ditemukan." };
   if (row.approvedAt) return { ok: false, message: "Sudah disetujui, tak bisa ditolak." };
-  if (!isSuperRole(ctx.activeRole) && row.branchId !== ctx.branchId) return { ok: false, message: "Bukan cabang Anda." };
 
   await prisma.cashout.delete({ where: { id } });
   const { ip } = await clientMeta();

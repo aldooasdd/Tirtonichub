@@ -1,12 +1,11 @@
 "use server";
 
 import { prisma } from "@/server/db";
-import { requireSalesInput, requireFinance, requireHeadBranch, requireOnlineSales } from "@/server/auth/rbac";
-import { isSuperRole } from "@/lib/roles";
+import { requireSalesInput, requireFinance, requireOnlineSales } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
-import { notifyBosses, notifyBranchHeads, notifyAdmins } from "@/server/notify";
+import { notifyBosses, notifyRole } from "@/server/notify";
 import { parseSalesNotaViaN8n, type SalesItem, type SalesPayment } from "@/server/n8n-sales";
 
 export type ActionResult = { ok: boolean; message?: string };
@@ -160,15 +159,15 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
   await logActivity({ ...ctx, ip }, { action: "sales_report", entity: "SalesReport", entityId: rep.id });
   const rupiah = new Intl.NumberFormat("id-ID").format(rep.grandTotal);
   if (channel === "offline") {
-    // Minta ACC Kepala Cabang cabang tsb (belum masuk Finance).
-    await notifyBranchHeads(branchId, {
+    // Minta ACC Finance (belum masuk rekap Finance).
+    await notifyRole("FINANCE", {
       type: "sales_pending",
       title: `Penjualan perlu ACC: Rp ${rupiah}${rep.salesman ? ` · ${rep.salesman}` : ""}`,
       link: "/cabang/penjualan",
     });
   } else {
-    // Online: minta ACC Admin dulu (belum masuk Finance).
-    await notifyAdmins({
+    // Online: minta ACC Order Specialist dulu.
+    await notifyRole("ORDER_SPECIALIST", {
       type: "sales_pending",
       title: `Penjualan online perlu ACC: Rp ${rupiah}${rep.salesman ? ` · ${rep.salesman}` : ""}`,
       link: "/penjualan-online",
@@ -218,9 +217,9 @@ export async function rejectOnlineSales(id: string): Promise<ActionResult> {
   return { ok: true };
 }
 
-/** Kepala Cabang (cabangnya) / Boss: setujui penjualan offline → masuk Finance. */
+/** Finance/Boss/Admin: setujui penjualan offline → masuk rekap Finance. */
 export async function approveSalesReport(id: string): Promise<ActionResult> {
-  const ctx = await requireHeadBranch();
+  const ctx = await requireFinance();
   if (!id) return { ok: false, message: "ID kosong." };
   const rep = await prisma.salesReport.findUnique({
     where: { id },
@@ -229,8 +228,6 @@ export async function approveSalesReport(id: string): Promise<ActionResult> {
   if (!rep) return { ok: false, message: "Nota tidak ditemukan." };
   if (rep.channel !== "offline") return { ok: false, message: "Hanya penjualan offline yang perlu ACC." };
   if (rep.approvedAt) return { ok: false, message: "Sudah disetujui." };
-  // Kepala Cabang hanya cabangnya sendiri; Boss semua.
-  if (!isSuperRole(ctx.activeRole) && rep.branchId !== ctx.branchId) return { ok: false, message: "Bukan cabang Anda." };
 
   await prisma.salesReport.update({
     where: { id },
@@ -246,18 +243,17 @@ export async function approveSalesReport(id: string): Promise<ActionResult> {
   return { ok: true };
 }
 
-/** Kepala Cabang (cabangnya) / Boss: tolak penjualan offline (hapus, belum masuk Finance). */
+/** Finance/Boss/Admin: tolak penjualan offline (hapus, belum masuk Finance). */
 export async function rejectSalesReport(id: string): Promise<ActionResult> {
-  const ctx = await requireHeadBranch();
+  const ctx = await requireFinance();
   if (!id) return { ok: false, message: "ID kosong." };
   const rep = await prisma.salesReport.findUnique({
     where: { id },
-    select: { id: true, channel: true, branchId: true, approvedAt: true },
+    select: { id: true, channel: true, approvedAt: true },
   });
   if (!rep) return { ok: false, message: "Nota tidak ditemukan." };
   if (rep.channel !== "offline") return { ok: false, message: "Hanya penjualan offline." };
   if (rep.approvedAt) return { ok: false, message: "Sudah disetujui, tak bisa ditolak." };
-  if (!isSuperRole(ctx.activeRole) && rep.branchId !== ctx.branchId) return { ok: false, message: "Bukan cabang Anda." };
 
   await prisma.salesReport.delete({ where: { id } });
   const { ip } = await clientMeta();

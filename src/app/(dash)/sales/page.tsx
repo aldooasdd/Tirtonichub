@@ -7,7 +7,12 @@ import { SalesClient, type SalesRow } from "@/components/sales/sales-client";
 export default async function SalesPage() {
   const ctx = await requireSales();
   const canViewAll = isSuperRole(ctx.activeRole);
-  const mine = canViewAll ? {} : { createdById: ctx.userId };
+  // Kepala Cabang: lihat semua nota cabangnya. Sales: hanya miliknya.
+  const mine = canViewAll
+    ? {}
+    : ctx.activeRole === "HEAD_BRANCH"
+      ? { branchId: ctx.branchId }
+      : { createdById: ctx.userId };
   const rows = await prisma.salesReport.findMany({
     where: { ...mine },
     orderBy: { soldAt: "desc" },

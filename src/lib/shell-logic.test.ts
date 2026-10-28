@@ -29,10 +29,11 @@ test("menu Absen ikut kewajiban absen", () => {
   assert.ok(labels("SALES").includes("Absen"));
 });
 
-test("bottom nav HP: Boss tanpa Absen, Sales dengan Absen", () => {
+test("bottom nav HP: Sales = Input Pembelian + Input Penjualan (tanpa Absen)", () => {
   const boss = bottomNavForRole("BOSS").map((i) => i.label);
   const sales = bottomNavForRole("SALES").map((i) => i.label);
   assert.ok(!boss.includes("Absen"));
-  assert.ok(sales.includes("Absen"));
-  assert.equal(sales.length, 4); // Beranda, Absen, Rekap Penjualan, Profil (Chat dibuang)
+  assert.ok(!sales.includes("Absen"));
+  assert.ok(sales.includes("Input Pembelian"));
+  assert.equal(sales.length, 4); // Beranda, Input Pembelian, Input Penjualan, Profil
 });

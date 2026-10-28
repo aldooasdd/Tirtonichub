@@ -1,5 +1,4 @@
-import { requireHeadBranch } from "@/server/auth/rbac";
-import { isSuperRole } from "@/lib/roles";
+import { requireFinance } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
 import { CabangApproval } from "@/components/sales/cabang-approval";
@@ -7,15 +6,10 @@ import { CabangApproval } from "@/components/sales/cabang-approval";
 type Item = { name: string; qty: number; price: number; total: number; note: string | null };
 
 export default async function CabangPenjualanPage() {
-  const ctx = await requireHeadBranch();
-  const isBoss = isSuperRole(ctx.activeRole);
-  // Penjualan offline yang belum disetujui; Kepala Cabang = cabangnya saja.
+  await requireFinance();
+  // Penjualan offline yang belum disetujui (ACC Finance).
   const rows = await prisma.salesReport.findMany({
-    where: {
-      channel: "offline",
-      approvedAt: null,
-      ...(isBoss ? {} : { branchId: ctx.branchId }),
-    },
+    where: { channel: "offline", approvedAt: null },
     orderBy: { soldAt: "desc" },
     take: 200,
     include: { createdBy: { select: { fullName: true } } },

@@ -1,14 +1,12 @@
-import { requireHeadBranch } from "@/server/auth/rbac";
-import { isSuperRole } from "@/lib/roles";
+import { requireFinance } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
 import { CashoutApproval } from "@/components/cashout/cashout-approval";
 
 export default async function CabangPembelianPage() {
-  const ctx = await requireHeadBranch();
-  const isBoss = isSuperRole(ctx.activeRole);
+  await requireFinance();
   const rows = await prisma.cashout.findMany({
-    where: { approvedAt: null, ...(isBoss ? {} : { branchId: ctx.branchId }) },
+    where: { approvedAt: null },
     orderBy: { spentAt: "desc" },
     take: 200,
     include: { createdBy: { select: { fullName: true } } },

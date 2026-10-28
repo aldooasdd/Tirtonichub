@@ -1,4 +1,5 @@
 import { prisma } from "@/server/db";
+import type { RoleCode } from "@/generated/prisma";
 
 /** Kirim notifikasi ke semua Boss aktif. (Sementara: semua event masuk ke Boss.) */
 export async function notifyBosses(n: {
@@ -32,6 +33,22 @@ export async function notifyAdmins(n: { type: string; title: string; body?: stri
   if (admins.length === 0) return;
   await prisma.notification.createMany({
     data: admins.map((a) => ({ userId: a.userId, type: n.type, title: n.title, body: n.body ?? null, link: n.link ?? null })),
+  });
+}
+
+/** Kirim notifikasi ke semua user aktif dengan role tertentu (opsional batasi cabang). */
+export async function notifyRole(
+  code: RoleCode,
+  n: { type: string; title: string; body?: string; link?: string },
+  branchId?: string | null,
+): Promise<void> {
+  const us = await prisma.userRole.findMany({
+    where: { role: { code }, user: { isActive: true, ...(branchId ? { branchId } : {}) } },
+    select: { userId: true },
+  });
+  if (us.length === 0) return;
+  await prisma.notification.createMany({
+    data: us.map((u) => ({ userId: u.userId, type: n.type, title: n.title, body: n.body ?? null, link: n.link ?? null })),
   });
 }
 

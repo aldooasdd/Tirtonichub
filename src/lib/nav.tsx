@@ -85,6 +85,8 @@ export function navForRole(role: RoleCode): NavGroup[] {
       icon: Wallet,
       items: [
         { label: "Produk Mentah", href: "/finance", icon: Receipt },
+        { label: "Approval Penjualan", href: "/cabang/penjualan", icon: ClipboardCheck },
+        { label: "Approval Pembelian", href: "/cabang/pembelian", icon: ClipboardCheck },
         { label: "Rekap Penjualan", href: "/finance/penjualan", icon: Receipt },
         { label: "Rekap Pembelian", href: "/finance/pembelian", icon: Wallet },
         { label: "Sinkronisasi Accurate", href: "/finance/sinkronisasi", icon: FileText },
@@ -97,7 +99,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
       title: "Sales",
       icon: ShoppingCart,
       items: [
-        { label: "Rekap Penjualan", href: "/sales", icon: Receipt },
+        { label: "Input Penjualan", href: "/sales", icon: Receipt },
         { label: "Input Pembelian", href: "/pembelian", icon: Wallet },
       ],
     });
@@ -115,10 +117,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
     groups.push({
       title: "Cabang",
       icon: Building2,
-      items: [
-        { label: "Approval Penjualan", href: "/cabang/penjualan", icon: ClipboardCheck },
-        { label: "Approval Pembelian", href: "/cabang/pembelian", icon: Wallet },
-      ],
+      items: [{ label: "Rekap Penjualan", href: "/sales", icon: Receipt }],
     });
   }
 
@@ -149,11 +148,14 @@ export function navForRole(role: RoleCode): NavGroup[] {
 /** Bottom nav HP: 5 item. (PRD §6.1) */
 export function bottomNavForRole(role: RoleCode): NavItem[] {
   const items: NavItem[] = [{ label: "Beranda", href: "/beranda", icon: Home }];
-  if (ABSEN_ON && roleAttends(role)) items.push({ label: "Absen", href: "/absen", icon: Clock });
-  // Sales: ganti Pengajuan jadi Rekap Penjualan (akses cepat input nota).
-  if (role === "SALES") items.push({ label: "Rekap Penjualan", href: "/sales", icon: Receipt });
-  else items.push({ label: "Pengajuan", href: "/pengajuan", icon: FileText });
-  // Chat diganti Absen di bottom nav (uji coba). Chat tetap via widget mengambang desktop.
+  if (role === "SALES") {
+    // Sales HP: ganti Absen → Input Pembelian; plus Input Penjualan (akses cepat).
+    items.push({ label: "Input Pembelian", href: "/pembelian", icon: Wallet });
+    items.push({ label: "Input Penjualan", href: "/sales", icon: Receipt });
+  } else {
+    if (ABSEN_ON && roleAttends(role)) items.push({ label: "Absen", href: "/absen", icon: Clock });
+    items.push({ label: "Pengajuan", href: "/pengajuan", icon: FileText });
+  }
   items.push({ label: "Profil", href: "/profil", icon: User });
   return items; // Notifikasi via bell di header (hemat slot bottom nav)
 }
