@@ -40,6 +40,7 @@ export async function finishStringingScan(scanned: string): Promise<ScanResult> 
     not_started: "Belum dimulai di tirtonic.com (status harus 'dikerjakan').",
     no_active: "Tak ada stringing aktif untuk nomor ini.",
     already_done: "Sudah selesai sebelumnya.",
+    wa_failed: "WA gagal terkirim — belum ditandai selesai. Coba lagi.",
     unauthorized: "Token salah.",
     bad_phone: "Nomor tak valid.",
     not_configured: "Server tirtonic.com belum set token.",
