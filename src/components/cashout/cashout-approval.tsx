@@ -10,6 +10,7 @@ type Row = {
   spentAt: string;
   amount: number;
   description: string;
+  category: string | null;
   branch: string;
   by: string;
   photoKey: string | null;
@@ -43,7 +44,7 @@ export function CashoutApproval({ pending }: { pending: Row[] }) {
               <div>
                 <p className="font-medium">{rupiah(r.amount)}</p>
                 <p className="text-14 text-muted-foreground">
-                  {r.spentAt} · {r.branch} · {r.by}
+                  {r.spentAt} · {r.category ?? "-"} · {r.branch} · {r.by}
                 </p>
               </div>
               {r.photoKey && (

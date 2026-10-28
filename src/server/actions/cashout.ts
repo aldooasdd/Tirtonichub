@@ -59,6 +59,8 @@ export async function saveCashout(input: SaveInput): Promise<ActionResult> {
   const ctx = await requireCashoutInput();
   const amount = Math.max(0, Math.round(input.amount) || 0);
   const description = input.description?.trim();
+  const category = input.category?.trim();
+  if (!category) return { ok: false, message: "Pilih jenis pembelian." };
   if (amount <= 0) return { ok: false, message: "Jumlah harus lebih dari 0." };
   if (!description) return { ok: false, message: "Keterangan wajib diisi." };
 

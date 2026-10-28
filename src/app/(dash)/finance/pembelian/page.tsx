@@ -30,6 +30,7 @@ export default async function FinancePembelianPage() {
             <thead>
               <tr className="border-b bg-card text-left text-muted-foreground">
                 <th className="p-3">Tanggal</th>
+                <th className="p-3">Jenis</th>
                 <th className="p-3">Cabang</th>
                 <th className="p-3">Keterangan</th>
                 <th className="p-3">Oleh</th>
@@ -41,6 +42,7 @@ export default async function FinancePembelianPage() {
               {rows.map((r) => (
                 <tr key={r.id} className="border-b last:border-b-0">
                   <td className="p-3 whitespace-nowrap">{fmtWIB(r.spentAt)}</td>
+                  <td className="p-3">{r.category ?? "-"}</td>
                   <td className="p-3">{r.branchName ?? "-"}</td>
                   <td className="p-3">{r.description}</td>
                   <td className="p-3">{r.createdBy.fullName}</td>

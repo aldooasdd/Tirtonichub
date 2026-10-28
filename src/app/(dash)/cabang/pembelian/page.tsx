@@ -18,6 +18,7 @@ export default async function CabangPembelianPage() {
         spentAt: fmtWIB(r.spentAt),
         amount: r.amount,
         description: r.description,
+        category: r.category,
         branch: r.branchName ?? "-",
         by: r.createdBy.fullName,
         photoKey: r.photoKey,

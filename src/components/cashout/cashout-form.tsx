@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { compressImage } from "@/lib/image";
 import { scanCashoutNota, saveCashout } from "@/server/actions/cashout";
 
@@ -13,6 +14,7 @@ export type CashoutRow = {
   spentAt: string; // sudah diformat
   amount: number;
   description: string;
+  category: string | null;
   branch: string;
   approved: boolean;
 };
@@ -37,11 +39,12 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
   </label>
 );
 
-export function CashoutForm({ rows }: { rows: CashoutRow[] }) {
+export function CashoutForm({ rows, categories }: { rows: CashoutRow[]; categories: string[] }) {
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
+  const [category, setCategory] = useState("");
   const [photoKey, setPhotoKey] = useState<string | null>(null);
   const [draft, setDraft] = useState<Draft | null>(null);
 
@@ -79,6 +82,7 @@ export function CashoutForm({ rows }: { rows: CashoutRow[] }) {
       amount: draft.amount,
       description: draft.description,
       spentAt: draft.spentAt || null,
+      category,
       photoKey,
     });
     setBusy(false);
@@ -87,6 +91,7 @@ export function CashoutForm({ rows }: { rows: CashoutRow[] }) {
       return;
     }
     reset();
+    setCategory("");
     router.refresh();
   }
 
@@ -108,11 +113,27 @@ export function CashoutForm({ rows }: { rows: CashoutRow[] }) {
           onChange={(e) => e.target.files?.[0] && onCapture(e.target.files[0])}
         />
         {!draft && (
-          <Button disabled={busy} onClick={() => fileRef.current?.click()} className="shrink-0">
+          <Button disabled={busy || !category} onClick={() => fileRef.current?.click()} className="shrink-0">
             {busy ? "Memindai…" : "Foto nota pembelian"}
           </Button>
         )}
       </div>
+
+      {!draft && (
+        <div className="max-w-xs space-y-1">
+          <span className="block text-12 text-muted-foreground">Jenis pembelian (pilih dulu)</span>
+          <Select value={category} onValueChange={setCategory}>
+            <SelectTrigger>
+              <SelectValue placeholder="Pilih jenis" />
+            </SelectTrigger>
+            <SelectContent>
+              {categories.map((c) => (
+                <SelectItem key={c} value={c}>{c}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
 
       {!draft ? (
         msg ? <p className="text-12 text-muted-foreground">{msg}</p> : null
@@ -132,8 +153,9 @@ export function CashoutForm({ rows }: { rows: CashoutRow[] }) {
           <Field label="Waktu (opsional)">
             <Input type="datetime-local" value={draft.spentAt} onChange={(e) => upd({ spentAt: e.target.value })} />
           </Field>
+          <p className="text-12 text-muted-foreground">Jenis: {category || "-"}</p>
           <div className="flex flex-wrap gap-2">
-            <Button disabled={busy || !draft.amount || !draft.description.trim()} onClick={submit}>
+            <Button disabled={busy || !category || !draft.amount || !draft.description.trim()} onClick={submit}>
               {busy ? "Menyimpan…" : "Kirim ke Finance"}
             </Button>
             <Button variant="outline" disabled={busy} onClick={reset}>Batal</Button>
@@ -153,6 +175,7 @@ export function CashoutForm({ rows }: { rows: CashoutRow[] }) {
                   <p className="truncate font-medium">{rupiah(r.amount)}</p>
                   <p className="text-11 text-muted-foreground">
                     {r.spentAt}
+                    {r.category ? ` · ${r.category}` : ""}
                     {r.description ? ` · ${r.description}` : ""}
                   </p>
                 </div>
