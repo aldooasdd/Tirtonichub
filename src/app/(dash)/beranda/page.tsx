@@ -145,7 +145,7 @@ export default async function BerandaPage() {
         />
       )}
 
-      <section className={isHeadBranch ? "grid grid-cols-4 gap-3" : "grid grid-cols-2 gap-5 lg:grid-cols-4"}>
+      <section className={isHeadBranch ? "grid grid-cols-2 gap-2 sm:grid-cols-4 sm:gap-3" : "grid grid-cols-2 gap-5 lg:grid-cols-4"}>
         <Kpi label="Hadir bulan ini" value={hadir} bg="bg-kpi-1" small={isHeadBranch} />
         <Kpi label="Terlambat" value={telat} bg="bg-kpi-2" small={isHeadBranch} />
         <Kpi label="Sisa cuti" value={sisaCuti} bg="bg-kpi-1" small={isHeadBranch} />
