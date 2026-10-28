@@ -37,6 +37,8 @@ export interface Event {
   category?: string
   attendees?: string[]
   tags?: string[]
+  requestId?: string // pengajuan terkait (buat ACC pengganti dari kalender)
+  canRespond?: boolean // viewer = pengganti yang bisa setuju
 }
 
 export interface EventManagerProps {
@@ -44,6 +46,7 @@ export interface EventManagerProps {
   onEventCreate?: (event: Omit<Event, "id">) => void
   onEventUpdate?: (id: string, event: Partial<Event>) => void
   onEventDelete?: (id: string) => void
+  onRequestRespond?: (requestId: string) => void
   categories?: string[]
   colors?: { name: string; value: string; bg: string; text: string }[]
   defaultView?: "month" | "week" | "day" | "list"
@@ -65,6 +68,7 @@ export function EventManager({
   onEventCreate,
   onEventUpdate,
   onEventDelete,
+  onRequestRespond,
   categories = ["Meeting", "Task", "Reminder", "Personal"],
   colors = defaultColors,
   defaultView = "month",
@@ -570,6 +574,17 @@ export function EventManager({
                 )}
               </div>
               <DialogFooter>
+                {selectedEvent.canRespond && selectedEvent.requestId && onRequestRespond && (
+                  <Button
+                    onClick={() => {
+                      onRequestRespond(selectedEvent.requestId!)
+                      setIsDialogOpen(false)
+                      setSelectedEvent(null)
+                    }}
+                  >
+                    Setuju gantiin (long shift)
+                  </Button>
+                )}
                 <Button
                   variant="outline"
                   onClick={() => {

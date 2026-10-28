@@ -7,6 +7,7 @@ import {
   updateCalendarEvent,
   deleteCalendarEvent,
 } from "@/server/actions/calendar";
+import { respondRequest } from "@/server/actions/requests";
 
 const CATEGORIES = ["Agenda", "Rapat", "Deadline", "Pengingat", "Libur", "Cuti", "Izin", "Sakit", "Pengajuan"];
 const TAGS = ["Penting", "Mendesak", "Kantor", "Tim", "Pribadi"];
@@ -50,6 +51,11 @@ export function KalenderClient({ events }: { events: Event[] }) {
         }}
         onEventDelete={async (id) => {
           await deleteCalendarEvent(id);
+          router.refresh();
+        }}
+        onRequestRespond={async (id) => {
+          const r = await respondRequest(id, true);
+          if (!r.ok) alert(r.message);
           router.refresh();
         }}
       />

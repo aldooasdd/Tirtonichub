@@ -122,6 +122,9 @@ export async function loadCalendarEvents(me?: { userId: string; fullName: string
 
   for (const r of requests) {
     const pending = r.status === "PENDING";
+    const p = (r.payload ?? {}) as { counterpartId?: string; counterpartApproved?: boolean };
+    // viewer = pengganti & belum setuju → bisa ACC langsung dari kalender
+    const canRespond = pending && !!me && p.counterpartId === me.userId && !p.counterpartApproved;
     for (const day of eachDay(r.startDate, r.endDate)) {
       events.push({
         id: `req_${r.id}_${day.toISOString().slice(0, 10)}`,
@@ -131,6 +134,8 @@ export async function loadCalendarEvents(me?: { userId: string; fullName: string
         endTime: atDay(day, 10),
         color: pending ? "pink" : (REQ_COLOR[r.type] ?? "blue"),
         category: pending ? "Pengajuan" : REQ_TYPE_LABEL[r.type],
+        requestId: r.id,
+        canRespond,
       });
     }
   }
