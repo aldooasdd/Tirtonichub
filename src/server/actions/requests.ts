@@ -23,6 +23,9 @@ const TYPE_TO_STATUS = {
 // Pengajuan yang butuh pengganti setuju dulu (koreksi absen tak perlu).
 const NEEDS_COVER: string[] = ["LEAVE", "PERMIT", "SICK", "SHIFT_SWAP"];
 
+// Kode shift di jadwal saat pengajuan disetujui.
+const TYPE_TO_SHIFT = { LEAVE: "CUTI", PERMIT: "IZIN", SICK: "SAKIT" } as const;
+
 function dayRange(start: Date, end: Date): Date[] {
   const out: Date[] = [];
   for (let t = start.getTime(); t <= end.getTime(); t += 86_400_000) {
@@ -149,11 +152,18 @@ export async function reviewRequest(
     if (decision === "APPROVED") {
       if (req.type === "LEAVE" || req.type === "PERMIT" || req.type === "SICK") {
         const status = TYPE_TO_STATUS[req.type];
+        const code = TYPE_TO_SHIFT[req.type];
         for (const date of dayRange(req.startDate, req.endDate)) {
           await tx.attendance.upsert({
             where: { userId_date: { userId: req.userId, date } },
             update: { status },
             create: { userId: req.userId, date, status },
+          });
+          // jadwal ikut berubah otomatis (CUTI/IZIN/SAKIT)
+          await tx.shift.upsert({
+            where: { userId_date: { userId: req.userId, date } },
+            update: { code },
+            create: { userId: req.userId, date, code },
           });
         }
       } else if (req.type === "SHIFT_SWAP") {
@@ -206,5 +216,6 @@ export async function reviewRequest(
   });
 
   revalidatePath("/beranda"); // jadwal/absen karyawan ikut keputusan terbaru
+  revalidatePath("/hr/jadwal");
   return { ok: true };
 }
