@@ -8,6 +8,7 @@ const MEDIA_ROLES: RoleCode[] = ["BOSS", "ADMIN", "MEDIA"]; // Tirtonic Studio (
 const SALES_ROLES: RoleCode[] = ["BOSS", "ADMIN", "SALES", "HEAD_BRANCH"]; // buka halaman /sales (Kepala Cabang: lihat rekap cabangnya)
 const ORDER_SPECIALIST_ROLES: RoleCode[] = ["BOSS", "ADMIN", "ORDER_SPECIALIST"]; // approve penjualan online
 const SALES_INPUT_ROLES: RoleCode[] = ["BOSS", "ADMIN", "SALES"]; // input penjualan (offline/online)
+const CASHOUT_INPUT_ROLES: RoleCode[] = ["BOSS", "ADMIN", "SALES", "FINANCE"]; // input pembelian/pengeluaran
 const HEAD_BRANCH_ROLES: RoleCode[] = ["BOSS", "ADMIN", "HEAD_BRANCH"]; // ACC penjualan offline cabang sebelum masuk Finance
 
 /** Izin murni (tanpa DB/next) — bisa diuji langsung. */
@@ -26,6 +27,7 @@ export const can = {
   manageSales: (role: RoleCode) => SALES_ROLES.includes(role),
   manageOnlineSales: (role: RoleCode) => ORDER_SPECIALIST_ROLES.includes(role),
   inputSales: (role: RoleCode) => SALES_INPUT_ROLES.includes(role),
+  inputCashout: (role: RoleCode) => CASHOUT_INPUT_ROLES.includes(role),
   approveBranchSales: (role: RoleCode) => HEAD_BRANCH_ROLES.includes(role),
 
   /** Atur role tertentu di akun targetUserId. Anti-eskalasi (PRD §3). */

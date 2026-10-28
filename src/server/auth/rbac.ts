@@ -87,6 +87,13 @@ export async function requireSalesInput(): Promise<AuthContext> {
   return ctx;
 }
 
+/** Sales/Finance/Admin/Boss: boleh input pembelian/pengeluaran. */
+export async function requireCashoutInput(): Promise<AuthContext> {
+  const ctx = await requireAuth();
+  assert(can.inputCashout(ctx.activeRole));
+  return ctx;
+}
+
 /** Kepala Cabang/Boss: ACC penjualan offline cabang sebelum masuk Finance. */
 export async function requireHeadBranch(): Promise<AuthContext> {
   const ctx = await requireAuth();

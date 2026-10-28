@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/server/db";
-import { requireSalesInput, requireFinance } from "@/server/auth/rbac";
+import { requireCashoutInput, requireFinance } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
@@ -32,7 +32,7 @@ const rupiah = (n: number) => new Intl.NumberFormat("id-ID").format(n);
 
 /** Scan foto nota pembelian via OCR (sama seperti nota penjualan). Belum simpan DB (diedit dulu). */
 export async function scanCashoutNota(imageBase64: string, mimeType: string): Promise<CashoutScan> {
-  await requireSalesInput();
+  await requireCashoutInput();
   if (!imageBase64) return { ok: false, message: "Foto nota kosong." };
 
   const key = makeKey("cashout-nota", mimeType.includes("png") ? "png" : "jpg");
@@ -56,7 +56,7 @@ export async function scanCashoutNota(imageBase64: string, mimeType: string): Pr
 
 /** Sales: input pengeluaran/pembelian → perlu ACC Kepala Cabang cabangnya, lalu masuk Finance. */
 export async function saveCashout(input: SaveInput): Promise<ActionResult> {
-  const ctx = await requireSalesInput();
+  const ctx = await requireCashoutInput();
   const amount = Math.max(0, Math.round(input.amount) || 0);
   const description = input.description?.trim();
   if (amount <= 0) return { ok: false, message: "Jumlah harus lebih dari 0." };

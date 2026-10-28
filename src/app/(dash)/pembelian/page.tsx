@@ -1,10 +1,10 @@
-import { requireSalesInput } from "@/server/auth/rbac";
+import { requireCashoutInput } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
 import { CashoutForm } from "@/components/cashout/cashout-form";
 
 export default async function PembelianPage() {
-  const ctx = await requireSalesInput();
+  const ctx = await requireCashoutInput();
   const rows = await prisma.cashout.findMany({
     where: { createdById: ctx.userId },
     orderBy: { spentAt: "desc" },

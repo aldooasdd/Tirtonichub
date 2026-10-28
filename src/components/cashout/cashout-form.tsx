@@ -1,120 +1,171 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Camera } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Badge } from "@/components/ui/badge";
-import { saveCashout, scanCashoutNota } from "@/server/actions/cashout";
+import { compressImage } from "@/lib/image";
+import { scanCashoutNota, saveCashout } from "@/server/actions/cashout";
 
-type Row = { id: string; spentAt: string; amount: number; description: string; branch: string; approved: boolean };
+export type CashoutRow = {
+  id: string;
+  spentAt: string; // sudah diformat
+  amount: number;
+  description: string;
+  branch: string;
+  approved: boolean;
+};
 
-const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
+const rupiah = (n: number) => `Rp ${new Intl.NumberFormat("id-ID").format(n)}`;
 
-export function CashoutForm({ rows }: { rows: Row[] }) {
+function blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(String(r.result).split(",")[1] ?? "");
+    r.onerror = rej;
+    r.readAsDataURL(blob);
+  });
+}
+
+type Draft = { amount: number; description: string; spentAt: string };
+
+const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
+  <label className="block space-y-1">
+    <span className="block text-12 text-muted-foreground">{label}</span>
+    {children}
+  </label>
+);
+
+export function CashoutForm({ rows }: { rows: CashoutRow[] }) {
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
-  const [amount, setAmount] = useState("");
-  const [desc, setDesc] = useState("");
-  const [when, setWhen] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState("");
   const [photoKey, setPhotoKey] = useState<string | null>(null);
-  const [scanning, setScanning] = useState(false);
-  const [msg, setMsg] = useState<string | null>(null);
-  const [pending, start] = useTransition();
+  const [draft, setDraft] = useState<Draft | null>(null);
 
-  function onFile(e: React.ChangeEvent<HTMLInputElement>) {
-    const f = e.target.files?.[0];
-    if (!f) return;
-    setMsg(null);
-    setScanning(true);
-    const r = new FileReader();
-    r.onload = async () => {
-      const b64 = String(r.result).split(",")[1] ?? "";
-      const res = await scanCashoutNota(b64, f.type || "image/jpeg");
-      setScanning(false);
-      if (!res.ok || !res.photoKey) {
-        setMsg(res.message ?? "Scan gagal.");
+  async function onCapture(file: File) {
+    setBusy(true);
+    setMsg("Memindai nota…");
+    try {
+      const b64 = await blobToBase64(await compressImage(file));
+      const r = await scanCashoutNota(b64, "image/jpeg");
+      if (!r.ok || !r.photoKey) {
+        setMsg(r.message ?? "Gagal pindai.");
         return;
       }
-      setPhotoKey(res.photoKey);
-      if (res.parsed) {
-        if (res.parsed.amount) setAmount(String(res.parsed.amount));
-        if (res.parsed.description) setDesc(res.parsed.description);
-        if (res.parsed.spentAt) setWhen(res.parsed.spentAt.slice(0, 16));
-      }
-      setMsg(res.ocr ? "Nota terbaca. Periksa & edit bila perlu." : "Foto tersimpan. Isi manual (OCR tak membaca).");
-    };
-    r.readAsDataURL(f);
+      setPhotoKey(r.photoKey);
+      const p = r.parsed!;
+      setDraft({ amount: p.amount, description: p.description, spentAt: p.spentAt ? p.spentAt.slice(0, 16) : "" });
+      setMsg(r.ocr ? "AI mengisi otomatis. Periksa lalu kirim." : "AI tak terbaca — isi manual.");
+    } finally {
+      setBusy(false);
+    }
   }
 
-  function submit() {
-    setMsg(null);
-    start(async () => {
-      const r = await saveCashout({
-        amount: Number(amount),
-        description: desc,
-        spentAt: when ? new Date(when).toISOString() : null,
-        photoKey,
-      });
-      if (!r.ok) {
-        setMsg(r.message ?? "Gagal.");
-        return;
-      }
-      setAmount("");
-      setDesc("");
-      setWhen("");
-      setPhotoKey(null);
-      setMsg("Terkirim. Menunggu ACC Finance.");
-      router.refresh();
+  const upd = (patch: Partial<Draft>) => setDraft((d) => (d ? { ...d, ...patch } : d));
+
+  function reset() {
+    setDraft(null);
+    setPhotoKey(null);
+    setMsg("");
+  }
+
+  async function submit() {
+    if (!draft || !photoKey) return;
+    setBusy(true);
+    const r = await saveCashout({
+      amount: draft.amount,
+      description: draft.description,
+      spentAt: draft.spentAt || null,
+      photoKey,
     });
+    setBusy(false);
+    if (!r.ok) {
+      setMsg(r.message ?? "Gagal simpan.");
+      return;
+    }
+    reset();
+    router.refresh();
   }
 
   return (
     <div className="space-y-5">
-      <h1 className="text-24 font-semibold">Input Pembelian / Pengeluaran</h1>
-
-      <div className="space-y-4 rounded-lg border bg-card p-4">
-        <div className="space-y-2">
-          <Label>Scan nota pembelian</Label>
-          <input ref={fileRef} type="file" accept="image/*" capture="environment" hidden onChange={onFile} />
-          <Button type="button" variant="outline" className="w-full" disabled={scanning} onClick={() => fileRef.current?.click()}>
-            <Camera className="h-4 w-4" /> {scanning ? "Membaca nota…" : photoKey ? "Nota terbaca · scan ulang" : "Foto nota pembelian"}
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h1 className="text-24 font-semibold">Rekap Pembelian</h1>
+          <p className="text-14 text-muted-foreground">
+            Foto nota pembelian, AI isi datanya, lalu kirim ke Finance untuk disetujui.
+          </p>
+        </div>
+        <input
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          capture="environment"
+          className="hidden"
+          onChange={(e) => e.target.files?.[0] && onCapture(e.target.files[0])}
+        />
+        {!draft && (
+          <Button disabled={busy} onClick={() => fileRef.current?.click()} className="shrink-0">
+            {busy ? "Memindai…" : "Foto nota pembelian"}
           </Button>
-        </div>
-        <div className="space-y-2">
-          <Label>Jumlah (Rp)</Label>
-          <Input inputMode="numeric" value={amount} onChange={(e) => setAmount(e.target.value.replace(/\D/g, ""))} placeholder="0" />
-        </div>
-        <div className="space-y-2">
-          <Label>Keterangan</Label>
-          <Textarea value={desc} onChange={(e) => setDesc(e.target.value)} placeholder="Beli apa / untuk apa" rows={2} />
-        </div>
-        <div className="space-y-2">
-          <Label>Tanggal (opsional)</Label>
-          <Input type="datetime-local" value={when} onChange={(e) => setWhen(e.target.value)} />
-        </div>
-        {msg && <p className="text-14 text-muted-foreground">{msg}</p>}
-        <Button className="w-full" disabled={pending || scanning || !amount || !desc} onClick={submit}>
-          {pending ? "Mengirim…" : "Kirim ke Finance"}
-        </Button>
+        )}
       </div>
 
-      <div className="space-y-2">
-        <h2 className="text-14 font-semibold">Pengeluaran saya</h2>
-        {rows.length === 0 && <p className="rounded-lg border bg-card py-8 text-center text-muted-foreground">Belum ada.</p>}
-        {rows.map((r) => (
-          <div key={r.id} className="flex items-center justify-between rounded-lg border bg-card p-3">
-            <div>
-              <p className="font-medium">{rupiah(r.amount)}</p>
-              <p className="text-13 text-muted-foreground">{r.spentAt} · {r.description}</p>
-            </div>
-            <Badge variant={r.approved ? "default" : "secondary"}>{r.approved ? "Masuk Finance" : "Menunggu ACC"}</Badge>
+      {!draft ? (
+        msg ? <p className="text-12 text-muted-foreground">{msg}</p> : null
+      ) : (
+        <div className="space-y-4 rounded-lg border bg-card p-4">
+          {msg && <p className="text-12 text-muted-foreground">{msg}</p>}
+          <Field label="Jumlah (Rp)">
+            <Input
+              inputMode="numeric"
+              value={draft.amount || ""}
+              onChange={(e) => upd({ amount: Number(e.target.value.replace(/\D/g, "")) })}
+            />
+          </Field>
+          <Field label="Keterangan">
+            <Textarea value={draft.description} onChange={(e) => upd({ description: e.target.value })} rows={2} placeholder="Beli apa / untuk apa" />
+          </Field>
+          <Field label="Waktu (opsional)">
+            <Input type="datetime-local" value={draft.spentAt} onChange={(e) => upd({ spentAt: e.target.value })} />
+          </Field>
+          <div className="flex flex-wrap gap-2">
+            <Button disabled={busy || !draft.amount || !draft.description.trim()} onClick={submit}>
+              {busy ? "Menyimpan…" : "Kirim ke Finance"}
+            </Button>
+            <Button variant="outline" disabled={busy} onClick={reset}>Batal</Button>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
+
+      <section className="space-y-2">
+        <h2 className="text-14 font-medium text-muted-foreground">Pembelian terbaru</h2>
+        {rows.length === 0 ? (
+          <p className="rounded-lg border bg-card py-8 text-center text-muted-foreground">Belum ada.</p>
+        ) : (
+          <div className="rounded-lg border bg-card divide-y">
+            {rows.map((r) => (
+              <div key={r.id} className="flex items-center justify-between gap-2 px-4 py-2">
+                <div className="min-w-0">
+                  <p className="truncate font-medium">{rupiah(r.amount)}</p>
+                  <p className="text-11 text-muted-foreground">
+                    {r.spentAt}
+                    {r.description ? ` · ${r.description}` : ""}
+                  </p>
+                </div>
+                {!r.approved && (
+                  <span className="shrink-0 rounded-full bg-warning/15 px-2 py-0.5 text-11 font-medium text-warning">
+                    Menunggu ACC
+                  </span>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 }
