@@ -182,10 +182,12 @@ model SalesReport {
   createdById      String // user yang mengirim (Sales / Admin)
   createdAt        DateTime @default(now())
 
-  // Approval: offline wajib di-ACC Kepala Cabang dulu baru masuk Finance.
-  // online auto-approve. approvedAt != null = sudah masuk Finance.
-  approvedAt   DateTime?
-  approvedById String?
+  // Approval 2 tahap (offline): Kepala Cabang dulu, lalu Finance.
+  // branchApprovedAt != null = lolos Kepala Cabang. approvedAt != null = masuk Finance (final).
+  branchApprovedAt   DateTime?
+  branchApprovedById String?
+  approvedAt         DateTime?
+  approvedById       String?
 
   // Sinkronisasi Accurate: cocok (no nota+tanggal+total) → tersinkron.
   accurateSyncedAt DateTime?

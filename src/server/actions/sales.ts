@@ -1,12 +1,12 @@
 "use server";
 
 import { prisma } from "@/server/db";
-import { requireSalesInput, requireFinance, requireOnlineSales } from "@/server/auth/rbac";
+import { requireSalesInput, requireFinance, requireOnlineSales, requireHeadBranch } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { parseWIB } from "@/lib/datetime";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
-import { notifyBosses, notifyRole } from "@/server/notify";
+import { notifyBosses, notifyRole, notifyBranchHeads } from "@/server/notify";
 import { parseSalesNotaViaN8n, type SalesItem, type SalesPayment } from "@/server/n8n-sales";
 
 export type ActionResult = { ok: boolean; message?: string };
@@ -175,11 +175,11 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
   await logActivity({ ...ctx, ip }, { action: "sales_report", entity: "SalesReport", entityId: rep.id });
   const rupiah = new Intl.NumberFormat("id-ID").format(rep.grandTotal);
   if (channel === "offline") {
-    // Minta ACC Finance (belum masuk rekap Finance).
-    await notifyRole("FINANCE", {
+    // Tahap 1: ACC Kepala Cabang cabang asal (baru lanjut ke Finance).
+    await notifyBranchHeads(rep.branchId, {
       type: "sales_pending",
-      title: `Penjualan perlu ACC: Rp ${rupiah}${rep.salesman ? ` · ${rep.salesman}` : ""}`,
-      link: "/cabang/penjualan",
+      title: `Penjualan perlu ACC cabang: Rp ${rupiah}${rep.salesman ? ` · ${rep.salesman}` : ""}`,
+      link: "/cabang/approval-penjualan",
     });
   } else {
     // Online: minta ACC Order Specialist dulu.
@@ -233,16 +233,60 @@ export async function rejectOnlineSales(id: string): Promise<ActionResult> {
   return { ok: true };
 }
 
-/** Finance/Boss/Admin: setujui penjualan offline → masuk rekap Finance. */
+/** Kepala Cabang: ACC tahap 1 penjualan offline cabangnya → lanjut ke Finance. */
+export async function approveBranchSalesReport(id: string): Promise<ActionResult> {
+  const ctx = await requireHeadBranch();
+  if (!id) return { ok: false, message: "ID kosong." };
+  const rep = await prisma.salesReport.findUnique({
+    where: { id },
+    select: { id: true, channel: true, branchId: true, branchApprovedAt: true, grandTotal: true },
+  });
+  if (!rep) return { ok: false, message: "Nota tidak ditemukan." };
+  if (rep.channel !== "offline") return { ok: false, message: "Hanya penjualan offline." };
+  if (ctx.branchId && rep.branchId !== ctx.branchId) return { ok: false, message: "Beda cabang." };
+  if (rep.branchApprovedAt) return { ok: false, message: "Sudah di-ACC cabang." };
+
+  await prisma.salesReport.update({ where: { id }, data: { branchApprovedAt: new Date(), branchApprovedById: ctx.userId } });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "sales_branch_approve", entity: "SalesReport", entityId: id });
+  await notifyRole("FINANCE", {
+    type: "sales_pending",
+    title: `Penjualan perlu ACC Finance: Rp ${new Intl.NumberFormat("id-ID").format(rep.grandTotal)}`,
+    link: "/cabang/penjualan",
+  });
+  return { ok: true };
+}
+
+/** Kepala Cabang: tolak penjualan offline cabangnya (hapus, sebelum Finance). */
+export async function rejectBranchSalesReport(id: string): Promise<ActionResult> {
+  const ctx = await requireHeadBranch();
+  if (!id) return { ok: false, message: "ID kosong." };
+  const rep = await prisma.salesReport.findUnique({
+    where: { id },
+    select: { id: true, channel: true, branchId: true, branchApprovedAt: true, approvedAt: true },
+  });
+  if (!rep) return { ok: false, message: "Nota tidak ditemukan." };
+  if (rep.channel !== "offline") return { ok: false, message: "Hanya penjualan offline." };
+  if (ctx.branchId && rep.branchId !== ctx.branchId) return { ok: false, message: "Beda cabang." };
+  if (rep.approvedAt) return { ok: false, message: "Sudah di-ACC Finance, tak bisa ditolak." };
+
+  await prisma.salesReport.delete({ where: { id } });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "sales_branch_reject", entity: "SalesReport", entityId: id });
+  return { ok: true };
+}
+
+/** Finance/Boss/Admin: ACC tahap 2 penjualan offline → masuk rekap Finance. */
 export async function approveSalesReport(id: string): Promise<ActionResult> {
   const ctx = await requireFinance();
   if (!id) return { ok: false, message: "ID kosong." };
   const rep = await prisma.salesReport.findUnique({
     where: { id },
-    select: { id: true, channel: true, branchId: true, approvedAt: true, grandTotal: true },
+    select: { id: true, channel: true, branchId: true, branchApprovedAt: true, approvedAt: true, grandTotal: true },
   });
   if (!rep) return { ok: false, message: "Nota tidak ditemukan." };
   if (rep.channel !== "offline") return { ok: false, message: "Hanya penjualan offline yang perlu ACC." };
+  if (!rep.branchApprovedAt) return { ok: false, message: "Belum di-ACC Kepala Cabang." };
   if (rep.approvedAt) return { ok: false, message: "Sudah disetujui." };
 
   await prisma.salesReport.update({

@@ -132,7 +132,10 @@ export function navForRole(role: RoleCode): NavGroup[] {
     groups.push({
       title: "Cabang",
       icon: Building2,
-      items: [{ label: "Rekap Penjualan", href: "/sales", icon: Receipt }],
+      items: [
+        { label: "Approval Penjualan", href: "/cabang/approval-penjualan", icon: ClipboardCheck },
+        { label: "Rekap Penjualan", href: "/sales", icon: Receipt },
+      ],
     });
   }
 
