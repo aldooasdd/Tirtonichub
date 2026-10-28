@@ -907,7 +907,7 @@ button.addph svg{width:16px;height:16px}
 .reph h3{margin:0;color:var(--ink);font-size:18px}
 .reph .acts{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .reph select{width:auto}
-.rep{display:grid;gap:16px}
+.rep{display:grid;gap:16px;grid-template-columns:minmax(0,1fr)}   /* tabel lebar digeser di kotaknya, laporan tidak melebar di HP */
 .recs{list-style:none;margin:0;padding:0;display:grid;gap:6px}
 .recs li{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--surface);font-size:14px}
 .recs .chip{flex:none}
@@ -1330,6 +1330,11 @@ html[data-skin] details.kgrp,html[data-skin] details.wtype>summary h3{background
 .itemview:has(.ivbig[aria-pressed="true"]) .ivbig[aria-pressed="true"] b{font-size:14.5px}
 .itemview:has(.ivbig[aria-pressed="true"]) .ivbig:hover{transform:translateY(-2px)}
 @media (max-width:520px){.itemview:has(.ivbig[aria-pressed="true"]){margin-top:-54px}}
+/* HP: semua pilihan jadi ikon saja supaya judul halaman tidak tertutup; Finder: tombol & warna pindah ke baris kedua; Tambah file: daftar ringkas; Kembali tidak menutupi isi */
+@media (max-width:520px){.itemview:has(.ivbig[aria-pressed="true"]) .ivbig[aria-pressed="true"]{padding:5px;gap:0}.itemview:has(.ivbig[aria-pressed="true"]) .ivbig[aria-pressed="true"] b{display:none}
+  .fndbar{flex-wrap:wrap;gap:8px 10px;padding:10px 12px}.fndbar>b,.fndbar .crumbs{flex:1 1 0;min-width:0}.fndbar .fndacts{flex:1 0 100%;justify-content:space-between;align-items:center;gap:4px}.fndacts .fcols{gap:5px;flex-wrap:nowrap}
+  .uprows{grid-template-columns:minmax(0,1fr);gap:10px}.uprow{grid-template-columns:64px minmax(0,1fr);column-gap:10px;align-items:center}.uprow .upth{grid-row:span 2;width:64px}}
+@media (max-width:820px){body.inpage .backbtn{position:relative;top:auto}}
 .ivbig:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
 html[data-skin] .ivbig{background:var(--glass);border-color:var(--glass-line)}
 html[data-skin] .ivbig:hover{background:var(--accent)}
