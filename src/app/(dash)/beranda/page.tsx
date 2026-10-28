@@ -89,12 +89,18 @@ export default async function BerandaPage() {
   const sisaCuti = tenureOk ? Math.max(0, 12 - cutiTerpakai) : 0;
 
   const absenPhase = !att?.checkInAt ? "in" : !att.checkOutAt ? "out" : "done";
-  // Tombol pulang baru muncul setelah shift berakhir.
+  // Media: jadwal fleksibel → pulang setelah 5 jam. Lainnya: setelah shift berakhir.
+  const isMedia = ctx.activeRole === "MEDIA";
   const shiftSched =
-    ABSEN_ON && absenPhase === "out"
+    ABSEN_ON && absenPhase === "out" && !isMedia
       ? await shiftScheduleFor({ id: ctx.userId, fullName: user.fullName }, today)
       : null;
-  const canCheckOut = !shiftSched || wibMinutesOfDay(now) >= parseHHMM(shiftSched.end);
+  const canCheckOut = isMedia
+    ? !!att?.checkInAt && now.getTime() - att.checkInAt.getTime() >= 5 * 3600_000
+    : !shiftSched || wibMinutesOfDay(now) >= parseHHMM(shiftSched.end);
+  const checkoutHint = isMedia
+    ? "Absen pulang tersedia setelah 5 jam kerja."
+    : `Absen pulang tersedia setelah shift berakhir${shiftSched ? ` (${shiftSched.end})` : ""}.`;
 
   return (
     <div className="space-y-6">
@@ -138,9 +144,7 @@ export default async function BerandaPage() {
                   <Link href="/absen">Absen Pulang</Link>
                 </Button>
               ) : (
-                <p className="text-12 text-muted-foreground">
-                  Absen pulang tersedia setelah shift berakhir{shiftSched ? ` (${shiftSched.end})` : ""}.
-                </p>
+                <p className="text-12 text-muted-foreground">{checkoutHint}</p>
               ))}
           </div>
         </section>

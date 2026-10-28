@@ -31,10 +31,16 @@ export default async function AbsenPage() {
       ? "out"
       : "done";
 
-  // Tombol pulang baru aktif setelah shift berakhir.
+  // Media: pulang setelah 5 jam kerja. Lainnya: setelah shift berakhir.
+  const isMedia = ctx.activeRole === "MEDIA";
   const user = await prisma.user.findUniqueOrThrow({ where: { id: ctx.userId }, select: { fullName: true } });
-  const shiftSched = phase === "out" ? await shiftScheduleFor({ id: ctx.userId, fullName: user.fullName }, today) : null;
-  const tooEarly = phase === "out" && !!shiftSched && wibMinutesOfDay(new Date()) < parseHHMM(shiftSched.end);
+  const shiftSched = phase === "out" && !isMedia ? await shiftScheduleFor({ id: ctx.userId, fullName: user.fullName }, today) : null;
+  const tooEarly =
+    phase === "out" &&
+    (isMedia
+      ? !!att?.checkInAt && Date.now() - att.checkInAt.getTime() < 5 * 3600_000
+      : !!shiftSched && wibMinutesOfDay(new Date()) < parseHHMM(shiftSched.end));
+  const earlyMsg = isMedia ? "Absen pulang tersedia setelah 5 jam kerja." : `Absen pulang tersedia setelah shift berakhir (${shiftSched?.end ?? ""}).`;
 
   return (
     <div className="mx-auto max-w-md space-y-4">
@@ -54,9 +60,7 @@ export default async function AbsenPage() {
           Absen hari ini sudah lengkap. Sampai jumpa besok.
         </div>
       ) : tooEarly ? (
-        <div className="rounded-lg bg-card p-6 text-center text-muted-foreground">
-          Absen pulang tersedia setelah shift berakhir ({shiftSched!.end}).
-        </div>
+        <div className="rounded-lg bg-card p-6 text-center text-muted-foreground">{earlyMsg}</div>
       ) : (
         <AbsenCapture mode={phase} />
       )}

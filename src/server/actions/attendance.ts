@@ -14,6 +14,7 @@ export type ActionResult = { ok: boolean; message?: string };
 const MAX_PHOTO = 500 * 1024; // 500 KB
 const RADIUS_M = Number(process.env.ATTENDANCE_RADIUS_METERS) || 0;
 const LATE_TOLERANCE_MIN = Number(process.env.ATTENDANCE_LATE_TOLERANCE_MIN) || 5;
+const MEDIA_MIN_WORK_MS = 5 * 3600_000; // Media: min 5 jam sebelum boleh absen pulang
 
 type Geo = { lat: number; lng: number; accuracy: number };
 
@@ -56,20 +57,24 @@ export async function checkIn(form: FormData): Promise<ActionResult> {
   });
   if (existing?.checkInAt) return { ok: false, message: "Kamu sudah absen masuk hari ini." };
 
-  const schedule = await shiftScheduleFor(user, dateKey);
-  if (!schedule)
-    return { ok: false, message: "Hari ini kamu tidak ada jadwal kerja (libur/cuti/WFH). Tak perlu absen." };
+  // Media: jadwal fleksibel (tak ada shift tetap) → selalu boleh masuk, tak dihitung telat.
+  let status: "ON_TIME" | "LATE" = "ON_TIME";
+  let lateMinutes = 0;
+  if (ctx.activeRole !== "MEDIA") {
+    const schedule = await shiftScheduleFor(user, dateKey);
+    if (!schedule)
+      return { ok: false, message: "Hari ini kamu tidak ada jadwal kerja (libur/cuti/WFH). Tak perlu absen." };
+    ({ status, lateMinutes } = computeCheckInStatus(now, {
+      startTime: schedule.start,
+      lateToleranceMin: LATE_TOLERANCE_MIN,
+    }));
+  }
 
   const radiusErr = await checkRadiusOrFail(user.branchId, geo);
   if (radiusErr) return { ok: false, message: radiusErr };
 
   const key = makeKey(`attendance/${ctx.userId}`, "jpg");
   await putObject(key, Buffer.from(await photo.arrayBuffer()), photo.type);
-
-  const { status, lateMinutes } = computeCheckInStatus(now, {
-    startTime: schedule.start,
-    lateToleranceMin: LATE_TOLERANCE_MIN,
-  });
   const { ip } = await clientMeta();
 
   await prisma.attendance.upsert({
@@ -120,9 +125,15 @@ export async function checkOut(form: FormData): Promise<ActionResult> {
     return { ok: false, message: "Belum absen masuk. Pakai pengajuan koreksi bila lupa." };
   if (existing.checkOutAt) return { ok: false, message: "Kamu sudah absen pulang hari ini." };
 
-  const schedule = await shiftScheduleFor(user, dateKey);
-  if (schedule && wibMinutesOfDay(now) < parseHHMM(schedule.end))
-    return { ok: false, message: `Absen pulang bisa setelah shift berakhir (${schedule.end}).` };
+  if (ctx.activeRole === "MEDIA") {
+    // Media: absen pulang hanya setelah 5 jam kerja.
+    if (now.getTime() - existing.checkInAt.getTime() < MEDIA_MIN_WORK_MS)
+      return { ok: false, message: "Belum 5 jam kerja. Belum bisa absen pulang." };
+  } else {
+    const schedule = await shiftScheduleFor(user, dateKey);
+    if (schedule && wibMinutesOfDay(now) < parseHHMM(schedule.end))
+      return { ok: false, message: `Absen pulang bisa setelah shift berakhir (${schedule.end}).` };
+  }
 
   const radiusErr = await checkRadiusOrFail(user.branchId, geo);
   if (radiusErr) return { ok: false, message: radiusErr };
