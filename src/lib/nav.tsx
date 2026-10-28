@@ -21,7 +21,7 @@ import {
   Warehouse,
   type LucideIcon,
 } from "lucide-react";
-import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, ADMIN_ROLES, HEAD_BRANCH_ROLES, roleAttends, type RoleCode } from "./roles";
+import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, ORDER_SPECIALIST_ROLES, HEAD_BRANCH_ROLES, roleAttends, type RoleCode } from "./roles";
 import { ABSEN_ON } from "./flags";
 
 export type NavItem = {
@@ -43,7 +43,7 @@ export const GROUP_COLOR: Record<string, string> = {
   HR: "text-pink-500",
   Finance: "text-blue-500",
   Sales: "text-emerald-500",
-  Admin: "text-violet-500",
+  "Order Specialist": "text-violet-500",
   Cabang: "text-indigo-500",
   Stok: "text-amber-500",
   Media: "text-cyan-500",
@@ -101,9 +101,9 @@ export function navForRole(role: RoleCode): NavGroup[] {
     });
   }
 
-  if (ADMIN_ROLES.includes(role)) {
+  if (ORDER_SPECIALIST_ROLES.includes(role)) {
     groups.push({
-      title: "Admin",
+      title: "Order Specialist",
       icon: Globe,
       items: [{ label: "Approval Online", href: "/penjualan-online", icon: ClipboardCheck }],
     });

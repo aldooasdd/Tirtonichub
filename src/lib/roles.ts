@@ -34,8 +34,10 @@ export const STOCK_ROLES: RoleCode[] = ["BOSS", "STOCK_ROOM"];
 export const MEDIA_ROLES: RoleCode[] = ["BOSS", "MEDIA"];
 /** Sales: kirim rekap penjualan (foto nota). */
 export const SALES_ROLES: RoleCode[] = ["BOSS", "SALES"];
-/** Admin: input penjualan online (screenshot marketplace). */
+/** Admin: (lama input penjualan online — kini approval pindah ke Order Specialist). */
 export const ADMIN_ROLES: RoleCode[] = ["BOSS", "ADMIN"];
+/** Order Specialist: approve penjualan online dari Sales sebelum masuk Finance. */
+export const ORDER_SPECIALIST_ROLES: RoleCode[] = ["BOSS", "ORDER_SPECIALIST"];
 /** Kepala Cabang: ACC penjualan offline cabang sebelum masuk Finance. */
 export const HEAD_BRANCH_ROLES: RoleCode[] = ["BOSS", "HEAD_BRANCH"];
 
