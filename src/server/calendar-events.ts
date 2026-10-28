@@ -89,7 +89,11 @@ export async function loadCalendarEvents(me?: { userId: string; fullName: string
     prisma.calendarEvent.findMany({ orderBy: { startTime: "asc" } }),
     prisma.holiday.findMany(),
     prisma.request.findMany({
-      where: { type: { in: ["LEAVE", "PERMIT", "SICK"] }, status: { in: ["APPROVED", "PENDING"] } },
+      where: {
+        type: { in: ["LEAVE", "PERMIT", "SICK"] },
+        status: { in: ["APPROVED", "PENDING"] },
+        ...(me?.branchId ? { user: { branchId: me.branchId } } : {}), // cabang lain tak terlihat
+      },
       include: { user: { select: { fullName: true } } },
     }),
   ]);
