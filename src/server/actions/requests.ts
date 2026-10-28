@@ -153,18 +153,26 @@ export async function reviewRequest(
       if (req.type === "LEAVE" || req.type === "PERMIT" || req.type === "SICK") {
         const status = TYPE_TO_STATUS[req.type];
         const code = TYPE_TO_SHIFT[req.type];
+        const coverId = (req.payload as { counterpartId?: string } | null)?.counterpartId;
         for (const date of dayRange(req.startDate, req.endDate)) {
           await tx.attendance.upsert({
             where: { userId_date: { userId: req.userId, date } },
             update: { status },
             create: { userId: req.userId, date, status },
           });
-          // jadwal ikut berubah otomatis (CUTI/IZIN/SAKIT)
+          // jadwal pemohon auto jadi CUTI/IZIN/SAKIT
           await tx.shift.upsert({
             where: { userId_date: { userId: req.userId, date } },
             update: { code },
             create: { userId: req.userId, date, code },
           });
+          // pengganti auto jadi long shift (gantiin seharian)
+          if (coverId)
+            await tx.shift.upsert({
+              where: { userId_date: { userId: coverId, date } },
+              update: { code: "LONG" },
+              create: { userId: coverId, date, code: "LONG" },
+            });
         }
       } else if (req.type === "SHIFT_SWAP") {
         // tukar shift: kedua pihak saling tukar kode shift di tanggal itu

@@ -21,7 +21,7 @@ function eachDay(start: Date, end: Date): Date[] {
 
 const REQ_COLOR: Record<string, string> = { LEAVE: "blue", PERMIT: "orange", SICK: "purple" };
 const SHIFT_COLOR: Record<ShiftCode, string> = {
-  P: "green", S: "blue", OH: "purple", O: "red", WFH: "orange", CUTI: "blue", SAKIT: "purple", IZIN: "pink",
+  P: "green", S: "blue", OH: "purple", LONG: "indigo", O: "red", WFH: "orange", CUTI: "blue", SAKIT: "purple", IZIN: "pink",
 };
 
 function atTime(y: number, mo: number, day: number, hhmm: string): Date {
