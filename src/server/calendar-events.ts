@@ -31,7 +31,8 @@ function atTime(y: number, mo: number, day: number, hhmm: string): Date {
 
 const SHIFT_MONTHS = 3; // bulan berjalan + 2 ke depan (biar navigasi kalender tetap terisi)
 
-/** Event jadwal shift utk satu karyawan, 3 bulan ke depan (saved Shift timpa pola PDF). */
+/** Event jadwal shift utk satu karyawan, 3 bulan ke depan (saved Shift timpa pola PDF).
+ *  attendees = daftar karyawan yang kerja di hari sama (buat konfirmasi pengganti). */
 async function shiftEvents(userId: string, fullName: string): Promise<Event[]> {
   const wib = new Date(Date.now() + 7 * 3600_000);
   const y0 = wib.getUTCFullYear();
@@ -39,12 +40,15 @@ async function shiftEvents(userId: string, fullName: string): Promise<Event[]> {
   const start = new Date(Date.UTC(y0, m0, 1));
   const end = new Date(Date.UTC(y0, m0 + SHIFT_MONTHS, 0)); // akhir bulan terakhir
 
-  const rows = await prisma.shift.findMany({
-    where: { userId, date: { gte: start, lte: end } },
-    select: { date: true, code: true },
-  });
-  const saved = new Map<string, string>(); // "y-mo-day" (mo 0-based)
-  for (const r of rows) saved.set(`${r.date.getUTCFullYear()}-${r.date.getUTCMonth()}-${r.date.getUTCDate()}`, r.code);
+  // Semua karyawan + shift tersimpan sekali, lalu hitung kode per hari di memori.
+  const [users, rows] = await Promise.all([
+    prisma.user.findMany({ where: { isActive: true }, select: { id: true, fullName: true } }),
+    prisma.shift.findMany({ where: { date: { gte: start, lte: end } }, select: { userId: true, date: true, code: true } }),
+  ]);
+  const saved = new Map<string, string>(); // "uid|y-mo-day" → code
+  for (const r of rows) saved.set(`${r.userId}|${r.date.getUTCFullYear()}-${r.date.getUTCMonth()}-${r.date.getUTCDate()}`, r.code);
+  const codeOf = (uid: string, name: string, y: number, mo: number, day: number) =>
+    saved.get(`${uid}|${y}-${mo}-${day}`) ?? defaultShift(name, day);
 
   const out: Event[] = [];
   for (let k = 0; k < SHIFT_MONTHS; k++) {
@@ -53,9 +57,16 @@ async function shiftEvents(userId: string, fullName: string): Promise<Event[]> {
     const mo = d0.getUTCMonth();
     const dim = new Date(Date.UTC(y, mo + 1, 0)).getUTCDate();
     for (let day = 1; day <= dim; day++) {
-      const code = saved.get(`${y}-${mo}-${day}`) ?? defaultShift(fullName, day);
+      const code = codeOf(userId, fullName, y, mo, day);
       if (!code || !isShiftCode(code)) continue;
       const def = SHIFTS[code as ShiftCode];
+      // roster hari itu: semua karyawan yang masuk kerja + kode shiftnya
+      const roster: string[] = [];
+      for (const u of users) {
+        const c = codeOf(u.id, u.fullName, y, mo, day);
+        if (c && isShiftCode(c) && SHIFTS[c as ShiftCode].working)
+          roster.push(`${u.fullName} — ${SHIFTS[c as ShiftCode].label.split(" ")[0]}`);
+      }
       out.push({
         id: `shift_${y}-${mo + 1}-${day}`,
         title: def.label.split(" ")[0], // kata singkat: Pagi/Siang/Office/Libur/WFH/Cuti/Sakit/Izin
@@ -64,6 +75,7 @@ async function shiftEvents(userId: string, fullName: string): Promise<Event[]> {
         endTime: atTime(y, mo, day, def.end ?? "23:59"),
         color: SHIFT_COLOR[code as ShiftCode] ?? "blue",
         category: "Jadwal",
+        attendees: roster,
       });
     }
   }

@@ -77,6 +77,8 @@ export function EventManager({
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isCreating, setIsCreating] = useState(false)
+  // Event turunan (jadwal shift/libur/pengajuan) tak bisa diedit, hanya dilihat.
+  const isReadOnly = !isCreating && !!selectedEvent && /^(shift_|hol_|req_)/.test(selectedEvent.id)
   const [draggedEvent, setDraggedEvent] = useState<Event | null>(null)
   const [newEvent, setNewEvent] = useState<Partial<Event>>({
     title: "",
@@ -543,6 +545,44 @@ export function EventManager({
             </DialogDescription>
           </DialogHeader>
 
+          {isReadOnly && selectedEvent ? (
+            <>
+              <div className="space-y-3">
+                <div>
+                  <Label>Judul</Label>
+                  <p className="text-14 font-medium">{selectedEvent.title}</p>
+                </div>
+                {selectedEvent.description && (
+                  <div>
+                    <Label>Deskripsi</Label>
+                    <p className="text-14 whitespace-pre-wrap">{selectedEvent.description}</p>
+                  </div>
+                )}
+                {selectedEvent.attendees && selectedEvent.attendees.length > 0 && (
+                  <div>
+                    <Label>Yang shift hari ini</Label>
+                    <ul className="mt-1 space-y-0.5 text-14">
+                      {selectedEvent.attendees.map((a) => (
+                        <li key={a}>{a}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+              <DialogFooter>
+                <Button
+                  variant="outline"
+                  onClick={() => {
+                    setIsDialogOpen(false)
+                    setSelectedEvent(null)
+                  }}
+                >
+                  Tutup
+                </Button>
+              </DialogFooter>
+            </>
+          ) : (
+          <>
           <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="title">Judul</Label>
@@ -723,6 +763,8 @@ export function EventManager({
               {isCreating ? "Buat" : "Simpan"}
             </Button>
           </DialogFooter>
+          </>
+          )}
         </DialogContent>
       </Dialog>
     </div>
