@@ -3,6 +3,7 @@
 import { randomUUID } from "node:crypto";
 import { prisma } from "@/server/db";
 import { requireFinance, requireStock } from "@/server/auth/rbac";
+import { isSuperRole } from "@/lib/roles";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
@@ -106,9 +107,9 @@ export async function saveRawBatch(input: {
 // Filter kepemilikan: BOSS boleh semua draft, Finance biasa hanya miliknya.
 // (Page /finance menampilkan semua draft utk BOSS, jadi mutasi harus sejalan.)
 const ownerWhere = (ctx: { activeRole: string; userId: string }) =>
-  ctx.activeRole === "BOSS" ? {} : { createdById: ctx.userId };
+  isSuperRole(ctx.activeRole) ? {} : { createdById: ctx.userId };
 const owns = (ctx: { activeRole: string; userId: string }, createdById: string) =>
-  ctx.activeRole === "BOSS" || createdById === ctx.userId;
+  isSuperRole(ctx.activeRole) || createdById === ctx.userId;
 
 /** Edit satu kartu DRAFT milik sendiri (BOSS: semua). */
 export async function updateRawProduct(id: string, fields: SaveItem): Promise<ActionResult> {
@@ -142,7 +143,7 @@ export async function deleteRawProduct(id: string): Promise<ActionResult> {
   const p = await prisma.rawProduct.findUnique({ where: { id } });
   if (!p || !owns(ctx, p.createdById)) return { ok: false, message: "Tidak ditemukan." };
   // Non-BOSS cuma boleh hapus draft; BOSS boleh hapus riwayat (QC/stok/ditolak).
-  if (p.status !== "DRAFT" && ctx.activeRole !== "BOSS") return { ok: false, message: "Hanya draft bisa dihapus." };
+  if (p.status !== "DRAFT" && !isSuperRole(ctx.activeRole)) return { ok: false, message: "Hanya draft bisa dihapus." };
   await prisma.rawProduct.delete({ where: { id } });
   return { ok: true };
 }
@@ -150,7 +151,7 @@ export async function deleteRawProduct(id: string): Promise<ActionResult> {
 /** BOSS: hapus semua item Riwayat (status QC/STOCK/REJECTED). */
 export async function deleteAllHistory(): Promise<ActionResult> {
   const ctx = await requireFinance();
-  if (ctx.activeRole !== "BOSS") return { ok: false, message: "Hanya Direksi." };
+  if (!isSuperRole(ctx.activeRole)) return { ok: false, message: "Hanya Direksi/Admin." };
   const r = await prisma.rawProduct.deleteMany({ where: { status: { not: "DRAFT" } } });
   if (r.count === 0) return { ok: false, message: "Tidak ada riwayat." };
   const { ip } = await clientMeta();

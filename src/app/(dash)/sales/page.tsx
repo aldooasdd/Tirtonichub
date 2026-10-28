@@ -1,11 +1,12 @@
 import { requireSales } from "@/server/auth/rbac";
+import { isSuperRole } from "@/lib/roles";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
 import { SalesClient, type SalesRow } from "@/components/sales/sales-client";
 
 export default async function SalesPage() {
   const ctx = await requireSales();
-  const canViewAll = ctx.activeRole === "BOSS";
+  const canViewAll = isSuperRole(ctx.activeRole);
   const mine = canViewAll ? {} : { createdById: ctx.userId };
   const rows = await prisma.salesReport.findMany({
     where: { ...mine },

@@ -6,8 +6,8 @@ import { navForRole, bottomNavForRole } from "./nav";
 const labels = (role: Parameters<typeof navForRole>[0]) =>
   navForRole(role).flatMap((g) => g.items.map((i) => i.label));
 
-test("ada tepat 8 role", () => {
-  assert.equal(ROLE_CODES.length, 8);
+test("ada tepat 9 role", () => {
+  assert.equal(ROLE_CODES.length, 9);
 });
 
 test("Boss tidak absen, role lain absen", () => {
@@ -16,8 +16,8 @@ test("Boss tidak absen, role lain absen", () => {
   assert.equal(roleAttends("SALES"), true);
 });
 
-test("hanya BOSS & HR punya modul HR", () => {
-  assert.deepEqual([...HR_ROLES].sort(), ["BOSS", "HR"]);
+test("modul HR: BOSS, ADMIN, HR", () => {
+  assert.deepEqual([...HR_ROLES].sort(), ["ADMIN", "BOSS", "HR"]); // Admin super user
   assert.ok(navForRole("HR").some((g) => g.title === "HR"));
   assert.ok(navForRole("BOSS").some((g) => g.title === "HR"));
   assert.ok(!navForRole("SALES").some((g) => g.title === "HR"));
@@ -34,5 +34,5 @@ test("bottom nav HP: Boss tanpa Absen, Sales dengan Absen", () => {
   const sales = bottomNavForRole("SALES").map((i) => i.label);
   assert.ok(!boss.includes("Absen"));
   assert.ok(sales.includes("Absen"));
-  assert.equal(sales.length, 5);
+  assert.equal(sales.length, 4); // Beranda, Absen, Rekap Penjualan, Profil (Chat dibuang)
 });

@@ -1,4 +1,5 @@
 import { requireHr } from "@/server/auth/rbac";
+import { isSuperRole } from "@/lib/roles";
 import { prisma } from "@/server/db";
 import { KaryawanClient } from "@/components/hr/karyawan-client";
 
@@ -30,7 +31,7 @@ export default async function KaryawanPage() {
       users={data}
       branches={branches.map((b) => ({ id: b.id, name: b.name }))}
       schedules={schedules.map((s) => ({ id: s.id, name: s.name }))}
-      canAssignBossHr={ctx.activeRole === "BOSS"}
+      canAssignBossHr={isSuperRole(ctx.activeRole)}
       selfId={ctx.userId}
     />
   );

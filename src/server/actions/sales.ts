@@ -2,6 +2,7 @@
 
 import { prisma } from "@/server/db";
 import { requireSalesInput, requireFinance, requireHeadBranch, requireOnlineSales } from "@/server/auth/rbac";
+import { isSuperRole } from "@/lib/roles";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
@@ -229,7 +230,7 @@ export async function approveSalesReport(id: string): Promise<ActionResult> {
   if (rep.channel !== "offline") return { ok: false, message: "Hanya penjualan offline yang perlu ACC." };
   if (rep.approvedAt) return { ok: false, message: "Sudah disetujui." };
   // Kepala Cabang hanya cabangnya sendiri; Boss semua.
-  if (ctx.activeRole !== "BOSS" && rep.branchId !== ctx.branchId) return { ok: false, message: "Bukan cabang Anda." };
+  if (!isSuperRole(ctx.activeRole) && rep.branchId !== ctx.branchId) return { ok: false, message: "Bukan cabang Anda." };
 
   await prisma.salesReport.update({
     where: { id },
@@ -256,7 +257,7 @@ export async function rejectSalesReport(id: string): Promise<ActionResult> {
   if (!rep) return { ok: false, message: "Nota tidak ditemukan." };
   if (rep.channel !== "offline") return { ok: false, message: "Hanya penjualan offline." };
   if (rep.approvedAt) return { ok: false, message: "Sudah disetujui, tak bisa ditolak." };
-  if (ctx.activeRole !== "BOSS" && rep.branchId !== ctx.branchId) return { ok: false, message: "Bukan cabang Anda." };
+  if (!isSuperRole(ctx.activeRole) && rep.branchId !== ctx.branchId) return { ok: false, message: "Bukan cabang Anda." };
 
   await prisma.salesReport.delete({ where: { id } });
   const { ip } = await clientMeta();

@@ -1,11 +1,12 @@
 import { requireFinance } from "@/server/auth/rbac";
+import { isSuperRole } from "@/lib/roles";
 import { prisma } from "@/server/db";
 import { FinanceClient } from "@/components/finance/finance-client";
 
 export default async function FinancePage() {
   const ctx = await requireFinance();
   const rows = await prisma.rawProduct.findMany({
-    where: ctx.activeRole === "BOSS" ? {} : { createdById: ctx.userId },
+    where: isSuperRole(ctx.activeRole) ? {} : { createdById: ctx.userId },
     orderBy: { createdAt: "desc" },
     take: 200,
     include: { qcBy: { select: { fullName: true } } },
@@ -13,7 +14,7 @@ export default async function FinancePage() {
 
   return (
     <FinanceClient
-      isBoss={ctx.activeRole === "BOSS"}
+      isBoss={isSuperRole(ctx.activeRole)}
       items={rows.map((r) => ({
         id: r.id,
         batchId: r.batchId,

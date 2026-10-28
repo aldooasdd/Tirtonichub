@@ -24,24 +24,30 @@ export const ROLE_LABELS: Record<RoleCode, string> = {
   ADMIN: "Admin",
 };
 
+// Admin = super user (akses penuh seperti BOSS) → ikut di semua modul.
 /** Role yang punya modul HR (kelola karyawan, rekap, approval, dll). */
-export const HR_ROLES: RoleCode[] = ["BOSS", "HR"];
+export const HR_ROLES: RoleCode[] = ["BOSS", "ADMIN", "HR"];
 /** Finance: scan nota + produk mentah. */
-export const FINANCE_ROLES: RoleCode[] = ["BOSS", "FINANCE"];
+export const FINANCE_ROLES: RoleCode[] = ["BOSS", "ADMIN", "FINANCE"];
 /** Stock Room: QC + stok. */
-export const STOCK_ROLES: RoleCode[] = ["BOSS", "STOCK_ROOM"];
+export const STOCK_ROLES: RoleCode[] = ["BOSS", "ADMIN", "STOCK_ROOM"];
 /** Media: Tirtonic Studio (produksi konten). */
-export const MEDIA_ROLES: RoleCode[] = ["BOSS", "MEDIA"];
+export const MEDIA_ROLES: RoleCode[] = ["BOSS", "ADMIN", "MEDIA"];
 /** Sales: kirim rekap penjualan (foto nota). */
-export const SALES_ROLES: RoleCode[] = ["BOSS", "SALES"];
-/** Admin: (lama input penjualan online — kini approval pindah ke Order Specialist). */
+export const SALES_ROLES: RoleCode[] = ["BOSS", "ADMIN", "SALES"];
+/** Admin: super user akses penuh. */
 export const ADMIN_ROLES: RoleCode[] = ["BOSS", "ADMIN"];
 /** Order Specialist: approve penjualan online dari Sales sebelum masuk Finance. */
-export const ORDER_SPECIALIST_ROLES: RoleCode[] = ["BOSS", "ORDER_SPECIALIST"];
+export const ORDER_SPECIALIST_ROLES: RoleCode[] = ["BOSS", "ADMIN", "ORDER_SPECIALIST"];
 /** Kepala Cabang: ACC penjualan offline cabang sebelum masuk Finance. */
-export const HEAD_BRANCH_ROLES: RoleCode[] = ["BOSS", "HEAD_BRANCH"];
+export const HEAD_BRANCH_ROLES: RoleCode[] = ["BOSS", "ADMIN", "HEAD_BRANCH"];
 
 /** Boss tidak absen; role lain absen. (PRD §3) */
 export function roleAttends(role: RoleCode): boolean {
   return role !== "BOSS";
+}
+
+/** Super user akses penuh: BOSS & ADMIN (dipakai cek scope "lihat/ubah semua", bukan hanya cabang sendiri). */
+export function isSuperRole(role: string): boolean {
+  return role === "BOSS" || role === "ADMIN";
 }

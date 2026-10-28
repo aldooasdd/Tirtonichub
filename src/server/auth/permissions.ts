@@ -1,13 +1,14 @@
 import type { RoleCode } from "@/generated/prisma";
 
-const HR_ROLES: RoleCode[] = ["BOSS", "HR"];
-const FINANCE_ROLES: RoleCode[] = ["BOSS", "FINANCE"];
-const STOCK_ROLES: RoleCode[] = ["BOSS", "STOCK_ROOM"]; // Stock Room juga pegang QC
-const MEDIA_ROLES: RoleCode[] = ["BOSS", "MEDIA"]; // Tirtonic Studio (produksi konten)
-const SALES_ROLES: RoleCode[] = ["BOSS", "SALES"]; // kirim rekap penjualan (foto nota)
-const ORDER_SPECIALIST_ROLES: RoleCode[] = ["BOSS", "ORDER_SPECIALIST"]; // approve penjualan online
-const SALES_INPUT_ROLES: RoleCode[] = ["BOSS", "SALES"]; // input penjualan (offline/online)
-const HEAD_BRANCH_ROLES: RoleCode[] = ["BOSS", "HEAD_BRANCH"]; // ACC penjualan offline cabang sebelum masuk Finance
+// Admin = super user (akses penuh seperti BOSS) → ikut di semua modul.
+const HR_ROLES: RoleCode[] = ["BOSS", "ADMIN", "HR"];
+const FINANCE_ROLES: RoleCode[] = ["BOSS", "ADMIN", "FINANCE"];
+const STOCK_ROLES: RoleCode[] = ["BOSS", "ADMIN", "STOCK_ROOM"]; // Stock Room juga pegang QC
+const MEDIA_ROLES: RoleCode[] = ["BOSS", "ADMIN", "MEDIA"]; // Tirtonic Studio (produksi konten)
+const SALES_ROLES: RoleCode[] = ["BOSS", "ADMIN", "SALES"]; // kirim rekap penjualan (foto nota)
+const ORDER_SPECIALIST_ROLES: RoleCode[] = ["BOSS", "ADMIN", "ORDER_SPECIALIST"]; // approve penjualan online
+const SALES_INPUT_ROLES: RoleCode[] = ["BOSS", "ADMIN", "SALES"]; // input penjualan (offline/online)
+const HEAD_BRANCH_ROLES: RoleCode[] = ["BOSS", "ADMIN", "HEAD_BRANCH"]; // ACC penjualan offline cabang sebelum masuk Finance
 
 /** Izin murni (tanpa DB/next) — bisa diuji langsung. */
 export const can = {
@@ -33,7 +34,7 @@ export const can = {
     target: RoleCode,
     targetUserId: string,
   ): boolean {
-    if (ctx.activeRole === "BOSS") return true; // Boss: semua role
+    if (ctx.activeRole === "BOSS" || ctx.activeRole === "ADMIN") return true; // Boss/Admin: semua role
     if (ctx.activeRole !== "HR") return false;
     if (target === "BOSS" || target === "HR") return false; // HR tak boleh Boss/HR
     if (targetUserId === ctx.userId) return false; // HR tak boleh ubah akun sendiri
