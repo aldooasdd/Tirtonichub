@@ -46,6 +46,8 @@ export async function createEmployee(input: EmployeeInput): Promise<ActionResult
   }
 
   const map = await roleIdMap();
+  const miss = data.roleCodes.filter((c) => !map[c]);
+  if (miss.length) return { ok: false, message: `Role ${miss.join(", ")} belum tersedia. Jalankan migrasi/seed.` };
   const { ip } = await clientMeta();
 
   try {
@@ -114,6 +116,8 @@ export async function updateEmployee(
   }
 
   const map = await roleIdMap();
+  const missing = added.filter((c) => !map[c]);
+  if (missing.length) return { ok: false, message: `Role ${missing.join(", ")} belum tersedia. Jalankan migrasi/seed.` };
   const { ip } = await clientMeta();
 
   try {

@@ -9,6 +9,7 @@ const prisma = new PrismaClient({
 
 const ROLES: { code: RoleCode; name: string }[] = [
   { code: "BOSS", name: "Boss" },
+  { code: "ADMIN", name: "Admin" },
   { code: "MEDIA", name: "Media" },
   { code: "FINANCE", name: "Finance" },
   { code: "STOCK_ROOM", name: "Stok Room" },
