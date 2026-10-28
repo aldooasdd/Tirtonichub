@@ -541,31 +541,31 @@ export function EventManager({
           <DialogHeader>
             <DialogTitle>{isCreating ? "Buat Event" : "Detail Event"}</DialogTitle>
             <DialogDescription>
-              {isCreating ? "Tambah event ke kalender" : "Lihat & edit event"}
+              {isCreating ? "Tambah event ke kalender" : isReadOnly ? "Detail jadwal" : "Lihat & edit event"}
             </DialogDescription>
           </DialogHeader>
 
           {isReadOnly && selectedEvent ? (
             <>
-              <div className="space-y-3">
-                <div>
-                  <Label>Judul</Label>
-                  <p className="text-14 font-medium">{selectedEvent.title}</p>
+              <div className="space-y-4">
+                <div className="rounded-lg border bg-muted/40 p-3">
+                  <p className="text-16 font-semibold">{selectedEvent.title}</p>
+                  {selectedEvent.description && (
+                    <p className="text-13 text-muted-foreground">{selectedEvent.description}</p>
+                  )}
                 </div>
-                {selectedEvent.description && (
-                  <div>
-                    <Label>Deskripsi</Label>
-                    <p className="text-14 whitespace-pre-wrap">{selectedEvent.description}</p>
-                  </div>
-                )}
                 {selectedEvent.attendees && selectedEvent.attendees.length > 0 && (
-                  <div>
-                    <Label>Yang shift hari ini</Label>
-                    <ul className="mt-1 space-y-0.5 text-14">
+                  <div className="space-y-2">
+                    <p className="text-12 font-medium text-muted-foreground">
+                      Yang shift hari ini · {selectedEvent.attendees.length}
+                    </p>
+                    <div className="flex max-h-56 flex-wrap gap-1.5 overflow-y-auto pr-1">
                       {selectedEvent.attendees.map((a) => (
-                        <li key={a}>{a}</li>
+                        <span key={a} className="rounded-full border bg-card px-2.5 py-1 text-12">
+                          {a}
+                        </span>
                       ))}
-                    </ul>
+                    </div>
                   </div>
                 )}
               </div>

@@ -58,7 +58,7 @@ export default async function BerandaPage() {
   const yearEnd = new Date(Date.UTC(year + 1, 0, 1));
 
   const [user, monthRows, pending, att, leaveReqs] = await Promise.all([
-    prisma.user.findUniqueOrThrow({ where: { id: ctx.userId }, select: { joinedAt: true, fullName: true } }),
+    prisma.user.findUniqueOrThrow({ where: { id: ctx.userId }, select: { joinedAt: true, fullName: true, branchId: true } }),
     prisma.attendance.findMany({
       where: { userId: ctx.userId, date: { gte: monthStart, lt: monthEnd } },
       select: { status: true },
@@ -150,7 +150,7 @@ export default async function BerandaPage() {
         </section>
       )}
 
-      <KalenderClient events={await loadCalendarEvents({ userId: ctx.userId, fullName: user.fullName })} />
+      <KalenderClient events={await loadCalendarEvents({ userId: ctx.userId, fullName: user.fullName, branchId: user.branchId })} />
     </div>
   );
 }

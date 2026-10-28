@@ -33,7 +33,7 @@ const SHIFT_MONTHS = 3; // bulan berjalan + 2 ke depan (biar navigasi kalender t
 
 /** Event jadwal shift utk satu karyawan, 3 bulan ke depan (saved Shift timpa pola PDF).
  *  attendees = daftar karyawan yang kerja di hari sama (buat konfirmasi pengganti). */
-async function shiftEvents(userId: string, fullName: string): Promise<Event[]> {
+async function shiftEvents(userId: string, fullName: string, branchId?: string | null): Promise<Event[]> {
   const wib = new Date(Date.now() + 7 * 3600_000);
   const y0 = wib.getUTCFullYear();
   const m0 = wib.getUTCMonth();
@@ -42,7 +42,8 @@ async function shiftEvents(userId: string, fullName: string): Promise<Event[]> {
 
   // Semua karyawan + shift tersimpan sekali, lalu hitung kode per hari di memori.
   const [users, rows] = await Promise.all([
-    prisma.user.findMany({ where: { isActive: true }, select: { id: true, fullName: true } }),
+    // roster hanya cabang yang sama (kalau viewer punya cabang).
+    prisma.user.findMany({ where: { isActive: true, ...(branchId ? { branchId } : {}) }, select: { id: true, fullName: true } }),
     prisma.shift.findMany({ where: { date: { gte: start, lte: end } }, select: { userId: true, date: true, code: true } }),
   ]);
   const saved = new Map<string, string>(); // "uid|y-mo-day" → code
@@ -83,7 +84,7 @@ async function shiftEvents(userId: string, fullName: string): Promise<Event[]> {
 }
 
 /** Gabungan event: manual (editable) + libur + cuti/izin/sakit (turunan, read-only). `me` → tambah jadwal shift pribadi. */
-export async function loadCalendarEvents(me?: { userId: string; fullName: string }): Promise<Event[]> {
+export async function loadCalendarEvents(me?: { userId: string; fullName: string; branchId?: string | null }): Promise<Event[]> {
   const [manual, holidays, requests] = await Promise.all([
     prisma.calendarEvent.findMany({ orderBy: { startTime: "asc" } }),
     prisma.holiday.findMany(),
@@ -134,7 +135,7 @@ export async function loadCalendarEvents(me?: { userId: string; fullName: string
     }
   }
 
-  if (me) events.push(...(await shiftEvents(me.userId, me.fullName)));
+  if (me) events.push(...(await shiftEvents(me.userId, me.fullName, me.branchId)));
 
   return events;
 }
