@@ -3161,14 +3161,15 @@ const isExpired=t=>{const e=expiryOf(t);return !!e&&today()>=e};
 function splitTasks(){(S.allTasks||[]).forEach(t=>{if(OLD_STATUS[t.status]){if(t.status==='Terjadwal'&&!t.metaAt)t.metaAt=t.updatedAt||1;t._old=t.status;t.status=OLD_STATUS[t.status]}});
   S.tasks=(S.allTasks||[]).filter(t=>!isExpired(t));if(S.isAdmin&&S.canWrite)setTimeout(maintainStatuses,800)}
 /* admin: simpan status baru untuk data lama, dan pindahkan otomatis ke Tayang setelah jam tayang di Meta lewat */
-let maintBusy=false;
+let maintBusy=false;S.linkTried=new Set();
 async function maintainStatuses(){if(maintBusy||!S.db||!S.full)return;maintBusy=true;const now=new Date();const nowKey=today()+' '+pad(now.getHours())+':'+pad(now.getMinutes());
   try{for(const t of (S.allTasks||[])){const up={};
       if(t._old){up.status=t.status;if(t._old==='Terjadwal')up.metaAt=t.metaAt;if(t._old==='Terjadwal'||t._old==='QC')up.checked=t._old==='Terjadwal'}
       if(t.status==='Ready'&&t.metaAt&&t.postAt){const tm=t.postTime||timeOf(t)||'23:59';if(t.postAt+' '+tm<=nowKey){up.status='Tayang';
         up.history=(t.history||[]).concat([{at:Date.now(),by:'auto',name:'Otomatis',from:'Ready',to:'Tayang'}]).slice(-30)}}
-      if(Object.keys(up).length){up.updatedAt=Date.now();try{await S.db.collection('tasks').doc(t.id).update(up);delete t._old}catch(e){}}}}
-  finally{maintBusy=false}}
+      if(Object.keys(up).length){up.updatedAt=Date.now();try{await S.db.collection('tasks').doc(t.id).update(up);delete t._old}catch(e){}}}
+    if(S.hub)for(const t of S.tasks.filter(t=>!t.itemId&&t.status!=='Tayang'&&!S.linkTried.has(t.id))){S.linkTried.add(t.id);await ensureItem(t)}   /* konten tanpa barang (event otomatis, + Konten lama) dihubungkan ke barang supaya semua anggota bisa unggah file final */
+  }finally{maintBusy=false}}
 setInterval(()=>{if(S.isAdmin&&S.tasksLoaded)maintainStatuses()},60000);
 /* ---------- pencarian pipeline ---------- */
 S.pq='';S.pm='';S.ps='';
