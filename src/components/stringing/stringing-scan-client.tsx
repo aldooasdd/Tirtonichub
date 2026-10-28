@@ -7,7 +7,13 @@ import { finishStringingScan } from "@/server/actions/stringing";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-export function StringingScanClient() {
+export function StringingScanClient({
+  embedded = false,
+  onDone,
+}: {
+  embedded?: boolean;
+  onDone?: (resultCode?: string) => void;
+} = {}) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const streamRef = useRef<MediaStream | null>(null);
   const loopRef = useRef<number | null>(null);
@@ -36,6 +42,7 @@ export function StringingScanClient() {
     const r = await finishStringingScan(value);
     setBusy(false);
     setMsg({ ok: r.ok, text: r.message });
+    if (r.ok) onDone?.(r.resultCode);
   }
 
   async function startScan() {
@@ -74,13 +81,15 @@ export function StringingScanClient() {
   }
 
   return (
-    <div className="mx-auto max-w-lg space-y-5">
-      <div>
-        <h1 className="text-24 font-semibold">Scan Stringing Selesai</h1>
-        <p className="text-14 text-muted-foreground">
-          Selesai senar &amp; print stiker, scan barcode raket di sini — status di tirtonic.com langsung Selesai + WA ke customer.
-        </p>
-      </div>
+    <div className={embedded ? "space-y-4" : "mx-auto max-w-lg space-y-5"}>
+      {!embedded && (
+        <div>
+          <h1 className="text-24 font-semibold">Scan Stringing Selesai</h1>
+          <p className="text-14 text-muted-foreground">
+            Selesai senar &amp; print stiker, scan barcode raket di sini — status di tirtonic.com langsung Selesai + WA ke customer.
+          </p>
+        </div>
+      )}
 
       <div className="space-y-4 rounded-lg border bg-card p-4">
         <div className="relative aspect-square w-full overflow-hidden rounded-lg bg-black">

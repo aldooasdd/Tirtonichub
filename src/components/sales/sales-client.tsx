@@ -7,6 +7,10 @@ import { Input } from "@/components/ui/input";
 import { compressImage } from "@/lib/image";
 import { scanSalesNota, saveSalesReport, uploadSalesPhoto } from "@/server/actions/sales";
 import type { SalesItem, SalesPayment } from "@/server/n8n-sales";
+import { StringingScanClient } from "@/components/stringing/stringing-scan-client";
+
+// Nota mengandung jasa stringing/pasang senar → wajib scan raket dulu.
+const isStringingItem = (name: string) => /string|senar|pasang\s*senar/i.test(name);
 
 export type SalesRow = {
   id: string;
@@ -77,6 +81,9 @@ export function SalesClient({
   const [photoKey, setPhotoKey] = useState<string | null>(null);
   const [productKeys, setProductKeys] = useState<string[]>([]);
   const [draft, setDraft] = useState<Draft | null>(null);
+  const [stringingDone, setStringingDone] = useState(false);
+
+  const needsStringing = !online && !!draft && draft.items.some((it) => isStringingItem(it.name));
 
   // Foto pertama = nota (dibaca AI), sisanya = foto produk (hanya diupload).
   async function onCapture(files: FileList) {
@@ -132,11 +139,16 @@ export function SalesClient({
     setDraft(null);
     setPhotoKey(null);
     setProductKeys([]);
+    setStringingDone(false);
     setMsg("");
   }
 
   async function submit() {
     if (!draft || !photoKey) return;
+    if (needsStringing && !stringingDone) {
+      setMsg("Nota ada stringing — scan raket dulu sebelum kirim.");
+      return;
+    }
     setBusy(true);
     const r = await saveSalesReport({
       photoKey,
@@ -261,8 +273,25 @@ export function SalesClient({
             <Field label="Grand total"><Input type="number" value={draft.grandTotal} onChange={(e) => upd({ grandTotal: Number(e.target.value) })} /></Field>
           </div>
 
+          {needsStringing && (
+            <div className="space-y-2 rounded-lg border border-amber-300 bg-amber-50 p-3 dark:border-amber-900 dark:bg-amber-950/30">
+              {stringingDone ? (
+                <p className="text-14 font-medium text-emerald-600">✓ Stringing sudah discan & diselesaikan.</p>
+              ) : (
+                <>
+                  <p className="text-13 font-medium text-amber-700 dark:text-amber-400">
+                    Nota ini ada stringing. Scan barcode raket dulu (tandai selesai + WA customer) baru bisa kirim.
+                  </p>
+                  <StringingScanClient embedded onDone={() => setStringingDone(true)} />
+                </>
+              )}
+            </div>
+          )}
+
           <div className="flex flex-wrap gap-2">
-            <Button disabled={busy} onClick={submit}>{busy ? "Menyimpan…" : online ? "Kirim ke Admin" : "Kirim ke Cabang"}</Button>
+            <Button disabled={busy || (needsStringing && !stringingDone)} onClick={submit}>
+              {busy ? "Menyimpan…" : online ? "Kirim ke Admin" : "Kirim ke Cabang"}
+            </Button>
             <Button variant="outline" disabled={busy} onClick={reset}>Batal</Button>
           </div>
         </div>
