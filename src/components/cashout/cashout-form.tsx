@@ -75,8 +75,14 @@ export function CashoutForm({ rows, categories }: { rows: CashoutRow[]; categori
     setMsg("");
   }
 
+  function manual() {
+    setDraft({ amount: 0, description: "", spentAt: "" });
+    setPhotoKey(null);
+    setMsg("Isi manual lalu kirim.");
+  }
+
   async function submit() {
-    if (!draft || !photoKey) return;
+    if (!draft) return;
     setBusy(true);
     const r = await saveCashout({
       amount: draft.amount,
@@ -113,9 +119,14 @@ export function CashoutForm({ rows, categories }: { rows: CashoutRow[]; categori
           onChange={(e) => e.target.files?.[0] && onCapture(e.target.files[0])}
         />
         {!draft && (
-          <Button disabled={busy || !category} onClick={() => fileRef.current?.click()} className="shrink-0">
-            {busy ? "Memindai…" : "Foto nota pembelian"}
-          </Button>
+          <div className="flex shrink-0 gap-2">
+            <Button disabled={busy || !category} onClick={() => fileRef.current?.click()}>
+              {busy ? "Memindai…" : "Foto nota pembelian"}
+            </Button>
+            <Button variant="outline" disabled={busy || !category} onClick={manual}>
+              Input manual
+            </Button>
+          </div>
         )}
       </div>
 
