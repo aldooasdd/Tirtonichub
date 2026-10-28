@@ -4,6 +4,7 @@ import { prisma } from "@/server/db";
 import { requireAuth, requireReports } from "@/server/auth/rbac";
 import { makeKey, putObject } from "@/server/storage";
 import { notifyAdmins } from "@/server/notify";
+import { sendWa } from "@/server/wa";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -31,6 +32,13 @@ export async function submitReport(input: SubmitInput): Promise<ActionResult> {
 
   await prisma.report.create({ data: { message: message.slice(0, 2000), photoKey, createdById: ctx.userId } });
   await notifyAdmins({ type: "report", title: "Laporan baru masuk", body: message.slice(0, 120), link: "/admin/laporan" });
+
+  // WA ke admin (tanpa foto, cuma keterangan masalahnya). Nomor dari env.
+  const to = process.env.REPORT_WA_TO;
+  if (to) {
+    const me = await prisma.user.findUnique({ where: { id: ctx.userId }, select: { fullName: true } });
+    await sendWa(to, `Laporan baru di Tirtonichub dari ${me?.fullName ?? "karyawan"}:\n\n${message}`);
+  }
   return { ok: true };
 }
 
