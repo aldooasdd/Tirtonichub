@@ -3,6 +3,7 @@
 import { prisma } from "@/server/db";
 import { requireSalesInput, requireFinance, requireOnlineSales } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
+import { parseWIB } from "@/lib/datetime";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
 import { notifyBosses, notifyRole } from "@/server/notify";
@@ -138,7 +139,7 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
   const items = (input.items ?? []).filter((i) => i.name?.trim());
   if (items.length === 0 && input.grandTotal <= 0) return { ok: false, message: "Isi minimal 1 item atau total." };
 
-  const soldAt = input.soldAt && !Number.isNaN(Date.parse(input.soldAt)) ? new Date(input.soldAt) : new Date();
+  const soldAt = input.soldAt && !Number.isNaN(Date.parse(input.soldAt)) ? parseWIB(input.soldAt) : new Date();
 
   const rep = await prisma.salesReport.create({
     data: {
@@ -299,7 +300,7 @@ export async function updateSalesReport(input: UpdateInput): Promise<ActionResul
 
   const items = mapItems(input.items);
   if (items.length === 0 && input.grandTotal <= 0) return { ok: false, message: "Isi minimal 1 item atau total." };
-  const soldAt = input.soldAt && !Number.isNaN(Date.parse(input.soldAt)) ? new Date(input.soldAt) : undefined;
+  const soldAt = input.soldAt && !Number.isNaN(Date.parse(input.soldAt)) ? parseWIB(input.soldAt) : undefined;
 
   await prisma.salesReport.update({
     where: { id: input.id },

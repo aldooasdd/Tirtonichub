@@ -7,6 +7,7 @@ import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
 import { notifyBosses, notifyRole } from "@/server/notify";
 import { parseSalesNotaViaN8n } from "@/server/n8n-sales";
+import { parseWIB } from "@/lib/datetime";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -79,7 +80,7 @@ export async function saveCashout(input: SaveInput): Promise<ActionResult> {
     }
   }
 
-  const spentAt = input.spentAt && !Number.isNaN(Date.parse(input.spentAt)) ? new Date(input.spentAt) : new Date();
+  const spentAt = input.spentAt && !Number.isNaN(Date.parse(input.spentAt)) ? parseWIB(input.spentAt) : new Date();
 
   const row = await prisma.cashout.create({
     data: {

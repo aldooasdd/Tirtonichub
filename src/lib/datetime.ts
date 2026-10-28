@@ -12,6 +12,14 @@ export function fmtWIB(d: Date | string): string {
   return fmt.format(typeof d === "string" ? new Date(d) : d);
 }
 
+/** Parse string datetime-local ("YYYY-MM-DDTHH:mm") sebagai WIB, bukan TZ server. */
+export function parseWIB(s: string): Date {
+  const hasTz = /[zZ]$|[+-]\d{2}:?\d{2}$/.test(s);
+  if (hasTz) return new Date(s);
+  const withSec = /T\d{2}:\d{2}$/.test(s) ? `${s}:00` : s; // tambah detik bila perlu
+  return new Date(`${withSec}+07:00`);
+}
+
 /** Waktu relatif singkat (buat feed notif/aktivitas). */
 export function timeAgo(d: Date | string): string {
   const t = typeof d === "string" ? new Date(d) : d;
