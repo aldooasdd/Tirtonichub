@@ -115,7 +115,6 @@ export function navForRole(role: RoleCode): NavGroup[] {
       items: [
         { label: "Input Penjualan", href: "/sales", icon: Receipt },
         { label: "Input Pembelian", href: "/pembelian", icon: Wallet },
-        { label: "Scan Stringing", href: "/stringing", icon: ScanLine },
       ],
     });
   }
