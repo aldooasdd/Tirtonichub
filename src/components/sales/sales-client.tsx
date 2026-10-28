@@ -145,10 +145,6 @@ export function SalesClient({
 
   async function submit() {
     if (!draft || !photoKey) return;
-    if (needsStringing && !stringingDone) {
-      setMsg("Nota ada stringing — scan raket dulu sebelum kirim.");
-      return;
-    }
     setBusy(true);
     const r = await saveSalesReport({
       photoKey,
@@ -280,7 +276,7 @@ export function SalesClient({
               ) : (
                 <>
                   <p className="text-13 font-medium text-amber-700 dark:text-amber-400">
-                    Nota ini ada stringing. Scan barcode raket dulu (tandai selesai + WA customer) baru bisa kirim.
+                    Nota ini ada stringing. Scan barcode raket (tandai selesai + WA customer) — opsional, boleh kirim tanpa scan.
                   </p>
                   <StringingScanClient embedded onDone={() => setStringingDone(true)} />
                 </>
@@ -289,7 +285,7 @@ export function SalesClient({
           )}
 
           <div className="flex flex-wrap gap-2">
-            <Button disabled={busy || (needsStringing && !stringingDone)} onClick={submit}>
+            <Button disabled={busy} onClick={submit}>
               {busy ? "Menyimpan…" : online ? "Kirim ke Admin" : "Kirim ke Cabang"}
             </Button>
             <Button variant="outline" disabled={busy} onClick={reset}>Batal</Button>
