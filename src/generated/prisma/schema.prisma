@@ -100,6 +100,7 @@ model User {
   mediaPcal         MediaPcal?
   salesReports      SalesReport[]      @relation("SalesReportCreator")
   shifts            Shift[]
+  cashouts          Cashout[]          @relation("CashoutCreator")
 
   @@index([branchId])
 }
@@ -116,6 +117,30 @@ model Shift {
 
   @@unique([userId, date])
   @@index([date])
+}
+
+// Cashout = pengeluaran/pembelian perusahaan. Input Sales → ACC Kepala Cabang (cabang yg keluar uang)
+// → masuk Finance (rekap pembelian). approvedAt != null = sudah masuk Finance.
+model Cashout {
+  id          String   @id @default(cuid())
+  spentAt     DateTime // waktu pengeluaran
+  amount      Int      @default(0) // rupiah
+  description String
+  category    String?
+  branchId    String? // cabang yang mengeluarkan uang (utk filter ACC Kepala Cabang)
+  branchName  String?
+  photoKey    String? // foto nota pembelian (opsional)
+  createdById String
+  createdAt   DateTime @default(now())
+
+  approvedAt   DateTime?
+  approvedById String?
+
+  createdBy User @relation("CashoutCreator", fields: [createdById], references: [id])
+
+  @@index([createdById])
+  @@index([spentAt])
+  @@index([approvedAt])
 }
 
 // Nota penjualan difoto Sales → AI (n8n) ekstrak → masuk ke Finance (rekap harian).

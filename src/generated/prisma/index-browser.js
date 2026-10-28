@@ -146,6 +146,21 @@ exports.Prisma.ShiftScalarFieldEnum = {
   code: 'code'
 };
 
+exports.Prisma.CashoutScalarFieldEnum = {
+  id: 'id',
+  spentAt: 'spentAt',
+  amount: 'amount',
+  description: 'description',
+  category: 'category',
+  branchId: 'branchId',
+  branchName: 'branchName',
+  photoKey: 'photoKey',
+  createdById: 'createdById',
+  createdAt: 'createdAt',
+  approvedAt: 'approvedAt',
+  approvedById: 'approvedById'
+};
+
 exports.Prisma.SalesReportScalarFieldEnum = {
   id: 'id',
   notaNo: 'notaNo',
@@ -601,6 +616,7 @@ exports.MediaTier = exports.$Enums.MediaTier = {
 exports.Prisma.ModelName = {
   User: 'User',
   Shift: 'Shift',
+  Cashout: 'Cashout',
   SalesReport: 'SalesReport',
   AccurateCompare: 'AccurateCompare',
   Role: 'Role',

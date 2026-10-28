@@ -24,6 +24,11 @@ export type User = $Result.DefaultSelection<Prisma.$UserPayload>
  */
 export type Shift = $Result.DefaultSelection<Prisma.$ShiftPayload>
 /**
+ * Model Cashout
+ * 
+ */
+export type Cashout = $Result.DefaultSelection<Prisma.$CashoutPayload>
+/**
  * Model SalesReport
  * 
  */
@@ -428,6 +433,16 @@ export class PrismaClient<
     * ```
     */
   get shift(): Prisma.ShiftDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cashout`: Exposes CRUD operations for the **Cashout** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Cashouts
+    * const cashouts = await prisma.cashout.findMany()
+    * ```
+    */
+  get cashout(): Prisma.CashoutDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.salesReport`: Exposes CRUD operations for the **SalesReport** model.
@@ -1161,6 +1176,7 @@ export namespace Prisma {
   export const ModelName: {
     User: 'User',
     Shift: 'Shift',
+    Cashout: 'Cashout',
     SalesReport: 'SalesReport',
     AccurateCompare: 'AccurateCompare',
     Role: 'Role',
@@ -1208,7 +1224,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "shift" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone"
+      modelProps: "user" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1357,6 +1373,80 @@ export namespace Prisma {
           count: {
             args: Prisma.ShiftCountArgs<ExtArgs>
             result: $Utils.Optional<ShiftCountAggregateOutputType> | number
+          }
+        }
+      }
+      Cashout: {
+        payload: Prisma.$CashoutPayload<ExtArgs>
+        fields: Prisma.CashoutFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CashoutFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashoutPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CashoutFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashoutPayload>
+          }
+          findFirst: {
+            args: Prisma.CashoutFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashoutPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CashoutFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashoutPayload>
+          }
+          findMany: {
+            args: Prisma.CashoutFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashoutPayload>[]
+          }
+          create: {
+            args: Prisma.CashoutCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashoutPayload>
+          }
+          createMany: {
+            args: Prisma.CashoutCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CashoutCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashoutPayload>[]
+          }
+          delete: {
+            args: Prisma.CashoutDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashoutPayload>
+          }
+          update: {
+            args: Prisma.CashoutUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashoutPayload>
+          }
+          deleteMany: {
+            args: Prisma.CashoutDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CashoutUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CashoutUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashoutPayload>[]
+          }
+          upsert: {
+            args: Prisma.CashoutUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashoutPayload>
+          }
+          aggregate: {
+            args: Prisma.CashoutAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCashout>
+          }
+          groupBy: {
+            args: Prisma.CashoutGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CashoutGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CashoutCountArgs<ExtArgs>
+            result: $Utils.Optional<CashoutCountAggregateOutputType> | number
           }
         }
       }
@@ -3604,6 +3694,7 @@ export namespace Prisma {
   export type GlobalOmitConfig = {
     user?: UserOmit
     shift?: ShiftOmit
+    cashout?: CashoutOmit
     salesReport?: SalesReportOmit
     accurateCompare?: AccurateCompareOmit
     role?: RoleOmit
@@ -3731,6 +3822,7 @@ export namespace Prisma {
     personalCalEvents: number
     salesReports: number
     shifts: number
+    cashouts: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3752,6 +3844,7 @@ export namespace Prisma {
     personalCalEvents?: boolean | UserCountOutputTypeCountPersonalCalEventsArgs
     salesReports?: boolean | UserCountOutputTypeCountSalesReportsArgs
     shifts?: boolean | UserCountOutputTypeCountShiftsArgs
+    cashouts?: boolean | UserCountOutputTypeCountCashoutsArgs
   }
 
   // Custom InputTypes
@@ -3889,6 +3982,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountShiftsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: ShiftWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountCashoutsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CashoutWhereInput
   }
 
 
@@ -4343,6 +4443,7 @@ export namespace Prisma {
     mediaPcal?: boolean | User$mediaPcalArgs<ExtArgs>
     salesReports?: boolean | User$salesReportsArgs<ExtArgs>
     shifts?: boolean | User$shiftsArgs<ExtArgs>
+    cashouts?: boolean | User$cashoutsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4425,6 +4526,7 @@ export namespace Prisma {
     mediaPcal?: boolean | User$mediaPcalArgs<ExtArgs>
     salesReports?: boolean | User$salesReportsArgs<ExtArgs>
     shifts?: boolean | User$shiftsArgs<ExtArgs>
+    cashouts?: boolean | User$cashoutsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4458,6 +4560,7 @@ export namespace Prisma {
       mediaPcal: Prisma.$MediaPcalPayload<ExtArgs> | null
       salesReports: Prisma.$SalesReportPayload<ExtArgs>[]
       shifts: Prisma.$ShiftPayload<ExtArgs>[]
+      cashouts: Prisma.$CashoutPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4890,6 +4993,7 @@ export namespace Prisma {
     mediaPcal<T extends User$mediaPcalArgs<ExtArgs> = {}>(args?: Subset<T, User$mediaPcalArgs<ExtArgs>>): Prisma__MediaPcalClient<$Result.GetResult<Prisma.$MediaPcalPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     salesReports<T extends User$salesReportsArgs<ExtArgs> = {}>(args?: Subset<T, User$salesReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     shifts<T extends User$shiftsArgs<ExtArgs> = {}>(args?: Subset<T, User$shiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    cashouts<T extends User$cashoutsArgs<ExtArgs> = {}>(args?: Subset<T, User$cashoutsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5816,6 +5920,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: ShiftScalarFieldEnum | ShiftScalarFieldEnum[]
+  }
+
+  /**
+   * User.cashouts
+   */
+  export type User$cashoutsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cashout
+     */
+    select?: CashoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cashout
+     */
+    omit?: CashoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CashoutInclude<ExtArgs> | null
+    where?: CashoutWhereInput
+    orderBy?: CashoutOrderByWithRelationInput | CashoutOrderByWithRelationInput[]
+    cursor?: CashoutWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: CashoutScalarFieldEnum | CashoutScalarFieldEnum[]
   }
 
   /**
@@ -6879,6 +7007,1189 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: ShiftInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Cashout
+   */
+
+  export type AggregateCashout = {
+    _count: CashoutCountAggregateOutputType | null
+    _avg: CashoutAvgAggregateOutputType | null
+    _sum: CashoutSumAggregateOutputType | null
+    _min: CashoutMinAggregateOutputType | null
+    _max: CashoutMaxAggregateOutputType | null
+  }
+
+  export type CashoutAvgAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type CashoutSumAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type CashoutMinAggregateOutputType = {
+    id: string | null
+    spentAt: Date | null
+    amount: number | null
+    description: string | null
+    category: string | null
+    branchId: string | null
+    branchName: string | null
+    photoKey: string | null
+    createdById: string | null
+    createdAt: Date | null
+    approvedAt: Date | null
+    approvedById: string | null
+  }
+
+  export type CashoutMaxAggregateOutputType = {
+    id: string | null
+    spentAt: Date | null
+    amount: number | null
+    description: string | null
+    category: string | null
+    branchId: string | null
+    branchName: string | null
+    photoKey: string | null
+    createdById: string | null
+    createdAt: Date | null
+    approvedAt: Date | null
+    approvedById: string | null
+  }
+
+  export type CashoutCountAggregateOutputType = {
+    id: number
+    spentAt: number
+    amount: number
+    description: number
+    category: number
+    branchId: number
+    branchName: number
+    photoKey: number
+    createdById: number
+    createdAt: number
+    approvedAt: number
+    approvedById: number
+    _all: number
+  }
+
+
+  export type CashoutAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type CashoutSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type CashoutMinAggregateInputType = {
+    id?: true
+    spentAt?: true
+    amount?: true
+    description?: true
+    category?: true
+    branchId?: true
+    branchName?: true
+    photoKey?: true
+    createdById?: true
+    createdAt?: true
+    approvedAt?: true
+    approvedById?: true
+  }
+
+  export type CashoutMaxAggregateInputType = {
+    id?: true
+    spentAt?: true
+    amount?: true
+    description?: true
+    category?: true
+    branchId?: true
+    branchName?: true
+    photoKey?: true
+    createdById?: true
+    createdAt?: true
+    approvedAt?: true
+    approvedById?: true
+  }
+
+  export type CashoutCountAggregateInputType = {
+    id?: true
+    spentAt?: true
+    amount?: true
+    description?: true
+    category?: true
+    branchId?: true
+    branchName?: true
+    photoKey?: true
+    createdById?: true
+    createdAt?: true
+    approvedAt?: true
+    approvedById?: true
+    _all?: true
+  }
+
+  export type CashoutAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cashout to aggregate.
+     */
+    where?: CashoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cashouts to fetch.
+     */
+    orderBy?: CashoutOrderByWithRelationInput | CashoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CashoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cashouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cashouts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Cashouts
+    **/
+    _count?: true | CashoutCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CashoutAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CashoutSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CashoutMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CashoutMaxAggregateInputType
+  }
+
+  export type GetCashoutAggregateType<T extends CashoutAggregateArgs> = {
+        [P in keyof T & keyof AggregateCashout]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCashout[P]>
+      : GetScalarType<T[P], AggregateCashout[P]>
+  }
+
+
+
+
+  export type CashoutGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CashoutWhereInput
+    orderBy?: CashoutOrderByWithAggregationInput | CashoutOrderByWithAggregationInput[]
+    by: CashoutScalarFieldEnum[] | CashoutScalarFieldEnum
+    having?: CashoutScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CashoutCountAggregateInputType | true
+    _avg?: CashoutAvgAggregateInputType
+    _sum?: CashoutSumAggregateInputType
+    _min?: CashoutMinAggregateInputType
+    _max?: CashoutMaxAggregateInputType
+  }
+
+  export type CashoutGroupByOutputType = {
+    id: string
+    spentAt: Date
+    amount: number
+    description: string
+    category: string | null
+    branchId: string | null
+    branchName: string | null
+    photoKey: string | null
+    createdById: string
+    createdAt: Date
+    approvedAt: Date | null
+    approvedById: string | null
+    _count: CashoutCountAggregateOutputType | null
+    _avg: CashoutAvgAggregateOutputType | null
+    _sum: CashoutSumAggregateOutputType | null
+    _min: CashoutMinAggregateOutputType | null
+    _max: CashoutMaxAggregateOutputType | null
+  }
+
+  type GetCashoutGroupByPayload<T extends CashoutGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CashoutGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CashoutGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CashoutGroupByOutputType[P]>
+            : GetScalarType<T[P], CashoutGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CashoutSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    spentAt?: boolean
+    amount?: boolean
+    description?: boolean
+    category?: boolean
+    branchId?: boolean
+    branchName?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    approvedAt?: boolean
+    approvedById?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cashout"]>
+
+  export type CashoutSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    spentAt?: boolean
+    amount?: boolean
+    description?: boolean
+    category?: boolean
+    branchId?: boolean
+    branchName?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    approvedAt?: boolean
+    approvedById?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cashout"]>
+
+  export type CashoutSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    spentAt?: boolean
+    amount?: boolean
+    description?: boolean
+    category?: boolean
+    branchId?: boolean
+    branchName?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    approvedAt?: boolean
+    approvedById?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["cashout"]>
+
+  export type CashoutSelectScalar = {
+    id?: boolean
+    spentAt?: boolean
+    amount?: boolean
+    description?: boolean
+    category?: boolean
+    branchId?: boolean
+    branchName?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    approvedAt?: boolean
+    approvedById?: boolean
+  }
+
+  export type CashoutOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "spentAt" | "amount" | "description" | "category" | "branchId" | "branchName" | "photoKey" | "createdById" | "createdAt" | "approvedAt" | "approvedById", ExtArgs["result"]["cashout"]>
+  export type CashoutInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CashoutIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type CashoutIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $CashoutPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Cashout"
+    objects: {
+      createdBy: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      spentAt: Date
+      amount: number
+      description: string
+      category: string | null
+      branchId: string | null
+      branchName: string | null
+      photoKey: string | null
+      createdById: string
+      createdAt: Date
+      approvedAt: Date | null
+      approvedById: string | null
+    }, ExtArgs["result"]["cashout"]>
+    composites: {}
+  }
+
+  type CashoutGetPayload<S extends boolean | null | undefined | CashoutDefaultArgs> = $Result.GetResult<Prisma.$CashoutPayload, S>
+
+  type CashoutCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CashoutFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CashoutCountAggregateInputType | true
+    }
+
+  export interface CashoutDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Cashout'], meta: { name: 'Cashout' } }
+    /**
+     * Find zero or one Cashout that matches the filter.
+     * @param {CashoutFindUniqueArgs} args - Arguments to find a Cashout
+     * @example
+     * // Get one Cashout
+     * const cashout = await prisma.cashout.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CashoutFindUniqueArgs>(args: SelectSubset<T, CashoutFindUniqueArgs<ExtArgs>>): Prisma__CashoutClient<$Result.GetResult<Prisma.$CashoutPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Cashout that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CashoutFindUniqueOrThrowArgs} args - Arguments to find a Cashout
+     * @example
+     * // Get one Cashout
+     * const cashout = await prisma.cashout.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CashoutFindUniqueOrThrowArgs>(args: SelectSubset<T, CashoutFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CashoutClient<$Result.GetResult<Prisma.$CashoutPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Cashout that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashoutFindFirstArgs} args - Arguments to find a Cashout
+     * @example
+     * // Get one Cashout
+     * const cashout = await prisma.cashout.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CashoutFindFirstArgs>(args?: SelectSubset<T, CashoutFindFirstArgs<ExtArgs>>): Prisma__CashoutClient<$Result.GetResult<Prisma.$CashoutPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Cashout that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashoutFindFirstOrThrowArgs} args - Arguments to find a Cashout
+     * @example
+     * // Get one Cashout
+     * const cashout = await prisma.cashout.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CashoutFindFirstOrThrowArgs>(args?: SelectSubset<T, CashoutFindFirstOrThrowArgs<ExtArgs>>): Prisma__CashoutClient<$Result.GetResult<Prisma.$CashoutPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Cashouts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashoutFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Cashouts
+     * const cashouts = await prisma.cashout.findMany()
+     * 
+     * // Get first 10 Cashouts
+     * const cashouts = await prisma.cashout.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cashoutWithIdOnly = await prisma.cashout.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CashoutFindManyArgs>(args?: SelectSubset<T, CashoutFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Cashout.
+     * @param {CashoutCreateArgs} args - Arguments to create a Cashout.
+     * @example
+     * // Create one Cashout
+     * const Cashout = await prisma.cashout.create({
+     *   data: {
+     *     // ... data to create a Cashout
+     *   }
+     * })
+     * 
+     */
+    create<T extends CashoutCreateArgs>(args: SelectSubset<T, CashoutCreateArgs<ExtArgs>>): Prisma__CashoutClient<$Result.GetResult<Prisma.$CashoutPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Cashouts.
+     * @param {CashoutCreateManyArgs} args - Arguments to create many Cashouts.
+     * @example
+     * // Create many Cashouts
+     * const cashout = await prisma.cashout.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CashoutCreateManyArgs>(args?: SelectSubset<T, CashoutCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Cashouts and returns the data saved in the database.
+     * @param {CashoutCreateManyAndReturnArgs} args - Arguments to create many Cashouts.
+     * @example
+     * // Create many Cashouts
+     * const cashout = await prisma.cashout.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Cashouts and only return the `id`
+     * const cashoutWithIdOnly = await prisma.cashout.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CashoutCreateManyAndReturnArgs>(args?: SelectSubset<T, CashoutCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashoutPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Cashout.
+     * @param {CashoutDeleteArgs} args - Arguments to delete one Cashout.
+     * @example
+     * // Delete one Cashout
+     * const Cashout = await prisma.cashout.delete({
+     *   where: {
+     *     // ... filter to delete one Cashout
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CashoutDeleteArgs>(args: SelectSubset<T, CashoutDeleteArgs<ExtArgs>>): Prisma__CashoutClient<$Result.GetResult<Prisma.$CashoutPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Cashout.
+     * @param {CashoutUpdateArgs} args - Arguments to update one Cashout.
+     * @example
+     * // Update one Cashout
+     * const cashout = await prisma.cashout.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CashoutUpdateArgs>(args: SelectSubset<T, CashoutUpdateArgs<ExtArgs>>): Prisma__CashoutClient<$Result.GetResult<Prisma.$CashoutPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Cashouts.
+     * @param {CashoutDeleteManyArgs} args - Arguments to filter Cashouts to delete.
+     * @example
+     * // Delete a few Cashouts
+     * const { count } = await prisma.cashout.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CashoutDeleteManyArgs>(args?: SelectSubset<T, CashoutDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cashouts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashoutUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Cashouts
+     * const cashout = await prisma.cashout.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CashoutUpdateManyArgs>(args: SelectSubset<T, CashoutUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Cashouts and returns the data updated in the database.
+     * @param {CashoutUpdateManyAndReturnArgs} args - Arguments to update many Cashouts.
+     * @example
+     * // Update many Cashouts
+     * const cashout = await prisma.cashout.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Cashouts and only return the `id`
+     * const cashoutWithIdOnly = await prisma.cashout.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CashoutUpdateManyAndReturnArgs>(args: SelectSubset<T, CashoutUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashoutPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Cashout.
+     * @param {CashoutUpsertArgs} args - Arguments to update or create a Cashout.
+     * @example
+     * // Update or create a Cashout
+     * const cashout = await prisma.cashout.upsert({
+     *   create: {
+     *     // ... data to create a Cashout
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Cashout we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CashoutUpsertArgs>(args: SelectSubset<T, CashoutUpsertArgs<ExtArgs>>): Prisma__CashoutClient<$Result.GetResult<Prisma.$CashoutPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Cashouts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashoutCountArgs} args - Arguments to filter Cashouts to count.
+     * @example
+     * // Count the number of Cashouts
+     * const count = await prisma.cashout.count({
+     *   where: {
+     *     // ... the filter for the Cashouts we want to count
+     *   }
+     * })
+    **/
+    count<T extends CashoutCountArgs>(
+      args?: Subset<T, CashoutCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CashoutCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Cashout.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashoutAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CashoutAggregateArgs>(args: Subset<T, CashoutAggregateArgs>): Prisma.PrismaPromise<GetCashoutAggregateType<T>>
+
+    /**
+     * Group by Cashout.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashoutGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CashoutGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CashoutGroupByArgs['orderBy'] }
+        : { orderBy?: CashoutGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CashoutGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCashoutGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Cashout model
+   */
+  readonly fields: CashoutFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Cashout.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CashoutClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Cashout model
+   */
+  interface CashoutFieldRefs {
+    readonly id: FieldRef<"Cashout", 'String'>
+    readonly spentAt: FieldRef<"Cashout", 'DateTime'>
+    readonly amount: FieldRef<"Cashout", 'Int'>
+    readonly description: FieldRef<"Cashout", 'String'>
+    readonly category: FieldRef<"Cashout", 'String'>
+    readonly branchId: FieldRef<"Cashout", 'String'>
+    readonly branchName: FieldRef<"Cashout", 'String'>
+    readonly photoKey: FieldRef<"Cashout", 'String'>
+    readonly createdById: FieldRef<"Cashout", 'String'>
+    readonly createdAt: FieldRef<"Cashout", 'DateTime'>
+    readonly approvedAt: FieldRef<"Cashout", 'DateTime'>
+    readonly approvedById: FieldRef<"Cashout", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Cashout findUnique
+   */
+  export type CashoutFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cashout
+     */
+    select?: CashoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cashout
+     */
+    omit?: CashoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CashoutInclude<ExtArgs> | null
+    /**
+     * Filter, which Cashout to fetch.
+     */
+    where: CashoutWhereUniqueInput
+  }
+
+  /**
+   * Cashout findUniqueOrThrow
+   */
+  export type CashoutFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cashout
+     */
+    select?: CashoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cashout
+     */
+    omit?: CashoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CashoutInclude<ExtArgs> | null
+    /**
+     * Filter, which Cashout to fetch.
+     */
+    where: CashoutWhereUniqueInput
+  }
+
+  /**
+   * Cashout findFirst
+   */
+  export type CashoutFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cashout
+     */
+    select?: CashoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cashout
+     */
+    omit?: CashoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CashoutInclude<ExtArgs> | null
+    /**
+     * Filter, which Cashout to fetch.
+     */
+    where?: CashoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cashouts to fetch.
+     */
+    orderBy?: CashoutOrderByWithRelationInput | CashoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cashouts.
+     */
+    cursor?: CashoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cashouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cashouts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cashouts.
+     */
+    distinct?: CashoutScalarFieldEnum | CashoutScalarFieldEnum[]
+  }
+
+  /**
+   * Cashout findFirstOrThrow
+   */
+  export type CashoutFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cashout
+     */
+    select?: CashoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cashout
+     */
+    omit?: CashoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CashoutInclude<ExtArgs> | null
+    /**
+     * Filter, which Cashout to fetch.
+     */
+    where?: CashoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cashouts to fetch.
+     */
+    orderBy?: CashoutOrderByWithRelationInput | CashoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Cashouts.
+     */
+    cursor?: CashoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cashouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cashouts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Cashouts.
+     */
+    distinct?: CashoutScalarFieldEnum | CashoutScalarFieldEnum[]
+  }
+
+  /**
+   * Cashout findMany
+   */
+  export type CashoutFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cashout
+     */
+    select?: CashoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cashout
+     */
+    omit?: CashoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CashoutInclude<ExtArgs> | null
+    /**
+     * Filter, which Cashouts to fetch.
+     */
+    where?: CashoutWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Cashouts to fetch.
+     */
+    orderBy?: CashoutOrderByWithRelationInput | CashoutOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Cashouts.
+     */
+    cursor?: CashoutWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Cashouts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Cashouts.
+     */
+    skip?: number
+    distinct?: CashoutScalarFieldEnum | CashoutScalarFieldEnum[]
+  }
+
+  /**
+   * Cashout create
+   */
+  export type CashoutCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cashout
+     */
+    select?: CashoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cashout
+     */
+    omit?: CashoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CashoutInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Cashout.
+     */
+    data: XOR<CashoutCreateInput, CashoutUncheckedCreateInput>
+  }
+
+  /**
+   * Cashout createMany
+   */
+  export type CashoutCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Cashouts.
+     */
+    data: CashoutCreateManyInput | CashoutCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Cashout createManyAndReturn
+   */
+  export type CashoutCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cashout
+     */
+    select?: CashoutSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cashout
+     */
+    omit?: CashoutOmit<ExtArgs> | null
+    /**
+     * The data used to create many Cashouts.
+     */
+    data: CashoutCreateManyInput | CashoutCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CashoutIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Cashout update
+   */
+  export type CashoutUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cashout
+     */
+    select?: CashoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cashout
+     */
+    omit?: CashoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CashoutInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Cashout.
+     */
+    data: XOR<CashoutUpdateInput, CashoutUncheckedUpdateInput>
+    /**
+     * Choose, which Cashout to update.
+     */
+    where: CashoutWhereUniqueInput
+  }
+
+  /**
+   * Cashout updateMany
+   */
+  export type CashoutUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Cashouts.
+     */
+    data: XOR<CashoutUpdateManyMutationInput, CashoutUncheckedUpdateManyInput>
+    /**
+     * Filter which Cashouts to update
+     */
+    where?: CashoutWhereInput
+    /**
+     * Limit how many Cashouts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Cashout updateManyAndReturn
+   */
+  export type CashoutUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cashout
+     */
+    select?: CashoutSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cashout
+     */
+    omit?: CashoutOmit<ExtArgs> | null
+    /**
+     * The data used to update Cashouts.
+     */
+    data: XOR<CashoutUpdateManyMutationInput, CashoutUncheckedUpdateManyInput>
+    /**
+     * Filter which Cashouts to update
+     */
+    where?: CashoutWhereInput
+    /**
+     * Limit how many Cashouts to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CashoutIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Cashout upsert
+   */
+  export type CashoutUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cashout
+     */
+    select?: CashoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cashout
+     */
+    omit?: CashoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CashoutInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Cashout to update in case it exists.
+     */
+    where: CashoutWhereUniqueInput
+    /**
+     * In case the Cashout found by the `where` argument doesn't exist, create a new Cashout with this data.
+     */
+    create: XOR<CashoutCreateInput, CashoutUncheckedCreateInput>
+    /**
+     * In case the Cashout was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CashoutUpdateInput, CashoutUncheckedUpdateInput>
+  }
+
+  /**
+   * Cashout delete
+   */
+  export type CashoutDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cashout
+     */
+    select?: CashoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cashout
+     */
+    omit?: CashoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CashoutInclude<ExtArgs> | null
+    /**
+     * Filter which Cashout to delete.
+     */
+    where: CashoutWhereUniqueInput
+  }
+
+  /**
+   * Cashout deleteMany
+   */
+  export type CashoutDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Cashouts to delete
+     */
+    where?: CashoutWhereInput
+    /**
+     * Limit how many Cashouts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Cashout without action
+   */
+  export type CashoutDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Cashout
+     */
+    select?: CashoutSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Cashout
+     */
+    omit?: CashoutOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: CashoutInclude<ExtArgs> | null
   }
 
 
@@ -39568,6 +40879,24 @@ export namespace Prisma {
   export type ShiftScalarFieldEnum = (typeof ShiftScalarFieldEnum)[keyof typeof ShiftScalarFieldEnum]
 
 
+  export const CashoutScalarFieldEnum: {
+    id: 'id',
+    spentAt: 'spentAt',
+    amount: 'amount',
+    description: 'description',
+    category: 'category',
+    branchId: 'branchId',
+    branchName: 'branchName',
+    photoKey: 'photoKey',
+    createdById: 'createdById',
+    createdAt: 'createdAt',
+    approvedAt: 'approvedAt',
+    approvedById: 'approvedById'
+  };
+
+  export type CashoutScalarFieldEnum = (typeof CashoutScalarFieldEnum)[keyof typeof CashoutScalarFieldEnum]
+
+
   export const SalesReportScalarFieldEnum: {
     id: 'id',
     notaNo: 'notaNo',
@@ -40106,20 +41435,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Json'
-   */
-  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-  /**
-   * Reference to a field of type 'QueryMode'
-   */
-  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -40130,6 +41445,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+  /**
+   * Reference to a field of type 'QueryMode'
+   */
+  export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -40302,6 +41631,7 @@ export namespace Prisma {
     mediaPcal?: XOR<MediaPcalNullableScalarRelationFilter, MediaPcalWhereInput> | null
     salesReports?: SalesReportListRelationFilter
     shifts?: ShiftListRelationFilter
+    cashouts?: CashoutListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -40341,6 +41671,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalOrderByWithRelationInput
     salesReports?: SalesReportOrderByRelationAggregateInput
     shifts?: ShiftOrderByRelationAggregateInput
+    cashouts?: CashoutOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -40383,6 +41714,7 @@ export namespace Prisma {
     mediaPcal?: XOR<MediaPcalNullableScalarRelationFilter, MediaPcalWhereInput> | null
     salesReports?: SalesReportListRelationFilter
     shifts?: ShiftListRelationFilter
+    cashouts?: CashoutListRelationFilter
   }, "id" | "email" | "waNumber">
 
   export type UserOrderByWithAggregationInput = {
@@ -40476,6 +41808,98 @@ export namespace Prisma {
     userId?: StringWithAggregatesFilter<"Shift"> | string
     date?: DateTimeWithAggregatesFilter<"Shift"> | Date | string
     code?: StringWithAggregatesFilter<"Shift"> | string
+  }
+
+  export type CashoutWhereInput = {
+    AND?: CashoutWhereInput | CashoutWhereInput[]
+    OR?: CashoutWhereInput[]
+    NOT?: CashoutWhereInput | CashoutWhereInput[]
+    id?: StringFilter<"Cashout"> | string
+    spentAt?: DateTimeFilter<"Cashout"> | Date | string
+    amount?: IntFilter<"Cashout"> | number
+    description?: StringFilter<"Cashout"> | string
+    category?: StringNullableFilter<"Cashout"> | string | null
+    branchId?: StringNullableFilter<"Cashout"> | string | null
+    branchName?: StringNullableFilter<"Cashout"> | string | null
+    photoKey?: StringNullableFilter<"Cashout"> | string | null
+    createdById?: StringFilter<"Cashout"> | string
+    createdAt?: DateTimeFilter<"Cashout"> | Date | string
+    approvedAt?: DateTimeNullableFilter<"Cashout"> | Date | string | null
+    approvedById?: StringNullableFilter<"Cashout"> | string | null
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type CashoutOrderByWithRelationInput = {
+    id?: SortOrder
+    spentAt?: SortOrder
+    amount?: SortOrder
+    description?: SortOrder
+    category?: SortOrderInput | SortOrder
+    branchId?: SortOrderInput | SortOrder
+    branchName?: SortOrderInput | SortOrder
+    photoKey?: SortOrderInput | SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    approvedAt?: SortOrderInput | SortOrder
+    approvedById?: SortOrderInput | SortOrder
+    createdBy?: UserOrderByWithRelationInput
+  }
+
+  export type CashoutWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CashoutWhereInput | CashoutWhereInput[]
+    OR?: CashoutWhereInput[]
+    NOT?: CashoutWhereInput | CashoutWhereInput[]
+    spentAt?: DateTimeFilter<"Cashout"> | Date | string
+    amount?: IntFilter<"Cashout"> | number
+    description?: StringFilter<"Cashout"> | string
+    category?: StringNullableFilter<"Cashout"> | string | null
+    branchId?: StringNullableFilter<"Cashout"> | string | null
+    branchName?: StringNullableFilter<"Cashout"> | string | null
+    photoKey?: StringNullableFilter<"Cashout"> | string | null
+    createdById?: StringFilter<"Cashout"> | string
+    createdAt?: DateTimeFilter<"Cashout"> | Date | string
+    approvedAt?: DateTimeNullableFilter<"Cashout"> | Date | string | null
+    approvedById?: StringNullableFilter<"Cashout"> | string | null
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type CashoutOrderByWithAggregationInput = {
+    id?: SortOrder
+    spentAt?: SortOrder
+    amount?: SortOrder
+    description?: SortOrder
+    category?: SortOrderInput | SortOrder
+    branchId?: SortOrderInput | SortOrder
+    branchName?: SortOrderInput | SortOrder
+    photoKey?: SortOrderInput | SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    approvedAt?: SortOrderInput | SortOrder
+    approvedById?: SortOrderInput | SortOrder
+    _count?: CashoutCountOrderByAggregateInput
+    _avg?: CashoutAvgOrderByAggregateInput
+    _max?: CashoutMaxOrderByAggregateInput
+    _min?: CashoutMinOrderByAggregateInput
+    _sum?: CashoutSumOrderByAggregateInput
+  }
+
+  export type CashoutScalarWhereWithAggregatesInput = {
+    AND?: CashoutScalarWhereWithAggregatesInput | CashoutScalarWhereWithAggregatesInput[]
+    OR?: CashoutScalarWhereWithAggregatesInput[]
+    NOT?: CashoutScalarWhereWithAggregatesInput | CashoutScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Cashout"> | string
+    spentAt?: DateTimeWithAggregatesFilter<"Cashout"> | Date | string
+    amount?: IntWithAggregatesFilter<"Cashout"> | number
+    description?: StringWithAggregatesFilter<"Cashout"> | string
+    category?: StringNullableWithAggregatesFilter<"Cashout"> | string | null
+    branchId?: StringNullableWithAggregatesFilter<"Cashout"> | string | null
+    branchName?: StringNullableWithAggregatesFilter<"Cashout"> | string | null
+    photoKey?: StringNullableWithAggregatesFilter<"Cashout"> | string | null
+    createdById?: StringWithAggregatesFilter<"Cashout"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Cashout"> | Date | string
+    approvedAt?: DateTimeNullableWithAggregatesFilter<"Cashout"> | Date | string | null
+    approvedById?: StringNullableWithAggregatesFilter<"Cashout"> | string | null
   }
 
   export type SalesReportWhereInput = {
@@ -42799,6 +44223,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -42837,6 +44262,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUpdateInput = {
@@ -42875,6 +44301,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -42913,6 +44340,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -43014,6 +44442,110 @@ export namespace Prisma {
     userId?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
     code?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type CashoutCreateInput = {
+    id?: string
+    spentAt: Date | string
+    amount?: number
+    description: string
+    category?: string | null
+    branchId?: string | null
+    branchName?: string | null
+    photoKey?: string | null
+    createdAt?: Date | string
+    approvedAt?: Date | string | null
+    approvedById?: string | null
+    createdBy: UserCreateNestedOneWithoutCashoutsInput
+  }
+
+  export type CashoutUncheckedCreateInput = {
+    id?: string
+    spentAt: Date | string
+    amount?: number
+    description: string
+    category?: string | null
+    branchId?: string | null
+    branchName?: string | null
+    photoKey?: string | null
+    createdById: string
+    createdAt?: Date | string
+    approvedAt?: Date | string | null
+    approvedById?: string | null
+  }
+
+  export type CashoutUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: UserUpdateOneRequiredWithoutCashoutsNestedInput
+  }
+
+  export type CashoutUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CashoutCreateManyInput = {
+    id?: string
+    spentAt: Date | string
+    amount?: number
+    description: string
+    category?: string | null
+    branchId?: string | null
+    branchName?: string | null
+    photoKey?: string | null
+    createdById: string
+    createdAt?: Date | string
+    approvedAt?: Date | string | null
+    approvedById?: string | null
+  }
+
+  export type CashoutUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CashoutUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SalesReportCreateInput = {
@@ -45718,6 +47250,12 @@ export namespace Prisma {
     none?: ShiftWhereInput
   }
 
+  export type CashoutListRelationFilter = {
+    every?: CashoutWhereInput
+    some?: CashoutWhereInput
+    none?: CashoutWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -45780,6 +47318,10 @@ export namespace Prisma {
   }
 
   export type ShiftOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type CashoutOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -45939,6 +47481,86 @@ export namespace Prisma {
     date?: SortOrder
     code?: SortOrder
   }
+
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
+  export type CashoutCountOrderByAggregateInput = {
+    id?: SortOrder
+    spentAt?: SortOrder
+    amount?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    branchId?: SortOrder
+    branchName?: SortOrder
+    photoKey?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    approvedAt?: SortOrder
+    approvedById?: SortOrder
+  }
+
+  export type CashoutAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type CashoutMaxOrderByAggregateInput = {
+    id?: SortOrder
+    spentAt?: SortOrder
+    amount?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    branchId?: SortOrder
+    branchName?: SortOrder
+    photoKey?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    approvedAt?: SortOrder
+    approvedById?: SortOrder
+  }
+
+  export type CashoutMinOrderByAggregateInput = {
+    id?: SortOrder
+    spentAt?: SortOrder
+    amount?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    branchId?: SortOrder
+    branchName?: SortOrder
+    photoKey?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    approvedAt?: SortOrder
+    approvedById?: SortOrder
+  }
+
+  export type CashoutSumOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
+  }
   export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
         Either<Required<JsonFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonFilterBase<$PrismaModel>>, 'path'>>,
@@ -45961,17 +47583,6 @@ export namespace Prisma {
     gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
-
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type SalesReportCountOrderByAggregateInput = {
@@ -46078,22 +47689,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedJsonFilter<$PrismaModel>
     _max?: NestedJsonFilter<$PrismaModel>
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type AccurateCompareCountOrderByAggregateInput = {
@@ -47674,6 +49269,13 @@ export namespace Prisma {
     connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
   }
 
+  export type CashoutCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<CashoutCreateWithoutCreatedByInput, CashoutUncheckedCreateWithoutCreatedByInput> | CashoutCreateWithoutCreatedByInput[] | CashoutUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: CashoutCreateOrConnectWithoutCreatedByInput | CashoutCreateOrConnectWithoutCreatedByInput[]
+    createMany?: CashoutCreateManyCreatedByInputEnvelope
+    connect?: CashoutWhereUniqueInput | CashoutWhereUniqueInput[]
+  }
+
   export type UserRoleUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -47810,6 +49412,13 @@ export namespace Prisma {
     connectOrCreate?: ShiftCreateOrConnectWithoutUserInput | ShiftCreateOrConnectWithoutUserInput[]
     createMany?: ShiftCreateManyUserInputEnvelope
     connect?: ShiftWhereUniqueInput | ShiftWhereUniqueInput[]
+  }
+
+  export type CashoutUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<CashoutCreateWithoutCreatedByInput, CashoutUncheckedCreateWithoutCreatedByInput> | CashoutCreateWithoutCreatedByInput[] | CashoutUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: CashoutCreateOrConnectWithoutCreatedByInput | CashoutCreateOrConnectWithoutCreatedByInput[]
+    createMany?: CashoutCreateManyCreatedByInputEnvelope
+    connect?: CashoutWhereUniqueInput | CashoutWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -48114,6 +49723,20 @@ export namespace Prisma {
     deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
   }
 
+  export type CashoutUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<CashoutCreateWithoutCreatedByInput, CashoutUncheckedCreateWithoutCreatedByInput> | CashoutCreateWithoutCreatedByInput[] | CashoutUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: CashoutCreateOrConnectWithoutCreatedByInput | CashoutCreateOrConnectWithoutCreatedByInput[]
+    upsert?: CashoutUpsertWithWhereUniqueWithoutCreatedByInput | CashoutUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: CashoutCreateManyCreatedByInputEnvelope
+    set?: CashoutWhereUniqueInput | CashoutWhereUniqueInput[]
+    disconnect?: CashoutWhereUniqueInput | CashoutWhereUniqueInput[]
+    delete?: CashoutWhereUniqueInput | CashoutWhereUniqueInput[]
+    connect?: CashoutWhereUniqueInput | CashoutWhereUniqueInput[]
+    update?: CashoutUpdateWithWhereUniqueWithoutCreatedByInput | CashoutUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: CashoutUpdateManyWithWhereWithoutCreatedByInput | CashoutUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: CashoutScalarWhereInput | CashoutScalarWhereInput[]
+  }
+
   export type UserRoleUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -48386,6 +50009,20 @@ export namespace Prisma {
     deleteMany?: ShiftScalarWhereInput | ShiftScalarWhereInput[]
   }
 
+  export type CashoutUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<CashoutCreateWithoutCreatedByInput, CashoutUncheckedCreateWithoutCreatedByInput> | CashoutCreateWithoutCreatedByInput[] | CashoutUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: CashoutCreateOrConnectWithoutCreatedByInput | CashoutCreateOrConnectWithoutCreatedByInput[]
+    upsert?: CashoutUpsertWithWhereUniqueWithoutCreatedByInput | CashoutUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: CashoutCreateManyCreatedByInputEnvelope
+    set?: CashoutWhereUniqueInput | CashoutWhereUniqueInput[]
+    disconnect?: CashoutWhereUniqueInput | CashoutWhereUniqueInput[]
+    delete?: CashoutWhereUniqueInput | CashoutWhereUniqueInput[]
+    connect?: CashoutWhereUniqueInput | CashoutWhereUniqueInput[]
+    update?: CashoutUpdateWithWhereUniqueWithoutCreatedByInput | CashoutUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: CashoutUpdateManyWithWhereWithoutCreatedByInput | CashoutUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: CashoutScalarWhereInput | CashoutScalarWhereInput[]
+  }
+
   export type UserCreateNestedOneWithoutShiftsInput = {
     create?: XOR<UserCreateWithoutShiftsInput, UserUncheckedCreateWithoutShiftsInput>
     connectOrCreate?: UserCreateOrConnectWithoutShiftsInput
@@ -48400,9 +50037,9 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutShiftsInput, UserUpdateWithoutShiftsInput>, UserUncheckedUpdateWithoutShiftsInput>
   }
 
-  export type UserCreateNestedOneWithoutSalesReportsInput = {
-    create?: XOR<UserCreateWithoutSalesReportsInput, UserUncheckedCreateWithoutSalesReportsInput>
-    connectOrCreate?: UserCreateOrConnectWithoutSalesReportsInput
+  export type UserCreateNestedOneWithoutCashoutsInput = {
+    create?: XOR<UserCreateWithoutCashoutsInput, UserUncheckedCreateWithoutCashoutsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCashoutsInput
     connect?: UserWhereUniqueInput
   }
 
@@ -48412,6 +50049,20 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type UserUpdateOneRequiredWithoutCashoutsNestedInput = {
+    create?: XOR<UserCreateWithoutCashoutsInput, UserUncheckedCreateWithoutCashoutsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutCashoutsInput
+    upsert?: UserUpsertWithoutCashoutsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCashoutsInput, UserUpdateWithoutCashoutsInput>, UserUncheckedUpdateWithoutCashoutsInput>
+  }
+
+  export type UserCreateNestedOneWithoutSalesReportsInput = {
+    create?: XOR<UserCreateWithoutSalesReportsInput, UserUncheckedCreateWithoutSalesReportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutSalesReportsInput
+    connect?: UserWhereUniqueInput
   }
 
   export type UserUpdateOneRequiredWithoutSalesReportsNestedInput = {
@@ -49345,29 +50996,6 @@ export namespace Prisma {
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
-  export type NestedJsonFilter<$PrismaModel = never> =
-    | PatchUndefined<
-        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
-        Required<NestedJsonFilterBase<$PrismaModel>>
-      >
-    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
-
-  export type NestedJsonFilterBase<$PrismaModel = never> = {
-    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-    path?: string[]
-    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
-    string_contains?: string | StringFieldRefInput<$PrismaModel>
-    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
-    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
-    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
-    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
-    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
-  }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
@@ -49394,6 +51022,29 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+  export type NestedJsonFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<NestedJsonFilterBase<$PrismaModel>>, Exclude<keyof Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>,
+        Required<NestedJsonFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<NestedJsonFilterBase<$PrismaModel>>, 'path'>>
+
+  export type NestedJsonFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
+    path?: string[]
+    mode?: QueryMode | EnumQueryModeFieldRefInput<$PrismaModel>
+    string_contains?: string | StringFieldRefInput<$PrismaModel>
+    string_starts_with?: string | StringFieldRefInput<$PrismaModel>
+    string_ends_with?: string | StringFieldRefInput<$PrismaModel>
+    array_starts_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_ends_with?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    array_contains?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    lt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    lte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gt?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    gte?: InputJsonValue | JsonFieldRefInput<$PrismaModel>
+    not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
   export type NestedEnumRoleCodeFilter<$PrismaModel = never> = {
@@ -50350,6 +52001,44 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type CashoutCreateWithoutCreatedByInput = {
+    id?: string
+    spentAt: Date | string
+    amount?: number
+    description: string
+    category?: string | null
+    branchId?: string | null
+    branchName?: string | null
+    photoKey?: string | null
+    createdAt?: Date | string
+    approvedAt?: Date | string | null
+    approvedById?: string | null
+  }
+
+  export type CashoutUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    spentAt: Date | string
+    amount?: number
+    description: string
+    category?: string | null
+    branchId?: string | null
+    branchName?: string | null
+    photoKey?: string | null
+    createdAt?: Date | string
+    approvedAt?: Date | string | null
+    approvedById?: string | null
+  }
+
+  export type CashoutCreateOrConnectWithoutCreatedByInput = {
+    where: CashoutWhereUniqueInput
+    create: XOR<CashoutCreateWithoutCreatedByInput, CashoutUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type CashoutCreateManyCreatedByInputEnvelope = {
+    data: CashoutCreateManyCreatedByInput | CashoutCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BranchUpsertWithoutUsersInput = {
     update: XOR<BranchUpdateWithoutUsersInput, BranchUncheckedUpdateWithoutUsersInput>
     create: XOR<BranchCreateWithoutUsersInput, BranchUncheckedCreateWithoutUsersInput>
@@ -50985,6 +52674,40 @@ export namespace Prisma {
     code?: StringFilter<"Shift"> | string
   }
 
+  export type CashoutUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: CashoutWhereUniqueInput
+    update: XOR<CashoutUpdateWithoutCreatedByInput, CashoutUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<CashoutCreateWithoutCreatedByInput, CashoutUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type CashoutUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: CashoutWhereUniqueInput
+    data: XOR<CashoutUpdateWithoutCreatedByInput, CashoutUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type CashoutUpdateManyWithWhereWithoutCreatedByInput = {
+    where: CashoutScalarWhereInput
+    data: XOR<CashoutUpdateManyMutationInput, CashoutUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type CashoutScalarWhereInput = {
+    AND?: CashoutScalarWhereInput | CashoutScalarWhereInput[]
+    OR?: CashoutScalarWhereInput[]
+    NOT?: CashoutScalarWhereInput | CashoutScalarWhereInput[]
+    id?: StringFilter<"Cashout"> | string
+    spentAt?: DateTimeFilter<"Cashout"> | Date | string
+    amount?: IntFilter<"Cashout"> | number
+    description?: StringFilter<"Cashout"> | string
+    category?: StringNullableFilter<"Cashout"> | string | null
+    branchId?: StringNullableFilter<"Cashout"> | string | null
+    branchName?: StringNullableFilter<"Cashout"> | string | null
+    photoKey?: StringNullableFilter<"Cashout"> | string | null
+    createdById?: StringFilter<"Cashout"> | string
+    createdAt?: DateTimeFilter<"Cashout"> | Date | string
+    approvedAt?: DateTimeNullableFilter<"Cashout"> | Date | string | null
+    approvedById?: StringNullableFilter<"Cashout"> | string | null
+  }
+
   export type UserCreateWithoutShiftsInput = {
     id?: string
     fullName: string
@@ -51020,6 +52743,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutShiftsInput = {
@@ -51057,6 +52781,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutShiftsInput = {
@@ -51110,6 +52835,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutShiftsInput = {
@@ -51147,6 +52873,175 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserCreateWithoutCashoutsInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    passwordHash?: string | null
+    avatarKey?: string | null
+    bio?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    branch?: BranchCreateNestedOneWithoutUsersInput
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleCreateNestedManyWithoutUserInput
+    attendances?: AttendanceCreateNestedManyWithoutUserInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    reviewed?: RequestCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
+  }
+
+  export type UserUncheckedCreateWithoutCashoutsInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    passwordHash?: string | null
+    avatarKey?: string | null
+    bio?: string | null
+    branchId?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleUncheckedCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleUncheckedCreateNestedManyWithoutUserInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutUserInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+  }
+
+  export type UserCreateOrConnectWithoutCashoutsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutCashoutsInput, UserUncheckedCreateWithoutCashoutsInput>
+  }
+
+  export type UserUpsertWithoutCashoutsInput = {
+    update: XOR<UserUpdateWithoutCashoutsInput, UserUncheckedUpdateWithoutCashoutsInput>
+    create: XOR<UserCreateWithoutCashoutsInput, UserUncheckedCreateWithoutCashoutsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutCashoutsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutCashoutsInput, UserUncheckedUpdateWithoutCashoutsInput>
+  }
+
+  export type UserUpdateWithoutCashoutsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branch?: BranchUpdateOneWithoutUsersNestedInput
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUpdateManyWithoutUserNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutCashoutsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUncheckedUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUncheckedUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
   }
 
   export type UserCreateWithoutSalesReportsInput = {
@@ -51184,6 +53079,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSalesReportsInput = {
@@ -51221,6 +53117,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSalesReportsInput = {
@@ -51274,6 +53171,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSalesReportsInput = {
@@ -51311,6 +53209,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserRoleCreateWithoutRoleInput = {
@@ -51386,6 +53285,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutRolesInput = {
@@ -51423,6 +53323,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutRolesInput = {
@@ -51482,6 +53383,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAssignedRolesInput = {
@@ -51519,6 +53421,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAssignedRolesInput = {
@@ -51572,6 +53475,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRolesInput = {
@@ -51609,6 +53513,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type RoleUpsertWithoutUsersInput = {
@@ -51680,6 +53585,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedRolesInput = {
@@ -51717,6 +53623,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -51754,6 +53661,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -51791,6 +53699,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -51844,6 +53753,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -51881,6 +53791,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutBranchInput = {
@@ -51918,6 +53829,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutBranchInput = {
@@ -51955,6 +53867,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutBranchInput = {
@@ -52139,6 +54052,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSchedulesInput = {
@@ -52176,6 +54090,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSchedulesInput = {
@@ -52252,6 +54167,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSchedulesInput = {
@@ -52289,6 +54205,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type WorkScheduleUpsertWithoutUsersInput = {
@@ -52355,6 +54272,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAttendancesInput = {
@@ -52392,6 +54310,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAttendancesInput = {
@@ -52468,6 +54387,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAttendancesInput = {
@@ -52505,6 +54425,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type BranchUpsertWithoutAttendancesInput = {
@@ -52571,6 +54492,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutRequestsInput = {
@@ -52608,6 +54530,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutRequestsInput = {
@@ -52650,6 +54573,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutReviewedInput = {
@@ -52687,6 +54611,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutReviewedInput = {
@@ -52740,6 +54665,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRequestsInput = {
@@ -52777,6 +54703,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutReviewedInput = {
@@ -52825,6 +54752,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedInput = {
@@ -52862,6 +54790,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -52899,6 +54828,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -52936,6 +54866,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -52989,6 +54920,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -53026,6 +54958,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutActivityLogsInput = {
@@ -53063,6 +54996,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutActivityLogsInput = {
@@ -53100,6 +55034,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutActivityLogsInput = {
@@ -53153,6 +55088,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivityLogsInput = {
@@ -53190,6 +55126,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ChatMemberCreateWithoutRoomInput = {
@@ -53334,6 +55271,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutChatMembersInput = {
@@ -53371,6 +55309,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutChatMembersInput = {
@@ -53453,6 +55392,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMembersInput = {
@@ -53490,6 +55430,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ChatRoomCreateWithoutMessagesInput = {
@@ -53550,6 +55491,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutChatMessagesInput = {
@@ -53587,6 +55529,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutChatMessagesInput = {
@@ -53669,6 +55612,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMessagesInput = {
@@ -53706,6 +55650,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutCalendarEventsInput = {
@@ -53743,6 +55688,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutCalendarEventsInput = {
@@ -53780,6 +55726,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutCalendarEventsInput = {
@@ -53833,6 +55780,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCalendarEventsInput = {
@@ -53870,6 +55818,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutRawCreatedInput = {
@@ -53907,6 +55856,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutRawCreatedInput = {
@@ -53944,6 +55894,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutRawCreatedInput = {
@@ -53986,6 +55937,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutRawQcInput = {
@@ -54023,6 +55975,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutRawQcInput = {
@@ -54076,6 +56029,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRawCreatedInput = {
@@ -54113,6 +56067,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutRawQcInput = {
@@ -54161,6 +56116,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRawQcInput = {
@@ -54198,6 +56154,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutMediaMemberInput = {
@@ -54235,6 +56192,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMediaMemberInput = {
@@ -54272,6 +56230,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMediaMemberInput = {
@@ -54325,6 +56284,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaMemberInput = {
@@ -54362,6 +56322,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutMediaItemsInput = {
@@ -54399,6 +56360,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMediaItemsInput = {
@@ -54436,6 +56398,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMediaItemsInput = {
@@ -54609,6 +56572,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaItemsInput = {
@@ -54646,6 +56610,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type MediaTaskUpsertWithWhereUniqueWithoutItemInput = {
@@ -54981,6 +56946,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutPersonalCalEventsInput = {
@@ -55018,6 +56984,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutPersonalCalEventsInput = {
@@ -55071,6 +57038,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPersonalCalEventsInput = {
@@ -55108,6 +57076,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutMediaPcalInput = {
@@ -55145,6 +57114,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMediaPcalInput = {
@@ -55182,6 +57152,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMediaPcalInput = {
@@ -55235,6 +57206,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaPcalInput = {
@@ -55272,6 +57244,7 @@ export namespace Prisma {
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserRoleCreateManyUserInput = {
@@ -55509,6 +57482,20 @@ export namespace Prisma {
     id?: string
     date: Date | string
     code: string
+  }
+
+  export type CashoutCreateManyCreatedByInput = {
+    id?: string
+    spentAt: Date | string
+    amount?: number
+    description: string
+    category?: string | null
+    branchId?: string | null
+    branchName?: string | null
+    photoKey?: string | null
+    createdAt?: Date | string
+    approvedAt?: Date | string | null
+    approvedById?: string | null
   }
 
   export type UserRoleUpdateWithoutUserInput = {
@@ -56226,6 +58213,48 @@ export namespace Prisma {
     code?: StringFieldUpdateOperationsInput | string
   }
 
+  export type CashoutUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CashoutUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type CashoutUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    spentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    amount?: IntFieldUpdateOperationsInput | number
+    description?: StringFieldUpdateOperationsInput | string
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    branchName?: NullableStringFieldUpdateOperationsInput | string | null
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type UserRoleCreateManyRoleInput = {
     userId: string
     assignedById?: string | null
@@ -56320,6 +58349,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBranchInput = {
@@ -56357,6 +58387,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBranchInput = {

@@ -86,6 +86,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
       items: [
         { label: "Produk Mentah", href: "/finance", icon: Receipt },
         { label: "Rekap Penjualan", href: "/finance/penjualan", icon: Receipt },
+        { label: "Rekap Pembelian", href: "/finance/pembelian", icon: Wallet },
         { label: "Sinkronisasi Accurate", href: "/finance/sinkronisasi", icon: FileText },
       ],
     });
@@ -95,7 +96,10 @@ export function navForRole(role: RoleCode): NavGroup[] {
     groups.push({
       title: "Sales",
       icon: ShoppingCart,
-      items: [{ label: "Rekap Penjualan", href: "/sales", icon: Receipt }],
+      items: [
+        { label: "Rekap Penjualan", href: "/sales", icon: Receipt },
+        { label: "Input Pembelian", href: "/pembelian", icon: Wallet },
+      ],
     });
   }
 
@@ -111,7 +115,10 @@ export function navForRole(role: RoleCode): NavGroup[] {
     groups.push({
       title: "Cabang",
       icon: Building2,
-      items: [{ label: "Approval Penjualan", href: "/cabang/penjualan", icon: ClipboardCheck }],
+      items: [
+        { label: "Approval Penjualan", href: "/cabang/penjualan", icon: ClipboardCheck },
+        { label: "Approval Pembelian", href: "/cabang/pembelian", icon: Wallet },
+      ],
     });
   }
 
