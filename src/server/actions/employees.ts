@@ -197,6 +197,30 @@ export async function setEmployeeActive(id: string, active: boolean): Promise<Ac
   }
 }
 
+/** Hapus permanen karyawan. Gagal bila punya data terkait (penjualan/absen/dll). */
+export async function deleteEmployee(id: string): Promise<ActionResult> {
+  const ctx = await requireHr();
+  if (id === ctx.userId) return { ok: false, message: "Tak bisa hapus akun sendiri." };
+  const { ip } = await clientMeta();
+  try {
+    await prisma.$transaction(async (tx) => {
+      const isBoss = await tx.user.findFirst({ where: { id, roles: { some: { role: { code: "BOSS" } } } }, select: { id: true } });
+      if (isBoss && (await activeBossCount(tx, id)) < 1) throw new Error("BOSS_LAST");
+      await tx.userRole.deleteMany({ where: { userId: id } });
+      await tx.session.deleteMany({ where: { userId: id } });
+      await tx.notification.deleteMany({ where: { userId: id } });
+      await tx.user.delete({ where: { id } });
+    });
+    await logActivity({ ...ctx, ip }, { action: "delete", entity: "User", entityId: id });
+    return { ok: true, id };
+  } catch (e) {
+    if (e instanceof Error && e.message === "BOSS_LAST") return { ok: false, message: "Tidak bisa hapus Boss terakhir yang aktif." };
+    if (e && typeof e === "object" && "code" in e && (e as { code?: string }).code === "P2003")
+      return { ok: false, message: "Karyawan punya data terkait (penjualan/absen/dll). Nonaktifkan saja." };
+    return { ok: false, message: "Gagal hapus karyawan." };
+  }
+}
+
 function conflictMsg(e: unknown): string {
   if (
     e &&

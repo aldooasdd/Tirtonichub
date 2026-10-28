@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Plus, Pencil } from "lucide-react";
+import { Plus, Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -33,7 +33,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ROLE_CODES, ROLE_LABELS, type RoleCode } from "@/lib/roles";
-import { createEmployee, updateEmployee, setEmployeeActive } from "@/server/actions/employees";
+import { createEmployee, updateEmployee, setEmployeeActive, deleteEmployee } from "@/server/actions/employees";
 
 type Row = {
   id: string;
@@ -85,6 +85,14 @@ export function KaryawanClient({
   function toggleActive(row: Row) {
     start(async () => {
       const r = await setEmployeeActive(row.id, !row.isActive);
+      if (!r.ok) alert(r.message);
+      router.refresh();
+    });
+  }
+  function hapus(row: Row) {
+    if (!confirm(`Hapus karyawan ${row.fullName}? Permanen, tak bisa dibatalkan.`)) return;
+    start(async () => {
+      const r = await deleteEmployee(row.id);
       if (!r.ok) alert(r.message);
       router.refresh();
     });
@@ -147,6 +155,9 @@ export function KaryawanClient({
                 onClick={() => toggleActive(u)}
               >
                 {u.isActive ? "Nonaktifkan" : "Aktifkan"}
+              </Button>
+              <Button variant="outline" size="sm" disabled={pending} onClick={() => hapus(u)}>
+                <Trash2 className="h-4 w-4 text-destructive" />
               </Button>
             </div>
           </div>
@@ -211,6 +222,9 @@ export function KaryawanClient({
                       onClick={() => toggleActive(u)}
                     >
                       {u.isActive ? "Nonaktifkan" : "Aktifkan"}
+                    </Button>
+                    <Button variant="ghost" size="icon" disabled={pending} onClick={() => hapus(u)}>
+                      <Trash2 className="h-4 w-4 text-destructive" />
                     </Button>
                   </div>
                 </TableCell>
