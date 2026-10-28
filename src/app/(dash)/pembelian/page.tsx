@@ -12,7 +12,7 @@ export default async function PembelianPage() {
   const categories = ctx.activeRole === "FINANCE" ? FINANCE_CATS : SALES_CATS;
   const rows = await prisma.cashout.findMany({
     where: { createdById: ctx.userId },
-    orderBy: { spentAt: "desc" },
+    orderBy: { createdAt: "desc" },
     take: 50,
   });
   return (

@@ -7,7 +7,7 @@ export default async function CabangPembelianPage() {
   await requireFinance();
   const rows = await prisma.cashout.findMany({
     where: { approvedAt: null },
-    orderBy: { spentAt: "desc" },
+    orderBy: { createdAt: "desc" },
     take: 200,
     include: { createdBy: { select: { fullName: true } } },
   });

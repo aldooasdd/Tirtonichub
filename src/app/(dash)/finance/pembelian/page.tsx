@@ -9,7 +9,7 @@ export default async function FinancePembelianPage() {
   // Hanya yang sudah di-ACC Kepala Cabang.
   const rows = await prisma.cashout.findMany({
     where: { approvedAt: { not: null } },
-    orderBy: { spentAt: "desc" },
+    orderBy: { createdAt: "desc" },
     take: 500,
     include: { createdBy: { select: { fullName: true } } },
   });

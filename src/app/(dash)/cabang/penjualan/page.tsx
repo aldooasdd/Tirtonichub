@@ -10,7 +10,7 @@ export default async function CabangPenjualanPage() {
   // Penjualan offline yang belum disetujui (ACC Finance).
   const rows = await prisma.salesReport.findMany({
     where: { channel: "offline", branchApprovedAt: { not: null }, approvedAt: null },
-    orderBy: { soldAt: "desc" },
+    orderBy: { createdAt: "desc" },
     take: 200,
     include: { createdBy: { select: { fullName: true } } },
   });

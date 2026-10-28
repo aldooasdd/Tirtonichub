@@ -16,7 +16,7 @@ export default async function ApprovalPenjualanCabangPage() {
       approvedAt: null,
       ...(ctx.branchId ? { branchId: ctx.branchId } : {}),
     },
-    orderBy: { soldAt: "desc" },
+    orderBy: { createdAt: "desc" },
     take: 200,
     include: { createdBy: { select: { fullName: true } } },
   });

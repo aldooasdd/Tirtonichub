@@ -15,7 +15,7 @@ export default async function SalesPage() {
       : { createdById: ctx.userId };
   const rows = await prisma.salesReport.findMany({
     where: { ...mine },
-    orderBy: { soldAt: "desc" },
+    orderBy: { createdAt: "desc" },
     take: 100,
     include: { createdBy: { select: { fullName: true } } },
   });

@@ -17,7 +17,7 @@ export default async function FinancePenjualanPage() {
   // Hanya yang sudah disetujui (offline di-ACC Kepala Cabang; online auto).
   const reports = await prisma.salesReport.findMany({
     where: { approvedAt: { not: null } },
-    orderBy: { soldAt: "desc" },
+    orderBy: { createdAt: "desc" },
     take: 500,
   });
 

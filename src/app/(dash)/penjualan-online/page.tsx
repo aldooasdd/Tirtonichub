@@ -11,7 +11,7 @@ export default async function PenjualanOnlinePage() {
   // Penjualan online yang belum disetujui Admin.
   const rows = await prisma.salesReport.findMany({
     where: { channel: "online", approvedAt: null },
-    orderBy: { soldAt: "desc" },
+    orderBy: { createdAt: "desc" },
     take: 200,
     include: { createdBy: { select: { fullName: true } } },
   });
