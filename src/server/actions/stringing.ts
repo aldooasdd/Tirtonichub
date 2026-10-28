@@ -27,9 +27,10 @@ export async function finishStringingScan(scanned: string): Promise<ScanResult> 
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ phone, token }),
+      signal: AbortSignal.timeout(15000),
     });
   } catch {
-    return { ok: false, message: "Gagal hubungi tirtonic.com." };
+    return { ok: false, message: "Gagal/timeout hubungi tirtonic.com." };
   }
 
   const data = (await res.json().catch(() => ({}))) as { ok?: boolean; reason?: string; resultCode?: string };
