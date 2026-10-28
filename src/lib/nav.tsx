@@ -18,9 +18,11 @@ import {
   ClipboardCheck,
   Boxes,
   Warehouse,
+  AlertCircle,
+  Inbox,
   type LucideIcon,
 } from "lucide-react";
-import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, ORDER_SPECIALIST_ROLES, HEAD_BRANCH_ROLES, roleAttends, type RoleCode } from "./roles";
+import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, ORDER_SPECIALIST_ROLES, HEAD_BRANCH_ROLES, ADMIN_ROLES, roleAttends, type RoleCode } from "./roles";
 import { ABSEN_ON } from "./flags";
 
 export type NavItem = {
@@ -46,6 +48,7 @@ export const GROUP_COLOR: Record<string, string> = {
   Cabang: "text-indigo-500",
   Stok: "text-amber-500",
   Media: "text-cyan-500",
+  Admin: "text-red-500",
 };
 
 /** Menu sidebar sesuai role aktif. (PRD §6.1) */
@@ -59,9 +62,18 @@ export function navForRole(role: RoleCode): NavGroup[] {
   // Chat desktop pindah ke widget mengambang (FloatingChat); mobile tetap di bottom-nav.
   // Kalender pindah ke Beranda (tidak ada menu terpisah).
   umum.push({ label: "Notifikasi", href: "/notifikasi", icon: Bell });
+  umum.push({ label: "Lapor", href: "/lapor", icon: AlertCircle });
   umum.push({ label: "Profil", href: "/profil", icon: User });
 
   const groups: NavGroup[] = [{ items: umum }];
+
+  if (ADMIN_ROLES.includes(role)) {
+    groups.push({
+      title: "Admin",
+      icon: Inbox,
+      items: [{ label: "Laporan Masuk", href: "/admin/laporan", icon: Inbox }],
+    });
+  }
 
   if (HR_ROLES.includes(role)) {
     groups.push({

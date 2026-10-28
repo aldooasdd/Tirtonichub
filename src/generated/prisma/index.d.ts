@@ -19,6 +19,11 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
  */
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
+ * Model Report
+ * * Laporan/keluhan error dari karyawan → ditangani Admin.
+ */
+export type Report = $Result.DefaultSelection<Prisma.$ReportPayload>
+/**
  * Model Shift
  * 
  */
@@ -423,6 +428,16 @@ export class PrismaClient<
     * ```
     */
   get user(): Prisma.UserDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.report`: Exposes CRUD operations for the **Report** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Reports
+    * const reports = await prisma.report.findMany()
+    * ```
+    */
+  get report(): Prisma.ReportDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.shift`: Exposes CRUD operations for the **Shift** model.
@@ -1175,6 +1190,7 @@ export namespace Prisma {
 
   export const ModelName: {
     User: 'User',
+    Report: 'Report',
     Shift: 'Shift',
     Cashout: 'Cashout',
     SalesReport: 'SalesReport',
@@ -1224,7 +1240,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1299,6 +1315,80 @@ export namespace Prisma {
           count: {
             args: Prisma.UserCountArgs<ExtArgs>
             result: $Utils.Optional<UserCountAggregateOutputType> | number
+          }
+        }
+      }
+      Report: {
+        payload: Prisma.$ReportPayload<ExtArgs>
+        fields: Prisma.ReportFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ReportFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ReportFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>
+          }
+          findFirst: {
+            args: Prisma.ReportFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ReportFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>
+          }
+          findMany: {
+            args: Prisma.ReportFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>[]
+          }
+          create: {
+            args: Prisma.ReportCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>
+          }
+          createMany: {
+            args: Prisma.ReportCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ReportCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>[]
+          }
+          delete: {
+            args: Prisma.ReportDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>
+          }
+          update: {
+            args: Prisma.ReportUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>
+          }
+          deleteMany: {
+            args: Prisma.ReportDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ReportUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ReportUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>[]
+          }
+          upsert: {
+            args: Prisma.ReportUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ReportPayload>
+          }
+          aggregate: {
+            args: Prisma.ReportAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateReport>
+          }
+          groupBy: {
+            args: Prisma.ReportGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ReportGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ReportCountArgs<ExtArgs>
+            result: $Utils.Optional<ReportCountAggregateOutputType> | number
           }
         }
       }
@@ -3693,6 +3783,7 @@ export namespace Prisma {
   }
   export type GlobalOmitConfig = {
     user?: UserOmit
+    report?: ReportOmit
     shift?: ShiftOmit
     cashout?: CashoutOmit
     salesReport?: SalesReportOmit
@@ -3823,6 +3914,7 @@ export namespace Prisma {
     salesReports: number
     shifts: number
     cashouts: number
+    reports: number
   }
 
   export type UserCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -3845,6 +3937,7 @@ export namespace Prisma {
     salesReports?: boolean | UserCountOutputTypeCountSalesReportsArgs
     shifts?: boolean | UserCountOutputTypeCountShiftsArgs
     cashouts?: boolean | UserCountOutputTypeCountCashoutsArgs
+    reports?: boolean | UserCountOutputTypeCountReportsArgs
   }
 
   // Custom InputTypes
@@ -3989,6 +4082,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountCashoutsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: CashoutWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountReportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReportWhereInput
   }
 
 
@@ -4444,6 +4544,7 @@ export namespace Prisma {
     salesReports?: boolean | User$salesReportsArgs<ExtArgs>
     shifts?: boolean | User$shiftsArgs<ExtArgs>
     cashouts?: boolean | User$cashoutsArgs<ExtArgs>
+    reports?: boolean | User$reportsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
@@ -4527,6 +4628,7 @@ export namespace Prisma {
     salesReports?: boolean | User$salesReportsArgs<ExtArgs>
     shifts?: boolean | User$shiftsArgs<ExtArgs>
     cashouts?: boolean | User$cashoutsArgs<ExtArgs>
+    reports?: boolean | User$reportsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -4561,6 +4663,7 @@ export namespace Prisma {
       salesReports: Prisma.$SalesReportPayload<ExtArgs>[]
       shifts: Prisma.$ShiftPayload<ExtArgs>[]
       cashouts: Prisma.$CashoutPayload<ExtArgs>[]
+      reports: Prisma.$ReportPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4994,6 +5097,7 @@ export namespace Prisma {
     salesReports<T extends User$salesReportsArgs<ExtArgs> = {}>(args?: Subset<T, User$salesReportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SalesReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     shifts<T extends User$shiftsArgs<ExtArgs> = {}>(args?: Subset<T, User$shiftsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ShiftPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     cashouts<T extends User$cashoutsArgs<ExtArgs> = {}>(args?: Subset<T, User$cashoutsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashoutPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    reports<T extends User$reportsArgs<ExtArgs> = {}>(args?: Subset<T, User$reportsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5947,6 +6051,30 @@ export namespace Prisma {
   }
 
   /**
+   * User.reports
+   */
+  export type User$reportsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    where?: ReportWhereInput
+    orderBy?: ReportOrderByWithRelationInput | ReportOrderByWithRelationInput[]
+    cursor?: ReportWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ReportScalarFieldEnum | ReportScalarFieldEnum[]
+  }
+
+  /**
    * User without action
    */
   export type UserDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -5962,6 +6090,1090 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: UserInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Report
+   */
+
+  export type AggregateReport = {
+    _count: ReportCountAggregateOutputType | null
+    _min: ReportMinAggregateOutputType | null
+    _max: ReportMaxAggregateOutputType | null
+  }
+
+  export type ReportMinAggregateOutputType = {
+    id: string | null
+    message: string | null
+    photoKey: string | null
+    createdById: string | null
+    createdAt: Date | null
+    resolvedAt: Date | null
+    resolvedById: string | null
+  }
+
+  export type ReportMaxAggregateOutputType = {
+    id: string | null
+    message: string | null
+    photoKey: string | null
+    createdById: string | null
+    createdAt: Date | null
+    resolvedAt: Date | null
+    resolvedById: string | null
+  }
+
+  export type ReportCountAggregateOutputType = {
+    id: number
+    message: number
+    photoKey: number
+    createdById: number
+    createdAt: number
+    resolvedAt: number
+    resolvedById: number
+    _all: number
+  }
+
+
+  export type ReportMinAggregateInputType = {
+    id?: true
+    message?: true
+    photoKey?: true
+    createdById?: true
+    createdAt?: true
+    resolvedAt?: true
+    resolvedById?: true
+  }
+
+  export type ReportMaxAggregateInputType = {
+    id?: true
+    message?: true
+    photoKey?: true
+    createdById?: true
+    createdAt?: true
+    resolvedAt?: true
+    resolvedById?: true
+  }
+
+  export type ReportCountAggregateInputType = {
+    id?: true
+    message?: true
+    photoKey?: true
+    createdById?: true
+    createdAt?: true
+    resolvedAt?: true
+    resolvedById?: true
+    _all?: true
+  }
+
+  export type ReportAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Report to aggregate.
+     */
+    where?: ReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reports to fetch.
+     */
+    orderBy?: ReportOrderByWithRelationInput | ReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Reports
+    **/
+    _count?: true | ReportCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ReportMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ReportMaxAggregateInputType
+  }
+
+  export type GetReportAggregateType<T extends ReportAggregateArgs> = {
+        [P in keyof T & keyof AggregateReport]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateReport[P]>
+      : GetScalarType<T[P], AggregateReport[P]>
+  }
+
+
+
+
+  export type ReportGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ReportWhereInput
+    orderBy?: ReportOrderByWithAggregationInput | ReportOrderByWithAggregationInput[]
+    by: ReportScalarFieldEnum[] | ReportScalarFieldEnum
+    having?: ReportScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ReportCountAggregateInputType | true
+    _min?: ReportMinAggregateInputType
+    _max?: ReportMaxAggregateInputType
+  }
+
+  export type ReportGroupByOutputType = {
+    id: string
+    message: string
+    photoKey: string | null
+    createdById: string
+    createdAt: Date
+    resolvedAt: Date | null
+    resolvedById: string | null
+    _count: ReportCountAggregateOutputType | null
+    _min: ReportMinAggregateOutputType | null
+    _max: ReportMaxAggregateOutputType | null
+  }
+
+  type GetReportGroupByPayload<T extends ReportGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ReportGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ReportGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ReportGroupByOutputType[P]>
+            : GetScalarType<T[P], ReportGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ReportSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    message?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    resolvedAt?: boolean
+    resolvedById?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["report"]>
+
+  export type ReportSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    message?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    resolvedAt?: boolean
+    resolvedById?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["report"]>
+
+  export type ReportSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    message?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    resolvedAt?: boolean
+    resolvedById?: boolean
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["report"]>
+
+  export type ReportSelectScalar = {
+    id?: boolean
+    message?: boolean
+    photoKey?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+    resolvedAt?: boolean
+    resolvedById?: boolean
+  }
+
+  export type ReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "message" | "photoKey" | "createdById" | "createdAt" | "resolvedAt" | "resolvedById", ExtArgs["result"]["report"]>
+  export type ReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ReportIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type ReportIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    createdBy?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $ReportPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Report"
+    objects: {
+      createdBy: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      message: string
+      photoKey: string | null
+      createdById: string
+      createdAt: Date
+      resolvedAt: Date | null
+      resolvedById: string | null
+    }, ExtArgs["result"]["report"]>
+    composites: {}
+  }
+
+  type ReportGetPayload<S extends boolean | null | undefined | ReportDefaultArgs> = $Result.GetResult<Prisma.$ReportPayload, S>
+
+  type ReportCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ReportFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ReportCountAggregateInputType | true
+    }
+
+  export interface ReportDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Report'], meta: { name: 'Report' } }
+    /**
+     * Find zero or one Report that matches the filter.
+     * @param {ReportFindUniqueArgs} args - Arguments to find a Report
+     * @example
+     * // Get one Report
+     * const report = await prisma.report.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ReportFindUniqueArgs>(args: SelectSubset<T, ReportFindUniqueArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Report that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ReportFindUniqueOrThrowArgs} args - Arguments to find a Report
+     * @example
+     * // Get one Report
+     * const report = await prisma.report.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ReportFindUniqueOrThrowArgs>(args: SelectSubset<T, ReportFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Report that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportFindFirstArgs} args - Arguments to find a Report
+     * @example
+     * // Get one Report
+     * const report = await prisma.report.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ReportFindFirstArgs>(args?: SelectSubset<T, ReportFindFirstArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Report that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportFindFirstOrThrowArgs} args - Arguments to find a Report
+     * @example
+     * // Get one Report
+     * const report = await prisma.report.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ReportFindFirstOrThrowArgs>(args?: SelectSubset<T, ReportFindFirstOrThrowArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Reports that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Reports
+     * const reports = await prisma.report.findMany()
+     * 
+     * // Get first 10 Reports
+     * const reports = await prisma.report.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const reportWithIdOnly = await prisma.report.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ReportFindManyArgs>(args?: SelectSubset<T, ReportFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Report.
+     * @param {ReportCreateArgs} args - Arguments to create a Report.
+     * @example
+     * // Create one Report
+     * const Report = await prisma.report.create({
+     *   data: {
+     *     // ... data to create a Report
+     *   }
+     * })
+     * 
+     */
+    create<T extends ReportCreateArgs>(args: SelectSubset<T, ReportCreateArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Reports.
+     * @param {ReportCreateManyArgs} args - Arguments to create many Reports.
+     * @example
+     * // Create many Reports
+     * const report = await prisma.report.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ReportCreateManyArgs>(args?: SelectSubset<T, ReportCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Reports and returns the data saved in the database.
+     * @param {ReportCreateManyAndReturnArgs} args - Arguments to create many Reports.
+     * @example
+     * // Create many Reports
+     * const report = await prisma.report.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Reports and only return the `id`
+     * const reportWithIdOnly = await prisma.report.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ReportCreateManyAndReturnArgs>(args?: SelectSubset<T, ReportCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Report.
+     * @param {ReportDeleteArgs} args - Arguments to delete one Report.
+     * @example
+     * // Delete one Report
+     * const Report = await prisma.report.delete({
+     *   where: {
+     *     // ... filter to delete one Report
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ReportDeleteArgs>(args: SelectSubset<T, ReportDeleteArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Report.
+     * @param {ReportUpdateArgs} args - Arguments to update one Report.
+     * @example
+     * // Update one Report
+     * const report = await prisma.report.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ReportUpdateArgs>(args: SelectSubset<T, ReportUpdateArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Reports.
+     * @param {ReportDeleteManyArgs} args - Arguments to filter Reports to delete.
+     * @example
+     * // Delete a few Reports
+     * const { count } = await prisma.report.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ReportDeleteManyArgs>(args?: SelectSubset<T, ReportDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Reports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Reports
+     * const report = await prisma.report.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ReportUpdateManyArgs>(args: SelectSubset<T, ReportUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Reports and returns the data updated in the database.
+     * @param {ReportUpdateManyAndReturnArgs} args - Arguments to update many Reports.
+     * @example
+     * // Update many Reports
+     * const report = await prisma.report.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Reports and only return the `id`
+     * const reportWithIdOnly = await prisma.report.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ReportUpdateManyAndReturnArgs>(args: SelectSubset<T, ReportUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Report.
+     * @param {ReportUpsertArgs} args - Arguments to update or create a Report.
+     * @example
+     * // Update or create a Report
+     * const report = await prisma.report.upsert({
+     *   create: {
+     *     // ... data to create a Report
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Report we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ReportUpsertArgs>(args: SelectSubset<T, ReportUpsertArgs<ExtArgs>>): Prisma__ReportClient<$Result.GetResult<Prisma.$ReportPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Reports.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportCountArgs} args - Arguments to filter Reports to count.
+     * @example
+     * // Count the number of Reports
+     * const count = await prisma.report.count({
+     *   where: {
+     *     // ... the filter for the Reports we want to count
+     *   }
+     * })
+    **/
+    count<T extends ReportCountArgs>(
+      args?: Subset<T, ReportCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ReportCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Report.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ReportAggregateArgs>(args: Subset<T, ReportAggregateArgs>): Prisma.PrismaPromise<GetReportAggregateType<T>>
+
+    /**
+     * Group by Report.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ReportGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ReportGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ReportGroupByArgs['orderBy'] }
+        : { orderBy?: ReportGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ReportGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetReportGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Report model
+   */
+  readonly fields: ReportFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Report.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ReportClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    createdBy<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Report model
+   */
+  interface ReportFieldRefs {
+    readonly id: FieldRef<"Report", 'String'>
+    readonly message: FieldRef<"Report", 'String'>
+    readonly photoKey: FieldRef<"Report", 'String'>
+    readonly createdById: FieldRef<"Report", 'String'>
+    readonly createdAt: FieldRef<"Report", 'DateTime'>
+    readonly resolvedAt: FieldRef<"Report", 'DateTime'>
+    readonly resolvedById: FieldRef<"Report", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Report findUnique
+   */
+  export type ReportFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * Filter, which Report to fetch.
+     */
+    where: ReportWhereUniqueInput
+  }
+
+  /**
+   * Report findUniqueOrThrow
+   */
+  export type ReportFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * Filter, which Report to fetch.
+     */
+    where: ReportWhereUniqueInput
+  }
+
+  /**
+   * Report findFirst
+   */
+  export type ReportFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * Filter, which Report to fetch.
+     */
+    where?: ReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reports to fetch.
+     */
+    orderBy?: ReportOrderByWithRelationInput | ReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Reports.
+     */
+    cursor?: ReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Reports.
+     */
+    distinct?: ReportScalarFieldEnum | ReportScalarFieldEnum[]
+  }
+
+  /**
+   * Report findFirstOrThrow
+   */
+  export type ReportFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * Filter, which Report to fetch.
+     */
+    where?: ReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reports to fetch.
+     */
+    orderBy?: ReportOrderByWithRelationInput | ReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Reports.
+     */
+    cursor?: ReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reports.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Reports.
+     */
+    distinct?: ReportScalarFieldEnum | ReportScalarFieldEnum[]
+  }
+
+  /**
+   * Report findMany
+   */
+  export type ReportFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * Filter, which Reports to fetch.
+     */
+    where?: ReportWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Reports to fetch.
+     */
+    orderBy?: ReportOrderByWithRelationInput | ReportOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Reports.
+     */
+    cursor?: ReportWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Reports from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Reports.
+     */
+    skip?: number
+    distinct?: ReportScalarFieldEnum | ReportScalarFieldEnum[]
+  }
+
+  /**
+   * Report create
+   */
+  export type ReportCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Report.
+     */
+    data: XOR<ReportCreateInput, ReportUncheckedCreateInput>
+  }
+
+  /**
+   * Report createMany
+   */
+  export type ReportCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Reports.
+     */
+    data: ReportCreateManyInput | ReportCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Report createManyAndReturn
+   */
+  export type ReportCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * The data used to create many Reports.
+     */
+    data: ReportCreateManyInput | ReportCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Report update
+   */
+  export type ReportUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Report.
+     */
+    data: XOR<ReportUpdateInput, ReportUncheckedUpdateInput>
+    /**
+     * Choose, which Report to update.
+     */
+    where: ReportWhereUniqueInput
+  }
+
+  /**
+   * Report updateMany
+   */
+  export type ReportUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Reports.
+     */
+    data: XOR<ReportUpdateManyMutationInput, ReportUncheckedUpdateManyInput>
+    /**
+     * Filter which Reports to update
+     */
+    where?: ReportWhereInput
+    /**
+     * Limit how many Reports to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Report updateManyAndReturn
+   */
+  export type ReportUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * The data used to update Reports.
+     */
+    data: XOR<ReportUpdateManyMutationInput, ReportUncheckedUpdateManyInput>
+    /**
+     * Filter which Reports to update
+     */
+    where?: ReportWhereInput
+    /**
+     * Limit how many Reports to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Report upsert
+   */
+  export type ReportUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Report to update in case it exists.
+     */
+    where: ReportWhereUniqueInput
+    /**
+     * In case the Report found by the `where` argument doesn't exist, create a new Report with this data.
+     */
+    create: XOR<ReportCreateInput, ReportUncheckedCreateInput>
+    /**
+     * In case the Report was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ReportUpdateInput, ReportUncheckedUpdateInput>
+  }
+
+  /**
+   * Report delete
+   */
+  export type ReportDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
+    /**
+     * Filter which Report to delete.
+     */
+    where: ReportWhereUniqueInput
+  }
+
+  /**
+   * Report deleteMany
+   */
+  export type ReportDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Reports to delete
+     */
+    where?: ReportWhereInput
+    /**
+     * Limit how many Reports to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Report without action
+   */
+  export type ReportDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Report
+     */
+    select?: ReportSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Report
+     */
+    omit?: ReportOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ReportInclude<ExtArgs> | null
   }
 
 
@@ -40878,6 +42090,19 @@ export namespace Prisma {
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
 
 
+  export const ReportScalarFieldEnum: {
+    id: 'id',
+    message: 'message',
+    photoKey: 'photoKey',
+    createdById: 'createdById',
+    createdAt: 'createdAt',
+    resolvedAt: 'resolvedAt',
+    resolvedById: 'resolvedById'
+  };
+
+  export type ReportScalarFieldEnum = (typeof ReportScalarFieldEnum)[keyof typeof ReportScalarFieldEnum]
+
+
   export const ShiftScalarFieldEnum: {
     id: 'id',
     userId: 'userId',
@@ -41642,6 +42867,7 @@ export namespace Prisma {
     salesReports?: SalesReportListRelationFilter
     shifts?: ShiftListRelationFilter
     cashouts?: CashoutListRelationFilter
+    reports?: ReportListRelationFilter
   }
 
   export type UserOrderByWithRelationInput = {
@@ -41682,6 +42908,7 @@ export namespace Prisma {
     salesReports?: SalesReportOrderByRelationAggregateInput
     shifts?: ShiftOrderByRelationAggregateInput
     cashouts?: CashoutOrderByRelationAggregateInput
+    reports?: ReportOrderByRelationAggregateInput
   }
 
   export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -41725,6 +42952,7 @@ export namespace Prisma {
     salesReports?: SalesReportListRelationFilter
     shifts?: ShiftListRelationFilter
     cashouts?: CashoutListRelationFilter
+    reports?: ReportListRelationFilter
   }, "id" | "email" | "waNumber">
 
   export type UserOrderByWithAggregationInput = {
@@ -41767,6 +42995,71 @@ export namespace Prisma {
     themePref?: StringWithAggregatesFilter<"User"> | string
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+  }
+
+  export type ReportWhereInput = {
+    AND?: ReportWhereInput | ReportWhereInput[]
+    OR?: ReportWhereInput[]
+    NOT?: ReportWhereInput | ReportWhereInput[]
+    id?: StringFilter<"Report"> | string
+    message?: StringFilter<"Report"> | string
+    photoKey?: StringNullableFilter<"Report"> | string | null
+    createdById?: StringFilter<"Report"> | string
+    createdAt?: DateTimeFilter<"Report"> | Date | string
+    resolvedAt?: DateTimeNullableFilter<"Report"> | Date | string | null
+    resolvedById?: StringNullableFilter<"Report"> | string | null
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type ReportOrderByWithRelationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    photoKey?: SortOrderInput | SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    resolvedAt?: SortOrderInput | SortOrder
+    resolvedById?: SortOrderInput | SortOrder
+    createdBy?: UserOrderByWithRelationInput
+  }
+
+  export type ReportWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ReportWhereInput | ReportWhereInput[]
+    OR?: ReportWhereInput[]
+    NOT?: ReportWhereInput | ReportWhereInput[]
+    message?: StringFilter<"Report"> | string
+    photoKey?: StringNullableFilter<"Report"> | string | null
+    createdById?: StringFilter<"Report"> | string
+    createdAt?: DateTimeFilter<"Report"> | Date | string
+    resolvedAt?: DateTimeNullableFilter<"Report"> | Date | string | null
+    resolvedById?: StringNullableFilter<"Report"> | string | null
+    createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id">
+
+  export type ReportOrderByWithAggregationInput = {
+    id?: SortOrder
+    message?: SortOrder
+    photoKey?: SortOrderInput | SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    resolvedAt?: SortOrderInput | SortOrder
+    resolvedById?: SortOrderInput | SortOrder
+    _count?: ReportCountOrderByAggregateInput
+    _max?: ReportMaxOrderByAggregateInput
+    _min?: ReportMinOrderByAggregateInput
+  }
+
+  export type ReportScalarWhereWithAggregatesInput = {
+    AND?: ReportScalarWhereWithAggregatesInput | ReportScalarWhereWithAggregatesInput[]
+    OR?: ReportScalarWhereWithAggregatesInput[]
+    NOT?: ReportScalarWhereWithAggregatesInput | ReportScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Report"> | string
+    message?: StringWithAggregatesFilter<"Report"> | string
+    photoKey?: StringNullableWithAggregatesFilter<"Report"> | string | null
+    createdById?: StringWithAggregatesFilter<"Report"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"Report"> | Date | string
+    resolvedAt?: DateTimeNullableWithAggregatesFilter<"Report"> | Date | string | null
+    resolvedById?: StringNullableWithAggregatesFilter<"Report"> | string | null
   }
 
   export type ShiftWhereInput = {
@@ -44239,6 +45532,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateInput = {
@@ -44278,6 +45572,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUpdateInput = {
@@ -44317,6 +45612,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateInput = {
@@ -44356,6 +45652,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateManyInput = {
@@ -44409,6 +45706,75 @@ export namespace Prisma {
     themePref?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ReportCreateInput = {
+    id?: string
+    message: string
+    photoKey?: string | null
+    createdAt?: Date | string
+    resolvedAt?: Date | string | null
+    resolvedById?: string | null
+    createdBy: UserCreateNestedOneWithoutReportsInput
+  }
+
+  export type ReportUncheckedCreateInput = {
+    id?: string
+    message: string
+    photoKey?: string | null
+    createdById: string
+    createdAt?: Date | string
+    resolvedAt?: Date | string | null
+    resolvedById?: string | null
+  }
+
+  export type ReportUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: UserUpdateOneRequiredWithoutReportsNestedInput
+  }
+
+  export type ReportUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedById?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ReportCreateManyInput = {
+    id?: string
+    message: string
+    photoKey?: string | null
+    createdById: string
+    createdAt?: Date | string
+    resolvedAt?: Date | string | null
+    resolvedById?: string | null
+  }
+
+  export type ReportUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedById?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ReportUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ShiftCreateInput = {
@@ -47278,6 +48644,12 @@ export namespace Prisma {
     none?: CashoutWhereInput
   }
 
+  export type ReportListRelationFilter = {
+    every?: ReportWhereInput
+    some?: ReportWhereInput
+    none?: ReportWhereInput
+  }
+
   export type SortOrderInput = {
     sort: SortOrder
     nulls?: NullsOrder
@@ -47344,6 +48716,10 @@ export namespace Prisma {
   }
 
   export type CashoutOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type ReportOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -47476,6 +48852,36 @@ export namespace Prisma {
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
+  }
+
+  export type ReportCountOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    photoKey?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    resolvedAt?: SortOrder
+    resolvedById?: SortOrder
+  }
+
+  export type ReportMaxOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    photoKey?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    resolvedAt?: SortOrder
+    resolvedById?: SortOrder
+  }
+
+  export type ReportMinOrderByAggregateInput = {
+    id?: SortOrder
+    message?: SortOrder
+    photoKey?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    resolvedAt?: SortOrder
+    resolvedById?: SortOrder
   }
 
   export type ShiftUserIdDateCompoundUniqueInput = {
@@ -49299,6 +50705,13 @@ export namespace Prisma {
     connect?: CashoutWhereUniqueInput | CashoutWhereUniqueInput[]
   }
 
+  export type ReportCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<ReportCreateWithoutCreatedByInput, ReportUncheckedCreateWithoutCreatedByInput> | ReportCreateWithoutCreatedByInput[] | ReportUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: ReportCreateOrConnectWithoutCreatedByInput | ReportCreateOrConnectWithoutCreatedByInput[]
+    createMany?: ReportCreateManyCreatedByInputEnvelope
+    connect?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+  }
+
   export type UserRoleUncheckedCreateNestedManyWithoutUserInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -49442,6 +50855,13 @@ export namespace Prisma {
     connectOrCreate?: CashoutCreateOrConnectWithoutCreatedByInput | CashoutCreateOrConnectWithoutCreatedByInput[]
     createMany?: CashoutCreateManyCreatedByInputEnvelope
     connect?: CashoutWhereUniqueInput | CashoutWhereUniqueInput[]
+  }
+
+  export type ReportUncheckedCreateNestedManyWithoutCreatedByInput = {
+    create?: XOR<ReportCreateWithoutCreatedByInput, ReportUncheckedCreateWithoutCreatedByInput> | ReportCreateWithoutCreatedByInput[] | ReportUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: ReportCreateOrConnectWithoutCreatedByInput | ReportCreateOrConnectWithoutCreatedByInput[]
+    createMany?: ReportCreateManyCreatedByInputEnvelope
+    connect?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
   }
 
   export type StringFieldUpdateOperationsInput = {
@@ -49760,6 +51180,20 @@ export namespace Prisma {
     deleteMany?: CashoutScalarWhereInput | CashoutScalarWhereInput[]
   }
 
+  export type ReportUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<ReportCreateWithoutCreatedByInput, ReportUncheckedCreateWithoutCreatedByInput> | ReportCreateWithoutCreatedByInput[] | ReportUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: ReportCreateOrConnectWithoutCreatedByInput | ReportCreateOrConnectWithoutCreatedByInput[]
+    upsert?: ReportUpsertWithWhereUniqueWithoutCreatedByInput | ReportUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: ReportCreateManyCreatedByInputEnvelope
+    set?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    disconnect?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    delete?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    connect?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    update?: ReportUpdateWithWhereUniqueWithoutCreatedByInput | ReportUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: ReportUpdateManyWithWhereWithoutCreatedByInput | ReportUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: ReportScalarWhereInput | ReportScalarWhereInput[]
+  }
+
   export type UserRoleUncheckedUpdateManyWithoutUserNestedInput = {
     create?: XOR<UserRoleCreateWithoutUserInput, UserRoleUncheckedCreateWithoutUserInput> | UserRoleCreateWithoutUserInput[] | UserRoleUncheckedCreateWithoutUserInput[]
     connectOrCreate?: UserRoleCreateOrConnectWithoutUserInput | UserRoleCreateOrConnectWithoutUserInput[]
@@ -50044,6 +51478,34 @@ export namespace Prisma {
     update?: CashoutUpdateWithWhereUniqueWithoutCreatedByInput | CashoutUpdateWithWhereUniqueWithoutCreatedByInput[]
     updateMany?: CashoutUpdateManyWithWhereWithoutCreatedByInput | CashoutUpdateManyWithWhereWithoutCreatedByInput[]
     deleteMany?: CashoutScalarWhereInput | CashoutScalarWhereInput[]
+  }
+
+  export type ReportUncheckedUpdateManyWithoutCreatedByNestedInput = {
+    create?: XOR<ReportCreateWithoutCreatedByInput, ReportUncheckedCreateWithoutCreatedByInput> | ReportCreateWithoutCreatedByInput[] | ReportUncheckedCreateWithoutCreatedByInput[]
+    connectOrCreate?: ReportCreateOrConnectWithoutCreatedByInput | ReportCreateOrConnectWithoutCreatedByInput[]
+    upsert?: ReportUpsertWithWhereUniqueWithoutCreatedByInput | ReportUpsertWithWhereUniqueWithoutCreatedByInput[]
+    createMany?: ReportCreateManyCreatedByInputEnvelope
+    set?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    disconnect?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    delete?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    connect?: ReportWhereUniqueInput | ReportWhereUniqueInput[]
+    update?: ReportUpdateWithWhereUniqueWithoutCreatedByInput | ReportUpdateWithWhereUniqueWithoutCreatedByInput[]
+    updateMany?: ReportUpdateManyWithWhereWithoutCreatedByInput | ReportUpdateManyWithWhereWithoutCreatedByInput[]
+    deleteMany?: ReportScalarWhereInput | ReportScalarWhereInput[]
+  }
+
+  export type UserCreateNestedOneWithoutReportsInput = {
+    create?: XOR<UserCreateWithoutReportsInput, UserUncheckedCreateWithoutReportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReportsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutReportsNestedInput = {
+    create?: XOR<UserCreateWithoutReportsInput, UserUncheckedCreateWithoutReportsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutReportsInput
+    upsert?: UserUpsertWithoutReportsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutReportsInput, UserUpdateWithoutReportsInput>, UserUncheckedUpdateWithoutReportsInput>
   }
 
   export type UserCreateNestedOneWithoutShiftsInput = {
@@ -52073,6 +53535,34 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type ReportCreateWithoutCreatedByInput = {
+    id?: string
+    message: string
+    photoKey?: string | null
+    createdAt?: Date | string
+    resolvedAt?: Date | string | null
+    resolvedById?: string | null
+  }
+
+  export type ReportUncheckedCreateWithoutCreatedByInput = {
+    id?: string
+    message: string
+    photoKey?: string | null
+    createdAt?: Date | string
+    resolvedAt?: Date | string | null
+    resolvedById?: string | null
+  }
+
+  export type ReportCreateOrConnectWithoutCreatedByInput = {
+    where: ReportWhereUniqueInput
+    create: XOR<ReportCreateWithoutCreatedByInput, ReportUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type ReportCreateManyCreatedByInputEnvelope = {
+    data: ReportCreateManyCreatedByInput | ReportCreateManyCreatedByInput[]
+    skipDuplicates?: boolean
+  }
+
   export type BranchUpsertWithoutUsersInput = {
     update: XOR<BranchUpdateWithoutUsersInput, BranchUncheckedUpdateWithoutUsersInput>
     create: XOR<BranchCreateWithoutUsersInput, BranchUncheckedCreateWithoutUsersInput>
@@ -52743,6 +54233,207 @@ export namespace Prisma {
     approvedById?: StringNullableFilter<"Cashout"> | string | null
   }
 
+  export type ReportUpsertWithWhereUniqueWithoutCreatedByInput = {
+    where: ReportWhereUniqueInput
+    update: XOR<ReportUpdateWithoutCreatedByInput, ReportUncheckedUpdateWithoutCreatedByInput>
+    create: XOR<ReportCreateWithoutCreatedByInput, ReportUncheckedCreateWithoutCreatedByInput>
+  }
+
+  export type ReportUpdateWithWhereUniqueWithoutCreatedByInput = {
+    where: ReportWhereUniqueInput
+    data: XOR<ReportUpdateWithoutCreatedByInput, ReportUncheckedUpdateWithoutCreatedByInput>
+  }
+
+  export type ReportUpdateManyWithWhereWithoutCreatedByInput = {
+    where: ReportScalarWhereInput
+    data: XOR<ReportUpdateManyMutationInput, ReportUncheckedUpdateManyWithoutCreatedByInput>
+  }
+
+  export type ReportScalarWhereInput = {
+    AND?: ReportScalarWhereInput | ReportScalarWhereInput[]
+    OR?: ReportScalarWhereInput[]
+    NOT?: ReportScalarWhereInput | ReportScalarWhereInput[]
+    id?: StringFilter<"Report"> | string
+    message?: StringFilter<"Report"> | string
+    photoKey?: StringNullableFilter<"Report"> | string | null
+    createdById?: StringFilter<"Report"> | string
+    createdAt?: DateTimeFilter<"Report"> | Date | string
+    resolvedAt?: DateTimeNullableFilter<"Report"> | Date | string | null
+    resolvedById?: StringNullableFilter<"Report"> | string | null
+  }
+
+  export type UserCreateWithoutReportsInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    passwordHash?: string | null
+    avatarKey?: string | null
+    bio?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    branch?: BranchCreateNestedOneWithoutUsersInput
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleCreateNestedManyWithoutUserInput
+    attendances?: AttendanceCreateNestedManyWithoutUserInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    reviewed?: RequestCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutReportsInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    passwordHash?: string | null
+    avatarKey?: string | null
+    bio?: string | null
+    branchId?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleUncheckedCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleUncheckedCreateNestedManyWithoutUserInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutUserInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutReportsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutReportsInput, UserUncheckedCreateWithoutReportsInput>
+  }
+
+  export type UserUpsertWithoutReportsInput = {
+    update: XOR<UserUpdateWithoutReportsInput, UserUncheckedUpdateWithoutReportsInput>
+    create: XOR<UserCreateWithoutReportsInput, UserUncheckedCreateWithoutReportsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutReportsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutReportsInput, UserUncheckedUpdateWithoutReportsInput>
+  }
+
+  export type UserUpdateWithoutReportsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branch?: BranchUpdateOneWithoutUsersNestedInput
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUpdateManyWithoutUserNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutReportsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUncheckedUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUncheckedUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
   export type UserCreateWithoutShiftsInput = {
     id?: string
     fullName: string
@@ -52779,6 +54470,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutShiftsInput = {
@@ -52817,6 +54509,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutShiftsInput = {
@@ -52871,6 +54564,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutShiftsInput = {
@@ -52909,6 +54603,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutCashoutsInput = {
@@ -52947,6 +54642,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutCashoutsInput = {
@@ -52985,6 +54681,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutCashoutsInput = {
@@ -53039,6 +54736,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCashoutsInput = {
@@ -53077,6 +54775,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutSalesReportsInput = {
@@ -53115,6 +54814,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSalesReportsInput = {
@@ -53153,6 +54853,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSalesReportsInput = {
@@ -53207,6 +54908,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSalesReportsInput = {
@@ -53245,6 +54947,7 @@ export namespace Prisma {
     mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserRoleCreateWithoutRoleInput = {
@@ -53321,6 +55024,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutRolesInput = {
@@ -53359,6 +55063,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutRolesInput = {
@@ -53419,6 +55124,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAssignedRolesInput = {
@@ -53457,6 +55163,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAssignedRolesInput = {
@@ -53511,6 +55218,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRolesInput = {
@@ -53549,6 +55257,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type RoleUpsertWithoutUsersInput = {
@@ -53621,6 +55330,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAssignedRolesInput = {
@@ -53659,6 +55369,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutSessionsInput = {
@@ -53697,6 +55408,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSessionsInput = {
@@ -53735,6 +55447,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSessionsInput = {
@@ -53789,6 +55502,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSessionsInput = {
@@ -53827,6 +55541,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutBranchInput = {
@@ -53865,6 +55580,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutBranchInput = {
@@ -53903,6 +55619,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutBranchInput = {
@@ -54088,6 +55805,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutSchedulesInput = {
@@ -54126,6 +55844,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutSchedulesInput = {
@@ -54203,6 +55922,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutSchedulesInput = {
@@ -54241,6 +55961,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type WorkScheduleUpsertWithoutUsersInput = {
@@ -54308,6 +56029,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutAttendancesInput = {
@@ -54346,6 +56068,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutAttendancesInput = {
@@ -54423,6 +56146,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutAttendancesInput = {
@@ -54461,6 +56185,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type BranchUpsertWithoutAttendancesInput = {
@@ -54528,6 +56253,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutRequestsInput = {
@@ -54566,6 +56292,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutRequestsInput = {
@@ -54609,6 +56336,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutReviewedInput = {
@@ -54647,6 +56375,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutReviewedInput = {
@@ -54701,6 +56430,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRequestsInput = {
@@ -54739,6 +56469,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutReviewedInput = {
@@ -54788,6 +56519,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutReviewedInput = {
@@ -54826,6 +56558,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutNotificationsInput = {
@@ -54864,6 +56597,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -54902,6 +56636,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -54956,6 +56691,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -54994,6 +56730,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutActivityLogsInput = {
@@ -55032,6 +56769,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutActivityLogsInput = {
@@ -55070,6 +56808,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutActivityLogsInput = {
@@ -55124,6 +56863,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutActivityLogsInput = {
@@ -55162,6 +56902,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ChatMemberCreateWithoutRoomInput = {
@@ -55307,6 +57048,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutChatMembersInput = {
@@ -55345,6 +57087,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutChatMembersInput = {
@@ -55428,6 +57171,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMembersInput = {
@@ -55466,6 +57210,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type ChatRoomCreateWithoutMessagesInput = {
@@ -55527,6 +57272,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutChatMessagesInput = {
@@ -55565,6 +57311,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutChatMessagesInput = {
@@ -55648,6 +57395,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutChatMessagesInput = {
@@ -55686,6 +57434,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutCalendarEventsInput = {
@@ -55724,6 +57473,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutCalendarEventsInput = {
@@ -55762,6 +57512,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutCalendarEventsInput = {
@@ -55816,6 +57567,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutCalendarEventsInput = {
@@ -55854,6 +57606,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutRawCreatedInput = {
@@ -55892,6 +57645,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutRawCreatedInput = {
@@ -55930,6 +57684,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutRawCreatedInput = {
@@ -55973,6 +57728,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutRawQcInput = {
@@ -56011,6 +57767,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutRawQcInput = {
@@ -56065,6 +57822,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRawCreatedInput = {
@@ -56103,6 +57861,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUpsertWithoutRawQcInput = {
@@ -56152,6 +57911,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutRawQcInput = {
@@ -56190,6 +57950,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutMediaMemberInput = {
@@ -56228,6 +57989,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMediaMemberInput = {
@@ -56266,6 +58028,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMediaMemberInput = {
@@ -56320,6 +58083,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaMemberInput = {
@@ -56358,6 +58122,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutMediaItemsInput = {
@@ -56396,6 +58161,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMediaItemsInput = {
@@ -56434,6 +58200,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMediaItemsInput = {
@@ -56608,6 +58375,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaItemsInput = {
@@ -56646,6 +58414,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type MediaTaskUpsertWithWhereUniqueWithoutItemInput = {
@@ -56982,6 +58751,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutPersonalCalEventsInput = {
@@ -57020,6 +58790,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutPersonalCalEventsInput = {
@@ -57074,6 +58845,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutPersonalCalEventsInput = {
@@ -57112,6 +58884,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserCreateWithoutMediaPcalInput = {
@@ -57150,6 +58923,7 @@ export namespace Prisma {
     salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftCreateNestedManyWithoutUserInput
     cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserUncheckedCreateWithoutMediaPcalInput = {
@@ -57188,6 +58962,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
     shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
     cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
   }
 
   export type UserCreateOrConnectWithoutMediaPcalInput = {
@@ -57242,6 +59017,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutMediaPcalInput = {
@@ -57280,6 +59056,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserRoleCreateManyUserInput = {
@@ -57532,6 +59309,15 @@ export namespace Prisma {
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
+  }
+
+  export type ReportCreateManyCreatedByInput = {
+    id?: string
+    message: string
+    photoKey?: string | null
+    createdAt?: Date | string
+    resolvedAt?: Date | string | null
+    resolvedById?: string | null
   }
 
   export type UserRoleUpdateWithoutUserInput = {
@@ -58294,6 +60080,33 @@ export namespace Prisma {
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
+  export type ReportUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedById?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ReportUncheckedUpdateWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedById?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type ReportUncheckedUpdateManyWithoutCreatedByInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
+    photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedById?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type UserRoleCreateManyRoleInput = {
     userId: string
     assignedById?: string | null
@@ -58389,6 +60202,7 @@ export namespace Prisma {
     salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateWithoutBranchInput = {
@@ -58427,6 +60241,7 @@ export namespace Prisma {
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
   export type UserUncheckedUpdateManyWithoutBranchInput = {

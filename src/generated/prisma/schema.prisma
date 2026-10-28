@@ -101,8 +101,26 @@ model User {
   salesReports      SalesReport[]      @relation("SalesReportCreator")
   shifts            Shift[]
   cashouts          Cashout[]          @relation("CashoutCreator")
+  reports           Report[]           @relation("ReportCreator")
 
   @@index([branchId])
+}
+
+/**
+ * Laporan/keluhan error dari karyawan → ditangani Admin.
+ */
+model Report {
+  id           String    @id @default(cuid())
+  message      String // keterangan kenapa
+  photoKey     String? // screenshot di storage
+  createdById  String
+  createdBy    User      @relation("ReportCreator", fields: [createdById], references: [id])
+  createdAt    DateTime  @default(now())
+  resolvedAt   DateTime?
+  resolvedById String?
+
+  @@index([resolvedAt])
+  @@index([createdById])
 }
 
 // Jadwal kerja bulanan: 1 kode shift per karyawan per tanggal (dibuat HR).

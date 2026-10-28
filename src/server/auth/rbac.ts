@@ -100,3 +100,10 @@ export async function requireHeadBranch(): Promise<AuthContext> {
   assert(can.approveBranchSales(ctx.activeRole));
   return ctx;
 }
+
+/** Untuk halaman laporan masuk (Admin/Boss). */
+export async function requireReports(): Promise<AuthContext> {
+  const ctx = await requireAuth();
+  assert(can.manageReports(ctx.activeRole));
+  return ctx;
+}
