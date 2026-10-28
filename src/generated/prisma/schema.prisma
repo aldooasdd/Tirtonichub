@@ -259,8 +259,34 @@ model Branch {
   latitude  Float?
   longitude Float?
 
-  users       User[]
-  attendances Attendance[]
+  users        User[]
+  attendances  Attendance[]
+  cashSessions CashSession[]
+}
+
+/**
+ * Saldo kasir per cabang per hari (laci + 3 EDC). Dibuka sales pertama absen masuk,
+ * ditutup sebelum sales terakhir absen pulang. Rekonsiliasi vs penjualan+pembelian.
+ */
+model CashSession {
+  id           String    @id @default(cuid())
+  branchId     String
+  branch       Branch    @relation(fields: [branchId], references: [id])
+  date         DateTime  @db.Date
+  openCash     Int       @default(0)
+  openMandiri  Int       @default(0)
+  openBca      Int       @default(0)
+  openBri      Int       @default(0)
+  openedById   String
+  openedAt     DateTime  @default(now())
+  closeCash    Int?
+  closeMandiri Int?
+  closeBca     Int?
+  closeBri     Int?
+  closedById   String?
+  closedAt     DateTime?
+
+  @@unique([branchId, date])
 }
 
 model WorkSchedule {

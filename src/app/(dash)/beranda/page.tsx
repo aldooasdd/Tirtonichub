@@ -10,12 +10,15 @@ import { dateKeyWIB, wibMinutesOfDay, parseHHMM } from "@/server/attendance/logi
 import { shiftScheduleFor } from "@/server/attendance/shift-schedule";
 import { loadCalendarEvents } from "@/server/calendar-events";
 import { KalenderClient } from "@/components/kalender/kalender-client";
+import { computeBranchCash, zeroBuckets, type Buckets } from "@/lib/cash";
+import { CashOpenForm, CashCloseForm } from "@/components/cash/cash-forms";
+import { BranchCashBoard } from "@/components/cash/branch-cash-board";
 
-function Kpi({ label, value, bg }: { label: string; value: string | number; bg: string }) {
+function Kpi({ label, value, bg, small }: { label: string; value: string | number; bg: string; small?: boolean }) {
   return (
-    <div className={`${bg} rounded-2xl p-6 text-kpi-foreground`}>
-      <p className="text-14">{label}</p>
-      <p className="mt-3 text-24 font-semibold leading-none">{value}</p>
+    <div className={`${bg} rounded-2xl text-kpi-foreground ${small ? "p-3" : "p-6"}`}>
+      <p className={small ? "text-11" : "text-14"}>{label}</p>
+      <p className={`mt-1 font-semibold leading-none ${small ? "text-16" : "mt-3 text-24"}`}>{value}</p>
     </div>
   );
 }
@@ -88,6 +91,28 @@ export default async function BerandaPage() {
   );
   const sisaCuti = tenureOk ? Math.max(0, 12 - cutiTerpakai) : 0;
 
+  // Saldo kasir cabang (untuk Sales input & Kepala Cabang pantau).
+  const isSales = ctx.activeRole === "SALES";
+  const isHeadBranch = ctx.activeRole === "HEAD_BRANCH";
+  let cashSession: Awaited<ReturnType<typeof prisma.cashSession.findUnique>> = null;
+  let cashOpen: Buckets = zeroBuckets();
+  let cashReport: Awaited<ReturnType<typeof computeBranchCash>> | null = null;
+  if (user.branchId && (isSales || isHeadBranch)) {
+    cashSession = await prisma.cashSession.findUnique({
+      where: { branchId_date: { branchId: user.branchId, date: today } },
+    });
+    cashOpen = cashSession
+      ? { cash: cashSession.openCash, mandiri: cashSession.openMandiri, bca: cashSession.openBca, bri: cashSession.openBri }
+      : zeroBuckets();
+    cashReport = await computeBranchCash(user.branchId, today, cashOpen);
+  }
+  const cashClose =
+    cashSession?.closedAt != null
+      ? { cash: cashSession.closeCash ?? 0, mandiri: cashSession.closeMandiri ?? 0, bca: cashSession.closeBca ?? 0, bri: cashSession.closeBri ?? 0 }
+      : null;
+  const needOpenCash = isSales && !!att?.checkInAt && !cashSession;
+  const needCloseCash = isSales && !!cashSession && !cashSession.closedAt && !att?.checkOutAt;
+
   const absenPhase = !att?.checkInAt ? "in" : !att.checkOutAt ? "out" : "done";
   // Media: jadwal fleksibel → pulang setelah 5 jam. Lainnya: setelah shift berakhir.
   const isMedia = ctx.activeRole === "MEDIA";
@@ -109,12 +134,25 @@ export default async function BerandaPage() {
         <p className="text-14 text-muted-foreground">Ringkasan kinerja & absensi kamu.</p>
       </div>
 
-      <section className="grid grid-cols-2 gap-5 lg:grid-cols-4">
-        <Kpi label="Hadir bulan ini" value={hadir} bg="bg-kpi-1" />
-        <Kpi label="Terlambat" value={telat} bg="bg-kpi-2" />
-        <Kpi label="Sisa cuti" value={sisaCuti} bg="bg-kpi-1" />
-        <Kpi label="Pengajuan pending" value={pending} bg="bg-kpi-2" />
+      {isHeadBranch && cashReport && (
+        <BranchCashBoard
+          opened={!!cashSession}
+          open={cashOpen}
+          masuk={cashReport.masuk}
+          cashout={cashReport.cashout}
+          expected={cashReport.expected}
+          close={cashClose}
+        />
+      )}
+
+      <section className={isHeadBranch ? "grid grid-cols-4 gap-3" : "grid grid-cols-2 gap-5 lg:grid-cols-4"}>
+        <Kpi label="Hadir bulan ini" value={hadir} bg="bg-kpi-1" small={isHeadBranch} />
+        <Kpi label="Terlambat" value={telat} bg="bg-kpi-2" small={isHeadBranch} />
+        <Kpi label="Sisa cuti" value={sisaCuti} bg="bg-kpi-1" small={isHeadBranch} />
+        <Kpi label="Pengajuan pending" value={pending} bg="bg-kpi-2" small={isHeadBranch} />
       </section>
+
+      {needOpenCash && <CashOpenForm />}
 
       {ABSEN_ON && (
         <section className="rounded-2xl border bg-card p-6">
@@ -149,6 +187,8 @@ export default async function BerandaPage() {
           </div>
         </section>
       )}
+
+      {needCloseCash && <CashCloseForm />}
 
       <KalenderClient events={await loadCalendarEvents({ userId: ctx.userId, fullName: user.fullName, branchId: user.branchId })} />
     </div>

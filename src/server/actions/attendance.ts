@@ -135,6 +135,15 @@ export async function checkOut(form: FormData): Promise<ActionResult> {
       return { ok: false, message: `Absen pulang bisa setelah shift berakhir (${schedule.end}).` };
   }
 
+  // Sales: wajib tutup saldo kasir cabang sebelum pulang.
+  if (ctx.activeRole === "SALES" && user.branchId) {
+    const sess = await prisma.cashSession.findUnique({
+      where: { branchId_date: { branchId: user.branchId, date: dateKey } },
+    });
+    if (!sess) return { ok: false, message: "Buka saldo kasir (saldo awal) dulu." };
+    if (!sess.closedAt) return { ok: false, message: "Tutup saldo kasir (saldo akhir) dulu sebelum pulang." };
+  }
+
   const radiusErr = await checkRadiusOrFail(user.branchId, geo);
   if (radiusErr) return { ok: false, message: radiusErr };
 

@@ -243,6 +243,24 @@ exports.Prisma.BranchScalarFieldEnum = {
   longitude: 'longitude'
 };
 
+exports.Prisma.CashSessionScalarFieldEnum = {
+  id: 'id',
+  branchId: 'branchId',
+  date: 'date',
+  openCash: 'openCash',
+  openMandiri: 'openMandiri',
+  openBca: 'openBca',
+  openBri: 'openBri',
+  openedById: 'openedById',
+  openedAt: 'openedAt',
+  closeCash: 'closeCash',
+  closeMandiri: 'closeMandiri',
+  closeBca: 'closeBca',
+  closeBri: 'closeBri',
+  closedById: 'closedById',
+  closedAt: 'closedAt'
+};
+
 exports.Prisma.WorkScheduleScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -637,6 +655,7 @@ exports.Prisma.ModelName = {
   UserRole: 'UserRole',
   Session: 'Session',
   Branch: 'Branch',
+  CashSession: 'CashSession',
   WorkSchedule: 'WorkSchedule',
   UserSchedule: 'UserSchedule',
   Holiday: 'Holiday',
