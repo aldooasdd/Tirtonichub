@@ -27,6 +27,7 @@ export default async function PenjualanOnlinePage() {
       by: r.createdBy.fullName,
       grandTotal: r.grandTotal,
       photoKey: r.photoKey,
+      productPhotoKeys: r.productPhotoKeys,
       items: items.map((it) => ({ name: it.name, qty: it.qty || 1, jual: it.total ?? it.price * (it.qty || 1) })),
     };
   });

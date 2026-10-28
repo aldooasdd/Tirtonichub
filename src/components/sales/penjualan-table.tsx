@@ -31,6 +31,7 @@ export type NotaRow = {
   saluran: string;
   grandTotal: number;
   photoKey: string;
+  productPhotoKeys?: string[];
   items: NotaItem[];
   edit: NotaEdit;
 };
@@ -115,6 +116,16 @@ export function PenjualanTable({ notas }: { notas: NotaRow[] }) {
                   </button>
                 </div>
               </div>
+              {n.productPhotoKeys && n.productPhotoKeys.length > 0 && (
+                <div className="flex flex-wrap gap-2 border-b px-4 py-2">
+                  {n.productPhotoKeys.map((k) => (
+                    <a key={k} href={`/api/file?key=${encodeURIComponent(k)}`} target="_blank" rel="noopener">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={`/api/file?key=${encodeURIComponent(k)}`} alt="Foto produk" className="h-14 w-14 rounded-md border object-cover" />
+                    </a>
+                  ))}
+                </div>
+              )}
               <table className="w-full text-14 border-collapse">
                 <thead>
                   <tr className="border-b text-left text-12 text-muted-foreground">

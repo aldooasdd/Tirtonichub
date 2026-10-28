@@ -38,6 +38,7 @@ export default async function FinancePenjualanPage() {
       saluran: r.channel === "online" ? "Online" : "Offline",
       grandTotal: r.grandTotal,
       photoKey: r.photoKey,
+      productPhotoKeys: r.productPhotoKeys,
       items: items.map((it) => {
         const jual = it.total ?? it.price * (it.qty || 1); // total net eksplisit (0 utk diskon 100%) dihormati
         return { name: it.name || "-", qty: it.qty || 1, jual, cash: isCash ? jual : 0 };

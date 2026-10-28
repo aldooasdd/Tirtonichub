@@ -18,6 +18,7 @@ type Row = {
   by: string;
   grandTotal: number;
   photoKey: string;
+  productPhotoKeys?: string[];
   items: Item[];
 };
 
@@ -83,6 +84,21 @@ export function CabangApproval({
                     Lihat nota
                   </a>
                 </div>
+
+                {r.productPhotoKeys && r.productPhotoKeys.length > 0 && (
+                  <div className="flex flex-wrap gap-2">
+                    {r.productPhotoKeys.map((k) => (
+                      <a key={k} href={`/api/file?key=${encodeURIComponent(k)}`} target="_blank" rel="noopener">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={`/api/file?key=${encodeURIComponent(k)}`}
+                          alt="Foto produk"
+                          className="h-16 w-16 rounded-md border object-cover"
+                        />
+                      </a>
+                    ))}
+                  </div>
+                )}
 
                 {r.items.length > 0 && (
                   <div className="rounded-md border">
