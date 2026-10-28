@@ -5,8 +5,8 @@ const FINANCE_ROLES: RoleCode[] = ["BOSS", "FINANCE"];
 const STOCK_ROLES: RoleCode[] = ["BOSS", "STOCK_ROOM"]; // Stock Room juga pegang QC
 const MEDIA_ROLES: RoleCode[] = ["BOSS", "MEDIA"]; // Tirtonic Studio (produksi konten)
 const SALES_ROLES: RoleCode[] = ["BOSS", "SALES"]; // kirim rekap penjualan (foto nota)
-const ADMIN_ROLES: RoleCode[] = ["BOSS", "ADMIN"]; // input penjualan online (screenshot marketplace)
-const SALES_INPUT_ROLES: RoleCode[] = ["BOSS", "SALES", "ADMIN"]; // boleh input penjualan (offline/online)
+const ADMIN_ROLES: RoleCode[] = ["BOSS", "ADMIN"]; // approve penjualan online (bukan input)
+const SALES_INPUT_ROLES: RoleCode[] = ["BOSS", "SALES"]; // input penjualan (offline/online); Admin hanya approve
 const HEAD_BRANCH_ROLES: RoleCode[] = ["BOSS", "HEAD_BRANCH"]; // ACC penjualan offline cabang sebelum masuk Finance
 
 /** Izin murni (tanpa DB/next) — bisa diuji langsung. */
