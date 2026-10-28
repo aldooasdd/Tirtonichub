@@ -127,8 +127,8 @@ export async function loadCalendarEvents(me?: { userId: string; fullName: string
   for (const r of requests) {
     const pending = r.status === "PENDING";
     const p = (r.payload ?? {}) as { counterpartId?: string; counterpartApproved?: boolean };
-    // viewer = pengganti & belum setuju → bisa ACC langsung dari kalender
-    const canRespond = pending && !!me && p.counterpartId === me.userId && !p.counterpartApproved;
+    // bukan pemohon & belum ada pengganti → bisa jadi pengganti dari kalender (cabang sudah difilter)
+    const canRespond = pending && !!me && r.userId !== me.userId && !p.counterpartApproved;
     for (const day of eachDay(r.startDate, r.endDate)) {
       events.push({
         id: `req_${r.id}_${day.toISOString().slice(0, 10)}`,

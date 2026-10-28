@@ -108,6 +108,29 @@ export async function respondRequest(id: string, agree: boolean): Promise<Action
   return { ok: true };
 }
 
+/** Volunteer jadi pengganti (long shift) dari kalender. Setuju langsung → lanjut HR. */
+export async function coverRequest(id: string): Promise<ActionResult> {
+  const ctx = await requireAuth();
+  assert(roleAttends(ctx.activeRole));
+  const r = await prisma.request.findUnique({ where: { id }, include: { user: { select: { branchId: true } } } });
+  if (!r) return { ok: false, message: "Tidak ditemukan." };
+  if (r.status !== "PENDING") return { ok: false, message: "Sudah diproses." };
+  if (!["LEAVE", "PERMIT", "SICK"].includes(r.type)) return { ok: false, message: "Jenis ini tak bisa digantikan di sini." };
+  if (r.userId === ctx.userId) return { ok: false, message: "Tak bisa menggantikan diri sendiri." };
+  const me = await prisma.user.findUnique({ where: { id: ctx.userId }, select: { branchId: true } });
+  if (r.user.branchId && me?.branchId !== r.user.branchId) return { ok: false, message: "Beda cabang." };
+  const p = (r.payload ?? {}) as { counterpartApproved?: boolean };
+  if (p.counterpartApproved) return { ok: false, message: "Sudah ada pengganti." };
+
+  await prisma.request.update({
+    where: { id },
+    data: { payload: { ...p, counterpartId: ctx.userId, counterpartApproved: true } as Prisma.InputJsonValue },
+  });
+  await prisma.notification.create({ data: { userId: r.userId, type: "request", title: "Pengganti siap, menunggu HR", link: "/pengajuan" } });
+  await notifyBosses({ type: "request", title: "Pengajuan siap di-approve (ada pengganti)", link: "/hr/approval" });
+  return { ok: true };
+}
+
 export async function cancelRequest(id: string): Promise<ActionResult> {
   const ctx = await requireAuth();
   const r = await prisma.request.findUnique({ where: { id } });
