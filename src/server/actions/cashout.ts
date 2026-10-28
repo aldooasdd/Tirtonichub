@@ -6,6 +6,7 @@ import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
 import { notifyBosses, notifyRole } from "@/server/notify";
+import { parseSalesNotaViaN8n } from "@/server/n8n-sales";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -14,11 +15,44 @@ type SaveInput = {
   description: string;
   spentAt?: string | null; // ISO; kosong → sekarang
   category?: string | null;
-  imageBase64?: string | null; // foto nota pembelian (opsional)
+  photoKey?: string | null; // foto nota hasil scan (sudah diupload)
+  imageBase64?: string | null; // atau foto mentah (diupload saat simpan)
   mimeType?: string | null;
 };
 
+export type CashoutScan = {
+  ok: boolean;
+  message?: string;
+  photoKey?: string;
+  parsed?: { amount: number; description: string; spentAt: string | null };
+  ocr?: boolean; // true bila n8n mengisi
+};
+
 const rupiah = (n: number) => new Intl.NumberFormat("id-ID").format(n);
+
+/** Scan foto nota pembelian via OCR (sama seperti nota penjualan). Belum simpan DB (diedit dulu). */
+export async function scanCashoutNota(imageBase64: string, mimeType: string): Promise<CashoutScan> {
+  await requireSalesInput();
+  if (!imageBase64) return { ok: false, message: "Foto nota kosong." };
+
+  const key = makeKey("cashout-nota", mimeType.includes("png") ? "png" : "jpg");
+  try {
+    await putObject(key, Buffer.from(imageBase64, "base64"), mimeType || "image/jpeg");
+  } catch {
+    return { ok: false, message: "Gagal simpan foto nota." };
+  }
+
+  const parsed = await parseSalesNotaViaN8n(imageBase64, mimeType);
+  const amount = parsed ? parsed.grandTotal || parsed.total || 0 : 0;
+  const description = parsed
+    ? parsed.items
+        .filter((i) => i.name?.trim())
+        .map((i) => (i.qty > 1 ? `${i.name} x${i.qty}` : i.name))
+        .join(", ")
+        .slice(0, 500)
+    : "";
+  return { ok: true, photoKey: key, parsed: { amount, description, spentAt: parsed?.soldAt ?? null }, ocr: parsed !== null };
+}
 
 /** Sales: input pengeluaran/pembelian → perlu ACC Kepala Cabang cabangnya, lalu masuk Finance. */
 export async function saveCashout(input: SaveInput): Promise<ActionResult> {
@@ -33,8 +67,8 @@ export async function saveCashout(input: SaveInput): Promise<ActionResult> {
     ? await prisma.branch.findUnique({ where: { id: ctx.branchId }, select: { name: true } })
     : null;
 
-  let photoKey: string | null = null;
-  if (input.imageBase64) {
+  let photoKey: string | null = input.photoKey ?? null;
+  if (!photoKey && input.imageBase64) {
     photoKey = makeKey("cashout-nota", (input.mimeType ?? "").includes("png") ? "png" : "jpg");
     try {
       await putObject(photoKey, Buffer.from(input.imageBase64, "base64"), input.mimeType || "image/jpeg");
