@@ -10,7 +10,7 @@ import { clientMeta } from "@/server/request-meta";
 import { notifyBosses } from "@/server/notify";
 import { REQ_TYPE_LABEL } from "@/lib/request-labels";
 import { requestSchema, type RequestInput } from "@/lib/validation";
-import { isShiftCode } from "@/lib/shift";
+import { effectiveShiftCode } from "@/server/attendance/shift-schedule";
 
 export type ActionResult = { ok: boolean; message?: string; id?: string };
 
@@ -44,9 +44,17 @@ export async function createRequest(input: RequestInput): Promise<ActionResult> 
     return { ok: false, message: parsed.error.issues[0]?.message ?? "Input tidak valid" };
   const d = parsed.data;
   if (d.endDate < d.startDate) return { ok: false, message: "Tanggal selesai sebelum mulai." };
+
+  // Tukar shift wajib ada pengganti; pengganti harus setuju dulu sebelum HR approve.
+  let payload = (d.payload ?? undefined) as Prisma.InputJsonValue | undefined;
+  let counterpartId: string | null = null;
   if (d.type === "SHIFT_SWAP") {
-    const toCode = (d.payload as { toCode?: string } | null)?.toCode;
-    if (!toCode || !isShiftCode(toCode)) return { ok: false, message: "Pilih shift tujuan." };
+    const cid = (d.payload as { counterpartId?: string } | null)?.counterpartId;
+    if (!cid || cid === ctx.userId) return { ok: false, message: "Pilih karyawan pengganti." };
+    const cp = await prisma.user.findFirst({ where: { id: cid, isActive: true }, select: { id: true } });
+    if (!cp) return { ok: false, message: "Pengganti tidak ditemukan." };
+    counterpartId = cid;
+    payload = { counterpartId, counterpartApproved: false };
   }
 
   const r = await prisma.request.create({
@@ -57,13 +65,41 @@ export async function createRequest(input: RequestInput): Promise<ActionResult> 
       endDate: new Date(d.endDate),
       reason: d.reason,
       attachmentKey: d.attachmentKey ?? null,
-      payload: (d.payload ?? undefined) as Prisma.InputJsonValue | undefined,
+      payload,
     },
   });
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "create", entity: "Request", entityId: r.id, after: { type: d.type } });
-  await notifyBosses({ type: "request", title: `Pengajuan ${REQ_TYPE_LABEL[d.type]} baru masuk`, link: "/hr/approval" });
+  if (counterpartId) {
+    // minta persetujuan pengganti dulu (bukan HR)
+    await prisma.notification.create({
+      data: { userId: counterpartId, type: "request", title: "Permintaan tukar shift", body: `Tanggal ${d.startDate}`, link: "/pengajuan" },
+    });
+  } else {
+    await notifyBosses({ type: "request", title: `Pengajuan ${REQ_TYPE_LABEL[d.type]} baru masuk`, link: "/hr/approval" });
+  }
   return { ok: true, id: r.id };
+}
+
+/** Pengganti menyetujui / menolak permintaan tukar shift. Setuju → lanjut ke HR. */
+export async function respondShiftSwap(id: string, agree: boolean): Promise<ActionResult> {
+  const ctx = await requireAuth();
+  const r = await prisma.request.findUnique({ where: { id } });
+  if (!r || r.type !== "SHIFT_SWAP") return { ok: false, message: "Tidak ditemukan." };
+  if (r.status !== "PENDING") return { ok: false, message: "Sudah diproses." };
+  const p = (r.payload ?? {}) as { counterpartId?: string; counterpartApproved?: boolean };
+  if (p.counterpartId !== ctx.userId) return { ok: false, message: "Bukan permintaan untukmu." };
+  if (p.counterpartApproved) return { ok: false, message: "Sudah kamu setujui." };
+
+  if (!agree) {
+    await prisma.request.update({ where: { id }, data: { status: "REJECTED", reviewNote: "Pengganti menolak" } });
+    await prisma.notification.create({ data: { userId: r.userId, type: "request", title: "Tukar shift ditolak pengganti", link: "/pengajuan" } });
+    return { ok: true };
+  }
+  await prisma.request.update({ where: { id }, data: { payload: { ...p, counterpartApproved: true } as Prisma.InputJsonValue } });
+  await prisma.notification.create({ data: { userId: r.userId, type: "request", title: "Pengganti setuju, menunggu HR", link: "/pengajuan" } });
+  await notifyBosses({ type: "request", title: "Tukar shift siap di-approve (pengganti setuju)", link: "/hr/approval" });
+  return { ok: true };
 }
 
 export async function cancelRequest(id: string): Promise<ActionResult> {
@@ -88,6 +124,10 @@ export async function reviewRequest(
   const req = await prisma.request.findUnique({ where: { id } });
   if (!req) return { ok: false, message: "Tidak ditemukan." };
   if (req.status !== "PENDING") return { ok: false, message: "Pengajuan sudah diproses." };
+  if (decision === "APPROVED" && req.type === "SHIFT_SWAP") {
+    const p = (req.payload ?? {}) as { counterpartApproved?: boolean };
+    if (!p.counterpartApproved) return { ok: false, message: "Pengganti belum setuju. Tak bisa di-approve." };
+  }
 
   const { ip } = await clientMeta();
 
@@ -113,15 +153,16 @@ export async function reviewRequest(
           });
         }
       } else if (req.type === "SHIFT_SWAP") {
-        // tukar shift: set kode shift baru di tanggal itu (menimpa pola/jadwal)
-        const toCode = (req.payload as { toCode?: string } | null)?.toCode;
-        if (toCode && isShiftCode(toCode)) {
-          await tx.shift.upsert({
-            where: { userId_date: { userId: req.userId, date: req.startDate } },
-            update: { code: toCode },
-            create: { userId: req.userId, date: req.startDate, code: toCode },
-          });
-        }
+        // tukar shift: kedua pihak saling tukar kode shift di tanggal itu
+        const p = (req.payload ?? {}) as { counterpartId?: string };
+        const D = req.startDate;
+        const [reqUser, cpUser] = await Promise.all([
+          tx.user.findUniqueOrThrow({ where: { id: req.userId }, select: { id: true, fullName: true } }),
+          tx.user.findUniqueOrThrow({ where: { id: p.counterpartId! }, select: { id: true, fullName: true } }),
+        ]);
+        const [rCode, cCode] = await Promise.all([effectiveShiftCode(reqUser, D), effectiveShiftCode(cpUser, D)]);
+        await tx.shift.upsert({ where: { userId_date: { userId: reqUser.id, date: D } }, update: { code: cCode }, create: { userId: reqUser.id, date: D, code: cCode } });
+        await tx.shift.upsert({ where: { userId_date: { userId: cpUser.id, date: D } }, update: { code: rCode }, create: { userId: cpUser.id, date: D, code: rCode } });
       } else if (req.type === "ATTENDANCE_CORRECTION") {
         // koreksi: terapkan payload persis ke hari itu (§11.11)
         const p = (req.payload ?? {}) as {

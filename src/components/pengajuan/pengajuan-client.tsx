@@ -23,10 +23,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { REQ_TYPE_LABEL, REQ_STATUS_LABEL, statusBadgeVariant } from "@/lib/request-labels";
-import { createRequest, cancelRequest } from "@/server/actions/requests";
-import { SHIFTS } from "@/lib/shift";
+import { createRequest, cancelRequest, respondShiftSwap } from "@/server/actions/requests";
 
-const SWAP_CODES = ["P", "S", "OH"] as const; // shift kerja tujuan tukar
+type Emp = { id: string; fullName: string };
+type Incoming = { id: string; requester: string; date: string; reason: string };
 
 type Row = {
   id: string;
@@ -36,11 +36,20 @@ type Row = {
   reason: string;
   status: string;
   reviewNote: string | null;
+  swap?: { counterpart: string; approved: boolean } | null;
 };
 
 const TYPES = ["LEAVE", "PERMIT", "SICK", "SHIFT_SWAP", "ATTENDANCE_CORRECTION"] as const;
 
-export function PengajuanClient({ requests }: { requests: Row[] }) {
+export function PengajuanClient({
+  requests,
+  employees,
+  incoming,
+}: {
+  requests: Row[];
+  employees: Emp[];
+  incoming: Incoming[];
+}) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const [pending, start] = useTransition();
@@ -54,6 +63,14 @@ export function PengajuanClient({ requests }: { requests: Row[] }) {
     });
   }
 
+  function respond(id: string, agree: boolean) {
+    start(async () => {
+      const r = await respondShiftSwap(id, agree);
+      if (!r.ok) alert(r.message);
+      router.refresh();
+    });
+  }
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
@@ -62,6 +79,28 @@ export function PengajuanClient({ requests }: { requests: Row[] }) {
           <Plus className="h-4 w-4" /> Ajukan
         </Button>
       </div>
+
+      {incoming.length > 0 && (
+        <div className="space-y-2 rounded-lg border bg-card p-4">
+          <p className="text-14 font-medium">Perlu persetujuanmu (tukar shift)</p>
+          {incoming.map((it) => (
+            <div key={it.id} className="rounded-md border p-3">
+              <p className="text-14">
+                <span className="font-medium">{it.requester}</span> minta tukar shift tgl {it.date}
+              </p>
+              <p className="text-13 text-muted-foreground">{it.reason}</p>
+              <div className="mt-2 flex gap-2">
+                <Button size="sm" disabled={pending} onClick={() => respond(it.id, true)}>
+                  Setuju
+                </Button>
+                <Button size="sm" variant="outline" disabled={pending} onClick={() => respond(it.id, false)}>
+                  Tolak
+                </Button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       <div className="flex flex-col gap-3">
         {requests.length === 0 && (
@@ -82,6 +121,16 @@ export function PengajuanClient({ requests }: { requests: Row[] }) {
               <Badge variant={statusBadgeVariant(r.status)}>{REQ_STATUS_LABEL[r.status]}</Badge>
             </div>
             <p className="mt-2 text-14">{r.reason}</p>
+            {r.swap && (
+              <p className="mt-1 text-13 text-muted-foreground">
+                Pengganti: {r.swap.counterpart} ·{" "}
+                {r.status === "PENDING"
+                  ? r.swap.approved
+                    ? "pengganti setuju, menunggu HR"
+                    : "menunggu persetujuan pengganti"
+                  : ""}
+              </p>
+            )}
             {r.status === "REJECTED" && r.reviewNote && (
               <p className="mt-1 text-14 text-destructive">Catatan: {r.reviewNote}</p>
             )}
@@ -103,6 +152,7 @@ export function PengajuanClient({ requests }: { requests: Row[] }) {
       <AjukanDialog
         open={open}
         onOpenChange={setOpen}
+        employees={employees}
         onSaved={() => {
           setOpen(false);
           router.refresh();
@@ -116,10 +166,12 @@ function AjukanDialog({
   open,
   onOpenChange,
   onSaved,
+  employees,
 }: {
   open: boolean;
   onOpenChange: (v: boolean) => void;
   onSaved: () => void;
+  employees: Emp[];
 }) {
   const [type, setType] = useState<(typeof TYPES)[number]>("LEAVE");
   const [startDate, setStart] = useState("");
@@ -127,7 +179,7 @@ function AjukanDialog({
   const [reason, setReason] = useState("");
   const [jamMasuk, setJamMasuk] = useState("");
   const [jamPulang, setJamPulang] = useState("");
-  const [toCode, setToCode] = useState<string>("P");
+  const [counterpartId, setCounterpart] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
   const [pending, start] = useTransition();
 
@@ -144,7 +196,7 @@ function AjukanDialog({
       if (jamMasuk) payload.checkInAt = `${startDate}T${jamMasuk}:00+07:00`;
       if (jamPulang) payload.checkOutAt = `${startDate}T${jamPulang}:00+07:00`;
     } else if (isSwap) {
-      payload = { toCode };
+      payload = { counterpartId };
     }
     start(async () => {
       const r = await createRequest({ type, startDate, endDate: end, reason, payload });
@@ -189,15 +241,15 @@ function AjukanDialog({
           </div>
           {isSwap && (
             <div className="space-y-2">
-              <Label>Shift tujuan</Label>
-              <Select value={toCode} onValueChange={setToCode}>
+              <Label>Pengganti (tukar shift dgn)</Label>
+              <Select value={counterpartId} onValueChange={setCounterpart}>
                 <SelectTrigger>
-                  <SelectValue />
+                  <SelectValue placeholder="Pilih karyawan" />
                 </SelectTrigger>
                 <SelectContent>
-                  {SWAP_CODES.map((c) => (
-                    <SelectItem key={c} value={c}>
-                      {c} · {SHIFTS[c].label}
+                  {employees.map((e) => (
+                    <SelectItem key={e.id} value={e.id}>
+                      {e.fullName}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -226,7 +278,7 @@ function AjukanDialog({
           <Button variant="secondary" onClick={() => onOpenChange(false)}>
             Batal
           </Button>
-          <Button onClick={submit} disabled={pending || !startDate || !reason}>
+          <Button onClick={submit} disabled={pending || !startDate || !reason || (isSwap && !counterpartId)}>
             {pending ? "Mengirim…" : "Kirim"}
           </Button>
         </DialogFooter>

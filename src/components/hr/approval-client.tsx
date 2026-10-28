@@ -15,6 +15,7 @@ type Row = {
   startDate: string;
   endDate: string;
   reason: string;
+  swap?: { counterpart: string; approved: boolean } | null;
 };
 
 export function ApprovalClient({ requests }: { requests: Row[] }) {
@@ -57,6 +58,12 @@ export function ApprovalClient({ requests }: { requests: Row[] }) {
               <Badge variant="secondary">{REQ_TYPE_LABEL[r.type]}</Badge>
             </div>
             <p className="mt-2 text-14">{r.reason}</p>
+            {r.swap && (
+              <p className="mt-1 text-13 text-muted-foreground">
+                Pengganti: {r.swap.counterpart} ·{" "}
+                {r.swap.approved ? "pengganti setuju" : "menunggu persetujuan pengganti"}
+              </p>
+            )}
             <Input
               className="mt-3"
               placeholder="Catatan (wajib bila tolak)"
@@ -64,7 +71,11 @@ export function ApprovalClient({ requests }: { requests: Row[] }) {
               onChange={(e) => setNotes((n) => ({ ...n, [r.id]: e.target.value }))}
             />
             <div className="mt-3 flex gap-2">
-              <Button className="flex-1" disabled={pending} onClick={() => act(r.id, "APPROVED")}>
+              <Button
+                className="flex-1"
+                disabled={pending || (!!r.swap && !r.swap.approved)}
+                onClick={() => act(r.id, "APPROVED")}
+              >
                 Setujui
               </Button>
               <Button
