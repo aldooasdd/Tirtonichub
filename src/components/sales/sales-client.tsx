@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { compressImage } from "@/lib/image";
-import { scanSalesNota, saveSalesReport } from "@/server/actions/sales";
+import { scanSalesNota, saveSalesReport, uploadSalesPhoto } from "@/server/actions/sales";
 import type { SalesItem, SalesPayment } from "@/server/n8n-sales";
 
 export type SalesRow = {
@@ -75,19 +75,33 @@ export function SalesClient({
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
   const [photoKey, setPhotoKey] = useState<string | null>(null);
+  const [productKeys, setProductKeys] = useState<string[]>([]);
   const [draft, setDraft] = useState<Draft | null>(null);
 
-  async function onCapture(file: File) {
+  // Foto pertama = nota (dibaca AI), sisanya = foto produk (hanya diupload).
+  async function onCapture(files: FileList) {
+    const arr = Array.from(files);
     setBusy(true);
     setMsg(online ? "Memindai screenshot…" : "Memindai nota…");
     try {
-      const b64 = await blobToBase64(await compressImage(file));
+      const b64 = await blobToBase64(await compressImage(arr[0]));
       const r = await scanSalesNota(b64, "image/jpeg");
       if (!r.ok || !r.photoKey) {
         setMsg(r.message ?? "Gagal pindai.");
         return;
       }
       setPhotoKey(r.photoKey);
+      // upload foto produk sisanya
+      if (arr.length > 1) {
+        setMsg(`Mengunggah ${arr.length - 1} foto produk…`);
+        const keys: string[] = [];
+        for (const f of arr.slice(1)) {
+          const pb64 = await blobToBase64(await compressImage(f));
+          const u = await uploadSalesPhoto(pb64, "image/jpeg");
+          if (u.ok && u.key) keys.push(u.key);
+        }
+        setProductKeys(keys);
+      }
       const p = r.parsed!;
       setDraft({
         notaNo: p.notaNo ?? "",
@@ -117,6 +131,7 @@ export function SalesClient({
   function reset() {
     setDraft(null);
     setPhotoKey(null);
+    setProductKeys([]);
     setMsg("");
   }
 
@@ -125,6 +140,7 @@ export function SalesClient({
     setBusy(true);
     const r = await saveSalesReport({
       photoKey,
+      productPhotoKeys: productKeys,
       notaNo: draft.notaNo,
       soldAt: draft.soldAt || null,
       customer: draft.customer,
@@ -175,21 +191,21 @@ export function SalesClient({
           <h1 className="text-24 font-semibold">{online ? "Rekap Penjualan Online" : "Rekap Penjualan Offline"}</h1>
           <p className="text-14 text-muted-foreground">
             {online
-              ? "Upload screenshot marketplace, AI isi datanya, lalu kirim ke Admin untuk disetujui."
-              : "Foto nota penjualan, AI isi datanya, lalu kirim ke Kepala Cabang untuk disetujui."}
+              ? "Foto pertama = screenshot (dibaca AI), sisanya foto produk. Lalu kirim ke Admin."
+              : "Foto pertama = nota (dibaca AI), sisanya foto produk. Lalu kirim ke Kepala Cabang."}
           </p>
         </div>
         <input
           ref={fileRef}
           type="file"
           accept="image/*"
-          capture="environment"
+          multiple
           className="hidden"
-          onChange={(e) => e.target.files?.[0] && onCapture(e.target.files[0])}
+          onChange={(e) => e.target.files?.length && onCapture(e.target.files)}
         />
         {!draft && (
           <Button disabled={busy} onClick={() => fileRef.current?.click()} className="shrink-0">
-            {busy ? "Memindai…" : "Foto nota penjualan"}
+            {busy ? "Memproses…" : online ? "Foto screenshot + produk" : "Foto nota + produk"}
           </Button>
         )}
       </div>
@@ -199,6 +215,9 @@ export function SalesClient({
       ) : (
         <div className="space-y-4 rounded-lg border bg-card p-4">
           {msg && <p className="text-12 text-muted-foreground">{msg}</p>}
+          {productKeys.length > 0 && (
+            <p className="text-12 text-muted-foreground">+{productKeys.length} foto produk terlampir.</p>
+          )}
           <div className="grid gap-3 sm:grid-cols-2">
             <Field label="No. nota"><Input value={draft.notaNo} onChange={(e) => upd({ notaNo: e.target.value })} /></Field>
             <Field label="Waktu transaksi"><Input type="datetime-local" value={draft.soldAt} onChange={(e) => upd({ soldAt: e.target.value })} /></Field>

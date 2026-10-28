@@ -54,8 +54,22 @@ export async function scanSalesNota(imageBase64: string, mimeType: string): Prom
   };
 }
 
+/** Upload foto produk tambahan (tak dibaca AI). Return key storage. */
+export async function uploadSalesPhoto(imageBase64: string, mimeType: string): Promise<{ ok: boolean; key?: string; message?: string }> {
+  await requireSalesInput();
+  if (!imageBase64) return { ok: false, message: "Foto kosong." };
+  const key = makeKey("sales-produk", mimeType.includes("png") ? "png" : "jpg");
+  try {
+    await putObject(key, Buffer.from(imageBase64, "base64"), mimeType || "image/jpeg");
+  } catch {
+    return { ok: false, message: "Gagal simpan foto." };
+  }
+  return { ok: true, key };
+}
+
 type SaveInput = {
   photoKey: string;
+  productPhotoKeys?: string[];
   notaNo?: string | null;
   soldAt?: string | null; // ISO; kosong → sekarang
   customer?: string | null;
@@ -151,6 +165,7 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
       branchId,
       approvedAt,
       photoKey: input.photoKey,
+      productPhotoKeys: (input.productPhotoKeys ?? []).slice(0, 20),
       createdById: ctx.userId,
     },
   });

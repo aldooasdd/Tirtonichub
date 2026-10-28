@@ -8277,6 +8277,7 @@ export namespace Prisma {
     branchName: number
     branchId: number
     photoKey: number
+    productPhotoKeys: number
     createdById: number
     createdAt: number
     approvedAt: number
@@ -8359,6 +8360,7 @@ export namespace Prisma {
     branchName?: true
     branchId?: true
     photoKey?: true
+    productPhotoKeys?: true
     createdById?: true
     createdAt?: true
     approvedAt?: true
@@ -8470,6 +8472,7 @@ export namespace Prisma {
     branchName: string | null
     branchId: string | null
     photoKey: string
+    productPhotoKeys: string[]
     createdById: string
     createdAt: Date
     approvedAt: Date | null
@@ -8513,6 +8516,7 @@ export namespace Prisma {
     branchName?: boolean
     branchId?: boolean
     photoKey?: boolean
+    productPhotoKeys?: boolean
     createdById?: boolean
     createdAt?: boolean
     approvedAt?: boolean
@@ -8538,6 +8542,7 @@ export namespace Prisma {
     branchName?: boolean
     branchId?: boolean
     photoKey?: boolean
+    productPhotoKeys?: boolean
     createdById?: boolean
     createdAt?: boolean
     approvedAt?: boolean
@@ -8563,6 +8568,7 @@ export namespace Prisma {
     branchName?: boolean
     branchId?: boolean
     photoKey?: boolean
+    productPhotoKeys?: boolean
     createdById?: boolean
     createdAt?: boolean
     approvedAt?: boolean
@@ -8588,6 +8594,7 @@ export namespace Prisma {
     branchName?: boolean
     branchId?: boolean
     photoKey?: boolean
+    productPhotoKeys?: boolean
     createdById?: boolean
     createdAt?: boolean
     approvedAt?: boolean
@@ -8596,7 +8603,7 @@ export namespace Prisma {
     accurateRef?: boolean
   }
 
-  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "branchName" | "branchId" | "photoKey" | "createdById" | "createdAt" | "approvedAt" | "approvedById" | "accurateSyncedAt" | "accurateRef", ExtArgs["result"]["salesReport"]>
+  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "branchName" | "branchId" | "photoKey" | "productPhotoKeys" | "createdById" | "createdAt" | "approvedAt" | "approvedById" | "accurateSyncedAt" | "accurateRef", ExtArgs["result"]["salesReport"]>
   export type SalesReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -8628,6 +8635,7 @@ export namespace Prisma {
       branchName: string | null
       branchId: string | null
       photoKey: string
+      productPhotoKeys: string[]
       createdById: string
       createdAt: Date
       approvedAt: Date | null
@@ -9073,6 +9081,7 @@ export namespace Prisma {
     readonly branchName: FieldRef<"SalesReport", 'String'>
     readonly branchId: FieldRef<"SalesReport", 'String'>
     readonly photoKey: FieldRef<"SalesReport", 'String'>
+    readonly productPhotoKeys: FieldRef<"SalesReport", 'String[]'>
     readonly createdById: FieldRef<"SalesReport", 'String'>
     readonly createdAt: FieldRef<"SalesReport", 'DateTime'>
     readonly approvedAt: FieldRef<"SalesReport", 'DateTime'>
@@ -40913,6 +40922,7 @@ export namespace Prisma {
     branchName: 'branchName',
     branchId: 'branchId',
     photoKey: 'photoKey',
+    productPhotoKeys: 'productPhotoKeys',
     createdById: 'createdById',
     createdAt: 'createdAt',
     approvedAt: 'approvedAt',
@@ -41921,6 +41931,7 @@ export namespace Prisma {
     branchName?: StringNullableFilter<"SalesReport"> | string | null
     branchId?: StringNullableFilter<"SalesReport"> | string | null
     photoKey?: StringFilter<"SalesReport"> | string
+    productPhotoKeys?: StringNullableListFilter<"SalesReport">
     createdById?: StringFilter<"SalesReport"> | string
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
     approvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
@@ -41946,6 +41957,7 @@ export namespace Prisma {
     branchName?: SortOrderInput | SortOrder
     branchId?: SortOrderInput | SortOrder
     photoKey?: SortOrder
+    productPhotoKeys?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     approvedAt?: SortOrderInput | SortOrder
@@ -41974,6 +41986,7 @@ export namespace Prisma {
     branchName?: StringNullableFilter<"SalesReport"> | string | null
     branchId?: StringNullableFilter<"SalesReport"> | string | null
     photoKey?: StringFilter<"SalesReport"> | string
+    productPhotoKeys?: StringNullableListFilter<"SalesReport">
     createdById?: StringFilter<"SalesReport"> | string
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
     approvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
@@ -41999,6 +42012,7 @@ export namespace Prisma {
     branchName?: SortOrderInput | SortOrder
     branchId?: SortOrderInput | SortOrder
     photoKey?: SortOrder
+    productPhotoKeys?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     approvedAt?: SortOrderInput | SortOrder
@@ -42031,6 +42045,7 @@ export namespace Prisma {
     branchName?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
     branchId?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
     photoKey?: StringWithAggregatesFilter<"SalesReport"> | string
+    productPhotoKeys?: StringNullableListFilter<"SalesReport">
     createdById?: StringWithAggregatesFilter<"SalesReport"> | string
     createdAt?: DateTimeWithAggregatesFilter<"SalesReport"> | Date | string
     approvedAt?: DateTimeNullableWithAggregatesFilter<"SalesReport"> | Date | string | null
@@ -44564,6 +44579,7 @@ export namespace Prisma {
     branchName?: string | null
     branchId?: string | null
     photoKey: string
+    productPhotoKeys?: SalesReportCreateproductPhotoKeysInput | string[]
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
@@ -44588,6 +44604,7 @@ export namespace Prisma {
     branchName?: string | null
     branchId?: string | null
     photoKey: string
+    productPhotoKeys?: SalesReportCreateproductPhotoKeysInput | string[]
     createdById: string
     createdAt?: Date | string
     approvedAt?: Date | string | null
@@ -44612,6 +44629,7 @@ export namespace Prisma {
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
+    productPhotoKeys?: SalesReportUpdateproductPhotoKeysInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44636,6 +44654,7 @@ export namespace Prisma {
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
+    productPhotoKeys?: SalesReportUpdateproductPhotoKeysInput | string[]
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -44660,6 +44679,7 @@ export namespace Prisma {
     branchName?: string | null
     branchId?: string | null
     photoKey: string
+    productPhotoKeys?: SalesReportCreateproductPhotoKeysInput | string[]
     createdById: string
     createdAt?: Date | string
     approvedAt?: Date | string | null
@@ -44684,6 +44704,7 @@ export namespace Prisma {
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
+    productPhotoKeys?: SalesReportUpdateproductPhotoKeysInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
@@ -44707,6 +44728,7 @@ export namespace Prisma {
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
+    productPhotoKeys?: SalesReportUpdateproductPhotoKeysInput | string[]
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -47585,6 +47607,14 @@ export namespace Prisma {
     not?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | JsonNullValueFilter
   }
 
+  export type StringNullableListFilter<$PrismaModel = never> = {
+    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    has?: string | StringFieldRefInput<$PrismaModel> | null
+    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
+    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
+
   export type SalesReportCountOrderByAggregateInput = {
     id?: SortOrder
     notaNo?: SortOrder
@@ -47601,6 +47631,7 @@ export namespace Prisma {
     branchName?: SortOrder
     branchId?: SortOrder
     photoKey?: SortOrder
+    productPhotoKeys?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     approvedAt?: SortOrder
@@ -48418,14 +48449,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     editedAt?: SortOrder
     deletedAt?: SortOrder
-  }
-
-  export type StringNullableListFilter<$PrismaModel = never> = {
-    equals?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    has?: string | StringFieldRefInput<$PrismaModel> | null
-    hasEvery?: string[] | ListStringFieldRefInput<$PrismaModel>
-    hasSome?: string[] | ListStringFieldRefInput<$PrismaModel>
-    isEmpty?: boolean
   }
 
   export type CalendarEventCountOrderByAggregateInput = {
@@ -50059,10 +50082,19 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutCashoutsInput, UserUpdateWithoutCashoutsInput>, UserUncheckedUpdateWithoutCashoutsInput>
   }
 
+  export type SalesReportCreateproductPhotoKeysInput = {
+    set: string[]
+  }
+
   export type UserCreateNestedOneWithoutSalesReportsInput = {
     create?: XOR<UserCreateWithoutSalesReportsInput, UserUncheckedCreateWithoutSalesReportsInput>
     connectOrCreate?: UserCreateOrConnectWithoutSalesReportsInput
     connect?: UserWhereUniqueInput
+  }
+
+  export type SalesReportUpdateproductPhotoKeysInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type UserUpdateOneRequiredWithoutSalesReportsNestedInput = {
@@ -51939,6 +51971,7 @@ export namespace Prisma {
     branchName?: string | null
     branchId?: string | null
     photoKey: string
+    productPhotoKeys?: SalesReportCreateproductPhotoKeysInput | string[]
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
@@ -51962,6 +51995,7 @@ export namespace Prisma {
     branchName?: string | null
     branchId?: string | null
     photoKey: string
+    productPhotoKeys?: SalesReportCreateproductPhotoKeysInput | string[]
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
@@ -52640,6 +52674,7 @@ export namespace Prisma {
     branchName?: StringNullableFilter<"SalesReport"> | string | null
     branchId?: StringNullableFilter<"SalesReport"> | string | null
     photoKey?: StringFilter<"SalesReport"> | string
+    productPhotoKeys?: StringNullableListFilter<"SalesReport">
     createdById?: StringFilter<"SalesReport"> | string
     createdAt?: DateTimeFilter<"SalesReport"> | Date | string
     approvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
@@ -57471,6 +57506,7 @@ export namespace Prisma {
     branchName?: string | null
     branchId?: string | null
     photoKey: string
+    productPhotoKeys?: SalesReportCreateproductPhotoKeysInput | string[]
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
@@ -58142,6 +58178,7 @@ export namespace Prisma {
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
+    productPhotoKeys?: SalesReportUpdateproductPhotoKeysInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58165,6 +58202,7 @@ export namespace Prisma {
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
+    productPhotoKeys?: SalesReportUpdateproductPhotoKeysInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
@@ -58188,6 +58226,7 @@ export namespace Prisma {
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: StringFieldUpdateOperationsInput | string
+    productPhotoKeys?: SalesReportUpdateproductPhotoKeysInput | string[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null

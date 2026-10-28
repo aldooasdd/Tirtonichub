@@ -145,23 +145,24 @@ model Cashout {
 
 // Nota penjualan difoto Sales → AI (n8n) ekstrak → masuk ke Finance (rekap harian).
 model SalesReport {
-  id          String   @id @default(cuid())
-  notaNo      String? // nomor nota di struk
-  soldAt      DateTime // waktu transaksi di struk
-  customer    String? // Pelanggan
-  salesman    String? // Salesman di struk
-  employee    String? // Karyawan di struk
-  items       Json // [{name, qty, price, total, note}]
-  subtotal    Int      @default(0)
-  total       Int      @default(0)
-  grandTotal  Int      @default(0)
-  payments    Json // [{method, amount}]
-  channel     String   @default("offline") // offline=nota Sales, online=input Admin dari marketplace
-  branchName  String? // cabang asal (dari user pengirim)
-  branchId    String? // cabang asal (utk filter approval Kepala Cabang)
-  photoKey    String // foto nota / screenshot di storage
-  createdById String // user yang mengirim (Sales / Admin)
-  createdAt   DateTime @default(now())
+  id               String   @id @default(cuid())
+  notaNo           String? // nomor nota di struk
+  soldAt           DateTime // waktu transaksi di struk
+  customer         String? // Pelanggan
+  salesman         String? // Salesman di struk
+  employee         String? // Karyawan di struk
+  items            Json // [{name, qty, price, total, note}]
+  subtotal         Int      @default(0)
+  total            Int      @default(0)
+  grandTotal       Int      @default(0)
+  payments         Json // [{method, amount}]
+  channel          String   @default("offline") // offline=nota Sales, online=input Admin dari marketplace
+  branchName       String? // cabang asal (dari user pengirim)
+  branchId         String? // cabang asal (utk filter approval Kepala Cabang)
+  photoKey         String // foto nota / screenshot di storage (foto pertama, dibaca AI)
+  productPhotoKeys String[] @default([]) // foto produk tambahan (tak dibaca AI)
+  createdById      String // user yang mengirim (Sales / Admin)
+  createdAt        DateTime @default(now())
 
   // Approval: offline wajib di-ACC Kepala Cabang dulu baru masuk Finance.
   // online auto-approve. approvedAt != null = sudah masuk Finance.

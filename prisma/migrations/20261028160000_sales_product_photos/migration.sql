@@ -1,0 +1,1 @@
+ALTER TABLE "SalesReport" ADD COLUMN "productPhotoKeys" TEXT[] NOT NULL DEFAULT ARRAY[]::TEXT[];

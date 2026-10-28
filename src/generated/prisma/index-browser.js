@@ -177,6 +177,7 @@ exports.Prisma.SalesReportScalarFieldEnum = {
   branchName: 'branchName',
   branchId: 'branchId',
   photoKey: 'photoKey',
+  productPhotoKeys: 'productPhotoKeys',
   createdById: 'createdById',
   createdAt: 'createdAt',
   approvedAt: 'approvedAt',
