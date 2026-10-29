@@ -3,13 +3,19 @@ import { prisma } from "@/server/db";
 import { dateKeyWIB } from "@/server/attendance/logic";
 import { computeBranchCash, zeroBuckets, type Buckets } from "@/lib/cash";
 import { BranchCashBoard } from "@/components/cash/branch-cash-board";
+import { BranchCashTreemap } from "@/components/cash/branch-cash-treemap";
 
 export default async function FinanceKasPage() {
   await requireFinance();
   const today = dateKeyWIB(new Date());
 
   const [branches, sessions] = await Promise.all([
-    prisma.branch.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true } }),
+    // Office tak punya kasir → sembunyikan.
+    prisma.branch.findMany({
+      where: { NOT: { name: { contains: "office", mode: "insensitive" } } },
+      orderBy: { name: "asc" },
+      select: { id: true, name: true },
+    }),
     prisma.cashSession.findMany({ where: { date: today } }),
   ]);
   const byBranch = new Map(sessions.map((s) => [s.branchId, s]));
@@ -35,6 +41,16 @@ export default async function FinanceKasPage() {
         <h1 className="text-24 font-semibold">Saldo Kasir Semua Cabang</h1>
         <p className="text-14 text-muted-foreground">Saldo laci + EDC hari ini per cabang. Selisih merah = tak cocok.</p>
       </div>
+      <BranchCashTreemap
+        branches={boards.map(({ branch, opened, report, close }) => ({
+          id: branch.id,
+          name: branch.name,
+          opened,
+          expected: report.expected,
+          close,
+        }))}
+      />
+
       <div className="space-y-5">
         {boards.map(({ branch, opened, open, report, close }) => (
           <div key={branch.id} className="space-y-2">
