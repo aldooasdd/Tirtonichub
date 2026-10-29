@@ -45,7 +45,7 @@ export function TotalSalesChart({ trends }: { trends: SalesTrends }) {
         <div>
           <p className="text-12 text-muted-foreground">Total Penjualan Semua Cabang</p>
           <div className="mt-1 flex items-baseline gap-2">
-            <span className="text-24 font-semibold tabular-nums">{rupiah(last)}</span>
+            <span className="text-16 font-semibold tabular-nums">{rupiah(last)}</span>
             {delta != null && (
               <span className={`text-12 font-semibold ${up ? "text-emerald-500" : "text-destructive"}`}>
                 {up ? "▲" : "▼"} {Math.abs(delta).toFixed(1)}%
@@ -83,7 +83,7 @@ export function TotalSalesChart({ trends }: { trends: SalesTrends }) {
           </AreaChart>
         </ResponsiveContainer>
       </div>
-      <p className="mt-2 text-11 text-muted-foreground">Jumlah penjualan (grandTotal) semua cabang per periode.</p>
+      <p className="mt-2 text-[10px] text-muted-foreground">Jumlah penjualan (grandTotal) semua cabang per periode.</p>
     </section>
   );
 }

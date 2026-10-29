@@ -86,7 +86,7 @@ export function BranchSalesChart({ trends }: { trends: SalesTrends }) {
           </LineChart>
         </ResponsiveContainer>
       </div>
-      <p className="mt-2 text-11 text-muted-foreground">Total penjualan (grandTotal) per periode, per cabang.</p>
+      <p className="mt-2 text-[10px] text-muted-foreground">Total penjualan (grandTotal) per periode, per cabang.</p>
     </section>
   );
 }
