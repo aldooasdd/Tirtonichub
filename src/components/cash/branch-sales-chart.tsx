@@ -44,13 +44,13 @@ export function BranchSalesChart({ trends }: { trends: SalesTrends }) {
 
   return (
     <section className="min-w-0 flex-1 rounded-2xl border bg-card p-5">
-      <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
-        <div className="flex items-center gap-2">
+      <div className="flex flex-col gap-2">
+        <div className="flex items-center justify-between gap-2">
           <h2 className="text-16 font-semibold">Penjualan per Cabang</h2>
           <select
             value={mode}
             onChange={(e) => setMode(e.target.value as Mode)}
-            className="rounded-lg border bg-background px-2 py-1 text-12"
+            className="shrink-0 rounded-lg border bg-background px-2 py-1 text-12"
           >
             <option value="harian">Harian</option>
             <option value="bulanan">Bulanan</option>
