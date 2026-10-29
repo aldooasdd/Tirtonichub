@@ -2,7 +2,15 @@
 
 import * as React from "react";
 import type { Buckets } from "@/lib/cash";
-import { avatarColor } from "@/lib/avatar-color";
+
+// Warna tile solid (bukan gradient): rank 0 (saldo terbesar) = hijau aksen,
+// sisanya grayscale terang→gelap sesuai urutan. ink = warna teks kontras.
+function tileStyle(rank: number, n: number): { bg: string; ink: string } {
+  if (rank === 0) return { bg: "#7CFF5B", ink: "#0a0a0a" };
+  const t = (rank - 1) / Math.max(1, n - 2); // 0..1
+  const L = Math.round(92 - t * 78); // 92% → 14%
+  return { bg: `hsl(0 0% ${L}%)`, ink: L > 55 ? "#0a0a0a" : "#f5f5f5" };
+}
 
 // Label lokal (jangan import nilai dari @/lib/cash → menyeret prisma ke bundle client).
 const BUCKET_LABEL: Record<keyof Buckets, string> = {
@@ -53,7 +61,7 @@ export function BranchCashTreemap({ branches, children }: { branches: BranchCash
     b.close != null && (metric === "all" ? total(b.close) !== total(b.expected) : b.close[metric] !== b.expected[metric]);
 
   const rows = branches
-    .map((b) => ({ b, cls: avatarColor(b.id), v: valueOf(b) }))
+    .map((b) => ({ b, v: valueOf(b) }))
     .filter((r) => r.v > 0)
     .sort((a, b) => b.v - a.v);
   const grand = rows.reduce((s, r) => s + r.v, 0);
@@ -95,24 +103,22 @@ export function BranchCashTreemap({ branches, children }: { branches: BranchCash
       ) : (
         <div className="relative mt-4 h-[220px] w-full sm:h-[260px]">
           {rects.map((r) => {
-            const { b, cls } = rows[r.i];
+            const { b } = rows[r.i];
             const share = ((r.v / grand) * 100).toFixed(r.v / grand < 0.1 ? 1 : 0);
+            const { bg, ink } = tileStyle(r.i, rows.length);
             const big = r.w >= 22 && r.h >= 18;
             return (
               <div
                 key={b.id}
-                className={`absolute flex flex-col justify-between overflow-hidden rounded-xl p-2.5 ${cls}`}
-                style={{ left: `${r.x}%`, top: `${r.y}%`, width: `calc(${r.w}% - 6px)`, height: `calc(${r.h}% - 6px)` }}
+                className="absolute flex flex-col justify-between overflow-hidden rounded-xl p-2.5"
+                style={{ left: `${r.x}%`, top: `${r.y}%`, width: `calc(${r.w}% - 6px)`, height: `calc(${r.h}% - 6px)`, background: bg, color: ink }}
                 title={`${b.name}: ${rupiah(r.v)} (${share}%)`}
               >
-                <div className="flex items-center gap-1 text-11 font-semibold uppercase leading-tight tracking-wide">
+                <div className="flex items-center gap-1 text-12 leading-tight" style={{ opacity: 0.7 }}>
                   <span className="truncate">{b.name}</span>
-                  {mismatch(b) && <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-700" title="Selisih" />}
+                  {mismatch(b) && <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-600" title="Selisih" />}
                 </div>
-                <div className="flex items-end justify-between gap-1">
-                  <span className="font-semibold leading-none" style={{ fontSize: big ? 22 : 15 }}>{compact(r.v)}</span>
-                  {big && <span className="rounded-md bg-black/75 px-1.5 py-0.5 text-10 font-medium text-white">{share}%</span>}
-                </div>
+                <span className="font-semibold leading-none" style={{ fontSize: big ? 30 : 18 }}>{compact(r.v)}</span>
               </div>
             );
           })}
