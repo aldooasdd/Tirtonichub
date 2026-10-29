@@ -3,16 +3,17 @@ import { Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { requireAuth } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
-import { roleAttends } from "@/lib/roles";
+import { roleAttends, isSuperRole } from "@/lib/roles";
 import { ABSEN_ON } from "@/lib/flags";
 import { fmtWIB } from "@/lib/datetime";
 import { dateKeyWIB, wibMinutesOfDay, parseHHMM } from "@/server/attendance/logic";
 import { shiftScheduleFor } from "@/server/attendance/shift-schedule";
 import { loadCalendarEvents } from "@/server/calendar-events";
 import { KalenderClient } from "@/components/kalender/kalender-client";
-import { computeBranchCash, zeroBuckets, type Buckets } from "@/lib/cash";
+import { computeBranchCash, zeroBuckets, loadBranchCashBoards, loadBranchSalesTrends, loadCashMovements, type Buckets } from "@/lib/cash";
 import { CashOpenForm, CashCloseForm } from "@/components/cash/cash-forms";
 import { BranchCashBoard } from "@/components/cash/branch-cash-board";
+import { CashDashboard } from "@/components/cash/cash-dashboard";
 
 function Kpi({ label, value, bg, small }: { label: string; value: string | number; bg: string; small?: boolean }) {
   return (
@@ -47,6 +48,11 @@ export default async function BerandaPage() {
           <Kpi label="Hadir hari ini" value={hadirHariIni} bg="bg-kpi-2" />
           <Kpi label="Pengajuan pending" value={pending} bg="bg-kpi-1" />
         </section>
+        <CashDashboard
+          boards={await loadBranchCashBoards(today)}
+          trends={await loadBranchSalesTrends()}
+          moves={await loadCashMovements(today)}
+        />
         <KalenderClient events={await loadCalendarEvents()} />
       </div>
     );
@@ -192,6 +198,14 @@ export default async function BerandaPage() {
       )}
 
       {needCloseCash && <CashCloseForm />}
+
+      {isSuperRole(ctx.activeRole) && (
+        <CashDashboard
+          boards={await loadBranchCashBoards(today)}
+          trends={await loadBranchSalesTrends()}
+          moves={await loadCashMovements(today)}
+        />
+      )}
 
       <KalenderClient events={await loadCalendarEvents({ userId: ctx.userId, fullName: user.fullName, branchId: user.branchId })} />
     </div>

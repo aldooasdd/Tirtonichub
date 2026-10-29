@@ -2,38 +2,28 @@ import { requireFinance } from "@/server/auth/rbac";
 import { isSuperRole } from "@/lib/roles";
 import { prisma } from "@/server/db";
 import { dateKeyWIB } from "@/server/attendance/logic";
-import { loadBranchCashBoards, loadBranchSalesTrends } from "@/lib/cash";
-import { BranchCashTreemap } from "@/components/cash/branch-cash-treemap";
-import { BranchSalesChart } from "@/components/cash/branch-sales-chart";
+import { loadBranchCashBoards, loadBranchSalesTrends, loadCashMovements } from "@/lib/cash";
+import { CashDashboard } from "@/components/cash/cash-dashboard";
 import { FinanceClient } from "@/components/finance/finance-client";
 
 export default async function FinancePage() {
   const ctx = await requireFinance();
-  const [rows, boards, trends] = await Promise.all([
+  const today = dateKeyWIB(new Date());
+  const [rows, boards, trends, moves] = await Promise.all([
     prisma.rawProduct.findMany({
       where: isSuperRole(ctx.activeRole) ? {} : { createdById: ctx.userId },
       orderBy: { createdAt: "desc" },
       take: 200,
       include: { qcBy: { select: { fullName: true } } },
     }),
-    loadBranchCashBoards(dateKeyWIB(new Date())),
+    loadBranchCashBoards(today),
     loadBranchSalesTrends(),
+    loadCashMovements(today),
   ]);
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-col gap-5 lg:flex-row lg:items-start">
-        <BranchCashTreemap
-          branches={boards.map(({ branch, opened, report, close }) => ({
-            id: branch.id,
-            name: branch.name,
-            opened,
-            expected: report.expected,
-            close,
-          }))}
-        />
-        <BranchSalesChart trends={trends} />
-      </div>
+      <CashDashboard boards={boards} trends={trends} moves={moves} />
       <FinanceClient
       isBoss={isSuperRole(ctx.activeRole)}
       items={rows.map((r) => ({
