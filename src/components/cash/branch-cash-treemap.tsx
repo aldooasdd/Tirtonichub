@@ -124,7 +124,6 @@ export function BranchCashTreemap({ branches, children }: { branches: BranchCash
           })}
         </div>
       )}
-      <p className="mt-3 text-11 text-muted-foreground">Ukuran kotak = besar saldo. Titik merah = selisih fisik vs seharusnya (cabang sudah tutup).</p>
       {children}
     </section>
   );
