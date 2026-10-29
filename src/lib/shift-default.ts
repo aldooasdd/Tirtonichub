@@ -1,34 +1,35 @@
-// Jadwal default per karyawan per tanggal (1..30), dari PDF "Jadwal Tirtonic - NOV".
-// Pola sama tiap bulan (berlaku sekarang & ke depan); grid HR menampilkannya otomatis,
-// edit HR / approve tukar shift menimpanya (jadi row Shift). match = awalan nama (lowercase),
-// sudah sinkron dengan nama di DB. Bulan 31 hari → tgl 31 kosong (HR isi manual).
+// Jadwal default per karyawan per tanggal (1..31), dari PDF "Jadwal Tirtonic - DES"
+// (Des = 31 hari, dipakai sebagai pola contoh ke depan). Pola sama tiap bulan;
+// grid HR menampilkannya otomatis, edit HR / approve tukar shift menimpanya (jadi row Shift
+// per-tanggal, jadi cuma berlaku bulan itu — bulan depan kembali ke pola ini). match = awalan
+// nama (lowercase), sinkron dengan nama di DB. Bulan <31 hari pakai token 1..dim saja.
 
 type Row = { match: string; codes: string };
 
-// 30 token per baris (dipisah spasi).
+// 31 token per baris (dipisah spasi). Des 2026: tgl 1 = Selasa.
 const ROWS: Row[] = [
   // Jogja
-  { match: "delfia", codes: "S WFH O S P S P S WFH O S P S P S WFH O S P S P S WFH O S P S P S WFH" },
-  { match: "wimas", codes: "P O WFH P S P S P O WFH P S P S P O WFH P S P S P O WFH P S P S P O" },
-  { match: "yopi", codes: "S P S P O S P S P S P O S P S P S P O S P S P S P O S P S P" },
-  { match: "aldi", codes: "P S P O S P S P S P O S P S P S P O S P S P S P O S P S P S" },
-  { match: "indy", codes: "P S P S P O S P S P S P O S P S P S P O S P S P S P O S P S" },
-  { match: "edo", codes: "P P O S P S P S P O S P S P S P O S P S P S P O S P S P S P" },
-  { match: "junita", codes: "S O S P S P S P O S P S P S P O S P S P S P O S P S P S P O" },
-  { match: "dea", codes: "O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH" },
-  { match: "andhin", codes: "O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH" },
+  { match: "delfia", codes: "O S P S P S WFH O S P S P S WFH O S P S P S WFH O S P S P S WFH O S P" },
+  { match: "wimas", codes: "WFH P S P S P O WFH P S P S P O WFH P S P S P O WFH P S P S P O WFH P S" },
+  { match: "yopi", codes: "S P O S P S P S P O S P S P S P O S P S P S P O S P S P S P O" },
+  { match: "aldi", codes: "P O S P S P S P O S P S P S P O S P S P S P O S P S P S P O S" },
+  { match: "indy", codes: "P S P O S P S P S P O S P S P S P O S P S P S P O S P S P S P" },
+  { match: "edo", codes: "O S P S P S P O S P S P S P O S P S P S P O S P S P S P O S P" },
+  { match: "junita", codes: "S P S P S P O S P S P S P O S P S P S P O S P S P S P O S P S" },
+  { match: "dea", codes: "OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH" },
+  { match: "andhin", codes: "OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH" },
   // Solo
-  { match: "lala", codes: "S O S P P S P S O S P P S P S O S P P S P S O S P P S P S O" },
-  { match: "mutia", codes: "S P S P O S P S P S P O S P S P S P O S P S P S P O S P S P" },
-  { match: "ghifari", codes: "O S P S P S P O S P S P S P O S P S P S P O S P S P S P O S" },
-  { match: "mawa", codes: "P P O S S P S P P O S S P S P P O S S P S P P O S S P S P P" },
-  { match: "afi", codes: "P S P O S P S P S P O S P S P S P O S P S P S P O S P S P S" },
+  { match: "lala", codes: "O S P P S P S O S P P S P S O S P P S P S O S P P S P S O S P" },
+  { match: "mutia", codes: "P S P O S P S P S P O S P S P S P O S P S P S P O S P S P S P" },
+  { match: "ghifari", codes: "S P S P S P O S P S P S P O S P S P S P O S P S P S P O S P S" },
+  { match: "mawa", codes: "P O S S P S P P O S S P S P P O S S P S P P O S S P S P P O S" },
+  { match: "afi", codes: "S P O S P S P S P O S P S P S P O S P S P S P O S P S P S P O" },
   // Semarang
-  { match: "jose", codes: "S O S S P P P S O S S P P P S O S S P P P S O S S P P P S O" },
-  { match: "nur taufiq", codes: "P P P O S S S P P P O S S S P P P O S S S P P P O S S S P P" },
-  { match: "rahma", codes: "P S S P O P S P S S P O P S P S S P O P S P S S P O P S P S" },
-  { match: "a taufiq", codes: "S S P P P O S S S P P P O S S S P P P O S S S P P P O S S S" },
-  { match: "irfan", codes: "P P O S S S P P P O S S S P P P O S S S P P P O S S S P P P" },
+  { match: "jose", codes: "S S P P P S O S S P P P S O S S P P P S O S S P P P S O S S P" },
+  { match: "nur taufiq", codes: "P O S S S P P P O S S S P P P O S S S P P P O S S S P P P O S" },
+  { match: "rahma", codes: "S P O P S P S S P O P S P S S P O P S P S S P O P S P S S P O" },
+  { match: "a taufiq", codes: "P P P O S S S P P P O S S S P P P O S S S P P P O S S S P P P" },
+  { match: "irfan", codes: "O S S S P P P O S S S P P P O S S S P P P O S S S P P P O S S" },
 ];
 
 const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
