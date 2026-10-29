@@ -66,6 +66,45 @@ export async function loadBranchCashBoards(dateKey: Date): Promise<BranchCashBoa
   );
 }
 
+export type CashMovement = {
+  id: string;
+  at: Date;
+  branch: string;
+  kind: "in" | "out"; // penjualan masuk / pembelian keluar
+  bucket: keyof Buckets;
+  amount: number; // selalu positif; tanda dari kind
+  note: string;
+};
+
+/** Riwayat uang masuk (penjualan) & keluar (pembelian) hari itu, semua cabang, terbaru dulu. */
+export async function loadCashMovements(dateKey: Date, take = 60): Promise<CashMovement[]> {
+  const { start, end } = dayRange(dateKey);
+  const [sales, cashouts] = await Promise.all([
+    prisma.salesReport.findMany({
+      where: { channel: "offline", branchId: { not: null }, createdAt: { gte: start, lt: end } },
+      select: { id: true, createdAt: true, branchName: true, payments: true, notaNo: true },
+    }),
+    prisma.cashout.findMany({
+      where: { branchId: { not: null }, createdAt: { gte: start, lt: end } },
+      select: { id: true, createdAt: true, branchName: true, amount: true, description: true },
+    }),
+  ]);
+
+  const out: CashMovement[] = [];
+  for (const s of sales) {
+    const pays = (Array.isArray(s.payments) ? s.payments : []) as { method?: string; amount?: number }[];
+    for (const [i, p] of pays.entries()) {
+      const amt = Math.max(0, Math.round(p.amount ?? 0));
+      if (amt <= 0) continue;
+      out.push({ id: `${s.id}-${i}`, at: s.createdAt, branch: s.branchName ?? "-", kind: "in", bucket: bucketOf(p.method ?? ""), amount: amt, note: s.notaNo ? `Nota ${s.notaNo}` : "Penjualan" });
+    }
+  }
+  for (const c of cashouts)
+    out.push({ id: c.id, at: c.createdAt, branch: c.branchName ?? "-", kind: "out", bucket: "cash", amount: c.amount, note: c.description || "Pembelian" });
+
+  return out.sort((a, b) => b.at.getTime() - a.at.getTime()).slice(0, take);
+}
+
 const MONTH_ID = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
 
 export type SalesTrend = { months: string[]; series: { id: string; name: string; points: number[] }[] };
