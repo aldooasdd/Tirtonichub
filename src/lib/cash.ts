@@ -66,6 +66,48 @@ export async function loadBranchCashBoards(dateKey: Date): Promise<BranchCashBoa
   );
 }
 
+const MONTH_ID = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
+
+export type SalesTrend = { months: string[]; series: { id: string; name: string; points: number[] }[] };
+
+/** Total penjualan per cabang per bulan, 6 bulan terakhir (WIB). 1 garis per cabang. */
+export async function loadBranchSalesTrend(now = new Date()): Promise<SalesTrend> {
+  const wib = new Date(now.getTime() + 7 * 3600_000);
+  // 6 kunci bulan (WIB) dari 5 bulan lalu sampai bulan ini.
+  const keys: { y: number; m: number }[] = [];
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(Date.UTC(wib.getUTCFullYear(), wib.getUTCMonth() - i, 1));
+    keys.push({ y: d.getUTCFullYear(), m: d.getUTCMonth() });
+  }
+  const from = new Date(Date.UTC(keys[0].y, keys[0].m, 1) - 7 * 3600_000); // WIB awal bulan pertama
+  const idx = new Map(keys.map((k, i) => [`${k.y}-${k.m}`, i]));
+
+  const [branches, sales] = await Promise.all([
+    prisma.branch.findMany({
+      where: { NOT: { name: { contains: "office", mode: "insensitive" } } },
+      orderBy: { name: "asc" },
+      select: { id: true, name: true },
+    }),
+    prisma.salesReport.findMany({
+      where: { branchId: { not: null }, soldAt: { gte: from } },
+      select: { branchId: true, soldAt: true, grandTotal: true },
+    }),
+  ]);
+
+  const byBranch = new Map(branches.map((b) => [b.id, new Array(6).fill(0) as number[]]));
+  for (const s of sales) {
+    const arr = byBranch.get(s.branchId!);
+    if (!arr) continue; // cabang Office / terhapus
+    const w = new Date(s.soldAt.getTime() + 7 * 3600_000);
+    const i = idx.get(`${w.getUTCFullYear()}-${w.getUTCMonth()}`);
+    if (i != null) arr[i] += s.grandTotal;
+  }
+  return {
+    months: keys.map((k) => MONTH_ID[k.m]),
+    series: branches.map((b) => ({ id: b.id, name: b.name, points: byBranch.get(b.id)! })),
+  };
+}
+
 /** Hitung saldo seharusnya dari penjualan offline + pembelian hari itu di cabang. */
 export async function computeBranchCash(branchId: string, dateKey: Date, open: Buckets): Promise<CashReport> {
   const { start, end } = dayRange(dateKey);
