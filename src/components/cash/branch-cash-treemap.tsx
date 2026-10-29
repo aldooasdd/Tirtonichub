@@ -110,7 +110,7 @@ export function BranchCashTreemap({ branches, children }: { branches: BranchCash
             return (
               <div
                 key={b.id}
-                className="absolute flex flex-col justify-between overflow-hidden rounded-xl p-2.5"
+                className="absolute flex flex-col justify-between overflow-hidden rounded-md p-2.5"
                 style={{ left: `${r.x}%`, top: `${r.y}%`, width: `calc(${r.w}% - 6px)`, height: `calc(${r.h}% - 6px)`, background: bg, color: ink }}
                 title={`${b.name}: ${rupiah(r.v)} (${share}%)`}
               >
