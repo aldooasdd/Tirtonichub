@@ -10,13 +10,16 @@ export const BUCKET_LABEL: Record<keyof Buckets, string> = {
   bri: "EDC BRI",
 };
 
-/** Metode bayar penjualan → penempatan saldo. Selain Mandiri/BCA/BRI dianggap cash. */
-export function bucketOf(method: string): keyof Buckets {
+/** Metode bayar POS → penempatan saldo kasir.
+ *  Daftar POS: Tunai; CC/Debit/Debit Selain/QRIS/Transfer + {BCA,BRI,Mandiri} → EDC bank itu.
+ *  SHOPEE/TOKOPEDIA/WEBSITE = online (duit ke marketplace, bukan laci/EDC) → null, tak masuk kasir. */
+export function bucketOf(method: string): keyof Buckets | null {
   const m = (method || "").toLowerCase();
+  if (/shopee|tokopedia|website|tiktok|lazada|blibli|online|marketplace/.test(m)) return null;
   if (m.includes("mandiri")) return "mandiri";
   if (m.includes("bca")) return "bca";
   if (m.includes("bri")) return "bri";
-  return "cash"; // tunai/cash/lainnya
+  return "cash"; // Tunai & lainnya
 }
 
 /** Rentang UTC untuk 1 hari WIB (dateKey = UTC midnight tanggal WIB). */
@@ -95,8 +98,9 @@ export async function loadCashMovements(dateKey: Date, take = 60): Promise<CashM
     const pays = (Array.isArray(s.payments) ? s.payments : []) as { method?: string; amount?: number }[];
     for (const [i, p] of pays.entries()) {
       const amt = Math.max(0, Math.round(p.amount ?? 0));
-      if (amt <= 0) continue;
-      out.push({ id: `${s.id}-${i}`, at: s.createdAt, branch: s.branchName ?? "-", kind: "in", bucket: bucketOf(p.method ?? ""), amount: amt, note: s.notaNo ? `Nota ${s.notaNo}` : "Penjualan" });
+      const bk = bucketOf(p.method ?? "");
+      if (amt <= 0 || !bk) continue; // online (SHOPEE/dll) tak masuk kasir
+      out.push({ id: `${s.id}-${i}`, at: s.createdAt, branch: s.branchName ?? "-", kind: "in", bucket: bk, amount: amt, note: s.notaNo ? `Nota ${s.notaNo}` : "Penjualan" });
     }
   }
   for (const c of cashouts)
@@ -161,7 +165,10 @@ export async function computeBranchCash(branchId: string, dateKey: Date, open: B
   const masuk = zeroBuckets();
   for (const s of sales) {
     const pays = (Array.isArray(s.payments) ? s.payments : []) as { method?: string; amount?: number }[];
-    for (const p of pays) masuk[bucketOf(p.method ?? "")] += Math.max(0, Math.round(p.amount ?? 0));
+    for (const p of pays) {
+      const bk = bucketOf(p.method ?? "");
+      if (bk) masuk[bk] += Math.max(0, Math.round(p.amount ?? 0)); // online tak masuk saldo kasir
+    }
   }
   const cashout = cashoutAgg._sum.amount ?? 0;
   const expected: Buckets = {

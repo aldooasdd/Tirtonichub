@@ -29,11 +29,11 @@ export default async function FinanceKasPage() {
             expected: report.expected,
             close,
           }))}
-        />
+        >
+          <CashMovements rows={moves} />
+        </BranchCashTreemap>
         <BranchSalesChart trend={trend} />
       </div>
-
-      <CashMovements rows={moves} />
     </div>
   );
 }

@@ -7,8 +7,8 @@ const jam = (d: Date) =>
 
 export function CashMovements({ rows }: { rows: CashMovement[] }) {
   return (
-    <section className="rounded-2xl border bg-card p-5">
-      <h2 className="text-16 font-semibold">Riwayat Uang Masuk / Keluar (hari ini)</h2>
+    <div className="mt-5 border-t pt-4">
+      <h2 className="text-14 font-semibold">Riwayat Uang Masuk / Keluar (hari ini)</h2>
       {rows.length === 0 ? (
         <p className="py-8 text-center text-14 text-muted-foreground">Belum ada transaksi hari ini.</p>
       ) : (
@@ -46,6 +46,6 @@ export function CashMovements({ rows }: { rows: CashMovement[] }) {
         </div>
       )}
       <p className="mt-2 text-11 text-muted-foreground">Masuk = penjualan (ke Cash/EDC sesuai metode). Keluar = pembelian (dari Cash). Saldo di atas ikut berubah.</p>
-    </section>
+    </div>
   );
 }

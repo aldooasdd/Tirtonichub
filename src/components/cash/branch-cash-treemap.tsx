@@ -47,7 +47,7 @@ function squarify(vals: number[], X: number, Y: number, W: number, H: number): R
   return out;
 }
 
-export function BranchCashTreemap({ branches }: { branches: BranchCash[] }) {
+export function BranchCashTreemap({ branches, children }: { branches: BranchCash[]; children?: React.ReactNode }) {
   const [metric, setMetric] = React.useState<Metric>("all");
   const valueOf = (b: BranchCash) => (metric === "all" ? total(b.expected) : b.expected[metric]);
   const mismatch = (b: BranchCash) =>
@@ -69,7 +69,7 @@ export function BranchCashTreemap({ branches }: { branches: BranchCash[] }) {
   ];
 
   return (
-    <section className="max-w-3xl rounded-2xl border bg-card p-5">
+    <section className="min-w-0 flex-1 rounded-2xl border bg-card p-5">
       <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
         <div>
           <h2 className="text-16 font-semibold">Saldo Kasir per Cabang</h2>
@@ -120,6 +120,7 @@ export function BranchCashTreemap({ branches }: { branches: BranchCash[] }) {
         </div>
       )}
       <p className="mt-3 text-11 text-muted-foreground">Ukuran kotak = besar saldo. Titik merah = selisih fisik vs seharusnya (cabang sudah tutup).</p>
+      {children}
     </section>
   );
 }
