@@ -17,7 +17,7 @@ const ROWS: Row[] = [
   { match: "edo", codes: "O S P S P S P O S P S P S P O S P S P S P O S P S P S P O S P" },
   { match: "junita", codes: "S P S P S P O S P S P S P O S P S P S P O S P S P S P O S P S" },
   { match: "dea", codes: "OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH" },
-  { match: "andhin", codes: "OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH" },
+  { match: "andhin", codes: "P P P P WFH O P P P P P WFH O P P P P P WFH O P P P P P WFH O P P P P" },
   // Solo
   { match: "lala", codes: "O S P P S P S O S P P S P S O S P P S P S O S P P S P S O S P" },
   { match: "mutia", codes: "P S P O S P S P S P O S P S P S P O S P S P S P O S P S P S P" },
