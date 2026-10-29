@@ -40,10 +40,13 @@ const rowFor = (fullName: string) => {
   return table.find((r) => n.startsWith(r.match));
 };
 
+// Office yang ikut HARI (bukan tanggal): Sabtu WFH, Minggu Off, lainnya P. Benar di semua bulan.
+const WEEKDAY_OFFICE = ["andhin", "dea"];
+
 /** Kode shift default utk nama + tanggal (1..31). dow = hari (0=Minggu..6=Sabtu) jika ada.
- *  Andhin ikut hari (Sabtu WFH, Minggu Off, lainnya P), bukan pola tanggal. "" bila tak ada. */
+ *  Andhin & Dea ikut hari, bukan pola tanggal. "" bila tak ada. */
 export function defaultShift(fullName: string, day: number, dow?: number): string {
-  if (dow != null && norm(fullName).startsWith("andhin")) {
+  if (dow != null && WEEKDAY_OFFICE.some((m) => norm(fullName).startsWith(m))) {
     return dow === 6 ? "WFH" : dow === 0 ? "O" : "P";
   }
   return rowFor(fullName)?.days[day - 1] ?? "";
