@@ -39,7 +39,7 @@ export async function dailyRekap(date: Date, branchId?: string) {
 
   // Shift kerja (P/S/OH) tanpa absen → ABSENT (alpa). Non-kerja/tak terjadwal → OFF.
   const worksToday = (u: { id: string; fullName: string }) => {
-    const code = shiftByUser.get(u.id) ?? defaultShift(u.fullName, day);
+    const code = shiftByUser.get(u.id) ?? defaultShift(u.fullName, day, date.getUTCDay());
     return !!code && isShiftCode(code) && SHIFTS[code as ShiftCode].working;
   };
 

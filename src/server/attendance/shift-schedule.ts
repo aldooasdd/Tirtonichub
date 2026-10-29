@@ -11,7 +11,7 @@ export async function effectiveShiftCode(
     where: { userId_date: { userId: user.id, date: dateKey } },
     select: { code: true },
   });
-  return row?.code ?? defaultShift(user.fullName, dateKey.getUTCDate());
+  return row?.code ?? defaultShift(user.fullName, dateKey.getUTCDate(), dateKey.getUTCDay());
 }
 
 /** Jadwal shift kerja hari itu (start+end "HH:MM"). null = non-kerja/tak terjadwal → tak absen.
@@ -24,7 +24,7 @@ export async function shiftScheduleFor(
     where: { userId_date: { userId: user.id, date: dateKey } },
     select: { code: true },
   });
-  const code = row?.code ?? defaultShift(user.fullName, dateKey.getUTCDate());
+  const code = row?.code ?? defaultShift(user.fullName, dateKey.getUTCDate(), dateKey.getUTCDay());
   if (!code || !isShiftCode(code)) return null;
   const def = SHIFTS[code as ShiftCode];
   if (!def.working || !def.start || !def.end) return null;

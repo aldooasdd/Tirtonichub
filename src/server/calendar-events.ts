@@ -49,7 +49,7 @@ async function shiftEvents(userId: string, fullName: string, branchId?: string |
   const saved = new Map<string, string>(); // "uid|y-mo-day" → code
   for (const r of rows) saved.set(`${r.userId}|${r.date.getUTCFullYear()}-${r.date.getUTCMonth()}-${r.date.getUTCDate()}`, r.code);
   const codeOf = (uid: string, name: string, y: number, mo: number, day: number) =>
-    saved.get(`${uid}|${y}-${mo}-${day}`) ?? defaultShift(name, day);
+    saved.get(`${uid}|${y}-${mo}-${day}`) ?? defaultShift(name, day, new Date(Date.UTC(y, mo, day)).getUTCDay());
 
   const out: Event[] = [];
   for (let k = 0; k < SHIFT_MONTHS; k++) {

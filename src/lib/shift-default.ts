@@ -40,8 +40,12 @@ const rowFor = (fullName: string) => {
   return table.find((r) => n.startsWith(r.match));
 };
 
-/** Kode shift default utk nama + tanggal (1..31). "" bila tak ada. */
-export function defaultShift(fullName: string, day: number): string {
+/** Kode shift default utk nama + tanggal (1..31). dow = hari (0=Minggu..6=Sabtu) jika ada.
+ *  Andhin ikut hari (Sabtu WFH, Minggu Off, lainnya P), bukan pola tanggal. "" bila tak ada. */
+export function defaultShift(fullName: string, day: number, dow?: number): string {
+  if (dow != null && norm(fullName).startsWith("andhin")) {
+    return dow === 6 ? "WFH" : dow === 0 ? "O" : "P";
+  }
   return rowFor(fullName)?.days[day - 1] ?? "";
 }
 

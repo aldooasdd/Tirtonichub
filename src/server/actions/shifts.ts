@@ -101,8 +101,9 @@ async function checkSalesRule(
 
   const eff = (u: { id: string; fullName: string }, day: number): string => {
     const k = `${u.id}:${day}`;
-    if (editByKey.has(k)) return editByKey.get(k)! || defaultShift(u.fullName, day);
-    return savedMap.get(k) ?? defaultShift(u.fullName, day);
+    const dow = new Date(Date.UTC(y, m - 1, day)).getUTCDay();
+    if (editByKey.has(k)) return editByKey.get(k)! || defaultShift(u.fullName, day, dow);
+    return savedMap.get(k) ?? defaultShift(u.fullName, day, dow);
   };
 
   for (const [bid, days] of affected) {

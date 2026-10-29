@@ -47,7 +47,8 @@ export default async function JadwalPage({
   const defaults: Record<string, string> = {};
   for (const e of employees) {
     for (let d = 1; d <= dim; d++) {
-      const c = defaultShift(e.fullName, d);
+      const dow = new Date(Date.UTC(y, m - 1, d)).getUTCDay();
+      const c = defaultShift(e.fullName, d, dow);
       if (c) defaults[`${e.id}:${d}`] = c;
     }
   }
