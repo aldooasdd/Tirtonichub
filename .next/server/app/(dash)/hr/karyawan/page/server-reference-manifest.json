@@ -3,7 +3,7 @@
     "40cb68bd69c9f705546bf9e2546b12d30c0bd6b5f6": {
       "workers": {
         "app/(dash)/hr/karyawan/page": {
-          "moduleId": 30583,
+          "moduleId": 34922,
           "async": true
         }
       },
@@ -13,7 +13,7 @@
     "009c180e2b358072164d2323d2b3d8c4696e515d3f": {
       "workers": {
         "app/(dash)/hr/karyawan/page": {
-          "moduleId": 30583,
+          "moduleId": 34922,
           "async": true
         }
       },
@@ -23,7 +23,7 @@
     "70bbec802ca74acc04dfb2e7d13540257c4275e0a2": {
       "workers": {
         "app/(dash)/hr/karyawan/page": {
-          "moduleId": 30583,
+          "moduleId": 34922,
           "async": true
         }
       },
@@ -33,7 +33,7 @@
     "40693d0a5020bda62ddb8742f584388d6ea734fc61": {
       "workers": {
         "app/(dash)/hr/karyawan/page": {
-          "moduleId": 30583,
+          "moduleId": 34922,
           "async": true
         }
       },
@@ -43,17 +43,27 @@
     "40e8ffc61489da93cb08c7b14300d21cba65aa2999": {
       "workers": {
         "app/(dash)/hr/karyawan/page": {
-          "moduleId": 30583,
+          "moduleId": 34922,
           "async": true
         }
       },
       "exportedName": "startDM",
       "filename": "src/server/actions/chat.ts"
     },
+    "00f7a99a22870a5b705c2efd6cef04003b0ea73e81": {
+      "workers": {
+        "app/(dash)/hr/karyawan/page": {
+          "moduleId": 34922,
+          "async": true
+        }
+      },
+      "exportedName": "heartbeat",
+      "filename": "src/server/actions/presence.ts"
+    },
     "40461699a63b83a639f9b1c8f87795fd75b3629b53": {
       "workers": {
         "app/(dash)/hr/karyawan/page": {
-          "moduleId": 30583,
+          "moduleId": 34922,
           "async": true
         }
       },
@@ -63,7 +73,7 @@
     "6030347480b50b5cb02d20b6f647eb0191fe50ab85": {
       "workers": {
         "app/(dash)/hr/karyawan/page": {
-          "moduleId": 30583,
+          "moduleId": 34922,
           "async": true
         }
       },
@@ -73,11 +83,21 @@
     "602ac309716abf47ee17e10088fcaccdf9e336347e": {
       "workers": {
         "app/(dash)/hr/karyawan/page": {
-          "moduleId": 30583,
+          "moduleId": 34922,
           "async": true
         }
       },
       "exportedName": "setEmployeeActive",
+      "filename": "src/server/actions/employees.ts"
+    },
+    "40ba2394af51166d2f3ee079d62bee810b4ed101d1": {
+      "workers": {
+        "app/(dash)/hr/karyawan/page": {
+          "moduleId": 34922,
+          "async": true
+        }
+      },
+      "exportedName": "deleteEmployee",
       "filename": "src/server/actions/employees.ts"
     }
   },

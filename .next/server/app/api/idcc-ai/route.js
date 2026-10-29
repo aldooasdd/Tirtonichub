@@ -1,10 +1,10 @@
 var R=require("../../../chunks/[turbopack]_runtime.js")("server/app/api/idcc-ai/route.js")
 R.c("server/chunks/[externals]_node_crypto_17926ec5x-c1p._.js")
 R.c("server/chunks/_0w_fq3p07z99h._.js")
-R.c("server/chunks/[root-of-the-server]__0tv7ba6r9cvdo._.js")
-R.c("server/chunks/[root-of-the-server]__0wz2evfjc7ml1._.js")
+R.c("server/chunks/[root-of-the-server]__1qmtei3qzgdqf._.js")
 R.c("server/chunks/_0plewitzb0qs8._.js")
 R.c("server/chunks/18de_next_0ppk3xwbn6jez._.js")
+R.c("server/chunks/[root-of-the-server]__0wz2evfjc7ml1._.js")
 R.c("server/chunks/_next-internal_server_app_api_idcc-ai_route_actions_1fhma_b6ynr40.js")
 R.m(2642)
 module.exports=R.m(2642).exports

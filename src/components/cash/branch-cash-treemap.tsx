@@ -1,7 +1,15 @@
 "use client";
 
 import * as React from "react";
-import { BUCKET_LABEL, type Buckets } from "@/lib/cash";
+import type { Buckets } from "@/lib/cash";
+
+// Label lokal (jangan import nilai dari @/lib/cash → menyeret prisma ke bundle client).
+const BUCKET_LABEL: Record<keyof Buckets, string> = {
+  cash: "Cash (laci)",
+  mandiri: "EDC Mandiri",
+  bca: "EDC BCA",
+  bri: "EDC BRI",
+};
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 const compact = (n: number) =>

@@ -1,0 +1,3 @@
+module.exports=[70406,(a,b,c)=>{b.exports=a.x("next/dist/compiled/@opentelemetry/api",()=>require("next/dist/compiled/@opentelemetry/api"))},49739,a=>{"use strict";a.s(["D",0,{PENDING:"Pending",APPROVED:"Disetujui",REJECTED:"Ditolak",CANCELLED:"Dibatalkan"},"n",0,{LEAVE:"Cuti",PERMIT:"Izin Acara",SICK:"Izin Sakit",ATTENDANCE_CORRECTION:"Koreksi Absen",SHIFT_SWAP:"Tukar Shift"},"f",0,function(a){return"APPROVED"===a?"default":"REJECTED"===a?"destructive":"PENDING"===a?"secondary":"outline"}])}];
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__1wubrazb1xwic._.js.map

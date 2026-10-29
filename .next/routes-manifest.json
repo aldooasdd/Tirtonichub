@@ -63,6 +63,12 @@
       "namedRegex": "^/absen(?:/)?$"
     },
     {
+      "page": "/admin/laporan",
+      "regex": "^/admin/laporan(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/admin/laporan(?:/)?$"
+    },
+    {
       "page": "/api/chat/messages",
       "regex": "^/api/chat/messages(?:/)?$",
       "routeKeys": {},
@@ -165,6 +171,24 @@
       "namedRegex": "^/beranda(?:/)?$"
     },
     {
+      "page": "/cabang/approval-penjualan",
+      "regex": "^/cabang/approval\\-penjualan(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/cabang/approval\\-penjualan(?:/)?$"
+    },
+    {
+      "page": "/cabang/pembelian",
+      "regex": "^/cabang/pembelian(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/cabang/pembelian(?:/)?$"
+    },
+    {
+      "page": "/cabang/penjualan",
+      "regex": "^/cabang/penjualan(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/cabang/penjualan(?:/)?$"
+    },
+    {
       "page": "/chat",
       "regex": "^/chat(?:/)?$",
       "routeKeys": {},
@@ -177,10 +201,28 @@
       "namedRegex": "^/finance(?:/)?$"
     },
     {
+      "page": "/finance/kas",
+      "regex": "^/finance/kas(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/finance/kas(?:/)?$"
+    },
+    {
+      "page": "/finance/pembelian",
+      "regex": "^/finance/pembelian(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/finance/pembelian(?:/)?$"
+    },
+    {
       "page": "/finance/penjualan",
       "regex": "^/finance/penjualan(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/finance/penjualan(?:/)?$"
+    },
+    {
+      "page": "/finance/sinkronisasi",
+      "regex": "^/finance/sinkronisasi(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/finance/sinkronisasi(?:/)?$"
     },
     {
       "page": "/hr/approval",
@@ -193,12 +235,6 @@
       "regex": "^/hr/cabang(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/hr/cabang(?:/)?$"
-    },
-    {
-      "page": "/hr/hari-libur",
-      "regex": "^/hr/hari\\-libur(?:/)?$",
-      "routeKeys": {},
-      "namedRegex": "^/hr/hari\\-libur(?:/)?$"
     },
     {
       "page": "/hr/jadwal",
@@ -241,6 +277,12 @@
       "regex": "^/icon\\.png(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/icon\\.png(?:/)?$"
+    },
+    {
+      "page": "/lapor",
+      "regex": "^/lapor(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/lapor(?:/)?$"
     },
     {
       "page": "/login",
@@ -315,6 +357,12 @@
       "namedRegex": "^/notifikasi(?:/)?$"
     },
     {
+      "page": "/pembelian",
+      "regex": "^/pembelian(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/pembelian(?:/)?$"
+    },
+    {
       "page": "/pengajuan",
       "regex": "^/pengajuan(?:/)?$",
       "routeKeys": {},
@@ -361,6 +409,12 @@
       "regex": "^/stok/qc(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/stok/qc(?:/)?$"
+    },
+    {
+      "page": "/stringing",
+      "regex": "^/stringing(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/stringing(?:/)?$"
     }
   ],
   "dataRoutes": [],
