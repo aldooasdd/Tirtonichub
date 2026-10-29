@@ -1,34 +1,42 @@
+"use client";
+
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import type { SalesTrend } from "@/lib/cash";
 
 // Palet sama & urutan sama (name-sorted) dengan treemap → warna cabang konsisten.
 const PALETTE = ["#7CFF5B", "#8B3DFF", "#FFB800", "#FF5A1F", "#22D3EE", "#FF3DA5", "#34D399", "#6366F1"];
+const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 const compact = (n: number) =>
   n >= 1_000_000 ? (n / 1_000_000).toFixed(n % 1_000_000 ? 1 : 0) + "jt" : n >= 1000 ? Math.round(n / 1000) + "rb" : String(n);
 
-const W = 600, H = 300, PL = 46, PR = 14, PT = 16, PB = 28;
-
-/** Catmull-rom → kurva mulus. */
-function smooth(P: [number, number][]) {
-  if (P.length < 2) return P.length ? `M${P[0][0]},${P[0][1]}` : "";
-  const g = (i: number) => P[Math.max(0, Math.min(P.length - 1, i))];
-  let d = `M${P[0][0]},${P[0][1]}`;
-  for (let i = 0; i < P.length - 1; i++) {
-    const p0 = g(i - 1), p1 = g(i), p2 = g(i + 1), p3 = g(i + 2), k = 0.2;
-    d += `C${p1[0] + (p2[0] - p0[0]) * k},${p1[1] + (p2[1] - p0[1]) * k} ${p2[0] - (p3[0] - p1[0]) * k},${p2[1] - (p3[1] - p1[1]) * k} ${p2[0]},${p2[1]}`;
-  }
-  return d;
+type TipProps = { active?: boolean; label?: string; payload?: { dataKey?: string | number; value?: number; color?: string }[] };
+function Tip({ active, label, payload }: TipProps) {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="rounded-lg border bg-card px-2.5 py-1.5 text-12 shadow-xl">
+      <div className="mb-1 font-medium">{label}</div>
+      <div className="grid gap-1">
+        {payload.map((p) => (
+          <div key={String(p.dataKey)} className="flex items-center justify-between gap-3">
+            <span className="inline-flex items-center gap-1.5 text-muted-foreground">
+              <i className="h-2 w-2 rounded-[2px]" style={{ background: p.color }} />
+              {String(p.dataKey)}
+            </span>
+            <b className="font-medium tabular-nums">{rupiah(Number(p.value ?? 0))}</b>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 export function BranchSalesChart({ trend }: { trend: SalesTrend }) {
   const { months, series } = trend;
-  const n = months.length;
-  const max = Math.max(1, ...series.flatMap((s) => s.points));
-  // Skala Y "cantik": bulatkan max ke atas.
-  const mag = Math.pow(10, Math.floor(Math.log10(max)));
-  const niceMax = Math.ceil(max / mag) * mag;
-  const X = (i: number) => PL + (i / Math.max(1, n - 1)) * (W - PL - PR);
-  const Y = (v: number) => PT + (1 - v / niceMax) * (H - PT - PB);
-  const ticks = [0, 0.25, 0.5, 0.75, 1].map((t) => t * niceMax);
+  const data = months.map((m, i) => {
+    const row: Record<string, string | number> = { month: m };
+    for (const s of series) row[s.name] = s.points[i];
+    return row;
+  });
 
   return (
     <section className="min-w-0 flex-1 rounded-2xl border bg-card p-5">
@@ -44,28 +52,25 @@ export function BranchSalesChart({ trend }: { trend: SalesTrend }) {
         </div>
       </div>
 
-      <svg viewBox={`0 0 ${W} ${H}`} className="mt-3 h-auto w-full" role="img" aria-label="Tren penjualan per cabang">
-        {ticks.map((v) => (
-          <g key={v}>
-            <line x1={PL} x2={W - PR} y1={Y(v)} y2={Y(v)} className="stroke-border" strokeWidth={1} vectorEffect="non-scaling-stroke" />
-            <text x={PL - 6} y={Y(v) + 3} textAnchor="end" fontSize={10} className="fill-muted-foreground">{compact(v)}</text>
-          </g>
-        ))}
-        {months.map((m, i) => (
-          <text key={m + i} x={X(i)} y={H - 8} textAnchor="middle" fontSize={10} className="fill-muted-foreground">{m}</text>
-        ))}
-        {series.map((s, si) => {
-          const pts = s.points.map((v, i) => [X(i), Y(v)] as [number, number]);
-          const color = PALETTE[si % PALETTE.length];
-          const last = pts[pts.length - 1];
-          return (
-            <g key={s.id}>
-              <path d={smooth(pts)} fill="none" stroke={color} strokeWidth={2.2} strokeLinecap="round" vectorEffect="non-scaling-stroke" />
-              <circle cx={last[0]} cy={last[1]} r={3} fill={color} />
-            </g>
-          );
-        })}
-      </svg>
+      <div className="mt-3 h-[300px] w-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={data} margin={{ left: 4, right: 12, top: 8, bottom: 0 }}>
+            <defs>
+              <filter id="line-glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="8" result="blur" />
+                <feComposite in="SourceGraphic" in2="blur" operator="over" />
+              </filter>
+            </defs>
+            <CartesianGrid vertical={false} stroke="currentColor" className="text-border" strokeOpacity={0.4} />
+            <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} fontSize={11} stroke="currentColor" className="text-muted-foreground" />
+            <YAxis width={44} tickLine={false} axisLine={false} fontSize={10} stroke="currentColor" className="text-muted-foreground" tickFormatter={(v) => compact(Number(v))} />
+            <Tooltip content={<Tip />} cursor={{ stroke: "currentColor", strokeOpacity: 0.3 }} />
+            {series.map((s, i) => (
+              <Line key={s.id} dataKey={s.name} type="bump" stroke={PALETTE[i % PALETTE.length]} dot={false} strokeWidth={2} filter="url(#line-glow)" isAnimationActive={false} />
+            ))}
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
       <p className="mt-2 text-11 text-muted-foreground">Total penjualan (grandTotal) per bulan, per cabang.</p>
     </section>
   );
