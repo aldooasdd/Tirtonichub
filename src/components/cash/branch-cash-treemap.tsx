@@ -104,19 +104,18 @@ export function BranchCashTreemap({ branches, children }: { branches: BranchCash
             const { b } = rows[r.i];
             const share = ((r.v / grand) * 100).toFixed(r.v / grand < 0.1 ? 1 : 0);
             const { bg, ink } = tileStyle(r.i, rows.length);
-            const big = r.w >= 22 && r.h >= 18;
             return (
               <div
                 key={b.id}
                 className="absolute flex flex-col justify-between overflow-hidden rounded-md p-2.5"
-                style={{ left: `${r.x}%`, top: `${r.y}%`, width: `calc(${r.w}% - 6px)`, height: `calc(${r.h}% - 6px)`, background: bg, color: ink }}
+                style={{ left: `${r.x}%`, top: `${r.y}%`, width: `calc(${r.w}% - 6px)`, height: `calc(${r.h}% - 6px)`, background: bg, color: ink, containerType: "inline-size" }}
                 title={`${b.name}: ${rupiah(r.v)} (${share}%)`}
               >
-                <div className="flex items-center gap-1 text-12 leading-tight" style={{ opacity: 0.7 }}>
+                <div className="flex items-center gap-1 leading-tight" style={{ opacity: 0.7, fontSize: "clamp(10px, 6cqi, 13px)" }}>
                   <span className="truncate">{b.name}</span>
                   {mismatch(b) && <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-600" title="Selisih" />}
                 </div>
-                <span className="font-semibold leading-none" style={{ fontSize: big ? 24 : 14 }}>{rupiah(r.v)}</span>
+                <span className="whitespace-nowrap font-semibold leading-none" style={{ fontSize: "clamp(11px, 12cqi, 26px)" }}>{rupiah(r.v)}</span>
               </div>
             );
           })}
