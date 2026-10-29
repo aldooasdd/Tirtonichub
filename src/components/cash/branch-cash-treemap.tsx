@@ -2,6 +2,7 @@
 
 import * as React from "react";
 import type { Buckets } from "@/lib/cash";
+import { avatarColor } from "@/lib/avatar-color";
 
 // Label lokal (jangan import nilai dari @/lib/cash → menyeret prisma ke bundle client).
 const BUCKET_LABEL: Record<keyof Buckets, string> = {
@@ -15,8 +16,6 @@ const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 const compact = (n: number) =>
   n >= 1_000_000 ? (n / 1_000_000).toFixed(n % 1_000_000 ? 1 : 0) + "jt" : n >= 1000 ? Math.round(n / 1000) + "rb" : String(n);
 
-// Palet tile per cabang (urut, berulang kalau cabang > palet).
-const PALETTE = ["#7CFF5B", "#8B3DFF", "#FFB800", "#FF5A1F", "#22D3EE", "#FF3DA5", "#34D399", "#6366F1"];
 const total = (b: Buckets) => b.cash + b.mandiri + b.bca + b.bri;
 
 export type BranchCash = { id: string; name: string; opened: boolean; expected: Buckets; close: Buckets | null };
@@ -54,7 +53,7 @@ export function BranchCashTreemap({ branches, children }: { branches: BranchCash
     b.close != null && (metric === "all" ? total(b.close) !== total(b.expected) : b.close[metric] !== b.expected[metric]);
 
   const rows = branches
-    .map((b, idx) => ({ b, color: PALETTE[idx % PALETTE.length], v: valueOf(b) }))
+    .map((b) => ({ b, cls: avatarColor(b.id), v: valueOf(b) }))
     .filter((r) => r.v > 0)
     .sort((a, b) => b.v - a.v);
   const grand = rows.reduce((s, r) => s + r.v, 0);
@@ -94,16 +93,16 @@ export function BranchCashTreemap({ branches, children }: { branches: BranchCash
       {rows.length === 0 ? (
         <p className="py-10 text-center text-14 text-muted-foreground">Belum ada saldo cabang hari ini.</p>
       ) : (
-        <div className="relative mt-4 h-[360px] w-full sm:h-[440px]">
+        <div className="relative mt-4 h-[220px] w-full sm:h-[260px]">
           {rects.map((r) => {
-            const { b, color } = rows[r.i];
+            const { b, cls } = rows[r.i];
             const share = ((r.v / grand) * 100).toFixed(r.v / grand < 0.1 ? 1 : 0);
             const big = r.w >= 22 && r.h >= 18;
             return (
               <div
                 key={b.id}
-                className="absolute flex flex-col justify-between overflow-hidden rounded-xl p-2.5 text-neutral-950"
-                style={{ left: `${r.x}%`, top: `${r.y}%`, width: `calc(${r.w}% - 6px)`, height: `calc(${r.h}% - 6px)`, background: color }}
+                className={`absolute flex flex-col justify-between overflow-hidden rounded-xl p-2.5 ${cls}`}
+                style={{ left: `${r.x}%`, top: `${r.y}%`, width: `calc(${r.w}% - 6px)`, height: `calc(${r.h}% - 6px)` }}
                 title={`${b.name}: ${rupiah(r.v)} (${share}%)`}
               >
                 <div className="flex items-center gap-1 text-11 font-semibold uppercase leading-tight tracking-wide">
