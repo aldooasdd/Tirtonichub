@@ -8,6 +8,15 @@ import { sendWa } from "@/server/wa";
 
 export type ActionResult = { ok: boolean; message?: string };
 
+/** Nomor WA → format internasional wa.me (62, tanpa + / 0 depan). */
+function waId(num: string): string {
+  const d = num.replace(/\D/g, "");
+  if (d.startsWith("62")) return d;
+  if (d.startsWith("0")) return "62" + d.slice(1);
+  if (d.startsWith("8")) return "62" + d;
+  return d;
+}
+
 type SubmitInput = {
   message: string;
   imageBase64?: string | null;
@@ -36,8 +45,9 @@ export async function submitReport(input: SubmitInput): Promise<ActionResult> {
   // WA ke admin (tanpa foto, cuma keterangan masalahnya). Nomor dari env.
   const to = process.env.REPORT_WA_TO;
   if (to) {
-    const me = await prisma.user.findUnique({ where: { id: ctx.userId }, select: { fullName: true } });
-    await sendWa(to, `Laporan baru di Tirtonichub dari ${me?.fullName ?? "karyawan"}:\n\n${message}`);
+    const me = await prisma.user.findUnique({ where: { id: ctx.userId }, select: { fullName: true, waNumber: true } });
+    const waLink = me?.waNumber ? `\n\nBalas pengirim: https://wa.me/${waId(me.waNumber)}` : "";
+    await sendWa(to, `Laporan baru di Tirtonichub dari ${me?.fullName ?? "karyawan"}:\n\n${message}${waLink}`);
   }
   return { ok: true };
 }
