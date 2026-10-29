@@ -110,8 +110,11 @@ export default async function BerandaPage() {
     cashSession?.closedAt != null
       ? { cash: cashSession.closeCash ?? 0, mandiri: cashSession.closeMandiri ?? 0, bca: cashSession.closeBca ?? 0, bri: cashSession.closeBri ?? 0 }
       : null;
+  // Buka saldo: perwakilan (sales pertama yang absen masuk) saat belum ada sesi.
   const needOpenCash = isSales && !!att?.checkInAt && !cashSession;
-  const needCloseCash = isSales && !!cashSession && !cashSession.closedAt && !att?.checkOutAt;
+  // Tutup saldo: hanya yang buka (perwakilan).
+  const needCloseCash =
+    isSales && !!cashSession && cashSession.openedById === ctx.userId && !cashSession.closedAt && !att?.checkOutAt;
 
   const absenPhase = !att?.checkInAt ? "in" : !att.checkOutAt ? "out" : "done";
   // Media: jadwal fleksibel → pulang setelah 5 jam. Lainnya: setelah shift berakhir.
