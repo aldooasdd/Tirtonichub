@@ -31,6 +31,41 @@ export type CashReport = {
   expected: Buckets; // saldo seharusnya = saldo awal + masuk − keluar
 };
 
+export type BranchCashBoardData = {
+  branch: { id: string; name: string };
+  opened: boolean;
+  open: Buckets;
+  report: CashReport;
+  close: Buckets | null;
+};
+
+/** Muat saldo kasir semua cabang (Office disembunyikan) untuk dateKey. Dipakai dashboard Finance. */
+export async function loadBranchCashBoards(dateKey: Date): Promise<BranchCashBoardData[]> {
+  const [branches, sessions] = await Promise.all([
+    prisma.branch.findMany({
+      where: { NOT: { name: { contains: "office", mode: "insensitive" } } },
+      orderBy: { name: "asc" },
+      select: { id: true, name: true },
+    }),
+    prisma.cashSession.findMany({ where: { date: dateKey } }),
+  ]);
+  const byBranch = new Map(sessions.map((s) => [s.branchId, s]));
+  return Promise.all(
+    branches.map(async (branch) => {
+      const s = byBranch.get(branch.id) ?? null;
+      const open: Buckets = s
+        ? { cash: s.openCash, mandiri: s.openMandiri, bca: s.openBca, bri: s.openBri }
+        : zeroBuckets();
+      const report = await computeBranchCash(branch.id, dateKey, open);
+      const close =
+        s?.closedAt != null
+          ? { cash: s.closeCash ?? 0, mandiri: s.closeMandiri ?? 0, bca: s.closeBca ?? 0, bri: s.closeBri ?? 0 }
+          : null;
+      return { branch, opened: !!s, open, report, close };
+    }),
+  );
+}
+
 /** Hitung saldo seharusnya dari penjualan offline + pembelian hari itu di cabang. */
 export async function computeBranchCash(branchId: string, dateKey: Date, open: Buckets): Promise<CashReport> {
   const { start, end } = dayRange(dateKey);
