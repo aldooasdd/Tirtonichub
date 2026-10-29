@@ -9,20 +9,26 @@ import { TotalSalesChart } from "./total-sales-chart";
 export function CashDashboard({ boards, trends, moves }: { boards: BranchCashBoardData[]; trends: SalesTrends; moves: CashMovement[] }) {
   return (
     <div className="flex flex-col gap-5 lg:flex-row lg:items-start">
-      <BranchCashTreemap
-        branches={boards.map(({ branch, opened, report, close }) => ({
-          id: branch.id,
-          name: branch.name,
-          opened,
-          expected: report.expected,
-          close,
-        }))}
-      >
-        <CashMovements rows={moves} />
-      </BranchCashTreemap>
+      <div className="reveal min-w-0 flex-1" style={{ animationDelay: "0ms" }}>
+        <BranchCashTreemap
+          branches={boards.map(({ branch, opened, report, close }) => ({
+            id: branch.id,
+            name: branch.name,
+            opened,
+            expected: report.expected,
+            close,
+          }))}
+        >
+          <CashMovements rows={moves} />
+        </BranchCashTreemap>
+      </div>
       <div className="flex min-w-0 flex-1 flex-col gap-5">
-        <BranchSalesChart trends={trends} />
-        <TotalSalesChart trends={trends} />
+        <div className="reveal" style={{ animationDelay: "90ms" }}>
+          <BranchSalesChart trends={trends} />
+        </div>
+        <div className="reveal" style={{ animationDelay: "180ms" }}>
+          <TotalSalesChart trends={trends} />
+        </div>
       </div>
     </div>
   );
