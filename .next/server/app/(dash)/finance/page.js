@@ -1,6 +1,6 @@
 var R=require("../../../chunks/ssr/[turbopack]_runtime.js")("server/app/(dash)/finance/page.js")
 R.c("server/chunks/ssr/[root-of-the-server]__0yfg7_mxynp7u._.js")
-R.c("server/chunks/ssr/src_1e3h_bna0ackr._.js")
+R.c("server/chunks/ssr/src_1e7ac5cy6uu0r._.js")
 R.c("server/chunks/ssr/18de_next_dist_esm_build_templates_app-page_1nvi6_m-u1bw8.js")
 R.c("server/chunks/ssr/[root-of-the-server]__1nt2b1qt00vvu._.js")
 R.c("server/chunks/ssr/18de_next_dist_compiled_@opentelemetry_api_index_1yf92bye5y28m.js")
