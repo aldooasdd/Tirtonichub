@@ -2,6 +2,7 @@ import { redirect } from "next/navigation";
 import { getSession } from "@/server/auth/session";
 import { SessionProvider } from "@/components/layout/active-role-context";
 import { AppShell } from "@/components/layout/app-shell";
+import { RouteReveal } from "@/components/route-reveal";
 import { Presence } from "@/components/presence";
 import { prisma } from "@/server/db";
 import { timeAgo } from "@/lib/datetime";
@@ -82,7 +83,7 @@ export default async function DashLayout({ children }: LayoutProps<"/">) {
         me={s.user.id}
         notifCount={unreadCount}
       >
-        {children}
+        <RouteReveal>{children}</RouteReveal>
       </AppShell>
       <Presence />
     </SessionProvider>
