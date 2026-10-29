@@ -69,7 +69,7 @@ export function BranchCashTreemap({ branches }: { branches: BranchCash[] }) {
   ];
 
   return (
-    <section className="rounded-2xl border bg-card p-5">
+    <section className="max-w-3xl rounded-2xl border bg-card p-5">
       <div className="flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
         <div>
           <h2 className="text-16 font-semibold">Saldo Kasir per Cabang</h2>
@@ -94,7 +94,7 @@ export function BranchCashTreemap({ branches }: { branches: BranchCash[] }) {
       {rows.length === 0 ? (
         <p className="py-10 text-center text-14 text-muted-foreground">Belum ada saldo cabang hari ini.</p>
       ) : (
-        <div className="relative mt-4 w-full" style={{ aspectRatio: "100 / 62" }}>
+        <div className="relative mt-4 h-[360px] w-full sm:h-[440px]">
           {rects.map((r) => {
             const { b, color } = rows[r.i];
             const share = ((r.v / grand) * 100).toFixed(r.v / grand < 0.1 ? 1 : 0);
