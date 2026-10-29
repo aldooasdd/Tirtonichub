@@ -21,8 +21,6 @@ const BUCKET_LABEL: Record<keyof Buckets, string> = {
 };
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
-const compact = (n: number) =>
-  n >= 1_000_000 ? (n / 1_000_000).toFixed(n % 1_000_000 ? 1 : 0) + "jt" : n >= 1000 ? Math.round(n / 1000) + "rb" : String(n);
 
 const total = (b: Buckets) => b.cash + b.mandiri + b.bca + b.bri;
 
@@ -65,7 +63,7 @@ export function BranchCashTreemap({ branches, children }: { branches: BranchCash
     .filter((r) => r.v > 0)
     .sort((a, b) => b.v - a.v);
   const grand = rows.reduce((s, r) => s + r.v, 0);
-  const rects = rows.length ? squarify(rows.map((r) => r.v), 0, 0, 100, 62) : [];
+  const rects = rows.length ? squarify(rows.map((r) => r.v), 0, 0, 100, 100) : [];
 
   const tabs: { key: Metric; label: string }[] = [
     { key: "all", label: "Total" },
@@ -118,7 +116,7 @@ export function BranchCashTreemap({ branches, children }: { branches: BranchCash
                   <span className="truncate">{b.name}</span>
                   {mismatch(b) && <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-red-600" title="Selisih" />}
                 </div>
-                <span className="font-semibold leading-none" style={{ fontSize: big ? 30 : 18 }}>{compact(r.v)}</span>
+                <span className="font-semibold leading-none" style={{ fontSize: big ? 24 : 14 }}>{rupiah(r.v)}</span>
               </div>
             );
           })}
