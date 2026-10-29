@@ -3,7 +3,7 @@ import { Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { requireAuth } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
-import { roleAttends, isSuperRole } from "@/lib/roles";
+import { roleAttends, FINANCE_ROLES } from "@/lib/roles";
 import { ABSEN_ON } from "@/lib/flags";
 import { fmtWIB } from "@/lib/datetime";
 import { dateKeyWIB, wibMinutesOfDay, parseHHMM } from "@/server/attendance/logic";
@@ -199,7 +199,7 @@ export default async function BerandaPage() {
 
       {needCloseCash && <CashCloseForm />}
 
-      {isSuperRole(ctx.activeRole) && (
+      {FINANCE_ROLES.includes(ctx.activeRole) && (
         <CashDashboard
           boards={await loadBranchCashBoards(today)}
           trends={await loadBranchSalesTrends()}
