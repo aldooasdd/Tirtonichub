@@ -1,6 +1,6 @@
 import { requireFinance } from "@/server/auth/rbac";
 import { dateKeyWIB } from "@/server/attendance/logic";
-import { loadBranchCashBoards, loadBranchSalesTrend, loadCashMovements } from "@/lib/cash";
+import { loadBranchCashBoards, loadBranchSalesTrends, loadCashMovements } from "@/lib/cash";
 import { BranchCashTreemap } from "@/components/cash/branch-cash-treemap";
 import { BranchSalesChart } from "@/components/cash/branch-sales-chart";
 import { CashMovements } from "@/components/cash/cash-movements";
@@ -8,9 +8,9 @@ import { CashMovements } from "@/components/cash/cash-movements";
 export default async function FinanceKasPage() {
   await requireFinance();
   const today = dateKeyWIB(new Date());
-  const [boards, trend, moves] = await Promise.all([
+  const [boards, trends, moves] = await Promise.all([
     loadBranchCashBoards(today),
-    loadBranchSalesTrend(),
+    loadBranchSalesTrends(),
     loadCashMovements(today),
   ]);
 
@@ -32,7 +32,7 @@ export default async function FinanceKasPage() {
         >
           <CashMovements rows={moves} />
         </BranchCashTreemap>
-        <BranchSalesChart trend={trend} />
+        <BranchSalesChart trends={trends} />
       </div>
     </div>
   );

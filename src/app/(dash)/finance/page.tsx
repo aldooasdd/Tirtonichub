@@ -2,14 +2,14 @@ import { requireFinance } from "@/server/auth/rbac";
 import { isSuperRole } from "@/lib/roles";
 import { prisma } from "@/server/db";
 import { dateKeyWIB } from "@/server/attendance/logic";
-import { loadBranchCashBoards, loadBranchSalesTrend } from "@/lib/cash";
+import { loadBranchCashBoards, loadBranchSalesTrends } from "@/lib/cash";
 import { BranchCashTreemap } from "@/components/cash/branch-cash-treemap";
 import { BranchSalesChart } from "@/components/cash/branch-sales-chart";
 import { FinanceClient } from "@/components/finance/finance-client";
 
 export default async function FinancePage() {
   const ctx = await requireFinance();
-  const [rows, boards, trend] = await Promise.all([
+  const [rows, boards, trends] = await Promise.all([
     prisma.rawProduct.findMany({
       where: isSuperRole(ctx.activeRole) ? {} : { createdById: ctx.userId },
       orderBy: { createdAt: "desc" },
@@ -17,7 +17,7 @@ export default async function FinancePage() {
       include: { qcBy: { select: { fullName: true } } },
     }),
     loadBranchCashBoards(dateKeyWIB(new Date())),
-    loadBranchSalesTrend(),
+    loadBranchSalesTrends(),
   ]);
 
   return (
@@ -32,7 +32,7 @@ export default async function FinancePage() {
             close,
           }))}
         />
-        <BranchSalesChart trend={trend} />
+        <BranchSalesChart trends={trends} />
       </div>
       <FinanceClient
       isBoss={isSuperRole(ctx.activeRole)}

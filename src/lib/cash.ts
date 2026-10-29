@@ -111,21 +111,45 @@ export async function loadCashMovements(dateKey: Date, take = 60): Promise<CashM
 
 const MONTH_ID = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
 
-export type SalesTrend = { months: string[]; series: { id: string; name: string; points: number[] }[] };
+export type SalesTrend = { labels: string[]; series: { id: string; name: string; points: number[] }[] };
+export type SalesTrends = { harian: SalesTrend; bulanan: SalesTrend; tahunan: SalesTrend };
 
-/** Total penjualan per cabang per bulan, 6 bulan terakhir (WIB). 1 garis per cabang. */
-export async function loadBranchSalesTrend(now = new Date()): Promise<SalesTrend> {
-  const wib = new Date(now.getTime() + 7 * 3600_000);
-  // 6 kunci bulan (WIB) dari 5 bulan lalu sampai bulan ini.
-  const keys: { y: number; m: number }[] = [];
-  for (let i = 5; i >= 0; i--) {
-    const d = new Date(Date.UTC(wib.getUTCFullYear(), wib.getUTCMonth() - i, 1));
-    keys.push({ y: d.getUTCFullYear(), m: d.getUTCMonth() });
+type BranchLite = { id: string; name: string };
+type SaleLite = { branchId: string | null; wib: Date; grandTotal: number };
+
+/** Bikin 1 trend: bucket penjualan per kunci waktu. keyOf(wib) harus cocok salah satu key. */
+function trendFrom(branches: BranchLite[], sales: SaleLite[], keys: { k: string; label: string }[], keyOf: (wib: Date) => string): SalesTrend {
+  const idx = new Map(keys.map((kk, i) => [kk.k, i]));
+  const byBranch = new Map(branches.map((b) => [b.id, new Array(keys.length).fill(0) as number[]]));
+  for (const s of sales) {
+    const arr = s.branchId ? byBranch.get(s.branchId) : null;
+    if (!arr) continue; // cabang Office / terhapus
+    const i = idx.get(keyOf(s.wib));
+    if (i != null) arr[i] += s.grandTotal;
   }
-  const from = new Date(Date.UTC(keys[0].y, keys[0].m, 1) - 7 * 3600_000); // WIB awal bulan pertama
-  const idx = new Map(keys.map((k, i) => [`${k.y}-${k.m}`, i]));
+  return { labels: keys.map((k) => k.label), series: branches.map((b) => ({ id: b.id, name: b.name, points: byBranch.get(b.id)! })) };
+}
 
-  const [branches, sales] = await Promise.all([
+/** Trend penjualan per cabang: harian (30 hr), bulanan (6 bln), tahunan (5 th). WIB. 1 query. */
+export async function loadBranchSalesTrends(now = new Date()): Promise<SalesTrends> {
+  const wib = new Date(now.getTime() + 7 * 3600_000);
+  const y0 = wib.getUTCFullYear(), m0 = wib.getUTCMonth(), d0 = wib.getUTCDate();
+
+  const dayKeys: { k: string; label: string }[] = [];
+  for (let i = 29; i >= 0; i--) {
+    const d = new Date(Date.UTC(y0, m0, d0 - i));
+    dayKeys.push({ k: `${d.getUTCFullYear()}-${d.getUTCMonth()}-${d.getUTCDate()}`, label: `${d.getUTCDate()}/${d.getUTCMonth() + 1}` });
+  }
+  const monKeys: { k: string; label: string }[] = [];
+  for (let i = 5; i >= 0; i--) {
+    const d = new Date(Date.UTC(y0, m0 - i, 1));
+    monKeys.push({ k: `${d.getUTCFullYear()}-${d.getUTCMonth()}`, label: MONTH_ID[d.getUTCMonth()] });
+  }
+  const yrKeys: { k: string; label: string }[] = [];
+  for (let i = 4; i >= 0; i--) yrKeys.push({ k: String(y0 - i), label: String(y0 - i) });
+
+  const from = new Date(Date.UTC(y0 - 5, 0, 1) - 7 * 3600_000); // 5 th lalu (WIB), paling lebar
+  const [branches, rows] = await Promise.all([
     prisma.branch.findMany({
       where: { NOT: { name: { contains: "office", mode: "insensitive" } } },
       orderBy: { name: "asc" },
@@ -136,18 +160,12 @@ export async function loadBranchSalesTrend(now = new Date()): Promise<SalesTrend
       select: { branchId: true, soldAt: true, grandTotal: true },
     }),
   ]);
+  const sales: SaleLite[] = rows.map((s) => ({ branchId: s.branchId, wib: new Date(s.soldAt.getTime() + 7 * 3600_000), grandTotal: s.grandTotal }));
 
-  const byBranch = new Map(branches.map((b) => [b.id, new Array(6).fill(0) as number[]]));
-  for (const s of sales) {
-    const arr = byBranch.get(s.branchId!);
-    if (!arr) continue; // cabang Office / terhapus
-    const w = new Date(s.soldAt.getTime() + 7 * 3600_000);
-    const i = idx.get(`${w.getUTCFullYear()}-${w.getUTCMonth()}`);
-    if (i != null) arr[i] += s.grandTotal;
-  }
   return {
-    months: keys.map((k) => MONTH_ID[k.m]),
-    series: branches.map((b) => ({ id: b.id, name: b.name, points: byBranch.get(b.id)! })),
+    harian: trendFrom(branches, sales, dayKeys, (w) => `${w.getUTCFullYear()}-${w.getUTCMonth()}-${w.getUTCDate()}`),
+    bulanan: trendFrom(branches, sales, monKeys, (w) => `${w.getUTCFullYear()}-${w.getUTCMonth()}`),
+    tahunan: trendFrom(branches, sales, yrKeys, (w) => String(w.getUTCFullYear())),
   };
 }
 

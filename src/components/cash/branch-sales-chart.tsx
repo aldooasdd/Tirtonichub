@@ -1,7 +1,8 @@
 "use client";
 
+import * as React from "react";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
-import type { SalesTrend } from "@/lib/cash";
+import type { SalesTrends } from "@/lib/cash";
 
 // Palet sama & urutan sama (name-sorted) dengan treemap → warna cabang konsisten.
 const PALETTE = ["#7CFF5B", "#8B3DFF", "#FFB800", "#FF5A1F", "#22D3EE", "#FF3DA5", "#34D399", "#6366F1"];
@@ -30,10 +31,13 @@ function Tip({ active, label, payload }: TipProps) {
   );
 }
 
-export function BranchSalesChart({ trend }: { trend: SalesTrend }) {
-  const { months, series } = trend;
-  const data = months.map((m, i) => {
-    const row: Record<string, string | number> = { month: m };
+type Mode = "harian" | "bulanan" | "tahunan";
+
+export function BranchSalesChart({ trends }: { trends: SalesTrends }) {
+  const [mode, setMode] = React.useState<Mode>("bulanan");
+  const { labels, series } = trends[mode];
+  const data = labels.map((m, i) => {
+    const row: Record<string, string | number> = { label: m };
     for (const s of series) row[s.name] = s.points[i];
     return row;
   });
@@ -41,7 +45,18 @@ export function BranchSalesChart({ trend }: { trend: SalesTrend }) {
   return (
     <section className="min-w-0 flex-1 rounded-2xl border bg-card p-5">
       <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
-        <h2 className="text-16 font-semibold">Penjualan per Cabang (6 bulan)</h2>
+        <div className="flex items-center gap-2">
+          <h2 className="text-16 font-semibold">Penjualan per Cabang</h2>
+          <select
+            value={mode}
+            onChange={(e) => setMode(e.target.value as Mode)}
+            className="rounded-lg border bg-background px-2 py-1 text-12"
+          >
+            <option value="harian">Harian</option>
+            <option value="bulanan">Bulanan</option>
+            <option value="tahunan">Tahunan</option>
+          </select>
+        </div>
         <div className="flex flex-wrap gap-x-3 gap-y-1 text-12 text-muted-foreground">
           {series.map((s, i) => (
             <span key={s.id} className="inline-flex items-center gap-1.5">
@@ -62,7 +77,7 @@ export function BranchSalesChart({ trend }: { trend: SalesTrend }) {
               </filter>
             </defs>
             <CartesianGrid vertical={false} stroke="currentColor" className="text-border" strokeOpacity={0.4} />
-            <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} fontSize={11} stroke="currentColor" className="text-muted-foreground" />
+            <XAxis dataKey="label" tickLine={false} axisLine={false} tickMargin={8} fontSize={11} stroke="currentColor" className="text-muted-foreground" interval="preserveStartEnd" minTickGap={16} />
             <YAxis width={44} tickLine={false} axisLine={false} fontSize={10} stroke="currentColor" className="text-muted-foreground" tickFormatter={(v) => compact(Number(v))} />
             <Tooltip content={<Tip />} cursor={{ stroke: "currentColor", strokeOpacity: 0.3 }} />
             {series.map((s, i) => (
@@ -71,7 +86,7 @@ export function BranchSalesChart({ trend }: { trend: SalesTrend }) {
           </LineChart>
         </ResponsiveContainer>
       </div>
-      <p className="mt-2 text-11 text-muted-foreground">Total penjualan (grandTotal) per bulan, per cabang.</p>
+      <p className="mt-2 text-11 text-muted-foreground">Total penjualan (grandTotal) per periode, per cabang.</p>
     </section>
   );
 }
