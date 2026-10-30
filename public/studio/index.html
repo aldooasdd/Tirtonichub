@@ -1980,7 +1980,7 @@ html[data-skin] .pccell{background:var(--glass);border-color:var(--glass-line)}
       <div class="tw"><table class="t">
         <thead><tr><th>Orang</th><th>Syuting maks / hari</th><th>Editing maks / hari</th><th>Masuk</th></tr></thead>
         <tbody>
-          <tr><td>Zaki</td><td>1,5 jam (juga planning & QC)</td><td>2 jam</td><td>Sen, Sel, Rab, Jum, Sab, Min</td></tr>
+          <tr><td>Zaki</td><td>3 jam (juga planning & QC)</td><td>2 jam</td><td>Sen, Sel, Rab, Jum, Sab, Min</td></tr>
           <tr><td>Rayhan</td><td>3 jam</td><td>3 jam</td><td>Sen, Rab, Jum, Sab, Min</td></tr>
           <tr><td>Aulia</td><td>3 jam</td><td>3 jam</td><td>Sen, Sel, Rab, Sab, Min</td></tr>
           <tr><td>Salma</td><td>3 jam (talent)</td><td>—</td><td>Sen, Sel, Rab, Sab, Min</td></tr>
@@ -2282,7 +2282,7 @@ function editQueue(){const q={Z:0,R:0,A:0,S:0};S.tasks.forEach(t=>{if(IDX[t.stat
 /* ---------- kapasitas produksi: jam kerja per orang per hari + batas per jenis konten ---------- */
 const SHOOT_H={idf:0.5,ktl:0.25,igf:0.5,vpr:0.5,vrv:1.25,idc:1,evt:1.5,khs:1.5,cmp:1};    /* perkiraan jam syuting per konten */
 const EDIT_H={idf:0.3,ktl:0.25,igf:0.3,vpr:0.75,vrv:2.5,idc:2,evt:2.5,khs:2,cmp:0.75};     /* perkiraan jam editing per konten */
-const SHOOT_CAP={Z:1.5,R:3,A:3,S:3};   /* jam syuting maks per hari (jam aktif bersama 3,5 jam; Zaki juga planning & QC) */
+const SHOOT_CAP={Z:3,R:3,A:3,S:3};   /* jam syuting maks per hari (jam aktif bersama 3,5 jam; Zaki juga planning & QC) */
 const EDIT_CAP={Z:4,R:6,A:6,S:0};      /* jam editing maks per hari; editing di luar jam aktif kerja (Zaki lebih sedikit karena planning, cek file, Meta) */
 const TYPE_CAP={idf:2,ktl:12,igf:4,vpr:3,vrv:2,idc:1,evt:1,khs:1,cmp:2};   /* konten per jenis per hari */
 /* jobdesk: orang utama dulu, lalu pengganti sesuai urutan. Bisa diubah di tab Panduan (disimpan di pengaturan) */
