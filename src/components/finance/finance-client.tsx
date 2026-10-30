@@ -6,7 +6,7 @@ import { ScanLine, Plus, Trash2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { compressImage } from "@/lib/image";
+import { compressImage, notaStrips } from "@/lib/image";
 import { computeSellPrice } from "@/lib/pricing";
 import { stripSize, groupKey } from "@/lib/raw-group";
 import { BRANDS, brandByKey } from "@/lib/distributors";
@@ -89,11 +89,15 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
     setBusy(true);
     setMsg(null);
     try {
-      // Nota PDF: kirim apa adanya (tak bisa di-rasterize canvas). Foto: kompres dulu.
+      // Arsip nota: PDF apa adanya, foto dikompres. OCR pakai strip resolusi tinggi (lebih akurat);
+      // render gagal → strip kosong, server fallback kirim file asli.
       const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
       const mime = isPdf ? "application/pdf" : "image/jpeg";
-      const b64 = await blobToBase64(isPdf ? file : await compressImage(file));
-      const scan = await scanNota(b64, mime, brandKey);
+      const [b64, strips] = await Promise.all([
+        blobToBase64(isPdf ? file : await compressImage(file)),
+        notaStrips(file).catch(() => [] as string[]),
+      ]);
+      const scan = await scanNota(b64, mime, brandKey, strips);
       if (!scan.ok || !scan.batchId) {
         setMsg(scan.message ?? "Scan gagal.");
         return;

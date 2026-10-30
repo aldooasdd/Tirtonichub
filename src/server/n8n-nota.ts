@@ -57,14 +57,20 @@ function normalize(raw: unknown): NotaItem {
 }
 
 /** Kirim foto nota ke n8n, terima daftar item. null bila belum diset / gagal.
- *  brand/distributor diteruskan supaya n8n pilih prompt OCR per-brand. */
+ *  brand/distributor diteruskan supaya n8n pilih prompt OCR per-brand.
+ *  strips (JPEG base64 potongan halaman) dipakai OCR bila ada; file asli tak ikut dikirim. */
 export async function parseNotaViaN8n(
   imageBase64: string,
   mimeType: string,
   meta?: { brand?: string; distributor?: string; brandKey?: string },
+  strips: string[] = [],
 ): Promise<NotaItem[] | null> {
   const url = process.env.N8N_NOTA_OCR_WEBHOOK_URL;
   if (!url) return null;
+  const brandMeta = { brand: meta?.brand ?? null, distributor: meta?.distributor ?? null, brandKey: meta?.brandKey ?? null };
+  const body = strips.length
+    ? { imageBase64: "", mimeType: "image/jpeg", strips: true, images: strips.map((base64) => ({ base64, mimeType: "image/jpeg" })), ...brandMeta }
+    : { imageBase64, mimeType, ...brandMeta };
   try {
     const res = await fetch(url, {
       method: "POST",
@@ -72,7 +78,7 @@ export async function parseNotaViaN8n(
         "content-type": "application/json",
         "x-webhook-secret": process.env.N8N_NOTA_OCR_SECRET ?? "",
       },
-      body: JSON.stringify({ imageBase64, mimeType, brand: meta?.brand ?? null, distributor: meta?.distributor ?? null, brandKey: meta?.brandKey ?? null }),
+      body: JSON.stringify(body),
     });
     if (!res.ok) return null;
     const data = (await res.json()) as { items?: unknown };

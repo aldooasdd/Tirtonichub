@@ -26,10 +26,12 @@ export type ScanResult = {
 };
 
 /** Upload foto nota + OCR via n8n. Tidak menyimpan DB (biar diedit dulu). */
-export async function scanNota(imageBase64: string, mimeType: string, brandKey?: string): Promise<ScanResult> {
+export async function scanNota(imageBase64: string, mimeType: string, brandKey?: string, strips?: string[]): Promise<ScanResult> {
   await requireFinance();
   if (!imageBase64) return { ok: false, message: "Foto nota kosong." };
   const b = brandByKey(brandKey);
+  // Strip OCR dari browser (input tak tepercaya): hanya string, maks 80 potong (±13 halaman A4).
+  const okStrips = Array.isArray(strips) ? strips.filter((s) => typeof s === "string" && s).slice(0, 80) : [];
 
   const ext = mimeType.includes("pdf") ? "pdf" : mimeType.includes("png") ? "png" : "jpg";
   const key = makeKey("nota", ext);
@@ -40,7 +42,7 @@ export async function scanNota(imageBase64: string, mimeType: string, brandKey?:
     return { ok: false, message: "Gagal simpan foto nota." };
   }
 
-  const items = await parseNotaViaN8n(imageBase64, mimeType, b ? { brand: b.brand, distributor: b.distributor, brandKey: b.key } : undefined);
+  const items = await parseNotaViaN8n(imageBase64, mimeType, b ? { brand: b.brand, distributor: b.distributor, brandKey: b.key } : undefined, okStrips);
   return {
     ok: true,
     batchId: randomUUID(),
