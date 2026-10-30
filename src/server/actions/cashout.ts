@@ -92,15 +92,18 @@ export async function saveCashout(input: SaveInput): Promise<ActionResult> {
       branchName: br?.name ?? null,
       photoKey,
       createdById: ctx.userId,
+      // Langsung masuk rekap Finance tanpa approval.
+      approvedAt: new Date(),
+      approvedById: ctx.userId,
     },
   });
 
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "cashout_input", entity: "Cashout", entityId: row.id });
   await notifyRole("FINANCE", {
-    type: "cashout_pending",
-    title: `Pengeluaran perlu ACC: Rp ${rupiah(amount)}`,
-    link: "/cabang/pembelian",
+    type: "cashout_input",
+    title: `Pengeluaran masuk rekap: Rp ${rupiah(amount)}`,
+    link: "/finance/pembelian",
   });
   return { ok: true };
 }
