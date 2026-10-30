@@ -65,8 +65,9 @@ export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
 export type Branch = $Result.DefaultSelection<Prisma.$BranchPayload>
 /**
  * Model CashSession
- * * Saldo kasir per cabang per hari (laci + 3 EDC). Dibuka sales pertama absen masuk,
- *  *  ditutup sebelum sales terakhir absen pulang. Rekonsiliasi vs penjualan+pembelian.
+ * * Saldo kasir per cabang per hari (laci + 3 EDC). 1 kasir/hari: dibuka wakil shift
+ *  *  pertama (Pagi) saat absen masuk, ditutup wakil shift terakhir (Siang) saat absen
+ *  *  pulang (boleh beda orang). Rekonsiliasi vs penjualan+pembelian.
  */
 export type CashSession = $Result.DefaultSelection<Prisma.$CashSessionPayload>
 /**
@@ -16737,7 +16738,6 @@ export namespace Prisma {
     id: string | null
     branchId: string | null
     date: Date | null
-    shift: string | null
     openCash: number | null
     openMandiri: number | null
     openBca: number | null
@@ -16756,7 +16756,6 @@ export namespace Prisma {
     id: string | null
     branchId: string | null
     date: Date | null
-    shift: string | null
     openCash: number | null
     openMandiri: number | null
     openBca: number | null
@@ -16775,7 +16774,6 @@ export namespace Prisma {
     id: number
     branchId: number
     date: number
-    shift: number
     openCash: number
     openMandiri: number
     openBca: number
@@ -16818,7 +16816,6 @@ export namespace Prisma {
     id?: true
     branchId?: true
     date?: true
-    shift?: true
     openCash?: true
     openMandiri?: true
     openBca?: true
@@ -16837,7 +16834,6 @@ export namespace Prisma {
     id?: true
     branchId?: true
     date?: true
-    shift?: true
     openCash?: true
     openMandiri?: true
     openBca?: true
@@ -16856,7 +16852,6 @@ export namespace Prisma {
     id?: true
     branchId?: true
     date?: true
-    shift?: true
     openCash?: true
     openMandiri?: true
     openBca?: true
@@ -16962,7 +16957,6 @@ export namespace Prisma {
     id: string
     branchId: string
     date: Date
-    shift: string
     openCash: number
     openMandiri: number
     openBca: number
@@ -17000,7 +16994,6 @@ export namespace Prisma {
     id?: boolean
     branchId?: boolean
     date?: boolean
-    shift?: boolean
     openCash?: boolean
     openMandiri?: boolean
     openBca?: boolean
@@ -17020,7 +17013,6 @@ export namespace Prisma {
     id?: boolean
     branchId?: boolean
     date?: boolean
-    shift?: boolean
     openCash?: boolean
     openMandiri?: boolean
     openBca?: boolean
@@ -17040,7 +17032,6 @@ export namespace Prisma {
     id?: boolean
     branchId?: boolean
     date?: boolean
-    shift?: boolean
     openCash?: boolean
     openMandiri?: boolean
     openBca?: boolean
@@ -17060,7 +17051,6 @@ export namespace Prisma {
     id?: boolean
     branchId?: boolean
     date?: boolean
-    shift?: boolean
     openCash?: boolean
     openMandiri?: boolean
     openBca?: boolean
@@ -17075,7 +17065,7 @@ export namespace Prisma {
     closedAt?: boolean
   }
 
-  export type CashSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "branchId" | "date" | "shift" | "openCash" | "openMandiri" | "openBca" | "openBri" | "openedById" | "openedAt" | "closeCash" | "closeMandiri" | "closeBca" | "closeBri" | "closedById" | "closedAt", ExtArgs["result"]["cashSession"]>
+  export type CashSessionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "branchId" | "date" | "openCash" | "openMandiri" | "openBca" | "openBri" | "openedById" | "openedAt" | "closeCash" | "closeMandiri" | "closeBca" | "closeBri" | "closedById" | "closedAt", ExtArgs["result"]["cashSession"]>
   export type CashSessionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     branch?: boolean | BranchDefaultArgs<ExtArgs>
   }
@@ -17095,7 +17085,6 @@ export namespace Prisma {
       id: string
       branchId: string
       date: Date
-      shift: string
       openCash: number
       openMandiri: number
       openBca: number
@@ -17535,7 +17524,6 @@ export namespace Prisma {
     readonly id: FieldRef<"CashSession", 'String'>
     readonly branchId: FieldRef<"CashSession", 'String'>
     readonly date: FieldRef<"CashSession", 'DateTime'>
-    readonly shift: FieldRef<"CashSession", 'String'>
     readonly openCash: FieldRef<"CashSession", 'Int'>
     readonly openMandiri: FieldRef<"CashSession", 'Int'>
     readonly openBca: FieldRef<"CashSession", 'Int'>
@@ -47071,7 +47059,6 @@ export namespace Prisma {
     id: 'id',
     branchId: 'branchId',
     date: 'date',
-    shift: 'shift',
     openCash: 'openCash',
     openMandiri: 'openMandiri',
     openBca: 'openBca',
@@ -48609,7 +48596,6 @@ export namespace Prisma {
     id?: StringFilter<"CashSession"> | string
     branchId?: StringFilter<"CashSession"> | string
     date?: DateTimeFilter<"CashSession"> | Date | string
-    shift?: StringFilter<"CashSession"> | string
     openCash?: IntFilter<"CashSession"> | number
     openMandiri?: IntFilter<"CashSession"> | number
     openBca?: IntFilter<"CashSession"> | number
@@ -48629,7 +48615,6 @@ export namespace Prisma {
     id?: SortOrder
     branchId?: SortOrder
     date?: SortOrder
-    shift?: SortOrder
     openCash?: SortOrder
     openMandiri?: SortOrder
     openBca?: SortOrder
@@ -48647,13 +48632,12 @@ export namespace Prisma {
 
   export type CashSessionWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    branchId_date_shift?: CashSessionBranchIdDateShiftCompoundUniqueInput
+    branchId_date?: CashSessionBranchIdDateCompoundUniqueInput
     AND?: CashSessionWhereInput | CashSessionWhereInput[]
     OR?: CashSessionWhereInput[]
     NOT?: CashSessionWhereInput | CashSessionWhereInput[]
     branchId?: StringFilter<"CashSession"> | string
     date?: DateTimeFilter<"CashSession"> | Date | string
-    shift?: StringFilter<"CashSession"> | string
     openCash?: IntFilter<"CashSession"> | number
     openMandiri?: IntFilter<"CashSession"> | number
     openBca?: IntFilter<"CashSession"> | number
@@ -48667,13 +48651,12 @@ export namespace Prisma {
     closedById?: StringNullableFilter<"CashSession"> | string | null
     closedAt?: DateTimeNullableFilter<"CashSession"> | Date | string | null
     branch?: XOR<BranchScalarRelationFilter, BranchWhereInput>
-  }, "id" | "branchId_date_shift">
+  }, "id" | "branchId_date">
 
   export type CashSessionOrderByWithAggregationInput = {
     id?: SortOrder
     branchId?: SortOrder
     date?: SortOrder
-    shift?: SortOrder
     openCash?: SortOrder
     openMandiri?: SortOrder
     openBca?: SortOrder
@@ -48700,7 +48683,6 @@ export namespace Prisma {
     id?: StringWithAggregatesFilter<"CashSession"> | string
     branchId?: StringWithAggregatesFilter<"CashSession"> | string
     date?: DateTimeWithAggregatesFilter<"CashSession"> | Date | string
-    shift?: StringWithAggregatesFilter<"CashSession"> | string
     openCash?: IntWithAggregatesFilter<"CashSession"> | number
     openMandiri?: IntWithAggregatesFilter<"CashSession"> | number
     openBca?: IntWithAggregatesFilter<"CashSession"> | number
@@ -51702,7 +51684,6 @@ export namespace Prisma {
   export type CashSessionCreateInput = {
     id?: string
     date: Date | string
-    shift: string
     openCash?: number
     openMandiri?: number
     openBca?: number
@@ -51722,7 +51703,6 @@ export namespace Prisma {
     id?: string
     branchId: string
     date: Date | string
-    shift: string
     openCash?: number
     openMandiri?: number
     openBca?: number
@@ -51740,7 +51720,6 @@ export namespace Prisma {
   export type CashSessionUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    shift?: StringFieldUpdateOperationsInput | string
     openCash?: IntFieldUpdateOperationsInput | number
     openMandiri?: IntFieldUpdateOperationsInput | number
     openBca?: IntFieldUpdateOperationsInput | number
@@ -51760,7 +51739,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     branchId?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    shift?: StringFieldUpdateOperationsInput | string
     openCash?: IntFieldUpdateOperationsInput | number
     openMandiri?: IntFieldUpdateOperationsInput | number
     openBca?: IntFieldUpdateOperationsInput | number
@@ -51779,7 +51757,6 @@ export namespace Prisma {
     id?: string
     branchId: string
     date: Date | string
-    shift: string
     openCash?: number
     openMandiri?: number
     openBca?: number
@@ -51797,7 +51774,6 @@ export namespace Prisma {
   export type CashSessionUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    shift?: StringFieldUpdateOperationsInput | string
     openCash?: IntFieldUpdateOperationsInput | number
     openMandiri?: IntFieldUpdateOperationsInput | number
     openBca?: IntFieldUpdateOperationsInput | number
@@ -51816,7 +51792,6 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     branchId?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    shift?: StringFieldUpdateOperationsInput | string
     openCash?: IntFieldUpdateOperationsInput | number
     openMandiri?: IntFieldUpdateOperationsInput | number
     openBca?: IntFieldUpdateOperationsInput | number
@@ -54998,17 +54973,15 @@ export namespace Prisma {
     isNot?: BranchWhereInput
   }
 
-  export type CashSessionBranchIdDateShiftCompoundUniqueInput = {
+  export type CashSessionBranchIdDateCompoundUniqueInput = {
     branchId: string
     date: Date | string
-    shift: string
   }
 
   export type CashSessionCountOrderByAggregateInput = {
     id?: SortOrder
     branchId?: SortOrder
     date?: SortOrder
-    shift?: SortOrder
     openCash?: SortOrder
     openMandiri?: SortOrder
     openBca?: SortOrder
@@ -55038,7 +55011,6 @@ export namespace Prisma {
     id?: SortOrder
     branchId?: SortOrder
     date?: SortOrder
-    shift?: SortOrder
     openCash?: SortOrder
     openMandiri?: SortOrder
     openBca?: SortOrder
@@ -55057,7 +55029,6 @@ export namespace Prisma {
     id?: SortOrder
     branchId?: SortOrder
     date?: SortOrder
-    shift?: SortOrder
     openCash?: SortOrder
     openMandiri?: SortOrder
     openBca?: SortOrder
@@ -61683,7 +61654,6 @@ export namespace Prisma {
   export type CashSessionCreateWithoutBranchInput = {
     id?: string
     date: Date | string
-    shift: string
     openCash?: number
     openMandiri?: number
     openBca?: number
@@ -61701,7 +61671,6 @@ export namespace Prisma {
   export type CashSessionUncheckedCreateWithoutBranchInput = {
     id?: string
     date: Date | string
-    shift: string
     openCash?: number
     openMandiri?: number
     openBca?: number
@@ -61802,7 +61771,6 @@ export namespace Prisma {
     id?: StringFilter<"CashSession"> | string
     branchId?: StringFilter<"CashSession"> | string
     date?: DateTimeFilter<"CashSession"> | Date | string
-    shift?: StringFilter<"CashSession"> | string
     openCash?: IntFilter<"CashSession"> | number
     openMandiri?: IntFilter<"CashSession"> | number
     openBca?: IntFilter<"CashSession"> | number
@@ -66619,7 +66587,6 @@ export namespace Prisma {
   export type CashSessionCreateManyBranchInput = {
     id?: string
     date: Date | string
-    shift: string
     openCash?: number
     openMandiri?: number
     openBca?: number
@@ -66788,7 +66755,6 @@ export namespace Prisma {
   export type CashSessionUpdateWithoutBranchInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    shift?: StringFieldUpdateOperationsInput | string
     openCash?: IntFieldUpdateOperationsInput | number
     openMandiri?: IntFieldUpdateOperationsInput | number
     openBca?: IntFieldUpdateOperationsInput | number
@@ -66806,7 +66772,6 @@ export namespace Prisma {
   export type CashSessionUncheckedUpdateWithoutBranchInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    shift?: StringFieldUpdateOperationsInput | string
     openCash?: IntFieldUpdateOperationsInput | number
     openMandiri?: IntFieldUpdateOperationsInput | number
     openBca?: IntFieldUpdateOperationsInput | number
@@ -66824,7 +66789,6 @@ export namespace Prisma {
   export type CashSessionUncheckedUpdateManyWithoutBranchInput = {
     id?: StringFieldUpdateOperationsInput | string
     date?: DateTimeFieldUpdateOperationsInput | Date | string
-    shift?: StringFieldUpdateOperationsInput | string
     openCash?: IntFieldUpdateOperationsInput | number
     openMandiri?: IntFieldUpdateOperationsInput | number
     openBca?: IntFieldUpdateOperationsInput | number

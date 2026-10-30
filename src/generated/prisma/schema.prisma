@@ -275,15 +275,15 @@ model Branch {
 }
 
 /**
- * Saldo kasir per cabang per hari (laci + 3 EDC). Dibuka sales pertama absen masuk,
- * ditutup sebelum sales terakhir absen pulang. Rekonsiliasi vs penjualan+pembelian.
+ * Saldo kasir per cabang per hari (laci + 3 EDC). 1 kasir/hari: dibuka wakil shift
+ * pertama (Pagi) saat absen masuk, ditutup wakil shift terakhir (Siang) saat absen
+ * pulang (boleh beda orang). Rekonsiliasi vs penjualan+pembelian.
  */
 model CashSession {
   id           String    @id @default(cuid())
   branchId     String
   branch       Branch    @relation(fields: [branchId], references: [id])
   date         DateTime  @db.Date
-  shift        String // PAGI (P) | SIANG (S): 1 orang buka & wajib tutup per shift
   openCash     Int       @default(0)
   openMandiri  Int       @default(0)
   openBca      Int       @default(0)
@@ -297,7 +297,7 @@ model CashSession {
   closedById   String?
   closedAt     DateTime?
 
-  @@unique([branchId, date, shift])
+  @@unique([branchId, date])
 }
 
 model WorkSchedule {

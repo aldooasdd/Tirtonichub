@@ -101,39 +101,31 @@ export default async function BerandaPage() {
   // Saldo kasir cabang (untuk Sales input & Kepala Cabang pantau).
   const isSales = ctx.activeRole === "SALES";
   const isHeadBranch = ctx.activeRole === "HEAD_BRANCH";
-  // 2 shift/hari (Pagi+Siang), 1 orang buka & wajib tutup per shift. Sales → sesi shift-nya.
+  // 1 kasir/hari: buka wakil shift pertama (Pagi), tutup wakil shift terakhir (Siang) saat pulang.
   let cashSession: Awaited<ReturnType<typeof prisma.cashSession.findFirst>> = null;
   let cashOpen: Buckets = zeroBuckets();
   let cashReport: Awaited<ReturnType<typeof computeBranchCash>> | null = null;
   let myKasirShift: ReturnType<typeof kasirShift> = null;
   let cashClose: Buckets | null = null;
   if (user.branchId && (isSales || isHeadBranch)) {
-    const sessions = await prisma.cashSession.findMany({
-      where: { branchId: user.branchId, date: today },
-      orderBy: { openedAt: "asc" },
+    cashSession = await prisma.cashSession.findUnique({
+      where: { branchId_date: { branchId: user.branchId, date: today } },
     });
-    const first = sessions[0] ?? null; // buka paling pagi
-    const last = sessions[sessions.length - 1] ?? null; // shift terakhir
-    if (isSales) {
-      myKasirShift = kasirShift(await effectiveShiftCode({ id: ctx.userId, fullName: user.fullName }, today));
-      cashSession = myKasirShift ? sessions.find((s) => s.shift === myKasirShift) ?? null : null;
-    } else {
-      cashSession = last; // Kepala Cabang: pantau
-    }
-    cashOpen = first
-      ? { cash: first.openCash, mandiri: first.openMandiri, bca: first.openBca, bri: first.openBri }
+    if (isSales) myKasirShift = kasirShift(await effectiveShiftCode({ id: ctx.userId, fullName: user.fullName }, today));
+    cashOpen = cashSession
+      ? { cash: cashSession.openCash, mandiri: cashSession.openMandiri, bca: cashSession.openBca, bri: cashSession.openBri }
       : zeroBuckets();
     cashReport = await computeBranchCash(user.branchId, today, cashOpen);
     cashClose =
-      last?.closedAt != null
-        ? { cash: last.closeCash ?? 0, mandiri: last.closeMandiri ?? 0, bca: last.closeBca ?? 0, bri: last.closeBri ?? 0 }
+      cashSession?.closedAt != null
+        ? { cash: cashSession.closeCash ?? 0, mandiri: cashSession.closeMandiri ?? 0, bca: cashSession.closeBca ?? 0, bri: cashSession.closeBri ?? 0 }
         : null;
   }
-  // Buka saldo: sales yang jadwalnya shift toko (Pagi/Siang) & shift-nya belum dibuka.
-  const needOpenCash = isSales && !!att?.checkInAt && !!myKasirShift && !cashSession;
-  // Tutup saldo: hanya yang buka shift itu.
+  // Buka saldo: wakil shift pertama (Pagi) yang sudah absen masuk & kasir belum dibuka.
+  const needOpenCash = isSales && !!att?.checkInAt && myKasirShift === "PAGI" && !cashSession;
+  // Tutup saldo: wakil shift terakhir (Siang), kasir sudah dibuka & belum ditutup, saat mau pulang.
   const needCloseCash =
-    isSales && !!cashSession && cashSession.openedById === ctx.userId && !cashSession.closedAt && !att?.checkOutAt;
+    isSales && myKasirShift === "SIANG" && !!cashSession && !cashSession.closedAt && !!att?.checkInAt && !att?.checkOutAt;
 
   const absenPhase = !att?.checkInAt ? "in" : !att.checkOutAt ? "out" : "done";
   // Media: jadwal fleksibel → pulang setelah 5 jam. Lainnya: setelah shift berakhir.

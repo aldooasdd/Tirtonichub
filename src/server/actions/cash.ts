@@ -5,7 +5,7 @@ import { prisma } from "@/server/db";
 import { requireAuth } from "@/server/auth/rbac";
 import { dateKeyWIB } from "@/server/attendance/logic";
 import { effectiveShiftCode } from "@/server/attendance/shift-schedule";
-import { kasirShift, SHIFT_LABEL } from "@/lib/cash";
+import { kasirShift } from "@/lib/cash";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 
@@ -21,21 +21,20 @@ async function myShift(userId: string, date: Date) {
   return kasirShift(await effectiveShiftCode({ id: userId, fullName: u.fullName }, date));
 }
 
-/** Buka saldo kasir shift-nya (laci + 3 EDC) setelah absen masuk. 1 orang per shift. */
+/** Buka saldo kasir (laci + 3 EDC) setelah absen masuk. 1 kasir/hari, dibuka wakil shift pertama (Pagi). */
 export async function openCashSession(a: Amounts): Promise<ActionResult> {
   const ctx = await requireAuth();
   if (!ctx.branchId) return { ok: false, message: "Akun tak punya cabang." };
   const date = dateKeyWIB(new Date());
   const shift = await myShift(ctx.userId, date);
-  if (!shift) return { ok: false, message: "Jadwal kamu hari ini bukan shift toko (Pagi/Siang), tak bisa buka kasir." };
-  const exists = await prisma.cashSession.findUnique({ where: { branchId_date_shift: { branchId: ctx.branchId, date, shift } } });
-  if (exists) return { ok: false, message: `Kasir shift ${SHIFT_LABEL[shift]} sudah dibuka.` };
+  if (shift !== "PAGI") return { ok: false, message: "Hanya wakil shift pertama (Pagi) yang buka kasir." };
+  const exists = await prisma.cashSession.findUnique({ where: { branchId_date: { branchId: ctx.branchId, date } } });
+  if (exists) return { ok: false, message: "Kasir hari ini sudah dibuka." };
 
   await prisma.cashSession.create({
     data: {
       branchId: ctx.branchId,
       date,
-      shift,
       openCash: int(a.cash),
       openMandiri: int(a.mandiri),
       openBca: int(a.bca),
@@ -49,16 +48,15 @@ export async function openCashSession(a: Amounts): Promise<ActionResult> {
   return { ok: true };
 }
 
-/** Tutup saldo kasir shift-nya (hitung fisik cash + 3 EDC). Hanya yang buka boleh tutup. */
+/** Tutup saldo kasir (fisik cash + 3 EDC). Ditutup wakil shift terakhir (Siang) saat absen pulang. */
 export async function closeCashSession(a: Amounts): Promise<ActionResult> {
   const ctx = await requireAuth();
   if (!ctx.branchId) return { ok: false, message: "Akun tak punya cabang." };
   const date = dateKeyWIB(new Date());
   const shift = await myShift(ctx.userId, date);
-  if (!shift) return { ok: false, message: "Jadwal kamu hari ini bukan shift toko (Pagi/Siang)." };
-  const sess = await prisma.cashSession.findUnique({ where: { branchId_date_shift: { branchId: ctx.branchId, date, shift } } });
-  if (!sess) return { ok: false, message: `Kasir shift ${SHIFT_LABEL[shift]} belum dibuka.` };
-  if (sess.openedById !== ctx.userId) return { ok: false, message: "Hanya yang buka kasir boleh menutup." };
+  if (shift !== "SIANG") return { ok: false, message: "Hanya wakil shift terakhir (Siang) yang tutup kasir." };
+  const sess = await prisma.cashSession.findUnique({ where: { branchId_date: { branchId: ctx.branchId, date } } });
+  if (!sess) return { ok: false, message: "Kasir hari ini belum dibuka." };
   if (sess.closedAt) return { ok: false, message: "Saldo kasir sudah ditutup." };
 
   await prisma.cashSession.update({

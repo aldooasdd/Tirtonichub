@@ -7,7 +7,8 @@ import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
 import { dateKeyWIB, computeCheckInStatus, withinRadius, wibMinutesOfDay, parseHHMM } from "@/server/attendance/logic";
-import { shiftScheduleFor } from "@/server/attendance/shift-schedule";
+import { shiftScheduleFor, effectiveShiftCode } from "@/server/attendance/shift-schedule";
+import { kasirShift } from "@/lib/cash";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -138,13 +139,16 @@ export async function checkOut(form: FormData): Promise<ActionResult> {
       return { ok: false, message: `Absen pulang bisa setelah shift berakhir (${schedule.end}).` };
   }
 
-  // Yang buka saldo kasir (shift-nya) wajib tutup dulu sebelum pulang. Sales lain bebas.
-  if (ctx.activeRole === "SALES" && user.branchId) {
-    const sess = await prisma.cashSession.findFirst({
-      where: { branchId: user.branchId, date: dateKey, openedById: ctx.userId, closedAt: null },
-    });
-    if (sess)
-      return { ok: false, message: "Kamu yang buka saldo kasir — tutup saldo (saldo akhir) dulu sebelum pulang." };
+  // Wakil shift terakhir (Siang) wajib tutup saldo kasir dulu sebelum pulang.
+  if (user.branchId) {
+    const myKasir = kasirShift(await effectiveShiftCode({ id: ctx.userId, fullName: user.fullName }, dateKey));
+    if (myKasir === "SIANG") {
+      const sess = await prisma.cashSession.findFirst({
+        where: { branchId: user.branchId, date: dateKey, closedAt: null },
+      });
+      if (sess)
+        return { ok: false, message: "Kamu shift terakhir — tutup saldo kasir (saldo akhir) dulu sebelum pulang." };
+    }
   }
 
   const radiusErr = await checkRadiusOrFail(user.branchId, geo);

@@ -8,7 +8,6 @@ import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
 import { navForRoles, GROUP_COLOR, type NavItem } from "@/lib/nav";
 import { useActiveRole, useSessionUser } from "./active-role-context";
-import { RoleSwitcher } from "./role-switcher";
 import { logoutAction } from "@/server/actions/auth";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -137,9 +136,6 @@ export function Sidebar({ notifCount, notifications }: { notifCount: number; not
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-1.5">
                 <span className="truncate text-14 font-medium">{user.fullName}</span>
-                <span onClick={(e) => e.stopPropagation()}>
-                  <RoleSwitcher compact />
-                </span>
               </div>
               <p className="truncate text-12 text-muted-foreground">{user.email}</p>
             </div>

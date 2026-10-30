@@ -130,7 +130,6 @@ export type CashSessionRow = {
   branchId: string;
   branch: string;
   date: Date;
-  shift: string;
   openAt: Date;
   openBy: string;
   open: Buckets;
@@ -154,7 +153,6 @@ export async function loadCashSessions(take = 120): Promise<CashSessionRow[]> {
     branchId: s.branchId,
     branch: s.branch.name,
     date: s.date,
-    shift: s.shift,
     openAt: s.openedAt,
     openBy: name.get(s.openedById) ?? "-",
     open: { cash: s.openCash, mandiri: s.openMandiri, bca: s.openBca, bri: s.openBri },
