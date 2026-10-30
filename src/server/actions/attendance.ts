@@ -64,6 +64,9 @@ export async function checkIn(form: FormData): Promise<ActionResult> {
     const schedule = await shiftScheduleFor(user, dateKey);
     if (!schedule)
       return { ok: false, message: "Hari ini kamu tidak ada jadwal kerja (libur/cuti/WFH). Tak perlu absen." };
+    // Absen masuk paling cepat 1 jam sebelum shift. Telat tetap boleh (tak ada batas atas).
+    if (wibMinutesOfDay(now) < parseHHMM(schedule.start) - 60)
+      return { ok: false, message: `Belum waktunya. Absen masuk paling cepat 1 jam sebelum shift (jam ${schedule.start}).` };
     ({ status, lateMinutes } = computeCheckInStatus(now, {
       startTime: schedule.start,
       lateToleranceMin: LATE_TOLERANCE_MIN,

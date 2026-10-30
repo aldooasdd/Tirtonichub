@@ -119,6 +119,7 @@ async function DailyView({ date, branchId }: { date: string; branchId?: string }
             <tr className="[&>th]:px-3 [&>th]:py-2 [&>th]:text-left">
               <th>Nama</th>
               <th>Cabang</th>
+              <th>Jadwal</th>
               <th>Masuk</th>
               <th>Pulang</th>
               <th>Status</th>
@@ -131,7 +132,11 @@ async function DailyView({ date, branchId }: { date: string; branchId?: string }
               <tr key={r.userId} className="border-t [&>td]:px-3 [&>td]:py-2">
                 <td className="font-medium">{r.name}</td>
                 <td className="text-muted-foreground">{r.branch ?? "—"}</td>
-                <td>{r.checkInAt ? fmtWIB(r.checkInAt) : "—"}</td>
+                <td className="text-muted-foreground">{r.jadwal ?? "—"}</td>
+                <td>
+                  {r.checkInAt ? fmtWIB(r.checkInAt) : "—"}
+                  {r.earlyMinutes > 0 ? <span className="text-11 text-emerald-600"> ({r.earlyMinutes}m awal)</span> : ""}
+                </td>
                 <td>{r.checkOutAt ? fmtWIB(r.checkOutAt) : "—"}</td>
                 <td>
                   {STATUS_LABEL[r.status]}

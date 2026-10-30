@@ -1,6 +1,7 @@
 import { prisma } from "@/server/db";
 import { SHIFTS, isShiftCode, type ShiftCode } from "@/lib/shift";
 import { defaultShift } from "@/lib/shift-default";
+import { parseHHMM, wibMinutesOfDay } from "@/server/attendance/logic";
 
 export type DailyRow = {
   userId: string;
@@ -10,6 +11,8 @@ export type DailyRow = {
   checkOutAt: Date | null;
   status: string;
   lateMinutes: number;
+  earlyMinutes: number; // menit masuk sebelum jam shift (absen awal, maks 60)
+  jadwal: string | null; // "HH:MM–HH:MM" shift kerja hari itu
   checkInLat: number | null;
   checkInLng: number | null;
   checkInPhotoKey: string | null;
@@ -37,15 +40,22 @@ export async function dailyRekap(date: Date, branchId?: string) {
   const shiftByUser = new Map(shifts.map((s) => [s.userId, s.code]));
   const day = date.getUTCDate();
 
-  // Shift kerja (P/S/OH) tanpa absen → ABSENT (alpa). Non-kerja/tak terjadwal → OFF.
-  const worksToday = (u: { id: string; fullName: string }) => {
+  // Shift kerja efektif hari itu (Shift tersimpan ?? pola PDF).
+  const defFor = (u: { id: string; fullName: string }) => {
     const code = shiftByUser.get(u.id) ?? defaultShift(u.fullName, day, date.getUTCDay());
-    return !!code && isShiftCode(code) && SHIFTS[code as ShiftCode].working;
+    return code && isShiftCode(code) ? SHIFTS[code as ShiftCode] : null;
   };
 
   const rows: DailyRow[] = users.map((u) => {
     const a = byUser.get(u.id);
-    const status = a?.status ?? (holiday ? "HOLIDAY" : worksToday(u) ? "ABSENT" : "OFF");
+    const def = defFor(u);
+    const status = a?.status ?? (holiday ? "HOLIDAY" : def?.working ? "ABSENT" : "OFF");
+    // Menit absen awal: hanya saat tepat waktu & masuk sebelum jam shift.
+    let earlyMinutes = 0;
+    if (a?.checkInAt && a.status === "ON_TIME" && def?.working && def.start) {
+      const diff = parseHHMM(def.start) - wibMinutesOfDay(a.checkInAt);
+      if (diff > 0) earlyMinutes = diff;
+    }
     return {
       userId: u.id,
       name: u.fullName,
@@ -54,6 +64,8 @@ export async function dailyRekap(date: Date, branchId?: string) {
       checkOutAt: a?.checkOutAt ?? null,
       status,
       lateMinutes: a?.lateMinutes ?? 0,
+      earlyMinutes,
+      jadwal: def?.working && def.start && def.end ? `${def.start}–${def.end}` : null,
       checkInLat: a?.checkInLat ?? null,
       checkInLng: a?.checkInLng ?? null,
       checkInPhotoKey: a?.checkInPhotoKey ?? null,

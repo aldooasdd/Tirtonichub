@@ -38,7 +38,9 @@ export async function GET(req: NextRequest) {
     ws.columns = [
       { header: "Nama", key: "name", width: 24 },
       { header: "Cabang", key: "branch", width: 18 },
+      { header: "Jadwal", key: "jadwal", width: 16 },
       { header: "Masuk", key: "in", width: 20 },
+      { header: "Awal (menit)", key: "early", width: 14 },
       { header: "Pulang", key: "out", width: 20 },
       { header: "Status", key: "status", width: 18 },
       { header: "Telat (menit)", key: "late", width: 14 },
@@ -47,7 +49,9 @@ export async function GET(req: NextRequest) {
       ws.addRow({
         name: r.name,
         branch: r.branch ?? "-",
+        jadwal: r.jadwal ?? "-",
         in: r.checkInAt ? fmtWIB(r.checkInAt) : "-",
+        early: r.earlyMinutes,
         out: r.checkOutAt ? fmtWIB(r.checkOutAt) : "-",
         status: STATUS_LABEL[r.status],
         late: r.lateMinutes,
