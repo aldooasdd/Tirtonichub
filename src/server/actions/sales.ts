@@ -8,6 +8,7 @@ import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
 import { notifyBosses, notifyRole, notifyBranchHeads } from "@/server/notify";
 import { parseSalesNotaViaN8n, type SalesItem, type SalesPayment } from "@/server/n8n-sales";
+import { REPORT_CATEGORIES, REPORT_LABEL, type ReportCategory } from "@/lib/sales-report";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -319,14 +320,6 @@ export async function rejectSalesReport(id: string): Promise<ActionResult> {
   await logActivity({ ...ctx, ip }, { action: "sales_report_reject", entity: "SalesReport", entityId: id });
   return { ok: true };
 }
-
-export const REPORT_CATEGORIES = ["TENAGA_PENJUAL", "STOK", "PEMBAYARAN"] as const;
-export type ReportCategory = (typeof REPORT_CATEGORIES)[number];
-export const REPORT_LABEL: Record<ReportCategory, string> = {
-  TENAGA_PENJUAL: "Tenaga penjual",
-  STOK: "Stok",
-  PEMBAYARAN: "Pembayaran",
-};
 
 /** Sales (pemilik nota): lapor salah-input. Masuk ke Kepala Cabang (blokir ACC) +
  *  role sekunder: TENAGA_PENJUAL/STOK → Stok, PEMBAYARAN → Finance. */

@@ -2,7 +2,7 @@ import { requireStock } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
 import { ReportList } from "@/components/sales/report-list";
-import { REPORT_LABEL, type ReportCategory } from "@/server/actions/sales";
+import { REPORT_LABEL, type ReportCategory } from "@/lib/sales-report";
 
 export default async function StokReportPenjualanPage() {
   await requireStock();

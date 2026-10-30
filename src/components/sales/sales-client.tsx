@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { compressImage } from "@/lib/image";
-import { scanSalesNota, saveSalesReport, uploadSalesPhoto, reportSalesError, REPORT_CATEGORIES, REPORT_LABEL } from "@/server/actions/sales";
+import { scanSalesNota, saveSalesReport, uploadSalesPhoto, reportSalesError } from "@/server/actions/sales";
+import { REPORT_CATEGORIES, REPORT_LABEL } from "@/lib/sales-report";
 import type { SalesItem, SalesPayment } from "@/server/n8n-sales";
 import { StringingScanClient } from "@/components/stringing/stringing-scan-client";
 

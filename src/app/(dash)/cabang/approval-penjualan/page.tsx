@@ -2,7 +2,8 @@ import { requireHeadBranch } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
 import { CabangApproval } from "@/components/sales/cabang-approval";
-import { approveBranchSalesReport, rejectBranchSalesReport, REPORT_LABEL, type ReportCategory } from "@/server/actions/sales";
+import { approveBranchSalesReport, rejectBranchSalesReport } from "@/server/actions/sales";
+import { REPORT_LABEL, type ReportCategory } from "@/lib/sales-report";
 
 type Item = { name: string; qty: number; price: number; total: number; note: string | null };
 type Pay = { method: string; amount: number };
