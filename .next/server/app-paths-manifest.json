@@ -53,6 +53,8 @@
   "/api/studio/logout/route": "app/api/studio/logout/route.js",
   "/api/studio/me/route": "app/api/studio/me/route.js",
   "/api/studio/photo/route": "app/api/studio/photo/route.js",
+  "/api/studio/push/route": "app/api/studio/push/route.js",
+  "/api/studio/push/test/route": "app/api/studio/push/test/route.js",
   "/api/studio/sync/route": "app/api/studio/sync/route.js",
   "/api/studio/upload/abort/route": "app/api/studio/upload/abort/route.js",
   "/api/studio/upload/finish/route": "app/api/studio/upload/finish/route.js",

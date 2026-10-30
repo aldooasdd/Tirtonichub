@@ -88,6 +88,7 @@ model User {
   requests          Request[]          @relation("Requester")
   reviewed          Request[]          @relation("Reviewer")
   notifications     Notification[]
+  pushSubs          PushSubscription[]
   activityLogs      ActivityLog[]
   chatMembers       ChatMember[]
   chatMessages      ChatMessage[]
@@ -694,4 +695,37 @@ model StudioTombstone {
   deletedAt DateTime @default(now())
 
   @@index([deletedAt])
+}
+
+// Notifikasi push (Web Push/VAPID): satu baris per perangkat yang mengaktifkan notifikasi.
+model PushSubscription {
+  id        String   @id @default(cuid())
+  userId    String
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  device    String? // keterangan perangkat (user agent singkat)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
+
+// Tanda "sudah dikirim" supaya push terjadwal hanya sekali (mis. "pagi:2026-10-30:<userId>").
+model PushLog {
+  key       String   @id
+  createdAt DateTime @default(now())
+}
+
+// Antrean barang masuk Studio; dikirim bergabung tiap 2 menit lalu sentAt diisi.
+model PushItemQueue {
+  id        String    @id @default(cuid())
+  itemId    String
+  name      String
+  createdAt DateTime  @default(now())
+  sentAt    DateTime?
+
+  @@index([sentAt])
 }

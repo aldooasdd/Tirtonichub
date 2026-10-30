@@ -53,6 +53,8 @@
   "/api/studio/logout/route": "/api/studio/logout",
   "/api/studio/me/route": "/api/studio/me",
   "/api/studio/photo/route": "/api/studio/photo",
+  "/api/studio/push/route": "/api/studio/push",
+  "/api/studio/push/test/route": "/api/studio/push/test",
   "/api/studio/sync/route": "/api/studio/sync",
   "/api/studio/upload/abort/route": "/api/studio/upload/abort",
   "/api/studio/upload/finish/route": "/api/studio/upload/finish",

@@ -123,6 +123,18 @@
       "namedRegex": "^/api/studio/photo(?:/)?$"
     },
     {
+      "page": "/api/studio/push",
+      "regex": "^/api/studio/push(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/studio/push(?:/)?$"
+    },
+    {
+      "page": "/api/studio/push/test",
+      "regex": "^/api/studio/push/test(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/studio/push/test(?:/)?$"
+    },
+    {
       "page": "/api/studio/sync",
       "regex": "^/api/studio/sync(?:/)?$",
       "routeKeys": {},
