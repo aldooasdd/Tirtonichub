@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/server/db";
-import { requireSalesInput, requireFinance, requireOnlineSales, requireHeadBranch } from "@/server/auth/rbac";
+import { requireSalesInput, requireSales, requireFinance, requireOnlineSales, requireHeadBranch } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { parseWIB } from "@/lib/datetime";
 import { clientMeta } from "@/server/request-meta";
@@ -201,7 +201,8 @@ export async function approveOnlineSales(id: string): Promise<ActionResult> {
   if (rep.channel !== "online") return { ok: false, message: "Hanya penjualan online." };
   if (rep.approvedAt) return { ok: false, message: "Sudah disetujui." };
 
-  await prisma.salesReport.update({ where: { id }, data: { approvedAt: new Date(), approvedById: ctx.userId } });
+  // Online tak punya Kepala Cabang; ACC Order Specialist sekalian tutup report yang terbuka.
+  await prisma.salesReport.update({ where: { id }, data: { approvedAt: new Date(), approvedById: ctx.userId, reportResolvedAt: new Date() } });
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "sales_online_approve", entity: "SalesReport", entityId: id });
   await notifyBosses({
@@ -236,12 +237,13 @@ export async function approveBranchSalesReport(id: string): Promise<ActionResult
   if (!id) return { ok: false, message: "ID kosong." };
   const rep = await prisma.salesReport.findUnique({
     where: { id },
-    select: { id: true, channel: true, branchId: true, branchApprovedAt: true, grandTotal: true },
+    select: { id: true, channel: true, branchId: true, branchApprovedAt: true, grandTotal: true, reportAt: true, reportResolvedAt: true },
   });
   if (!rep) return { ok: false, message: "Nota tidak ditemukan." };
   if (rep.channel !== "offline") return { ok: false, message: "Hanya penjualan offline." };
   if (ctx.branchId && rep.branchId !== ctx.branchId) return { ok: false, message: "Beda cabang." };
   if (rep.branchApprovedAt) return { ok: false, message: "Sudah di-ACC cabang." };
+  if (rep.reportAt && !rep.reportResolvedAt) return { ok: false, message: "Ada report salah-input. Benarkan dulu sebelum ACC." };
 
   await prisma.salesReport.update({ where: { id }, data: { branchApprovedAt: new Date(), branchApprovedById: ctx.userId } });
   const { ip } = await clientMeta();
@@ -318,6 +320,50 @@ export async function rejectSalesReport(id: string): Promise<ActionResult> {
   return { ok: true };
 }
 
+export const REPORT_CATEGORIES = ["TENAGA_PENJUAL", "STOK", "PEMBAYARAN"] as const;
+export type ReportCategory = (typeof REPORT_CATEGORIES)[number];
+export const REPORT_LABEL: Record<ReportCategory, string> = {
+  TENAGA_PENJUAL: "Tenaga penjual",
+  STOK: "Stok",
+  PEMBAYARAN: "Pembayaran",
+};
+
+/** Sales (pemilik nota): lapor salah-input. Masuk ke Kepala Cabang (blokir ACC) +
+ *  role sekunder: TENAGA_PENJUAL/STOK → Stok, PEMBAYARAN → Finance. */
+export async function reportSalesError(id: string, category: string, note: string): Promise<ActionResult> {
+  const ctx = await requireSales();
+  if (!id) return { ok: false, message: "ID kosong." };
+  const cat = category as ReportCategory;
+  if (!REPORT_CATEGORIES.includes(cat)) return { ok: false, message: "Pilih jenis kesalahan." };
+  const ket = note?.trim();
+  if (!ket) return { ok: false, message: "Isi keterangan kesalahan." };
+
+  const rep = await prisma.salesReport.findUnique({
+    where: { id },
+    select: { id: true, createdById: true, branchId: true, reportAt: true, reportResolvedAt: true, grandTotal: true, salesman: true },
+  });
+  if (!rep) return { ok: false, message: "Nota tidak ditemukan." };
+  const isSuper = ctx.activeRole === "BOSS" || ctx.activeRole === "ADMIN";
+  if (!isSuper && rep.createdById !== ctx.userId) return { ok: false, message: "Hanya pemilik nota yang bisa lapor." };
+  if (rep.reportAt && !rep.reportResolvedAt) return { ok: false, message: "Sudah ada report terbuka di nota ini." };
+
+  await prisma.salesReport.update({
+    where: { id },
+    data: { reportCategory: cat, reportNote: ket.slice(0, 500), reportById: ctx.userId, reportAt: new Date(), reportResolvedAt: null },
+  });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "sales_report_error", entity: "SalesReport", entityId: id });
+  const rupiah = new Intl.NumberFormat("id-ID").format(rep.grandTotal);
+  const title = `Report salah-input (${REPORT_LABEL[cat]}): Rp ${rupiah}${rep.salesman ? ` · ${rep.salesman}` : ""}`;
+  await notifyBranchHeads(rep.branchId, { type: "sales_report_error", title, body: ket.slice(0, 200), link: "/cabang/approval-penjualan" });
+  if (cat === "PEMBAYARAN") {
+    await notifyRole("FINANCE", { type: "sales_report_error", title, body: ket.slice(0, 200), link: "/finance/report-penjualan" });
+  } else {
+    await notifyRole("STOCK_ROOM", { type: "sales_report_error", title, body: ket.slice(0, 200), link: "/stok/report-penjualan" });
+  }
+  return { ok: true };
+}
+
 type UpdateInput = {
   id: string;
   notaNo?: string | null;
@@ -361,6 +407,44 @@ export async function updateSalesReport(input: UpdateInput): Promise<ActionResul
 
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "sales_report_edit", entity: "SalesReport", entityId: input.id });
+  return { ok: true };
+}
+
+/** Kepala Cabang: benarkan nota yang di-report lalu tandai beres → ACC bisa lanjut. */
+export async function fixSalesReport(input: UpdateInput): Promise<ActionResult> {
+  const ctx = await requireHeadBranch();
+  if (!input.id) return { ok: false, message: "ID kosong." };
+  const rep = await prisma.salesReport.findUnique({
+    where: { id: input.id },
+    select: { id: true, branchId: true, reportAt: true, reportResolvedAt: true },
+  });
+  if (!rep) return { ok: false, message: "Nota tidak ditemukan." };
+  const isSuper = ctx.activeRole === "BOSS" || ctx.activeRole === "ADMIN";
+  if (!isSuper && ctx.branchId && rep.branchId !== ctx.branchId) return { ok: false, message: "Beda cabang." };
+  if (!rep.reportAt || rep.reportResolvedAt) return { ok: false, message: "Tak ada report terbuka." };
+
+  const items = mapItems(input.items);
+  if (items.length === 0 && input.grandTotal <= 0) return { ok: false, message: "Isi minimal 1 item atau total." };
+  const soldAt = input.soldAt && !Number.isNaN(Date.parse(input.soldAt)) ? parseWIB(input.soldAt) : undefined;
+
+  await prisma.salesReport.update({
+    where: { id: input.id },
+    data: {
+      notaNo: clean(input.notaNo, 60),
+      ...(soldAt ? { soldAt } : {}),
+      customer: clean(input.customer, 120),
+      salesman: clean(input.salesman, 120),
+      employee: clean(input.employee, 120),
+      items,
+      subtotal: int(input.subtotal),
+      total: int(input.total),
+      grandTotal: int(input.grandTotal) || int(input.total),
+      payments: mapPayments(input.payments),
+      reportResolvedAt: new Date(),
+    },
+  });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "sales_report_fix", entity: "SalesReport", entityId: input.id });
   return { ok: true };
 }
 

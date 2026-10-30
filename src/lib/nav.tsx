@@ -100,6 +100,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Approval Penjualan", href: "/cabang/penjualan", icon: ClipboardCheck },
         { label: "Input Pembelian", href: "/pembelian", icon: Wallet },
         { label: "Rekap Penjualan", href: "/finance/penjualan", icon: Receipt },
+        { label: "Report Penjualan", href: "/finance/report-penjualan", icon: AlertCircle },
         { label: "Rekap Pembelian", href: "/finance/pembelian", icon: Wallet },
         { label: "Saldo Kasir", href: "/finance/kas", icon: Wallet },
         { label: "Sinkronisasi Accurate", href: "/finance/sinkronisasi", icon: FileText },
@@ -143,6 +144,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
       icon: Warehouse,
       items: [
         { label: "Quality Control", href: "/stok/qc", icon: ClipboardCheck },
+        { label: "Report Penjualan", href: "/stok/report-penjualan", icon: AlertCircle },
         { label: "Stok", href: "/stok", icon: Boxes },
       ],
     });

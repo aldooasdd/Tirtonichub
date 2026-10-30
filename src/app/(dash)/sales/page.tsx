@@ -33,6 +33,8 @@ export default async function SalesPage() {
         itemCount: Array.isArray(r.items) ? (r.items as unknown[]).length : 0,
         by: r.createdBy.fullName,
         pending: r.approvedAt == null,
+        canReport: canViewAll || r.createdById === ctx.userId,
+        reportedCategory: r.reportAt && !r.reportResolvedAt ? r.reportCategory : null,
       }));
 
   return <SalesClient canViewAll={canViewAll} reports={map("offline")} reportsOnline={map("online")} />;

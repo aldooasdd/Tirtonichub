@@ -172,7 +172,19 @@ export function PenjualanTable({ notas }: { notas: NotaRow[] }) {
   );
 }
 
-function EditNotaModal({ id, init, onClose }: { id: string; init: NotaEdit; onClose: () => void }) {
+export function EditNotaModal({
+  id,
+  init,
+  onClose,
+  saveFn = updateSalesReport,
+  title = "Edit Nota",
+}: {
+  id: string;
+  init: NotaEdit;
+  onClose: () => void;
+  saveFn?: (input: Parameters<typeof updateSalesReport>[0]) => Promise<{ ok: boolean; message?: string }>;
+  title?: string;
+}) {
   const router = useRouter();
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState("");
@@ -189,7 +201,7 @@ function EditNotaModal({ id, init, onClose }: { id: string; init: NotaEdit; onCl
 
   async function save() {
     setBusy(true);
-    const r = await updateSalesReport({
+    const r = await saveFn({
       id,
       notaNo: d.notaNo,
       soldAt: d.soldAt || null,
@@ -217,7 +229,7 @@ function EditNotaModal({ id, init, onClose }: { id: string; init: NotaEdit; onCl
     <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 p-4" onClick={onClose}>
       <div className="my-8 w-full max-w-2xl space-y-4 rounded-lg border bg-card p-4" onClick={(e) => e.stopPropagation()}>
         <div className="flex items-center justify-between">
-          <h2 className="text-16 font-semibold">Edit Nota</h2>
+          <h2 className="text-16 font-semibold">{title}</h2>
           <button onClick={onClose} className="text-14 text-muted-foreground">Tutup</button>
         </div>
         {msg && <p className="text-12 text-red-500">{msg}</p>}

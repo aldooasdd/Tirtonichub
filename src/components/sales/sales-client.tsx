@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { compressImage } from "@/lib/image";
-import { scanSalesNota, saveSalesReport, uploadSalesPhoto } from "@/server/actions/sales";
+import { scanSalesNota, saveSalesReport, uploadSalesPhoto, reportSalesError, REPORT_CATEGORIES, REPORT_LABEL } from "@/server/actions/sales";
 import type { SalesItem, SalesPayment } from "@/server/n8n-sales";
 import { StringingScanClient } from "@/components/stringing/stringing-scan-client";
 
@@ -21,6 +21,8 @@ export type SalesRow = {
   itemCount: number;
   by: string;
   pending?: boolean; // offline belum di-ACC Kepala Cabang
+  canReport?: boolean; // pemilik nota / super → boleh lapor salah-input
+  reportedCategory?: string | null; // ada report terbuka → tampilkan badge
 };
 
 const rupiah = (n: number) => `Rp ${new Intl.NumberFormat("id-ID").format(n)}`;
@@ -54,6 +56,74 @@ const emptyDraft = (): Draft => ({
   payments: [{ method: "", amount: 0 }],
   subtotal: 0, total: 0, grandTotal: 0,
 });
+
+function HistoryRow({ r, canViewAll }: { r: SalesRow; canViewAll: boolean }) {
+  const router = useRouter();
+  const [open, setOpen] = useState(false);
+  const [cat, setCat] = useState<string>("");
+  const [note, setNote] = useState("");
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState("");
+  const reported = !!r.reportedCategory;
+
+  async function kirim() {
+    if (!cat) { setErr("Pilih jenis kesalahan."); return; }
+    if (!note.trim()) { setErr("Isi keterangan."); return; }
+    setBusy(true);
+    const res = await reportSalesError(r.id, cat, note);
+    setBusy(false);
+    if (!res.ok) { setErr(res.message ?? "Gagal lapor."); return; }
+    setOpen(false);
+    router.refresh();
+  }
+
+  return (
+    <div className="px-4 py-2">
+      <div className="flex items-center justify-between gap-2">
+        <div className="min-w-0">
+          <p className="truncate font-medium">{rupiah(r.grandTotal)} <span className="text-12 font-normal text-muted-foreground">· {r.itemCount} item</span></p>
+          <p className="text-11 text-muted-foreground">{r.soldAt}{r.salesman ? ` · ${r.salesman}` : ""}{canViewAll ? ` · ${r.by}` : ""}</p>
+        </div>
+        <div className="flex shrink-0 items-center gap-2">
+          {r.pending && (
+            <span className="rounded-full bg-warning/15 px-2 py-0.5 text-11 font-medium text-warning">Menunggu ACC</span>
+          )}
+          {reported ? (
+            <span className="rounded-full bg-red-500/15 px-2 py-0.5 text-11 font-medium text-red-500">
+              Report: {REPORT_LABEL[r.reportedCategory as keyof typeof REPORT_LABEL] ?? r.reportedCategory}
+            </span>
+          ) : r.canReport ? (
+            <button onClick={() => setOpen((v) => !v)} className="text-11 font-medium text-primary hover:underline">
+              {open ? "Tutup" : "Report"}
+            </button>
+          ) : null}
+        </div>
+      </div>
+      {open && !reported && (
+        <div className="mt-2 space-y-2 rounded-md border bg-muted/30 p-3">
+          <select value={cat} onChange={(e) => setCat(e.target.value)} className="w-full rounded-md border bg-card px-2 py-1 text-14">
+            <option value="">— Jenis kesalahan —</option>
+            {REPORT_CATEGORIES.map((c) => (
+              <option key={c} value={c}>{REPORT_LABEL[c]}</option>
+            ))}
+          </select>
+          <textarea
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
+            placeholder="Keterangan: kesalahannya di mana?"
+            rows={2}
+            className="w-full rounded-md border bg-card px-2 py-1 text-14"
+          />
+          {err && <p className="text-11 text-red-500">{err}</p>}
+          <div className="flex gap-2">
+            <Button size="sm" disabled={busy} onClick={kirim}>{busy ? "Mengirim…" : "Kirim report"}</Button>
+            <Button size="sm" variant="outline" disabled={busy} onClick={() => setOpen(false)}>Batal</Button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <label className="block space-y-1">
@@ -300,17 +370,7 @@ export function SalesClient({
         ) : (
           <div className="rounded-lg border bg-card divide-y">
             {list.map((r) => (
-              <div key={r.id} className="flex items-center justify-between gap-2 px-4 py-2">
-                <div className="min-w-0">
-                  <p className="truncate font-medium">{rupiah(r.grandTotal)} <span className="text-12 font-normal text-muted-foreground">· {r.itemCount} item</span></p>
-                  <p className="text-11 text-muted-foreground">{r.soldAt}{r.salesman ? ` · ${r.salesman}` : ""}{canViewAll ? ` · ${r.by}` : ""}</p>
-                </div>
-                {r.pending && (
-                  <span className="shrink-0 rounded-full bg-warning/15 px-2 py-0.5 text-11 font-medium text-warning">
-                    Menunggu ACC
-                  </span>
-                )}
-              </div>
+              <HistoryRow key={r.id} r={r} canViewAll={canViewAll} />
             ))}
           </div>
         )}

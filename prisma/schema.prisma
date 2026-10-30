@@ -187,6 +187,15 @@ model SalesReport {
   approvedAt   DateTime?
   approvedById String?
 
+  // Report salah-input dari Sales: TENAGA_PENJUAL | STOK | PEMBAYARAN + keterangan.
+  // Report terbuka (reportAt != null, reportResolvedAt == null) → Kepala Cabang
+  // tak bisa ACC, wajib benarkan dulu. Routing: TENAGA_PENJUAL/STOK → Stok, PEMBAYARAN → Finance.
+  reportCategory   String?
+  reportNote       String?
+  reportById       String?
+  reportAt         DateTime?
+  reportResolvedAt DateTime?
+
   // Sinkronisasi Accurate: cocok (no nota+tanggal+total) → tersinkron.
   accurateSyncedAt DateTime?
   accurateRef      String? // no invoice Accurate yang cocok

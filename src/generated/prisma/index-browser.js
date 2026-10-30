@@ -194,6 +194,11 @@ exports.Prisma.SalesReportScalarFieldEnum = {
   branchApprovedById: 'branchApprovedById',
   approvedAt: 'approvedAt',
   approvedById: 'approvedById',
+  reportCategory: 'reportCategory',
+  reportNote: 'reportNote',
+  reportById: 'reportById',
+  reportAt: 'reportAt',
+  reportResolvedAt: 'reportResolvedAt',
   accurateSyncedAt: 'accurateSyncedAt',
   accurateRef: 'accurateRef'
 };

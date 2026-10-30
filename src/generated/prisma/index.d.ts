@@ -9550,6 +9550,11 @@ export namespace Prisma {
     branchApprovedById: string | null
     approvedAt: Date | null
     approvedById: string | null
+    reportCategory: string | null
+    reportNote: string | null
+    reportById: string | null
+    reportAt: Date | null
+    reportResolvedAt: Date | null
     accurateSyncedAt: Date | null
     accurateRef: string | null
   }
@@ -9574,6 +9579,11 @@ export namespace Prisma {
     branchApprovedById: string | null
     approvedAt: Date | null
     approvedById: string | null
+    reportCategory: string | null
+    reportNote: string | null
+    reportById: string | null
+    reportAt: Date | null
+    reportResolvedAt: Date | null
     accurateSyncedAt: Date | null
     accurateRef: string | null
   }
@@ -9601,6 +9611,11 @@ export namespace Prisma {
     branchApprovedById: number
     approvedAt: number
     approvedById: number
+    reportCategory: number
+    reportNote: number
+    reportById: number
+    reportAt: number
+    reportResolvedAt: number
     accurateSyncedAt: number
     accurateRef: number
     _all: number
@@ -9639,6 +9654,11 @@ export namespace Prisma {
     branchApprovedById?: true
     approvedAt?: true
     approvedById?: true
+    reportCategory?: true
+    reportNote?: true
+    reportById?: true
+    reportAt?: true
+    reportResolvedAt?: true
     accurateSyncedAt?: true
     accurateRef?: true
   }
@@ -9663,6 +9683,11 @@ export namespace Prisma {
     branchApprovedById?: true
     approvedAt?: true
     approvedById?: true
+    reportCategory?: true
+    reportNote?: true
+    reportById?: true
+    reportAt?: true
+    reportResolvedAt?: true
     accurateSyncedAt?: true
     accurateRef?: true
   }
@@ -9690,6 +9715,11 @@ export namespace Prisma {
     branchApprovedById?: true
     approvedAt?: true
     approvedById?: true
+    reportCategory?: true
+    reportNote?: true
+    reportById?: true
+    reportAt?: true
+    reportResolvedAt?: true
     accurateSyncedAt?: true
     accurateRef?: true
     _all?: true
@@ -9804,6 +9834,11 @@ export namespace Prisma {
     branchApprovedById: string | null
     approvedAt: Date | null
     approvedById: string | null
+    reportCategory: string | null
+    reportNote: string | null
+    reportById: string | null
+    reportAt: Date | null
+    reportResolvedAt: Date | null
     accurateSyncedAt: Date | null
     accurateRef: string | null
     _count: SalesReportCountAggregateOutputType | null
@@ -9850,6 +9885,11 @@ export namespace Prisma {
     branchApprovedById?: boolean
     approvedAt?: boolean
     approvedById?: boolean
+    reportCategory?: boolean
+    reportNote?: boolean
+    reportById?: boolean
+    reportAt?: boolean
+    reportResolvedAt?: boolean
     accurateSyncedAt?: boolean
     accurateRef?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
@@ -9878,6 +9918,11 @@ export namespace Prisma {
     branchApprovedById?: boolean
     approvedAt?: boolean
     approvedById?: boolean
+    reportCategory?: boolean
+    reportNote?: boolean
+    reportById?: boolean
+    reportAt?: boolean
+    reportResolvedAt?: boolean
     accurateSyncedAt?: boolean
     accurateRef?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
@@ -9906,6 +9951,11 @@ export namespace Prisma {
     branchApprovedById?: boolean
     approvedAt?: boolean
     approvedById?: boolean
+    reportCategory?: boolean
+    reportNote?: boolean
+    reportById?: boolean
+    reportAt?: boolean
+    reportResolvedAt?: boolean
     accurateSyncedAt?: boolean
     accurateRef?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
@@ -9934,11 +9984,16 @@ export namespace Prisma {
     branchApprovedById?: boolean
     approvedAt?: boolean
     approvedById?: boolean
+    reportCategory?: boolean
+    reportNote?: boolean
+    reportById?: boolean
+    reportAt?: boolean
+    reportResolvedAt?: boolean
     accurateSyncedAt?: boolean
     accurateRef?: boolean
   }
 
-  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "branchName" | "branchId" | "photoKey" | "productPhotoKeys" | "createdById" | "createdAt" | "branchApprovedAt" | "branchApprovedById" | "approvedAt" | "approvedById" | "accurateSyncedAt" | "accurateRef", ExtArgs["result"]["salesReport"]>
+  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "branchName" | "branchId" | "photoKey" | "productPhotoKeys" | "createdById" | "createdAt" | "branchApprovedAt" | "branchApprovedById" | "approvedAt" | "approvedById" | "reportCategory" | "reportNote" | "reportById" | "reportAt" | "reportResolvedAt" | "accurateSyncedAt" | "accurateRef", ExtArgs["result"]["salesReport"]>
   export type SalesReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -9977,6 +10032,11 @@ export namespace Prisma {
       branchApprovedById: string | null
       approvedAt: Date | null
       approvedById: string | null
+      reportCategory: string | null
+      reportNote: string | null
+      reportById: string | null
+      reportAt: Date | null
+      reportResolvedAt: Date | null
       accurateSyncedAt: Date | null
       accurateRef: string | null
     }, ExtArgs["result"]["salesReport"]>
@@ -10425,6 +10485,11 @@ export namespace Prisma {
     readonly branchApprovedById: FieldRef<"SalesReport", 'String'>
     readonly approvedAt: FieldRef<"SalesReport", 'DateTime'>
     readonly approvedById: FieldRef<"SalesReport", 'String'>
+    readonly reportCategory: FieldRef<"SalesReport", 'String'>
+    readonly reportNote: FieldRef<"SalesReport", 'String'>
+    readonly reportById: FieldRef<"SalesReport", 'String'>
+    readonly reportAt: FieldRef<"SalesReport", 'DateTime'>
+    readonly reportResolvedAt: FieldRef<"SalesReport", 'DateTime'>
     readonly accurateSyncedAt: FieldRef<"SalesReport", 'DateTime'>
     readonly accurateRef: FieldRef<"SalesReport", 'String'>
   }
@@ -43572,6 +43637,11 @@ export namespace Prisma {
     branchApprovedById: 'branchApprovedById',
     approvedAt: 'approvedAt',
     approvedById: 'approvedById',
+    reportCategory: 'reportCategory',
+    reportNote: 'reportNote',
+    reportById: 'reportById',
+    reportAt: 'reportAt',
+    reportResolvedAt: 'reportResolvedAt',
     accurateSyncedAt: 'accurateSyncedAt',
     accurateRef: 'accurateRef'
   };
@@ -44673,6 +44743,11 @@ export namespace Prisma {
     branchApprovedById?: StringNullableFilter<"SalesReport"> | string | null
     approvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
     approvedById?: StringNullableFilter<"SalesReport"> | string | null
+    reportCategory?: StringNullableFilter<"SalesReport"> | string | null
+    reportNote?: StringNullableFilter<"SalesReport"> | string | null
+    reportById?: StringNullableFilter<"SalesReport"> | string | null
+    reportAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
+    reportResolvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
     accurateSyncedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
     accurateRef?: StringNullableFilter<"SalesReport"> | string | null
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -44701,6 +44776,11 @@ export namespace Prisma {
     branchApprovedById?: SortOrderInput | SortOrder
     approvedAt?: SortOrderInput | SortOrder
     approvedById?: SortOrderInput | SortOrder
+    reportCategory?: SortOrderInput | SortOrder
+    reportNote?: SortOrderInput | SortOrder
+    reportById?: SortOrderInput | SortOrder
+    reportAt?: SortOrderInput | SortOrder
+    reportResolvedAt?: SortOrderInput | SortOrder
     accurateSyncedAt?: SortOrderInput | SortOrder
     accurateRef?: SortOrderInput | SortOrder
     createdBy?: UserOrderByWithRelationInput
@@ -44732,6 +44812,11 @@ export namespace Prisma {
     branchApprovedById?: StringNullableFilter<"SalesReport"> | string | null
     approvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
     approvedById?: StringNullableFilter<"SalesReport"> | string | null
+    reportCategory?: StringNullableFilter<"SalesReport"> | string | null
+    reportNote?: StringNullableFilter<"SalesReport"> | string | null
+    reportById?: StringNullableFilter<"SalesReport"> | string | null
+    reportAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
+    reportResolvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
     accurateSyncedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
     accurateRef?: StringNullableFilter<"SalesReport"> | string | null
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -44760,6 +44845,11 @@ export namespace Prisma {
     branchApprovedById?: SortOrderInput | SortOrder
     approvedAt?: SortOrderInput | SortOrder
     approvedById?: SortOrderInput | SortOrder
+    reportCategory?: SortOrderInput | SortOrder
+    reportNote?: SortOrderInput | SortOrder
+    reportById?: SortOrderInput | SortOrder
+    reportAt?: SortOrderInput | SortOrder
+    reportResolvedAt?: SortOrderInput | SortOrder
     accurateSyncedAt?: SortOrderInput | SortOrder
     accurateRef?: SortOrderInput | SortOrder
     _count?: SalesReportCountOrderByAggregateInput
@@ -44795,6 +44885,11 @@ export namespace Prisma {
     branchApprovedById?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
     approvedAt?: DateTimeNullableWithAggregatesFilter<"SalesReport"> | Date | string | null
     approvedById?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
+    reportCategory?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
+    reportNote?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
+    reportById?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
+    reportAt?: DateTimeNullableWithAggregatesFilter<"SalesReport"> | Date | string | null
+    reportResolvedAt?: DateTimeNullableWithAggregatesFilter<"SalesReport"> | Date | string | null
     accurateSyncedAt?: DateTimeNullableWithAggregatesFilter<"SalesReport"> | Date | string | null
     accurateRef?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
   }
@@ -47519,6 +47614,11 @@ export namespace Prisma {
     branchApprovedById?: string | null
     approvedAt?: Date | string | null
     approvedById?: string | null
+    reportCategory?: string | null
+    reportNote?: string | null
+    reportById?: string | null
+    reportAt?: Date | string | null
+    reportResolvedAt?: Date | string | null
     accurateSyncedAt?: Date | string | null
     accurateRef?: string | null
     createdBy: UserCreateNestedOneWithoutSalesReportsInput
@@ -47547,6 +47647,11 @@ export namespace Prisma {
     branchApprovedById?: string | null
     approvedAt?: Date | string | null
     approvedById?: string | null
+    reportCategory?: string | null
+    reportNote?: string | null
+    reportById?: string | null
+    reportAt?: Date | string | null
+    reportResolvedAt?: Date | string | null
     accurateSyncedAt?: Date | string | null
     accurateRef?: string | null
   }
@@ -47573,6 +47678,11 @@ export namespace Prisma {
     branchApprovedById?: NullableStringFieldUpdateOperationsInput | string | null
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    reportCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    reportNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reportById?: NullableStringFieldUpdateOperationsInput | string | null
+    reportAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reportResolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
     createdBy?: UserUpdateOneRequiredWithoutSalesReportsNestedInput
@@ -47601,6 +47711,11 @@ export namespace Prisma {
     branchApprovedById?: NullableStringFieldUpdateOperationsInput | string | null
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    reportCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    reportNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reportById?: NullableStringFieldUpdateOperationsInput | string | null
+    reportAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reportResolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -47628,6 +47743,11 @@ export namespace Prisma {
     branchApprovedById?: string | null
     approvedAt?: Date | string | null
     approvedById?: string | null
+    reportCategory?: string | null
+    reportNote?: string | null
+    reportById?: string | null
+    reportAt?: Date | string | null
+    reportResolvedAt?: Date | string | null
     accurateSyncedAt?: Date | string | null
     accurateRef?: string | null
   }
@@ -47654,6 +47774,11 @@ export namespace Prisma {
     branchApprovedById?: NullableStringFieldUpdateOperationsInput | string | null
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    reportCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    reportNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reportById?: NullableStringFieldUpdateOperationsInput | string | null
+    reportAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reportResolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -47681,6 +47806,11 @@ export namespace Prisma {
     branchApprovedById?: NullableStringFieldUpdateOperationsInput | string | null
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    reportCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    reportNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reportById?: NullableStringFieldUpdateOperationsInput | string | null
+    reportAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reportResolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -50762,6 +50892,11 @@ export namespace Prisma {
     branchApprovedById?: SortOrder
     approvedAt?: SortOrder
     approvedById?: SortOrder
+    reportCategory?: SortOrder
+    reportNote?: SortOrder
+    reportById?: SortOrder
+    reportAt?: SortOrder
+    reportResolvedAt?: SortOrder
     accurateSyncedAt?: SortOrder
     accurateRef?: SortOrder
   }
@@ -50792,6 +50927,11 @@ export namespace Prisma {
     branchApprovedById?: SortOrder
     approvedAt?: SortOrder
     approvedById?: SortOrder
+    reportCategory?: SortOrder
+    reportNote?: SortOrder
+    reportById?: SortOrder
+    reportAt?: SortOrder
+    reportResolvedAt?: SortOrder
     accurateSyncedAt?: SortOrder
     accurateRef?: SortOrder
   }
@@ -50816,6 +50956,11 @@ export namespace Prisma {
     branchApprovedById?: SortOrder
     approvedAt?: SortOrder
     approvedById?: SortOrder
+    reportCategory?: SortOrder
+    reportNote?: SortOrder
+    reportById?: SortOrder
+    reportAt?: SortOrder
+    reportResolvedAt?: SortOrder
     accurateSyncedAt?: SortOrder
     accurateRef?: SortOrder
   }
@@ -55321,6 +55466,11 @@ export namespace Prisma {
     branchApprovedById?: string | null
     approvedAt?: Date | string | null
     approvedById?: string | null
+    reportCategory?: string | null
+    reportNote?: string | null
+    reportById?: string | null
+    reportAt?: Date | string | null
+    reportResolvedAt?: Date | string | null
     accurateSyncedAt?: Date | string | null
     accurateRef?: string | null
   }
@@ -55347,6 +55497,11 @@ export namespace Prisma {
     branchApprovedById?: string | null
     approvedAt?: Date | string | null
     approvedById?: string | null
+    reportCategory?: string | null
+    reportNote?: string | null
+    reportById?: string | null
+    reportAt?: Date | string | null
+    reportResolvedAt?: Date | string | null
     accurateSyncedAt?: Date | string | null
     accurateRef?: string | null
   }
@@ -56059,6 +56214,11 @@ export namespace Prisma {
     branchApprovedById?: StringNullableFilter<"SalesReport"> | string | null
     approvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
     approvedById?: StringNullableFilter<"SalesReport"> | string | null
+    reportCategory?: StringNullableFilter<"SalesReport"> | string | null
+    reportNote?: StringNullableFilter<"SalesReport"> | string | null
+    reportById?: StringNullableFilter<"SalesReport"> | string | null
+    reportAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
+    reportResolvedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
     accurateSyncedAt?: DateTimeNullableFilter<"SalesReport"> | Date | string | null
     accurateRef?: StringNullableFilter<"SalesReport"> | string | null
   }
@@ -61323,6 +61483,11 @@ export namespace Prisma {
     branchApprovedById?: string | null
     approvedAt?: Date | string | null
     approvedById?: string | null
+    reportCategory?: string | null
+    reportNote?: string | null
+    reportById?: string | null
+    reportAt?: Date | string | null
+    reportResolvedAt?: Date | string | null
     accurateSyncedAt?: Date | string | null
     accurateRef?: string | null
   }
@@ -62006,6 +62171,11 @@ export namespace Prisma {
     branchApprovedById?: NullableStringFieldUpdateOperationsInput | string | null
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    reportCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    reportNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reportById?: NullableStringFieldUpdateOperationsInput | string | null
+    reportAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reportResolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -62032,6 +62202,11 @@ export namespace Prisma {
     branchApprovedById?: NullableStringFieldUpdateOperationsInput | string | null
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    reportCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    reportNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reportById?: NullableStringFieldUpdateOperationsInput | string | null
+    reportAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reportResolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
   }
@@ -62058,6 +62233,11 @@ export namespace Prisma {
     branchApprovedById?: NullableStringFieldUpdateOperationsInput | string | null
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    reportCategory?: NullableStringFieldUpdateOperationsInput | string | null
+    reportNote?: NullableStringFieldUpdateOperationsInput | string | null
+    reportById?: NullableStringFieldUpdateOperationsInput | string | null
+    reportAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    reportResolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateSyncedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     accurateRef?: NullableStringFieldUpdateOperationsInput | string | null
   }
