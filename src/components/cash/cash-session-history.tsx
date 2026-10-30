@@ -59,7 +59,7 @@ export function CashSessionHistory({ rows }: { rows: CashSessionRow[] }) {
               <div key={b.name}>
                 <h3 className="text-13 font-semibold text-muted-foreground">{b.name}</h3>
                 <div className="mt-1 overflow-x-auto">
-                  <table className="w-full border-collapse text-14">
+                  <table className="w-full border-collapse text-14 [&_td]:px-3 [&_th]:px-3 [&_td:first-child]:pl-0 [&_th:first-child]:pl-0 [&_td:last-child]:pr-0 [&_th:last-child]:pr-0">
                     <thead>
                       <tr className="text-12 text-muted-foreground">
                         <th className="pb-2 text-left font-medium">Tgl</th>

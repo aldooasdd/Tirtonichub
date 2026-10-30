@@ -33,7 +33,7 @@ export function CashDashboard({ boards, trends, moves, sessions }: { boards: Bra
         </div>
       </div>
     </div>
-      <div className="reveal rounded-xl border bg-card p-4 sm:p-5" style={{ animationDelay: "240ms" }}>
+      <div className="reveal w-full max-w-4xl rounded-xl border bg-card p-4 sm:p-5" style={{ animationDelay: "240ms" }}>
         <CashSessionHistory rows={sessions} />
       </div>
     </div>
