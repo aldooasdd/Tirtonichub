@@ -160,7 +160,9 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
           >
             <option value="">— Pilih brand nota —</option>
             {BRANDS.map((b) => (
-              <option key={b.key} value={b.key}>{b.brand} · {b.distributor}</option>
+              <option key={b.key} value={b.key} disabled={!b.trained}>
+                {b.brand} · {b.distributor}{b.trained ? "" : " (belum terlatih)"}
+              </option>
             ))}
           </select>
           <Button onClick={() => fileRef.current?.click()} disabled={busy || !brandKey}>
