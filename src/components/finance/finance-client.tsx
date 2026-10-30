@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { compressImage } from "@/lib/image";
 import { computeSellPrice } from "@/lib/pricing";
 import { stripSize, groupKey } from "@/lib/raw-group";
+import { BRANDS, brandByKey } from "@/lib/distributors";
 import {
   scanNota,
   saveRawBatch,
@@ -80,6 +81,7 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
   const fileRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
   const [msg, setMsg] = useState<string | null>(null);
+  const [brandKey, setBrandKey] = useState(""); // brand nota yang dipilih (wajib sebelum scan/manual)
 
   async function onPick(file: File) {
     setBusy(true);
@@ -87,13 +89,19 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
     try {
       const blob = await compressImage(file);
       const b64 = await blobToBase64(blob);
-      const scan = await scanNota(b64, "image/jpeg");
+      const scan = await scanNota(b64, "image/jpeg", brandKey);
       if (!scan.ok || !scan.batchId) {
         setMsg(scan.message ?? "Scan gagal.");
         return;
       }
+      const b = brandByKey(brandKey);
       const parsed = scan.items ?? [];
-      const toSave = parsed.length > 0 ? parsed : [EMPTY_ITEM];
+      // Stempel brand+distributor pilihan sebagai label (kalau OCR kosong).
+      const toSave = (parsed.length > 0 ? parsed : [EMPTY_ITEM]).map((it) => ({
+        ...it,
+        brand: it.brand ?? b?.brand ?? null,
+        supplier: it.supplier ?? b?.distributor ?? null,
+      }));
       const r = await saveRawBatch({ batchId: scan.batchId, notaPhotoKey: scan.notaPhotoKey, items: toSave });
       if (!r.ok) setMsg(r.message ?? "Gagal simpan.");
       else setMsg(scan.ocr ? `Nota terbaca: ${parsed.length} item. Cek & edit di bawah.` : "OCR belum aktif — kartu kosong dibuat, isi manual.");
@@ -124,10 +132,11 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
     setBusy(true);
     setMsg(null);
     const batchId = crypto.randomUUID();
+    const b = brandByKey(brandKey);
     const r = await saveRawBatch({
       batchId,
       notaPhotoKey: null,
-      items: [{ ...EMPTY_ITEM, name: "Produk baru" }],
+      items: [{ ...EMPTY_ITEM, name: "Produk baru", brand: b?.brand ?? null, supplier: b?.distributor ?? null }],
     });
     if (!r.ok) setMsg(r.message ?? "Gagal.");
     router.refresh();
@@ -142,15 +151,27 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-24 font-semibold">Purchasing</h1>
-        <div className="flex gap-2">
-          <Button onClick={() => fileRef.current?.click()} disabled={busy}>
+        <div className="flex flex-wrap items-center gap-2">
+          <select
+            value={brandKey}
+            onChange={(e) => setBrandKey(e.target.value)}
+            className="h-9 rounded-md border bg-card px-2 text-14"
+            aria-label="Brand nota"
+          >
+            <option value="">— Pilih brand nota —</option>
+            {BRANDS.map((b) => (
+              <option key={b.key} value={b.key}>{b.brand} · {b.distributor}</option>
+            ))}
+          </select>
+          <Button onClick={() => fileRef.current?.click()} disabled={busy || !brandKey}>
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <ScanLine className="h-4 w-4" />} Scan Nota
           </Button>
-          <Button variant="secondary" onClick={addManual} disabled={busy}>
+          <Button variant="secondary" onClick={addManual} disabled={busy || !brandKey}>
             <Plus className="h-4 w-4" /> Manual
           </Button>
         </div>
       </div>
+      {!brandKey && <p className="text-12 text-muted-foreground">Pilih brand nota dulu sebelum scan / input manual.</p>}
       <input
         ref={fileRef}
         type="file"

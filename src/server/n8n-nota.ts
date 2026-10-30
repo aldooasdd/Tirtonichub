@@ -53,10 +53,12 @@ function normalize(raw: unknown): NotaItem {
   };
 }
 
-/** Kirim foto nota ke n8n, terima daftar item. null bila belum diset / gagal. */
+/** Kirim foto nota ke n8n, terima daftar item. null bila belum diset / gagal.
+ *  brand/distributor diteruskan supaya n8n pilih prompt OCR per-brand. */
 export async function parseNotaViaN8n(
   imageBase64: string,
   mimeType: string,
+  meta?: { brand?: string; distributor?: string; brandKey?: string },
 ): Promise<NotaItem[] | null> {
   const url = process.env.N8N_NOTA_OCR_WEBHOOK_URL;
   if (!url) return null;
@@ -67,7 +69,7 @@ export async function parseNotaViaN8n(
         "content-type": "application/json",
         "x-webhook-secret": process.env.N8N_NOTA_OCR_SECRET ?? "",
       },
-      body: JSON.stringify({ imageBase64, mimeType }),
+      body: JSON.stringify({ imageBase64, mimeType, brand: meta?.brand ?? null, distributor: meta?.distributor ?? null, brandKey: meta?.brandKey ?? null }),
     });
     if (!res.ok) return null;
     const data = (await res.json()) as { items?: unknown };

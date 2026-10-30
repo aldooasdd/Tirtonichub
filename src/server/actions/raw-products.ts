@@ -9,6 +9,7 @@ import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
 import { parseNotaViaN8n, type NotaItem } from "@/server/n8n-nota";
+import { brandByKey } from "@/lib/distributors";
 import { computeSellPrice } from "@/lib/pricing";
 import { notifyBosses } from "@/server/notify";
 import { dateKeyWIB } from "@/server/attendance/logic";
@@ -25,9 +26,10 @@ export type ScanResult = {
 };
 
 /** Upload foto nota + OCR via n8n. Tidak menyimpan DB (biar diedit dulu). */
-export async function scanNota(imageBase64: string, mimeType: string): Promise<ScanResult> {
+export async function scanNota(imageBase64: string, mimeType: string, brandKey?: string): Promise<ScanResult> {
   await requireFinance();
   if (!imageBase64) return { ok: false, message: "Foto nota kosong." };
+  const b = brandByKey(brandKey);
 
   const ext = mimeType.includes("png") ? "png" : "jpg";
   const key = makeKey("nota", ext);
@@ -38,7 +40,7 @@ export async function scanNota(imageBase64: string, mimeType: string): Promise<S
     return { ok: false, message: "Gagal simpan foto nota." };
   }
 
-  const items = await parseNotaViaN8n(imageBase64, mimeType);
+  const items = await parseNotaViaN8n(imageBase64, mimeType, b ? { brand: b.brand, distributor: b.distributor, brandKey: b.key } : undefined);
   return {
     ok: true,
     batchId: randomUUID(),
