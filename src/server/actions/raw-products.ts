@@ -31,7 +31,7 @@ export async function scanNota(imageBase64: string, mimeType: string, brandKey?:
   if (!imageBase64) return { ok: false, message: "Foto nota kosong." };
   const b = brandByKey(brandKey);
 
-  const ext = mimeType.includes("png") ? "png" : "jpg";
+  const ext = mimeType.includes("pdf") ? "pdf" : mimeType.includes("png") ? "png" : "jpg";
   const key = makeKey("nota", ext);
   try {
     const buf = Buffer.from(imageBase64, "base64");

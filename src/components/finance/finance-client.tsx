@@ -87,9 +87,11 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
     setBusy(true);
     setMsg(null);
     try {
-      const blob = await compressImage(file);
-      const b64 = await blobToBase64(blob);
-      const scan = await scanNota(b64, "image/jpeg", brandKey);
+      // Nota PDF: kirim apa adanya (tak bisa di-rasterize canvas). Foto: kompres dulu.
+      const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
+      const mime = isPdf ? "application/pdf" : "image/jpeg";
+      const b64 = await blobToBase64(isPdf ? file : await compressImage(file));
+      const scan = await scanNota(b64, mime, brandKey);
       if (!scan.ok || !scan.batchId) {
         setMsg(scan.message ?? "Scan gagal.");
         return;
@@ -106,8 +108,8 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
       if (!r.ok) setMsg(r.message ?? "Gagal simpan.");
       else setMsg(scan.ocr ? `Nota terbaca: ${parsed.length} item. Cek & edit di bawah.` : "OCR belum aktif — kartu kosong dibuat, isi manual.");
       router.refresh();
-    } catch {
-      setMsg("Gagal proses foto.");
+    } catch (e) {
+      setMsg(e instanceof Error ? `Gagal proses nota: ${e.message}` : "Gagal proses nota.");
     } finally {
       setBusy(false);
     }
@@ -177,8 +179,7 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
       <input
         ref={fileRef}
         type="file"
-        accept="image/*"
-        capture="environment"
+        accept="image/*,application/pdf"
         className="hidden"
         onChange={(e) => {
           const f = e.target.files?.[0];
