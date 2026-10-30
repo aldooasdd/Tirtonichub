@@ -43,6 +43,7 @@ export function PenjualanTable({ notas }: { notas: NotaRow[] }) {
   const [pending, startTransition] = useTransition();
   const [tgl, setTgl] = useState(todayWIB); // default: hari ini (WIB)
   const [cabang, setCabang] = useState(""); // "" = semua
+  const [saluran, setSaluran] = useState<"Offline" | "Online">("Offline"); // pisah rekap
   const [editId, setEditId] = useState<string | null>(null);
 
   function hapus(id: string) {
@@ -59,7 +60,7 @@ export function PenjualanTable({ notas }: { notas: NotaRow[] }) {
     [notas],
   );
 
-  const shown = notas.filter((n) => (!tgl || n.dateKey === tgl) && (!cabang || n.branch === cabang));
+  const shown = notas.filter((n) => n.saluran === saluran && (!tgl || n.dateKey === tgl) && (!cabang || n.branch === cabang));
   const total = shown.reduce((s, n) => s + n.grandTotal, 0);
 
   return (
@@ -70,6 +71,18 @@ export function PenjualanTable({ notas }: { notas: NotaRow[] }) {
           <p className="text-14 text-muted-foreground">Offline dari nota Sales. Online diinput Admin (marketplace).</p>
         </div>
         <p className="text-14 font-semibold shrink-0">{rupiah(total)} <span className="text-12 font-normal text-muted-foreground">· {shown.length} nota</span></p>
+      </div>
+
+      <div className="inline-flex rounded-lg border bg-card p-0.5 text-14">
+        {(["Offline", "Online"] as const).map((s) => (
+          <button
+            key={s}
+            onClick={() => setSaluran(s)}
+            className={`rounded-md px-3 py-1 font-medium ${saluran === s ? "bg-primary text-primary-foreground" : "text-muted-foreground"}`}
+          >
+            {s}
+          </button>
+        ))}
       </div>
 
       <div className="flex flex-wrap items-center gap-3">
