@@ -1,55 +1,49 @@
-// Jadwal default per karyawan per tanggal (1..31), dari PDF "Jadwal Tirtonic - DES"
-// (Des = 31 hari, dipakai sebagai pola contoh ke depan). Pola sama tiap bulan;
-// grid HR menampilkannya otomatis, edit HR / approve tukar shift menimpanya (jadi row Shift
-// per-tanggal, jadi cuma berlaku bulan itu — bulan depan kembali ke pola ini). match = awalan
-// nama (lowercase), sinkron dengan nama di DB. Bulan <31 hari pakai token 1..dim saja.
+// Jadwal default per karyawan per HARI (bukan tanggal), dari PDF "Jadwal Tirtonic".
+// Rota mingguan tetap: DES & NOV identik per orang, hanya beda hari tgl-1. Karena dipetakan
+// per hari (Minggu..Sabtu), pola otomatis benar di SEMUA bulan. Grid HR menampilkannya
+// otomatis; edit HR / approve tukar shift menimpanya sebagai row Shift per-tanggal, jadi cuma
+// berlaku bulan itu — bulan lain tetap pola ini. match = awalan nama (lowercase), sinkron DB.
 
-type Row = { match: string; codes: string };
+type Row = { match: string; week: string }; // week = 7 kode: Minggu Senin Selasa Rabu Kamis Jumat Sabtu
 
-// 31 token per baris (dipisah spasi). Des 2026: tgl 1 = Selasa.
+// Andhin & Dea: PDF tulis OH di hari kerja, tapi diminta jadi P. Sabtu WFH, Minggu O.
 const ROWS: Row[] = [
   // Jogja
-  { match: "delfia", codes: "O S P S P S WFH O S P S P S WFH O S P S P S WFH O S P S P S WFH O S P" },
-  { match: "wimas", codes: "WFH P S P S P O WFH P S P S P O WFH P S P S P O WFH P S P S P O WFH P S" },
-  { match: "yopi", codes: "S P O S P S P S P O S P S P S P O S P S P S P O S P S P S P O" },
-  { match: "aldi", codes: "P O S P S P S P O S P S P S P O S P S P S P O S P S P S P O S" },
-  { match: "indy", codes: "P S P O S P S P S P O S P S P S P O S P S P S P O S P S P S P" },
-  { match: "edo", codes: "O S P S P S P O S P S P S P O S P S P S P O S P S P S P O S P" },
-  { match: "junita", codes: "S P S P S P O S P S P S P O S P S P S P O S P S P S P O S P S" },
-  { match: "dea", codes: "OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH OH WFH O OH OH OH OH" },
-  { match: "andhin", codes: "P P P P WFH O P P P P P WFH O P P P P P WFH O P P P P P WFH O P P P P" },
+  { match: "delfia", week: "S WFH O S P S P" },
+  { match: "wimas", week: "P O WFH P S P S" },
+  { match: "yopi", week: "S P S P O S P" },
+  { match: "aldi", week: "P S P O S P S" },
+  { match: "indy", week: "P S P S P O S" },
+  { match: "edo", week: "S P O S P S P" },
+  { match: "junita", week: "P O S P S P S" },
+  { match: "dea", week: "O P P P P P WFH" },
+  { match: "andhin", week: "O P P P P P WFH" },
   // Solo
-  { match: "lala", codes: "O S P P S P S O S P P S P S O S P P S P S O S P P S P S O S P" },
-  { match: "mutia", codes: "P S P O S P S P S P O S P S P S P O S P S P S P O S P S P S P" },
-  { match: "ghifari", codes: "S P S P S P O S P S P S P O S P S P S P O S P S P S P O S P S" },
-  { match: "mawa", codes: "P O S S P S P P O S S P S P P O S S P S P P O S S P S P P O S" },
-  { match: "afi", codes: "S P O S P S P S P O S P S P S P O S P S P S P O S P S P S P O" },
+  { match: "lala", week: "P S O S P P S" },
+  { match: "mutia", week: "P S P S P O S" },
+  { match: "ghifari", week: "P O S P S P S" },
+  { match: "mawa", week: "S P P O S S P" },
+  { match: "afi", week: "S P S P O S P" },
   // Semarang
-  { match: "jose", codes: "S S P P P S O S S P P P S O S S P P P S O S S P P P S O S S P" },
-  { match: "nur taufiq", codes: "P O S S S P P P O S S S P P P O S S S P P P O S S S P P P O S" },
-  { match: "rahma", codes: "S P O P S P S S P O P S P S S P O P S P S S P O P S P S S P O" },
-  { match: "a taufiq", codes: "P P P O S S S P P P O S S S P P P O S S S P P P O S S S P P P" },
-  { match: "irfan", codes: "O S S S P P P O S S S P P P O S S S P P P O S S S P P P O S S" },
+  { match: "jose", week: "S O S S P P P" },
+  { match: "nur taufiq", week: "P P P O S S S" },
+  { match: "rahma", week: "P S S P O P S" },
+  { match: "a taufiq", week: "S S P P P O S" },
+  { match: "irfan", week: "P P O S S S P" },
 ];
 
 const norm = (s: string) => s.toLowerCase().replace(/\s+/g, " ").trim();
-const table = ROWS.map((r) => ({ match: r.match, days: r.codes.trim().split(/\s+/) }));
+const table = ROWS.map((r) => ({ match: r.match, week: r.week.trim().split(/\s+/) }));
 
 const rowFor = (fullName: string) => {
   const n = norm(fullName);
   return table.find((r) => n.startsWith(r.match));
 };
 
-// Office yang ikut HARI (bukan tanggal): Sabtu WFH, Minggu Off, lainnya P. Benar di semua bulan.
-const WEEKDAY_OFFICE = ["andhin", "dea"];
-
-/** Kode shift default utk nama + tanggal (1..31). dow = hari (0=Minggu..6=Sabtu) jika ada.
- *  Andhin & Dea ikut hari, bukan pola tanggal. "" bila tak ada. */
-export function defaultShift(fullName: string, day: number, dow?: number): string {
-  if (dow != null && WEEKDAY_OFFICE.some((m) => norm(fullName).startsWith(m))) {
-    return dow === 6 ? "WFH" : dow === 0 ? "O" : "P";
-  }
-  return rowFor(fullName)?.days[day - 1] ?? "";
+/** Kode shift default utk nama + hari. dow = 0=Minggu..6=Sabtu. "" bila tak ada pola / dow null. */
+export function defaultShift(fullName: string, _day: number, dow?: number): string {
+  if (dow == null) return "";
+  return rowFor(fullName)?.week[dow] ?? "";
 }
 
 /** True bila nama punya pola jadwal di PDF. */
