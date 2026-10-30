@@ -1,0 +1,2 @@
+ALTER TABLE "Cashout" ADD COLUMN "checkedAt" TIMESTAMP(3);
+ALTER TABLE "Cashout" ADD COLUMN "checkedById" TEXT;

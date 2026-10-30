@@ -126,6 +126,19 @@ export async function approveCashout(id: string): Promise<ActionResult> {
   return { ok: true };
 }
 
+/** Finance/Boss/Admin: tandai/untandai pembelian sudah dicek (checklist tersimpan). */
+export async function toggleCashoutChecked(id: string, checked: boolean): Promise<ActionResult> {
+  const ctx = await requireFinance();
+  if (!id) return { ok: false, message: "ID kosong." };
+  const row = await prisma.cashout.findUnique({ where: { id }, select: { id: true } });
+  if (!row) return { ok: false, message: "Tidak ditemukan." };
+  await prisma.cashout.update({
+    where: { id },
+    data: checked ? { checkedAt: new Date(), checkedById: ctx.userId } : { checkedAt: null, checkedById: null },
+  });
+  return { ok: true };
+}
+
 /** Finance/Boss/Admin: tolak pengeluaran (hapus). */
 export async function rejectCashout(id: string): Promise<ActionResult> {
   const ctx = await requireFinance();

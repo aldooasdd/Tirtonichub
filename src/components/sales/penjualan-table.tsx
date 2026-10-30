@@ -44,6 +44,7 @@ export function PenjualanTable({ notas }: { notas: NotaRow[] }) {
   const [tgl, setTgl] = useState(todayWIB); // default: hari ini (WIB)
   const [cabang, setCabang] = useState(""); // "" = semua
   const [saluran, setSaluran] = useState<"Offline" | "Online">("Offline"); // pisah rekap
+  const [q, setQ] = useState(""); // cari: pelanggan/nota/salesman/item
   const [editId, setEditId] = useState<string | null>(null);
 
   function hapus(id: string) {
@@ -60,7 +61,14 @@ export function PenjualanTable({ notas }: { notas: NotaRow[] }) {
     [notas],
   );
 
-  const shown = notas.filter((n) => n.saluran === saluran && (!tgl || n.dateKey === tgl) && (!cabang || n.branch === cabang));
+  const needle = q.trim().toLowerCase();
+  const match = (n: NotaRow) =>
+    !needle ||
+    [n.customer, n.branch, n.edit.notaNo, n.edit.salesman, ...n.items.map((it) => it.name)]
+      .some((s) => (s ?? "").toLowerCase().includes(needle));
+  const shown = notas.filter(
+    (n) => n.saluran === saluran && (!tgl || n.dateKey === tgl) && (!cabang || n.branch === cabang) && match(n),
+  );
   const total = shown.reduce((s, n) => s + n.grandTotal, 0);
 
   return (
@@ -100,6 +108,13 @@ export function PenjualanTable({ notas }: { notas: NotaRow[] }) {
             ))}
           </select>
         </div>
+        <input
+          type="search"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Cari pelanggan / nota / salesman / item…"
+          className="min-w-[14rem] flex-1 rounded-md border bg-card px-3 py-1 text-14"
+        />
       </div>
 
       {shown.length === 0 ? (

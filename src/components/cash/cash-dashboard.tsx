@@ -7,7 +7,7 @@ import { CashSessionHistory } from "./cash-session-history";
 
 /** Blok dashboard kasir: treemap saldo + riwayat (di dalam) + chart penjualan + riwayat buka/tutup.
  *  Dipakai Finance (/finance, /finance/kas) dan beranda Boss/Admin. */
-export function CashDashboard({ boards, trends, moves, sessions }: { boards: BranchCashBoardData[]; trends: SalesTrends; moves: CashMovement[]; sessions: CashSessionRow[] }) {
+export function CashDashboard({ boards, trends, moves, sessions, movesDay }: { boards: BranchCashBoardData[]; trends: SalesTrends; moves: CashMovement[]; sessions: CashSessionRow[]; movesDay?: string }) {
   return (
     <div className="flex flex-col gap-5 lg:flex-row lg:items-start">
       <div className="reveal min-w-0 flex-1" style={{ animationDelay: "0ms" }}>
@@ -20,7 +20,7 @@ export function CashDashboard({ boards, trends, moves, sessions }: { boards: Bra
             close,
           }))}
         >
-          <CashMovements rows={moves} />
+          <CashMovements rows={moves} defaultDay={movesDay} />
         </BranchCashTreemap>
       </div>
       <div className="flex min-w-0 flex-1 flex-col gap-5">

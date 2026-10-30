@@ -12,9 +12,9 @@ const todayWIB = () => dayKeyWIB(new Date());
 
 const PREVIEW = 5;
 
-export function CashMovements({ rows }: { rows: CashMovement[] }) {
+export function CashMovements({ rows, defaultDay }: { rows: CashMovement[]; defaultDay?: string }) {
   const [all, setAll] = React.useState(false);
-  const [day, setDay] = React.useState(todayWIB); // default hari ini; "" = semua
+  const [day, setDay] = React.useState(defaultDay ?? todayWIB()); // default tanggal terpilih / hari ini; "" = semua
 
   const filtered = day ? rows.filter((r) => dayKeyWIB(r.at) === day) : rows;
   const shown = all ? filtered : filtered.slice(0, PREVIEW);

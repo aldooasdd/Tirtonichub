@@ -158,6 +158,10 @@ model Cashout {
   approvedAt   DateTime?
   approvedById String?
 
+  // Checklist Finance: tandai pembelian sudah dicek/rekonsiliasi.
+  checkedAt   DateTime?
+  checkedById String?
+
   createdBy User @relation("CashoutCreator", fields: [createdById], references: [id])
 
   @@index([createdById])

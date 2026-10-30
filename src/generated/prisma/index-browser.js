@@ -171,7 +171,9 @@ exports.Prisma.CashoutScalarFieldEnum = {
   createdById: 'createdById',
   createdAt: 'createdAt',
   approvedAt: 'approvedAt',
-  approvedById: 'approvedById'
+  approvedById: 'approvedById',
+  checkedAt: 'checkedAt',
+  checkedById: 'checkedById'
 };
 
 exports.Prisma.SalesReportScalarFieldEnum = {

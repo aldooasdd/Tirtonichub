@@ -8740,6 +8740,8 @@ export namespace Prisma {
     createdAt: Date | null
     approvedAt: Date | null
     approvedById: string | null
+    checkedAt: Date | null
+    checkedById: string | null
   }
 
   export type CashoutMaxAggregateOutputType = {
@@ -8755,6 +8757,8 @@ export namespace Prisma {
     createdAt: Date | null
     approvedAt: Date | null
     approvedById: string | null
+    checkedAt: Date | null
+    checkedById: string | null
   }
 
   export type CashoutCountAggregateOutputType = {
@@ -8770,6 +8774,8 @@ export namespace Prisma {
     createdAt: number
     approvedAt: number
     approvedById: number
+    checkedAt: number
+    checkedById: number
     _all: number
   }
 
@@ -8795,6 +8801,8 @@ export namespace Prisma {
     createdAt?: true
     approvedAt?: true
     approvedById?: true
+    checkedAt?: true
+    checkedById?: true
   }
 
   export type CashoutMaxAggregateInputType = {
@@ -8810,6 +8818,8 @@ export namespace Prisma {
     createdAt?: true
     approvedAt?: true
     approvedById?: true
+    checkedAt?: true
+    checkedById?: true
   }
 
   export type CashoutCountAggregateInputType = {
@@ -8825,6 +8835,8 @@ export namespace Prisma {
     createdAt?: true
     approvedAt?: true
     approvedById?: true
+    checkedAt?: true
+    checkedById?: true
     _all?: true
   }
 
@@ -8927,6 +8939,8 @@ export namespace Prisma {
     createdAt: Date
     approvedAt: Date | null
     approvedById: string | null
+    checkedAt: Date | null
+    checkedById: string | null
     _count: CashoutCountAggregateOutputType | null
     _avg: CashoutAvgAggregateOutputType | null
     _sum: CashoutSumAggregateOutputType | null
@@ -8961,6 +8975,8 @@ export namespace Prisma {
     createdAt?: boolean
     approvedAt?: boolean
     approvedById?: boolean
+    checkedAt?: boolean
+    checkedById?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["cashout"]>
 
@@ -8977,6 +8993,8 @@ export namespace Prisma {
     createdAt?: boolean
     approvedAt?: boolean
     approvedById?: boolean
+    checkedAt?: boolean
+    checkedById?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["cashout"]>
 
@@ -8993,6 +9011,8 @@ export namespace Prisma {
     createdAt?: boolean
     approvedAt?: boolean
     approvedById?: boolean
+    checkedAt?: boolean
+    checkedById?: boolean
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["cashout"]>
 
@@ -9009,9 +9029,11 @@ export namespace Prisma {
     createdAt?: boolean
     approvedAt?: boolean
     approvedById?: boolean
+    checkedAt?: boolean
+    checkedById?: boolean
   }
 
-  export type CashoutOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "spentAt" | "amount" | "description" | "category" | "branchId" | "branchName" | "photoKey" | "createdById" | "createdAt" | "approvedAt" | "approvedById", ExtArgs["result"]["cashout"]>
+  export type CashoutOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "spentAt" | "amount" | "description" | "category" | "branchId" | "branchName" | "photoKey" | "createdById" | "createdAt" | "approvedAt" | "approvedById" | "checkedAt" | "checkedById", ExtArgs["result"]["cashout"]>
   export type CashoutInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -9040,6 +9062,8 @@ export namespace Prisma {
       createdAt: Date
       approvedAt: Date | null
       approvedById: string | null
+      checkedAt: Date | null
+      checkedById: string | null
     }, ExtArgs["result"]["cashout"]>
     composites: {}
   }
@@ -9476,6 +9500,8 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Cashout", 'DateTime'>
     readonly approvedAt: FieldRef<"Cashout", 'DateTime'>
     readonly approvedById: FieldRef<"Cashout", 'String'>
+    readonly checkedAt: FieldRef<"Cashout", 'DateTime'>
+    readonly checkedById: FieldRef<"Cashout", 'String'>
   }
     
 
@@ -47030,7 +47056,9 @@ export namespace Prisma {
     createdById: 'createdById',
     createdAt: 'createdAt',
     approvedAt: 'approvedAt',
-    approvedById: 'approvedById'
+    approvedById: 'approvedById',
+    checkedAt: 'checkedAt',
+    checkedById: 'checkedById'
   };
 
   export type CashoutScalarFieldEnum = (typeof CashoutScalarFieldEnum)[keyof typeof CashoutScalarFieldEnum]
@@ -48115,6 +48143,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Cashout"> | Date | string
     approvedAt?: DateTimeNullableFilter<"Cashout"> | Date | string | null
     approvedById?: StringNullableFilter<"Cashout"> | string | null
+    checkedAt?: DateTimeNullableFilter<"Cashout"> | Date | string | null
+    checkedById?: StringNullableFilter<"Cashout"> | string | null
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
 
@@ -48131,6 +48161,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     approvedAt?: SortOrderInput | SortOrder
     approvedById?: SortOrderInput | SortOrder
+    checkedAt?: SortOrderInput | SortOrder
+    checkedById?: SortOrderInput | SortOrder
     createdBy?: UserOrderByWithRelationInput
   }
 
@@ -48150,6 +48182,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Cashout"> | Date | string
     approvedAt?: DateTimeNullableFilter<"Cashout"> | Date | string | null
     approvedById?: StringNullableFilter<"Cashout"> | string | null
+    checkedAt?: DateTimeNullableFilter<"Cashout"> | Date | string | null
+    checkedById?: StringNullableFilter<"Cashout"> | string | null
     createdBy?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id">
 
@@ -48166,6 +48200,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     approvedAt?: SortOrderInput | SortOrder
     approvedById?: SortOrderInput | SortOrder
+    checkedAt?: SortOrderInput | SortOrder
+    checkedById?: SortOrderInput | SortOrder
     _count?: CashoutCountOrderByAggregateInput
     _avg?: CashoutAvgOrderByAggregateInput
     _max?: CashoutMaxOrderByAggregateInput
@@ -48189,6 +48225,8 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Cashout"> | Date | string
     approvedAt?: DateTimeNullableWithAggregatesFilter<"Cashout"> | Date | string | null
     approvedById?: StringNullableWithAggregatesFilter<"Cashout"> | string | null
+    checkedAt?: DateTimeNullableWithAggregatesFilter<"Cashout"> | Date | string | null
+    checkedById?: StringNullableWithAggregatesFilter<"Cashout"> | string | null
   }
 
   export type SalesReportWhereInput = {
@@ -51153,6 +51191,8 @@ export namespace Prisma {
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
+    checkedAt?: Date | string | null
+    checkedById?: string | null
     createdBy: UserCreateNestedOneWithoutCashoutsInput
   }
 
@@ -51169,6 +51209,8 @@ export namespace Prisma {
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
+    checkedAt?: Date | string | null
+    checkedById?: string | null
   }
 
   export type CashoutUpdateInput = {
@@ -51183,6 +51225,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    checkedById?: NullableStringFieldUpdateOperationsInput | string | null
     createdBy?: UserUpdateOneRequiredWithoutCashoutsNestedInput
   }
 
@@ -51199,6 +51243,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    checkedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CashoutCreateManyInput = {
@@ -51214,6 +51260,8 @@ export namespace Prisma {
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
+    checkedAt?: Date | string | null
+    checkedById?: string | null
   }
 
   export type CashoutUpdateManyMutationInput = {
@@ -51228,6 +51276,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    checkedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CashoutUncheckedUpdateManyInput = {
@@ -51243,6 +51293,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    checkedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type SalesReportCreateInput = {
@@ -54638,6 +54690,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     approvedAt?: SortOrder
     approvedById?: SortOrder
+    checkedAt?: SortOrder
+    checkedById?: SortOrder
   }
 
   export type CashoutAvgOrderByAggregateInput = {
@@ -54657,6 +54711,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     approvedAt?: SortOrder
     approvedById?: SortOrder
+    checkedAt?: SortOrder
+    checkedById?: SortOrder
   }
 
   export type CashoutMinOrderByAggregateInput = {
@@ -54672,6 +54728,8 @@ export namespace Prisma {
     createdAt?: SortOrder
     approvedAt?: SortOrder
     approvedById?: SortOrder
+    checkedAt?: SortOrder
+    checkedById?: SortOrder
   }
 
   export type CashoutSumOrderByAggregateInput = {
@@ -59544,6 +59602,8 @@ export namespace Prisma {
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
+    checkedAt?: Date | string | null
+    checkedById?: string | null
   }
 
   export type CashoutUncheckedCreateWithoutCreatedByInput = {
@@ -59558,6 +59618,8 @@ export namespace Prisma {
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
+    checkedAt?: Date | string | null
+    checkedById?: string | null
   }
 
   export type CashoutCreateOrConnectWithoutCreatedByInput = {
@@ -60305,6 +60367,8 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Cashout"> | Date | string
     approvedAt?: DateTimeNullableFilter<"Cashout"> | Date | string | null
     approvedById?: StringNullableFilter<"Cashout"> | string | null
+    checkedAt?: DateTimeNullableFilter<"Cashout"> | Date | string | null
+    checkedById?: StringNullableFilter<"Cashout"> | string | null
   }
 
   export type ReportUpsertWithWhereUniqueWithoutCreatedByInput = {
@@ -66092,6 +66156,8 @@ export namespace Prisma {
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
+    checkedAt?: Date | string | null
+    checkedById?: string | null
   }
 
   export type ReportCreateManyCreatedByInput = {
@@ -66884,6 +66950,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    checkedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CashoutUncheckedUpdateWithoutCreatedByInput = {
@@ -66898,6 +66966,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    checkedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CashoutUncheckedUpdateManyWithoutCreatedByInput = {
@@ -66912,6 +66982,8 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    checkedById?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type ReportUpdateWithoutCreatedByInput = {
