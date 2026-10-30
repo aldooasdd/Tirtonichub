@@ -117,21 +117,19 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
   const ctx = await requireSalesInput();
   if (!input.photoKey) return { ok: false, message: "Foto nota wajib." };
   const channel = input.channel === "online" ? "online" : "offline";
-  // Cabang offline dari nota (OCR/edit). Cocok → routing Kepala Cabang cabang itu.
-  // Tak cocok → fallback cabang user pengirim; tetap gagal → simpan teks mentah (hanya Direksi bisa ACC).
+  // Routing ACC Kepala Cabang = cabang SALES yang input (ctx.branchId), bukan teks nota.
+  // Nota OCR bisa salah kota → ACC nyasar. Fallback: teks nota, lalu teks mentah (hanya Direksi bisa ACC).
   let branchId: string | null = null;
   let branchName: string | null = null;
   if (channel === "offline") {
-    const det = await resolveBranchFromText(input.branch ?? null);
-    if (det.id) {
-      branchId = det.id;
-      branchName = det.name;
-    } else if (ctx.branchId) {
+    if (ctx.branchId) {
       const br = await prisma.branch.findUnique({ where: { id: ctx.branchId }, select: { name: true } });
       branchId = ctx.branchId;
       branchName = br?.name ?? null;
     } else {
-      branchName = clean(input.branch, 120);
+      const det = await resolveBranchFromText(input.branch ?? null);
+      branchId = det.id;
+      branchName = det.name ?? clean(input.branch, 120);
     }
   }
   // Penjualan wajib approval: offline → ACC Kepala Cabang lalu Finance; online → ACC Order Specialist. approvedAt null dulu.
