@@ -2,6 +2,7 @@
 // Alamat dokumen sama seperti versi Firebase (items/{id}, tasks/{id}, members/{email}, ...).
 
 import { randomBytes } from "node:crypto";
+import { queueNewItem } from "@/server/push/jobs";
 import type { Prisma } from "@/generated/prisma";
 import { prisma } from "@/server/db";
 import { makeKey, putObject, multipartStart, multipartPart, multipartFinish, multipartAbort } from "@/server/storage";
@@ -144,6 +145,7 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
       const row = M.itemFromDoc(after);
       const data = { ...row, extra: json(row.extra) };
       await prisma.mediaItem.upsert({ where: { id }, create: { id, ...data, createdById: u.userId }, update: data });
+      if (!before && !opts.trusted) await queueNewItem({ id, name: row.name, color: row.color, old: row.old }); // notifikasi Barang masuk
       break;
     }
     case "assets": {

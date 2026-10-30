@@ -560,6 +560,30 @@ exports.Prisma.StudioTombstoneScalarFieldEnum = {
   deletedAt: 'deletedAt'
 };
 
+exports.Prisma.PushSubscriptionScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  endpoint: 'endpoint',
+  p256dh: 'p256dh',
+  auth: 'auth',
+  device: 'device',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.PushLogScalarFieldEnum = {
+  key: 'key',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.PushItemQueueScalarFieldEnum = {
+  id: 'id',
+  itemId: 'itemId',
+  name: 'name',
+  createdAt: 'createdAt',
+  sentAt: 'sentAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -684,7 +708,10 @@ exports.Prisma.ModelName = {
   PersonalCalEvent: 'PersonalCalEvent',
   MediaPcal: 'MediaPcal',
   StudioDoc: 'StudioDoc',
-  StudioTombstone: 'StudioTombstone'
+  StudioTombstone: 'StudioTombstone',
+  PushSubscription: 'PushSubscription',
+  PushLog: 'PushLog',
+  PushItemQueue: 'PushItemQueue'
 };
 
 /**

@@ -105,7 +105,7 @@ self.__SERVER_FILES_MANIFEST={
         "transform": "lodash/{{member}}"
       }
     },
-    "outputFileTracingRoot": "/Users/a1/Tirtonic/Tirtonichub",
+    "outputFileTracingRoot": "/Users/zakiramadhan/Tirtonichub",
     "enablePrerenderSourceMaps": true,
     "cacheComponents": false,
     "cacheLife": {
@@ -343,9 +343,9 @@ self.__SERVER_FILES_MANIFEST={
           "as": "*.css"
         }
       },
-      "root": "/Users/a1/Tirtonic/Tirtonichub"
+      "root": "/Users/zakiramadhan/Tirtonichub"
     },
-    "repoRoot": "/Users/a1/Tirtonic/Tirtonichub",
+    "repoRoot": "/Users/zakiramadhan/Tirtonichub",
     "distDirRoot": ".next",
     "_originalRewrites": {
       "beforeFiles": [],
@@ -358,7 +358,7 @@ self.__SERVER_FILES_MANIFEST={
       "fallback": []
     }
   },
-  "appDir": "/Users/a1/Tirtonic/Tirtonichub",
+  "appDir": "/Users/zakiramadhan/Tirtonichub",
   "relativeAppDir": "",
   "files": [
     ".next/package.json",
@@ -378,7 +378,8 @@ self.__SERVER_FILES_MANIFEST={
     ".next/BUILD_ID",
     ".next/server/next-font-manifest.js",
     ".next/server/next-font-manifest.json",
-    ".next/required-server-files.json"
+    ".next/required-server-files.json",
+    ".next/server/instrumentation.js"
   ],
   "ignore": []
 }

@@ -184,6 +184,21 @@ export type StudioDoc = $Result.DefaultSelection<Prisma.$StudioDocPayload>
  * 
  */
 export type StudioTombstone = $Result.DefaultSelection<Prisma.$StudioTombstonePayload>
+/**
+ * Model PushSubscription
+ * 
+ */
+export type PushSubscription = $Result.DefaultSelection<Prisma.$PushSubscriptionPayload>
+/**
+ * Model PushLog
+ * 
+ */
+export type PushLog = $Result.DefaultSelection<Prisma.$PushLogPayload>
+/**
+ * Model PushItemQueue
+ * 
+ */
+export type PushItemQueue = $Result.DefaultSelection<Prisma.$PushItemQueuePayload>
 
 /**
  * Enums
@@ -764,6 +779,36 @@ export class PrismaClient<
     * ```
     */
   get studioTombstone(): Prisma.StudioTombstoneDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.pushSubscription`: Exposes CRUD operations for the **PushSubscription** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PushSubscriptions
+    * const pushSubscriptions = await prisma.pushSubscription.findMany()
+    * ```
+    */
+  get pushSubscription(): Prisma.PushSubscriptionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.pushLog`: Exposes CRUD operations for the **PushLog** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PushLogs
+    * const pushLogs = await prisma.pushLog.findMany()
+    * ```
+    */
+  get pushLog(): Prisma.PushLogDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.pushItemQueue`: Exposes CRUD operations for the **PushItemQueue** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more PushItemQueues
+    * const pushItemQueues = await prisma.pushItemQueue.findMany()
+    * ```
+    */
+  get pushItemQueue(): Prisma.PushItemQueueDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1238,7 +1283,10 @@ export namespace Prisma {
     PersonalCalEvent: 'PersonalCalEvent',
     MediaPcal: 'MediaPcal',
     StudioDoc: 'StudioDoc',
-    StudioTombstone: 'StudioTombstone'
+    StudioTombstone: 'StudioTombstone',
+    PushSubscription: 'PushSubscription',
+    PushLog: 'PushLog',
+    PushItemQueue: 'PushItemQueue'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1257,7 +1305,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "pushItemQueue"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3777,6 +3825,228 @@ export namespace Prisma {
           }
         }
       }
+      PushSubscription: {
+        payload: Prisma.$PushSubscriptionPayload<ExtArgs>
+        fields: Prisma.PushSubscriptionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PushSubscriptionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushSubscriptionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PushSubscriptionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushSubscriptionPayload>
+          }
+          findFirst: {
+            args: Prisma.PushSubscriptionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushSubscriptionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PushSubscriptionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushSubscriptionPayload>
+          }
+          findMany: {
+            args: Prisma.PushSubscriptionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushSubscriptionPayload>[]
+          }
+          create: {
+            args: Prisma.PushSubscriptionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushSubscriptionPayload>
+          }
+          createMany: {
+            args: Prisma.PushSubscriptionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PushSubscriptionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushSubscriptionPayload>[]
+          }
+          delete: {
+            args: Prisma.PushSubscriptionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushSubscriptionPayload>
+          }
+          update: {
+            args: Prisma.PushSubscriptionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushSubscriptionPayload>
+          }
+          deleteMany: {
+            args: Prisma.PushSubscriptionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PushSubscriptionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PushSubscriptionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushSubscriptionPayload>[]
+          }
+          upsert: {
+            args: Prisma.PushSubscriptionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushSubscriptionPayload>
+          }
+          aggregate: {
+            args: Prisma.PushSubscriptionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePushSubscription>
+          }
+          groupBy: {
+            args: Prisma.PushSubscriptionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PushSubscriptionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PushSubscriptionCountArgs<ExtArgs>
+            result: $Utils.Optional<PushSubscriptionCountAggregateOutputType> | number
+          }
+        }
+      }
+      PushLog: {
+        payload: Prisma.$PushLogPayload<ExtArgs>
+        fields: Prisma.PushLogFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PushLogFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushLogPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PushLogFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushLogPayload>
+          }
+          findFirst: {
+            args: Prisma.PushLogFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushLogPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PushLogFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushLogPayload>
+          }
+          findMany: {
+            args: Prisma.PushLogFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushLogPayload>[]
+          }
+          create: {
+            args: Prisma.PushLogCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushLogPayload>
+          }
+          createMany: {
+            args: Prisma.PushLogCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PushLogCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushLogPayload>[]
+          }
+          delete: {
+            args: Prisma.PushLogDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushLogPayload>
+          }
+          update: {
+            args: Prisma.PushLogUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushLogPayload>
+          }
+          deleteMany: {
+            args: Prisma.PushLogDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PushLogUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PushLogUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushLogPayload>[]
+          }
+          upsert: {
+            args: Prisma.PushLogUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushLogPayload>
+          }
+          aggregate: {
+            args: Prisma.PushLogAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePushLog>
+          }
+          groupBy: {
+            args: Prisma.PushLogGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PushLogGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PushLogCountArgs<ExtArgs>
+            result: $Utils.Optional<PushLogCountAggregateOutputType> | number
+          }
+        }
+      }
+      PushItemQueue: {
+        payload: Prisma.$PushItemQueuePayload<ExtArgs>
+        fields: Prisma.PushItemQueueFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PushItemQueueFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushItemQueuePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PushItemQueueFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushItemQueuePayload>
+          }
+          findFirst: {
+            args: Prisma.PushItemQueueFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushItemQueuePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PushItemQueueFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushItemQueuePayload>
+          }
+          findMany: {
+            args: Prisma.PushItemQueueFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushItemQueuePayload>[]
+          }
+          create: {
+            args: Prisma.PushItemQueueCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushItemQueuePayload>
+          }
+          createMany: {
+            args: Prisma.PushItemQueueCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PushItemQueueCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushItemQueuePayload>[]
+          }
+          delete: {
+            args: Prisma.PushItemQueueDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushItemQueuePayload>
+          }
+          update: {
+            args: Prisma.PushItemQueueUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushItemQueuePayload>
+          }
+          deleteMany: {
+            args: Prisma.PushItemQueueDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PushItemQueueUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PushItemQueueUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushItemQueuePayload>[]
+          }
+          upsert: {
+            args: Prisma.PushItemQueueUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PushItemQueuePayload>
+          }
+          aggregate: {
+            args: Prisma.PushItemQueueAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePushItemQueue>
+          }
+          groupBy: {
+            args: Prisma.PushItemQueueGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PushItemQueueGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PushItemQueueCountArgs<ExtArgs>
+            result: $Utils.Optional<PushItemQueueCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -3907,6 +4177,9 @@ export namespace Prisma {
     mediaPcal?: MediaPcalOmit
     studioDoc?: StudioDocOmit
     studioTombstone?: StudioTombstoneOmit
+    pushSubscription?: PushSubscriptionOmit
+    pushLog?: PushLogOmit
+    pushItemQueue?: PushItemQueueOmit
   }
 
   /* Types for Logging */
@@ -3995,6 +4268,7 @@ export namespace Prisma {
     requests: number
     reviewed: number
     notifications: number
+    pushSubs: number
     activityLogs: number
     chatMembers: number
     chatMessages: number
@@ -4018,6 +4292,7 @@ export namespace Prisma {
     requests?: boolean | UserCountOutputTypeCountRequestsArgs
     reviewed?: boolean | UserCountOutputTypeCountReviewedArgs
     notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+    pushSubs?: boolean | UserCountOutputTypeCountPushSubsArgs
     activityLogs?: boolean | UserCountOutputTypeCountActivityLogsArgs
     chatMembers?: boolean | UserCountOutputTypeCountChatMembersArgs
     chatMessages?: boolean | UserCountOutputTypeCountChatMessagesArgs
@@ -4097,6 +4372,13 @@ export namespace Prisma {
    */
   export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: NotificationWhereInput
+  }
+
+  /**
+   * UserCountOutputType without action
+   */
+  export type UserCountOutputTypeCountPushSubsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PushSubscriptionWhereInput
   }
 
   /**
@@ -4632,6 +4914,7 @@ export namespace Prisma {
     requests?: boolean | User$requestsArgs<ExtArgs>
     reviewed?: boolean | User$reviewedArgs<ExtArgs>
     notifications?: boolean | User$notificationsArgs<ExtArgs>
+    pushSubs?: boolean | User$pushSubsArgs<ExtArgs>
     activityLogs?: boolean | User$activityLogsArgs<ExtArgs>
     chatMembers?: boolean | User$chatMembersArgs<ExtArgs>
     chatMessages?: boolean | User$chatMessagesArgs<ExtArgs>
@@ -4716,6 +4999,7 @@ export namespace Prisma {
     requests?: boolean | User$requestsArgs<ExtArgs>
     reviewed?: boolean | User$reviewedArgs<ExtArgs>
     notifications?: boolean | User$notificationsArgs<ExtArgs>
+    pushSubs?: boolean | User$pushSubsArgs<ExtArgs>
     activityLogs?: boolean | User$activityLogsArgs<ExtArgs>
     chatMembers?: boolean | User$chatMembersArgs<ExtArgs>
     chatMessages?: boolean | User$chatMessagesArgs<ExtArgs>
@@ -4751,6 +5035,7 @@ export namespace Prisma {
       requests: Prisma.$RequestPayload<ExtArgs>[]
       reviewed: Prisma.$RequestPayload<ExtArgs>[]
       notifications: Prisma.$NotificationPayload<ExtArgs>[]
+      pushSubs: Prisma.$PushSubscriptionPayload<ExtArgs>[]
       activityLogs: Prisma.$ActivityLogPayload<ExtArgs>[]
       chatMembers: Prisma.$ChatMemberPayload<ExtArgs>[]
       chatMessages: Prisma.$ChatMessagePayload<ExtArgs>[]
@@ -5185,6 +5470,7 @@ export namespace Prisma {
     requests<T extends User$requestsArgs<ExtArgs> = {}>(args?: Subset<T, User$requestsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     reviewed<T extends User$reviewedArgs<ExtArgs> = {}>(args?: Subset<T, User$reviewedArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     notifications<T extends User$notificationsArgs<ExtArgs> = {}>(args?: Subset<T, User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    pushSubs<T extends User$pushSubsArgs<ExtArgs> = {}>(args?: Subset<T, User$pushSubsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     activityLogs<T extends User$activityLogsArgs<ExtArgs> = {}>(args?: Subset<T, User$activityLogsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ActivityLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     chatMembers<T extends User$chatMembersArgs<ExtArgs> = {}>(args?: Subset<T, User$chatMembersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatMemberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     chatMessages<T extends User$chatMessagesArgs<ExtArgs> = {}>(args?: Subset<T, User$chatMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -5847,6 +6133,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: NotificationScalarFieldEnum | NotificationScalarFieldEnum[]
+  }
+
+  /**
+   * User.pushSubs
+   */
+  export type User$pushSubsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushSubscription
+     */
+    select?: PushSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushSubscription
+     */
+    omit?: PushSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushSubscriptionInclude<ExtArgs> | null
+    where?: PushSubscriptionWhereInput
+    orderBy?: PushSubscriptionOrderByWithRelationInput | PushSubscriptionOrderByWithRelationInput[]
+    cursor?: PushSubscriptionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PushSubscriptionScalarFieldEnum | PushSubscriptionScalarFieldEnum[]
   }
 
   /**
@@ -43539,6 +43849,3054 @@ export namespace Prisma {
 
 
   /**
+   * Model PushSubscription
+   */
+
+  export type AggregatePushSubscription = {
+    _count: PushSubscriptionCountAggregateOutputType | null
+    _min: PushSubscriptionMinAggregateOutputType | null
+    _max: PushSubscriptionMaxAggregateOutputType | null
+  }
+
+  export type PushSubscriptionMinAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    endpoint: string | null
+    p256dh: string | null
+    auth: string | null
+    device: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PushSubscriptionMaxAggregateOutputType = {
+    id: string | null
+    userId: string | null
+    endpoint: string | null
+    p256dh: string | null
+    auth: string | null
+    device: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type PushSubscriptionCountAggregateOutputType = {
+    id: number
+    userId: number
+    endpoint: number
+    p256dh: number
+    auth: number
+    device: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type PushSubscriptionMinAggregateInputType = {
+    id?: true
+    userId?: true
+    endpoint?: true
+    p256dh?: true
+    auth?: true
+    device?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PushSubscriptionMaxAggregateInputType = {
+    id?: true
+    userId?: true
+    endpoint?: true
+    p256dh?: true
+    auth?: true
+    device?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type PushSubscriptionCountAggregateInputType = {
+    id?: true
+    userId?: true
+    endpoint?: true
+    p256dh?: true
+    auth?: true
+    device?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type PushSubscriptionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PushSubscription to aggregate.
+     */
+    where?: PushSubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushSubscriptions to fetch.
+     */
+    orderBy?: PushSubscriptionOrderByWithRelationInput | PushSubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PushSubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushSubscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushSubscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PushSubscriptions
+    **/
+    _count?: true | PushSubscriptionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PushSubscriptionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PushSubscriptionMaxAggregateInputType
+  }
+
+  export type GetPushSubscriptionAggregateType<T extends PushSubscriptionAggregateArgs> = {
+        [P in keyof T & keyof AggregatePushSubscription]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePushSubscription[P]>
+      : GetScalarType<T[P], AggregatePushSubscription[P]>
+  }
+
+
+
+
+  export type PushSubscriptionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PushSubscriptionWhereInput
+    orderBy?: PushSubscriptionOrderByWithAggregationInput | PushSubscriptionOrderByWithAggregationInput[]
+    by: PushSubscriptionScalarFieldEnum[] | PushSubscriptionScalarFieldEnum
+    having?: PushSubscriptionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PushSubscriptionCountAggregateInputType | true
+    _min?: PushSubscriptionMinAggregateInputType
+    _max?: PushSubscriptionMaxAggregateInputType
+  }
+
+  export type PushSubscriptionGroupByOutputType = {
+    id: string
+    userId: string
+    endpoint: string
+    p256dh: string
+    auth: string
+    device: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: PushSubscriptionCountAggregateOutputType | null
+    _min: PushSubscriptionMinAggregateOutputType | null
+    _max: PushSubscriptionMaxAggregateOutputType | null
+  }
+
+  type GetPushSubscriptionGroupByPayload<T extends PushSubscriptionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PushSubscriptionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PushSubscriptionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PushSubscriptionGroupByOutputType[P]>
+            : GetScalarType<T[P], PushSubscriptionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PushSubscriptionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    endpoint?: boolean
+    p256dh?: boolean
+    auth?: boolean
+    device?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pushSubscription"]>
+
+  export type PushSubscriptionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    endpoint?: boolean
+    p256dh?: boolean
+    auth?: boolean
+    device?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pushSubscription"]>
+
+  export type PushSubscriptionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    userId?: boolean
+    endpoint?: boolean
+    p256dh?: boolean
+    auth?: boolean
+    device?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["pushSubscription"]>
+
+  export type PushSubscriptionSelectScalar = {
+    id?: boolean
+    userId?: boolean
+    endpoint?: boolean
+    p256dh?: boolean
+    auth?: boolean
+    device?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type PushSubscriptionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "userId" | "endpoint" | "p256dh" | "auth" | "device" | "createdAt" | "updatedAt", ExtArgs["result"]["pushSubscription"]>
+  export type PushSubscriptionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PushSubscriptionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+  export type PushSubscriptionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    user?: boolean | UserDefaultArgs<ExtArgs>
+  }
+
+  export type $PushSubscriptionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PushSubscription"
+    objects: {
+      user: Prisma.$UserPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      userId: string
+      endpoint: string
+      p256dh: string
+      auth: string
+      device: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["pushSubscription"]>
+    composites: {}
+  }
+
+  type PushSubscriptionGetPayload<S extends boolean | null | undefined | PushSubscriptionDefaultArgs> = $Result.GetResult<Prisma.$PushSubscriptionPayload, S>
+
+  type PushSubscriptionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PushSubscriptionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PushSubscriptionCountAggregateInputType | true
+    }
+
+  export interface PushSubscriptionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PushSubscription'], meta: { name: 'PushSubscription' } }
+    /**
+     * Find zero or one PushSubscription that matches the filter.
+     * @param {PushSubscriptionFindUniqueArgs} args - Arguments to find a PushSubscription
+     * @example
+     * // Get one PushSubscription
+     * const pushSubscription = await prisma.pushSubscription.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PushSubscriptionFindUniqueArgs>(args: SelectSubset<T, PushSubscriptionFindUniqueArgs<ExtArgs>>): Prisma__PushSubscriptionClient<$Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PushSubscription that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PushSubscriptionFindUniqueOrThrowArgs} args - Arguments to find a PushSubscription
+     * @example
+     * // Get one PushSubscription
+     * const pushSubscription = await prisma.pushSubscription.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PushSubscriptionFindUniqueOrThrowArgs>(args: SelectSubset<T, PushSubscriptionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PushSubscriptionClient<$Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PushSubscription that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushSubscriptionFindFirstArgs} args - Arguments to find a PushSubscription
+     * @example
+     * // Get one PushSubscription
+     * const pushSubscription = await prisma.pushSubscription.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PushSubscriptionFindFirstArgs>(args?: SelectSubset<T, PushSubscriptionFindFirstArgs<ExtArgs>>): Prisma__PushSubscriptionClient<$Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PushSubscription that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushSubscriptionFindFirstOrThrowArgs} args - Arguments to find a PushSubscription
+     * @example
+     * // Get one PushSubscription
+     * const pushSubscription = await prisma.pushSubscription.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PushSubscriptionFindFirstOrThrowArgs>(args?: SelectSubset<T, PushSubscriptionFindFirstOrThrowArgs<ExtArgs>>): Prisma__PushSubscriptionClient<$Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PushSubscriptions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushSubscriptionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PushSubscriptions
+     * const pushSubscriptions = await prisma.pushSubscription.findMany()
+     * 
+     * // Get first 10 PushSubscriptions
+     * const pushSubscriptions = await prisma.pushSubscription.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pushSubscriptionWithIdOnly = await prisma.pushSubscription.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PushSubscriptionFindManyArgs>(args?: SelectSubset<T, PushSubscriptionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PushSubscription.
+     * @param {PushSubscriptionCreateArgs} args - Arguments to create a PushSubscription.
+     * @example
+     * // Create one PushSubscription
+     * const PushSubscription = await prisma.pushSubscription.create({
+     *   data: {
+     *     // ... data to create a PushSubscription
+     *   }
+     * })
+     * 
+     */
+    create<T extends PushSubscriptionCreateArgs>(args: SelectSubset<T, PushSubscriptionCreateArgs<ExtArgs>>): Prisma__PushSubscriptionClient<$Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PushSubscriptions.
+     * @param {PushSubscriptionCreateManyArgs} args - Arguments to create many PushSubscriptions.
+     * @example
+     * // Create many PushSubscriptions
+     * const pushSubscription = await prisma.pushSubscription.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PushSubscriptionCreateManyArgs>(args?: SelectSubset<T, PushSubscriptionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PushSubscriptions and returns the data saved in the database.
+     * @param {PushSubscriptionCreateManyAndReturnArgs} args - Arguments to create many PushSubscriptions.
+     * @example
+     * // Create many PushSubscriptions
+     * const pushSubscription = await prisma.pushSubscription.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PushSubscriptions and only return the `id`
+     * const pushSubscriptionWithIdOnly = await prisma.pushSubscription.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PushSubscriptionCreateManyAndReturnArgs>(args?: SelectSubset<T, PushSubscriptionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PushSubscription.
+     * @param {PushSubscriptionDeleteArgs} args - Arguments to delete one PushSubscription.
+     * @example
+     * // Delete one PushSubscription
+     * const PushSubscription = await prisma.pushSubscription.delete({
+     *   where: {
+     *     // ... filter to delete one PushSubscription
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PushSubscriptionDeleteArgs>(args: SelectSubset<T, PushSubscriptionDeleteArgs<ExtArgs>>): Prisma__PushSubscriptionClient<$Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PushSubscription.
+     * @param {PushSubscriptionUpdateArgs} args - Arguments to update one PushSubscription.
+     * @example
+     * // Update one PushSubscription
+     * const pushSubscription = await prisma.pushSubscription.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PushSubscriptionUpdateArgs>(args: SelectSubset<T, PushSubscriptionUpdateArgs<ExtArgs>>): Prisma__PushSubscriptionClient<$Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PushSubscriptions.
+     * @param {PushSubscriptionDeleteManyArgs} args - Arguments to filter PushSubscriptions to delete.
+     * @example
+     * // Delete a few PushSubscriptions
+     * const { count } = await prisma.pushSubscription.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PushSubscriptionDeleteManyArgs>(args?: SelectSubset<T, PushSubscriptionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PushSubscriptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushSubscriptionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PushSubscriptions
+     * const pushSubscription = await prisma.pushSubscription.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PushSubscriptionUpdateManyArgs>(args: SelectSubset<T, PushSubscriptionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PushSubscriptions and returns the data updated in the database.
+     * @param {PushSubscriptionUpdateManyAndReturnArgs} args - Arguments to update many PushSubscriptions.
+     * @example
+     * // Update many PushSubscriptions
+     * const pushSubscription = await prisma.pushSubscription.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PushSubscriptions and only return the `id`
+     * const pushSubscriptionWithIdOnly = await prisma.pushSubscription.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PushSubscriptionUpdateManyAndReturnArgs>(args: SelectSubset<T, PushSubscriptionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PushSubscription.
+     * @param {PushSubscriptionUpsertArgs} args - Arguments to update or create a PushSubscription.
+     * @example
+     * // Update or create a PushSubscription
+     * const pushSubscription = await prisma.pushSubscription.upsert({
+     *   create: {
+     *     // ... data to create a PushSubscription
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PushSubscription we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PushSubscriptionUpsertArgs>(args: SelectSubset<T, PushSubscriptionUpsertArgs<ExtArgs>>): Prisma__PushSubscriptionClient<$Result.GetResult<Prisma.$PushSubscriptionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PushSubscriptions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushSubscriptionCountArgs} args - Arguments to filter PushSubscriptions to count.
+     * @example
+     * // Count the number of PushSubscriptions
+     * const count = await prisma.pushSubscription.count({
+     *   where: {
+     *     // ... the filter for the PushSubscriptions we want to count
+     *   }
+     * })
+    **/
+    count<T extends PushSubscriptionCountArgs>(
+      args?: Subset<T, PushSubscriptionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PushSubscriptionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PushSubscription.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushSubscriptionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PushSubscriptionAggregateArgs>(args: Subset<T, PushSubscriptionAggregateArgs>): Prisma.PrismaPromise<GetPushSubscriptionAggregateType<T>>
+
+    /**
+     * Group by PushSubscription.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushSubscriptionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PushSubscriptionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PushSubscriptionGroupByArgs['orderBy'] }
+        : { orderBy?: PushSubscriptionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PushSubscriptionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPushSubscriptionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PushSubscription model
+   */
+  readonly fields: PushSubscriptionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PushSubscription.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PushSubscriptionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    user<T extends UserDefaultArgs<ExtArgs> = {}>(args?: Subset<T, UserDefaultArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PushSubscription model
+   */
+  interface PushSubscriptionFieldRefs {
+    readonly id: FieldRef<"PushSubscription", 'String'>
+    readonly userId: FieldRef<"PushSubscription", 'String'>
+    readonly endpoint: FieldRef<"PushSubscription", 'String'>
+    readonly p256dh: FieldRef<"PushSubscription", 'String'>
+    readonly auth: FieldRef<"PushSubscription", 'String'>
+    readonly device: FieldRef<"PushSubscription", 'String'>
+    readonly createdAt: FieldRef<"PushSubscription", 'DateTime'>
+    readonly updatedAt: FieldRef<"PushSubscription", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PushSubscription findUnique
+   */
+  export type PushSubscriptionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushSubscription
+     */
+    select?: PushSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushSubscription
+     */
+    omit?: PushSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushSubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which PushSubscription to fetch.
+     */
+    where: PushSubscriptionWhereUniqueInput
+  }
+
+  /**
+   * PushSubscription findUniqueOrThrow
+   */
+  export type PushSubscriptionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushSubscription
+     */
+    select?: PushSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushSubscription
+     */
+    omit?: PushSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushSubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which PushSubscription to fetch.
+     */
+    where: PushSubscriptionWhereUniqueInput
+  }
+
+  /**
+   * PushSubscription findFirst
+   */
+  export type PushSubscriptionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushSubscription
+     */
+    select?: PushSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushSubscription
+     */
+    omit?: PushSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushSubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which PushSubscription to fetch.
+     */
+    where?: PushSubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushSubscriptions to fetch.
+     */
+    orderBy?: PushSubscriptionOrderByWithRelationInput | PushSubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PushSubscriptions.
+     */
+    cursor?: PushSubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushSubscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushSubscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PushSubscriptions.
+     */
+    distinct?: PushSubscriptionScalarFieldEnum | PushSubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * PushSubscription findFirstOrThrow
+   */
+  export type PushSubscriptionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushSubscription
+     */
+    select?: PushSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushSubscription
+     */
+    omit?: PushSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushSubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which PushSubscription to fetch.
+     */
+    where?: PushSubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushSubscriptions to fetch.
+     */
+    orderBy?: PushSubscriptionOrderByWithRelationInput | PushSubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PushSubscriptions.
+     */
+    cursor?: PushSubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushSubscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushSubscriptions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PushSubscriptions.
+     */
+    distinct?: PushSubscriptionScalarFieldEnum | PushSubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * PushSubscription findMany
+   */
+  export type PushSubscriptionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushSubscription
+     */
+    select?: PushSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushSubscription
+     */
+    omit?: PushSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushSubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter, which PushSubscriptions to fetch.
+     */
+    where?: PushSubscriptionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushSubscriptions to fetch.
+     */
+    orderBy?: PushSubscriptionOrderByWithRelationInput | PushSubscriptionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PushSubscriptions.
+     */
+    cursor?: PushSubscriptionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushSubscriptions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushSubscriptions.
+     */
+    skip?: number
+    distinct?: PushSubscriptionScalarFieldEnum | PushSubscriptionScalarFieldEnum[]
+  }
+
+  /**
+   * PushSubscription create
+   */
+  export type PushSubscriptionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushSubscription
+     */
+    select?: PushSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushSubscription
+     */
+    omit?: PushSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushSubscriptionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a PushSubscription.
+     */
+    data: XOR<PushSubscriptionCreateInput, PushSubscriptionUncheckedCreateInput>
+  }
+
+  /**
+   * PushSubscription createMany
+   */
+  export type PushSubscriptionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PushSubscriptions.
+     */
+    data: PushSubscriptionCreateManyInput | PushSubscriptionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PushSubscription createManyAndReturn
+   */
+  export type PushSubscriptionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushSubscription
+     */
+    select?: PushSubscriptionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushSubscription
+     */
+    omit?: PushSubscriptionOmit<ExtArgs> | null
+    /**
+     * The data used to create many PushSubscriptions.
+     */
+    data: PushSubscriptionCreateManyInput | PushSubscriptionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushSubscriptionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PushSubscription update
+   */
+  export type PushSubscriptionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushSubscription
+     */
+    select?: PushSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushSubscription
+     */
+    omit?: PushSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushSubscriptionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a PushSubscription.
+     */
+    data: XOR<PushSubscriptionUpdateInput, PushSubscriptionUncheckedUpdateInput>
+    /**
+     * Choose, which PushSubscription to update.
+     */
+    where: PushSubscriptionWhereUniqueInput
+  }
+
+  /**
+   * PushSubscription updateMany
+   */
+  export type PushSubscriptionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PushSubscriptions.
+     */
+    data: XOR<PushSubscriptionUpdateManyMutationInput, PushSubscriptionUncheckedUpdateManyInput>
+    /**
+     * Filter which PushSubscriptions to update
+     */
+    where?: PushSubscriptionWhereInput
+    /**
+     * Limit how many PushSubscriptions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PushSubscription updateManyAndReturn
+   */
+  export type PushSubscriptionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushSubscription
+     */
+    select?: PushSubscriptionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushSubscription
+     */
+    omit?: PushSubscriptionOmit<ExtArgs> | null
+    /**
+     * The data used to update PushSubscriptions.
+     */
+    data: XOR<PushSubscriptionUpdateManyMutationInput, PushSubscriptionUncheckedUpdateManyInput>
+    /**
+     * Filter which PushSubscriptions to update
+     */
+    where?: PushSubscriptionWhereInput
+    /**
+     * Limit how many PushSubscriptions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushSubscriptionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * PushSubscription upsert
+   */
+  export type PushSubscriptionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushSubscription
+     */
+    select?: PushSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushSubscription
+     */
+    omit?: PushSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushSubscriptionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the PushSubscription to update in case it exists.
+     */
+    where: PushSubscriptionWhereUniqueInput
+    /**
+     * In case the PushSubscription found by the `where` argument doesn't exist, create a new PushSubscription with this data.
+     */
+    create: XOR<PushSubscriptionCreateInput, PushSubscriptionUncheckedCreateInput>
+    /**
+     * In case the PushSubscription was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PushSubscriptionUpdateInput, PushSubscriptionUncheckedUpdateInput>
+  }
+
+  /**
+   * PushSubscription delete
+   */
+  export type PushSubscriptionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushSubscription
+     */
+    select?: PushSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushSubscription
+     */
+    omit?: PushSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushSubscriptionInclude<ExtArgs> | null
+    /**
+     * Filter which PushSubscription to delete.
+     */
+    where: PushSubscriptionWhereUniqueInput
+  }
+
+  /**
+   * PushSubscription deleteMany
+   */
+  export type PushSubscriptionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PushSubscriptions to delete
+     */
+    where?: PushSubscriptionWhereInput
+    /**
+     * Limit how many PushSubscriptions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PushSubscription without action
+   */
+  export type PushSubscriptionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushSubscription
+     */
+    select?: PushSubscriptionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushSubscription
+     */
+    omit?: PushSubscriptionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PushSubscriptionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PushLog
+   */
+
+  export type AggregatePushLog = {
+    _count: PushLogCountAggregateOutputType | null
+    _min: PushLogMinAggregateOutputType | null
+    _max: PushLogMaxAggregateOutputType | null
+  }
+
+  export type PushLogMinAggregateOutputType = {
+    key: string | null
+    createdAt: Date | null
+  }
+
+  export type PushLogMaxAggregateOutputType = {
+    key: string | null
+    createdAt: Date | null
+  }
+
+  export type PushLogCountAggregateOutputType = {
+    key: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type PushLogMinAggregateInputType = {
+    key?: true
+    createdAt?: true
+  }
+
+  export type PushLogMaxAggregateInputType = {
+    key?: true
+    createdAt?: true
+  }
+
+  export type PushLogCountAggregateInputType = {
+    key?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type PushLogAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PushLog to aggregate.
+     */
+    where?: PushLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushLogs to fetch.
+     */
+    orderBy?: PushLogOrderByWithRelationInput | PushLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PushLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PushLogs
+    **/
+    _count?: true | PushLogCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PushLogMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PushLogMaxAggregateInputType
+  }
+
+  export type GetPushLogAggregateType<T extends PushLogAggregateArgs> = {
+        [P in keyof T & keyof AggregatePushLog]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePushLog[P]>
+      : GetScalarType<T[P], AggregatePushLog[P]>
+  }
+
+
+
+
+  export type PushLogGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PushLogWhereInput
+    orderBy?: PushLogOrderByWithAggregationInput | PushLogOrderByWithAggregationInput[]
+    by: PushLogScalarFieldEnum[] | PushLogScalarFieldEnum
+    having?: PushLogScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PushLogCountAggregateInputType | true
+    _min?: PushLogMinAggregateInputType
+    _max?: PushLogMaxAggregateInputType
+  }
+
+  export type PushLogGroupByOutputType = {
+    key: string
+    createdAt: Date
+    _count: PushLogCountAggregateOutputType | null
+    _min: PushLogMinAggregateOutputType | null
+    _max: PushLogMaxAggregateOutputType | null
+  }
+
+  type GetPushLogGroupByPayload<T extends PushLogGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PushLogGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PushLogGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PushLogGroupByOutputType[P]>
+            : GetScalarType<T[P], PushLogGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PushLogSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["pushLog"]>
+
+  export type PushLogSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["pushLog"]>
+
+  export type PushLogSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["pushLog"]>
+
+  export type PushLogSelectScalar = {
+    key?: boolean
+    createdAt?: boolean
+  }
+
+  export type PushLogOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"key" | "createdAt", ExtArgs["result"]["pushLog"]>
+
+  export type $PushLogPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PushLog"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      key: string
+      createdAt: Date
+    }, ExtArgs["result"]["pushLog"]>
+    composites: {}
+  }
+
+  type PushLogGetPayload<S extends boolean | null | undefined | PushLogDefaultArgs> = $Result.GetResult<Prisma.$PushLogPayload, S>
+
+  type PushLogCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PushLogFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PushLogCountAggregateInputType | true
+    }
+
+  export interface PushLogDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PushLog'], meta: { name: 'PushLog' } }
+    /**
+     * Find zero or one PushLog that matches the filter.
+     * @param {PushLogFindUniqueArgs} args - Arguments to find a PushLog
+     * @example
+     * // Get one PushLog
+     * const pushLog = await prisma.pushLog.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PushLogFindUniqueArgs>(args: SelectSubset<T, PushLogFindUniqueArgs<ExtArgs>>): Prisma__PushLogClient<$Result.GetResult<Prisma.$PushLogPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PushLog that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PushLogFindUniqueOrThrowArgs} args - Arguments to find a PushLog
+     * @example
+     * // Get one PushLog
+     * const pushLog = await prisma.pushLog.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PushLogFindUniqueOrThrowArgs>(args: SelectSubset<T, PushLogFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PushLogClient<$Result.GetResult<Prisma.$PushLogPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PushLog that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushLogFindFirstArgs} args - Arguments to find a PushLog
+     * @example
+     * // Get one PushLog
+     * const pushLog = await prisma.pushLog.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PushLogFindFirstArgs>(args?: SelectSubset<T, PushLogFindFirstArgs<ExtArgs>>): Prisma__PushLogClient<$Result.GetResult<Prisma.$PushLogPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PushLog that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushLogFindFirstOrThrowArgs} args - Arguments to find a PushLog
+     * @example
+     * // Get one PushLog
+     * const pushLog = await prisma.pushLog.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PushLogFindFirstOrThrowArgs>(args?: SelectSubset<T, PushLogFindFirstOrThrowArgs<ExtArgs>>): Prisma__PushLogClient<$Result.GetResult<Prisma.$PushLogPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PushLogs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushLogFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PushLogs
+     * const pushLogs = await prisma.pushLog.findMany()
+     * 
+     * // Get first 10 PushLogs
+     * const pushLogs = await prisma.pushLog.findMany({ take: 10 })
+     * 
+     * // Only select the `key`
+     * const pushLogWithKeyOnly = await prisma.pushLog.findMany({ select: { key: true } })
+     * 
+     */
+    findMany<T extends PushLogFindManyArgs>(args?: SelectSubset<T, PushLogFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PushLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PushLog.
+     * @param {PushLogCreateArgs} args - Arguments to create a PushLog.
+     * @example
+     * // Create one PushLog
+     * const PushLog = await prisma.pushLog.create({
+     *   data: {
+     *     // ... data to create a PushLog
+     *   }
+     * })
+     * 
+     */
+    create<T extends PushLogCreateArgs>(args: SelectSubset<T, PushLogCreateArgs<ExtArgs>>): Prisma__PushLogClient<$Result.GetResult<Prisma.$PushLogPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PushLogs.
+     * @param {PushLogCreateManyArgs} args - Arguments to create many PushLogs.
+     * @example
+     * // Create many PushLogs
+     * const pushLog = await prisma.pushLog.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PushLogCreateManyArgs>(args?: SelectSubset<T, PushLogCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PushLogs and returns the data saved in the database.
+     * @param {PushLogCreateManyAndReturnArgs} args - Arguments to create many PushLogs.
+     * @example
+     * // Create many PushLogs
+     * const pushLog = await prisma.pushLog.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PushLogs and only return the `key`
+     * const pushLogWithKeyOnly = await prisma.pushLog.createManyAndReturn({
+     *   select: { key: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PushLogCreateManyAndReturnArgs>(args?: SelectSubset<T, PushLogCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PushLogPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PushLog.
+     * @param {PushLogDeleteArgs} args - Arguments to delete one PushLog.
+     * @example
+     * // Delete one PushLog
+     * const PushLog = await prisma.pushLog.delete({
+     *   where: {
+     *     // ... filter to delete one PushLog
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PushLogDeleteArgs>(args: SelectSubset<T, PushLogDeleteArgs<ExtArgs>>): Prisma__PushLogClient<$Result.GetResult<Prisma.$PushLogPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PushLog.
+     * @param {PushLogUpdateArgs} args - Arguments to update one PushLog.
+     * @example
+     * // Update one PushLog
+     * const pushLog = await prisma.pushLog.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PushLogUpdateArgs>(args: SelectSubset<T, PushLogUpdateArgs<ExtArgs>>): Prisma__PushLogClient<$Result.GetResult<Prisma.$PushLogPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PushLogs.
+     * @param {PushLogDeleteManyArgs} args - Arguments to filter PushLogs to delete.
+     * @example
+     * // Delete a few PushLogs
+     * const { count } = await prisma.pushLog.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PushLogDeleteManyArgs>(args?: SelectSubset<T, PushLogDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PushLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushLogUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PushLogs
+     * const pushLog = await prisma.pushLog.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PushLogUpdateManyArgs>(args: SelectSubset<T, PushLogUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PushLogs and returns the data updated in the database.
+     * @param {PushLogUpdateManyAndReturnArgs} args - Arguments to update many PushLogs.
+     * @example
+     * // Update many PushLogs
+     * const pushLog = await prisma.pushLog.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PushLogs and only return the `key`
+     * const pushLogWithKeyOnly = await prisma.pushLog.updateManyAndReturn({
+     *   select: { key: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PushLogUpdateManyAndReturnArgs>(args: SelectSubset<T, PushLogUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PushLogPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PushLog.
+     * @param {PushLogUpsertArgs} args - Arguments to update or create a PushLog.
+     * @example
+     * // Update or create a PushLog
+     * const pushLog = await prisma.pushLog.upsert({
+     *   create: {
+     *     // ... data to create a PushLog
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PushLog we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PushLogUpsertArgs>(args: SelectSubset<T, PushLogUpsertArgs<ExtArgs>>): Prisma__PushLogClient<$Result.GetResult<Prisma.$PushLogPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PushLogs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushLogCountArgs} args - Arguments to filter PushLogs to count.
+     * @example
+     * // Count the number of PushLogs
+     * const count = await prisma.pushLog.count({
+     *   where: {
+     *     // ... the filter for the PushLogs we want to count
+     *   }
+     * })
+    **/
+    count<T extends PushLogCountArgs>(
+      args?: Subset<T, PushLogCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PushLogCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PushLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushLogAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PushLogAggregateArgs>(args: Subset<T, PushLogAggregateArgs>): Prisma.PrismaPromise<GetPushLogAggregateType<T>>
+
+    /**
+     * Group by PushLog.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushLogGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PushLogGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PushLogGroupByArgs['orderBy'] }
+        : { orderBy?: PushLogGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PushLogGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPushLogGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PushLog model
+   */
+  readonly fields: PushLogFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PushLog.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PushLogClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PushLog model
+   */
+  interface PushLogFieldRefs {
+    readonly key: FieldRef<"PushLog", 'String'>
+    readonly createdAt: FieldRef<"PushLog", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PushLog findUnique
+   */
+  export type PushLogFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushLog
+     */
+    select?: PushLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushLog
+     */
+    omit?: PushLogOmit<ExtArgs> | null
+    /**
+     * Filter, which PushLog to fetch.
+     */
+    where: PushLogWhereUniqueInput
+  }
+
+  /**
+   * PushLog findUniqueOrThrow
+   */
+  export type PushLogFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushLog
+     */
+    select?: PushLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushLog
+     */
+    omit?: PushLogOmit<ExtArgs> | null
+    /**
+     * Filter, which PushLog to fetch.
+     */
+    where: PushLogWhereUniqueInput
+  }
+
+  /**
+   * PushLog findFirst
+   */
+  export type PushLogFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushLog
+     */
+    select?: PushLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushLog
+     */
+    omit?: PushLogOmit<ExtArgs> | null
+    /**
+     * Filter, which PushLog to fetch.
+     */
+    where?: PushLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushLogs to fetch.
+     */
+    orderBy?: PushLogOrderByWithRelationInput | PushLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PushLogs.
+     */
+    cursor?: PushLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PushLogs.
+     */
+    distinct?: PushLogScalarFieldEnum | PushLogScalarFieldEnum[]
+  }
+
+  /**
+   * PushLog findFirstOrThrow
+   */
+  export type PushLogFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushLog
+     */
+    select?: PushLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushLog
+     */
+    omit?: PushLogOmit<ExtArgs> | null
+    /**
+     * Filter, which PushLog to fetch.
+     */
+    where?: PushLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushLogs to fetch.
+     */
+    orderBy?: PushLogOrderByWithRelationInput | PushLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PushLogs.
+     */
+    cursor?: PushLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushLogs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PushLogs.
+     */
+    distinct?: PushLogScalarFieldEnum | PushLogScalarFieldEnum[]
+  }
+
+  /**
+   * PushLog findMany
+   */
+  export type PushLogFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushLog
+     */
+    select?: PushLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushLog
+     */
+    omit?: PushLogOmit<ExtArgs> | null
+    /**
+     * Filter, which PushLogs to fetch.
+     */
+    where?: PushLogWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushLogs to fetch.
+     */
+    orderBy?: PushLogOrderByWithRelationInput | PushLogOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PushLogs.
+     */
+    cursor?: PushLogWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushLogs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushLogs.
+     */
+    skip?: number
+    distinct?: PushLogScalarFieldEnum | PushLogScalarFieldEnum[]
+  }
+
+  /**
+   * PushLog create
+   */
+  export type PushLogCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushLog
+     */
+    select?: PushLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushLog
+     */
+    omit?: PushLogOmit<ExtArgs> | null
+    /**
+     * The data needed to create a PushLog.
+     */
+    data: XOR<PushLogCreateInput, PushLogUncheckedCreateInput>
+  }
+
+  /**
+   * PushLog createMany
+   */
+  export type PushLogCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PushLogs.
+     */
+    data: PushLogCreateManyInput | PushLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PushLog createManyAndReturn
+   */
+  export type PushLogCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushLog
+     */
+    select?: PushLogSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushLog
+     */
+    omit?: PushLogOmit<ExtArgs> | null
+    /**
+     * The data used to create many PushLogs.
+     */
+    data: PushLogCreateManyInput | PushLogCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PushLog update
+   */
+  export type PushLogUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushLog
+     */
+    select?: PushLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushLog
+     */
+    omit?: PushLogOmit<ExtArgs> | null
+    /**
+     * The data needed to update a PushLog.
+     */
+    data: XOR<PushLogUpdateInput, PushLogUncheckedUpdateInput>
+    /**
+     * Choose, which PushLog to update.
+     */
+    where: PushLogWhereUniqueInput
+  }
+
+  /**
+   * PushLog updateMany
+   */
+  export type PushLogUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PushLogs.
+     */
+    data: XOR<PushLogUpdateManyMutationInput, PushLogUncheckedUpdateManyInput>
+    /**
+     * Filter which PushLogs to update
+     */
+    where?: PushLogWhereInput
+    /**
+     * Limit how many PushLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PushLog updateManyAndReturn
+   */
+  export type PushLogUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushLog
+     */
+    select?: PushLogSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushLog
+     */
+    omit?: PushLogOmit<ExtArgs> | null
+    /**
+     * The data used to update PushLogs.
+     */
+    data: XOR<PushLogUpdateManyMutationInput, PushLogUncheckedUpdateManyInput>
+    /**
+     * Filter which PushLogs to update
+     */
+    where?: PushLogWhereInput
+    /**
+     * Limit how many PushLogs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PushLog upsert
+   */
+  export type PushLogUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushLog
+     */
+    select?: PushLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushLog
+     */
+    omit?: PushLogOmit<ExtArgs> | null
+    /**
+     * The filter to search for the PushLog to update in case it exists.
+     */
+    where: PushLogWhereUniqueInput
+    /**
+     * In case the PushLog found by the `where` argument doesn't exist, create a new PushLog with this data.
+     */
+    create: XOR<PushLogCreateInput, PushLogUncheckedCreateInput>
+    /**
+     * In case the PushLog was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PushLogUpdateInput, PushLogUncheckedUpdateInput>
+  }
+
+  /**
+   * PushLog delete
+   */
+  export type PushLogDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushLog
+     */
+    select?: PushLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushLog
+     */
+    omit?: PushLogOmit<ExtArgs> | null
+    /**
+     * Filter which PushLog to delete.
+     */
+    where: PushLogWhereUniqueInput
+  }
+
+  /**
+   * PushLog deleteMany
+   */
+  export type PushLogDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PushLogs to delete
+     */
+    where?: PushLogWhereInput
+    /**
+     * Limit how many PushLogs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PushLog without action
+   */
+  export type PushLogDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushLog
+     */
+    select?: PushLogSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushLog
+     */
+    omit?: PushLogOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model PushItemQueue
+   */
+
+  export type AggregatePushItemQueue = {
+    _count: PushItemQueueCountAggregateOutputType | null
+    _min: PushItemQueueMinAggregateOutputType | null
+    _max: PushItemQueueMaxAggregateOutputType | null
+  }
+
+  export type PushItemQueueMinAggregateOutputType = {
+    id: string | null
+    itemId: string | null
+    name: string | null
+    createdAt: Date | null
+    sentAt: Date | null
+  }
+
+  export type PushItemQueueMaxAggregateOutputType = {
+    id: string | null
+    itemId: string | null
+    name: string | null
+    createdAt: Date | null
+    sentAt: Date | null
+  }
+
+  export type PushItemQueueCountAggregateOutputType = {
+    id: number
+    itemId: number
+    name: number
+    createdAt: number
+    sentAt: number
+    _all: number
+  }
+
+
+  export type PushItemQueueMinAggregateInputType = {
+    id?: true
+    itemId?: true
+    name?: true
+    createdAt?: true
+    sentAt?: true
+  }
+
+  export type PushItemQueueMaxAggregateInputType = {
+    id?: true
+    itemId?: true
+    name?: true
+    createdAt?: true
+    sentAt?: true
+  }
+
+  export type PushItemQueueCountAggregateInputType = {
+    id?: true
+    itemId?: true
+    name?: true
+    createdAt?: true
+    sentAt?: true
+    _all?: true
+  }
+
+  export type PushItemQueueAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PushItemQueue to aggregate.
+     */
+    where?: PushItemQueueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushItemQueues to fetch.
+     */
+    orderBy?: PushItemQueueOrderByWithRelationInput | PushItemQueueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PushItemQueueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushItemQueues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushItemQueues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned PushItemQueues
+    **/
+    _count?: true | PushItemQueueCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PushItemQueueMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PushItemQueueMaxAggregateInputType
+  }
+
+  export type GetPushItemQueueAggregateType<T extends PushItemQueueAggregateArgs> = {
+        [P in keyof T & keyof AggregatePushItemQueue]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePushItemQueue[P]>
+      : GetScalarType<T[P], AggregatePushItemQueue[P]>
+  }
+
+
+
+
+  export type PushItemQueueGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PushItemQueueWhereInput
+    orderBy?: PushItemQueueOrderByWithAggregationInput | PushItemQueueOrderByWithAggregationInput[]
+    by: PushItemQueueScalarFieldEnum[] | PushItemQueueScalarFieldEnum
+    having?: PushItemQueueScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PushItemQueueCountAggregateInputType | true
+    _min?: PushItemQueueMinAggregateInputType
+    _max?: PushItemQueueMaxAggregateInputType
+  }
+
+  export type PushItemQueueGroupByOutputType = {
+    id: string
+    itemId: string
+    name: string
+    createdAt: Date
+    sentAt: Date | null
+    _count: PushItemQueueCountAggregateOutputType | null
+    _min: PushItemQueueMinAggregateOutputType | null
+    _max: PushItemQueueMaxAggregateOutputType | null
+  }
+
+  type GetPushItemQueueGroupByPayload<T extends PushItemQueueGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PushItemQueueGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PushItemQueueGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PushItemQueueGroupByOutputType[P]>
+            : GetScalarType<T[P], PushItemQueueGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PushItemQueueSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    itemId?: boolean
+    name?: boolean
+    createdAt?: boolean
+    sentAt?: boolean
+  }, ExtArgs["result"]["pushItemQueue"]>
+
+  export type PushItemQueueSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    itemId?: boolean
+    name?: boolean
+    createdAt?: boolean
+    sentAt?: boolean
+  }, ExtArgs["result"]["pushItemQueue"]>
+
+  export type PushItemQueueSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    itemId?: boolean
+    name?: boolean
+    createdAt?: boolean
+    sentAt?: boolean
+  }, ExtArgs["result"]["pushItemQueue"]>
+
+  export type PushItemQueueSelectScalar = {
+    id?: boolean
+    itemId?: boolean
+    name?: boolean
+    createdAt?: boolean
+    sentAt?: boolean
+  }
+
+  export type PushItemQueueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "name" | "createdAt" | "sentAt", ExtArgs["result"]["pushItemQueue"]>
+
+  export type $PushItemQueuePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "PushItemQueue"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      itemId: string
+      name: string
+      createdAt: Date
+      sentAt: Date | null
+    }, ExtArgs["result"]["pushItemQueue"]>
+    composites: {}
+  }
+
+  type PushItemQueueGetPayload<S extends boolean | null | undefined | PushItemQueueDefaultArgs> = $Result.GetResult<Prisma.$PushItemQueuePayload, S>
+
+  type PushItemQueueCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PushItemQueueFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PushItemQueueCountAggregateInputType | true
+    }
+
+  export interface PushItemQueueDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['PushItemQueue'], meta: { name: 'PushItemQueue' } }
+    /**
+     * Find zero or one PushItemQueue that matches the filter.
+     * @param {PushItemQueueFindUniqueArgs} args - Arguments to find a PushItemQueue
+     * @example
+     * // Get one PushItemQueue
+     * const pushItemQueue = await prisma.pushItemQueue.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PushItemQueueFindUniqueArgs>(args: SelectSubset<T, PushItemQueueFindUniqueArgs<ExtArgs>>): Prisma__PushItemQueueClient<$Result.GetResult<Prisma.$PushItemQueuePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one PushItemQueue that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PushItemQueueFindUniqueOrThrowArgs} args - Arguments to find a PushItemQueue
+     * @example
+     * // Get one PushItemQueue
+     * const pushItemQueue = await prisma.pushItemQueue.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PushItemQueueFindUniqueOrThrowArgs>(args: SelectSubset<T, PushItemQueueFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PushItemQueueClient<$Result.GetResult<Prisma.$PushItemQueuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PushItemQueue that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushItemQueueFindFirstArgs} args - Arguments to find a PushItemQueue
+     * @example
+     * // Get one PushItemQueue
+     * const pushItemQueue = await prisma.pushItemQueue.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PushItemQueueFindFirstArgs>(args?: SelectSubset<T, PushItemQueueFindFirstArgs<ExtArgs>>): Prisma__PushItemQueueClient<$Result.GetResult<Prisma.$PushItemQueuePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first PushItemQueue that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushItemQueueFindFirstOrThrowArgs} args - Arguments to find a PushItemQueue
+     * @example
+     * // Get one PushItemQueue
+     * const pushItemQueue = await prisma.pushItemQueue.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PushItemQueueFindFirstOrThrowArgs>(args?: SelectSubset<T, PushItemQueueFindFirstOrThrowArgs<ExtArgs>>): Prisma__PushItemQueueClient<$Result.GetResult<Prisma.$PushItemQueuePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more PushItemQueues that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushItemQueueFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all PushItemQueues
+     * const pushItemQueues = await prisma.pushItemQueue.findMany()
+     * 
+     * // Get first 10 PushItemQueues
+     * const pushItemQueues = await prisma.pushItemQueue.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const pushItemQueueWithIdOnly = await prisma.pushItemQueue.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PushItemQueueFindManyArgs>(args?: SelectSubset<T, PushItemQueueFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PushItemQueuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a PushItemQueue.
+     * @param {PushItemQueueCreateArgs} args - Arguments to create a PushItemQueue.
+     * @example
+     * // Create one PushItemQueue
+     * const PushItemQueue = await prisma.pushItemQueue.create({
+     *   data: {
+     *     // ... data to create a PushItemQueue
+     *   }
+     * })
+     * 
+     */
+    create<T extends PushItemQueueCreateArgs>(args: SelectSubset<T, PushItemQueueCreateArgs<ExtArgs>>): Prisma__PushItemQueueClient<$Result.GetResult<Prisma.$PushItemQueuePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many PushItemQueues.
+     * @param {PushItemQueueCreateManyArgs} args - Arguments to create many PushItemQueues.
+     * @example
+     * // Create many PushItemQueues
+     * const pushItemQueue = await prisma.pushItemQueue.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PushItemQueueCreateManyArgs>(args?: SelectSubset<T, PushItemQueueCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many PushItemQueues and returns the data saved in the database.
+     * @param {PushItemQueueCreateManyAndReturnArgs} args - Arguments to create many PushItemQueues.
+     * @example
+     * // Create many PushItemQueues
+     * const pushItemQueue = await prisma.pushItemQueue.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many PushItemQueues and only return the `id`
+     * const pushItemQueueWithIdOnly = await prisma.pushItemQueue.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PushItemQueueCreateManyAndReturnArgs>(args?: SelectSubset<T, PushItemQueueCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PushItemQueuePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a PushItemQueue.
+     * @param {PushItemQueueDeleteArgs} args - Arguments to delete one PushItemQueue.
+     * @example
+     * // Delete one PushItemQueue
+     * const PushItemQueue = await prisma.pushItemQueue.delete({
+     *   where: {
+     *     // ... filter to delete one PushItemQueue
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PushItemQueueDeleteArgs>(args: SelectSubset<T, PushItemQueueDeleteArgs<ExtArgs>>): Prisma__PushItemQueueClient<$Result.GetResult<Prisma.$PushItemQueuePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one PushItemQueue.
+     * @param {PushItemQueueUpdateArgs} args - Arguments to update one PushItemQueue.
+     * @example
+     * // Update one PushItemQueue
+     * const pushItemQueue = await prisma.pushItemQueue.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PushItemQueueUpdateArgs>(args: SelectSubset<T, PushItemQueueUpdateArgs<ExtArgs>>): Prisma__PushItemQueueClient<$Result.GetResult<Prisma.$PushItemQueuePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more PushItemQueues.
+     * @param {PushItemQueueDeleteManyArgs} args - Arguments to filter PushItemQueues to delete.
+     * @example
+     * // Delete a few PushItemQueues
+     * const { count } = await prisma.pushItemQueue.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PushItemQueueDeleteManyArgs>(args?: SelectSubset<T, PushItemQueueDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PushItemQueues.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushItemQueueUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many PushItemQueues
+     * const pushItemQueue = await prisma.pushItemQueue.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PushItemQueueUpdateManyArgs>(args: SelectSubset<T, PushItemQueueUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more PushItemQueues and returns the data updated in the database.
+     * @param {PushItemQueueUpdateManyAndReturnArgs} args - Arguments to update many PushItemQueues.
+     * @example
+     * // Update many PushItemQueues
+     * const pushItemQueue = await prisma.pushItemQueue.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more PushItemQueues and only return the `id`
+     * const pushItemQueueWithIdOnly = await prisma.pushItemQueue.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PushItemQueueUpdateManyAndReturnArgs>(args: SelectSubset<T, PushItemQueueUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PushItemQueuePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one PushItemQueue.
+     * @param {PushItemQueueUpsertArgs} args - Arguments to update or create a PushItemQueue.
+     * @example
+     * // Update or create a PushItemQueue
+     * const pushItemQueue = await prisma.pushItemQueue.upsert({
+     *   create: {
+     *     // ... data to create a PushItemQueue
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the PushItemQueue we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PushItemQueueUpsertArgs>(args: SelectSubset<T, PushItemQueueUpsertArgs<ExtArgs>>): Prisma__PushItemQueueClient<$Result.GetResult<Prisma.$PushItemQueuePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of PushItemQueues.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushItemQueueCountArgs} args - Arguments to filter PushItemQueues to count.
+     * @example
+     * // Count the number of PushItemQueues
+     * const count = await prisma.pushItemQueue.count({
+     *   where: {
+     *     // ... the filter for the PushItemQueues we want to count
+     *   }
+     * })
+    **/
+    count<T extends PushItemQueueCountArgs>(
+      args?: Subset<T, PushItemQueueCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PushItemQueueCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a PushItemQueue.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushItemQueueAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PushItemQueueAggregateArgs>(args: Subset<T, PushItemQueueAggregateArgs>): Prisma.PrismaPromise<GetPushItemQueueAggregateType<T>>
+
+    /**
+     * Group by PushItemQueue.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PushItemQueueGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PushItemQueueGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PushItemQueueGroupByArgs['orderBy'] }
+        : { orderBy?: PushItemQueueGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PushItemQueueGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPushItemQueueGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the PushItemQueue model
+   */
+  readonly fields: PushItemQueueFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for PushItemQueue.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PushItemQueueClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the PushItemQueue model
+   */
+  interface PushItemQueueFieldRefs {
+    readonly id: FieldRef<"PushItemQueue", 'String'>
+    readonly itemId: FieldRef<"PushItemQueue", 'String'>
+    readonly name: FieldRef<"PushItemQueue", 'String'>
+    readonly createdAt: FieldRef<"PushItemQueue", 'DateTime'>
+    readonly sentAt: FieldRef<"PushItemQueue", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * PushItemQueue findUnique
+   */
+  export type PushItemQueueFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushItemQueue
+     */
+    select?: PushItemQueueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushItemQueue
+     */
+    omit?: PushItemQueueOmit<ExtArgs> | null
+    /**
+     * Filter, which PushItemQueue to fetch.
+     */
+    where: PushItemQueueWhereUniqueInput
+  }
+
+  /**
+   * PushItemQueue findUniqueOrThrow
+   */
+  export type PushItemQueueFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushItemQueue
+     */
+    select?: PushItemQueueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushItemQueue
+     */
+    omit?: PushItemQueueOmit<ExtArgs> | null
+    /**
+     * Filter, which PushItemQueue to fetch.
+     */
+    where: PushItemQueueWhereUniqueInput
+  }
+
+  /**
+   * PushItemQueue findFirst
+   */
+  export type PushItemQueueFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushItemQueue
+     */
+    select?: PushItemQueueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushItemQueue
+     */
+    omit?: PushItemQueueOmit<ExtArgs> | null
+    /**
+     * Filter, which PushItemQueue to fetch.
+     */
+    where?: PushItemQueueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushItemQueues to fetch.
+     */
+    orderBy?: PushItemQueueOrderByWithRelationInput | PushItemQueueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PushItemQueues.
+     */
+    cursor?: PushItemQueueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushItemQueues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushItemQueues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PushItemQueues.
+     */
+    distinct?: PushItemQueueScalarFieldEnum | PushItemQueueScalarFieldEnum[]
+  }
+
+  /**
+   * PushItemQueue findFirstOrThrow
+   */
+  export type PushItemQueueFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushItemQueue
+     */
+    select?: PushItemQueueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushItemQueue
+     */
+    omit?: PushItemQueueOmit<ExtArgs> | null
+    /**
+     * Filter, which PushItemQueue to fetch.
+     */
+    where?: PushItemQueueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushItemQueues to fetch.
+     */
+    orderBy?: PushItemQueueOrderByWithRelationInput | PushItemQueueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for PushItemQueues.
+     */
+    cursor?: PushItemQueueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushItemQueues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushItemQueues.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of PushItemQueues.
+     */
+    distinct?: PushItemQueueScalarFieldEnum | PushItemQueueScalarFieldEnum[]
+  }
+
+  /**
+   * PushItemQueue findMany
+   */
+  export type PushItemQueueFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushItemQueue
+     */
+    select?: PushItemQueueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushItemQueue
+     */
+    omit?: PushItemQueueOmit<ExtArgs> | null
+    /**
+     * Filter, which PushItemQueues to fetch.
+     */
+    where?: PushItemQueueWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of PushItemQueues to fetch.
+     */
+    orderBy?: PushItemQueueOrderByWithRelationInput | PushItemQueueOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing PushItemQueues.
+     */
+    cursor?: PushItemQueueWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` PushItemQueues from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` PushItemQueues.
+     */
+    skip?: number
+    distinct?: PushItemQueueScalarFieldEnum | PushItemQueueScalarFieldEnum[]
+  }
+
+  /**
+   * PushItemQueue create
+   */
+  export type PushItemQueueCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushItemQueue
+     */
+    select?: PushItemQueueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushItemQueue
+     */
+    omit?: PushItemQueueOmit<ExtArgs> | null
+    /**
+     * The data needed to create a PushItemQueue.
+     */
+    data: XOR<PushItemQueueCreateInput, PushItemQueueUncheckedCreateInput>
+  }
+
+  /**
+   * PushItemQueue createMany
+   */
+  export type PushItemQueueCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many PushItemQueues.
+     */
+    data: PushItemQueueCreateManyInput | PushItemQueueCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PushItemQueue createManyAndReturn
+   */
+  export type PushItemQueueCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushItemQueue
+     */
+    select?: PushItemQueueSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushItemQueue
+     */
+    omit?: PushItemQueueOmit<ExtArgs> | null
+    /**
+     * The data used to create many PushItemQueues.
+     */
+    data: PushItemQueueCreateManyInput | PushItemQueueCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * PushItemQueue update
+   */
+  export type PushItemQueueUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushItemQueue
+     */
+    select?: PushItemQueueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushItemQueue
+     */
+    omit?: PushItemQueueOmit<ExtArgs> | null
+    /**
+     * The data needed to update a PushItemQueue.
+     */
+    data: XOR<PushItemQueueUpdateInput, PushItemQueueUncheckedUpdateInput>
+    /**
+     * Choose, which PushItemQueue to update.
+     */
+    where: PushItemQueueWhereUniqueInput
+  }
+
+  /**
+   * PushItemQueue updateMany
+   */
+  export type PushItemQueueUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update PushItemQueues.
+     */
+    data: XOR<PushItemQueueUpdateManyMutationInput, PushItemQueueUncheckedUpdateManyInput>
+    /**
+     * Filter which PushItemQueues to update
+     */
+    where?: PushItemQueueWhereInput
+    /**
+     * Limit how many PushItemQueues to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PushItemQueue updateManyAndReturn
+   */
+  export type PushItemQueueUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushItemQueue
+     */
+    select?: PushItemQueueSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushItemQueue
+     */
+    omit?: PushItemQueueOmit<ExtArgs> | null
+    /**
+     * The data used to update PushItemQueues.
+     */
+    data: XOR<PushItemQueueUpdateManyMutationInput, PushItemQueueUncheckedUpdateManyInput>
+    /**
+     * Filter which PushItemQueues to update
+     */
+    where?: PushItemQueueWhereInput
+    /**
+     * Limit how many PushItemQueues to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * PushItemQueue upsert
+   */
+  export type PushItemQueueUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushItemQueue
+     */
+    select?: PushItemQueueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushItemQueue
+     */
+    omit?: PushItemQueueOmit<ExtArgs> | null
+    /**
+     * The filter to search for the PushItemQueue to update in case it exists.
+     */
+    where: PushItemQueueWhereUniqueInput
+    /**
+     * In case the PushItemQueue found by the `where` argument doesn't exist, create a new PushItemQueue with this data.
+     */
+    create: XOR<PushItemQueueCreateInput, PushItemQueueUncheckedCreateInput>
+    /**
+     * In case the PushItemQueue was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PushItemQueueUpdateInput, PushItemQueueUncheckedUpdateInput>
+  }
+
+  /**
+   * PushItemQueue delete
+   */
+  export type PushItemQueueDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushItemQueue
+     */
+    select?: PushItemQueueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushItemQueue
+     */
+    omit?: PushItemQueueOmit<ExtArgs> | null
+    /**
+     * Filter which PushItemQueue to delete.
+     */
+    where: PushItemQueueWhereUniqueInput
+  }
+
+  /**
+   * PushItemQueue deleteMany
+   */
+  export type PushItemQueueDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which PushItemQueues to delete
+     */
+    where?: PushItemQueueWhereInput
+    /**
+     * Limit how many PushItemQueues to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * PushItemQueue without action
+   */
+  export type PushItemQueueDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the PushItemQueue
+     */
+    select?: PushItemQueueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the PushItemQueue
+     */
+    omit?: PushItemQueueOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -44093,6 +47451,39 @@ export namespace Prisma {
   export type StudioTombstoneScalarFieldEnum = (typeof StudioTombstoneScalarFieldEnum)[keyof typeof StudioTombstoneScalarFieldEnum]
 
 
+  export const PushSubscriptionScalarFieldEnum: {
+    id: 'id',
+    userId: 'userId',
+    endpoint: 'endpoint',
+    p256dh: 'p256dh',
+    auth: 'auth',
+    device: 'device',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type PushSubscriptionScalarFieldEnum = (typeof PushSubscriptionScalarFieldEnum)[keyof typeof PushSubscriptionScalarFieldEnum]
+
+
+  export const PushLogScalarFieldEnum: {
+    key: 'key',
+    createdAt: 'createdAt'
+  };
+
+  export type PushLogScalarFieldEnum = (typeof PushLogScalarFieldEnum)[keyof typeof PushLogScalarFieldEnum]
+
+
+  export const PushItemQueueScalarFieldEnum: {
+    id: 'id',
+    itemId: 'itemId',
+    name: 'name',
+    createdAt: 'createdAt',
+    sentAt: 'sentAt'
+  };
+
+  export type PushItemQueueScalarFieldEnum = (typeof PushItemQueueScalarFieldEnum)[keyof typeof PushItemQueueScalarFieldEnum]
+
+
   export const SortOrder: {
     asc: 'asc',
     desc: 'desc'
@@ -44366,6 +47757,7 @@ export namespace Prisma {
     requests?: RequestListRelationFilter
     reviewed?: RequestListRelationFilter
     notifications?: NotificationListRelationFilter
+    pushSubs?: PushSubscriptionListRelationFilter
     activityLogs?: ActivityLogListRelationFilter
     chatMembers?: ChatMemberListRelationFilter
     chatMessages?: ChatMessageListRelationFilter
@@ -44407,6 +47799,7 @@ export namespace Prisma {
     requests?: RequestOrderByRelationAggregateInput
     reviewed?: RequestOrderByRelationAggregateInput
     notifications?: NotificationOrderByRelationAggregateInput
+    pushSubs?: PushSubscriptionOrderByRelationAggregateInput
     activityLogs?: ActivityLogOrderByRelationAggregateInput
     chatMembers?: ChatMemberOrderByRelationAggregateInput
     chatMessages?: ChatMessageOrderByRelationAggregateInput
@@ -44451,6 +47844,7 @@ export namespace Prisma {
     requests?: RequestListRelationFilter
     reviewed?: RequestListRelationFilter
     notifications?: NotificationListRelationFilter
+    pushSubs?: PushSubscriptionListRelationFilter
     activityLogs?: ActivityLogListRelationFilter
     chatMembers?: ChatMemberListRelationFilter
     chatMessages?: ChatMessageListRelationFilter
@@ -47158,6 +50552,165 @@ export namespace Prisma {
     deletedAt?: DateTimeWithAggregatesFilter<"StudioTombstone"> | Date | string
   }
 
+  export type PushSubscriptionWhereInput = {
+    AND?: PushSubscriptionWhereInput | PushSubscriptionWhereInput[]
+    OR?: PushSubscriptionWhereInput[]
+    NOT?: PushSubscriptionWhereInput | PushSubscriptionWhereInput[]
+    id?: StringFilter<"PushSubscription"> | string
+    userId?: StringFilter<"PushSubscription"> | string
+    endpoint?: StringFilter<"PushSubscription"> | string
+    p256dh?: StringFilter<"PushSubscription"> | string
+    auth?: StringFilter<"PushSubscription"> | string
+    device?: StringNullableFilter<"PushSubscription"> | string | null
+    createdAt?: DateTimeFilter<"PushSubscription"> | Date | string
+    updatedAt?: DateTimeFilter<"PushSubscription"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }
+
+  export type PushSubscriptionOrderByWithRelationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    endpoint?: SortOrder
+    p256dh?: SortOrder
+    auth?: SortOrder
+    device?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    user?: UserOrderByWithRelationInput
+  }
+
+  export type PushSubscriptionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    endpoint?: string
+    AND?: PushSubscriptionWhereInput | PushSubscriptionWhereInput[]
+    OR?: PushSubscriptionWhereInput[]
+    NOT?: PushSubscriptionWhereInput | PushSubscriptionWhereInput[]
+    userId?: StringFilter<"PushSubscription"> | string
+    p256dh?: StringFilter<"PushSubscription"> | string
+    auth?: StringFilter<"PushSubscription"> | string
+    device?: StringNullableFilter<"PushSubscription"> | string | null
+    createdAt?: DateTimeFilter<"PushSubscription"> | Date | string
+    updatedAt?: DateTimeFilter<"PushSubscription"> | Date | string
+    user?: XOR<UserScalarRelationFilter, UserWhereInput>
+  }, "id" | "endpoint">
+
+  export type PushSubscriptionOrderByWithAggregationInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    endpoint?: SortOrder
+    p256dh?: SortOrder
+    auth?: SortOrder
+    device?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: PushSubscriptionCountOrderByAggregateInput
+    _max?: PushSubscriptionMaxOrderByAggregateInput
+    _min?: PushSubscriptionMinOrderByAggregateInput
+  }
+
+  export type PushSubscriptionScalarWhereWithAggregatesInput = {
+    AND?: PushSubscriptionScalarWhereWithAggregatesInput | PushSubscriptionScalarWhereWithAggregatesInput[]
+    OR?: PushSubscriptionScalarWhereWithAggregatesInput[]
+    NOT?: PushSubscriptionScalarWhereWithAggregatesInput | PushSubscriptionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PushSubscription"> | string
+    userId?: StringWithAggregatesFilter<"PushSubscription"> | string
+    endpoint?: StringWithAggregatesFilter<"PushSubscription"> | string
+    p256dh?: StringWithAggregatesFilter<"PushSubscription"> | string
+    auth?: StringWithAggregatesFilter<"PushSubscription"> | string
+    device?: StringNullableWithAggregatesFilter<"PushSubscription"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"PushSubscription"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"PushSubscription"> | Date | string
+  }
+
+  export type PushLogWhereInput = {
+    AND?: PushLogWhereInput | PushLogWhereInput[]
+    OR?: PushLogWhereInput[]
+    NOT?: PushLogWhereInput | PushLogWhereInput[]
+    key?: StringFilter<"PushLog"> | string
+    createdAt?: DateTimeFilter<"PushLog"> | Date | string
+  }
+
+  export type PushLogOrderByWithRelationInput = {
+    key?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PushLogWhereUniqueInput = Prisma.AtLeast<{
+    key?: string
+    AND?: PushLogWhereInput | PushLogWhereInput[]
+    OR?: PushLogWhereInput[]
+    NOT?: PushLogWhereInput | PushLogWhereInput[]
+    createdAt?: DateTimeFilter<"PushLog"> | Date | string
+  }, "key">
+
+  export type PushLogOrderByWithAggregationInput = {
+    key?: SortOrder
+    createdAt?: SortOrder
+    _count?: PushLogCountOrderByAggregateInput
+    _max?: PushLogMaxOrderByAggregateInput
+    _min?: PushLogMinOrderByAggregateInput
+  }
+
+  export type PushLogScalarWhereWithAggregatesInput = {
+    AND?: PushLogScalarWhereWithAggregatesInput | PushLogScalarWhereWithAggregatesInput[]
+    OR?: PushLogScalarWhereWithAggregatesInput[]
+    NOT?: PushLogScalarWhereWithAggregatesInput | PushLogScalarWhereWithAggregatesInput[]
+    key?: StringWithAggregatesFilter<"PushLog"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PushLog"> | Date | string
+  }
+
+  export type PushItemQueueWhereInput = {
+    AND?: PushItemQueueWhereInput | PushItemQueueWhereInput[]
+    OR?: PushItemQueueWhereInput[]
+    NOT?: PushItemQueueWhereInput | PushItemQueueWhereInput[]
+    id?: StringFilter<"PushItemQueue"> | string
+    itemId?: StringFilter<"PushItemQueue"> | string
+    name?: StringFilter<"PushItemQueue"> | string
+    createdAt?: DateTimeFilter<"PushItemQueue"> | Date | string
+    sentAt?: DateTimeNullableFilter<"PushItemQueue"> | Date | string | null
+  }
+
+  export type PushItemQueueOrderByWithRelationInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    sentAt?: SortOrderInput | SortOrder
+  }
+
+  export type PushItemQueueWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PushItemQueueWhereInput | PushItemQueueWhereInput[]
+    OR?: PushItemQueueWhereInput[]
+    NOT?: PushItemQueueWhereInput | PushItemQueueWhereInput[]
+    itemId?: StringFilter<"PushItemQueue"> | string
+    name?: StringFilter<"PushItemQueue"> | string
+    createdAt?: DateTimeFilter<"PushItemQueue"> | Date | string
+    sentAt?: DateTimeNullableFilter<"PushItemQueue"> | Date | string | null
+  }, "id">
+
+  export type PushItemQueueOrderByWithAggregationInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    sentAt?: SortOrderInput | SortOrder
+    _count?: PushItemQueueCountOrderByAggregateInput
+    _max?: PushItemQueueMaxOrderByAggregateInput
+    _min?: PushItemQueueMinOrderByAggregateInput
+  }
+
+  export type PushItemQueueScalarWhereWithAggregatesInput = {
+    AND?: PushItemQueueScalarWhereWithAggregatesInput | PushItemQueueScalarWhereWithAggregatesInput[]
+    OR?: PushItemQueueScalarWhereWithAggregatesInput[]
+    NOT?: PushItemQueueScalarWhereWithAggregatesInput | PushItemQueueScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"PushItemQueue"> | string
+    itemId?: StringWithAggregatesFilter<"PushItemQueue"> | string
+    name?: StringWithAggregatesFilter<"PushItemQueue"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"PushItemQueue"> | Date | string
+    sentAt?: DateTimeNullableWithAggregatesFilter<"PushItemQueue"> | Date | string | null
+  }
+
   export type UserCreateInput = {
     id?: string
     fullName: string
@@ -47182,6 +50735,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -47222,6 +50776,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -47262,6 +50817,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -47302,6 +50858,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -50324,6 +53881,173 @@ export namespace Prisma {
     deletedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type PushSubscriptionCreateInput = {
+    id?: string
+    endpoint: string
+    p256dh: string
+    auth: string
+    device?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    user: UserCreateNestedOneWithoutPushSubsInput
+  }
+
+  export type PushSubscriptionUncheckedCreateInput = {
+    id?: string
+    userId: string
+    endpoint: string
+    p256dh: string
+    auth: string
+    device?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PushSubscriptionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    p256dh?: StringFieldUpdateOperationsInput | string
+    auth?: StringFieldUpdateOperationsInput | string
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    user?: UserUpdateOneRequiredWithoutPushSubsNestedInput
+  }
+
+  export type PushSubscriptionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    p256dh?: StringFieldUpdateOperationsInput | string
+    auth?: StringFieldUpdateOperationsInput | string
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PushSubscriptionCreateManyInput = {
+    id?: string
+    userId: string
+    endpoint: string
+    p256dh: string
+    auth: string
+    device?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PushSubscriptionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    p256dh?: StringFieldUpdateOperationsInput | string
+    auth?: StringFieldUpdateOperationsInput | string
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PushSubscriptionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    userId?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    p256dh?: StringFieldUpdateOperationsInput | string
+    auth?: StringFieldUpdateOperationsInput | string
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PushLogCreateInput = {
+    key: string
+    createdAt?: Date | string
+  }
+
+  export type PushLogUncheckedCreateInput = {
+    key: string
+    createdAt?: Date | string
+  }
+
+  export type PushLogUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PushLogUncheckedUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PushLogCreateManyInput = {
+    key: string
+    createdAt?: Date | string
+  }
+
+  export type PushLogUpdateManyMutationInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PushLogUncheckedUpdateManyInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PushItemQueueCreateInput = {
+    id?: string
+    itemId: string
+    name: string
+    createdAt?: Date | string
+    sentAt?: Date | string | null
+  }
+
+  export type PushItemQueueUncheckedCreateInput = {
+    id?: string
+    itemId: string
+    name: string
+    createdAt?: Date | string
+    sentAt?: Date | string | null
+  }
+
+  export type PushItemQueueUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PushItemQueueUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PushItemQueueCreateManyInput = {
+    id?: string
+    itemId: string
+    name: string
+    createdAt?: Date | string
+    sentAt?: Date | string | null
+  }
+
+  export type PushItemQueueUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type PushItemQueueUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemId?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -50420,6 +54144,12 @@ export namespace Prisma {
     every?: NotificationWhereInput
     some?: NotificationWhereInput
     none?: NotificationWhereInput
+  }
+
+  export type PushSubscriptionListRelationFilter = {
+    every?: PushSubscriptionWhereInput
+    some?: PushSubscriptionWhereInput
+    none?: PushSubscriptionWhereInput
   }
 
   export type ActivityLogListRelationFilter = {
@@ -50524,6 +54254,10 @@ export namespace Prisma {
   }
 
   export type NotificationOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PushSubscriptionOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -52523,6 +56257,78 @@ export namespace Prisma {
     deletedAt?: SortOrder
   }
 
+  export type PushSubscriptionCountOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    endpoint?: SortOrder
+    p256dh?: SortOrder
+    auth?: SortOrder
+    device?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PushSubscriptionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    endpoint?: SortOrder
+    p256dh?: SortOrder
+    auth?: SortOrder
+    device?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PushSubscriptionMinOrderByAggregateInput = {
+    id?: SortOrder
+    userId?: SortOrder
+    endpoint?: SortOrder
+    p256dh?: SortOrder
+    auth?: SortOrder
+    device?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type PushLogCountOrderByAggregateInput = {
+    key?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PushLogMaxOrderByAggregateInput = {
+    key?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PushLogMinOrderByAggregateInput = {
+    key?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type PushItemQueueCountOrderByAggregateInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    sentAt?: SortOrder
+  }
+
+  export type PushItemQueueMaxOrderByAggregateInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    sentAt?: SortOrder
+  }
+
+  export type PushItemQueueMinOrderByAggregateInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    name?: SortOrder
+    createdAt?: SortOrder
+    sentAt?: SortOrder
+  }
+
   export type BranchCreateNestedOneWithoutUsersInput = {
     create?: XOR<BranchCreateWithoutUsersInput, BranchUncheckedCreateWithoutUsersInput>
     connectOrCreate?: BranchCreateOrConnectWithoutUsersInput
@@ -52583,6 +56389,13 @@ export namespace Prisma {
     connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
     createMany?: NotificationCreateManyUserInputEnvelope
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type PushSubscriptionCreateNestedManyWithoutUserInput = {
+    create?: XOR<PushSubscriptionCreateWithoutUserInput, PushSubscriptionUncheckedCreateWithoutUserInput> | PushSubscriptionCreateWithoutUserInput[] | PushSubscriptionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PushSubscriptionCreateOrConnectWithoutUserInput | PushSubscriptionCreateOrConnectWithoutUserInput[]
+    createMany?: PushSubscriptionCreateManyUserInputEnvelope
+    connect?: PushSubscriptionWhereUniqueInput | PushSubscriptionWhereUniqueInput[]
   }
 
   export type ActivityLogCreateNestedManyWithoutActorInput = {
@@ -52735,6 +56548,13 @@ export namespace Prisma {
     connectOrCreate?: NotificationCreateOrConnectWithoutUserInput | NotificationCreateOrConnectWithoutUserInput[]
     createMany?: NotificationCreateManyUserInputEnvelope
     connect?: NotificationWhereUniqueInput | NotificationWhereUniqueInput[]
+  }
+
+  export type PushSubscriptionUncheckedCreateNestedManyWithoutUserInput = {
+    create?: XOR<PushSubscriptionCreateWithoutUserInput, PushSubscriptionUncheckedCreateWithoutUserInput> | PushSubscriptionCreateWithoutUserInput[] | PushSubscriptionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PushSubscriptionCreateOrConnectWithoutUserInput | PushSubscriptionCreateOrConnectWithoutUserInput[]
+    createMany?: PushSubscriptionCreateManyUserInputEnvelope
+    connect?: PushSubscriptionWhereUniqueInput | PushSubscriptionWhereUniqueInput[]
   }
 
   export type ActivityLogUncheckedCreateNestedManyWithoutActorInput = {
@@ -52973,6 +56793,20 @@ export namespace Prisma {
     update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type PushSubscriptionUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PushSubscriptionCreateWithoutUserInput, PushSubscriptionUncheckedCreateWithoutUserInput> | PushSubscriptionCreateWithoutUserInput[] | PushSubscriptionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PushSubscriptionCreateOrConnectWithoutUserInput | PushSubscriptionCreateOrConnectWithoutUserInput[]
+    upsert?: PushSubscriptionUpsertWithWhereUniqueWithoutUserInput | PushSubscriptionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PushSubscriptionCreateManyUserInputEnvelope
+    set?: PushSubscriptionWhereUniqueInput | PushSubscriptionWhereUniqueInput[]
+    disconnect?: PushSubscriptionWhereUniqueInput | PushSubscriptionWhereUniqueInput[]
+    delete?: PushSubscriptionWhereUniqueInput | PushSubscriptionWhereUniqueInput[]
+    connect?: PushSubscriptionWhereUniqueInput | PushSubscriptionWhereUniqueInput[]
+    update?: PushSubscriptionUpdateWithWhereUniqueWithoutUserInput | PushSubscriptionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PushSubscriptionUpdateManyWithWhereWithoutUserInput | PushSubscriptionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PushSubscriptionScalarWhereInput | PushSubscriptionScalarWhereInput[]
   }
 
   export type ActivityLogUpdateManyWithoutActorNestedInput = {
@@ -53273,6 +57107,20 @@ export namespace Prisma {
     update?: NotificationUpdateWithWhereUniqueWithoutUserInput | NotificationUpdateWithWhereUniqueWithoutUserInput[]
     updateMany?: NotificationUpdateManyWithWhereWithoutUserInput | NotificationUpdateManyWithWhereWithoutUserInput[]
     deleteMany?: NotificationScalarWhereInput | NotificationScalarWhereInput[]
+  }
+
+  export type PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput = {
+    create?: XOR<PushSubscriptionCreateWithoutUserInput, PushSubscriptionUncheckedCreateWithoutUserInput> | PushSubscriptionCreateWithoutUserInput[] | PushSubscriptionUncheckedCreateWithoutUserInput[]
+    connectOrCreate?: PushSubscriptionCreateOrConnectWithoutUserInput | PushSubscriptionCreateOrConnectWithoutUserInput[]
+    upsert?: PushSubscriptionUpsertWithWhereUniqueWithoutUserInput | PushSubscriptionUpsertWithWhereUniqueWithoutUserInput[]
+    createMany?: PushSubscriptionCreateManyUserInputEnvelope
+    set?: PushSubscriptionWhereUniqueInput | PushSubscriptionWhereUniqueInput[]
+    disconnect?: PushSubscriptionWhereUniqueInput | PushSubscriptionWhereUniqueInput[]
+    delete?: PushSubscriptionWhereUniqueInput | PushSubscriptionWhereUniqueInput[]
+    connect?: PushSubscriptionWhereUniqueInput | PushSubscriptionWhereUniqueInput[]
+    update?: PushSubscriptionUpdateWithWhereUniqueWithoutUserInput | PushSubscriptionUpdateWithWhereUniqueWithoutUserInput[]
+    updateMany?: PushSubscriptionUpdateManyWithWhereWithoutUserInput | PushSubscriptionUpdateManyWithWhereWithoutUserInput[]
+    deleteMany?: PushSubscriptionScalarWhereInput | PushSubscriptionScalarWhereInput[]
   }
 
   export type ActivityLogUncheckedUpdateManyWithoutActorNestedInput = {
@@ -54369,6 +58217,20 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMediaPcalInput, UserUpdateWithoutMediaPcalInput>, UserUncheckedUpdateWithoutMediaPcalInput>
   }
 
+  export type UserCreateNestedOneWithoutPushSubsInput = {
+    create?: XOR<UserCreateWithoutPushSubsInput, UserUncheckedCreateWithoutPushSubsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPushSubsInput
+    connect?: UserWhereUniqueInput
+  }
+
+  export type UserUpdateOneRequiredWithoutPushSubsNestedInput = {
+    create?: XOR<UserCreateWithoutPushSubsInput, UserUncheckedCreateWithoutPushSubsInput>
+    connectOrCreate?: UserCreateOrConnectWithoutPushSubsInput
+    upsert?: UserUpsertWithoutPushSubsInput
+    connect?: UserWhereUniqueInput
+    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPushSubsInput, UserUpdateWithoutPushSubsInput>, UserUncheckedUpdateWithoutPushSubsInput>
+  }
+
   export type NestedStringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -55063,6 +58925,36 @@ export namespace Prisma {
 
   export type NotificationCreateManyUserInputEnvelope = {
     data: NotificationCreateManyUserInput | NotificationCreateManyUserInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PushSubscriptionCreateWithoutUserInput = {
+    id?: string
+    endpoint: string
+    p256dh: string
+    auth: string
+    device?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PushSubscriptionUncheckedCreateWithoutUserInput = {
+    id?: string
+    endpoint: string
+    p256dh: string
+    auth: string
+    device?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PushSubscriptionCreateOrConnectWithoutUserInput = {
+    where: PushSubscriptionWhereUniqueInput
+    create: XOR<PushSubscriptionCreateWithoutUserInput, PushSubscriptionUncheckedCreateWithoutUserInput>
+  }
+
+  export type PushSubscriptionCreateManyUserInputEnvelope = {
+    data: PushSubscriptionCreateManyUserInput | PushSubscriptionCreateManyUserInput[]
     skipDuplicates?: boolean
   }
 
@@ -55854,6 +59746,36 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Notification"> | Date | string
   }
 
+  export type PushSubscriptionUpsertWithWhereUniqueWithoutUserInput = {
+    where: PushSubscriptionWhereUniqueInput
+    update: XOR<PushSubscriptionUpdateWithoutUserInput, PushSubscriptionUncheckedUpdateWithoutUserInput>
+    create: XOR<PushSubscriptionCreateWithoutUserInput, PushSubscriptionUncheckedCreateWithoutUserInput>
+  }
+
+  export type PushSubscriptionUpdateWithWhereUniqueWithoutUserInput = {
+    where: PushSubscriptionWhereUniqueInput
+    data: XOR<PushSubscriptionUpdateWithoutUserInput, PushSubscriptionUncheckedUpdateWithoutUserInput>
+  }
+
+  export type PushSubscriptionUpdateManyWithWhereWithoutUserInput = {
+    where: PushSubscriptionScalarWhereInput
+    data: XOR<PushSubscriptionUpdateManyMutationInput, PushSubscriptionUncheckedUpdateManyWithoutUserInput>
+  }
+
+  export type PushSubscriptionScalarWhereInput = {
+    AND?: PushSubscriptionScalarWhereInput | PushSubscriptionScalarWhereInput[]
+    OR?: PushSubscriptionScalarWhereInput[]
+    NOT?: PushSubscriptionScalarWhereInput | PushSubscriptionScalarWhereInput[]
+    id?: StringFilter<"PushSubscription"> | string
+    userId?: StringFilter<"PushSubscription"> | string
+    endpoint?: StringFilter<"PushSubscription"> | string
+    p256dh?: StringFilter<"PushSubscription"> | string
+    auth?: StringFilter<"PushSubscription"> | string
+    device?: StringNullableFilter<"PushSubscription"> | string | null
+    createdAt?: DateTimeFilter<"PushSubscription"> | Date | string
+    updatedAt?: DateTimeFilter<"PushSubscription"> | Date | string
+  }
+
   export type ActivityLogUpsertWithWhereUniqueWithoutActorInput = {
     where: ActivityLogWhereUniqueInput
     update: XOR<ActivityLogUpdateWithoutActorInput, ActivityLogUncheckedUpdateWithoutActorInput>
@@ -56336,6 +60258,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -56375,6 +60298,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -56430,6 +60354,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -56469,6 +60394,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -56508,6 +60434,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -56547,6 +60474,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -56602,6 +60530,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -56641,6 +60570,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -56680,6 +60610,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -56719,6 +60650,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -56774,6 +60706,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -56813,6 +60746,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -56852,6 +60786,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -56891,6 +60826,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -56946,6 +60882,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -56985,6 +60922,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -57061,6 +60999,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -57100,6 +61039,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -57161,6 +61101,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -57200,6 +61141,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -57255,6 +61197,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -57294,6 +61237,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -57367,6 +61311,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -57406,6 +61351,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -57445,6 +61391,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -57484,6 +61431,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -57539,6 +61487,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -57578,6 +61527,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -57617,6 +61567,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -57656,6 +61607,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -57982,6 +61934,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -58021,6 +61974,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -58099,6 +62053,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -58138,6 +62093,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -58206,6 +62162,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -58245,6 +62202,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -58325,6 +62283,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -58364,6 +62323,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -58434,6 +62394,7 @@ export namespace Prisma {
     attendances?: AttendanceCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -58473,6 +62434,7 @@ export namespace Prisma {
     attendances?: AttendanceUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -58517,6 +62479,7 @@ export namespace Prisma {
     attendances?: AttendanceCreateNestedManyWithoutUserInput
     requests?: RequestCreateNestedManyWithoutUserInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -58556,6 +62519,7 @@ export namespace Prisma {
     attendances?: AttendanceUncheckedCreateNestedManyWithoutUserInput
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -58611,6 +62575,7 @@ export namespace Prisma {
     attendances?: AttendanceUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -58650,6 +62615,7 @@ export namespace Prisma {
     attendances?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -58700,6 +62666,7 @@ export namespace Prisma {
     attendances?: AttendanceUpdateManyWithoutUserNestedInput
     requests?: RequestUpdateManyWithoutUserNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -58739,6 +62706,7 @@ export namespace Prisma {
     attendances?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -58778,6 +62746,7 @@ export namespace Prisma {
     attendances?: AttendanceCreateNestedManyWithoutUserInput
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -58817,6 +62786,7 @@ export namespace Prisma {
     attendances?: AttendanceUncheckedCreateNestedManyWithoutUserInput
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -58872,6 +62842,7 @@ export namespace Prisma {
     attendances?: AttendanceUpdateManyWithoutUserNestedInput
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -58911,6 +62882,7 @@ export namespace Prisma {
     attendances?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -58951,6 +62923,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
@@ -58990,6 +62963,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
@@ -59045,6 +63019,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
@@ -59084,6 +63059,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -59230,6 +63206,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
@@ -59269,6 +63246,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
@@ -59353,6 +63331,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
@@ -59392,6 +63371,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -59454,6 +63434,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
@@ -59493,6 +63474,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
@@ -59577,6 +63559,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
@@ -59616,6 +63599,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -59655,6 +63639,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -59694,6 +63679,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -59749,6 +63735,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -59788,6 +63775,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -59827,6 +63815,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -59866,6 +63855,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -59910,6 +63900,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -59949,6 +63940,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -60004,6 +63996,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -60043,6 +64036,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -60093,6 +64087,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -60132,6 +64127,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -60171,6 +64167,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -60210,6 +64207,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -60265,6 +64263,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -60304,6 +64303,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -60343,6 +64343,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -60382,6 +64383,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -60557,6 +64559,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -60596,6 +64599,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -60933,6 +64937,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -60972,6 +64977,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -61027,6 +65033,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -61066,6 +65073,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -61105,6 +65113,7 @@ export namespace Prisma {
     requests?: RequestCreateNestedManyWithoutUserInput
     reviewed?: RequestCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
@@ -61144,6 +65153,7 @@ export namespace Prisma {
     requests?: RequestUncheckedCreateNestedManyWithoutUserInput
     reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
     notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    pushSubs?: PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
     activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
     chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
     chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
@@ -61199,6 +65209,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -61238,6 +65249,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
@@ -61247,6 +65259,182 @@ export namespace Prisma {
     mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
     mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
     personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserCreateWithoutPushSubsInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    passwordHash?: string | null
+    avatarKey?: string | null
+    bio?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    branch?: BranchCreateNestedOneWithoutUsersInput
+    roles?: UserRoleCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleCreateNestedManyWithoutUserInput
+    attendances?: AttendanceCreateNestedManyWithoutUserInput
+    requests?: RequestCreateNestedManyWithoutUserInput
+    reviewed?: RequestCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftCreateNestedManyWithoutUserInput
+    cashouts?: CashoutCreateNestedManyWithoutCreatedByInput
+    reports?: ReportCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserUncheckedCreateWithoutPushSubsInput = {
+    id?: string
+    fullName: string
+    nickname?: string | null
+    email: string
+    waNumber: string
+    passwordHash?: string | null
+    avatarKey?: string | null
+    bio?: string | null
+    branchId?: string | null
+    joinedAt?: Date | string | null
+    birthDate?: Date | string | null
+    isActive?: boolean
+    themePref?: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    roles?: UserRoleUncheckedCreateNestedManyWithoutUserInput
+    assignedRoles?: UserRoleUncheckedCreateNestedManyWithoutAssignedByInput
+    sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
+    schedules?: UserScheduleUncheckedCreateNestedManyWithoutUserInput
+    attendances?: AttendanceUncheckedCreateNestedManyWithoutUserInput
+    requests?: RequestUncheckedCreateNestedManyWithoutUserInput
+    reviewed?: RequestUncheckedCreateNestedManyWithoutReviewedByInput
+    notifications?: NotificationUncheckedCreateNestedManyWithoutUserInput
+    activityLogs?: ActivityLogUncheckedCreateNestedManyWithoutActorInput
+    chatMembers?: ChatMemberUncheckedCreateNestedManyWithoutUserInput
+    chatMessages?: ChatMessageUncheckedCreateNestedManyWithoutSenderInput
+    rawCreated?: RawProductUncheckedCreateNestedManyWithoutCreatedByInput
+    rawQc?: RawProductUncheckedCreateNestedManyWithoutQcByInput
+    calendarEvents?: CalendarEventUncheckedCreateNestedManyWithoutCreatedByInput
+    mediaMember?: MediaMemberUncheckedCreateNestedOneWithoutUserInput
+    mediaItems?: MediaItemUncheckedCreateNestedManyWithoutCreatedByInput
+    personalCalEvents?: PersonalCalEventUncheckedCreateNestedManyWithoutUserInput
+    mediaPcal?: MediaPcalUncheckedCreateNestedOneWithoutUserInput
+    salesReports?: SalesReportUncheckedCreateNestedManyWithoutCreatedByInput
+    shifts?: ShiftUncheckedCreateNestedManyWithoutUserInput
+    cashouts?: CashoutUncheckedCreateNestedManyWithoutCreatedByInput
+    reports?: ReportUncheckedCreateNestedManyWithoutCreatedByInput
+  }
+
+  export type UserCreateOrConnectWithoutPushSubsInput = {
+    where: UserWhereUniqueInput
+    create: XOR<UserCreateWithoutPushSubsInput, UserUncheckedCreateWithoutPushSubsInput>
+  }
+
+  export type UserUpsertWithoutPushSubsInput = {
+    update: XOR<UserUpdateWithoutPushSubsInput, UserUncheckedUpdateWithoutPushSubsInput>
+    create: XOR<UserCreateWithoutPushSubsInput, UserUncheckedCreateWithoutPushSubsInput>
+    where?: UserWhereInput
+  }
+
+  export type UserUpdateToOneWithWhereWithoutPushSubsInput = {
+    where?: UserWhereInput
+    data: XOR<UserUpdateWithoutPushSubsInput, UserUncheckedUpdateWithoutPushSubsInput>
+  }
+
+  export type UserUpdateWithoutPushSubsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    branch?: BranchUpdateOneWithoutUsersNestedInput
+    roles?: UserRoleUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUpdateManyWithoutUserNestedInput
+    requests?: RequestUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUpdateOneWithoutUserNestedInput
+    salesReports?: SalesReportUpdateManyWithoutCreatedByNestedInput
+    shifts?: ShiftUpdateManyWithoutUserNestedInput
+    cashouts?: CashoutUpdateManyWithoutCreatedByNestedInput
+    reports?: ReportUpdateManyWithoutCreatedByNestedInput
+  }
+
+  export type UserUncheckedUpdateWithoutPushSubsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    fullName?: StringFieldUpdateOperationsInput | string
+    nickname?: NullableStringFieldUpdateOperationsInput | string | null
+    email?: StringFieldUpdateOperationsInput | string
+    waNumber?: StringFieldUpdateOperationsInput | string
+    passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
+    bio?: NullableStringFieldUpdateOperationsInput | string | null
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
+    joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    birthDate?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    themePref?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    roles?: UserRoleUncheckedUpdateManyWithoutUserNestedInput
+    assignedRoles?: UserRoleUncheckedUpdateManyWithoutAssignedByNestedInput
+    sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
+    schedules?: UserScheduleUncheckedUpdateManyWithoutUserNestedInput
+    attendances?: AttendanceUncheckedUpdateManyWithoutUserNestedInput
+    requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
+    reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
+    notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
+    chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
+    chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput
+    rawCreated?: RawProductUncheckedUpdateManyWithoutCreatedByNestedInput
+    rawQc?: RawProductUncheckedUpdateManyWithoutQcByNestedInput
+    calendarEvents?: CalendarEventUncheckedUpdateManyWithoutCreatedByNestedInput
+    mediaMember?: MediaMemberUncheckedUpdateOneWithoutUserNestedInput
+    mediaItems?: MediaItemUncheckedUpdateManyWithoutCreatedByNestedInput
+    personalCalEvents?: PersonalCalEventUncheckedUpdateManyWithoutUserNestedInput
+    mediaPcal?: MediaPcalUncheckedUpdateOneWithoutUserNestedInput
     salesReports?: SalesReportUncheckedUpdateManyWithoutCreatedByNestedInput
     shifts?: ShiftUncheckedUpdateManyWithoutUserNestedInput
     cashouts?: CashoutUncheckedUpdateManyWithoutCreatedByNestedInput
@@ -61339,6 +65527,16 @@ export namespace Prisma {
     link?: string | null
     readAt?: Date | string | null
     createdAt?: Date | string
+  }
+
+  export type PushSubscriptionCreateManyUserInput = {
+    id?: string
+    endpoint: string
+    p256dh: string
+    auth: string
+    device?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
   }
 
   export type ActivityLogCreateManyActorInput = {
@@ -61783,6 +65981,36 @@ export namespace Prisma {
     link?: NullableStringFieldUpdateOperationsInput | string | null
     readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PushSubscriptionUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    p256dh?: StringFieldUpdateOperationsInput | string
+    auth?: StringFieldUpdateOperationsInput | string
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PushSubscriptionUncheckedUpdateWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    p256dh?: StringFieldUpdateOperationsInput | string
+    auth?: StringFieldUpdateOperationsInput | string
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PushSubscriptionUncheckedUpdateManyWithoutUserInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    endpoint?: StringFieldUpdateOperationsInput | string
+    p256dh?: StringFieldUpdateOperationsInput | string
+    auth?: StringFieldUpdateOperationsInput | string
+    device?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type ActivityLogUpdateWithoutActorInput = {
@@ -62429,6 +66657,7 @@ export namespace Prisma {
     requests?: RequestUpdateManyWithoutUserNestedInput
     reviewed?: RequestUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUpdateManyWithoutSenderNestedInput
@@ -62468,6 +66697,7 @@ export namespace Prisma {
     requests?: RequestUncheckedUpdateManyWithoutUserNestedInput
     reviewed?: RequestUncheckedUpdateManyWithoutReviewedByNestedInput
     notifications?: NotificationUncheckedUpdateManyWithoutUserNestedInput
+    pushSubs?: PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput
     activityLogs?: ActivityLogUncheckedUpdateManyWithoutActorNestedInput
     chatMembers?: ChatMemberUncheckedUpdateManyWithoutUserNestedInput
     chatMessages?: ChatMessageUncheckedUpdateManyWithoutSenderNestedInput

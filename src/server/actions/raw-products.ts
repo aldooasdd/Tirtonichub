@@ -1,6 +1,7 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
+import { queueNewItem } from "@/server/push/jobs";
 import { prisma } from "@/server/db";
 import { requireFinance, requireStock } from "@/server/auth/rbac";
 import { isSuperRole } from "@/lib/roles";
@@ -291,7 +292,8 @@ export async function qcDecision(
   await prisma.rawProduct.update({ where: { id }, data });
   // Produk lolos QC otomatis masuk ke daftar barang media (konten). Media set kategori + tier lalu jadwalkan.
   if (decision === "STOCK") {
-    await prisma.mediaItem.upsert({
+    const existed = await prisma.mediaItem.findUnique({ where: { sourceRawId: id }, select: { id: true } });
+    const mi = await prisma.mediaItem.upsert({
       where: { sourceRawId: id },
       update: {}, // sudah ada: jangan timpa editan media
       create: {
@@ -304,6 +306,7 @@ export async function qcDecision(
         createdById: ctx.userId,
       },
     });
+    if (!existed) await queueNewItem(mi); // notifikasi Barang masuk ke anggota Studio
   }
   const { ip } = await clientMeta();
   await logActivity(

@@ -1,0 +1,3 @@
+module.exports=[97998,e=>{"use strict";async function s(){if("0"===process.env.PUSH_JOBS||"phase-production-build"===process.env.NEXT_PHASE)return;let s=globalThis;if(s.__pushTimer)return;let{pushTick:r}=await e.A(14710);setTimeout(()=>void r(),15e3).unref(),s.__pushTimer=setInterval(()=>void r(),6e4),s.__pushTimer.unref()}e.s(["register",0,s])},14710,e=>{e.v(s=>Promise.all(["server/chunks/[externals]__10rc720a2mek5._.js","server/chunks/_0ah9wsleg5skt._.js"].map(s=>e.l(s))).then(()=>s(96615)))}];
+
+//# sourceMappingURL=src_0c68w7pcgyzlu._.js.map
