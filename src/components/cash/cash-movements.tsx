@@ -7,18 +7,39 @@ const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 const BUCKET: Record<keyof Buckets, string> = { cash: "Cash", mandiri: "Mandiri", bca: "BCA", bri: "BRI" };
 const jam = (d: Date) =>
   new Intl.DateTimeFormat("id-ID", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta" }).format(new Date(d));
+const dayKeyWIB = (d: Date) => new Date(new Date(d).getTime() + 7 * 3600_000).toISOString().slice(0, 10);
+const todayWIB = () => dayKeyWIB(new Date());
 
 const PREVIEW = 5;
 
 export function CashMovements({ rows }: { rows: CashMovement[] }) {
   const [all, setAll] = React.useState(false);
-  const shown = all ? rows : rows.slice(0, PREVIEW);
+  const [day, setDay] = React.useState(todayWIB); // default hari ini; "" = semua
+
+  const filtered = day ? rows.filter((r) => dayKeyWIB(r.at) === day) : rows;
+  const shown = all ? filtered : filtered.slice(0, PREVIEW);
 
   return (
     <div className="mt-5 border-t pt-4">
-      <h2 className="text-14 font-semibold">Riwayat Uang Masuk / Keluar (hari ini)</h2>
-      {rows.length === 0 ? (
-        <p className="py-8 text-center text-14 text-muted-foreground">Belum ada transaksi hari ini.</p>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <h2 className="text-14 font-semibold">Riwayat Uang Masuk / Keluar</h2>
+        <div className="flex items-center gap-2">
+          <input
+            type="date"
+            value={day}
+            onChange={(e) => { setDay(e.target.value); setAll(false); }}
+            className="rounded-lg border bg-background px-2 py-1 text-12"
+            aria-label="Filter tanggal"
+          />
+          {day && (
+            <button type="button" onClick={() => setDay("")} className="text-12 text-muted-foreground underline">
+              Semua
+            </button>
+          )}
+        </div>
+      </div>
+      {filtered.length === 0 ? (
+        <p className="py-8 text-center text-14 text-muted-foreground">{day ? "Tak ada transaksi di tanggal ini." : "Belum ada transaksi."}</p>
       ) : (
         <>
           <div className="mt-3 overflow-x-auto">
@@ -53,13 +74,13 @@ export function CashMovements({ rows }: { rows: CashMovement[] }) {
               </tbody>
             </table>
           </div>
-          {rows.length > PREVIEW && (
+          {filtered.length > PREVIEW && (
             <button
               type="button"
               onClick={() => setAll((v) => !v)}
               className="mt-3 w-full rounded-lg border py-2 text-12 font-medium text-muted-foreground transition-colors hover:bg-muted"
             >
-              {all ? "Tampilkan lebih sedikit" : `Lihat semua (${rows.length})`}
+              {all ? "Tampilkan lebih sedikit" : `Lihat semua (${filtered.length})`}
             </button>
           )}
         </>

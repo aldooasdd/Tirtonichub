@@ -93,9 +93,11 @@ export type CashMovement = {
   note: string;
 };
 
-/** Riwayat uang masuk (penjualan) & keluar (pembelian) hari itu, semua cabang, terbaru dulu. */
-export async function loadCashMovements(dateKey: Date, take = 60): Promise<CashMovement[]> {
-  const { start, end } = dayRange(dateKey);
+/** Riwayat uang masuk (penjualan) & keluar (pembelian), semua cabang, terbaru dulu.
+ *  days = jumlah hari ke belakang (termasuk dateKey) biar bisa filter hari sebelumnya di UI. */
+export async function loadCashMovements(dateKey: Date, take = 400, days = 30): Promise<CashMovement[]> {
+  const end = dayRange(dateKey).end;
+  const start = new Date(dayRange(dateKey).start.getTime() - (days - 1) * 86_400_000);
   const [sales, cashouts] = await Promise.all([
     prisma.salesReport.findMany({
       where: { channel: "offline", branchId: { not: null }, createdAt: { gte: start, lt: end } },
