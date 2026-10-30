@@ -10,7 +10,7 @@ import { dateKeyWIB, wibMinutesOfDay, parseHHMM } from "@/server/attendance/logi
 import { shiftScheduleFor } from "@/server/attendance/shift-schedule";
 import { loadCalendarEvents } from "@/server/calendar-events";
 import { KalenderClient } from "@/components/kalender/kalender-client";
-import { computeBranchCash, zeroBuckets, loadBranchCashBoards, loadBranchSalesTrends, loadCashMovements, type Buckets } from "@/lib/cash";
+import { computeBranchCash, zeroBuckets, loadBranchCashBoards, loadBranchSalesTrends, loadCashMovements, loadCashSessions, type Buckets } from "@/lib/cash";
 import { CashOpenForm, CashCloseForm } from "@/components/cash/cash-forms";
 import { BranchCashBoard } from "@/components/cash/branch-cash-board";
 import { CashDashboard } from "@/components/cash/cash-dashboard";
@@ -52,6 +52,7 @@ export default async function BerandaPage() {
           boards={await loadBranchCashBoards(today)}
           trends={await loadBranchSalesTrends()}
           moves={await loadCashMovements(today)}
+          sessions={await loadCashSessions()}
         />
         <KalenderClient events={await loadCalendarEvents()} />
       </div>
@@ -204,6 +205,7 @@ export default async function BerandaPage() {
           boards={await loadBranchCashBoards(today)}
           trends={await loadBranchSalesTrends()}
           moves={await loadCashMovements(today)}
+          sessions={await loadCashSessions()}
         />
       )}
 

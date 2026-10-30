@@ -109,6 +109,43 @@ export async function loadCashMovements(dateKey: Date, take = 60): Promise<CashM
   return out.sort((a, b) => b.at.getTime() - a.at.getTime()).slice(0, take);
 }
 
+export type CashSessionRow = {
+  id: string;
+  branchId: string;
+  branch: string;
+  date: Date;
+  openAt: Date;
+  openBy: string;
+  open: Buckets;
+  closeAt: Date | null;
+  closeBy: string | null;
+  close: Buckets | null;
+};
+
+/** Riwayat buka/tutup kasir semua cabang (terbaru dulu). Dashboard kelompokkan per cabang. */
+export async function loadCashSessions(take = 40): Promise<CashSessionRow[]> {
+  const sessions = await prisma.cashSession.findMany({
+    orderBy: { openedAt: "desc" },
+    take,
+    include: { branch: { select: { name: true } } },
+  });
+  const ids = [...new Set(sessions.flatMap((s) => [s.openedById, s.closedById]).filter(Boolean) as string[])];
+  const users = ids.length ? await prisma.user.findMany({ where: { id: { in: ids } }, select: { id: true, fullName: true } }) : [];
+  const name = new Map(users.map((u) => [u.id, u.fullName]));
+  return sessions.map((s) => ({
+    id: s.id,
+    branchId: s.branchId,
+    branch: s.branch.name,
+    date: s.date,
+    openAt: s.openedAt,
+    openBy: name.get(s.openedById) ?? "-",
+    open: { cash: s.openCash, mandiri: s.openMandiri, bca: s.openBca, bri: s.openBri },
+    closeAt: s.closedAt,
+    closeBy: s.closedById ? name.get(s.closedById) ?? "-" : null,
+    close: s.closedAt != null ? { cash: s.closeCash ?? 0, mandiri: s.closeMandiri ?? 0, bca: s.closeBca ?? 0, bri: s.closeBri ?? 0 } : null,
+  }));
+}
+
 const MONTH_ID = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
 
 export type SalesTrend = { labels: string[]; series: { id: string; name: string; points: number[] }[] };
