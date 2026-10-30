@@ -138,7 +138,7 @@ export type CashSessionRow = {
 };
 
 /** Riwayat buka/tutup kasir semua cabang (terbaru dulu). Dashboard kelompokkan per cabang. */
-export async function loadCashSessions(take = 40): Promise<CashSessionRow[]> {
+export async function loadCashSessions(take = 120): Promise<CashSessionRow[]> {
   const sessions = await prisma.cashSession.findMany({
     orderBy: { openedAt: "desc" },
     take,

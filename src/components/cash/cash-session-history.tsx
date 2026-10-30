@@ -8,15 +8,19 @@ const total = (b: Buckets) => b.cash + b.mandiri + b.bca + b.bri;
 const jam = (d: Date) => new Intl.DateTimeFormat("id-ID", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta" }).format(new Date(d));
 const tgl = (d: Date) => new Intl.DateTimeFormat("id-ID", { day: "2-digit", month: "short", timeZone: "Asia/Jakarta" }).format(new Date(d));
 const shiftLabel = (s: string) => (s === "PAGI" ? "Pagi" : s === "SIANG" ? "Siang" : s);
+const dayKey = (d: Date) => new Date(d).toISOString().slice(0, 10); // @db.Date = UTC midnight tgl WIB
 
 const PREVIEW = 3; // baris per cabang sebelum "lihat semua"
 
 export function CashSessionHistory({ rows }: { rows: CashSessionRow[] }) {
   const [all, setAll] = React.useState(false);
+  const [day, setDay] = React.useState(""); // "" = semua tanggal
+
+  const filtered = day ? rows.filter((r) => dayKey(r.date) === day) : rows;
 
   // Kelompokkan per cabang, urutan cabang ikut kemunculan pertama (terbaru dulu sudah dari loader).
   const groups = new Map<string, { name: string; rows: CashSessionRow[] }>();
-  for (const r of rows) {
+  for (const r of filtered) {
     const g = groups.get(r.branchId) ?? { name: r.branch, rows: [] };
     g.rows.push(r);
     groups.set(r.branchId, g);
@@ -25,10 +29,28 @@ export function CashSessionHistory({ rows }: { rows: CashSessionRow[] }) {
 
   return (
     <div>
-      <h2 className="text-14 font-semibold">Riwayat Buka / Tutup Kasir</h2>
-      <p className="text-12 text-muted-foreground">Per cabang · 1 orang buka &amp; wajib tutup tiap shift</p>
-      {rows.length === 0 ? (
-        <p className="py-8 text-center text-14 text-muted-foreground">Belum ada data buka kasir.</p>
+      <div className="flex flex-wrap items-start justify-between gap-2">
+        <div>
+          <h2 className="text-14 font-semibold">Riwayat Buka / Tutup Kasir</h2>
+          <p className="text-12 text-muted-foreground">Per cabang · 1 orang buka &amp; wajib tutup tiap shift</p>
+        </div>
+        <div className="flex items-center gap-2">
+          <input
+            type="date"
+            value={day}
+            onChange={(e) => setDay(e.target.value)}
+            className="rounded-lg border bg-background px-2 py-1 text-12"
+            aria-label="Filter tanggal"
+          />
+          {day && (
+            <button type="button" onClick={() => setDay("")} className="text-12 text-muted-foreground underline">
+              Semua
+            </button>
+          )}
+        </div>
+      </div>
+      {filtered.length === 0 ? (
+        <p className="py-8 text-center text-14 text-muted-foreground">{day ? "Tak ada data di tanggal ini." : "Belum ada data buka kasir."}</p>
       ) : (
         <div className="mt-3 flex flex-col gap-5">
           {branches.map((b) => {
