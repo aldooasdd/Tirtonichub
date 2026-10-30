@@ -141,7 +141,7 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
   return (
     <div className="space-y-5">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h1 className="text-24 font-semibold">Produk Mentah</h1>
+        <h1 className="text-24 font-semibold">Purchasing</h1>
         <div className="flex gap-2">
           <Button onClick={() => fileRef.current?.click()} disabled={busy}>
             {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <ScanLine className="h-4 w-4" />} Scan Nota

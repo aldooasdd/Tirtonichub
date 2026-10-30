@@ -96,7 +96,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
       title: "Finance",
       icon: Wallet,
       items: [
-        { label: "Produk Mentah", href: "/finance", icon: Receipt },
+        { label: "Purchasing", href: "/finance", icon: Receipt },
         { label: "Approval Penjualan", href: "/cabang/penjualan", icon: ClipboardCheck },
         { label: "Input Pembelian", href: "/pembelian", icon: Wallet },
         { label: "Rekap Penjualan", href: "/finance/penjualan", icon: Receipt },
