@@ -58,13 +58,24 @@ type SaveItem = {
   sku?: string | null;
   qty: number;
   unit?: string | null;
-  unitPrice: number;
+  listPrice?: number; // @Harga per unit (sesuai PI). Fallback: unitPrice.
+  discount?: number; // Diskon baris (rupiah)
+  unitPrice: number; // kompat lama; dipakai sbg listPrice bila listPrice absen
   supplier?: string | null;
   notaDate?: string | null;
 };
 
 const clean = (v: string | null | undefined, max: number): string | null =>
   v?.trim() ? v.trim().slice(0, max) : null;
+
+/** @Harga + Diskon + qty → kolom harga tersimpan. unitPrice = modal net/unit. */
+function priceCols(i: SaveItem) {
+  const qty = Math.max(1, Math.round(i.qty) || 1);
+  const listPrice = Math.max(0, Math.round(i.listPrice ?? i.unitPrice) || 0);
+  const discount = Math.min(listPrice * qty, Math.max(0, Math.round(i.discount ?? 0) || 0));
+  const unitPrice = Math.round((listPrice * qty - discount) / qty); // net/unit
+  return { listPrice, discount, unitPrice, sellPrice: computeSellPrice(unitPrice) };
+}
 
 /** Simpan kartu produk mentah (status DRAFT). */
 export async function saveRawBatch(input: {
@@ -78,7 +89,7 @@ export async function saveRawBatch(input: {
 
   await prisma.rawProduct.createMany({
     data: items.map((i) => {
-      const unitPrice = Math.max(0, Math.round(i.unitPrice) || 0);
+      const p = priceCols(i);
       return {
       batchId: input.batchId,
       name: i.name.trim().slice(0, 200),
@@ -88,8 +99,10 @@ export async function saveRawBatch(input: {
       sku: clean(i.sku, 60),
       qty: Math.max(1, Math.round(i.qty) || 1),
       unit: i.unit?.trim() || null,
-      unitPrice,
-      sellPrice: computeSellPrice(unitPrice),
+      listPrice: p.listPrice,
+      discount: p.discount,
+      unitPrice: p.unitPrice,
+      sellPrice: p.sellPrice,
       supplier: i.supplier?.trim() || null,
       notaDate: i.notaDate ? new Date(i.notaDate) : null,
       notaPhotoKey: input.notaPhotoKey ?? null,
@@ -120,7 +133,7 @@ export async function updateRawProduct(id: string, fields: SaveItem): Promise<Ac
   const p = await prisma.rawProduct.findUnique({ where: { id } });
   if (!p || !owns(ctx, p.createdById)) return { ok: false, message: "Tidak ditemukan." };
   if (p.status !== "DRAFT") return { ok: false, message: "Hanya draft bisa diedit." };
-  const unitPrice = Math.max(0, Math.round(fields.unitPrice) || 0);
+  const pc = priceCols(fields);
   await prisma.rawProduct.update({
     where: { id },
     data: {
@@ -131,8 +144,10 @@ export async function updateRawProduct(id: string, fields: SaveItem): Promise<Ac
       sku: clean(fields.sku, 60),
       qty: Math.max(1, Math.round(fields.qty) || 1),
       unit: fields.unit?.trim() || null,
-      unitPrice,
-      sellPrice: computeSellPrice(unitPrice),
+      listPrice: pc.listPrice,
+      discount: pc.discount,
+      unitPrice: pc.unitPrice,
+      sellPrice: pc.sellPrice,
       supplier: fields.supplier?.trim() || null,
       notaDate: fields.notaDate ? new Date(fields.notaDate) : null,
     },
@@ -174,7 +189,7 @@ export async function saveRawItems(items: Array<SaveItem & { id: string }>): Pro
     items
       .filter((i) => allowed.has(i.id))
       .map((i) => {
-        const unitPrice = Math.max(0, Math.round(i.unitPrice) || 0);
+        const p = priceCols(i);
         return prisma.rawProduct.update({
           where: { id: i.id },
           data: {
@@ -185,8 +200,10 @@ export async function saveRawItems(items: Array<SaveItem & { id: string }>): Pro
             sku: clean(i.sku, 60),
             qty: Math.max(1, Math.round(i.qty) || 1),
             unit: i.unit?.trim() || null,
-            unitPrice,
-            sellPrice: computeSellPrice(unitPrice),
+            listPrice: p.listPrice,
+            discount: p.discount,
+            unitPrice: p.unitPrice,
+            sellPrice: p.sellPrice,
             supplier: i.supplier?.trim() || null,
             notaDate: i.notaDate ? new Date(i.notaDate) : null,
           },

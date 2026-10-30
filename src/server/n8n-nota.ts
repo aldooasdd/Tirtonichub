@@ -9,7 +9,8 @@ export type NotaItem = {
   sku: string | null;
   qty: number;
   unit: string | null;
-  unitPrice: number;
+  unitPrice: number; // @Harga per unit (harga list, sesuai PI)
+  totalPrice: number; // Total Harga baris (net setelah diskon, sesuai PI)
   supplier: string | null;
   notaDate: string | null; // "YYYY-MM-DD"
 };
@@ -24,21 +25,22 @@ function toInt(v: unknown): number {
   return Number.isFinite(n) ? Math.round(n) : 0;
 }
 
-/**
- * Harga satuan = harga net dibayar per unit, sesuai nota (sudah termasuk diskon
- * & PPN). Prefer total ÷ qty; tanpa total pakai harga satuan dari OCR.
- * PPN TIDAK ditambah di sini — prompt OCR yang gross-up bila nota PPN-exclusive.
- */
-export function computeUnitPrice(qty: number, totalPrice: number, unitPriceOcr: number): number {
+/** @Harga (list) + Total Harga (net) per baris, sesuai PI. Lengkapi yang hilang:
+ *  tanpa total → total = @Harga×qty; tanpa @Harga → @Harga = total/qty. */
+export function priceFields(qty: number, unitPriceOcr: number, totalPriceOcr: number): { unitPrice: number; totalPrice: number } {
   const q = Math.max(1, qty || 1);
-  const base = totalPrice > 0 ? totalPrice / q : unitPriceOcr;
-  return Math.max(0, Math.round(base));
+  const atHarga = Math.max(0, Math.round(unitPriceOcr));
+  const total = Math.max(0, Math.round(totalPriceOcr));
+  const unitPrice = atHarga > 0 ? atHarga : total > 0 ? Math.round(total / q) : 0;
+  const totalPrice = total > 0 ? total : unitPrice * q;
+  return { unitPrice, totalPrice };
 }
 
 function normalize(raw: unknown): NotaItem {
   const o = (raw ?? {}) as Record<string, unknown>;
   const date = typeof o.notaDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(o.notaDate) ? o.notaDate : null;
   const qty = Math.max(1, toInt(o.qty) || 1);
+  const { unitPrice, totalPrice } = priceFields(qty, toInt(o.unitPrice), toInt(o.totalPrice));
   return {
     name: String(o.name ?? "").slice(0, 200),
     brand: str(o.brand, 80),
@@ -47,7 +49,8 @@ function normalize(raw: unknown): NotaItem {
     sku: str(o.sku, 60),
     qty,
     unit: o.unit ? String(o.unit).slice(0, 20) : null,
-    unitPrice: computeUnitPrice(qty, toInt(o.totalPrice), toInt(o.unitPrice)),
+    unitPrice,
+    totalPrice,
     supplier: o.supplier ? String(o.supplier).slice(0, 120) : null,
     notaDate: date,
   };

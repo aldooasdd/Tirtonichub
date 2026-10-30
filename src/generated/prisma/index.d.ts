@@ -30273,12 +30273,16 @@ export namespace Prisma {
 
   export type RawProductAvgAggregateOutputType = {
     qty: number | null
+    listPrice: number | null
+    discount: number | null
     unitPrice: number | null
     sellPrice: number | null
   }
 
   export type RawProductSumAggregateOutputType = {
     qty: number | null
+    listPrice: number | null
+    discount: number | null
     unitPrice: number | null
     sellPrice: number | null
   }
@@ -30293,6 +30297,8 @@ export namespace Prisma {
     sku: string | null
     qty: number | null
     unit: string | null
+    listPrice: number | null
+    discount: number | null
     unitPrice: number | null
     sellPrice: number | null
     supplier: string | null
@@ -30318,6 +30324,8 @@ export namespace Prisma {
     sku: string | null
     qty: number | null
     unit: string | null
+    listPrice: number | null
+    discount: number | null
     unitPrice: number | null
     sellPrice: number | null
     supplier: string | null
@@ -30343,6 +30351,8 @@ export namespace Prisma {
     sku: number
     qty: number
     unit: number
+    listPrice: number
+    discount: number
     unitPrice: number
     sellPrice: number
     supplier: number
@@ -30362,12 +30372,16 @@ export namespace Prisma {
 
   export type RawProductAvgAggregateInputType = {
     qty?: true
+    listPrice?: true
+    discount?: true
     unitPrice?: true
     sellPrice?: true
   }
 
   export type RawProductSumAggregateInputType = {
     qty?: true
+    listPrice?: true
+    discount?: true
     unitPrice?: true
     sellPrice?: true
   }
@@ -30382,6 +30396,8 @@ export namespace Prisma {
     sku?: true
     qty?: true
     unit?: true
+    listPrice?: true
+    discount?: true
     unitPrice?: true
     sellPrice?: true
     supplier?: true
@@ -30407,6 +30423,8 @@ export namespace Prisma {
     sku?: true
     qty?: true
     unit?: true
+    listPrice?: true
+    discount?: true
     unitPrice?: true
     sellPrice?: true
     supplier?: true
@@ -30432,6 +30450,8 @@ export namespace Prisma {
     sku?: true
     qty?: true
     unit?: true
+    listPrice?: true
+    discount?: true
     unitPrice?: true
     sellPrice?: true
     supplier?: true
@@ -30544,6 +30564,8 @@ export namespace Prisma {
     sku: string | null
     qty: number
     unit: string | null
+    listPrice: number
+    discount: number
     unitPrice: number
     sellPrice: number | null
     supplier: string | null
@@ -30588,6 +30610,8 @@ export namespace Prisma {
     sku?: boolean
     qty?: boolean
     unit?: boolean
+    listPrice?: boolean
+    discount?: boolean
     unitPrice?: boolean
     sellPrice?: boolean
     supplier?: boolean
@@ -30615,6 +30639,8 @@ export namespace Prisma {
     sku?: boolean
     qty?: boolean
     unit?: boolean
+    listPrice?: boolean
+    discount?: boolean
     unitPrice?: boolean
     sellPrice?: boolean
     supplier?: boolean
@@ -30642,6 +30668,8 @@ export namespace Prisma {
     sku?: boolean
     qty?: boolean
     unit?: boolean
+    listPrice?: boolean
+    discount?: boolean
     unitPrice?: boolean
     sellPrice?: boolean
     supplier?: boolean
@@ -30669,6 +30697,8 @@ export namespace Prisma {
     sku?: boolean
     qty?: boolean
     unit?: boolean
+    listPrice?: boolean
+    discount?: boolean
     unitPrice?: boolean
     sellPrice?: boolean
     supplier?: boolean
@@ -30684,7 +30714,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type RawProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "batchId" | "name" | "brand" | "color" | "size" | "sku" | "qty" | "unit" | "unitPrice" | "sellPrice" | "supplier" | "notaDate" | "notaPhotoKey" | "qcPhotoKey" | "status" | "createdById" | "qcById" | "qcAt" | "qcNote" | "createdAt" | "updatedAt", ExtArgs["result"]["rawProduct"]>
+  export type RawProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "batchId" | "name" | "brand" | "color" | "size" | "sku" | "qty" | "unit" | "listPrice" | "discount" | "unitPrice" | "sellPrice" | "supplier" | "notaDate" | "notaPhotoKey" | "qcPhotoKey" | "status" | "createdById" | "qcById" | "qcAt" | "qcNote" | "createdAt" | "updatedAt", ExtArgs["result"]["rawProduct"]>
   export type RawProductInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
     qcBy?: boolean | RawProduct$qcByArgs<ExtArgs>
@@ -30714,6 +30744,8 @@ export namespace Prisma {
       sku: string | null
       qty: number
       unit: string | null
+      listPrice: number
+      discount: number
       unitPrice: number
       sellPrice: number | null
       supplier: string | null
@@ -31161,6 +31193,8 @@ export namespace Prisma {
     readonly sku: FieldRef<"RawProduct", 'String'>
     readonly qty: FieldRef<"RawProduct", 'Int'>
     readonly unit: FieldRef<"RawProduct", 'String'>
+    readonly listPrice: FieldRef<"RawProduct", 'Int'>
+    readonly discount: FieldRef<"RawProduct", 'Int'>
     readonly unitPrice: FieldRef<"RawProduct", 'Int'>
     readonly sellPrice: FieldRef<"RawProduct", 'Int'>
     readonly supplier: FieldRef<"RawProduct", 'String'>
@@ -47344,6 +47378,8 @@ export namespace Prisma {
     sku: 'sku',
     qty: 'qty',
     unit: 'unit',
+    listPrice: 'listPrice',
+    discount: 'discount',
     unitPrice: 'unitPrice',
     sellPrice: 'sellPrice',
     supplier: 'supplier',
@@ -49632,6 +49668,8 @@ export namespace Prisma {
     sku?: StringNullableFilter<"RawProduct"> | string | null
     qty?: IntFilter<"RawProduct"> | number
     unit?: StringNullableFilter<"RawProduct"> | string | null
+    listPrice?: IntFilter<"RawProduct"> | number
+    discount?: IntFilter<"RawProduct"> | number
     unitPrice?: IntFilter<"RawProduct"> | number
     sellPrice?: IntNullableFilter<"RawProduct"> | number | null
     supplier?: StringNullableFilter<"RawProduct"> | string | null
@@ -49659,6 +49697,8 @@ export namespace Prisma {
     sku?: SortOrderInput | SortOrder
     qty?: SortOrder
     unit?: SortOrderInput | SortOrder
+    listPrice?: SortOrder
+    discount?: SortOrder
     unitPrice?: SortOrder
     sellPrice?: SortOrderInput | SortOrder
     supplier?: SortOrderInput | SortOrder
@@ -49689,6 +49729,8 @@ export namespace Prisma {
     sku?: StringNullableFilter<"RawProduct"> | string | null
     qty?: IntFilter<"RawProduct"> | number
     unit?: StringNullableFilter<"RawProduct"> | string | null
+    listPrice?: IntFilter<"RawProduct"> | number
+    discount?: IntFilter<"RawProduct"> | number
     unitPrice?: IntFilter<"RawProduct"> | number
     sellPrice?: IntNullableFilter<"RawProduct"> | number | null
     supplier?: StringNullableFilter<"RawProduct"> | string | null
@@ -49716,6 +49758,8 @@ export namespace Prisma {
     sku?: SortOrderInput | SortOrder
     qty?: SortOrder
     unit?: SortOrderInput | SortOrder
+    listPrice?: SortOrder
+    discount?: SortOrder
     unitPrice?: SortOrder
     sellPrice?: SortOrderInput | SortOrder
     supplier?: SortOrderInput | SortOrder
@@ -49749,6 +49793,8 @@ export namespace Prisma {
     sku?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
     qty?: IntWithAggregatesFilter<"RawProduct"> | number
     unit?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
+    listPrice?: IntWithAggregatesFilter<"RawProduct"> | number
+    discount?: IntWithAggregatesFilter<"RawProduct"> | number
     unitPrice?: IntWithAggregatesFilter<"RawProduct"> | number
     sellPrice?: IntNullableWithAggregatesFilter<"RawProduct"> | number | null
     supplier?: StringNullableWithAggregatesFilter<"RawProduct"> | string | null
@@ -52828,6 +52874,8 @@ export namespace Prisma {
     sku?: string | null
     qty?: number
     unit?: string | null
+    listPrice?: number
+    discount?: number
     unitPrice?: number
     sellPrice?: number | null
     supplier?: string | null
@@ -52853,6 +52901,8 @@ export namespace Prisma {
     sku?: string | null
     qty?: number
     unit?: string | null
+    listPrice?: number
+    discount?: number
     unitPrice?: number
     sellPrice?: number | null
     supplier?: string | null
@@ -52878,6 +52928,8 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
+    listPrice?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
     sellPrice?: NullableIntFieldUpdateOperationsInput | number | null
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52903,6 +52955,8 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
+    listPrice?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
     sellPrice?: NullableIntFieldUpdateOperationsInput | number | null
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52928,6 +52982,8 @@ export namespace Prisma {
     sku?: string | null
     qty?: number
     unit?: string | null
+    listPrice?: number
+    discount?: number
     unitPrice?: number
     sellPrice?: number | null
     supplier?: string | null
@@ -52953,6 +53009,8 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
+    listPrice?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
     sellPrice?: NullableIntFieldUpdateOperationsInput | number | null
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
@@ -52976,6 +53034,8 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
+    listPrice?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
     sellPrice?: NullableIntFieldUpdateOperationsInput | number | null
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
@@ -55804,6 +55864,8 @@ export namespace Prisma {
     sku?: SortOrder
     qty?: SortOrder
     unit?: SortOrder
+    listPrice?: SortOrder
+    discount?: SortOrder
     unitPrice?: SortOrder
     sellPrice?: SortOrder
     supplier?: SortOrder
@@ -55821,6 +55883,8 @@ export namespace Prisma {
 
   export type RawProductAvgOrderByAggregateInput = {
     qty?: SortOrder
+    listPrice?: SortOrder
+    discount?: SortOrder
     unitPrice?: SortOrder
     sellPrice?: SortOrder
   }
@@ -55835,6 +55899,8 @@ export namespace Prisma {
     sku?: SortOrder
     qty?: SortOrder
     unit?: SortOrder
+    listPrice?: SortOrder
+    discount?: SortOrder
     unitPrice?: SortOrder
     sellPrice?: SortOrder
     supplier?: SortOrder
@@ -55860,6 +55926,8 @@ export namespace Prisma {
     sku?: SortOrder
     qty?: SortOrder
     unit?: SortOrder
+    listPrice?: SortOrder
+    discount?: SortOrder
     unitPrice?: SortOrder
     sellPrice?: SortOrder
     supplier?: SortOrder
@@ -55877,6 +55945,8 @@ export namespace Prisma {
 
   export type RawProductSumOrderByAggregateInput = {
     qty?: SortOrder
+    listPrice?: SortOrder
+    discount?: SortOrder
     unitPrice?: SortOrder
     sellPrice?: SortOrder
   }
@@ -59214,6 +59284,8 @@ export namespace Prisma {
     sku?: string | null
     qty?: number
     unit?: string | null
+    listPrice?: number
+    discount?: number
     unitPrice?: number
     sellPrice?: number | null
     supplier?: string | null
@@ -59238,6 +59310,8 @@ export namespace Prisma {
     sku?: string | null
     qty?: number
     unit?: string | null
+    listPrice?: number
+    discount?: number
     unitPrice?: number
     sellPrice?: number | null
     supplier?: string | null
@@ -59272,6 +59346,8 @@ export namespace Prisma {
     sku?: string | null
     qty?: number
     unit?: string | null
+    listPrice?: number
+    discount?: number
     unitPrice?: number
     sellPrice?: number | null
     supplier?: string | null
@@ -59296,6 +59372,8 @@ export namespace Prisma {
     sku?: string | null
     qty?: number
     unit?: string | null
+    listPrice?: number
+    discount?: number
     unitPrice?: number
     sellPrice?: number | null
     supplier?: string | null
@@ -60057,6 +60135,8 @@ export namespace Prisma {
     sku?: StringNullableFilter<"RawProduct"> | string | null
     qty?: IntFilter<"RawProduct"> | number
     unit?: StringNullableFilter<"RawProduct"> | string | null
+    listPrice?: IntFilter<"RawProduct"> | number
+    discount?: IntFilter<"RawProduct"> | number
     unitPrice?: IntFilter<"RawProduct"> | number
     sellPrice?: IntNullableFilter<"RawProduct"> | number | null
     supplier?: StringNullableFilter<"RawProduct"> | string | null
@@ -66025,6 +66105,8 @@ export namespace Prisma {
     sku?: string | null
     qty?: number
     unit?: string | null
+    listPrice?: number
+    discount?: number
     unitPrice?: number
     sellPrice?: number | null
     supplier?: string | null
@@ -66049,6 +66131,8 @@ export namespace Prisma {
     sku?: string | null
     qty?: number
     unit?: string | null
+    listPrice?: number
+    discount?: number
     unitPrice?: number
     sellPrice?: number | null
     supplier?: string | null
@@ -66557,6 +66641,8 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
+    listPrice?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
     sellPrice?: NullableIntFieldUpdateOperationsInput | number | null
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
@@ -66581,6 +66667,8 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
+    listPrice?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
     sellPrice?: NullableIntFieldUpdateOperationsInput | number | null
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
@@ -66605,6 +66693,8 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
+    listPrice?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
     sellPrice?: NullableIntFieldUpdateOperationsInput | number | null
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
@@ -66629,6 +66719,8 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
+    listPrice?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
     sellPrice?: NullableIntFieldUpdateOperationsInput | number | null
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
@@ -66653,6 +66745,8 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
+    listPrice?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
     sellPrice?: NullableIntFieldUpdateOperationsInput | number | null
     supplier?: NullableStringFieldUpdateOperationsInput | string | null
@@ -66677,6 +66771,8 @@ export namespace Prisma {
     sku?: NullableStringFieldUpdateOperationsInput | string | null
     qty?: IntFieldUpdateOperationsInput | number
     unit?: NullableStringFieldUpdateOperationsInput | string | null
+    listPrice?: IntFieldUpdateOperationsInput | number
+    discount?: IntFieldUpdateOperationsInput | number
     unitPrice?: IntFieldUpdateOperationsInput | number
     sellPrice?: NullableIntFieldUpdateOperationsInput | number | null
     supplier?: NullableStringFieldUpdateOperationsInput | string | null

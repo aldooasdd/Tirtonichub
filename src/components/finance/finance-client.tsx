@@ -32,7 +32,9 @@ type Item = {
   sku: string | null;
   qty: number;
   unit: string | null;
-  unitPrice: number;
+  listPrice: number; // @Harga per unit (sesuai PI)
+  discount: number; // Diskon baris (rupiah)
+  unitPrice: number; // modal net/unit
   sellPrice: number | null;
   supplier: string | null;
   notaDate: string | null;
@@ -41,7 +43,7 @@ type Item = {
   qcByName: string | null;
 };
 
-const EMPTY_ITEM = { name: "Produk 1", brand: null, color: null, size: null, sku: null, qty: 1, unit: null, unitPrice: 0, supplier: null, notaDate: null };
+const EMPTY_ITEM = { name: "Produk 1", brand: null, color: null, size: null, sku: null, qty: 1, unit: null, listPrice: 0, discount: 0, unitPrice: 0, supplier: null, notaDate: null };
 
 const STATUS_LABEL: Record<Item["status"], string> = {
   DRAFT: "Draft",
@@ -99,11 +101,19 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
       const b = brandByKey(brandKey);
       const parsed = scan.items ?? [];
       // Stempel brand+distributor pilihan sebagai label (kalau OCR kosong).
-      const toSave = (parsed.length > 0 ? parsed : [EMPTY_ITEM]).map((it) => ({
-        ...it,
-        brand: it.brand ?? b?.brand ?? null,
-        supplier: it.supplier ?? b?.distributor ?? null,
-      }));
+      // @Harga = it.unitPrice; Diskon = @Harga×qty − Total (sesuai PI).
+      const toSave = (parsed.length > 0 ? parsed : [EMPTY_ITEM]).map((it) => {
+        const qty = Math.max(1, it.qty || 1);
+        const listPrice = it.unitPrice;
+        const total = "totalPrice" in it ? it.totalPrice : listPrice * qty;
+        return {
+          ...it,
+          brand: it.brand ?? b?.brand ?? null,
+          supplier: it.supplier ?? b?.distributor ?? null,
+          listPrice,
+          discount: Math.max(0, listPrice * qty - total),
+        };
+      });
       const r = await saveRawBatch({ batchId: scan.batchId, notaPhotoKey: scan.notaPhotoKey, items: toSave });
       if (!r.ok) setMsg(r.message ?? "Gagal simpan.");
       else setMsg(scan.ocr ? `Nota terbaca: ${parsed.length} item. Cek & edit di bawah.` : "OCR belum aktif — kartu kosong dibuat, isi manual.");
@@ -260,7 +270,8 @@ type Row = {
   sku: string;
   qty: string;
   unit: string;
-  unitPrice: string;
+  listPrice: string; // @Harga per unit
+  discount: string; // Diskon baris
   supplier: string;
   notaDate: string;
 };
@@ -274,12 +285,14 @@ function toRow(i: Item): Row {
     sku: i.sku ?? "",
     qty: String(i.qty),
     unit: i.unit ?? "",
-    unitPrice: String(i.unitPrice),
+    listPrice: String(i.listPrice),
+    discount: String(i.discount),
     supplier: i.supplier ?? "",
     notaDate: i.notaDate ?? "",
   };
 }
 function toFields(r: Row) {
+  const listPrice = Number(r.listPrice) || 0;
   return {
     name: r.name,
     brand: r.brand || null,
@@ -288,10 +301,16 @@ function toFields(r: Row) {
     sku: r.sku || null,
     qty: Number(r.qty),
     unit: r.unit || null,
-    unitPrice: Number(r.unitPrice),
+    listPrice,
+    discount: Number(r.discount) || 0,
+    unitPrice: listPrice, // kompat: priceCols pakai listPrice bila ada
     supplier: r.supplier || null,
     notaDate: r.notaDate || null,
   };
+}
+/** Total Harga baris = @Harga×qty − Diskon (sesuai PI). */
+function rowTotal(r: Row): number {
+  return Math.max(0, (Number(r.listPrice) || 0) * (Number(r.qty) || 0) - (Number(r.discount) || 0));
 }
 
 function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
@@ -386,6 +405,7 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
         const head = g[0];
         const ids = new Set(g.map((r) => r.id));
         const totalQty = g.reduce((s, r) => s + (Number(r.qty) || 0), 0);
+        const groupNet = g.reduce((s, r) => s + rowTotal(r), 0);
         return (
           <div key={g.map((r) => r.id).sort().join(",")} className="space-y-2 rounded-md border p-3">
             <Field label="Nama barang">
@@ -401,8 +421,8 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
               <Field label="Satuan">
                 <Input value={head.unit} onChange={(e) => setShared(ids, "unit", e.target.value)} placeholder="pcs" />
               </Field>
-              <Field label="Harga/unit">
-                <Input type="number" value={head.unitPrice} onChange={(e) => setShared(ids, "unitPrice", e.target.value)} placeholder="Harga/unit" />
+              <Field label="@Harga">
+                <Input type="number" value={head.listPrice} onChange={(e) => setShared(ids, "listPrice", e.target.value)} placeholder="@Harga" />
               </Field>
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -415,21 +435,31 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
             </div>
 
             <div className="space-y-1">
-              <span className="block text-12 text-muted-foreground">Ukuran masuk ({totalQty} pcs)</span>
+              <div className="grid grid-cols-[1fr_auto_1fr_1.2fr_auto] items-center gap-2 text-12 text-muted-foreground">
+                <span>Ukuran ({totalQty} pcs)</span>
+                <span className="w-16 text-center">Qty</span>
+                <span>Diskon</span>
+                <span>SKU</span>
+                <span className="w-8" />
+              </div>
               {g.map((row) => (
-                <div key={row.id} className="grid grid-cols-[1fr_auto_1.2fr_auto] items-center gap-2">
-                  <Input value={row.size} onChange={(e) => setSize(row.id, "size", e.target.value)} placeholder="Ukuran" />
-                  <Input type="number" className="w-20" value={row.qty} onChange={(e) => setSize(row.id, "qty", e.target.value)} placeholder="Qty" />
-                  <Input value={row.sku} onChange={(e) => setSize(row.id, "sku", e.target.value)} placeholder="SKU" />
-                  <Button size="icon" variant="ghost" disabled={pending} onClick={() => deleteSize(row.id)} aria-label="Hapus ukuran">
-                    <Trash2 className="h-4 w-4" />
-                  </Button>
+                <div key={row.id} className="space-y-1">
+                  <div className="grid grid-cols-[1fr_auto_1fr_1.2fr_auto] items-center gap-2">
+                    <Input value={row.size} onChange={(e) => setSize(row.id, "size", e.target.value)} placeholder="Ukuran" />
+                    <Input type="number" className="w-16" value={row.qty} onChange={(e) => setSize(row.id, "qty", e.target.value)} placeholder="Qty" />
+                    <Input type="number" value={row.discount} onChange={(e) => setSize(row.id, "discount", e.target.value)} placeholder="0" />
+                    <Input value={row.sku} onChange={(e) => setSize(row.id, "sku", e.target.value)} placeholder="SKU" />
+                    <Button size="icon" variant="ghost" disabled={pending} onClick={() => deleteSize(row.id)} aria-label="Hapus ukuran">
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                  </div>
+                  <p className="pl-1 text-12 text-muted-foreground">Total Harga: Rp {rupiah.format(rowTotal(row))}</p>
                 </div>
               ))}
             </div>
 
             <p className="text-12 text-muted-foreground">
-              Harga jual (×135%×115%, bulat 5rb): Rp {rupiah.format(computeSellPrice(Number(head.unitPrice) || 0))}
+              Harga jual/unit (net ×135%×115%, bulat 5rb): Rp {rupiah.format(computeSellPrice(groupNet > 0 && totalQty > 0 ? Math.round(groupNet / totalQty) : 0))}
             </p>
             <Button size="sm" variant="secondary" className="w-full" disabled={pending} onClick={() => saveGroup(g)}>
               Simpan & Kirim ke QC

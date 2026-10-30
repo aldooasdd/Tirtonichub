@@ -402,6 +402,8 @@ exports.Prisma.RawProductScalarFieldEnum = {
   sku: 'sku',
   qty: 'qty',
   unit: 'unit',
+  listPrice: 'listPrice',
+  discount: 'discount',
   unitPrice: 'unitPrice',
   sellPrice: 'sellPrice',
   supplier: 'supplier',
