@@ -247,6 +247,7 @@ exports.Prisma.CashSessionScalarFieldEnum = {
   id: 'id',
   branchId: 'branchId',
   date: 'date',
+  shift: 'shift',
   openCash: 'openCash',
   openMandiri: 'openMandiri',
   openBca: 'openBca',

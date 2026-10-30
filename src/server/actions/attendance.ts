@@ -135,12 +135,12 @@ export async function checkOut(form: FormData): Promise<ActionResult> {
       return { ok: false, message: `Absen pulang bisa setelah shift berakhir (${schedule.end}).` };
   }
 
-  // Hanya perwakilan (yang buka saldo kasir) wajib tutup dulu sebelum pulang. Sales lain bebas.
+  // Yang buka saldo kasir (shift-nya) wajib tutup dulu sebelum pulang. Sales lain bebas.
   if (ctx.activeRole === "SALES" && user.branchId) {
-    const sess = await prisma.cashSession.findUnique({
-      where: { branchId_date: { branchId: user.branchId, date: dateKey } },
+    const sess = await prisma.cashSession.findFirst({
+      where: { branchId: user.branchId, date: dateKey, openedById: ctx.userId, closedAt: null },
     });
-    if (sess && sess.openedById === ctx.userId && !sess.closedAt)
+    if (sess)
       return { ok: false, message: "Kamu yang buka saldo kasir — tutup saldo (saldo akhir) dulu sebelum pulang." };
   }
 

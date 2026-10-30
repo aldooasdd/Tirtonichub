@@ -269,6 +269,7 @@ model CashSession {
   branchId    String
   branch      Branch   @relation(fields: [branchId], references: [id])
   date        DateTime @db.Date
+  shift       String   // PAGI (P) | SIANG (S): 1 orang buka & wajib tutup per shift
   openCash    Int      @default(0)
   openMandiri Int      @default(0)
   openBca     Int      @default(0)
@@ -282,7 +283,7 @@ model CashSession {
   closedById   String?
   closedAt     DateTime?
 
-  @@unique([branchId, date])
+  @@unique([branchId, date, shift])
 }
 
 model WorkSchedule {

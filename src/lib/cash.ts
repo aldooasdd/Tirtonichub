@@ -22,6 +22,16 @@ export function bucketOf(method: string): keyof Buckets | null {
   return "cash"; // Tunai & lainnya
 }
 
+export type KasirShift = "PAGI" | "SIANG";
+export const SHIFT_LABEL: Record<KasirShift, string> = { PAGI: "Pagi", SIANG: "Siang" };
+
+/** Kode jadwal → shift kasir. P/LONG = Pagi, S = Siang, lainnya (OH/O/WFH/…) tak buka kasir. */
+export function kasirShift(code: string): KasirShift | null {
+  if (code === "P" || code === "LONG") return "PAGI";
+  if (code === "S") return "SIANG";
+  return null;
+}
+
 /** Rentang UTC untuk 1 hari WIB (dateKey = UTC midnight tanggal WIB). */
 function dayRange(dateKey: Date) {
   const start = new Date(dateKey.getTime() - 7 * 3600_000); // WIB 00:00
@@ -50,21 +60,25 @@ export async function loadBranchCashBoards(dateKey: Date): Promise<BranchCashBoa
       orderBy: { name: "asc" },
       select: { id: true, name: true },
     }),
-    prisma.cashSession.findMany({ where: { date: dateKey } }),
+    prisma.cashSession.findMany({ where: { date: dateKey }, orderBy: { openedAt: "asc" } }),
   ]);
-  const byBranch = new Map(sessions.map((s) => [s.branchId, s]));
+  // Bisa 2 sesi/cabang (Pagi+Siang, laci sama). Saldo awal = buka paling pagi; akhir = tutup sesi terakhir.
+  const byBranch = new Map<string, typeof sessions>();
+  for (const s of sessions) (byBranch.get(s.branchId) ?? byBranch.set(s.branchId, []).get(s.branchId)!).push(s);
   return Promise.all(
     branches.map(async (branch) => {
-      const s = byBranch.get(branch.id) ?? null;
-      const open: Buckets = s
-        ? { cash: s.openCash, mandiri: s.openMandiri, bca: s.openBca, bri: s.openBri }
+      const list = byBranch.get(branch.id) ?? [];
+      const first = list[0] ?? null; // paling pagi
+      const last = list[list.length - 1] ?? null; // shift terakhir
+      const open: Buckets = first
+        ? { cash: first.openCash, mandiri: first.openMandiri, bca: first.openBca, bri: first.openBri }
         : zeroBuckets();
       const report = await computeBranchCash(branch.id, dateKey, open);
       const close =
-        s?.closedAt != null
-          ? { cash: s.closeCash ?? 0, mandiri: s.closeMandiri ?? 0, bca: s.closeBca ?? 0, bri: s.closeBri ?? 0 }
+        last?.closedAt != null
+          ? { cash: last.closeCash ?? 0, mandiri: last.closeMandiri ?? 0, bca: last.closeBca ?? 0, bri: last.closeBri ?? 0 }
           : null;
-      return { branch, opened: !!s, open, report, close };
+      return { branch, opened: list.length > 0, open, report, close };
     }),
   );
 }
@@ -114,6 +128,7 @@ export type CashSessionRow = {
   branchId: string;
   branch: string;
   date: Date;
+  shift: string;
   openAt: Date;
   openBy: string;
   open: Buckets;
@@ -137,6 +152,7 @@ export async function loadCashSessions(take = 40): Promise<CashSessionRow[]> {
     branchId: s.branchId,
     branch: s.branch.name,
     date: s.date,
+    shift: s.shift,
     openAt: s.openedAt,
     openBy: name.get(s.openedById) ?? "-",
     open: { cash: s.openCash, mandiri: s.openMandiri, bca: s.openBca, bri: s.openBri },
