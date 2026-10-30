@@ -9,6 +9,8 @@ import { makeKey, putObject } from "@/server/storage";
 import { notifyBosses, notifyRole, notifyBranchHeads } from "@/server/notify";
 import { parseSalesNotaViaN8n, type SalesItem, type SalesPayment } from "@/server/n8n-sales";
 import { REPORT_CATEGORIES, REPORT_LABEL, type ReportCategory } from "@/lib/sales-report";
+import { sendGowa } from "@/server/wa";
+import type { RoleCode } from "@/generated/prisma";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -348,12 +350,30 @@ export async function reportSalesError(id: string, category: string, note: strin
   await logActivity({ ...ctx, ip }, { action: "sales_report_error", entity: "SalesReport", entityId: id });
   const rupiah = new Intl.NumberFormat("id-ID").format(rep.grandTotal);
   const title = `Report salah-input (${REPORT_LABEL[cat]}): Rp ${rupiah}${rep.salesman ? ` · ${rep.salesman}` : ""}`;
+  const secondary: RoleCode = cat === "PEMBAYARAN" ? "FINANCE" : "STOCK_ROOM";
+  const secLink = cat === "PEMBAYARAN" ? "/finance/report-penjualan" : "/stok/report-penjualan";
   await notifyBranchHeads(rep.branchId, { type: "sales_report_error", title, body: ket.slice(0, 200), link: "/cabang/approval-penjualan" });
-  if (cat === "PEMBAYARAN") {
-    await notifyRole("FINANCE", { type: "sales_report_error", title, body: ket.slice(0, 200), link: "/finance/report-penjualan" });
-  } else {
-    await notifyRole("STOCK_ROOM", { type: "sales_report_error", title, body: ket.slice(0, 200), link: "/stok/report-penjualan" });
-  }
+  await notifyRole(secondary, { type: "sales_report_error", title, body: ket.slice(0, 200), link: secLink });
+
+  // WA via GOWA ke Kepala Cabang cabang itu + role sekunder (Finance/Stok).
+  const recipients = await prisma.userRole.findMany({
+    where: {
+      user: { isActive: true, waNumber: { not: "" } },
+      OR: [
+        { role: { code: "HEAD_BRANCH" }, user: { branchId: rep.branchId ?? "__none__" } },
+        { role: { code: secondary } },
+      ],
+    },
+    select: { user: { select: { waNumber: true } } },
+  });
+  const waMsg =
+    `*Report Salah-Input Penjualan*\n` +
+    `Jenis: ${REPORT_LABEL[cat]}\n` +
+    `Nominal: Rp ${rupiah}${rep.salesman ? `\nSales: ${rep.salesman}` : ""}\n` +
+    `Keterangan: ${ket}\n\n` +
+    `Cek detail datanya di dashboard Tirtonichub.`;
+  const nums = [...new Set(recipients.map((r) => r.user.waNumber).filter(Boolean))];
+  await Promise.allSettled(nums.map((n) => sendGowa(n, waMsg)));
   return { ok: true };
 }
 
