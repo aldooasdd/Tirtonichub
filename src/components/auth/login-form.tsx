@@ -65,6 +65,9 @@ export function LoginForm() {
           <Button type="submit" className="w-full" disabled={pending}>
             {pending ? "Memeriksa…" : "Masuk"}
           </Button>
+          <p className="text-center text-13 text-white/60">
+            <a href="/lupa-password" className="underline hover:text-white">Lupa password?</a>
+          </p>
         </form>
       </CardContent>
     </Card>

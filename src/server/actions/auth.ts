@@ -3,8 +3,11 @@
 import { redirect } from "next/navigation";
 import { prisma } from "@/server/db";
 import { emailSchema, passwordSchema } from "@/lib/validation";
+import { randomInt } from "node:crypto";
 import { hashPassword, verifyPassword, DEFAULT_PASSWORD } from "@/server/auth/password";
-import { createSession, destroyCurrentSession, setActiveRole } from "@/server/auth/session";
+import { hashValue, safeEqualHex } from "@/server/auth/hash";
+import { sendGowa } from "@/server/wa";
+import { createSession, destroyCurrentSession, setActiveRole, revokeAllSessions } from "@/server/auth/session";
 import { getSession } from "@/server/auth/session";
 import { requireAuth } from "@/server/auth/rbac";
 import { rateLimit } from "@/server/rate-limit";
@@ -73,4 +76,59 @@ export async function selectRoleAction(role: string): Promise<ActionResult> {
 export async function logoutAction() {
   await destroyCurrentSession();
   redirect("/login");
+}
+
+/** Nomor → bagian nasional (buang 62/0 depan) untuk cocokkan waNumber apa pun formatnya. */
+function normalizeNational(phone: string): string {
+  let d = (phone || "").replace(/\D/g, "");
+  if (d.startsWith("62")) d = d.slice(2);
+  else if (d.startsWith("0")) d = d.slice(1);
+  return d;
+}
+
+/** Lupa password #1: kirim OTP ke WA (gowa). Pesan selalu generik (anti-enumerasi). */
+export async function requestPasswordOtp(waNumber: string): Promise<ActionResult> {
+  const { ip } = await clientMeta();
+  if (!rateLimit(`otp:ip:${ip ?? "x"}`, 5, 300)) return { ok: false, message: "Terlalu banyak permintaan. Coba lagi nanti." };
+  const national = normalizeNational(waNumber);
+  if (national.length < 8) return { ok: false, message: "Nomor WA tidak valid." };
+  rateLimit(`otp:no:${national}`, 3, 300);
+
+  const user = await prisma.user.findFirst({ where: { isActive: true, waNumber: { contains: national } } });
+  if (user) {
+    const otp = String(randomInt(0, 1_000_000)).padStart(6, "0");
+    await prisma.user.update({
+      where: { id: user.id },
+      data: { resetCodeHash: hashValue(otp), resetExpiresAt: new Date(Date.now() + 10 * 60_000), resetAttempts: 0 },
+    });
+    await sendGowa(user.waNumber, `Kode OTP reset password Tirtonichub: ${otp}. Berlaku 10 menit. Jangan bagikan ke siapa pun.`);
+  }
+  return { ok: true }; // selalu ok: jangan bocorkan apakah nomor terdaftar
+}
+
+/** Lupa password #2: verifikasi OTP → set password baru + konfirmasi. Revoke semua sesi. */
+export async function resetPasswordWithOtp(waNumber: string, otp: string, newPass: string, confirm: string): Promise<ActionResult> {
+  const { ip } = await clientMeta();
+  if (!rateLimit(`otpverify:ip:${ip ?? "x"}`, 10, 300)) return { ok: false, message: "Terlalu banyak percobaan. Coba lagi nanti." };
+  if (newPass !== confirm) return { ok: false, message: "Konfirmasi password tidak cocok." };
+  const p = passwordSchema.safeParse(newPass);
+  if (!p.success) return { ok: false, message: p.error.issues[0]?.message ?? "Password tidak valid." };
+
+  const national = normalizeNational(waNumber);
+  const code = (otp || "").replace(/\D/g, "");
+  const user = await prisma.user.findFirst({ where: { isActive: true, waNumber: { contains: national } } });
+  if (!user || !user.resetCodeHash || !user.resetExpiresAt || user.resetExpiresAt < new Date())
+    return { ok: false, message: "OTP salah atau kedaluwarsa." };
+  if (user.resetAttempts >= 5) return { ok: false, message: "Terlalu banyak percobaan OTP. Minta OTP baru." };
+  if (!safeEqualHex(hashValue(code), user.resetCodeHash)) {
+    await prisma.user.update({ where: { id: user.id }, data: { resetAttempts: { increment: 1 } } });
+    return { ok: false, message: "OTP salah atau kedaluwarsa." };
+  }
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { passwordHash: hashPassword(p.data), resetCodeHash: null, resetExpiresAt: null, resetAttempts: 0 },
+  });
+  await revokeAllSessions(user.id);
+  return { ok: true, message: "Password berhasil diganti. Silakan login." };
 }

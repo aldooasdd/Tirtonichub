@@ -4668,8 +4668,18 @@ export namespace Prisma {
 
   export type AggregateUser = {
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
+  }
+
+  export type UserAvgAggregateOutputType = {
+    resetAttempts: number | null
+  }
+
+  export type UserSumAggregateOutputType = {
+    resetAttempts: number | null
   }
 
   export type UserMinAggregateOutputType = {
@@ -4679,6 +4689,9 @@ export namespace Prisma {
     email: string | null
     waNumber: string | null
     passwordHash: string | null
+    resetCodeHash: string | null
+    resetExpiresAt: Date | null
+    resetAttempts: number | null
     avatarKey: string | null
     bio: string | null
     branchId: string | null
@@ -4697,6 +4710,9 @@ export namespace Prisma {
     email: string | null
     waNumber: string | null
     passwordHash: string | null
+    resetCodeHash: string | null
+    resetExpiresAt: Date | null
+    resetAttempts: number | null
     avatarKey: string | null
     bio: string | null
     branchId: string | null
@@ -4715,6 +4731,9 @@ export namespace Prisma {
     email: number
     waNumber: number
     passwordHash: number
+    resetCodeHash: number
+    resetExpiresAt: number
+    resetAttempts: number
     avatarKey: number
     bio: number
     branchId: number
@@ -4728,6 +4747,14 @@ export namespace Prisma {
   }
 
 
+  export type UserAvgAggregateInputType = {
+    resetAttempts?: true
+  }
+
+  export type UserSumAggregateInputType = {
+    resetAttempts?: true
+  }
+
   export type UserMinAggregateInputType = {
     id?: true
     fullName?: true
@@ -4735,6 +4762,9 @@ export namespace Prisma {
     email?: true
     waNumber?: true
     passwordHash?: true
+    resetCodeHash?: true
+    resetExpiresAt?: true
+    resetAttempts?: true
     avatarKey?: true
     bio?: true
     branchId?: true
@@ -4753,6 +4783,9 @@ export namespace Prisma {
     email?: true
     waNumber?: true
     passwordHash?: true
+    resetCodeHash?: true
+    resetExpiresAt?: true
+    resetAttempts?: true
     avatarKey?: true
     bio?: true
     branchId?: true
@@ -4771,6 +4804,9 @@ export namespace Prisma {
     email?: true
     waNumber?: true
     passwordHash?: true
+    resetCodeHash?: true
+    resetExpiresAt?: true
+    resetAttempts?: true
     avatarKey?: true
     bio?: true
     branchId?: true
@@ -4821,6 +4857,18 @@ export namespace Prisma {
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      * 
+     * Select which fields to average
+    **/
+    _avg?: UserAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: UserSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType
@@ -4851,6 +4899,8 @@ export namespace Prisma {
     take?: number
     skip?: number
     _count?: UserCountAggregateInputType | true
+    _avg?: UserAvgAggregateInputType
+    _sum?: UserSumAggregateInputType
     _min?: UserMinAggregateInputType
     _max?: UserMaxAggregateInputType
   }
@@ -4862,6 +4912,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash: string | null
+    resetCodeHash: string | null
+    resetExpiresAt: Date | null
+    resetAttempts: number
     avatarKey: string | null
     bio: string | null
     branchId: string | null
@@ -4872,6 +4925,8 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     _count: UserCountAggregateOutputType | null
+    _avg: UserAvgAggregateOutputType | null
+    _sum: UserSumAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
   }
@@ -4897,6 +4952,9 @@ export namespace Prisma {
     email?: boolean
     waNumber?: boolean
     passwordHash?: boolean
+    resetCodeHash?: boolean
+    resetExpiresAt?: boolean
+    resetAttempts?: boolean
     avatarKey?: boolean
     bio?: boolean
     branchId?: boolean
@@ -4940,6 +4998,9 @@ export namespace Prisma {
     email?: boolean
     waNumber?: boolean
     passwordHash?: boolean
+    resetCodeHash?: boolean
+    resetExpiresAt?: boolean
+    resetAttempts?: boolean
     avatarKey?: boolean
     bio?: boolean
     branchId?: boolean
@@ -4959,6 +5020,9 @@ export namespace Prisma {
     email?: boolean
     waNumber?: boolean
     passwordHash?: boolean
+    resetCodeHash?: boolean
+    resetExpiresAt?: boolean
+    resetAttempts?: boolean
     avatarKey?: boolean
     bio?: boolean
     branchId?: boolean
@@ -4978,6 +5042,9 @@ export namespace Prisma {
     email?: boolean
     waNumber?: boolean
     passwordHash?: boolean
+    resetCodeHash?: boolean
+    resetExpiresAt?: boolean
+    resetAttempts?: boolean
     avatarKey?: boolean
     bio?: boolean
     branchId?: boolean
@@ -4989,7 +5056,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "nickname" | "email" | "waNumber" | "passwordHash" | "avatarKey" | "bio" | "branchId" | "joinedAt" | "birthDate" | "isActive" | "themePref" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "fullName" | "nickname" | "email" | "waNumber" | "passwordHash" | "resetCodeHash" | "resetExpiresAt" | "resetAttempts" | "avatarKey" | "bio" | "branchId" | "joinedAt" | "birthDate" | "isActive" | "themePref" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     branch?: boolean | User$branchArgs<ExtArgs>
     roles?: boolean | User$rolesArgs<ExtArgs>
@@ -5059,6 +5126,9 @@ export namespace Prisma {
       email: string
       waNumber: string
       passwordHash: string | null
+      resetCodeHash: string | null
+      resetExpiresAt: Date | null
+      resetAttempts: number
       avatarKey: string | null
       bio: string | null
       branchId: string | null
@@ -5521,6 +5591,9 @@ export namespace Prisma {
     readonly email: FieldRef<"User", 'String'>
     readonly waNumber: FieldRef<"User", 'String'>
     readonly passwordHash: FieldRef<"User", 'String'>
+    readonly resetCodeHash: FieldRef<"User", 'String'>
+    readonly resetExpiresAt: FieldRef<"User", 'DateTime'>
+    readonly resetAttempts: FieldRef<"User", 'Int'>
     readonly avatarKey: FieldRef<"User", 'String'>
     readonly bio: FieldRef<"User", 'String'>
     readonly branchId: FieldRef<"User", 'String'>
@@ -46905,6 +46978,9 @@ export namespace Prisma {
     email: 'email',
     waNumber: 'waNumber',
     passwordHash: 'passwordHash',
+    resetCodeHash: 'resetCodeHash',
+    resetExpiresAt: 'resetExpiresAt',
+    resetAttempts: 'resetAttempts',
     avatarKey: 'avatarKey',
     bio: 'bio',
     branchId: 'branchId',
@@ -47553,13 +47629,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'Boolean'
-   */
-  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
    * Reference to a field of type 'Int'
    */
   export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -47570,6 +47639,13 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Boolean'
+   */
+  export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -47726,6 +47802,9 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     waNumber?: StringFilter<"User"> | string
     passwordHash?: StringNullableFilter<"User"> | string | null
+    resetCodeHash?: StringNullableFilter<"User"> | string | null
+    resetExpiresAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    resetAttempts?: IntFilter<"User"> | number
     avatarKey?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     branchId?: StringNullableFilter<"User"> | string | null
@@ -47768,6 +47847,9 @@ export namespace Prisma {
     email?: SortOrder
     waNumber?: SortOrder
     passwordHash?: SortOrderInput | SortOrder
+    resetCodeHash?: SortOrderInput | SortOrder
+    resetExpiresAt?: SortOrderInput | SortOrder
+    resetAttempts?: SortOrder
     avatarKey?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
     branchId?: SortOrderInput | SortOrder
@@ -47813,6 +47895,9 @@ export namespace Prisma {
     fullName?: StringFilter<"User"> | string
     nickname?: StringNullableFilter<"User"> | string | null
     passwordHash?: StringNullableFilter<"User"> | string | null
+    resetCodeHash?: StringNullableFilter<"User"> | string | null
+    resetExpiresAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    resetAttempts?: IntFilter<"User"> | number
     avatarKey?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     branchId?: StringNullableFilter<"User"> | string | null
@@ -47855,6 +47940,9 @@ export namespace Prisma {
     email?: SortOrder
     waNumber?: SortOrder
     passwordHash?: SortOrderInput | SortOrder
+    resetCodeHash?: SortOrderInput | SortOrder
+    resetExpiresAt?: SortOrderInput | SortOrder
+    resetAttempts?: SortOrder
     avatarKey?: SortOrderInput | SortOrder
     bio?: SortOrderInput | SortOrder
     branchId?: SortOrderInput | SortOrder
@@ -47865,8 +47953,10 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: UserCountOrderByAggregateInput
+    _avg?: UserAvgOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
+    _sum?: UserSumOrderByAggregateInput
   }
 
   export type UserScalarWhereWithAggregatesInput = {
@@ -47879,6 +47969,9 @@ export namespace Prisma {
     email?: StringWithAggregatesFilter<"User"> | string
     waNumber?: StringWithAggregatesFilter<"User"> | string
     passwordHash?: StringNullableWithAggregatesFilter<"User"> | string | null
+    resetCodeHash?: StringNullableWithAggregatesFilter<"User"> | string | null
+    resetExpiresAt?: DateTimeNullableWithAggregatesFilter<"User"> | Date | string | null
+    resetAttempts?: IntWithAggregatesFilter<"User"> | number
     avatarKey?: StringNullableWithAggregatesFilter<"User"> | string | null
     bio?: StringNullableWithAggregatesFilter<"User"> | string | null
     branchId?: StringNullableWithAggregatesFilter<"User"> | string | null
@@ -50700,6 +50793,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -50741,6 +50837,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -50782,6 +50881,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -50823,6 +50925,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -50864,6 +50969,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -50882,6 +50990,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -50899,6 +51010,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -54064,6 +54178,17 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type IntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -54287,6 +54412,9 @@ export namespace Prisma {
     email?: SortOrder
     waNumber?: SortOrder
     passwordHash?: SortOrder
+    resetCodeHash?: SortOrder
+    resetExpiresAt?: SortOrder
+    resetAttempts?: SortOrder
     avatarKey?: SortOrder
     bio?: SortOrder
     branchId?: SortOrder
@@ -54298,6 +54426,10 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type UserAvgOrderByAggregateInput = {
+    resetAttempts?: SortOrder
+  }
+
   export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     fullName?: SortOrder
@@ -54305,6 +54437,9 @@ export namespace Prisma {
     email?: SortOrder
     waNumber?: SortOrder
     passwordHash?: SortOrder
+    resetCodeHash?: SortOrder
+    resetExpiresAt?: SortOrder
+    resetAttempts?: SortOrder
     avatarKey?: SortOrder
     bio?: SortOrder
     branchId?: SortOrder
@@ -54323,6 +54458,9 @@ export namespace Prisma {
     email?: SortOrder
     waNumber?: SortOrder
     passwordHash?: SortOrder
+    resetCodeHash?: SortOrder
+    resetExpiresAt?: SortOrder
+    resetAttempts?: SortOrder
     avatarKey?: SortOrder
     bio?: SortOrder
     branchId?: SortOrder
@@ -54332,6 +54470,10 @@ export namespace Prisma {
     themePref?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type UserSumOrderByAggregateInput = {
+    resetAttempts?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -54382,6 +54524,22 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedDateTimeNullableFilter<$PrismaModel>
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
+  }
+
+  export type IntWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
+    _count?: NestedIntFilter<$PrismaModel>
+    _avg?: NestedFloatFilter<$PrismaModel>
+    _sum?: NestedIntFilter<$PrismaModel>
+    _min?: NestedIntFilter<$PrismaModel>
+    _max?: NestedIntFilter<$PrismaModel>
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -54467,17 +54625,6 @@ export namespace Prisma {
     code?: SortOrder
   }
 
-  export type IntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
-  }
-
   export type CashoutCountOrderByAggregateInput = {
     id?: SortOrder
     spentAt?: SortOrder
@@ -54529,22 +54676,6 @@ export namespace Prisma {
 
   export type CashoutSumOrderByAggregateInput = {
     amount?: SortOrder
-  }
-
-  export type IntWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntWithAggregatesFilter<$PrismaModel> | number
-    _count?: NestedIntFilter<$PrismaModel>
-    _avg?: NestedFloatFilter<$PrismaModel>
-    _sum?: NestedIntFilter<$PrismaModel>
-    _min?: NestedIntFilter<$PrismaModel>
-    _max?: NestedIntFilter<$PrismaModel>
   }
   export type JsonFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -56636,6 +56767,14 @@ export namespace Prisma {
     set?: Date | string | null
   }
 
+  export type IntFieldUpdateOperationsInput = {
+    set?: number
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
   export type BoolFieldUpdateOperationsInput = {
     set?: boolean
   }
@@ -57314,14 +57453,6 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutCashoutsInput, UserUncheckedCreateWithoutCashoutsInput>
     connectOrCreate?: UserCreateOrConnectWithoutCashoutsInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type IntFieldUpdateOperationsInput = {
-    set?: number
-    increment?: number
-    decrement?: number
-    multiply?: number
-    divide?: number
   }
 
   export type UserUpdateOneRequiredWithoutCashoutsNestedInput = {
@@ -58241,6 +58372,17 @@ export namespace Prisma {
     not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
+  export type NestedIntFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel>
+    in?: number[] | ListIntFieldRefInput<$PrismaModel>
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntFilter<$PrismaModel> | number
+  }
+
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -58272,17 +58414,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
-  }
-
-  export type NestedIntFilter<$PrismaModel = never> = {
-    equals?: number | IntFieldRefInput<$PrismaModel>
-    in?: number[] | ListIntFieldRefInput<$PrismaModel>
-    notIn?: number[] | ListIntFieldRefInput<$PrismaModel>
-    lt?: number | IntFieldRefInput<$PrismaModel>
-    lte?: number | IntFieldRefInput<$PrismaModel>
-    gt?: number | IntFieldRefInput<$PrismaModel>
-    gte?: number | IntFieldRefInput<$PrismaModel>
-    not?: NestedIntFilter<$PrismaModel> | number
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -58327,28 +58458,6 @@ export namespace Prisma {
     _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedDateTimeFilter<$PrismaModel>
-    _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
     equals?: number | IntFieldRefInput<$PrismaModel>
     in?: number[] | ListIntFieldRefInput<$PrismaModel>
@@ -58374,6 +58483,28 @@ export namespace Prisma {
     gt?: number | FloatFieldRefInput<$PrismaModel>
     gte?: number | FloatFieldRefInput<$PrismaModel>
     not?: NestedFloatFilter<$PrismaModel> | number
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeWithAggregatesFilter<$PrismaModel> | Date | string
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedDateTimeFilter<$PrismaModel>
+    _max?: NestedDateTimeFilter<$PrismaModel>
   }
   export type NestedJsonFilter<$PrismaModel = never> =
     | PatchUndefined<
@@ -60212,6 +60343,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -60252,6 +60386,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -60308,6 +60445,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -60348,6 +60488,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60388,6 +60531,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -60428,6 +60574,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -60484,6 +60633,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -60524,6 +60676,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60564,6 +60719,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -60604,6 +60762,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -60660,6 +60821,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -60700,6 +60864,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60740,6 +60907,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -60780,6 +60950,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -60836,6 +61009,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -60876,6 +61052,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -60954,6 +61133,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -60994,6 +61176,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -61056,6 +61241,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -61096,6 +61284,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -61152,6 +61343,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -61192,6 +61386,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -61266,6 +61463,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -61306,6 +61506,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -61346,6 +61549,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -61386,6 +61592,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -61442,6 +61651,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -61482,6 +61694,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -61522,6 +61737,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -61562,6 +61780,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -61721,6 +61942,9 @@ export namespace Prisma {
     email?: StringFilter<"User"> | string
     waNumber?: StringFilter<"User"> | string
     passwordHash?: StringNullableFilter<"User"> | string | null
+    resetCodeHash?: StringNullableFilter<"User"> | string | null
+    resetExpiresAt?: DateTimeNullableFilter<"User"> | Date | string | null
+    resetAttempts?: IntFilter<"User"> | number
     avatarKey?: StringNullableFilter<"User"> | string | null
     bio?: StringNullableFilter<"User"> | string | null
     branchId?: StringNullableFilter<"User"> | string | null
@@ -61886,6 +62110,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -61926,6 +62153,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -62005,6 +62235,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -62045,6 +62278,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -62114,6 +62350,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -62154,6 +62393,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -62235,6 +62477,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -62275,6 +62520,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -62346,6 +62594,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -62386,6 +62637,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -62431,6 +62685,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -62471,6 +62728,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -62527,6 +62787,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -62567,6 +62830,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -62618,6 +62884,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -62658,6 +62927,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -62698,6 +62970,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -62738,6 +63013,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -62794,6 +63072,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -62834,6 +63115,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -62874,6 +63158,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -62914,6 +63201,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -62970,6 +63260,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63010,6 +63303,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63157,6 +63453,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -63197,6 +63496,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -63282,6 +63584,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63322,6 +63627,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63385,6 +63693,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -63425,6 +63736,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -63510,6 +63824,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63550,6 +63867,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63590,6 +63910,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -63630,6 +63953,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -63686,6 +64012,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63726,6 +64055,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -63766,6 +64098,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -63806,6 +64141,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -63851,6 +64189,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -63891,6 +64232,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -63947,6 +64291,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -63987,6 +64334,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -64038,6 +64388,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -64078,6 +64431,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -64118,6 +64474,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -64158,6 +64517,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -64214,6 +64576,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -64254,6 +64619,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -64294,6 +64662,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -64334,6 +64705,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -64510,6 +64884,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -64550,6 +64927,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -64888,6 +65268,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -64928,6 +65311,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -64984,6 +65370,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -65024,6 +65413,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -65064,6 +65456,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -65104,6 +65499,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -65160,6 +65558,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -65200,6 +65601,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -65240,6 +65644,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -65280,6 +65687,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     branchId?: string | null
@@ -65336,6 +65746,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -65376,6 +65789,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
@@ -66556,6 +66972,9 @@ export namespace Prisma {
     email: string
     waNumber: string
     passwordHash?: string | null
+    resetCodeHash?: string | null
+    resetExpiresAt?: Date | string | null
+    resetAttempts?: number
     avatarKey?: string | null
     bio?: string | null
     joinedAt?: Date | string | null
@@ -66608,6 +67027,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -66648,6 +67070,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -66688,6 +67113,9 @@ export namespace Prisma {
     email?: StringFieldUpdateOperationsInput | string
     waNumber?: StringFieldUpdateOperationsInput | string
     passwordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetCodeHash?: NullableStringFieldUpdateOperationsInput | string | null
+    resetExpiresAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resetAttempts?: IntFieldUpdateOperationsInput | number
     avatarKey?: NullableStringFieldUpdateOperationsInput | string | null
     bio?: NullableStringFieldUpdateOperationsInput | string | null
     joinedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
