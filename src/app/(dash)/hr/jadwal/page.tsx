@@ -55,6 +55,7 @@ export default async function JadwalPage({
 
   return (
     <JadwalGrid
+      key={`${ym}:${branchId}`}
       ym={ym}
       days={dim}
       branchId={branchId}
