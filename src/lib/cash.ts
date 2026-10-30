@@ -202,18 +202,26 @@ export async function loadBranchSalesTrends(now = new Date()): Promise<SalesTren
   for (let i = 4; i >= 0; i--) yrKeys.push({ k: String(y0 - i), label: String(y0 - i) });
 
   const from = new Date(Date.UTC(y0 - 5, 0, 1) - 7 * 3600_000); // 5 th lalu (WIB), paling lebar
-  const [branches, rows] = await Promise.all([
+  const [branchRows, rows] = await Promise.all([
     prisma.branch.findMany({
       where: { NOT: { name: { contains: "office", mode: "insensitive" } } },
       orderBy: { name: "asc" },
       select: { id: true, name: true },
     }),
+    // Semua penjualan (offline per cabang + online/website), dihitung real-time saat transaksi.
     prisma.salesReport.findMany({
-      where: { branchId: { not: null }, soldAt: { gte: from } },
-      select: { branchId: true, soldAt: true, grandTotal: true },
+      where: { soldAt: { gte: from } },
+      select: { branchId: true, channel: true, soldAt: true, grandTotal: true },
     }),
   ]);
-  const sales: SaleLite[] = rows.map((s) => ({ branchId: s.branchId, wib: new Date(s.soldAt.getTime() + 7 * 3600_000), grandTotal: s.grandTotal }));
+  // Online/website tak punya cabang → bucket sendiri biar ikut Total Penjualan Semua Cabang.
+  const ONLINE_ID = "__online__";
+  const branches = [...branchRows, { id: ONLINE_ID, name: "Online / Website" }];
+  const sales: SaleLite[] = rows.map((s) => ({
+    branchId: s.channel === "online" ? ONLINE_ID : s.branchId,
+    wib: new Date(s.soldAt.getTime() + 7 * 3600_000),
+    grandTotal: s.grandTotal,
+  }));
 
   return {
     harian: trendFrom(branches, sales, dayKeys, (w) => `${w.getUTCFullYear()}-${w.getUTCMonth()}-${w.getUTCDate()}`),
