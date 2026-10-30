@@ -6,7 +6,7 @@ import { logActivity } from "@/server/activity-log";
 import { parseWIB } from "@/lib/datetime";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
-import { notifyBosses, notifyRole, notifyBranchHeads } from "@/server/notify";
+import { notifyBosses, notifyRole } from "@/server/notify";
 import { parseSalesNotaViaN8n, type SalesItem, type SalesPayment } from "@/server/n8n-sales";
 
 export type ActionResult = { ok: boolean; message?: string };
@@ -134,8 +134,9 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
       branchName = clean(input.branch, 120);
     }
   }
-  // Offline wajib ACC Kepala Cabang; online wajib ACC Admin. Dua-duanya approvedAt null dulu.
-  const approvedAt = null;
+  // Offline (input penjualan Sales): langsung masuk rekap Finance tanpa ACC. Online: tetap ACC Order Specialist.
+  const now = new Date();
+  const autoAcc = channel === "offline";
   const items = (input.items ?? []).filter((i) => i.name?.trim());
   if (items.length === 0 && input.grandTotal <= 0) return { ok: false, message: "Isi minimal 1 item atau total." };
 
@@ -164,7 +165,10 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
       channel,
       branchName,
       branchId,
-      approvedAt,
+      approvedAt: autoAcc ? now : null,
+      approvedById: autoAcc ? ctx.userId : null,
+      branchApprovedAt: autoAcc ? now : null,
+      branchApprovedById: autoAcc ? ctx.userId : null,
       photoKey: input.photoKey,
       productPhotoKeys: (input.productPhotoKeys ?? []).slice(0, 20),
       createdById: ctx.userId,
@@ -175,11 +179,11 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
   await logActivity({ ...ctx, ip }, { action: "sales_report", entity: "SalesReport", entityId: rep.id });
   const rupiah = new Intl.NumberFormat("id-ID").format(rep.grandTotal);
   if (channel === "offline") {
-    // Tahap 1: ACC Kepala Cabang cabang asal (baru lanjut ke Finance).
-    await notifyBranchHeads(rep.branchId, {
-      type: "sales_pending",
-      title: `Penjualan perlu ACC cabang: Rp ${rupiah}${rep.salesman ? ` · ${rep.salesman}` : ""}`,
-      link: "/cabang/approval-penjualan",
+    // Langsung masuk rekap Finance (tanpa ACC).
+    await notifyRole("FINANCE", {
+      type: "sales_input",
+      title: `Penjualan masuk rekap: Rp ${rupiah}${rep.salesman ? ` · ${rep.salesman}` : ""}`,
+      link: "/finance/penjualan",
     });
   } else {
     // Online: minta ACC Order Specialist dulu.
