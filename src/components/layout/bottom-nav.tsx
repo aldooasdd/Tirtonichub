@@ -1,15 +1,15 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { bottomNavForRole } from "@/lib/nav";
+import { bottomNavForRoles } from "@/lib/nav";
 import { useActiveRole } from "./active-role-context";
 
 // Bottom nav HP: kapsul liquid-glass (CSS displacement filter + pill geser).
 export function BottomNav() {
   const pathname = usePathname();
   const router = useRouter();
-  const { role } = useActiveRole();
-  const items = bottomNavForRole(role);
+  const { roles } = useActiveRole();
+  const items = bottomNavForRoles(roles);
 
   // index aktif = prefix terpanjang yang cocok.
   let activeIdx = 0;

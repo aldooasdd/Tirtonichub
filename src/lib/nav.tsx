@@ -163,6 +163,35 @@ export function navForRole(role: RoleCode): NavGroup[] {
   return groups;
 }
 
+/** Gabung menu semua role user (tanpa pilih role): grup dedup per judul, item dedup per href. */
+export function navForRoles(roles: RoleCode[]): NavGroup[] {
+  const out: NavGroup[] = [];
+  const byKey = new Map<string, NavGroup>();
+  for (const role of roles) {
+    for (const g of navForRole(role)) {
+      const key = g.title ?? "__umum__";
+      let grp = byKey.get(key);
+      if (!grp) {
+        grp = { title: g.title, icon: g.icon, items: [] };
+        byKey.set(key, grp);
+        out.push(grp);
+      }
+      for (const it of g.items) if (!grp.items.some((x) => x.href === it.href)) grp.items.push(it);
+    }
+  }
+  return out;
+}
+
+/** Bottom nav HP gabungan: Beranda, maks 3 item unik, Profil (≤5). */
+export function bottomNavForRoles(roles: RoleCode[]): NavItem[] {
+  const seen = new Set<string>();
+  const uniq = roles.flatMap(bottomNavForRole).filter((i) => (seen.has(i.href) ? false : (seen.add(i.href), true)));
+  const beranda = uniq.find((i) => i.href === "/beranda");
+  const profil = uniq.find((i) => i.href === "/profil");
+  const mid = uniq.filter((i) => i.href !== "/beranda" && i.href !== "/profil").slice(0, 3);
+  return [...(beranda ? [beranda] : []), ...mid, ...(profil ? [profil] : [])];
+}
+
 /** Bottom nav HP: 5 item. (PRD §6.1) */
 export function bottomNavForRole(role: RoleCode): NavItem[] {
   const items: NavItem[] = [{ label: "Beranda", href: "/beranda", icon: Home }];

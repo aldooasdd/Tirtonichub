@@ -12,7 +12,7 @@ import { dateKeyWIB } from "@/server/attendance/logic";
 export default async function DashLayout({ children }: LayoutProps<"/">) {
   const s = await getSession();
   if (!s) redirect("/login");
-  if (!s.activeRole) redirect("/pilih-role");
+  if (!s.activeRole) redirect("/login"); // tak punya role → tak bisa masuk dashboard
 
   const [notifRows, memberRows, liveSessions, rooms, presenceRows, unreadCount] = await Promise.all([
     prisma.notification.findMany({

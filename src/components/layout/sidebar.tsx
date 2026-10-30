@@ -6,7 +6,7 @@ import { useState, useRef, useEffect } from "react";
 import { ChevronDown, LogOut, Bell, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { cn } from "@/lib/utils";
-import { navForRole, GROUP_COLOR, type NavItem } from "@/lib/nav";
+import { navForRoles, GROUP_COLOR, type NavItem } from "@/lib/nav";
 import { useActiveRole, useSessionUser } from "./active-role-context";
 import { RoleSwitcher } from "./role-switcher";
 import { logoutAction } from "@/server/actions/auth";
@@ -30,9 +30,9 @@ function initials(name: string) {
 
 export function Sidebar({ notifCount, notifications }: { notifCount: number; notifications: RightNotif[] }) {
   const pathname = usePathname();
-  const { role } = useActiveRole();
+  const { roles } = useActiveRole();
   const user = useSessionUser();
-  const groups = navForRole(role);
+  const groups = navForRoles(roles);
   // item aktif = href cocok DAN paling spesifik (prefix terpanjang).
   const matches = (href: string) => pathname === href || pathname.startsWith(href + "/");
   let activeHref = "";

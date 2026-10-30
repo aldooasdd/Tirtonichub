@@ -23,7 +23,7 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { avatarColor } from "@/lib/avatar-color";
-import { navForRole, GROUP_COLOR } from "@/lib/nav";
+import { navForRoles, GROUP_COLOR } from "@/lib/nav";
 import { useActiveRole, useSessionUser } from "./active-role-context";
 import { RoleSwitcher } from "./role-switcher";
 import { ThemeToggle } from "./theme-toggle";
@@ -35,9 +35,9 @@ function initials(name: string) {
 
 export function Header() {
   const pathname = usePathname();
-  const { role } = useActiveRole();
+  const { roles } = useActiveRole();
   const user = useSessionUser();
-  const groups = navForRole(role);
+  const groups = navForRoles(roles);
   const umum = groups.find((g) => !g.title);
   const roleGroups = groups.filter((g) => g.title);
   // item aktif = prefix terpanjang (sama dgn sidebar).

@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import type { RoleCode } from "@/generated/prisma";
 import { prisma } from "@/server/db";
+import { pickDefaultRole } from "@/lib/roles";
 import { hashValue, randomToken } from "./hash";
 
 const COOKIE = "session";
@@ -79,7 +80,8 @@ export async function getSession(): Promise<SessionData | null> {
       branchId: session.user.branchId,
     },
     roles: session.user.roles.map((r) => r.role.code),
-    activeRole: session.activeRoleCode,
+    // Tanpa layar "Pilih role": multi-role langsung dapat default (semua fitur digabung di sidebar).
+    activeRole: session.activeRoleCode ?? pickDefaultRole(session.user.roles.map((r) => r.role.code)),
   };
 }
 

@@ -51,3 +51,9 @@ export function roleAttends(role: RoleCode): boolean {
 export function isSuperRole(role: string): boolean {
   return role === "BOSS" || role === "ADMIN";
 }
+
+/** Role aktif default (tanpa pilih manual): BOSS → ADMIN → role pertama. null bila tak punya role. */
+export function pickDefaultRole(roles: RoleCode[]): RoleCode | null {
+  if (roles.length === 0) return null;
+  return roles.find((r) => r === "BOSS") ?? roles.find((r) => r === "ADMIN") ?? roles[0];
+}
