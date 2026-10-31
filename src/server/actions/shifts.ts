@@ -12,7 +12,7 @@ export type ActionResult = { ok: boolean; message?: string };
 export type Cell = { userId: string; day: number; code: string }; // code "" → hapus
 
 const ymRe = /^\d{4}-\d{2}$/;
-const MIN_SALES_PER_SHIFT = 2; // tiap hari: shift P & S masing-masing min 2 sales
+const MIN_SALES_PER_SHIFT = 2; // tiap hari: shift P & S idealnya min 2 sales (peringatan)
 
 /** Simpan sel jadwal 1 bulan (HR). code kosong → hapus shift tsb. */
 export async function saveShifts(ym: string, cells: Cell[]): Promise<ActionResult> {
@@ -44,8 +44,8 @@ export async function saveShifts(ym: string, cells: Cell[]): Promise<ActionResul
   }
   if (ops.length === 0) return { ok: true };
 
+  // HR yang putuskan: aturan sales cuma peringatan, tidak menolak simpan.
   const violation = await checkSalesRule(y, m, editByKey);
-  if (violation) return { ok: false, message: violation };
 
   await prisma.$transaction(ops);
 
@@ -53,7 +53,7 @@ export async function saveShifts(ym: string, cells: Cell[]): Promise<ActionResul
   await logActivity({ ...ctx, ip }, { action: "shift_save", entity: "Shift", entityId: `${ym}:${ops.length}` });
   revalidatePath("/beranda"); // dashboard karyawan ikut jadwal terbaru
   revalidatePath("/hr/jadwal");
-  return { ok: true };
+  return { ok: true, message: violation ? `Tersimpan, tapi ${violation}` : undefined };
 }
 
 // Validasi aturan sales. Hanya cek hari yg edit-nya menyentuh karyawan SALES.
@@ -117,7 +117,7 @@ async function checkSalesRule(
         else if (c === "S") s++;
       }
       if (p < MIN_SALES_PER_SHIFT || s < MIN_SALES_PER_SHIFT) {
-        return `Tgl ${day}: Pagi ${p} & Siang ${s} sales. Tiap shift wajib min ${MIN_SALES_PER_SHIFT}. Jadwal tidak disimpan.`;
+        return `Tgl ${day}: Pagi ${p} & Siang ${s} sales. idealnya min ${MIN_SALES_PER_SHIFT} per shift.`;
       }
     }
   }

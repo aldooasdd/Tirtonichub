@@ -57,13 +57,14 @@ export function JadwalGrid({
       return { userId, day: Number(day), code: cells[k] ?? "" };
     });
     start(async () => {
-      const r = await saveShifts(ym, payload);
+      // Halaman dibuka sebelum deploy baru → server action lama hilang, lempar error.
+      const r = await saveShifts(ym, payload).catch(() => ({ ok: false, message: "Gagal simpan. Muat ulang halaman (Ctrl+R) lalu coba lagi." }));
       if (!r.ok) {
         setMsg(r.message ?? "Gagal simpan.");
         return;
       }
       setDirty(new Set());
-      setMsg("Tersimpan.");
+      setMsg(r.message ?? "Tersimpan.");
       router.refresh();
     });
   }
@@ -105,7 +106,7 @@ export function JadwalGrid({
           </span>
         ))}
       </div>
-      {msg && <p className="text-12 text-muted-foreground">{msg}</p>}
+      {msg && <p className={cn("text-14", msg === "Tersimpan." ? "text-muted-foreground" : "font-medium text-amber-600")}>{msg}</p>}
 
       {employees.length === 0 ? (
         <p className="rounded-lg border bg-card py-8 text-center text-muted-foreground">Tak ada karyawan di cabang ini.</p>
