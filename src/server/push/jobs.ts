@@ -2,6 +2,7 @@
 import { prisma } from "@/server/db";
 import { inMorningWindow, itemsMessage, itemsReady, morningKey, morningPushes, wibKey } from "./logic";
 import { sendPush } from "./send";
+import { katalogMessage } from "./logic";
 
 /** Catat barang Studio BARU (bukan stok lama) ke antrean "Barang masuk". Jangan pernah menggagalkan penyimpanan barang. */
 export async function queueNewItem(item: { id: string; name: string; color?: string | null; old?: boolean }) {
@@ -70,5 +71,29 @@ export async function pushTick(now = new Date()) {
     } catch (e) {
       console.error("[push]", job.name, e);
     }
+  }
+}
+
+/** Penerima notifikasi Foto katalog (tim online shop). Atur lewat .env: PUSH_KATALOG_EMAILS=a@x.com,b@x.com */
+const katalogEmails = () =>
+  (process.env.PUSH_KATALOG_EMAILS || "ridho@tirtonichub.com")
+    .split(",")
+    .map((e) => e.trim().toLowerCase())
+    .filter(Boolean);
+
+/** Foto katalog selesai (Ready → otomatis Tayang): kabari penerima dengan nama file di folder barang. Jangan pernah menggagalkan penyimpanan. */
+export async function notifyKatalog(t: { taskId: string; itemId: string | null; title: string }) {
+  try {
+    const users = await prisma.user.findMany({ where: { email: { in: katalogEmails() }, isActive: true }, select: { id: true } });
+    if (!users.length) return;
+    const files = await prisma.mediaAsset.findMany({
+      where: { OR: [{ taskId: t.taskId }, ...(t.itemId ? [{ itemId: t.itemId, section: "ktl" }] : [])] },
+      select: { name: true },
+      orderBy: { createdAt: "asc" },
+    });
+    const msg = katalogMessage(t.title, files.map((f) => f.name));
+    await sendPush(users.map((u) => u.id), { type: "studio_katalog", ...msg, url: "/studio/?p=hasil" });
+  } catch (e) {
+    console.error("[push] foto katalog", e);
   }
 }
