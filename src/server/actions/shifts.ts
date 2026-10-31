@@ -113,8 +113,8 @@ async function checkSalesRule(
       let s = 0;
       for (const u of branchSales) {
         const c = eff(u, day);
-        if (c === "P") p++;
-        else if (c === "S") s++;
+        if (c === "P" || c === "LONG") p++; // LONG jaga pagi + siang
+        if (c === "S" || c === "LONG") s++;
       }
       if (p < MIN_SALES_PER_SHIFT || s < MIN_SALES_PER_SHIFT) {
         return `Tgl ${day}: Pagi ${p} & Siang ${s} sales. idealnya min ${MIN_SALES_PER_SHIFT} per shift.`;
