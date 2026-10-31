@@ -15,9 +15,10 @@ export async function compressImage(file: File, maxDim = 1280, quality = 0.7): P
 }
 
 // Nota (PDF/foto) → strip horizontal JPEG base64 buat OCR. OpenAI ngecilin gambar full-halaman
-// ke sisi pendek 768px (A4 ≈93dpi, tabel rapat kabur & AI ngarang). Strip 2048×≤700 nggak
-// dikecilin (≈250dpi). Overlap 80px biar baris di batas potongan nggak kepotong.
-const STRIP_W = 2048;
+// ke sisi pendek 768px (A4 ≈93dpi, tabel rapat kabur & AI ngarang). Strip 2480×≤700 (A4 ≈300dpi).
+// 2048 masih kurang: tabel Excel rapat (Lacoste) salah baca qty; 2480 cocok PI 19/19 brand (tes 2×).
+// Overlap 80px biar baris di batas potongan nggak kepotong.
+const STRIP_W = 2480;
 const STRIP_H = 700;
 const OVERLAP = 80;
 
