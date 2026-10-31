@@ -76,6 +76,12 @@ export async function GET(req: NextRequest) {
     orderBy: { soldAt: "asc" },
   });
 
+  // Mode raw: kirim baris nota mentah. App toko menggabung dgn transaksi online
+  // lalu hitung tier/poin gabungan sendiri (offline + online).
+  if (req.nextUrl.searchParams.get("raw") === "1") {
+    return Response.json({ phone, since: SINCE.toISOString(), rows });
+  }
+
   // Poin tiap nota pakai tier dari belanja 12 bulan berjalan SAMPAI nota itu (termasuk nota ybs).
   // Cocok dgn simulasi dokumen: Signature 20jt→307, Privé 60jt→1500.
   // ponytail: O(n²) atas nota 1 pelanggan (sedikit). Kalau 1 nomor pernah ribuan nota, ganti prefix-sum.
