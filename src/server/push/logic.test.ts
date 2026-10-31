@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { expired, inMorningWindow, itemsMessage, itemsReady, morningKey, morningPushes, wibKey, type MMember, type MTask } from "./logic";
+import { expired, katalogMessage, inMorningWindow, itemsMessage, itemsReady, morningKey, morningPushes, wibKey, type MMember, type MTask } from "./logic";
 
 // Jumat 30 Okt 2026 07.00 WIB = 00.00 UTC
 const FRI_7 = new Date("2026-10-30T00:00:00Z");
@@ -81,4 +81,12 @@ test("barang masuk digabung per 2 menit", () => {
   const m = itemsMessage(["A", "B", "C", "D", "E", "F"]);
   assert.equal(m.title, "6 barang masuk");
   assert.equal(m.body, "A, B, C, D, E, …");
+});
+
+test("pesan Foto katalog ready memakai nama file", () => {
+  assert.deepEqual(katalogMessage("Asics Gel 9", ["a.jpg"]), { title: 'Foto katalog "a.jpg" ready', body: "Asics Gel 9 · 1 foto" });
+  const m = katalogMessage("Asics Gel 9", ["a.jpg", "b.jpg", "c.jpg", "d.jpg"]);
+  assert.equal(m.title, 'Foto katalog "a.jpg" ready');
+  assert.equal(m.body, "Asics Gel 9 · 4 foto: a.jpg, b.jpg, c.jpg, …");
+  assert.equal(katalogMessage("Asics Gel 9", []).title, 'Foto katalog "Asics Gel 9" ready');
 });

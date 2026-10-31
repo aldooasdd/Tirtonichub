@@ -2,7 +2,7 @@
 // Alamat dokumen sama seperti versi Firebase (items/{id}, tasks/{id}, members/{email}, ...).
 
 import { randomBytes } from "node:crypto";
-import { queueNewItem } from "@/server/push/jobs";
+import { notifyKatalog, queueNewItem } from "@/server/push/jobs";
 import type { Prisma } from "@/generated/prisma";
 import { prisma } from "@/server/db";
 import { makeKey, putObject, multipartStart, multipartPart, multipartFinish, multipartAbort } from "@/server/storage";
@@ -162,10 +162,21 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
       break;
     }
     case "tasks": {
+      // Foto katalog: file sudah ada di File, jadi saat dipindah ke Ready langsung Tayang + kabari tim online shop (sekali per kartu).
+      const DONE = ["Ready", "Tayang"];
+      const ktlDone = after.type === "ktl" && DONE.includes(String(after.status)) && !DONE.includes(String(before?.status ?? ""));
+      if (after.type === "ktl" && after.status === "Ready" && before?.status !== "Ready") {
+        const day = new Date(Date.now() + 7 * 3600_000).toISOString().slice(0, 10); // WIB
+        after.status = "Tayang";
+        if (!after.postAt) after.postAt = day;
+        if (!after.readyAt) after.readyAt = day;
+        if (Array.isArray(after.history)) after.history = [...after.history, { at: Date.now(), by: "auto", name: "Otomatis", from: "Ready", to: "Tayang" }].slice(-30);
+      }
       const { row, itemId } = M.taskFromDoc(after);
       const okItem = itemId ? !!(await prisma.mediaItem.findUnique({ where: { id: itemId }, select: { id: true } })) : false;
       const data = { ...row, itemId: okItem ? itemId : null, extra: json(row.extra), history: row.history === undefined ? undefined : json(row.history) } as Prisma.MediaTaskUncheckedCreateInput;
       await prisma.mediaTask.upsert({ where: { id }, create: { ...data, id }, update: data });
+      if (ktlDone && !opts.trusted) await notifyKatalog({ taskId: id, itemId: okItem ? itemId : null, title: String(after.title ?? "") });
       break;
     }
     case "settings": {
