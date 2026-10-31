@@ -181,6 +181,7 @@ exports.Prisma.SalesReportScalarFieldEnum = {
   notaNo: 'notaNo',
   soldAt: 'soldAt',
   customer: 'customer',
+  phone: 'phone',
   salesman: 'salesman',
   employee: 'employee',
   items: 'items',

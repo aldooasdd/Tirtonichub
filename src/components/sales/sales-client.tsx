@@ -42,6 +42,7 @@ type Draft = {
   soldAt: string; // datetime-local
   branch: string; // cabang dari nota
   customer: string;
+  phone: string; // nomor WA pelanggan (loyalty)
   salesman: string;
   employee: string;
   items: SalesItem[];
@@ -52,7 +53,7 @@ type Draft = {
 };
 
 const emptyDraft = (): Draft => ({
-  notaNo: "", soldAt: "", branch: "", customer: "", salesman: "", employee: "",
+  notaNo: "", soldAt: "", branch: "", customer: "", phone: "", salesman: "", employee: "",
   items: [{ name: "", qty: 1, price: 0, total: 0, note: null }],
   payments: [{ method: "", amount: 0 }],
   subtotal: 0, total: 0, grandTotal: 0,
@@ -186,6 +187,7 @@ export function SalesClient({
         soldAt: p.soldAt ? p.soldAt.slice(0, 16) : "",
         branch: p.branch ?? "",
         customer: p.customer ?? "",
+        phone: "",
         salesman: p.salesman ?? "",
         employee: p.employee ?? "",
         items: p.items.length ? p.items : emptyDraft().items,
@@ -223,6 +225,7 @@ export function SalesClient({
       notaNo: draft.notaNo,
       soldAt: draft.soldAt || null,
       customer: draft.customer,
+      phone: draft.phone,
       salesman: draft.salesman,
       employee: draft.employee,
       items: draft.items,
@@ -304,6 +307,7 @@ export function SalesClient({
               <Field label="Cabang (dari nota)"><Input value={draft.branch} onChange={(e) => upd({ branch: e.target.value })} placeholder="mis. Semarang" /></Field>
             )}
             <Field label="Pelanggan"><Input value={draft.customer} onChange={(e) => upd({ customer: e.target.value })} /></Field>
+            <Field label="No. WhatsApp"><Input value={draft.phone} onChange={(e) => upd({ phone: e.target.value })} placeholder="08… (buat poin loyalty)" inputMode="numeric" /></Field>
             <Field label="Salesman"><Input value={draft.salesman} onChange={(e) => upd({ salesman: e.target.value })} /></Field>
             <Field label="Karyawan"><Input value={draft.employee} onChange={(e) => upd({ employee: e.target.value })} /></Field>
           </div>

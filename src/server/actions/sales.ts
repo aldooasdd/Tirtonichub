@@ -77,6 +77,7 @@ type SaveInput = {
   notaNo?: string | null;
   soldAt?: string | null; // ISO; kosong → sekarang
   customer?: string | null;
+  phone?: string | null;
   salesman?: string | null;
   employee?: string | null;
   items: SalesItem[];
@@ -101,6 +102,13 @@ async function resolveBranchFromText(text: string | null): Promise<{ id: string 
 }
 
 const clean = (v: string | null | undefined, max: number) => (v?.trim() ? v.trim().slice(0, max) : null);
+// Normalkan nomor WA pelanggan ke 62xxxx (loyalty Ace Points). Tak valid → null.
+const normPhone = (v: string | null | undefined): string | null => {
+  const d = (v ?? "").replace(/\D/g, "");
+  if (!d) return null;
+  const n = d.startsWith("62") ? d : d.startsWith("0") ? "62" + d.slice(1) : d.startsWith("8") ? "62" + d : d;
+  return n.length >= 9 && n.length <= 15 ? n : null;
+};
 const int = (v: number) => Math.max(0, Math.round(v) || 0);
 const mapItems = (items: SalesItem[]) =>
   (items ?? [])
@@ -146,6 +154,7 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
       notaNo: clean(input.notaNo, 60),
       soldAt,
       customer: clean(input.customer, 120),
+      phone: normPhone(input.phone),
       salesman: clean(input.salesman, 120),
       employee: clean(input.employee, 120),
       items: items.map((i) => ({
@@ -382,6 +391,7 @@ type UpdateInput = {
   notaNo?: string | null;
   soldAt?: string | null;
   customer?: string | null;
+  phone?: string | null;
   salesman?: string | null;
   employee?: string | null;
   items: SalesItem[];
@@ -408,6 +418,7 @@ export async function updateSalesReport(input: UpdateInput): Promise<ActionResul
       notaNo: clean(input.notaNo, 60),
       ...(soldAt ? { soldAt } : {}),
       customer: clean(input.customer, 120),
+      phone: normPhone(input.phone),
       salesman: clean(input.salesman, 120),
       employee: clean(input.employee, 120),
       items,
@@ -446,6 +457,7 @@ export async function fixSalesReport(input: UpdateInput): Promise<ActionResult> 
       notaNo: clean(input.notaNo, 60),
       ...(soldAt ? { soldAt } : {}),
       customer: clean(input.customer, 120),
+      phone: normPhone(input.phone),
       salesman: clean(input.salesman, 120),
       employee: clean(input.employee, 120),
       items,

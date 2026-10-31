@@ -9945,6 +9945,7 @@ export namespace Prisma {
     notaNo: string | null
     soldAt: Date | null
     customer: string | null
+    phone: string | null
     salesman: string | null
     employee: string | null
     subtotal: number | null
@@ -9974,6 +9975,7 @@ export namespace Prisma {
     notaNo: string | null
     soldAt: Date | null
     customer: string | null
+    phone: string | null
     salesman: string | null
     employee: string | null
     subtotal: number | null
@@ -10003,6 +10005,7 @@ export namespace Prisma {
     notaNo: number
     soldAt: number
     customer: number
+    phone: number
     salesman: number
     employee: number
     items: number
@@ -10049,6 +10052,7 @@ export namespace Prisma {
     notaNo?: true
     soldAt?: true
     customer?: true
+    phone?: true
     salesman?: true
     employee?: true
     subtotal?: true
@@ -10078,6 +10082,7 @@ export namespace Prisma {
     notaNo?: true
     soldAt?: true
     customer?: true
+    phone?: true
     salesman?: true
     employee?: true
     subtotal?: true
@@ -10107,6 +10112,7 @@ export namespace Prisma {
     notaNo?: true
     soldAt?: true
     customer?: true
+    phone?: true
     salesman?: true
     employee?: true
     items?: true
@@ -10226,6 +10232,7 @@ export namespace Prisma {
     notaNo: string | null
     soldAt: Date
     customer: string | null
+    phone: string | null
     salesman: string | null
     employee: string | null
     items: JsonValue
@@ -10277,6 +10284,7 @@ export namespace Prisma {
     notaNo?: boolean
     soldAt?: boolean
     customer?: boolean
+    phone?: boolean
     salesman?: boolean
     employee?: boolean
     items?: boolean
@@ -10310,6 +10318,7 @@ export namespace Prisma {
     notaNo?: boolean
     soldAt?: boolean
     customer?: boolean
+    phone?: boolean
     salesman?: boolean
     employee?: boolean
     items?: boolean
@@ -10343,6 +10352,7 @@ export namespace Prisma {
     notaNo?: boolean
     soldAt?: boolean
     customer?: boolean
+    phone?: boolean
     salesman?: boolean
     employee?: boolean
     items?: boolean
@@ -10376,6 +10386,7 @@ export namespace Prisma {
     notaNo?: boolean
     soldAt?: boolean
     customer?: boolean
+    phone?: boolean
     salesman?: boolean
     employee?: boolean
     items?: boolean
@@ -10403,7 +10414,7 @@ export namespace Prisma {
     accurateRef?: boolean
   }
 
-  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "branchName" | "branchId" | "photoKey" | "productPhotoKeys" | "createdById" | "createdAt" | "branchApprovedAt" | "branchApprovedById" | "approvedAt" | "approvedById" | "reportCategory" | "reportNote" | "reportById" | "reportAt" | "reportResolvedAt" | "accurateSyncedAt" | "accurateRef", ExtArgs["result"]["salesReport"]>
+  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "phone" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "branchName" | "branchId" | "photoKey" | "productPhotoKeys" | "createdById" | "createdAt" | "branchApprovedAt" | "branchApprovedById" | "approvedAt" | "approvedById" | "reportCategory" | "reportNote" | "reportById" | "reportAt" | "reportResolvedAt" | "accurateSyncedAt" | "accurateRef", ExtArgs["result"]["salesReport"]>
   export type SalesReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -10424,6 +10435,7 @@ export namespace Prisma {
       notaNo: string | null
       soldAt: Date
       customer: string | null
+      phone: string | null
       salesman: string | null
       employee: string | null
       items: Prisma.JsonValue
@@ -10877,6 +10889,7 @@ export namespace Prisma {
     readonly notaNo: FieldRef<"SalesReport", 'String'>
     readonly soldAt: FieldRef<"SalesReport", 'DateTime'>
     readonly customer: FieldRef<"SalesReport", 'String'>
+    readonly phone: FieldRef<"SalesReport", 'String'>
     readonly salesman: FieldRef<"SalesReport", 'String'>
     readonly employee: FieldRef<"SalesReport", 'String'>
     readonly items: FieldRef<"SalesReport", 'Json'>
@@ -47103,6 +47116,7 @@ export namespace Prisma {
     notaNo: 'notaNo',
     soldAt: 'soldAt',
     customer: 'customer',
+    phone: 'phone',
     salesman: 'salesman',
     employee: 'employee',
     items: 'items',
@@ -48273,6 +48287,7 @@ export namespace Prisma {
     notaNo?: StringNullableFilter<"SalesReport"> | string | null
     soldAt?: DateTimeFilter<"SalesReport"> | Date | string
     customer?: StringNullableFilter<"SalesReport"> | string | null
+    phone?: StringNullableFilter<"SalesReport"> | string | null
     salesman?: StringNullableFilter<"SalesReport"> | string | null
     employee?: StringNullableFilter<"SalesReport"> | string | null
     items?: JsonFilter<"SalesReport">
@@ -48306,6 +48321,7 @@ export namespace Prisma {
     notaNo?: SortOrderInput | SortOrder
     soldAt?: SortOrder
     customer?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
     salesman?: SortOrderInput | SortOrder
     employee?: SortOrderInput | SortOrder
     items?: SortOrder
@@ -48342,6 +48358,7 @@ export namespace Prisma {
     notaNo?: StringNullableFilter<"SalesReport"> | string | null
     soldAt?: DateTimeFilter<"SalesReport"> | Date | string
     customer?: StringNullableFilter<"SalesReport"> | string | null
+    phone?: StringNullableFilter<"SalesReport"> | string | null
     salesman?: StringNullableFilter<"SalesReport"> | string | null
     employee?: StringNullableFilter<"SalesReport"> | string | null
     items?: JsonFilter<"SalesReport">
@@ -48375,6 +48392,7 @@ export namespace Prisma {
     notaNo?: SortOrderInput | SortOrder
     soldAt?: SortOrder
     customer?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
     salesman?: SortOrderInput | SortOrder
     employee?: SortOrderInput | SortOrder
     items?: SortOrder
@@ -48415,6 +48433,7 @@ export namespace Prisma {
     notaNo?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
     soldAt?: DateTimeWithAggregatesFilter<"SalesReport"> | Date | string
     customer?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
+    phone?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
     salesman?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
     employee?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
     items?: JsonWithAggregatesFilter<"SalesReport">
@@ -51348,6 +51367,7 @@ export namespace Prisma {
     notaNo?: string | null
     soldAt: Date | string
     customer?: string | null
+    phone?: string | null
     salesman?: string | null
     employee?: string | null
     items: JsonNullValueInput | InputJsonValue
@@ -51380,6 +51400,7 @@ export namespace Prisma {
     notaNo?: string | null
     soldAt: Date | string
     customer?: string | null
+    phone?: string | null
     salesman?: string | null
     employee?: string | null
     items: JsonNullValueInput | InputJsonValue
@@ -51412,6 +51433,7 @@ export namespace Prisma {
     notaNo?: NullableStringFieldUpdateOperationsInput | string | null
     soldAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     salesman?: NullableStringFieldUpdateOperationsInput | string | null
     employee?: NullableStringFieldUpdateOperationsInput | string | null
     items?: JsonNullValueInput | InputJsonValue
@@ -51444,6 +51466,7 @@ export namespace Prisma {
     notaNo?: NullableStringFieldUpdateOperationsInput | string | null
     soldAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     salesman?: NullableStringFieldUpdateOperationsInput | string | null
     employee?: NullableStringFieldUpdateOperationsInput | string | null
     items?: JsonNullValueInput | InputJsonValue
@@ -51476,6 +51499,7 @@ export namespace Prisma {
     notaNo?: string | null
     soldAt: Date | string
     customer?: string | null
+    phone?: string | null
     salesman?: string | null
     employee?: string | null
     items: JsonNullValueInput | InputJsonValue
@@ -51508,6 +51532,7 @@ export namespace Prisma {
     notaNo?: NullableStringFieldUpdateOperationsInput | string | null
     soldAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     salesman?: NullableStringFieldUpdateOperationsInput | string | null
     employee?: NullableStringFieldUpdateOperationsInput | string | null
     items?: JsonNullValueInput | InputJsonValue
@@ -51539,6 +51564,7 @@ export namespace Prisma {
     notaNo?: NullableStringFieldUpdateOperationsInput | string | null
     soldAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     salesman?: NullableStringFieldUpdateOperationsInput | string | null
     employee?: NullableStringFieldUpdateOperationsInput | string | null
     items?: JsonNullValueInput | InputJsonValue
@@ -54832,6 +54858,7 @@ export namespace Prisma {
     notaNo?: SortOrder
     soldAt?: SortOrder
     customer?: SortOrder
+    phone?: SortOrder
     salesman?: SortOrder
     employee?: SortOrder
     items?: SortOrder
@@ -54870,6 +54897,7 @@ export namespace Prisma {
     notaNo?: SortOrder
     soldAt?: SortOrder
     customer?: SortOrder
+    phone?: SortOrder
     salesman?: SortOrder
     employee?: SortOrder
     subtotal?: SortOrder
@@ -54899,6 +54927,7 @@ export namespace Prisma {
     notaNo?: SortOrder
     soldAt?: SortOrder
     customer?: SortOrder
+    phone?: SortOrder
     salesman?: SortOrder
     employee?: SortOrder
     subtotal?: SortOrder
@@ -59579,6 +59608,7 @@ export namespace Prisma {
     notaNo?: string | null
     soldAt: Date | string
     customer?: string | null
+    phone?: string | null
     salesman?: string | null
     employee?: string | null
     items: JsonNullValueInput | InputJsonValue
@@ -59610,6 +59640,7 @@ export namespace Prisma {
     notaNo?: string | null
     soldAt: Date | string
     customer?: string | null
+    phone?: string | null
     salesman?: string | null
     employee?: string | null
     items: JsonNullValueInput | InputJsonValue
@@ -60362,6 +60393,7 @@ export namespace Prisma {
     notaNo?: StringNullableFilter<"SalesReport"> | string | null
     soldAt?: DateTimeFilter<"SalesReport"> | Date | string
     customer?: StringNullableFilter<"SalesReport"> | string | null
+    phone?: StringNullableFilter<"SalesReport"> | string | null
     salesman?: StringNullableFilter<"SalesReport"> | string | null
     employee?: StringNullableFilter<"SalesReport"> | string | null
     items?: JsonFilter<"SalesReport">
@@ -66196,6 +66228,7 @@ export namespace Prisma {
     notaNo?: string | null
     soldAt: Date | string
     customer?: string | null
+    phone?: string | null
     salesman?: string | null
     employee?: string | null
     items: JsonNullValueInput | InputJsonValue
@@ -66928,6 +66961,7 @@ export namespace Prisma {
     notaNo?: NullableStringFieldUpdateOperationsInput | string | null
     soldAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     salesman?: NullableStringFieldUpdateOperationsInput | string | null
     employee?: NullableStringFieldUpdateOperationsInput | string | null
     items?: JsonNullValueInput | InputJsonValue
@@ -66959,6 +66993,7 @@ export namespace Prisma {
     notaNo?: NullableStringFieldUpdateOperationsInput | string | null
     soldAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     salesman?: NullableStringFieldUpdateOperationsInput | string | null
     employee?: NullableStringFieldUpdateOperationsInput | string | null
     items?: JsonNullValueInput | InputJsonValue
@@ -66990,6 +67025,7 @@ export namespace Prisma {
     notaNo?: NullableStringFieldUpdateOperationsInput | string | null
     soldAt?: DateTimeFieldUpdateOperationsInput | Date | string
     customer?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
     salesman?: NullableStringFieldUpdateOperationsInput | string | null
     employee?: NullableStringFieldUpdateOperationsInput | string | null
     items?: JsonNullValueInput | InputJsonValue

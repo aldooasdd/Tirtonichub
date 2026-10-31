@@ -175,6 +175,7 @@ model SalesReport {
   notaNo           String? // nomor nota di struk
   soldAt           DateTime // waktu transaksi di struk
   customer         String? // Pelanggan
+  phone            String? // nomor WA pelanggan (loyalty Ace Points, dinormalkan 62xxxx)
   salesman         String? // Salesman di struk
   employee         String? // Karyawan di struk
   items            Json // [{name, qty, price, total, note}]
@@ -215,6 +216,7 @@ model SalesReport {
   @@index([createdById])
   @@index([soldAt])
   @@index([channel, approvedAt])
+  @@index([phone])
 }
 
 // Snapshot hasil sinkronisasi Accurate (disimpan Finance utk arsip).
