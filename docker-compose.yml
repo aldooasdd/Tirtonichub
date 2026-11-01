@@ -29,5 +29,11 @@ services:
     ports:
       - "3000:3000" # cloudflared -> host.docker.internal:3000
 
+  figcraft:
+    build: ./figcraft
+    restart: unless-stopped
+    ports:
+      - "18765:80" # cloudflared figcraft.tirtonichub.com -> host.docker.internal:18765
+
 volumes:
   pgdata:
