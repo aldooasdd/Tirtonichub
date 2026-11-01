@@ -35,6 +35,12 @@ const normPhone = (v: string | null): string | null => {
   return n.length >= 9 && n.length <= 15 ? n : null;
 };
 
+// Nomor bisa tersimpan beda bentuk di SalesReport.phone (62.., 0.., 8..) — cocokkan semua varian.
+const phoneVariants = (p: string): string[] => {
+  const rest = p.startsWith("62") ? p.slice(2) : p;
+  return Array.from(new Set([p, "0" + rest, rest, "+" + p]));
+};
+
 const emptyPayload = () => {
   const cur = tierFor(0);
   const next = TIERS[TIERS.indexOf(cur) - 1] ?? null;
@@ -71,7 +77,7 @@ export async function GET(req: NextRequest) {
   const flagRate = prive ? PRIVE.rpPerAce : coach ? GREEN.rpPerAce : Infinity;
 
   const rows = await prisma.salesReport.findMany({
-    where: { phone, approvedAt: { not: null }, soldAt: { gte: SINCE } },
+    where: { phone: { in: phoneVariants(phone) }, approvedAt: { not: null }, soldAt: { gte: SINCE } },
     select: { soldAt: true, grandTotal: true },
     orderBy: { soldAt: "asc" },
   });
