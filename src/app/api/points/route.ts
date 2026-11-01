@@ -76,8 +76,11 @@ export async function GET(req: NextRequest) {
   // Rate dari flag (rupiah-per-Ace lebih kecil = lebih bagus). Infinity = tak ada flag.
   const flagRate = prive ? PRIVE.rpPerAce : coach ? GREEN.rpPerAce : Infinity;
 
+  // Nomor bisa tersimpan di field phone ATAU di field customer (kasir lama ketik
+  // nomor di kolom nama). Cocokkan kedua field biar poin nota lama tetap kehitung.
+  const pv = phoneVariants(phone);
   const rows = await prisma.salesReport.findMany({
-    where: { phone: { in: phoneVariants(phone) }, approvedAt: { not: null }, soldAt: { gte: SINCE } },
+    where: { OR: [{ phone: { in: pv } }, { customer: { in: pv } }], approvedAt: { not: null }, soldAt: { gte: SINCE } },
     select: { soldAt: true, grandTotal: true },
     orderBy: { soldAt: "asc" },
   });
