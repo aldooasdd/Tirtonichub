@@ -33,7 +33,8 @@ export default async function FinancePenjualanPage() {
       id: r.id,
       dateKey,
       tgl: fmtTgl(dateKey),
-      customer: r.customer || "-",
+      // Identitas nota = nomor telepon (untuk poin member). Tampil bentuk 0xxx; fallback nama lama.
+      customer: r.phone ? "0" + r.phone.replace(/^62/, "") : r.customer || "-",
       branch: r.branchName || (r.channel === "online" ? "Online" : "-"),
       saluran: r.channel === "online" ? "Online" : "Offline",
       grandTotal: r.grandTotal,

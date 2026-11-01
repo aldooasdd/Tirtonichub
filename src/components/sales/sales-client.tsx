@@ -218,6 +218,11 @@ export function SalesClient({
 
   async function submit() {
     if (!draft || !photoKey) return;
+    // Nota offline wajib nomor telepon (identitas pelanggan untuk poin member).
+    if (!online && (draft.phone ?? "").replace(/\D/g, "").length < 8) {
+      setMsg("Nomor telepon pelanggan wajib — untuk poin member.");
+      return;
+    }
     setBusy(true);
     const r = await saveSalesReport({
       photoKey,
@@ -307,7 +312,7 @@ export function SalesClient({
               <Field label="Cabang (dari nota)"><Input value={draft.branch} onChange={(e) => upd({ branch: e.target.value })} placeholder="mis. Semarang" /></Field>
             )}
             <Field label="Pelanggan"><Input value={draft.customer} onChange={(e) => upd({ customer: e.target.value })} /></Field>
-            <Field label="No. WhatsApp"><Input value={draft.phone} onChange={(e) => upd({ phone: e.target.value })} placeholder="08… (buat poin loyalty)" inputMode="numeric" /></Field>
+            <Field label={online ? "No. WhatsApp" : "No. WhatsApp (wajib)"}><Input value={draft.phone} onChange={(e) => upd({ phone: e.target.value })} placeholder="08… (identitas pelanggan untuk poin)" inputMode="numeric" /></Field>
             <Field label="Salesman"><Input value={draft.salesman} onChange={(e) => upd({ salesman: e.target.value })} /></Field>
             <Field label="Karyawan"><Input value={draft.employee} onChange={(e) => upd({ employee: e.target.value })} /></Field>
           </div>

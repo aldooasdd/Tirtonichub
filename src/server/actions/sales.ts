@@ -147,6 +147,10 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
   const items = (input.items ?? []).filter((i) => i.name?.trim());
   if (items.length === 0 && input.grandTotal <= 0) return { ok: false, message: "Isi minimal 1 item atau total." };
 
+  // Nomor telepon = identitas pelanggan untuk poin member. Nota offline wajib ada nomor.
+  const phone = normPhone(input.phone);
+  if (channel === "offline" && !phone) return { ok: false, message: "Nomor telepon pelanggan wajib — untuk poin member." };
+
   const soldAt = input.soldAt && !Number.isNaN(Date.parse(input.soldAt)) ? parseWIB(input.soldAt) : new Date();
 
   const rep = await prisma.salesReport.create({
@@ -154,7 +158,7 @@ export async function saveSalesReport(input: SaveInput): Promise<ActionResult> {
       notaNo: clean(input.notaNo, 60),
       soldAt,
       customer: clean(input.customer, 120),
-      phone: normPhone(input.phone),
+      phone,
       salesman: clean(input.salesman, 120),
       employee: clean(input.employee, 120),
       items: items.map((i) => ({
