@@ -540,6 +540,7 @@ model MediaMember {
   pcalColor  String    @default("lime") // warna kalender pribadi
   pcalNotes  String? // catatan pribadi
   extra      Json? // isian UI Tirtonic Studio yang belum punya kolom (avPhoto, dst.)
+  lastSeenAt DateTime? // terakhir membuka Tirtonic Studio (sinkron /api/studio/sync), untuk "Terakhir online"
   createdAt  DateTime  @default(now())
   updatedAt  DateTime  @updatedAt
 

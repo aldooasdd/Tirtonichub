@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
 <script>/* tema tampilan pilihan pengguna (disimpan di perangkat ini) */
 (function(){var T={light:['light',''],dark:['dark',''],glass:['light','glass'],gradient:['light','gradient'],midnight:['dark','midnight'],ocean:['light','ocean'],sunset:['light','sunset'],forest:['dark','forest'],aurora:['dark','aurora'],candy:['light','candy'],weather:['dark','weather']};var k;try{k=localStorage.getItem('ts-theme')}catch(e){}
-if(!{glass:1,gradient:1,midnight:1,weather:1}[k])k='glass';
+if(!{gradient:1,midnight:1,weather:1}[k])k='gradient';
 if(k&&T[k]){document.documentElement.setAttribute('data-theme',T[k][0]);if(T[k][1])document.documentElement.setAttribute('data-skin',T[k][1])}
 if(k==='weather'){try{var w=(localStorage.getItem('ts-wxk')||'').split('|');if(w[1]){document.documentElement.setAttribute('data-wk',w[0]);document.documentElement.setAttribute('data-ph',w[1])}}catch(e){}}})();</script>
 <style>
@@ -4292,11 +4292,10 @@ new MutationObserver(ms=>{if(ms.some(m=>m.type==='childList'?m.target.closest&&(
 addEventListener('resize',segAll);segAll();
 /* ---------- pilihan tampilan (tema) per pengguna, disimpan di perangkat ---------- */
 const THEMES=[
-  {k:'glass',n:'Glass',d:'Panel kaca buram di atas warna lembut',t:'light',sk:'glass',sw:'radial-gradient(circle at 15% 20%,#c9e86b,transparent 55%),radial-gradient(circle at 90% 30%,#8fb3ff,transparent 55%),radial-gradient(circle at 60% 100%,#f7a8d0,transparent 60%),#eef3fb',b:'#ffffffcc'},
   {k:'gradient',n:'Gradasi',d:'Biru muda ke lime dan peach, segar',t:'light',sk:'gradient',sw:'linear-gradient(135deg,#dfe9ff,#eef8e0,#ffe8dc)',b:'#ffffff'},
   {k:'midnight',n:'Midnight',d:'Gelap navy-ungu dengan panel kaca',t:'dark',sk:'midnight',sw:'radial-gradient(circle at 10% 10%,#2a4a9a,transparent 60%),radial-gradient(circle at 100% 40%,#6a3fd1,transparent 60%),#0b1220',b:'#9fb6ef'},
   {k:'weather',n:'Cuaca',d:'Langit mengikuti cuaca Yogyakarta saat ini (hujan, cerah, malam), gaya Apple Weather',t:'dark',sk:'weather',sw:'radial-gradient(circle at 75% 20%,#ffffff55,transparent 45%),linear-gradient(180deg,#44546a,#768599)',b:'#ffffffcc'}];
-function curTheme(){let k='';try{k=localStorage.getItem('ts-theme')||''}catch(e){}return THEMES.some(x=>x.k===k)?k:'glass'}
+function curTheme(){let k='';try{k=localStorage.getItem('ts-theme')||''}catch(e){}return THEMES.some(x=>x.k===k)?k:'gradient'}
 function applyTheme(k){const T=THEMES.find(x=>x.k===k);const r=document.documentElement;
   if(T){r.setAttribute('data-theme',T.t);if(T.sk)r.setAttribute('data-skin',T.sk);else r.removeAttribute('data-skin')}else{r.removeAttribute('data-theme');r.removeAttribute('data-skin')}
   try{if(T)localStorage.setItem('ts-theme',k);else localStorage.removeItem('ts-theme')}catch(e){}renderThemePop();segAll();wxSync()}
