@@ -1,30 +1,24 @@
 import { NextRequest } from "next/server";
 import { changes } from "@/server/studio/store";
 import { guarded, ok } from "@/server/studio/http";
-import { getSession } from "@/server/auth/session";
 import { prisma } from "@/server/db";
 
-// Terakhir terlihat per akun (email → ms). UI hanya menarik sinkron saat halaman terbuka & terlihat,
-// jadi tarikan terakhir = tanda akun sedang membuka Studio. Disimpan di memori proses (hilang saat server restart).
-// "Terakhir online" bertahan lewat Session.lastActiveAt (DB): ditulis paling sering tiap 2 menit per akun,
-// dibaca (maks sesi terbaru per akun) paling sering tiap 1 menit.
-const g = globalThis as { __studioSeen?: Map<string, number>; __studioSeenDb?: Map<string, number>; __studioLast?: { t: number; m: Record<string, number> } };
+// Terakhir terlihat per akun (email → ms), HANYA dari Tirtonic Studio. UI menarik sinkron hanya saat halaman Studio
+// terbuka & terlihat, jadi tarikan terakhir = tanda akun sedang membuka Studio. Memori proses untuk "Online" (detik),
+// MediaMember.lastSeenAt (DB) untuk "Terakhir online" yang bertahan walau server restart: ditulis paling sering
+// tiap 2 menit per akun, dibaca paling sering tiap 1 menit.
+const g = globalThis as { __studioSeen?: Map<string, number>; __studioSeenDb?: Map<string, number>; __studioLast2?: { t: number; m: Record<string, number> } };
 const seen = (g.__studioSeen ??= new Map<string, number>());
 const wrote = (g.__studioSeenDb ??= new Map<string, number>());
 const KEEP_MS = 24 * 3600_000;
 
 async function lastActive(): Promise<Record<string, number>> {
-  const c = g.__studioLast;
+  const c = g.__studioLast2;
   if (c && Date.now() - c.t < 60_000) return c.m;
-  const rows = await prisma.session.groupBy({ by: ["userId"], _max: { lastActiveAt: true } });
-  const users = await prisma.user.findMany({ where: { id: { in: rows.map((r) => r.userId) } }, select: { id: true, email: true } });
-  const em = new Map(users.map((x) => [x.id, x.email.toLowerCase()]));
+  const rows = await prisma.mediaMember.findMany({ where: { lastSeenAt: { not: null } }, select: { lastSeenAt: true, user: { select: { email: true } } } });
   const m: Record<string, number> = {};
-  for (const r of rows) {
-    const e = em.get(r.userId), t = r._max.lastActiveAt?.getTime();
-    if (e && t) m[e] = Math.max(m[e] ?? 0, t);
-  }
-  g.__studioLast = { t: Date.now(), m };
+  for (const r of rows) if (r.lastSeenAt) m[r.user.email.toLowerCase()] = r.lastSeenAt.getTime();
+  g.__studioLast2 = { t: Date.now(), m };
   return m;
 }
 
@@ -35,9 +29,7 @@ export async function GET(req: NextRequest) {
     seen.set(u.email, now);
     if (now - (wrote.get(u.email) ?? 0) > 120_000) {
       wrote.set(u.email, now);
-      getSession()
-        .then((s) => s && prisma.session.update({ where: { id: s.sessionId }, data: { lastActiveAt: new Date(now) } }))
-        .catch(() => {});
+      prisma.mediaMember.updateMany({ where: { userId: u.userId }, data: { lastSeenAt: new Date(now) } }).catch(() => {});
     }
     const since = Number(req.nextUrl.searchParams.get("since")) || 0;
     const r = await changes(u, since);

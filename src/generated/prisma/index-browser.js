@@ -433,6 +433,7 @@ exports.Prisma.MediaMemberScalarFieldEnum = {
   pcalColor: 'pcalColor',
   pcalNotes: 'pcalNotes',
   extra: 'extra',
+  lastSeenAt: 'lastSeenAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };

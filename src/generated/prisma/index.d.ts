@@ -31685,6 +31685,7 @@ export namespace Prisma {
     avPhotoKey: string | null
     pcalColor: string | null
     pcalNotes: string | null
+    lastSeenAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -31700,6 +31701,7 @@ export namespace Prisma {
     avPhotoKey: string | null
     pcalColor: string | null
     pcalNotes: string | null
+    lastSeenAt: Date | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -31717,6 +31719,7 @@ export namespace Prisma {
     pcalColor: number
     pcalNotes: number
     extra: number
+    lastSeenAt: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -31742,6 +31745,7 @@ export namespace Prisma {
     avPhotoKey?: true
     pcalColor?: true
     pcalNotes?: true
+    lastSeenAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -31757,6 +31761,7 @@ export namespace Prisma {
     avPhotoKey?: true
     pcalColor?: true
     pcalNotes?: true
+    lastSeenAt?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -31774,6 +31779,7 @@ export namespace Prisma {
     pcalColor?: true
     pcalNotes?: true
     extra?: true
+    lastSeenAt?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -31878,6 +31884,7 @@ export namespace Prisma {
     pcalColor: string
     pcalNotes: string | null
     extra: JsonValue | null
+    lastSeenAt: Date | null
     createdAt: Date
     updatedAt: Date
     _count: MediaMemberCountAggregateOutputType | null
@@ -31914,6 +31921,7 @@ export namespace Prisma {
     pcalColor?: boolean
     pcalNotes?: boolean
     extra?: boolean
+    lastSeenAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -31932,6 +31940,7 @@ export namespace Prisma {
     pcalColor?: boolean
     pcalNotes?: boolean
     extra?: boolean
+    lastSeenAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -31950,6 +31959,7 @@ export namespace Prisma {
     pcalColor?: boolean
     pcalNotes?: boolean
     extra?: boolean
+    lastSeenAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
@@ -31968,11 +31978,12 @@ export namespace Prisma {
     pcalColor?: boolean
     pcalNotes?: boolean
     extra?: boolean
+    lastSeenAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type MediaMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "code" | "role" | "idcc" | "offDays" | "phone" | "avColor" | "avAnimal" | "avPhotoKey" | "pcalColor" | "pcalNotes" | "extra" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaMember"]>
+  export type MediaMemberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "code" | "role" | "idcc" | "offDays" | "phone" | "avColor" | "avAnimal" | "avPhotoKey" | "pcalColor" | "pcalNotes" | "extra" | "lastSeenAt" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaMember"]>
   export type MediaMemberInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -32001,6 +32012,7 @@ export namespace Prisma {
       pcalColor: string
       pcalNotes: string | null
       extra: Prisma.JsonValue | null
+      lastSeenAt: Date | null
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["mediaMember"]>
@@ -32439,6 +32451,7 @@ export namespace Prisma {
     readonly pcalColor: FieldRef<"MediaMember", 'String'>
     readonly pcalNotes: FieldRef<"MediaMember", 'String'>
     readonly extra: FieldRef<"MediaMember", 'Json'>
+    readonly lastSeenAt: FieldRef<"MediaMember", 'DateTime'>
     readonly createdAt: FieldRef<"MediaMember", 'DateTime'>
     readonly updatedAt: FieldRef<"MediaMember", 'DateTime'>
   }
@@ -47425,6 +47438,7 @@ export namespace Prisma {
     pcalColor: 'pcalColor',
     pcalNotes: 'pcalNotes',
     extra: 'extra',
+    lastSeenAt: 'lastSeenAt',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -49845,6 +49859,7 @@ export namespace Prisma {
     pcalColor?: StringFilter<"MediaMember"> | string
     pcalNotes?: StringNullableFilter<"MediaMember"> | string | null
     extra?: JsonNullableFilter<"MediaMember">
+    lastSeenAt?: DateTimeNullableFilter<"MediaMember"> | Date | string | null
     createdAt?: DateTimeFilter<"MediaMember"> | Date | string
     updatedAt?: DateTimeFilter<"MediaMember"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -49863,6 +49878,7 @@ export namespace Prisma {
     pcalColor?: SortOrder
     pcalNotes?: SortOrderInput | SortOrder
     extra?: SortOrderInput | SortOrder
+    lastSeenAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     user?: UserOrderByWithRelationInput
@@ -49884,6 +49900,7 @@ export namespace Prisma {
     pcalColor?: StringFilter<"MediaMember"> | string
     pcalNotes?: StringNullableFilter<"MediaMember"> | string | null
     extra?: JsonNullableFilter<"MediaMember">
+    lastSeenAt?: DateTimeNullableFilter<"MediaMember"> | Date | string | null
     createdAt?: DateTimeFilter<"MediaMember"> | Date | string
     updatedAt?: DateTimeFilter<"MediaMember"> | Date | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
@@ -49902,6 +49919,7 @@ export namespace Prisma {
     pcalColor?: SortOrder
     pcalNotes?: SortOrderInput | SortOrder
     extra?: SortOrderInput | SortOrder
+    lastSeenAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: MediaMemberCountOrderByAggregateInput
@@ -49927,6 +49945,7 @@ export namespace Prisma {
     pcalColor?: StringWithAggregatesFilter<"MediaMember"> | string
     pcalNotes?: StringNullableWithAggregatesFilter<"MediaMember"> | string | null
     extra?: JsonNullableWithAggregatesFilter<"MediaMember">
+    lastSeenAt?: DateTimeNullableWithAggregatesFilter<"MediaMember"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"MediaMember"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MediaMember"> | Date | string
   }
@@ -53089,6 +53108,7 @@ export namespace Prisma {
     pcalColor?: string
     pcalNotes?: string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
+    lastSeenAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutMediaMemberInput
@@ -53107,6 +53127,7 @@ export namespace Prisma {
     pcalColor?: string
     pcalNotes?: string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
+    lastSeenAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -53123,6 +53144,7 @@ export namespace Prisma {
     pcalColor?: StringFieldUpdateOperationsInput | string
     pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutMediaMemberNestedInput
@@ -53141,6 +53163,7 @@ export namespace Prisma {
     pcalColor?: StringFieldUpdateOperationsInput | string
     pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -53158,6 +53181,7 @@ export namespace Prisma {
     pcalColor?: string
     pcalNotes?: string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
+    lastSeenAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -53174,6 +53198,7 @@ export namespace Prisma {
     pcalColor?: StringFieldUpdateOperationsInput | string
     pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -53191,6 +53216,7 @@ export namespace Prisma {
     pcalColor?: StringFieldUpdateOperationsInput | string
     pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -56010,6 +56036,7 @@ export namespace Prisma {
     pcalColor?: SortOrder
     pcalNotes?: SortOrder
     extra?: SortOrder
+    lastSeenAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -56029,6 +56056,7 @@ export namespace Prisma {
     avPhotoKey?: SortOrder
     pcalColor?: SortOrder
     pcalNotes?: SortOrder
+    lastSeenAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -56044,6 +56072,7 @@ export namespace Prisma {
     avPhotoKey?: SortOrder
     pcalColor?: SortOrder
     pcalNotes?: SortOrder
+    lastSeenAt?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -59475,6 +59504,7 @@ export namespace Prisma {
     pcalColor?: string
     pcalNotes?: string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
+    lastSeenAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -59491,6 +59521,7 @@ export namespace Prisma {
     pcalColor?: string
     pcalNotes?: string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
+    lastSeenAt?: Date | string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -60255,6 +60286,7 @@ export namespace Prisma {
     pcalColor?: StringFieldUpdateOperationsInput | string
     pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -60271,6 +60303,7 @@ export namespace Prisma {
     pcalColor?: StringFieldUpdateOperationsInput | string
     pcalNotes?: NullableStringFieldUpdateOperationsInput | string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
+    lastSeenAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
