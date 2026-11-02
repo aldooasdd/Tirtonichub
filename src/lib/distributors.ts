@@ -22,7 +22,7 @@ export const BRANDS: Brand[] = [
   { key: "volkl", brand: "Volkl", distributor: "Arora Putra Sports & Music", trained: true },
   { key: "yonex", brand: "Yonex", distributor: "PT Sunrise Indonesia", trained: true },
   // Belum terlatih (nota belum cocok / belum dikirim) — disabled di dropdown:
-  { key: "dunlop", brand: "Dunlop", distributor: "Crown Sports", trained: false },
+  { key: "dunlop", brand: "Dunlop", distributor: "Crown Sports", trained: true },
   { key: "solinco", brand: "Solinco", distributor: "Solinco", trained: false },
   { key: "babolat", brand: "Babolat", distributor: "Babolat", trained: true },
   { key: "head", brand: "HEAD", distributor: "Kanmo", trained: true },
