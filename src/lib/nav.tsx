@@ -103,6 +103,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Report Penjualan", href: "/finance/report-penjualan", icon: AlertCircle },
         { label: "Rekap Pembelian", href: "/finance/pembelian", icon: Wallet },
         { label: "Saldo Kasir", href: "/finance/kas", icon: Wallet },
+        { label: "Rekap Rekening", href: "/finance/rekening", icon: Wallet },
         { label: "Sinkronisasi Accurate", href: "/finance/sinkronisasi", icon: FileText },
       ],
     });
