@@ -23,7 +23,7 @@ export const BRANDS: Brand[] = [
   // Belum terlatih (nota belum cocok / belum dikirim) — disabled di dropdown:
   { key: "dunlop", brand: "Dunlop", distributor: "Crown Sports", trained: false },
   { key: "solinco", brand: "Solinco", distributor: "Solinco", trained: false },
-  { key: "babolat", brand: "Babolat", distributor: "Babolat", trained: false },
+  { key: "babolat", brand: "Babolat", distributor: "Babolat", trained: true },
   { key: "head", brand: "HEAD", distributor: "Kanmo", trained: false },
   { key: "hundred", brand: "Hundred", distributor: "Mentari Cemerlang Indonesia", trained: true },
   { key: "lacoste", brand: "Lacoste", distributor: "Mitra Adiperkasa", trained: true },
