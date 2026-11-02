@@ -421,6 +421,15 @@ exports.Prisma.RawProductScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.OcrSampleScalarFieldEnum = {
+  batchId: 'batchId',
+  brandKey: 'brandKey',
+  aiRows: 'aiRows',
+  finalRows: 'finalRows',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.MediaMemberScalarFieldEnum = {
   userId: 'userId',
   code: 'code',
@@ -706,6 +715,7 @@ exports.Prisma.ModelName = {
   ChatMessage: 'ChatMessage',
   CalendarEvent: 'CalendarEvent',
   RawProduct: 'RawProduct',
+  OcrSample: 'OcrSample',
   MediaMember: 'MediaMember',
   MediaItem: 'MediaItem',
   MediaAsset: 'MediaAsset',

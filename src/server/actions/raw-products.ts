@@ -10,6 +10,7 @@ import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
 import { parseNotaViaN8n, type NotaItem } from "@/server/n8n-nota";
 import { brandByKey } from "@/lib/distributors";
+import { learnedPrompt, ocrRow, ocrRows } from "@/lib/ocr-learn";
 import { computeSellPrice } from "@/lib/pricing";
 import { notifyBosses } from "@/server/notify";
 import { dateKeyWIB } from "@/server/attendance/logic";
@@ -43,10 +44,25 @@ export async function scanNota(imageBase64: string, mimeType: string, brandKey?:
     return { ok: false, message: "Gagal simpan foto nota." };
   }
 
-  const items = await parseNotaViaN8n(imageBase64, mimeType, b ? { brand: b.brand, distributor: b.distributor, brandKey: b.key } : undefined, okStrips, okText);
+  // Koreksi Finance terakhir untuk brand ini → contoh tambahan di prompt (AI makin pintar).
+  const samples = b
+    ? await prisma.ocrSample.findMany({
+        where: { brandKey: b.key, finalRows: { not: null } },
+        orderBy: { updatedAt: "desc" },
+        take: 2,
+      })
+    : [];
+  const learned = learnedPrompt(samples.map((s) => ({ aiRows: s.aiRows, finalRows: s.finalRows ?? "" })));
+  const items = await parseNotaViaN8n(imageBase64, mimeType, b ? { brand: b.brand, distributor: b.distributor, brandKey: b.key, learned } : undefined, okStrips, okText);
+  const batchId = randomUUID();
+  if (b && items?.length) {
+    await prisma.ocrSample
+      .create({ data: { batchId, brandKey: b.key, aiRows: ocrRows(items.map((i) => ocrRow(i.name, i.qty, i.unitPrice, i.totalPrice))) } })
+      .catch(() => {}); // belajar = bonus, jangan gagalkan scan
+  }
   return {
     ok: true,
-    batchId: randomUUID(),
+    batchId,
     notaPhotoKey: key,
     items: items ?? [],
     ocr: items !== null,
@@ -238,6 +254,22 @@ export async function deleteBatch(batchId: string): Promise<ActionResult> {
   return { ok: true };
 }
 
+/** Batch selesai dicek Finance (tak ada DRAFT lagi): hasil final ≠ hasil AI → simpan sebagai koreksi
+ *  untuk scan brand ini berikutnya; sama → AI sudah benar, sampel dibuang. */
+async function learnFromBatch(batchId: string) {
+  try {
+    const s = await prisma.ocrSample.findUnique({ where: { batchId } });
+    if (!s || s.finalRows) return;
+    if (await prisma.rawProduct.count({ where: { batchId, status: "DRAFT" } })) return;
+    const rows = await prisma.rawProduct.findMany({ where: { batchId } });
+    const finalRows = ocrRows(rows.map((r) => ocrRow(r.name, r.qty, r.listPrice, r.listPrice * r.qty - r.discount)));
+    if (finalRows === s.aiRows) await prisma.ocrSample.delete({ where: { batchId } });
+    else await prisma.ocrSample.update({ where: { batchId }, data: { finalRows } });
+  } catch {
+    // belajar = bonus, jangan gagalkan kirim QC
+  }
+}
+
 /** Kirim satu kartu DRAFT milik sendiri ke Quality Control. */
 export async function submitItemToQc(id: string): Promise<ActionResult> {
   const ctx = await requireFinance();
@@ -245,6 +277,7 @@ export async function submitItemToQc(id: string): Promise<ActionResult> {
   if (!p || !owns(ctx, p.createdById)) return { ok: false, message: "Tidak ditemukan." };
   if (p.status !== "DRAFT") return { ok: false, message: "Hanya draft bisa dikirim." };
   await prisma.rawProduct.update({ where: { id }, data: { status: "QC" } });
+  await learnFromBatch(p.batchId);
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "submit_qc", entity: "RawProduct", entityId: id });
   await notifyBosses({ type: "qc_in", title: `Produk mentah masuk QC: ${p.name}`, link: "/stok/qc" });
@@ -259,6 +292,7 @@ export async function submitBatchToQc(batchId: string): Promise<ActionResult> {
     data: { status: "QC" },
   });
   if (r.count === 0) return { ok: false, message: "Tidak ada draft untuk dikirim." };
+  await learnFromBatch(batchId);
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "submit_qc", entity: "RawProduct", entityId: batchId });
   await notifyBosses({ type: "qc_in", title: `${r.count} produk mentah masuk QC`, link: "/stok/qc" });

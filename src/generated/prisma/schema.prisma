@@ -514,6 +514,18 @@ model RawProduct {
   @@index([createdById])
 }
 
+// --- OCR nota belajar dari Finance: hasil AI per batch vs hasil final saat dikirim ke QC ---
+model OcrSample {
+  batchId   String   @id
+  brandKey  String
+  aiRows    String // baris hasil OCR (lib/ocr-learn ocrRows)
+  finalRows String? // diisi bila Finance mengoreksi; null = belum dikirim / AI sudah benar
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([brandKey, updatedAt])
+}
+
 // --- Media (Tirtonic Studio): produksi konten IG, port dari app media Zaki ---
 enum MediaRole {
   ADMIN // admin penuh (Zaki); kelola kode Louis1, tim, laporan

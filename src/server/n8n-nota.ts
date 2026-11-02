@@ -67,13 +67,13 @@ function normalize(raw: unknown): NotaItem {
 export async function parseNotaViaN8n(
   imageBase64: string,
   mimeType: string,
-  meta?: { brand?: string; distributor?: string; brandKey?: string },
+  meta?: { brand?: string; distributor?: string; brandKey?: string; learned?: string },
   strips: string[] = [],
   text = "",
 ): Promise<NotaItem[] | null> {
   const url = process.env.N8N_NOTA_OCR_WEBHOOK_URL;
   if (!url) return null;
-  const brandMeta = { brand: meta?.brand ?? null, distributor: meta?.distributor ?? null, brandKey: meta?.brandKey ?? null };
+  const brandMeta = { brand: meta?.brand ?? null, distributor: meta?.distributor ?? null, brandKey: meta?.brandKey ?? null, learned: meta?.learned || null };
   const body = text
     ? { imageBase64: "", mimeType: "text/plain", text, ...brandMeta }
     : strips.length
