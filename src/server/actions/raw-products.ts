@@ -64,6 +64,7 @@ type SaveItem = {
   listPrice?: number; // @Harga per unit (sesuai PI). Fallback: unitPrice.
   discount?: number; // Diskon baris (rupiah)
   unitPrice: number; // kompat lama; dipakai sbg listPrice bila listPrice absen
+  currency?: string; // IDR | SGD (hanya dipakai saat buat batch)
   supplier?: string | null;
   notaDate?: string | null;
 };
@@ -71,13 +72,19 @@ type SaveItem = {
 const clean = (v: string | null | undefined, max: number): string | null =>
   v?.trim() ? v.trim().slice(0, max) : null;
 
-/** @Harga + Diskon + qty → kolom harga tersimpan. unitPrice = modal net/unit. */
-function priceCols(i: SaveItem) {
+const currencyOf = (c: unknown) => (c === "SGD" ? "SGD" : "IDR");
+
+/** @Harga + Diskon + qty → kolom harga tersimpan. unitPrice = modal net/unit.
+ *  IDR: rupiah bulat + harga jual otomatis. SGD: desimal (@Harga 4 digit, mis 175/16 = 10.9375,
+ *  biar Total = @Harga×qty persis), tanpa harga jual (rumus jual khusus rupiah). */
+function priceCols(i: SaveItem, currency: string) {
+  const idr = currency === "IDR";
+  const r = (n: number, dp: number) => (idr ? Math.round(n) : Math.round(n * 10 ** dp) / 10 ** dp);
   const qty = Math.max(1, Math.round(i.qty) || 1);
-  const listPrice = Math.max(0, Math.round(i.listPrice ?? i.unitPrice) || 0);
-  const discount = Math.min(listPrice * qty, Math.max(0, Math.round(i.discount ?? 0) || 0));
-  const unitPrice = Math.round((listPrice * qty - discount) / qty); // net/unit
-  return { listPrice, discount, unitPrice, sellPrice: computeSellPrice(unitPrice) };
+  const listPrice = Math.max(0, r(i.listPrice ?? i.unitPrice, 4) || 0);
+  const discount = Math.min(listPrice * qty, Math.max(0, r(i.discount ?? 0, 2) || 0));
+  const unitPrice = r((listPrice * qty - discount) / qty, 4); // net/unit
+  return { listPrice, discount, unitPrice, sellPrice: idr ? computeSellPrice(unitPrice) : null };
 }
 
 /** Simpan kartu produk mentah (status DRAFT). */
@@ -92,7 +99,8 @@ export async function saveRawBatch(input: {
 
   await prisma.rawProduct.createMany({
     data: items.map((i) => {
-      const p = priceCols(i);
+      const currency = currencyOf(i.currency);
+      const p = priceCols(i, currency);
       return {
       batchId: input.batchId,
       name: i.name.trim().slice(0, 200),
@@ -102,6 +110,7 @@ export async function saveRawBatch(input: {
       sku: clean(i.sku, 60),
       qty: Math.max(1, Math.round(i.qty) || 1),
       unit: i.unit?.trim() || null,
+      currency,
       listPrice: p.listPrice,
       discount: p.discount,
       unitPrice: p.unitPrice,
@@ -136,7 +145,7 @@ export async function updateRawProduct(id: string, fields: SaveItem): Promise<Ac
   const p = await prisma.rawProduct.findUnique({ where: { id } });
   if (!p || !owns(ctx, p.createdById)) return { ok: false, message: "Tidak ditemukan." };
   if (p.status !== "DRAFT") return { ok: false, message: "Hanya draft bisa diedit." };
-  const pc = priceCols(fields);
+  const pc = priceCols(fields, p.currency);
   await prisma.rawProduct.update({
     where: { id },
     data: {
@@ -185,14 +194,14 @@ export async function saveRawItems(items: Array<SaveItem & { id: string }>): Pro
   const ctx = await requireFinance();
   const own = await prisma.rawProduct.findMany({
     where: { id: { in: items.map((i) => i.id) }, ...ownerWhere(ctx), status: "DRAFT" },
-    select: { id: true },
+    select: { id: true, currency: true },
   });
-  const allowed = new Set(own.map((o) => o.id));
+  const allowed = new Map(own.map((o) => [o.id, o.currency]));
   await prisma.$transaction(
     items
       .filter((i) => allowed.has(i.id))
       .map((i) => {
-        const p = priceCols(i);
+        const p = priceCols(i, allowed.get(i.id)!);
         return prisma.rawProduct.update({
           where: { id: i.id },
           data: {

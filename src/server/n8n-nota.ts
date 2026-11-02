@@ -21,18 +21,23 @@ function str(v: unknown, max: number): string | null {
 }
 
 function toInt(v: unknown): number {
+  return Math.round(toNum(v));
+}
+
+// Harga boleh desimal (nota SGD: 175/16 = 10.9375). Dibulatkan ke rupiah di saveRawBatch utk IDR.
+function toNum(v: unknown): number {
   const n = Number(String(v ?? "").replace(/[^0-9.-]/g, ""));
-  return Number.isFinite(n) ? Math.round(n) : 0;
+  return Number.isFinite(n) ? Math.round(n * 10000) / 10000 : 0;
 }
 
 /** @Harga (list) + Total Harga (net) per baris, sesuai PI. Lengkapi yang hilang:
  *  tanpa total → total = @Harga×qty; tanpa @Harga → @Harga = total/qty. */
 export function priceFields(qty: number, unitPriceOcr: number, totalPriceOcr: number): { unitPrice: number; totalPrice: number } {
   const q = Math.max(1, qty || 1);
-  const atHarga = Math.max(0, Math.round(unitPriceOcr));
-  const total = Math.max(0, Math.round(totalPriceOcr));
-  const unitPrice = atHarga > 0 ? atHarga : total > 0 ? Math.round(total / q) : 0;
-  const totalPrice = total > 0 ? total : unitPrice * q;
+  const atHarga = Math.max(0, unitPriceOcr);
+  const total = Math.max(0, totalPriceOcr);
+  const unitPrice = atHarga > 0 ? atHarga : total > 0 ? Math.round((total / q) * 10000) / 10000 : 0;
+  const totalPrice = total > 0 ? total : Math.round(unitPrice * q * 100) / 100;
   return { unitPrice, totalPrice };
 }
 
@@ -40,7 +45,7 @@ function normalize(raw: unknown): NotaItem {
   const o = (raw ?? {}) as Record<string, unknown>;
   const date = typeof o.notaDate === "string" && /^\d{4}-\d{2}-\d{2}$/.test(o.notaDate) ? o.notaDate : null;
   const qty = Math.max(1, toInt(o.qty) || 1);
-  const { unitPrice, totalPrice } = priceFields(qty, toInt(o.unitPrice), toInt(o.totalPrice));
+  const { unitPrice, totalPrice } = priceFields(qty, toNum(o.unitPrice), toNum(o.totalPrice));
   return {
     name: String(o.name ?? "").slice(0, 200),
     brand: str(o.brand, 80),

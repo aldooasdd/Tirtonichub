@@ -403,6 +403,7 @@ exports.Prisma.RawProductScalarFieldEnum = {
   sku: 'sku',
   qty: 'qty',
   unit: 'unit',
+  currency: 'currency',
   listPrice: 'listPrice',
   discount: 'discount',
   unitPrice: 'unitPrice',

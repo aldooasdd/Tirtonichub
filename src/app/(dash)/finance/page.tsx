@@ -26,6 +26,7 @@ export default async function FinancePage() {
         sku: r.sku,
         qty: r.qty,
         unit: r.unit,
+        currency: r.currency,
         listPrice: r.listPrice,
         discount: r.discount,
         unitPrice: r.unitPrice,

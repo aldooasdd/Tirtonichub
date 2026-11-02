@@ -1,7 +1,8 @@
 // Brand racket/senar + distributor resminya. Dipakai dropdown scan Purchasing:
 // Finance pilih brand dulu → routing prompt OCR per-brand di n8n + label data latih.
 // trained: false = AI belum punya contoh latih → option disabled di dropdown sampai dilatih.
-export type Brand = { key: string; brand: string; distributor: string; trained: boolean };
+// currency: nota & PI dalam mata uang asing (default IDR).
+export type Brand = { key: string; brand: string; distributor: string; trained: boolean; currency?: "SGD" };
 
 export const BRANDS: Brand[] = [
   { key: "adidas", brand: "Adidas", distributor: "Nusantara Sportindo", trained: true },
@@ -29,7 +30,7 @@ export const BRANDS: Brand[] = [
   { key: "lacoste", brand: "Lacoste", distributor: "Mitra Adiperkasa", trained: false },
   { key: "mizuno", brand: "Mizuno", distributor: "PT. Surya Bumi Retailindo", trained: true },
   { key: "nike", brand: "Nike", distributor: "Generasi Anugerah Berkarya", trained: true },
-  { key: "toroline", brand: "Restring / Toroline", distributor: "GSM Sports", trained: false },
+  { key: "toroline", brand: "Restring / Toroline", distributor: "GSM Sports", trained: true, currency: "SGD" },
   { key: "toalson", brand: "Toalson", distributor: "PT. Pradajaya Sportivo Indonesia", trained: false },
   { key: "treton", brand: "Treton", distributor: "KAI", trained: true },
   { key: "wilson", brand: "Wilson", distributor: "Era Gaya Indonesia", trained: false },

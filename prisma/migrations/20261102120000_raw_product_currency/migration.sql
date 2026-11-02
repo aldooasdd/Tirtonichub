@@ -1,0 +1,8 @@
+-- Nota luar negeri (SGD) disimpan apa adanya dengan desimal, sesuai PI.
+ALTER TABLE "RawProduct" ADD COLUMN     "currency" TEXT NOT NULL DEFAULT 'IDR',
+ALTER COLUMN "listPrice" SET DEFAULT 0,
+ALTER COLUMN "listPrice" SET DATA TYPE DOUBLE PRECISION,
+ALTER COLUMN "discount" SET DEFAULT 0,
+ALTER COLUMN "discount" SET DATA TYPE DOUBLE PRECISION,
+ALTER COLUMN "unitPrice" SET DEFAULT 0,
+ALTER COLUMN "unitPrice" SET DATA TYPE DOUBLE PRECISION;

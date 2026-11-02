@@ -33,8 +33,9 @@ type Item = {
   sku: string | null;
   qty: number;
   unit: string | null;
+  currency: string; // IDR | SGD
   listPrice: number; // @Harga per unit (sesuai PI)
-  discount: number; // Diskon baris (rupiah)
+  discount: number; // Diskon baris
   unitPrice: number; // modal net/unit
   sellPrice: number | null;
   supplier: string | null;
@@ -60,6 +61,8 @@ function statusVariant(s: Item["status"]): "default" | "secondary" | "outline" |
 }
 
 const rupiah = new Intl.NumberFormat("id-ID");
+const sgd = new Intl.NumberFormat("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const money = (n: number, currency: string) => (currency === "SGD" ? `SGD ${sgd.format(n)}` : `Rp ${rupiah.format(n)}`);
 
 function Field({ label, children }: { label: string; children: React.ReactNode }) {
   return (
@@ -117,8 +120,9 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
           ...it,
           brand: it.brand ?? b?.brand ?? null,
           supplier: it.supplier ?? b?.distributor ?? null,
+          currency: b?.currency ?? "IDR",
           listPrice,
-          discount: Math.max(0, listPrice * qty - total),
+          discount: Math.max(0, Math.round((listPrice * qty - total) * 100) / 100),
         };
       });
       const r = await saveRawBatch({ batchId: scan.batchId, notaPhotoKey: scan.notaPhotoKey, items: toSave });
@@ -233,7 +237,7 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
                   </p>
                 )}
                 <p className="text-14 text-muted-foreground">
-                  {i.qty} {i.unit ?? "pcs"} · Rp {rupiah.format(i.unitPrice)}
+                  {i.qty} {i.unit ?? "pcs"} · {money(i.unitPrice, i.currency)}
                   {i.supplier ? ` · ${i.supplier}` : ""}
                 </p>
                 {i.sellPrice != null && (
@@ -315,14 +319,15 @@ function toFields(r: Row) {
     notaDate: r.notaDate || null,
   };
 }
-/** Total Harga baris = @Harga×qty − Diskon (sesuai PI). */
+/** Total Harga baris = @Harga×qty − Diskon (sesuai PI). Dibulatkan sen (SGD desimal). */
 function rowTotal(r: Row): number {
-  return Math.max(0, (Number(r.listPrice) || 0) * (Number(r.qty) || 0) - (Number(r.discount) || 0));
+  return Math.max(0, Math.round(((Number(r.listPrice) || 0) * (Number(r.qty) || 0) - (Number(r.discount) || 0)) * 100) / 100);
 }
 
 function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
   const router = useRouter();
   const [pending, start] = useTransition();
+  const currency = items[0]?.currency ?? "IDR"; // 1 batch = 1 nota = 1 mata uang
   // Normalisasi: nama tanpa ukuran, supaya baris model+warna sama tergabung.
   const [rows, setRows] = useState<Row[]>(() =>
     items.map((i) => ({ ...toRow(i), name: stripSize(i.name, i.size) })),
@@ -429,7 +434,7 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
                 <Input value={head.unit} onChange={(e) => setShared(ids, "unit", e.target.value)} placeholder="pcs" />
               </Field>
               <Field label="@Harga">
-                <Input type="number" value={head.listPrice} onChange={(e) => setShared(ids, "listPrice", e.target.value)} placeholder="@Harga" />
+                <Input type="number" step="any" value={head.listPrice} onChange={(e) => setShared(ids, "listPrice", e.target.value)} placeholder="@Harga" />
               </Field>
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -454,20 +459,22 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
                   <div className="grid grid-cols-[1fr_auto_1fr_1.2fr_auto] items-center gap-2">
                     <Input value={row.size} onChange={(e) => setSize(row.id, "size", e.target.value)} placeholder="Ukuran" />
                     <Input type="number" className="w-16" value={row.qty} onChange={(e) => setSize(row.id, "qty", e.target.value)} placeholder="Qty" />
-                    <Input type="number" value={row.discount} onChange={(e) => setSize(row.id, "discount", e.target.value)} placeholder="0" />
+                    <Input type="number" step="any" value={row.discount} onChange={(e) => setSize(row.id, "discount", e.target.value)} placeholder="0" />
                     <Input value={row.sku} onChange={(e) => setSize(row.id, "sku", e.target.value)} placeholder="SKU" />
                     <Button size="icon" variant="ghost" disabled={pending} onClick={() => deleteSize(row.id)} aria-label="Hapus ukuran">
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
-                  <p className="pl-1 text-12 text-muted-foreground">Total Harga: Rp {rupiah.format(rowTotal(row))}</p>
+                  <p className="pl-1 text-12 text-muted-foreground">Total Harga: {money(rowTotal(row), currency)}</p>
                 </div>
               ))}
             </div>
 
-            <p className="text-12 text-muted-foreground">
-              Harga jual/unit (net ×135%×115%, bulat 5rb): Rp {rupiah.format(computeSellPrice(groupNet > 0 && totalQty > 0 ? Math.round(groupNet / totalQty) : 0))}
-            </p>
+            {currency === "IDR" && (
+              <p className="text-12 text-muted-foreground">
+                Harga jual/unit (net ×135%×115%, bulat 5rb): Rp {rupiah.format(computeSellPrice(groupNet > 0 && totalQty > 0 ? Math.round(groupNet / totalQty) : 0))}
+              </p>
+            )}
             <Button size="sm" variant="secondary" className="w-full" disabled={pending} onClick={() => saveGroup(g)}>
               Simpan & Kirim ke QC
             </Button>

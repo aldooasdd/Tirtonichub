@@ -11,4 +11,7 @@ test("priceFields: @Harga + Total Harga per baris (sesuai PI)", () => {
   assert.deepEqual(priceFields(2, 0, 20000), { unitPrice: 10000, totalPrice: 20000 });
   // qty 0 aman.
   assert.deepEqual(priceFields(0, 0, 0), { unitPrice: 0, totalPrice: 0 });
+  // SGD desimal (GSM Sports): 1 reel 175 = 16 senar @10.9375
+  assert.deepEqual(priceFields(16, 10.9375, 175), { unitPrice: 10.9375, totalPrice: 175 });
+  assert.deepEqual(priceFields(96, 0, 1050), { unitPrice: 10.9375, totalPrice: 1050 });
 });

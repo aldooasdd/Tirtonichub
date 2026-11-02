@@ -489,10 +489,11 @@ model RawProduct {
   sku          String?
   qty          Int              @default(1)
   unit         String? // pcs, box, dst
-  listPrice    Int              @default(0) // @Harga per unit (harga list, sesuai PI)
-  discount     Int              @default(0) // Diskon baris (rupiah), sesuai PI
-  unitPrice    Int              @default(0) // modal net/unit = (listPrice×qty − discount)/qty
-  sellPrice    Int? // harga jual = unitPrice(net)×135%×115%, bulat ke atas 5000
+  currency     String           @default("IDR") // IDR | SGD (nota luar negeri, mis. GSM Sports)
+  listPrice    Float            @default(0) // @Harga per unit (harga list, sesuai PI). IDR bulat, SGD desimal
+  discount     Float            @default(0) // Diskon baris, sesuai PI
+  unitPrice    Float            @default(0) // modal net/unit = (listPrice×qty − discount)/qty
+  sellPrice    Int? // harga jual (Rp) = unitPrice(net)×135%×115%, bulat ke atas 5000. null utk non-IDR
   supplier     String?
   notaDate     DateTime?        @db.Date
   notaPhotoKey String?
