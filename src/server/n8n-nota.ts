@@ -58,17 +58,20 @@ function normalize(raw: unknown): NotaItem {
 
 /** Kirim foto nota ke n8n, terima daftar item. null bila belum diset / gagal.
  *  brand/distributor diteruskan supaya n8n pilih prompt OCR per-brand.
- *  strips (JPEG base64 potongan halaman) dipakai OCR bila ada; file asli tak ikut dikirim. */
+ *  text (teks PDF digital) > strips (JPEG base64 potongan halaman) > file asli. */
 export async function parseNotaViaN8n(
   imageBase64: string,
   mimeType: string,
   meta?: { brand?: string; distributor?: string; brandKey?: string },
   strips: string[] = [],
+  text = "",
 ): Promise<NotaItem[] | null> {
   const url = process.env.N8N_NOTA_OCR_WEBHOOK_URL;
   if (!url) return null;
   const brandMeta = { brand: meta?.brand ?? null, distributor: meta?.distributor ?? null, brandKey: meta?.brandKey ?? null };
-  const body = strips.length
+  const body = text
+    ? { imageBase64: "", mimeType: "text/plain", text, ...brandMeta }
+    : strips.length
     ? { imageBase64: "", mimeType: "image/jpeg", strips: true, images: strips.map((base64) => ({ base64, mimeType: "image/jpeg" })), ...brandMeta }
     : { imageBase64, mimeType, ...brandMeta };
   try {

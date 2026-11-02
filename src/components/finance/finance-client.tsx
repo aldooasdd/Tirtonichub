@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { compressImage, notaStrips } from "@/lib/image";
+import { notaText } from "@/lib/pdf-text";
 import { computeSellPrice } from "@/lib/pricing";
 import { stripSize, groupKey } from "@/lib/raw-group";
 import { BRANDS, brandByKey } from "@/lib/distributors";
@@ -89,15 +90,17 @@ export function FinanceClient({ items, isBoss }: { items: Item[]; isBoss: boolea
     setBusy(true);
     setMsg(null);
     try {
-      // Arsip nota: PDF apa adanya, foto dikompres. OCR pakai strip resolusi tinggi (lebih akurat);
-      // render gagal → strip kosong, server fallback kirim file asli.
+      // Arsip nota: PDF apa adanya, foto dikompres. OCR: PDF digital pakai teks aslinya (pasti benar,
+      // nota banyak halaman tak jadi puluhan gambar); scan/foto pakai strip resolusi tinggi.
+      // Render gagal → strip kosong, server fallback kirim file asli.
       const isPdf = file.type === "application/pdf" || /\.pdf$/i.test(file.name);
       const mime = isPdf ? "application/pdf" : "image/jpeg";
+      const text = await notaText(file).catch(() => "");
       const [b64, strips] = await Promise.all([
         blobToBase64(isPdf ? file : await compressImage(file)),
-        notaStrips(file).catch(() => [] as string[]),
+        text ? ([] as string[]) : notaStrips(file).catch(() => [] as string[]),
       ]);
-      const scan = await scanNota(b64, mime, brandKey, strips);
+      const scan = await scanNota(b64, mime, brandKey, strips, text);
       if (!scan.ok || !scan.batchId) {
         setMsg(scan.message ?? "Scan gagal.");
         return;
