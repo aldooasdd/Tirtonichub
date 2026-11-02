@@ -24,7 +24,7 @@ function toInt(v: unknown): number {
   return Math.round(toNum(v));
 }
 
-// Harga boleh desimal (nota SGD: 175/16 = 10.9375). Dibulatkan ke rupiah di saveRawBatch utk IDR.
+// Harga boleh desimal (nota SGD: 175/16 = 10.9375; rupiah PI kadang 30.208,34). Dibulatkan di saveRawBatch.
 function toNum(v: unknown): number {
   const n = Number(String(v ?? "").replace(/[^0-9.-]/g, ""));
   return Number.isFinite(n) ? Math.round(n * 10000) / 10000 : 0;

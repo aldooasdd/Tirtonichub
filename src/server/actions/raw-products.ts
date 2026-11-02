@@ -75,15 +75,16 @@ const clean = (v: string | null | undefined, max: number): string | null =>
 const currencyOf = (c: unknown) => (c === "SGD" ? "SGD" : "IDR");
 
 /** @Harga + Diskon + qty → kolom harga tersimpan. unitPrice = modal net/unit.
- *  IDR: rupiah bulat + harga jual otomatis. SGD: desimal (@Harga 4 digit, mis 175/16 = 10.9375,
- *  biar Total = @Harga×qty persis), tanpa harga jual (rumus jual khusus rupiah). */
+ *  IDR: 2 desimal (PI kadang @30.208,34 / diskon 652.501,44) + harga jual otomatis.
+ *  SGD: @Harga 4 desimal (175/16 = 10.9375, biar Total = @Harga×qty persis), tanpa harga jual
+ *  (rumus jual khusus rupiah). */
 function priceCols(i: SaveItem, currency: string) {
   const idr = currency === "IDR";
-  const r = (n: number, dp: number) => (idr ? Math.round(n) : Math.round(n * 10 ** dp) / 10 ** dp);
+  const r = (n: number, dp: number) => Math.round(n * 10 ** dp) / 10 ** dp;
   const qty = Math.max(1, Math.round(i.qty) || 1);
-  const listPrice = Math.max(0, r(i.listPrice ?? i.unitPrice, 4) || 0);
+  const listPrice = Math.max(0, r(i.listPrice ?? i.unitPrice, idr ? 2 : 4) || 0);
   const discount = Math.min(listPrice * qty, Math.max(0, r(i.discount ?? 0, 2) || 0));
-  const unitPrice = r((listPrice * qty - discount) / qty, 4); // net/unit
+  const unitPrice = r((listPrice * qty - discount) / qty, idr ? 2 : 4); // net/unit
   return { listPrice, discount, unitPrice, sellPrice: idr ? computeSellPrice(unitPrice) : null };
 }
 

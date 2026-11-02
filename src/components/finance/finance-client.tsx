@@ -60,7 +60,7 @@ function statusVariant(s: Item["status"]): "default" | "secondary" | "outline" |
   return "outline";
 }
 
-const rupiah = new Intl.NumberFormat("id-ID");
+const rupiah = new Intl.NumberFormat("id-ID", { maximumFractionDigits: 2 });
 const sgd = new Intl.NumberFormat("id-ID", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const money = (n: number, currency: string) => (currency === "SGD" ? `SGD ${sgd.format(n)}` : `Rp ${rupiah.format(n)}`);
 

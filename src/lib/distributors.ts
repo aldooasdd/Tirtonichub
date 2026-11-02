@@ -31,7 +31,7 @@ export const BRANDS: Brand[] = [
   { key: "mizuno", brand: "Mizuno", distributor: "PT. Surya Bumi Retailindo", trained: true },
   { key: "nike", brand: "Nike", distributor: "Generasi Anugerah Berkarya", trained: true },
   { key: "toroline", brand: "Restring / Toroline", distributor: "GSM Sports", trained: true, currency: "SGD" },
-  { key: "toalson", brand: "Toalson", distributor: "PT. Pradajaya Sportivo Indonesia", trained: false },
+  { key: "toalson", brand: "Toalson", distributor: "PT. Pradajaya Sportivo Indonesia", trained: true },
   { key: "treton", brand: "Treton", distributor: "KAI", trained: true },
   { key: "wilson", brand: "Wilson", distributor: "Era Gaya Indonesia", trained: false },
 ];
