@@ -24,7 +24,7 @@ export const BRANDS: Brand[] = [
   { key: "dunlop", brand: "Dunlop", distributor: "Crown Sports", trained: false },
   { key: "solinco", brand: "Solinco", distributor: "Solinco", trained: false },
   { key: "babolat", brand: "Babolat", distributor: "Babolat", trained: true },
-  { key: "head", brand: "HEAD", distributor: "Kanmo", trained: false },
+  { key: "head", brand: "HEAD", distributor: "Kanmo", trained: true },
   { key: "hundred", brand: "Hundred", distributor: "Mentari Cemerlang Indonesia", trained: true },
   { key: "lacoste", brand: "Lacoste", distributor: "Mitra Adiperkasa", trained: true },
   { key: "mizuno", brand: "Mizuno", distributor: "PT. Surya Bumi Retailindo", trained: false },
