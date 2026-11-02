@@ -33,7 +33,7 @@ export const BRANDS: Brand[] = [
   { key: "toroline", brand: "Restring / Toroline", distributor: "GSM Sports", trained: true, currency: "SGD" },
   { key: "toalson", brand: "Toalson", distributor: "PT. Pradajaya Sportivo Indonesia", trained: true },
   { key: "treton", brand: "Treton", distributor: "KAI", trained: true },
-  { key: "wilson", brand: "Wilson", distributor: "Era Gaya Indonesia", trained: false },
+  { key: "wilson", brand: "Wilson", distributor: "Era Gaya Indonesia", trained: true },
 ];
 
 export const brandByKey = (k: string | null | undefined): Brand | undefined => BRANDS.find((b) => b.key === k);
