@@ -593,6 +593,18 @@ exports.Prisma.PushLogScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.KatalogNotifScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  driveUrl: 'driveUrl',
+  movedBy: 'movedBy',
+  movedAt: 'movedAt',
+  batchId: 'batchId',
+  sentAt: 'sentAt',
+  failedAt: 'failedAt',
+  error: 'error'
+};
+
 exports.Prisma.PushItemQueueScalarFieldEnum = {
   id: 'id',
   itemId: 'itemId',
@@ -729,6 +741,7 @@ exports.Prisma.ModelName = {
   StudioTombstone: 'StudioTombstone',
   PushSubscription: 'PushSubscription',
   PushLog: 'PushLog',
+  KatalogNotif: 'KatalogNotif',
   PushItemQueue: 'PushItemQueue'
 };
 

@@ -109,19 +109,8 @@ export function itemsMessage(names: string[]): { title: string; body: string } {
   return { title: `${n} barang masuk`, body: n > 5 ? `${shown}, …` : shown };
 }
 
-/** Notifikasi Foto katalog ready: judul memakai nama file (atau nama barang bila belum ada file). */
-export function katalogMessage(title: string, files: string[]): { title: string; body: string } {
-  const n = files.length;
-  const head = n ? files[0] : title;
-  const shown = files.slice(0, 3).join(", ");
-  return {
-    title: `Foto katalog "${head}" ready`,
-    body: n ? `${title} · ${n} foto${n > 1 ? ": " + shown + (n > 3 ? ", …" : "") : ""}` : `${title} · file ada di File`,
-  };
-}
-
 // ---- WhatsApp (wa.ts) ----
-/** Penerima khusus Foto katalog (sama dengan jobs.ts notifyKatalog). */
+/** Penerima khusus Foto katalog (katalog.ts); nomor WA dari MediaMember.phone. */
 export const katalogOnly = () =>
   (process.env.PUSH_KATALOG_EMAILS || "ridho@tirtonichub.com").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
 

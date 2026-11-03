@@ -201,6 +201,11 @@ export type PushSubscription = $Result.DefaultSelection<Prisma.$PushSubscription
  */
 export type PushLog = $Result.DefaultSelection<Prisma.$PushLogPayload>
 /**
+ * Model KatalogNotif
+ * 
+ */
+export type KatalogNotif = $Result.DefaultSelection<Prisma.$KatalogNotifPayload>
+/**
  * Model PushItemQueue
  * 
  */
@@ -817,6 +822,16 @@ export class PrismaClient<
   get pushLog(): Prisma.PushLogDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.katalogNotif`: Exposes CRUD operations for the **KatalogNotif** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more KatalogNotifs
+    * const katalogNotifs = await prisma.katalogNotif.findMany()
+    * ```
+    */
+  get katalogNotif(): Prisma.KatalogNotifDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.pushItemQueue`: Exposes CRUD operations for the **PushItemQueue** model.
     * Example usage:
     * ```ts
@@ -1303,6 +1318,7 @@ export namespace Prisma {
     StudioTombstone: 'StudioTombstone',
     PushSubscription: 'PushSubscription',
     PushLog: 'PushLog',
+    KatalogNotif: 'KatalogNotif',
     PushItemQueue: 'PushItemQueue'
   };
 
@@ -1322,7 +1338,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "pushItemQueue"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4064,6 +4080,80 @@ export namespace Prisma {
           }
         }
       }
+      KatalogNotif: {
+        payload: Prisma.$KatalogNotifPayload<ExtArgs>
+        fields: Prisma.KatalogNotifFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.KatalogNotifFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KatalogNotifPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.KatalogNotifFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KatalogNotifPayload>
+          }
+          findFirst: {
+            args: Prisma.KatalogNotifFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KatalogNotifPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.KatalogNotifFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KatalogNotifPayload>
+          }
+          findMany: {
+            args: Prisma.KatalogNotifFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KatalogNotifPayload>[]
+          }
+          create: {
+            args: Prisma.KatalogNotifCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KatalogNotifPayload>
+          }
+          createMany: {
+            args: Prisma.KatalogNotifCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.KatalogNotifCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KatalogNotifPayload>[]
+          }
+          delete: {
+            args: Prisma.KatalogNotifDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KatalogNotifPayload>
+          }
+          update: {
+            args: Prisma.KatalogNotifUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KatalogNotifPayload>
+          }
+          deleteMany: {
+            args: Prisma.KatalogNotifDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.KatalogNotifUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.KatalogNotifUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KatalogNotifPayload>[]
+          }
+          upsert: {
+            args: Prisma.KatalogNotifUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$KatalogNotifPayload>
+          }
+          aggregate: {
+            args: Prisma.KatalogNotifAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateKatalogNotif>
+          }
+          groupBy: {
+            args: Prisma.KatalogNotifGroupByArgs<ExtArgs>
+            result: $Utils.Optional<KatalogNotifGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.KatalogNotifCountArgs<ExtArgs>
+            result: $Utils.Optional<KatalogNotifCountAggregateOutputType> | number
+          }
+        }
+      }
       PushItemQueue: {
         payload: Prisma.$PushItemQueuePayload<ExtArgs>
         fields: Prisma.PushItemQueueFieldRefs
@@ -4271,6 +4361,7 @@ export namespace Prisma {
     studioTombstone?: StudioTombstoneOmit
     pushSubscription?: PushSubscriptionOmit
     pushLog?: PushLogOmit
+    katalogNotif?: KatalogNotifOmit
     pushItemQueue?: PushItemQueueOmit
   }
 
@@ -47148,6 +47239,1053 @@ export namespace Prisma {
 
 
   /**
+   * Model KatalogNotif
+   */
+
+  export type AggregateKatalogNotif = {
+    _count: KatalogNotifCountAggregateOutputType | null
+    _min: KatalogNotifMinAggregateOutputType | null
+    _max: KatalogNotifMaxAggregateOutputType | null
+  }
+
+  export type KatalogNotifMinAggregateOutputType = {
+    id: string | null
+    taskId: string | null
+    driveUrl: string | null
+    movedBy: string | null
+    movedAt: Date | null
+    batchId: string | null
+    sentAt: Date | null
+    failedAt: Date | null
+    error: string | null
+  }
+
+  export type KatalogNotifMaxAggregateOutputType = {
+    id: string | null
+    taskId: string | null
+    driveUrl: string | null
+    movedBy: string | null
+    movedAt: Date | null
+    batchId: string | null
+    sentAt: Date | null
+    failedAt: Date | null
+    error: string | null
+  }
+
+  export type KatalogNotifCountAggregateOutputType = {
+    id: number
+    taskId: number
+    driveUrl: number
+    movedBy: number
+    movedAt: number
+    batchId: number
+    sentAt: number
+    failedAt: number
+    error: number
+    _all: number
+  }
+
+
+  export type KatalogNotifMinAggregateInputType = {
+    id?: true
+    taskId?: true
+    driveUrl?: true
+    movedBy?: true
+    movedAt?: true
+    batchId?: true
+    sentAt?: true
+    failedAt?: true
+    error?: true
+  }
+
+  export type KatalogNotifMaxAggregateInputType = {
+    id?: true
+    taskId?: true
+    driveUrl?: true
+    movedBy?: true
+    movedAt?: true
+    batchId?: true
+    sentAt?: true
+    failedAt?: true
+    error?: true
+  }
+
+  export type KatalogNotifCountAggregateInputType = {
+    id?: true
+    taskId?: true
+    driveUrl?: true
+    movedBy?: true
+    movedAt?: true
+    batchId?: true
+    sentAt?: true
+    failedAt?: true
+    error?: true
+    _all?: true
+  }
+
+  export type KatalogNotifAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KatalogNotif to aggregate.
+     */
+    where?: KatalogNotifWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KatalogNotifs to fetch.
+     */
+    orderBy?: KatalogNotifOrderByWithRelationInput | KatalogNotifOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: KatalogNotifWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KatalogNotifs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KatalogNotifs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned KatalogNotifs
+    **/
+    _count?: true | KatalogNotifCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: KatalogNotifMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: KatalogNotifMaxAggregateInputType
+  }
+
+  export type GetKatalogNotifAggregateType<T extends KatalogNotifAggregateArgs> = {
+        [P in keyof T & keyof AggregateKatalogNotif]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateKatalogNotif[P]>
+      : GetScalarType<T[P], AggregateKatalogNotif[P]>
+  }
+
+
+
+
+  export type KatalogNotifGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: KatalogNotifWhereInput
+    orderBy?: KatalogNotifOrderByWithAggregationInput | KatalogNotifOrderByWithAggregationInput[]
+    by: KatalogNotifScalarFieldEnum[] | KatalogNotifScalarFieldEnum
+    having?: KatalogNotifScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: KatalogNotifCountAggregateInputType | true
+    _min?: KatalogNotifMinAggregateInputType
+    _max?: KatalogNotifMaxAggregateInputType
+  }
+
+  export type KatalogNotifGroupByOutputType = {
+    id: string
+    taskId: string
+    driveUrl: string
+    movedBy: string
+    movedAt: Date
+    batchId: string | null
+    sentAt: Date | null
+    failedAt: Date | null
+    error: string | null
+    _count: KatalogNotifCountAggregateOutputType | null
+    _min: KatalogNotifMinAggregateOutputType | null
+    _max: KatalogNotifMaxAggregateOutputType | null
+  }
+
+  type GetKatalogNotifGroupByPayload<T extends KatalogNotifGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<KatalogNotifGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof KatalogNotifGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], KatalogNotifGroupByOutputType[P]>
+            : GetScalarType<T[P], KatalogNotifGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type KatalogNotifSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    taskId?: boolean
+    driveUrl?: boolean
+    movedBy?: boolean
+    movedAt?: boolean
+    batchId?: boolean
+    sentAt?: boolean
+    failedAt?: boolean
+    error?: boolean
+  }, ExtArgs["result"]["katalogNotif"]>
+
+  export type KatalogNotifSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    taskId?: boolean
+    driveUrl?: boolean
+    movedBy?: boolean
+    movedAt?: boolean
+    batchId?: boolean
+    sentAt?: boolean
+    failedAt?: boolean
+    error?: boolean
+  }, ExtArgs["result"]["katalogNotif"]>
+
+  export type KatalogNotifSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    taskId?: boolean
+    driveUrl?: boolean
+    movedBy?: boolean
+    movedAt?: boolean
+    batchId?: boolean
+    sentAt?: boolean
+    failedAt?: boolean
+    error?: boolean
+  }, ExtArgs["result"]["katalogNotif"]>
+
+  export type KatalogNotifSelectScalar = {
+    id?: boolean
+    taskId?: boolean
+    driveUrl?: boolean
+    movedBy?: boolean
+    movedAt?: boolean
+    batchId?: boolean
+    sentAt?: boolean
+    failedAt?: boolean
+    error?: boolean
+  }
+
+  export type KatalogNotifOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "taskId" | "driveUrl" | "movedBy" | "movedAt" | "batchId" | "sentAt" | "failedAt" | "error", ExtArgs["result"]["katalogNotif"]>
+
+  export type $KatalogNotifPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "KatalogNotif"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      taskId: string
+      driveUrl: string
+      movedBy: string
+      movedAt: Date
+      batchId: string | null
+      sentAt: Date | null
+      failedAt: Date | null
+      error: string | null
+    }, ExtArgs["result"]["katalogNotif"]>
+    composites: {}
+  }
+
+  type KatalogNotifGetPayload<S extends boolean | null | undefined | KatalogNotifDefaultArgs> = $Result.GetResult<Prisma.$KatalogNotifPayload, S>
+
+  type KatalogNotifCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<KatalogNotifFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: KatalogNotifCountAggregateInputType | true
+    }
+
+  export interface KatalogNotifDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['KatalogNotif'], meta: { name: 'KatalogNotif' } }
+    /**
+     * Find zero or one KatalogNotif that matches the filter.
+     * @param {KatalogNotifFindUniqueArgs} args - Arguments to find a KatalogNotif
+     * @example
+     * // Get one KatalogNotif
+     * const katalogNotif = await prisma.katalogNotif.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends KatalogNotifFindUniqueArgs>(args: SelectSubset<T, KatalogNotifFindUniqueArgs<ExtArgs>>): Prisma__KatalogNotifClient<$Result.GetResult<Prisma.$KatalogNotifPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one KatalogNotif that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {KatalogNotifFindUniqueOrThrowArgs} args - Arguments to find a KatalogNotif
+     * @example
+     * // Get one KatalogNotif
+     * const katalogNotif = await prisma.katalogNotif.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends KatalogNotifFindUniqueOrThrowArgs>(args: SelectSubset<T, KatalogNotifFindUniqueOrThrowArgs<ExtArgs>>): Prisma__KatalogNotifClient<$Result.GetResult<Prisma.$KatalogNotifPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first KatalogNotif that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KatalogNotifFindFirstArgs} args - Arguments to find a KatalogNotif
+     * @example
+     * // Get one KatalogNotif
+     * const katalogNotif = await prisma.katalogNotif.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends KatalogNotifFindFirstArgs>(args?: SelectSubset<T, KatalogNotifFindFirstArgs<ExtArgs>>): Prisma__KatalogNotifClient<$Result.GetResult<Prisma.$KatalogNotifPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first KatalogNotif that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KatalogNotifFindFirstOrThrowArgs} args - Arguments to find a KatalogNotif
+     * @example
+     * // Get one KatalogNotif
+     * const katalogNotif = await prisma.katalogNotif.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends KatalogNotifFindFirstOrThrowArgs>(args?: SelectSubset<T, KatalogNotifFindFirstOrThrowArgs<ExtArgs>>): Prisma__KatalogNotifClient<$Result.GetResult<Prisma.$KatalogNotifPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more KatalogNotifs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KatalogNotifFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all KatalogNotifs
+     * const katalogNotifs = await prisma.katalogNotif.findMany()
+     * 
+     * // Get first 10 KatalogNotifs
+     * const katalogNotifs = await prisma.katalogNotif.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const katalogNotifWithIdOnly = await prisma.katalogNotif.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends KatalogNotifFindManyArgs>(args?: SelectSubset<T, KatalogNotifFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KatalogNotifPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a KatalogNotif.
+     * @param {KatalogNotifCreateArgs} args - Arguments to create a KatalogNotif.
+     * @example
+     * // Create one KatalogNotif
+     * const KatalogNotif = await prisma.katalogNotif.create({
+     *   data: {
+     *     // ... data to create a KatalogNotif
+     *   }
+     * })
+     * 
+     */
+    create<T extends KatalogNotifCreateArgs>(args: SelectSubset<T, KatalogNotifCreateArgs<ExtArgs>>): Prisma__KatalogNotifClient<$Result.GetResult<Prisma.$KatalogNotifPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many KatalogNotifs.
+     * @param {KatalogNotifCreateManyArgs} args - Arguments to create many KatalogNotifs.
+     * @example
+     * // Create many KatalogNotifs
+     * const katalogNotif = await prisma.katalogNotif.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends KatalogNotifCreateManyArgs>(args?: SelectSubset<T, KatalogNotifCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many KatalogNotifs and returns the data saved in the database.
+     * @param {KatalogNotifCreateManyAndReturnArgs} args - Arguments to create many KatalogNotifs.
+     * @example
+     * // Create many KatalogNotifs
+     * const katalogNotif = await prisma.katalogNotif.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many KatalogNotifs and only return the `id`
+     * const katalogNotifWithIdOnly = await prisma.katalogNotif.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends KatalogNotifCreateManyAndReturnArgs>(args?: SelectSubset<T, KatalogNotifCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KatalogNotifPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a KatalogNotif.
+     * @param {KatalogNotifDeleteArgs} args - Arguments to delete one KatalogNotif.
+     * @example
+     * // Delete one KatalogNotif
+     * const KatalogNotif = await prisma.katalogNotif.delete({
+     *   where: {
+     *     // ... filter to delete one KatalogNotif
+     *   }
+     * })
+     * 
+     */
+    delete<T extends KatalogNotifDeleteArgs>(args: SelectSubset<T, KatalogNotifDeleteArgs<ExtArgs>>): Prisma__KatalogNotifClient<$Result.GetResult<Prisma.$KatalogNotifPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one KatalogNotif.
+     * @param {KatalogNotifUpdateArgs} args - Arguments to update one KatalogNotif.
+     * @example
+     * // Update one KatalogNotif
+     * const katalogNotif = await prisma.katalogNotif.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends KatalogNotifUpdateArgs>(args: SelectSubset<T, KatalogNotifUpdateArgs<ExtArgs>>): Prisma__KatalogNotifClient<$Result.GetResult<Prisma.$KatalogNotifPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more KatalogNotifs.
+     * @param {KatalogNotifDeleteManyArgs} args - Arguments to filter KatalogNotifs to delete.
+     * @example
+     * // Delete a few KatalogNotifs
+     * const { count } = await prisma.katalogNotif.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends KatalogNotifDeleteManyArgs>(args?: SelectSubset<T, KatalogNotifDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more KatalogNotifs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KatalogNotifUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many KatalogNotifs
+     * const katalogNotif = await prisma.katalogNotif.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends KatalogNotifUpdateManyArgs>(args: SelectSubset<T, KatalogNotifUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more KatalogNotifs and returns the data updated in the database.
+     * @param {KatalogNotifUpdateManyAndReturnArgs} args - Arguments to update many KatalogNotifs.
+     * @example
+     * // Update many KatalogNotifs
+     * const katalogNotif = await prisma.katalogNotif.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more KatalogNotifs and only return the `id`
+     * const katalogNotifWithIdOnly = await prisma.katalogNotif.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends KatalogNotifUpdateManyAndReturnArgs>(args: SelectSubset<T, KatalogNotifUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$KatalogNotifPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one KatalogNotif.
+     * @param {KatalogNotifUpsertArgs} args - Arguments to update or create a KatalogNotif.
+     * @example
+     * // Update or create a KatalogNotif
+     * const katalogNotif = await prisma.katalogNotif.upsert({
+     *   create: {
+     *     // ... data to create a KatalogNotif
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the KatalogNotif we want to update
+     *   }
+     * })
+     */
+    upsert<T extends KatalogNotifUpsertArgs>(args: SelectSubset<T, KatalogNotifUpsertArgs<ExtArgs>>): Prisma__KatalogNotifClient<$Result.GetResult<Prisma.$KatalogNotifPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of KatalogNotifs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KatalogNotifCountArgs} args - Arguments to filter KatalogNotifs to count.
+     * @example
+     * // Count the number of KatalogNotifs
+     * const count = await prisma.katalogNotif.count({
+     *   where: {
+     *     // ... the filter for the KatalogNotifs we want to count
+     *   }
+     * })
+    **/
+    count<T extends KatalogNotifCountArgs>(
+      args?: Subset<T, KatalogNotifCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], KatalogNotifCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a KatalogNotif.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KatalogNotifAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends KatalogNotifAggregateArgs>(args: Subset<T, KatalogNotifAggregateArgs>): Prisma.PrismaPromise<GetKatalogNotifAggregateType<T>>
+
+    /**
+     * Group by KatalogNotif.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {KatalogNotifGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends KatalogNotifGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: KatalogNotifGroupByArgs['orderBy'] }
+        : { orderBy?: KatalogNotifGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, KatalogNotifGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetKatalogNotifGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the KatalogNotif model
+   */
+  readonly fields: KatalogNotifFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for KatalogNotif.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__KatalogNotifClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the KatalogNotif model
+   */
+  interface KatalogNotifFieldRefs {
+    readonly id: FieldRef<"KatalogNotif", 'String'>
+    readonly taskId: FieldRef<"KatalogNotif", 'String'>
+    readonly driveUrl: FieldRef<"KatalogNotif", 'String'>
+    readonly movedBy: FieldRef<"KatalogNotif", 'String'>
+    readonly movedAt: FieldRef<"KatalogNotif", 'DateTime'>
+    readonly batchId: FieldRef<"KatalogNotif", 'String'>
+    readonly sentAt: FieldRef<"KatalogNotif", 'DateTime'>
+    readonly failedAt: FieldRef<"KatalogNotif", 'DateTime'>
+    readonly error: FieldRef<"KatalogNotif", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * KatalogNotif findUnique
+   */
+  export type KatalogNotifFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KatalogNotif
+     */
+    select?: KatalogNotifSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KatalogNotif
+     */
+    omit?: KatalogNotifOmit<ExtArgs> | null
+    /**
+     * Filter, which KatalogNotif to fetch.
+     */
+    where: KatalogNotifWhereUniqueInput
+  }
+
+  /**
+   * KatalogNotif findUniqueOrThrow
+   */
+  export type KatalogNotifFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KatalogNotif
+     */
+    select?: KatalogNotifSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KatalogNotif
+     */
+    omit?: KatalogNotifOmit<ExtArgs> | null
+    /**
+     * Filter, which KatalogNotif to fetch.
+     */
+    where: KatalogNotifWhereUniqueInput
+  }
+
+  /**
+   * KatalogNotif findFirst
+   */
+  export type KatalogNotifFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KatalogNotif
+     */
+    select?: KatalogNotifSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KatalogNotif
+     */
+    omit?: KatalogNotifOmit<ExtArgs> | null
+    /**
+     * Filter, which KatalogNotif to fetch.
+     */
+    where?: KatalogNotifWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KatalogNotifs to fetch.
+     */
+    orderBy?: KatalogNotifOrderByWithRelationInput | KatalogNotifOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KatalogNotifs.
+     */
+    cursor?: KatalogNotifWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KatalogNotifs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KatalogNotifs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KatalogNotifs.
+     */
+    distinct?: KatalogNotifScalarFieldEnum | KatalogNotifScalarFieldEnum[]
+  }
+
+  /**
+   * KatalogNotif findFirstOrThrow
+   */
+  export type KatalogNotifFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KatalogNotif
+     */
+    select?: KatalogNotifSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KatalogNotif
+     */
+    omit?: KatalogNotifOmit<ExtArgs> | null
+    /**
+     * Filter, which KatalogNotif to fetch.
+     */
+    where?: KatalogNotifWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KatalogNotifs to fetch.
+     */
+    orderBy?: KatalogNotifOrderByWithRelationInput | KatalogNotifOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for KatalogNotifs.
+     */
+    cursor?: KatalogNotifWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KatalogNotifs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KatalogNotifs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of KatalogNotifs.
+     */
+    distinct?: KatalogNotifScalarFieldEnum | KatalogNotifScalarFieldEnum[]
+  }
+
+  /**
+   * KatalogNotif findMany
+   */
+  export type KatalogNotifFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KatalogNotif
+     */
+    select?: KatalogNotifSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KatalogNotif
+     */
+    omit?: KatalogNotifOmit<ExtArgs> | null
+    /**
+     * Filter, which KatalogNotifs to fetch.
+     */
+    where?: KatalogNotifWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of KatalogNotifs to fetch.
+     */
+    orderBy?: KatalogNotifOrderByWithRelationInput | KatalogNotifOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing KatalogNotifs.
+     */
+    cursor?: KatalogNotifWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` KatalogNotifs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` KatalogNotifs.
+     */
+    skip?: number
+    distinct?: KatalogNotifScalarFieldEnum | KatalogNotifScalarFieldEnum[]
+  }
+
+  /**
+   * KatalogNotif create
+   */
+  export type KatalogNotifCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KatalogNotif
+     */
+    select?: KatalogNotifSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KatalogNotif
+     */
+    omit?: KatalogNotifOmit<ExtArgs> | null
+    /**
+     * The data needed to create a KatalogNotif.
+     */
+    data: XOR<KatalogNotifCreateInput, KatalogNotifUncheckedCreateInput>
+  }
+
+  /**
+   * KatalogNotif createMany
+   */
+  export type KatalogNotifCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many KatalogNotifs.
+     */
+    data: KatalogNotifCreateManyInput | KatalogNotifCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * KatalogNotif createManyAndReturn
+   */
+  export type KatalogNotifCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KatalogNotif
+     */
+    select?: KatalogNotifSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the KatalogNotif
+     */
+    omit?: KatalogNotifOmit<ExtArgs> | null
+    /**
+     * The data used to create many KatalogNotifs.
+     */
+    data: KatalogNotifCreateManyInput | KatalogNotifCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * KatalogNotif update
+   */
+  export type KatalogNotifUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KatalogNotif
+     */
+    select?: KatalogNotifSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KatalogNotif
+     */
+    omit?: KatalogNotifOmit<ExtArgs> | null
+    /**
+     * The data needed to update a KatalogNotif.
+     */
+    data: XOR<KatalogNotifUpdateInput, KatalogNotifUncheckedUpdateInput>
+    /**
+     * Choose, which KatalogNotif to update.
+     */
+    where: KatalogNotifWhereUniqueInput
+  }
+
+  /**
+   * KatalogNotif updateMany
+   */
+  export type KatalogNotifUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update KatalogNotifs.
+     */
+    data: XOR<KatalogNotifUpdateManyMutationInput, KatalogNotifUncheckedUpdateManyInput>
+    /**
+     * Filter which KatalogNotifs to update
+     */
+    where?: KatalogNotifWhereInput
+    /**
+     * Limit how many KatalogNotifs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * KatalogNotif updateManyAndReturn
+   */
+  export type KatalogNotifUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KatalogNotif
+     */
+    select?: KatalogNotifSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the KatalogNotif
+     */
+    omit?: KatalogNotifOmit<ExtArgs> | null
+    /**
+     * The data used to update KatalogNotifs.
+     */
+    data: XOR<KatalogNotifUpdateManyMutationInput, KatalogNotifUncheckedUpdateManyInput>
+    /**
+     * Filter which KatalogNotifs to update
+     */
+    where?: KatalogNotifWhereInput
+    /**
+     * Limit how many KatalogNotifs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * KatalogNotif upsert
+   */
+  export type KatalogNotifUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KatalogNotif
+     */
+    select?: KatalogNotifSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KatalogNotif
+     */
+    omit?: KatalogNotifOmit<ExtArgs> | null
+    /**
+     * The filter to search for the KatalogNotif to update in case it exists.
+     */
+    where: KatalogNotifWhereUniqueInput
+    /**
+     * In case the KatalogNotif found by the `where` argument doesn't exist, create a new KatalogNotif with this data.
+     */
+    create: XOR<KatalogNotifCreateInput, KatalogNotifUncheckedCreateInput>
+    /**
+     * In case the KatalogNotif was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<KatalogNotifUpdateInput, KatalogNotifUncheckedUpdateInput>
+  }
+
+  /**
+   * KatalogNotif delete
+   */
+  export type KatalogNotifDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KatalogNotif
+     */
+    select?: KatalogNotifSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KatalogNotif
+     */
+    omit?: KatalogNotifOmit<ExtArgs> | null
+    /**
+     * Filter which KatalogNotif to delete.
+     */
+    where: KatalogNotifWhereUniqueInput
+  }
+
+  /**
+   * KatalogNotif deleteMany
+   */
+  export type KatalogNotifDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which KatalogNotifs to delete
+     */
+    where?: KatalogNotifWhereInput
+    /**
+     * Limit how many KatalogNotifs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * KatalogNotif without action
+   */
+  export type KatalogNotifDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the KatalogNotif
+     */
+    select?: KatalogNotifSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the KatalogNotif
+     */
+    omit?: KatalogNotifOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model PushItemQueue
    */
 
@@ -48737,6 +49875,21 @@ export namespace Prisma {
   };
 
   export type PushLogScalarFieldEnum = (typeof PushLogScalarFieldEnum)[keyof typeof PushLogScalarFieldEnum]
+
+
+  export const KatalogNotifScalarFieldEnum: {
+    id: 'id',
+    taskId: 'taskId',
+    driveUrl: 'driveUrl',
+    movedBy: 'movedBy',
+    movedAt: 'movedAt',
+    batchId: 'batchId',
+    sentAt: 'sentAt',
+    failedAt: 'failedAt',
+    error: 'error'
+  };
+
+  export type KatalogNotifScalarFieldEnum = (typeof KatalogNotifScalarFieldEnum)[keyof typeof KatalogNotifScalarFieldEnum]
 
 
   export const PushItemQueueScalarFieldEnum: {
@@ -52022,6 +53175,78 @@ export namespace Prisma {
     NOT?: PushLogScalarWhereWithAggregatesInput | PushLogScalarWhereWithAggregatesInput[]
     key?: StringWithAggregatesFilter<"PushLog"> | string
     createdAt?: DateTimeWithAggregatesFilter<"PushLog"> | Date | string
+  }
+
+  export type KatalogNotifWhereInput = {
+    AND?: KatalogNotifWhereInput | KatalogNotifWhereInput[]
+    OR?: KatalogNotifWhereInput[]
+    NOT?: KatalogNotifWhereInput | KatalogNotifWhereInput[]
+    id?: StringFilter<"KatalogNotif"> | string
+    taskId?: StringFilter<"KatalogNotif"> | string
+    driveUrl?: StringFilter<"KatalogNotif"> | string
+    movedBy?: StringFilter<"KatalogNotif"> | string
+    movedAt?: DateTimeFilter<"KatalogNotif"> | Date | string
+    batchId?: StringNullableFilter<"KatalogNotif"> | string | null
+    sentAt?: DateTimeNullableFilter<"KatalogNotif"> | Date | string | null
+    failedAt?: DateTimeNullableFilter<"KatalogNotif"> | Date | string | null
+    error?: StringNullableFilter<"KatalogNotif"> | string | null
+  }
+
+  export type KatalogNotifOrderByWithRelationInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    driveUrl?: SortOrder
+    movedBy?: SortOrder
+    movedAt?: SortOrder
+    batchId?: SortOrderInput | SortOrder
+    sentAt?: SortOrderInput | SortOrder
+    failedAt?: SortOrderInput | SortOrder
+    error?: SortOrderInput | SortOrder
+  }
+
+  export type KatalogNotifWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: KatalogNotifWhereInput | KatalogNotifWhereInput[]
+    OR?: KatalogNotifWhereInput[]
+    NOT?: KatalogNotifWhereInput | KatalogNotifWhereInput[]
+    taskId?: StringFilter<"KatalogNotif"> | string
+    driveUrl?: StringFilter<"KatalogNotif"> | string
+    movedBy?: StringFilter<"KatalogNotif"> | string
+    movedAt?: DateTimeFilter<"KatalogNotif"> | Date | string
+    batchId?: StringNullableFilter<"KatalogNotif"> | string | null
+    sentAt?: DateTimeNullableFilter<"KatalogNotif"> | Date | string | null
+    failedAt?: DateTimeNullableFilter<"KatalogNotif"> | Date | string | null
+    error?: StringNullableFilter<"KatalogNotif"> | string | null
+  }, "id">
+
+  export type KatalogNotifOrderByWithAggregationInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    driveUrl?: SortOrder
+    movedBy?: SortOrder
+    movedAt?: SortOrder
+    batchId?: SortOrderInput | SortOrder
+    sentAt?: SortOrderInput | SortOrder
+    failedAt?: SortOrderInput | SortOrder
+    error?: SortOrderInput | SortOrder
+    _count?: KatalogNotifCountOrderByAggregateInput
+    _max?: KatalogNotifMaxOrderByAggregateInput
+    _min?: KatalogNotifMinOrderByAggregateInput
+  }
+
+  export type KatalogNotifScalarWhereWithAggregatesInput = {
+    AND?: KatalogNotifScalarWhereWithAggregatesInput | KatalogNotifScalarWhereWithAggregatesInput[]
+    OR?: KatalogNotifScalarWhereWithAggregatesInput[]
+    NOT?: KatalogNotifScalarWhereWithAggregatesInput | KatalogNotifScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"KatalogNotif"> | string
+    taskId?: StringWithAggregatesFilter<"KatalogNotif"> | string
+    driveUrl?: StringWithAggregatesFilter<"KatalogNotif"> | string
+    movedBy?: StringWithAggregatesFilter<"KatalogNotif"> | string
+    movedAt?: DateTimeWithAggregatesFilter<"KatalogNotif"> | Date | string
+    batchId?: StringNullableWithAggregatesFilter<"KatalogNotif"> | string | null
+    sentAt?: DateTimeNullableWithAggregatesFilter<"KatalogNotif"> | Date | string | null
+    failedAt?: DateTimeNullableWithAggregatesFilter<"KatalogNotif"> | Date | string | null
+    error?: StringNullableWithAggregatesFilter<"KatalogNotif"> | string | null
   }
 
   export type PushItemQueueWhereInput = {
@@ -55476,6 +56701,90 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type KatalogNotifCreateInput = {
+    id?: string
+    taskId: string
+    driveUrl: string
+    movedBy: string
+    movedAt?: Date | string
+    batchId?: string | null
+    sentAt?: Date | string | null
+    failedAt?: Date | string | null
+    error?: string | null
+  }
+
+  export type KatalogNotifUncheckedCreateInput = {
+    id?: string
+    taskId: string
+    driveUrl: string
+    movedBy: string
+    movedAt?: Date | string
+    batchId?: string | null
+    sentAt?: Date | string | null
+    failedAt?: Date | string | null
+    error?: string | null
+  }
+
+  export type KatalogNotifUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    taskId?: StringFieldUpdateOperationsInput | string
+    driveUrl?: StringFieldUpdateOperationsInput | string
+    movedBy?: StringFieldUpdateOperationsInput | string
+    movedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    batchId?: NullableStringFieldUpdateOperationsInput | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type KatalogNotifUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    taskId?: StringFieldUpdateOperationsInput | string
+    driveUrl?: StringFieldUpdateOperationsInput | string
+    movedBy?: StringFieldUpdateOperationsInput | string
+    movedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    batchId?: NullableStringFieldUpdateOperationsInput | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type KatalogNotifCreateManyInput = {
+    id?: string
+    taskId: string
+    driveUrl: string
+    movedBy: string
+    movedAt?: Date | string
+    batchId?: string | null
+    sentAt?: Date | string | null
+    failedAt?: Date | string | null
+    error?: string | null
+  }
+
+  export type KatalogNotifUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    taskId?: StringFieldUpdateOperationsInput | string
+    driveUrl?: StringFieldUpdateOperationsInput | string
+    movedBy?: StringFieldUpdateOperationsInput | string
+    movedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    batchId?: NullableStringFieldUpdateOperationsInput | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type KatalogNotifUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    taskId?: StringFieldUpdateOperationsInput | string
+    driveUrl?: StringFieldUpdateOperationsInput | string
+    movedBy?: StringFieldUpdateOperationsInput | string
+    movedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    batchId?: NullableStringFieldUpdateOperationsInput | string | null
+    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    failedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
   export type PushItemQueueCreateInput = {
     id?: string
     itemId: string
@@ -57876,6 +59185,42 @@ export namespace Prisma {
   export type PushLogMinOrderByAggregateInput = {
     key?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type KatalogNotifCountOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    driveUrl?: SortOrder
+    movedBy?: SortOrder
+    movedAt?: SortOrder
+    batchId?: SortOrder
+    sentAt?: SortOrder
+    failedAt?: SortOrder
+    error?: SortOrder
+  }
+
+  export type KatalogNotifMaxOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    driveUrl?: SortOrder
+    movedBy?: SortOrder
+    movedAt?: SortOrder
+    batchId?: SortOrder
+    sentAt?: SortOrder
+    failedAt?: SortOrder
+    error?: SortOrder
+  }
+
+  export type KatalogNotifMinOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    driveUrl?: SortOrder
+    movedBy?: SortOrder
+    movedAt?: SortOrder
+    batchId?: SortOrder
+    sentAt?: SortOrder
+    failedAt?: SortOrder
+    error?: SortOrder
   }
 
   export type PushItemQueueCountOrderByAggregateInput = {

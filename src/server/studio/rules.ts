@@ -1,6 +1,8 @@
 // Aturan akses UI Tirtonic Studio (/studio): port dari firestore.rules repo tirtonic-studio.
 // Fungsi murni, diuji di rules.test.ts. Server WAJIB memanggil ini sebelum baca/tulis.
 
+import { isDriveFolderLink, katalogEntersReady } from "@/server/push/katalog-logic";
+
 export type Doc = Record<string, unknown>;
 
 export type StudioUser = {
@@ -12,7 +14,6 @@ export type StudioUser = {
   staff: boolean; // full atau ADMIN2
   idcc: boolean; // boleh Analisis IDCC
 };
-
 export const AV_COLORS = ["lime", "orange", "purple", "teal", "green", "pink"];
 export const FILE_COLORS = ["", "red", "orange", "yellow", "green", "blue", "purple", "gray"];
 export const AV_ANIMALS = ["", "cat", "dog", "panda", "fox", "rabbit", "koala", "tiger", "frog", "penguin", "monkey", "bear", "chick"];
@@ -25,6 +26,7 @@ const changedKeys = (before: Doc, after: Doc) =>
 const jpOnly = (d: Doc | null) => !d || ((str(d.tier) || "JP") === "JP" && !d.seasonal);
 
 const PEOPLE = ["Z", "R", "A", "S"];
+const KTL_SERVER_KEYS = ["ktlNotifAt", "ktlNotifUrl", "ktlNotifErr", "ktlNotifWhy"];
 function shareWhy(s: unknown): string | null {
   if (s === undefined || s === null) return null;
   if (typeof s !== "object" || Array.isArray(s)) return "pengaturan bagikan tidak valid";
@@ -176,10 +178,21 @@ export function canWrite(
       return u.staff ? null : deny("hanya admin");
     case "photos":
     case "settings":
+      if (!u.staff) return deny("hanya admin");
+      // sakelar WA Foto katalog hanya admin penuh (lewat Tim & Aktivitas)
+      if (!u.full && JSON.stringify(before?.katalogWa ?? null) !== JSON.stringify(after?.katalogWa ?? null)) return deny("sakelar notifikasi hanya untuk admin");
+      return null;
     case "logs":
     case "locks":
       return u.staff ? null : deny("hanya admin");
     case "tasks": {
+      if (after) {
+        // Foto katalog wajib Link folder Drive saat masuk Ready (kartu lama yang sudah Ready tidak tersentuh: hanya saat berpindah)
+        if (katalogEntersReady(before, after) && !isDriveFolderLink(after.driveUrl)) return deny("Foto katalog wajib diisi Link folder Drive (Google Drive) sebelum Ready");
+        // tanda kirim notifikasi Foto katalog hanya diisi server
+        if (before && changedKeys(before, after).some((k) => KTL_SERVER_KEYS.includes(k))) return deny("tanda notifikasi diatur server");
+        if (!before && KTL_SERVER_KEYS.some((k) => after[k] != null)) return deny("tanda notifikasi diatur server");
+      }
       if (u.staff) return null;
       if (op === "delete") return deny("hanya admin");
       if (!before) {
