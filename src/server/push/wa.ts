@@ -1,28 +1,38 @@
 // Notifikasi Studio juga dikirim ke WhatsApp (permintaan Zaki, 3 Nov 2026).
 // Penerima = penerima push yang sama: tim Media (Zaki, Rayhan, Aulia, Salma) untuk semua notifikasi Studio,
 // penerima Foto katalog (PUSH_KATALOG_EMAILS, bawaan ridho@tirtonichub.com) hanya untuk "Foto katalog ready".
-// Jalur: GOWA (nomor yang sama dengan OTP) bila GOWA_URL diisi, selain itu webhook n8n. Matikan dengan STUDIO_WA=0.
+// Jalur utama: webhook n8n (N8N_WA_WEBHOOK_URL, sama dengan pesan Laporan karyawan). STUDIO_WA_VIA=gowa memakai GOWA.
+// Bila jalur pilihan belum diisi di .env, jalur lain dipakai. STUDIO_WA=0 mematikan WA.
 import { prisma } from "@/server/db";
 import { sendGowa, sendWa } from "@/server/wa";
 import { katalogOnly, waText } from "./logic";
 
-/** Kirim WA ke userIds. Tidak pernah melempar error. Mengembalikan jumlah nomor yang berhasil. */
-export async function sendStudioWa(userIds: string[], msg: { type: string; title: string; body?: string; url: string }): Promise<number> {
-  if (process.env.STUDIO_WA === "0" || !userIds.length) return 0;
+export type WaVia = "n8n" | "gowa" | "";
+export function waVia(): WaVia {
+  const n8n = !!process.env.N8N_WA_WEBHOOK_URL, gowa = !!process.env.GOWA_URL;
+  if (process.env.STUDIO_WA_VIA === "gowa") return gowa ? "gowa" : n8n ? "n8n" : "";
+  return n8n ? "n8n" : gowa ? "gowa" : "";
+}
+
+export type WaResult = { via: WaVia; off: boolean; sent: number; failed: number; noNumber: number };
+
+/** Kirim WA ke userIds. Tidak pernah melempar error. */
+export async function sendStudioWa(userIds: string[], msg: { type: string; title: string; body?: string; url: string }): Promise<WaResult> {
+  const r: WaResult = { via: waVia(), off: process.env.STUDIO_WA === "0", sent: 0, failed: 0, noNumber: 0 };
+  if (r.off || !r.via || !userIds.length) return r;
   try {
     const users = await prisma.user.findMany({ where: { id: { in: userIds }, isActive: true }, select: { waNumber: true, email: true } });
     const only = msg.type === "studio_katalog" ? [] : katalogOnly(); // Ridho dkk. hanya menerima WA Foto katalog
     const text = waText(msg);
-    const send = process.env.GOWA_URL ? sendGowa : sendWa;
-    let n = 0;
+    const send = r.via === "gowa" ? sendGowa : sendWa;
     for (const u of users) {
-      if (!u.waNumber || only.includes(u.email.toLowerCase())) continue;
-      if (await send(u.waNumber, text)) n++;
-      else console.error("[studio-wa] gagal kirim", msg.type);
+      if (only.includes(u.email.toLowerCase())) continue;
+      if (!u.waNumber) { r.noNumber++; continue; }
+      if (await send(u.waNumber, text)) r.sent++;
+      else { r.failed++; console.error("[studio-wa] gagal kirim lewat", r.via, msg.type); }
     }
-    return n;
   } catch (e) {
     console.error("[studio-wa]", e);
-    return 0;
   }
+  return r;
 }
