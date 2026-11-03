@@ -11,6 +11,7 @@ export type ReportRow = {
   branch: string;
   salesman: string;
   by: string;
+  reporter: string; // pelapor salah-input
   photoKey: string;
 };
 
@@ -43,6 +44,7 @@ export function ReportList({ rows, title, desc }: { rows: ReportRow[]; title: st
                 <div className="min-w-0">
                   <p className="font-medium text-red-600 dark:text-red-400">{r.label}</p>
                   <p className="text-muted-foreground">{r.note}</p>
+                  <p className="mt-1 text-12 text-muted-foreground">Dilaporkan oleh {r.reporter}</p>
                 </div>
               </div>
             </div>

@@ -1,5 +1,6 @@
 import { requireHeadBranch } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
+import { userNames } from "@/server/user-names";
 import { fmtWIB } from "@/lib/datetime";
 import { CabangApproval } from "@/components/sales/cabang-approval";
 import { approveBranchSalesReport, rejectBranchSalesReport } from "@/server/actions/sales";
@@ -23,6 +24,7 @@ export default async function ApprovalPenjualanCabangPage() {
     include: { createdBy: { select: { fullName: true } } },
   });
 
+  const nameOf = await userNames(rows.map((r) => r.reportById));
   const pending = rows.map((r) => {
     const items = (Array.isArray(r.items) ? r.items : []) as Item[];
     const pays = (Array.isArray(r.payments) ? r.payments : []) as Pay[];
@@ -40,7 +42,7 @@ export default async function ApprovalPenjualanCabangPage() {
       productPhotoKeys: r.productPhotoKeys,
       items: items.map((it) => ({ name: it.name, qty: it.qty || 1, jual: it.total ?? it.price * (it.qty || 1) })),
       report: open
-        ? { category: r.reportCategory!, note: r.reportNote || "-", label: REPORT_LABEL[r.reportCategory as ReportCategory] ?? r.reportCategory! }
+        ? { category: r.reportCategory!, note: r.reportNote || "-", reporter: nameOf(r.reportById), label: REPORT_LABEL[r.reportCategory as ReportCategory] ?? r.reportCategory! }
         : null,
       edit: {
         notaNo: r.notaNo ?? "",

@@ -21,7 +21,7 @@ type Row = {
   photoKey: string;
   productPhotoKeys?: string[];
   items: Item[];
-  report?: { category: string; note: string; label: string } | null;
+  report?: { category: string; note: string; label: string; reporter: string } | null;
   edit?: NotaEdit;
 };
 
@@ -122,6 +122,7 @@ export function CabangApproval({
                     <div className="min-w-0">
                       <p className="font-medium text-red-600 dark:text-red-400">Report salah-input: {r.report.label}</p>
                       <p className="text-muted-foreground">{r.report.note}</p>
+                      <p className="mt-1 text-12 text-muted-foreground">Dilaporkan oleh {r.report.reporter}</p>
                       <p className="mt-1 text-12 text-muted-foreground">Benarkan nota ini dulu, baru bisa disetujui.</p>
                     </div>
                   </div>

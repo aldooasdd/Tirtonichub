@@ -362,11 +362,13 @@ export async function reportSalesError(id: string, category: string, note: strin
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "sales_report_error", entity: "SalesReport", entityId: id });
   const rupiah = new Intl.NumberFormat("id-ID").format(rep.grandTotal);
+  const pelapor = (await prisma.user.findUnique({ where: { id: ctx.userId }, select: { fullName: true } }))?.fullName ?? "-";
   const title = `Report salah-input (${REPORT_LABEL[cat]}): Rp ${rupiah}${rep.salesman ? ` · ${rep.salesman}` : ""}`;
+  const body = `Dilaporkan oleh ${pelapor}: ${ket}`.slice(0, 200);
   const secondary: RoleCode = cat === "PEMBAYARAN" ? "FINANCE" : "STOCK_ROOM";
   const secLink = cat === "PEMBAYARAN" ? "/finance/report-penjualan" : "/stok/report-penjualan";
-  await notifyBranchHeads(rep.branchId, { type: "sales_report_error", title, body: ket.slice(0, 200), link: "/cabang/approval-penjualan" });
-  await notifyRole(secondary, { type: "sales_report_error", title, body: ket.slice(0, 200), link: secLink });
+  await notifyBranchHeads(rep.branchId, { type: "sales_report_error", title, body, link: "/cabang/approval-penjualan" });
+  await notifyRole(secondary, { type: "sales_report_error", title, body, link: secLink });
 
   // WA via GOWA ke Kepala Cabang cabang itu + role sekunder (Finance/Stok).
   const recipients = await prisma.userRole.findMany({
@@ -382,6 +384,7 @@ export async function reportSalesError(id: string, category: string, note: strin
   const waMsg =
     `*Report Salah-Input Penjualan*\n` +
     `Jenis: ${REPORT_LABEL[cat]}\n` +
+    `Dilaporkan oleh: ${pelapor}\n` +
     `Nominal: Rp ${rupiah}${rep.salesman ? `\nSales: ${rep.salesman}` : ""}\n` +
     `Keterangan: ${ket}\n\n` +
     `Cek detail datanya di dashboard Tirtonichub.`;
