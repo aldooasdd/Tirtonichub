@@ -1,4 +1,5 @@
 import { prisma } from "@/server/db";
+import { SETOR_AKUN } from "@/lib/rekening";
 
 export type Buckets = { cash: number; mandiri: number; bca: number; bri: number };
 export const zeroBuckets = (): Buckets => ({ cash: 0, mandiri: 0, bca: 0, bri: 0 });
@@ -59,6 +60,7 @@ function dayRange(dateKey: Date) {
 export type CashReport = {
   masuk: Buckets; // penjualan offline per metode (hari itu, cabang itu)
   cashout: number; // total pembelian → keluar dari cash
+  setor: number; // setor tunai Kepala Cabang ke bank → keluar dari cash
   expected: Buckets; // saldo seharusnya = saldo awal + masuk − keluar
 };
 
@@ -116,7 +118,7 @@ export type CashMovement = {
 export async function loadCashMovements(dateKey: Date, take = 400, days = 30): Promise<CashMovement[]> {
   const end = dayRange(dateKey).end;
   const start = new Date(dayRange(dateKey).start.getTime() - (days - 1) * 86_400_000);
-  const [sales, cashouts] = await Promise.all([
+  const [sales, cashouts, setors] = await Promise.all([
     prisma.salesReport.findMany({
       where: { channel: "offline", branchId: { not: null }, soldAt: { gte: start, lt: end } },
       select: { id: true, soldAt: true, branchName: true, payments: true, grandTotal: true, notaNo: true },
@@ -124,6 +126,10 @@ export async function loadCashMovements(dateKey: Date, take = 400, days = 30): P
     prisma.cashout.findMany({
       where: { branchId: { not: null }, createdAt: { gte: start, lt: end } },
       select: { id: true, createdAt: true, branchName: true, amount: true, description: true },
+    }),
+    prisma.cashDeposit.findMany({
+      where: { depositedAt: { gte: start, lt: end } },
+      select: { id: true, depositedAt: true, branchName: true, amount: true },
     }),
   ]);
 
@@ -137,6 +143,9 @@ export async function loadCashMovements(dateKey: Date, take = 400, days = 30): P
   }
   for (const c of cashouts)
     out.push({ id: c.id, at: c.createdAt, branch: c.branchName ?? "-", kind: "out", bucket: "cash", amount: c.amount, note: c.description || "Pembelian" });
+
+  for (const d of setors)
+    out.push({ id: d.id, at: d.depositedAt, branch: d.branchName, kind: "out", bucket: "cash", amount: d.amount, note: `Setor tunai → ${SETOR_AKUN}` });
 
   return out.sort((a, b) => b.at.getTime() - a.at.getTime()).slice(0, take);
 }
@@ -249,12 +258,13 @@ export async function loadBranchSalesTrends(now = new Date()): Promise<SalesTren
 /** Hitung saldo seharusnya dari penjualan offline + pembelian hari itu di cabang. */
 export async function computeBranchCash(branchId: string, dateKey: Date, open: Buckets): Promise<CashReport> {
   const { start, end } = dayRange(dateKey);
-  const [sales, cashoutAgg] = await Promise.all([
+  const [sales, cashoutAgg, setorAgg] = await Promise.all([
     prisma.salesReport.findMany({
       where: { channel: "offline", branchId, soldAt: { gte: start, lt: end } },
       select: { payments: true, grandTotal: true },
     }),
     prisma.cashout.aggregate({ where: { branchId, createdAt: { gte: start, lt: end } }, _sum: { amount: true } }),
+    prisma.cashDeposit.aggregate({ where: { branchId, depositedAt: { gte: start, lt: end } }, _sum: { amount: true } }),
   ]);
 
   const masuk = zeroBuckets();
@@ -263,11 +273,12 @@ export async function computeBranchCash(branchId: string, dateKey: Date, open: B
     for (const bk of Object.keys(b) as (keyof Buckets)[]) masuk[bk] += b[bk]; // online/transfer tak masuk
   }
   const cashout = cashoutAgg._sum.amount ?? 0;
+  const setor = setorAgg._sum.amount ?? 0;
   const expected: Buckets = {
-    cash: open.cash + masuk.cash - cashout,
+    cash: open.cash + masuk.cash - cashout - setor,
     mandiri: open.mandiri + masuk.mandiri,
     bca: open.bca + masuk.bca,
     bri: open.bri + masuk.bri,
   };
-  return { masuk, cashout, expected };
+  return { masuk, cashout, setor, expected };
 }

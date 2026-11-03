@@ -21,6 +21,9 @@ export const AKUN_METODE: Record<string, string> = {
   "Transfer Mandiri": "Mandiri - an Yupie Milenia",
 };
 
+/** Rekening tujuan setor tunai Kepala Cabang (cash laci → bank). */
+export const SETOR_AKUN = "BCA OP - Ridho";
+
 export const TUNAI = "Tunai (kas cabang)";
 export const TAK_TERPETAKAN = "Belum terpetakan";
 

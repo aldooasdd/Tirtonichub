@@ -136,6 +136,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
       items: [
         { label: "Approval Penjualan", href: "/cabang/approval-penjualan", icon: ClipboardCheck },
         { label: "Rekap Penjualan", href: "/sales", icon: Receipt },
+        { label: "Setor Tunai", href: "/cabang/setor-tunai", icon: Wallet },
       ],
     });
   }

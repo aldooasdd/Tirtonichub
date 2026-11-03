@@ -136,6 +136,11 @@ export type RawProduct = $Result.DefaultSelection<Prisma.$RawProductPayload>
  */
 export type OcrSample = $Result.DefaultSelection<Prisma.$OcrSamplePayload>
 /**
+ * Model CashDeposit
+ * 
+ */
+export type CashDeposit = $Result.DefaultSelection<Prisma.$CashDepositPayload>
+/**
  * Model OnlineRecon
  * 
  */
@@ -695,6 +700,16 @@ export class PrismaClient<
     * ```
     */
   get ocrSample(): Prisma.OcrSampleDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cashDeposit`: Exposes CRUD operations for the **CashDeposit** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CashDeposits
+    * const cashDeposits = await prisma.cashDeposit.findMany()
+    * ```
+    */
+  get cashDeposit(): Prisma.CashDepositDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.onlineRecon`: Exposes CRUD operations for the **OnlineRecon** model.
@@ -1320,6 +1335,7 @@ export namespace Prisma {
     CalendarEvent: 'CalendarEvent',
     RawProduct: 'RawProduct',
     OcrSample: 'OcrSample',
+    CashDeposit: 'CashDeposit',
     OnlineRecon: 'OnlineRecon',
     MediaMember: 'MediaMember',
     MediaItem: 'MediaItem',
@@ -1354,7 +1370,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3134,6 +3150,80 @@ export namespace Prisma {
           }
         }
       }
+      CashDeposit: {
+        payload: Prisma.$CashDepositPayload<ExtArgs>
+        fields: Prisma.CashDepositFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CashDepositFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashDepositPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CashDepositFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashDepositPayload>
+          }
+          findFirst: {
+            args: Prisma.CashDepositFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashDepositPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CashDepositFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashDepositPayload>
+          }
+          findMany: {
+            args: Prisma.CashDepositFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashDepositPayload>[]
+          }
+          create: {
+            args: Prisma.CashDepositCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashDepositPayload>
+          }
+          createMany: {
+            args: Prisma.CashDepositCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CashDepositCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashDepositPayload>[]
+          }
+          delete: {
+            args: Prisma.CashDepositDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashDepositPayload>
+          }
+          update: {
+            args: Prisma.CashDepositUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashDepositPayload>
+          }
+          deleteMany: {
+            args: Prisma.CashDepositDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CashDepositUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CashDepositUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashDepositPayload>[]
+          }
+          upsert: {
+            args: Prisma.CashDepositUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CashDepositPayload>
+          }
+          aggregate: {
+            args: Prisma.CashDepositAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCashDeposit>
+          }
+          groupBy: {
+            args: Prisma.CashDepositGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CashDepositGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CashDepositCountArgs<ExtArgs>
+            result: $Utils.Optional<CashDepositCountAggregateOutputType> | number
+          }
+        }
+      }
       OnlineRecon: {
         payload: Prisma.$OnlineReconPayload<ExtArgs>
         fields: Prisma.OnlineReconFieldRefs
@@ -4438,6 +4528,7 @@ export namespace Prisma {
     calendarEvent?: CalendarEventOmit
     rawProduct?: RawProductOmit
     ocrSample?: OcrSampleOmit
+    cashDeposit?: CashDepositOmit
     onlineRecon?: OnlineReconOmit
     mediaMember?: MediaMemberOmit
     mediaItem?: MediaItemOmit
@@ -32949,6 +33040,1074 @@ export namespace Prisma {
 
 
   /**
+   * Model CashDeposit
+   */
+
+  export type AggregateCashDeposit = {
+    _count: CashDepositCountAggregateOutputType | null
+    _avg: CashDepositAvgAggregateOutputType | null
+    _sum: CashDepositSumAggregateOutputType | null
+    _min: CashDepositMinAggregateOutputType | null
+    _max: CashDepositMaxAggregateOutputType | null
+  }
+
+  export type CashDepositAvgAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type CashDepositSumAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type CashDepositMinAggregateOutputType = {
+    id: string | null
+    branchId: string | null
+    branchName: string | null
+    amount: number | null
+    photoKey: string | null
+    depositedAt: Date | null
+    createdById: string | null
+    createdAt: Date | null
+  }
+
+  export type CashDepositMaxAggregateOutputType = {
+    id: string | null
+    branchId: string | null
+    branchName: string | null
+    amount: number | null
+    photoKey: string | null
+    depositedAt: Date | null
+    createdById: string | null
+    createdAt: Date | null
+  }
+
+  export type CashDepositCountAggregateOutputType = {
+    id: number
+    branchId: number
+    branchName: number
+    amount: number
+    photoKey: number
+    depositedAt: number
+    createdById: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type CashDepositAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type CashDepositSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type CashDepositMinAggregateInputType = {
+    id?: true
+    branchId?: true
+    branchName?: true
+    amount?: true
+    photoKey?: true
+    depositedAt?: true
+    createdById?: true
+    createdAt?: true
+  }
+
+  export type CashDepositMaxAggregateInputType = {
+    id?: true
+    branchId?: true
+    branchName?: true
+    amount?: true
+    photoKey?: true
+    depositedAt?: true
+    createdById?: true
+    createdAt?: true
+  }
+
+  export type CashDepositCountAggregateInputType = {
+    id?: true
+    branchId?: true
+    branchName?: true
+    amount?: true
+    photoKey?: true
+    depositedAt?: true
+    createdById?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type CashDepositAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CashDeposit to aggregate.
+     */
+    where?: CashDepositWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CashDeposits to fetch.
+     */
+    orderBy?: CashDepositOrderByWithRelationInput | CashDepositOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CashDepositWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CashDeposits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CashDeposits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CashDeposits
+    **/
+    _count?: true | CashDepositCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CashDepositAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CashDepositSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CashDepositMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CashDepositMaxAggregateInputType
+  }
+
+  export type GetCashDepositAggregateType<T extends CashDepositAggregateArgs> = {
+        [P in keyof T & keyof AggregateCashDeposit]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCashDeposit[P]>
+      : GetScalarType<T[P], AggregateCashDeposit[P]>
+  }
+
+
+
+
+  export type CashDepositGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CashDepositWhereInput
+    orderBy?: CashDepositOrderByWithAggregationInput | CashDepositOrderByWithAggregationInput[]
+    by: CashDepositScalarFieldEnum[] | CashDepositScalarFieldEnum
+    having?: CashDepositScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CashDepositCountAggregateInputType | true
+    _avg?: CashDepositAvgAggregateInputType
+    _sum?: CashDepositSumAggregateInputType
+    _min?: CashDepositMinAggregateInputType
+    _max?: CashDepositMaxAggregateInputType
+  }
+
+  export type CashDepositGroupByOutputType = {
+    id: string
+    branchId: string
+    branchName: string
+    amount: number
+    photoKey: string
+    depositedAt: Date
+    createdById: string
+    createdAt: Date
+    _count: CashDepositCountAggregateOutputType | null
+    _avg: CashDepositAvgAggregateOutputType | null
+    _sum: CashDepositSumAggregateOutputType | null
+    _min: CashDepositMinAggregateOutputType | null
+    _max: CashDepositMaxAggregateOutputType | null
+  }
+
+  type GetCashDepositGroupByPayload<T extends CashDepositGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CashDepositGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CashDepositGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CashDepositGroupByOutputType[P]>
+            : GetScalarType<T[P], CashDepositGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CashDepositSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    branchId?: boolean
+    branchName?: boolean
+    amount?: boolean
+    photoKey?: boolean
+    depositedAt?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["cashDeposit"]>
+
+  export type CashDepositSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    branchId?: boolean
+    branchName?: boolean
+    amount?: boolean
+    photoKey?: boolean
+    depositedAt?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["cashDeposit"]>
+
+  export type CashDepositSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    branchId?: boolean
+    branchName?: boolean
+    amount?: boolean
+    photoKey?: boolean
+    depositedAt?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["cashDeposit"]>
+
+  export type CashDepositSelectScalar = {
+    id?: boolean
+    branchId?: boolean
+    branchName?: boolean
+    amount?: boolean
+    photoKey?: boolean
+    depositedAt?: boolean
+    createdById?: boolean
+    createdAt?: boolean
+  }
+
+  export type CashDepositOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "branchId" | "branchName" | "amount" | "photoKey" | "depositedAt" | "createdById" | "createdAt", ExtArgs["result"]["cashDeposit"]>
+
+  export type $CashDepositPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CashDeposit"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      branchId: string
+      branchName: string
+      amount: number
+      photoKey: string
+      depositedAt: Date
+      createdById: string
+      createdAt: Date
+    }, ExtArgs["result"]["cashDeposit"]>
+    composites: {}
+  }
+
+  type CashDepositGetPayload<S extends boolean | null | undefined | CashDepositDefaultArgs> = $Result.GetResult<Prisma.$CashDepositPayload, S>
+
+  type CashDepositCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CashDepositFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CashDepositCountAggregateInputType | true
+    }
+
+  export interface CashDepositDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CashDeposit'], meta: { name: 'CashDeposit' } }
+    /**
+     * Find zero or one CashDeposit that matches the filter.
+     * @param {CashDepositFindUniqueArgs} args - Arguments to find a CashDeposit
+     * @example
+     * // Get one CashDeposit
+     * const cashDeposit = await prisma.cashDeposit.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CashDepositFindUniqueArgs>(args: SelectSubset<T, CashDepositFindUniqueArgs<ExtArgs>>): Prisma__CashDepositClient<$Result.GetResult<Prisma.$CashDepositPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CashDeposit that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CashDepositFindUniqueOrThrowArgs} args - Arguments to find a CashDeposit
+     * @example
+     * // Get one CashDeposit
+     * const cashDeposit = await prisma.cashDeposit.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CashDepositFindUniqueOrThrowArgs>(args: SelectSubset<T, CashDepositFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CashDepositClient<$Result.GetResult<Prisma.$CashDepositPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CashDeposit that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashDepositFindFirstArgs} args - Arguments to find a CashDeposit
+     * @example
+     * // Get one CashDeposit
+     * const cashDeposit = await prisma.cashDeposit.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CashDepositFindFirstArgs>(args?: SelectSubset<T, CashDepositFindFirstArgs<ExtArgs>>): Prisma__CashDepositClient<$Result.GetResult<Prisma.$CashDepositPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CashDeposit that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashDepositFindFirstOrThrowArgs} args - Arguments to find a CashDeposit
+     * @example
+     * // Get one CashDeposit
+     * const cashDeposit = await prisma.cashDeposit.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CashDepositFindFirstOrThrowArgs>(args?: SelectSubset<T, CashDepositFindFirstOrThrowArgs<ExtArgs>>): Prisma__CashDepositClient<$Result.GetResult<Prisma.$CashDepositPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CashDeposits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashDepositFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CashDeposits
+     * const cashDeposits = await prisma.cashDeposit.findMany()
+     * 
+     * // Get first 10 CashDeposits
+     * const cashDeposits = await prisma.cashDeposit.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const cashDepositWithIdOnly = await prisma.cashDeposit.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends CashDepositFindManyArgs>(args?: SelectSubset<T, CashDepositFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashDepositPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CashDeposit.
+     * @param {CashDepositCreateArgs} args - Arguments to create a CashDeposit.
+     * @example
+     * // Create one CashDeposit
+     * const CashDeposit = await prisma.cashDeposit.create({
+     *   data: {
+     *     // ... data to create a CashDeposit
+     *   }
+     * })
+     * 
+     */
+    create<T extends CashDepositCreateArgs>(args: SelectSubset<T, CashDepositCreateArgs<ExtArgs>>): Prisma__CashDepositClient<$Result.GetResult<Prisma.$CashDepositPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CashDeposits.
+     * @param {CashDepositCreateManyArgs} args - Arguments to create many CashDeposits.
+     * @example
+     * // Create many CashDeposits
+     * const cashDeposit = await prisma.cashDeposit.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CashDepositCreateManyArgs>(args?: SelectSubset<T, CashDepositCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CashDeposits and returns the data saved in the database.
+     * @param {CashDepositCreateManyAndReturnArgs} args - Arguments to create many CashDeposits.
+     * @example
+     * // Create many CashDeposits
+     * const cashDeposit = await prisma.cashDeposit.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CashDeposits and only return the `id`
+     * const cashDepositWithIdOnly = await prisma.cashDeposit.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CashDepositCreateManyAndReturnArgs>(args?: SelectSubset<T, CashDepositCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashDepositPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CashDeposit.
+     * @param {CashDepositDeleteArgs} args - Arguments to delete one CashDeposit.
+     * @example
+     * // Delete one CashDeposit
+     * const CashDeposit = await prisma.cashDeposit.delete({
+     *   where: {
+     *     // ... filter to delete one CashDeposit
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CashDepositDeleteArgs>(args: SelectSubset<T, CashDepositDeleteArgs<ExtArgs>>): Prisma__CashDepositClient<$Result.GetResult<Prisma.$CashDepositPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CashDeposit.
+     * @param {CashDepositUpdateArgs} args - Arguments to update one CashDeposit.
+     * @example
+     * // Update one CashDeposit
+     * const cashDeposit = await prisma.cashDeposit.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CashDepositUpdateArgs>(args: SelectSubset<T, CashDepositUpdateArgs<ExtArgs>>): Prisma__CashDepositClient<$Result.GetResult<Prisma.$CashDepositPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CashDeposits.
+     * @param {CashDepositDeleteManyArgs} args - Arguments to filter CashDeposits to delete.
+     * @example
+     * // Delete a few CashDeposits
+     * const { count } = await prisma.cashDeposit.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CashDepositDeleteManyArgs>(args?: SelectSubset<T, CashDepositDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CashDeposits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashDepositUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CashDeposits
+     * const cashDeposit = await prisma.cashDeposit.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CashDepositUpdateManyArgs>(args: SelectSubset<T, CashDepositUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CashDeposits and returns the data updated in the database.
+     * @param {CashDepositUpdateManyAndReturnArgs} args - Arguments to update many CashDeposits.
+     * @example
+     * // Update many CashDeposits
+     * const cashDeposit = await prisma.cashDeposit.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CashDeposits and only return the `id`
+     * const cashDepositWithIdOnly = await prisma.cashDeposit.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CashDepositUpdateManyAndReturnArgs>(args: SelectSubset<T, CashDepositUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CashDepositPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CashDeposit.
+     * @param {CashDepositUpsertArgs} args - Arguments to update or create a CashDeposit.
+     * @example
+     * // Update or create a CashDeposit
+     * const cashDeposit = await prisma.cashDeposit.upsert({
+     *   create: {
+     *     // ... data to create a CashDeposit
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CashDeposit we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CashDepositUpsertArgs>(args: SelectSubset<T, CashDepositUpsertArgs<ExtArgs>>): Prisma__CashDepositClient<$Result.GetResult<Prisma.$CashDepositPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CashDeposits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashDepositCountArgs} args - Arguments to filter CashDeposits to count.
+     * @example
+     * // Count the number of CashDeposits
+     * const count = await prisma.cashDeposit.count({
+     *   where: {
+     *     // ... the filter for the CashDeposits we want to count
+     *   }
+     * })
+    **/
+    count<T extends CashDepositCountArgs>(
+      args?: Subset<T, CashDepositCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CashDepositCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CashDeposit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashDepositAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CashDepositAggregateArgs>(args: Subset<T, CashDepositAggregateArgs>): Prisma.PrismaPromise<GetCashDepositAggregateType<T>>
+
+    /**
+     * Group by CashDeposit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CashDepositGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CashDepositGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CashDepositGroupByArgs['orderBy'] }
+        : { orderBy?: CashDepositGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CashDepositGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCashDepositGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CashDeposit model
+   */
+  readonly fields: CashDepositFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CashDeposit.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CashDepositClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CashDeposit model
+   */
+  interface CashDepositFieldRefs {
+    readonly id: FieldRef<"CashDeposit", 'String'>
+    readonly branchId: FieldRef<"CashDeposit", 'String'>
+    readonly branchName: FieldRef<"CashDeposit", 'String'>
+    readonly amount: FieldRef<"CashDeposit", 'Int'>
+    readonly photoKey: FieldRef<"CashDeposit", 'String'>
+    readonly depositedAt: FieldRef<"CashDeposit", 'DateTime'>
+    readonly createdById: FieldRef<"CashDeposit", 'String'>
+    readonly createdAt: FieldRef<"CashDeposit", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CashDeposit findUnique
+   */
+  export type CashDepositFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CashDeposit
+     */
+    select?: CashDepositSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CashDeposit
+     */
+    omit?: CashDepositOmit<ExtArgs> | null
+    /**
+     * Filter, which CashDeposit to fetch.
+     */
+    where: CashDepositWhereUniqueInput
+  }
+
+  /**
+   * CashDeposit findUniqueOrThrow
+   */
+  export type CashDepositFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CashDeposit
+     */
+    select?: CashDepositSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CashDeposit
+     */
+    omit?: CashDepositOmit<ExtArgs> | null
+    /**
+     * Filter, which CashDeposit to fetch.
+     */
+    where: CashDepositWhereUniqueInput
+  }
+
+  /**
+   * CashDeposit findFirst
+   */
+  export type CashDepositFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CashDeposit
+     */
+    select?: CashDepositSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CashDeposit
+     */
+    omit?: CashDepositOmit<ExtArgs> | null
+    /**
+     * Filter, which CashDeposit to fetch.
+     */
+    where?: CashDepositWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CashDeposits to fetch.
+     */
+    orderBy?: CashDepositOrderByWithRelationInput | CashDepositOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CashDeposits.
+     */
+    cursor?: CashDepositWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CashDeposits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CashDeposits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CashDeposits.
+     */
+    distinct?: CashDepositScalarFieldEnum | CashDepositScalarFieldEnum[]
+  }
+
+  /**
+   * CashDeposit findFirstOrThrow
+   */
+  export type CashDepositFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CashDeposit
+     */
+    select?: CashDepositSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CashDeposit
+     */
+    omit?: CashDepositOmit<ExtArgs> | null
+    /**
+     * Filter, which CashDeposit to fetch.
+     */
+    where?: CashDepositWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CashDeposits to fetch.
+     */
+    orderBy?: CashDepositOrderByWithRelationInput | CashDepositOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CashDeposits.
+     */
+    cursor?: CashDepositWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CashDeposits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CashDeposits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CashDeposits.
+     */
+    distinct?: CashDepositScalarFieldEnum | CashDepositScalarFieldEnum[]
+  }
+
+  /**
+   * CashDeposit findMany
+   */
+  export type CashDepositFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CashDeposit
+     */
+    select?: CashDepositSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CashDeposit
+     */
+    omit?: CashDepositOmit<ExtArgs> | null
+    /**
+     * Filter, which CashDeposits to fetch.
+     */
+    where?: CashDepositWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CashDeposits to fetch.
+     */
+    orderBy?: CashDepositOrderByWithRelationInput | CashDepositOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CashDeposits.
+     */
+    cursor?: CashDepositWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CashDeposits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CashDeposits.
+     */
+    skip?: number
+    distinct?: CashDepositScalarFieldEnum | CashDepositScalarFieldEnum[]
+  }
+
+  /**
+   * CashDeposit create
+   */
+  export type CashDepositCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CashDeposit
+     */
+    select?: CashDepositSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CashDeposit
+     */
+    omit?: CashDepositOmit<ExtArgs> | null
+    /**
+     * The data needed to create a CashDeposit.
+     */
+    data: XOR<CashDepositCreateInput, CashDepositUncheckedCreateInput>
+  }
+
+  /**
+   * CashDeposit createMany
+   */
+  export type CashDepositCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CashDeposits.
+     */
+    data: CashDepositCreateManyInput | CashDepositCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CashDeposit createManyAndReturn
+   */
+  export type CashDepositCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CashDeposit
+     */
+    select?: CashDepositSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CashDeposit
+     */
+    omit?: CashDepositOmit<ExtArgs> | null
+    /**
+     * The data used to create many CashDeposits.
+     */
+    data: CashDepositCreateManyInput | CashDepositCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CashDeposit update
+   */
+  export type CashDepositUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CashDeposit
+     */
+    select?: CashDepositSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CashDeposit
+     */
+    omit?: CashDepositOmit<ExtArgs> | null
+    /**
+     * The data needed to update a CashDeposit.
+     */
+    data: XOR<CashDepositUpdateInput, CashDepositUncheckedUpdateInput>
+    /**
+     * Choose, which CashDeposit to update.
+     */
+    where: CashDepositWhereUniqueInput
+  }
+
+  /**
+   * CashDeposit updateMany
+   */
+  export type CashDepositUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CashDeposits.
+     */
+    data: XOR<CashDepositUpdateManyMutationInput, CashDepositUncheckedUpdateManyInput>
+    /**
+     * Filter which CashDeposits to update
+     */
+    where?: CashDepositWhereInput
+    /**
+     * Limit how many CashDeposits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CashDeposit updateManyAndReturn
+   */
+  export type CashDepositUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CashDeposit
+     */
+    select?: CashDepositSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CashDeposit
+     */
+    omit?: CashDepositOmit<ExtArgs> | null
+    /**
+     * The data used to update CashDeposits.
+     */
+    data: XOR<CashDepositUpdateManyMutationInput, CashDepositUncheckedUpdateManyInput>
+    /**
+     * Filter which CashDeposits to update
+     */
+    where?: CashDepositWhereInput
+    /**
+     * Limit how many CashDeposits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CashDeposit upsert
+   */
+  export type CashDepositUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CashDeposit
+     */
+    select?: CashDepositSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CashDeposit
+     */
+    omit?: CashDepositOmit<ExtArgs> | null
+    /**
+     * The filter to search for the CashDeposit to update in case it exists.
+     */
+    where: CashDepositWhereUniqueInput
+    /**
+     * In case the CashDeposit found by the `where` argument doesn't exist, create a new CashDeposit with this data.
+     */
+    create: XOR<CashDepositCreateInput, CashDepositUncheckedCreateInput>
+    /**
+     * In case the CashDeposit was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CashDepositUpdateInput, CashDepositUncheckedUpdateInput>
+  }
+
+  /**
+   * CashDeposit delete
+   */
+  export type CashDepositDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CashDeposit
+     */
+    select?: CashDepositSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CashDeposit
+     */
+    omit?: CashDepositOmit<ExtArgs> | null
+    /**
+     * Filter which CashDeposit to delete.
+     */
+    where: CashDepositWhereUniqueInput
+  }
+
+  /**
+   * CashDeposit deleteMany
+   */
+  export type CashDepositDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CashDeposits to delete
+     */
+    where?: CashDepositWhereInput
+    /**
+     * Limit how many CashDeposits to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CashDeposit without action
+   */
+  export type CashDepositDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CashDeposit
+     */
+    select?: CashDepositSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CashDeposit
+     */
+    omit?: CashDepositOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model OnlineRecon
    */
 
@@ -50821,6 +51980,20 @@ export namespace Prisma {
   export type OcrSampleScalarFieldEnum = (typeof OcrSampleScalarFieldEnum)[keyof typeof OcrSampleScalarFieldEnum]
 
 
+  export const CashDepositScalarFieldEnum: {
+    id: 'id',
+    branchId: 'branchId',
+    branchName: 'branchName',
+    amount: 'amount',
+    photoKey: 'photoKey',
+    depositedAt: 'depositedAt',
+    createdById: 'createdById',
+    createdAt: 'createdAt'
+  };
+
+  export type CashDepositScalarFieldEnum = (typeof CashDepositScalarFieldEnum)[keyof typeof CashDepositScalarFieldEnum]
+
+
   export const OnlineReconScalarFieldEnum: {
     id: 'id',
     month: 'month',
@@ -53326,6 +54499,75 @@ export namespace Prisma {
     finalRows?: StringNullableWithAggregatesFilter<"OcrSample"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"OcrSample"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"OcrSample"> | Date | string
+  }
+
+  export type CashDepositWhereInput = {
+    AND?: CashDepositWhereInput | CashDepositWhereInput[]
+    OR?: CashDepositWhereInput[]
+    NOT?: CashDepositWhereInput | CashDepositWhereInput[]
+    id?: StringFilter<"CashDeposit"> | string
+    branchId?: StringFilter<"CashDeposit"> | string
+    branchName?: StringFilter<"CashDeposit"> | string
+    amount?: IntFilter<"CashDeposit"> | number
+    photoKey?: StringFilter<"CashDeposit"> | string
+    depositedAt?: DateTimeFilter<"CashDeposit"> | Date | string
+    createdById?: StringFilter<"CashDeposit"> | string
+    createdAt?: DateTimeFilter<"CashDeposit"> | Date | string
+  }
+
+  export type CashDepositOrderByWithRelationInput = {
+    id?: SortOrder
+    branchId?: SortOrder
+    branchName?: SortOrder
+    amount?: SortOrder
+    photoKey?: SortOrder
+    depositedAt?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CashDepositWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: CashDepositWhereInput | CashDepositWhereInput[]
+    OR?: CashDepositWhereInput[]
+    NOT?: CashDepositWhereInput | CashDepositWhereInput[]
+    branchId?: StringFilter<"CashDeposit"> | string
+    branchName?: StringFilter<"CashDeposit"> | string
+    amount?: IntFilter<"CashDeposit"> | number
+    photoKey?: StringFilter<"CashDeposit"> | string
+    depositedAt?: DateTimeFilter<"CashDeposit"> | Date | string
+    createdById?: StringFilter<"CashDeposit"> | string
+    createdAt?: DateTimeFilter<"CashDeposit"> | Date | string
+  }, "id">
+
+  export type CashDepositOrderByWithAggregationInput = {
+    id?: SortOrder
+    branchId?: SortOrder
+    branchName?: SortOrder
+    amount?: SortOrder
+    photoKey?: SortOrder
+    depositedAt?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+    _count?: CashDepositCountOrderByAggregateInput
+    _avg?: CashDepositAvgOrderByAggregateInput
+    _max?: CashDepositMaxOrderByAggregateInput
+    _min?: CashDepositMinOrderByAggregateInput
+    _sum?: CashDepositSumOrderByAggregateInput
+  }
+
+  export type CashDepositScalarWhereWithAggregatesInput = {
+    AND?: CashDepositScalarWhereWithAggregatesInput | CashDepositScalarWhereWithAggregatesInput[]
+    OR?: CashDepositScalarWhereWithAggregatesInput[]
+    NOT?: CashDepositScalarWhereWithAggregatesInput | CashDepositScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"CashDeposit"> | string
+    branchId?: StringWithAggregatesFilter<"CashDeposit"> | string
+    branchName?: StringWithAggregatesFilter<"CashDeposit"> | string
+    amount?: IntWithAggregatesFilter<"CashDeposit"> | number
+    photoKey?: StringWithAggregatesFilter<"CashDeposit"> | string
+    depositedAt?: DateTimeWithAggregatesFilter<"CashDeposit"> | Date | string
+    createdById?: StringWithAggregatesFilter<"CashDeposit"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"CashDeposit"> | Date | string
   }
 
   export type OnlineReconWhereInput = {
@@ -56783,6 +58025,83 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type CashDepositCreateInput = {
+    id?: string
+    branchId: string
+    branchName: string
+    amount: number
+    photoKey: string
+    depositedAt: Date | string
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type CashDepositUncheckedCreateInput = {
+    id?: string
+    branchId: string
+    branchName: string
+    amount: number
+    photoKey: string
+    depositedAt: Date | string
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type CashDepositUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    branchId?: StringFieldUpdateOperationsInput | string
+    branchName?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    photoKey?: StringFieldUpdateOperationsInput | string
+    depositedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CashDepositUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    branchId?: StringFieldUpdateOperationsInput | string
+    branchName?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    photoKey?: StringFieldUpdateOperationsInput | string
+    depositedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CashDepositCreateManyInput = {
+    id?: string
+    branchId: string
+    branchName: string
+    amount: number
+    photoKey: string
+    depositedAt: Date | string
+    createdById: string
+    createdAt?: Date | string
+  }
+
+  export type CashDepositUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    branchId?: StringFieldUpdateOperationsInput | string
+    branchName?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    photoKey?: StringFieldUpdateOperationsInput | string
+    depositedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CashDepositUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    branchId?: StringFieldUpdateOperationsInput | string
+    branchName?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    photoKey?: StringFieldUpdateOperationsInput | string
+    depositedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    createdById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type OnlineReconCreateInput = {
     id?: string
     month: string
@@ -59905,6 +61224,47 @@ export namespace Prisma {
     finalRows?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type CashDepositCountOrderByAggregateInput = {
+    id?: SortOrder
+    branchId?: SortOrder
+    branchName?: SortOrder
+    amount?: SortOrder
+    photoKey?: SortOrder
+    depositedAt?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CashDepositAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type CashDepositMaxOrderByAggregateInput = {
+    id?: SortOrder
+    branchId?: SortOrder
+    branchName?: SortOrder
+    amount?: SortOrder
+    photoKey?: SortOrder
+    depositedAt?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CashDepositMinOrderByAggregateInput = {
+    id?: SortOrder
+    branchId?: SortOrder
+    branchName?: SortOrder
+    amount?: SortOrder
+    photoKey?: SortOrder
+    depositedAt?: SortOrder
+    createdById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type CashDepositSumOrderByAggregateInput = {
+    amount?: SortOrder
   }
 
   export type OnlineReconMonthChannelCompoundUniqueInput = {

@@ -8,6 +8,7 @@ export function BranchCashBoard({
   open,
   masuk,
   cashout,
+  setor = 0,
   expected,
   close,
 }: {
@@ -15,6 +16,7 @@ export function BranchCashBoard({
   open: Buckets;
   masuk: Buckets;
   cashout: number;
+  setor?: number;
   expected: Buckets;
   close: Buckets | null;
 }) {
@@ -41,6 +43,7 @@ export function BranchCashBoard({
                   <p className="text-11 text-muted-foreground">
                     awal {rupiah(open[k])} · masuk {rupiah(masuk[k])}
                     {k === "cash" && cashout > 0 ? ` · keluar ${rupiah(cashout)}` : ""}
+                    {k === "cash" && setor > 0 ? ` · setor ${rupiah(setor)}` : ""}
                   </p>
                   {close && (
                     <div className="mt-1 text-11">

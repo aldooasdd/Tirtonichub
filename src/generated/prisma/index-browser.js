@@ -430,6 +430,17 @@ exports.Prisma.OcrSampleScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CashDepositScalarFieldEnum = {
+  id: 'id',
+  branchId: 'branchId',
+  branchName: 'branchName',
+  amount: 'amount',
+  photoKey: 'photoKey',
+  depositedAt: 'depositedAt',
+  createdById: 'createdById',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.OnlineReconScalarFieldEnum = {
   id: 'id',
   month: 'month',
@@ -738,6 +749,7 @@ exports.Prisma.ModelName = {
   CalendarEvent: 'CalendarEvent',
   RawProduct: 'RawProduct',
   OcrSample: 'OcrSample',
+  CashDeposit: 'CashDeposit',
   OnlineRecon: 'OnlineRecon',
   MediaMember: 'MediaMember',
   MediaItem: 'MediaItem',

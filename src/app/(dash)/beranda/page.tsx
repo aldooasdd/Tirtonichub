@@ -154,6 +154,7 @@ export default async function BerandaPage() {
           open={cashOpen}
           masuk={cashReport.masuk}
           cashout={cashReport.cashout}
+          setor={cashReport.setor}
           expected={cashReport.expected}
           close={cashClose}
         />

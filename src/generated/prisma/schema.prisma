@@ -526,6 +526,21 @@ model OcrSample {
   @@index([brandKey, updatedAt])
 }
 
+// --- Setor tunai Kepala Cabang: cash laci cabang → rekening BCA OP - Ridho (lib/rekening SETOR_AKUN) ---
+model CashDeposit {
+  id          String   @id @default(cuid())
+  branchId    String
+  branchName  String
+  amount      Int // rupiah
+  photoKey    String // bukti setor
+  depositedAt DateTime // waktu setor (WIB dari input)
+  createdById String
+  createdAt   DateTime @default(now())
+
+  @@index([branchId, depositedAt])
+  @@index([depositedAt])
+}
+
 // --- Rekap online bulanan: uang asli per kanal (dari Finance) vs total penjualan di app ---
 model OnlineRecon {
   id          String   @id @default(cuid())

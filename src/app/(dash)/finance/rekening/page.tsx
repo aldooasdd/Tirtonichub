@@ -1,7 +1,8 @@
 import { requireFinance } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
-import { akunOf, TAK_TERPETAKAN } from "@/lib/rekening";
+import { akunOf, SETOR_AKUN, TAK_TERPETAKAN } from "@/lib/rekening";
+import { userNames } from "@/server/user-names";
 
 type Pay = { method: string; amount: number };
 const rp = (n: number) => "Rp " + n.toLocaleString("id-ID");
@@ -20,13 +21,17 @@ export default async function FinanceRekeningPage({ searchParams }: { searchPara
   const [y, m] = bulan.split("-").map(Number);
   const to = new Date(`${m === 12 ? y + 1 : y}-${String(m === 12 ? 1 : m + 1).padStart(2, "0")}-01T00:00:00+07:00`);
 
-  const reports = await prisma.salesReport.findMany({
-    where: { approvedAt: { not: null }, soldAt: { gte: from, lt: to } },
-    orderBy: { soldAt: "asc" },
-    select: { id: true, notaNo: true, soldAt: true, branchName: true, channel: true, payments: true },
-  });
+  const [reports, setors] = await Promise.all([
+    prisma.salesReport.findMany({
+      where: { approvedAt: { not: null }, soldAt: { gte: from, lt: to } },
+      orderBy: { soldAt: "asc" },
+      select: { id: true, notaNo: true, soldAt: true, branchName: true, channel: true, payments: true },
+    }),
+    prisma.cashDeposit.findMany({ where: { depositedAt: { gte: from, lt: to } }, orderBy: { depositedAt: "asc" } }),
+  ]);
+  const nameOf = await userNames(setors.map((d) => d.createdById));
 
-  type Tx = { id: string; tgl: string; nota: string; cabang: string; method: string; amount: number };
+  type Tx = { id: string; tgl: string; nota: string; cabang: string; method: string; amount: number; photoKey?: string };
   const akun = new Map<string, Tx[]>();
   for (const r of reports) {
     for (const p of (Array.isArray(r.payments) ? r.payments : []) as Pay[]) {
@@ -43,6 +48,12 @@ export default async function FinanceRekeningPage({ searchParams }: { searchPara
       });
       akun.set(a, list);
     }
+  }
+  // Setor tunai Kepala Cabang: cash laci → rekening setor.
+  for (const d of setors) {
+    const list = akun.get(SETOR_AKUN) ?? [];
+    list.push({ id: d.id, tgl: fmtWIB(d.depositedAt), nota: "Setor tunai", cabang: d.branchName, method: `Setor oleh ${nameOf(d.createdById)}`, amount: d.amount, photoKey: d.photoKey });
+    akun.set(SETOR_AKUN, list);
   }
   const groups = [...akun.entries()]
     .map(([name, txs]) => ({ name, txs, total: txs.reduce((s, t) => s + t.amount, 0) }))
@@ -104,7 +115,15 @@ export default async function FinanceRekeningPage({ searchParams }: { searchPara
                   {g.txs.map((t, i) => (
                     <tr key={`${t.id}-${i}`} className="border-t">
                       <td className="whitespace-nowrap px-4 py-2">{t.tgl}</td>
-                      <td className="px-4 py-2">{t.nota}</td>
+                      <td className="px-4 py-2">
+                        {t.photoKey ? (
+                          <a href={`/api/file?key=${encodeURIComponent(t.photoKey)}`} target="_blank" rel="noopener" className="text-primary">
+                            {t.nota}
+                          </a>
+                        ) : (
+                          t.nota
+                        )}
+                      </td>
                       <td className="px-4 py-2">{t.cabang}</td>
                       <td className="px-4 py-2">{t.method}</td>
                       <td className="px-4 py-2 text-right tabular-nums">{rp(t.amount)}</td>
