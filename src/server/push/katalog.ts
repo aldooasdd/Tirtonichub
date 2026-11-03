@@ -10,6 +10,7 @@ import { randomBytes } from "node:crypto";
 import type { KatalogNotif, Prisma } from "@/generated/prisma";
 import { prisma } from "@/server/db";
 import { sendPush } from "./send";
+import { lastTick } from "./tick";
 import { katalogOnly } from "./logic";
 import { studioSender, studioWaSend, waVia } from "./wa";
 import { katalogBatchDue, katalogShouldQueue, katalogWaText, maskPhone, studioFolderLink, type KatalogLine } from "./katalog-logic";
@@ -144,6 +145,14 @@ export async function runKatalog(now = new Date()) {
   if (batchId) await deliver(batchId, now); // null = diambil proses lain
 }
 
+/** Admin: kirim antrean sekarang juga (tanpa menunggu 10 menit). */
+export async function flushKatalog(): Promise<SendResult> {
+  const pending = await prisma.katalogNotif.findMany({ where: { sentAt: null, failedAt: null, batchId: null } });
+  if (!pending.length) return { ok: false, error: "Tidak ada kartu yang menunggu.", sent: 0 };
+  const batchId = await claim(pending.map((p) => p.id));
+  return batchId ? deliver(batchId, new Date()) : { ok: false, error: "Sedang dikirim.", sent: 0 };
+}
+
 /** Admin: kirim ulang kartu yang gagal (langsung, tanpa menunggu 10 menit). */
 export async function resendKatalog(taskId: string, by: string): Promise<SendResult> {
   const t = await prisma.mediaTask.findUnique({ where: { id: taskId }, select: { type: true } });
@@ -171,14 +180,16 @@ export async function testKatalog(by: string): Promise<SendResult> {
 
 /** Ringkasan untuk panel Tim & Aktivitas. */
 export async function katalogStatus() {
-  const [on, recips, pending, lastFail, sender, to] = await Promise.all([
+  const [on, recips, pending, lastFail, sender, to, recent] = await Promise.all([
     katalogOn(),
     katalogRecipients(),
     prisma.katalogNotif.count({ where: { sentAt: null, failedAt: null } }),
     prisma.katalogNotif.findFirst({ where: { failedAt: { not: null } }, orderBy: { failedAt: "desc" }, select: { failedAt: true, error: true } }),
     studioSender(),
     katalogTo(),
+    prisma.katalogNotif.findMany({ orderBy: { movedAt: "desc" }, take: 5, select: { taskId: true, movedBy: true, movedAt: true, sentAt: true, failedAt: true, error: true, batchId: true } }),
   ]);
+  const titles = new Map((await prisma.mediaTask.findMany({ where: { id: { in: recent.map((r) => r.taskId) } }, select: { id: true, title: true } })).map((t) => [t.id, t.title]));
   return {
     on,
     via: waVia(),
@@ -187,5 +198,9 @@ export async function katalogStatus() {
     recipients: recips.map((r) => ({ email: r.email, name: r.name, member: r.member, phone: r.phone ? maskPhone(r.phone) : "" })),
     pending,
     lastFail: lastFail ? { at: lastFail.failedAt!.getTime(), error: lastFail.error ?? "" } : null,
+    // diagnosa: tugas terjadwal (pushTick tiap menit) + 5 kartu terakhir di antrean
+    jobsOff: process.env.PUSH_JOBS === "0",
+    tickAt: lastTick(),
+    recent: recent.map((r) => ({ title: titles.get(r.taskId) ?? "(kartu dihapus)", by: r.movedBy, at: r.movedAt.getTime(), sentAt: r.sentAt?.getTime() ?? 0, failedAt: r.failedAt?.getTime() ?? 0, error: r.error ?? "", busy: !!r.batchId && !r.sentAt && !r.failedAt })),
   };
 }
