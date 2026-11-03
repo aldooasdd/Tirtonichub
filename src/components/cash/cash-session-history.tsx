@@ -8,6 +8,18 @@ const total = (b: Buckets) => b.cash + b.mandiri + b.bca + b.bri;
 const jam = (d: Date) => new Intl.DateTimeFormat("id-ID", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta" }).format(new Date(d));
 const tgl = (d: Date) => new Intl.DateTimeFormat("id-ID", { day: "2-digit", month: "short", timeZone: "Asia/Jakarta" }).format(new Date(d));
 
+/** Saldo total + rincian isian kasir (cash laci & tiap EDC) di bawahnya. */
+function Saldo({ b }: { b: Buckets }) {
+  return (
+    <>
+      <div className="font-semibold">{rupiah(total(b))}</div>
+      <div className="text-12 font-normal text-muted-foreground">
+        Cash {rupiah(b.cash)} · Mandiri {rupiah(b.mandiri)} · BCA {rupiah(b.bca)} · BRI {rupiah(b.bri)}
+      </div>
+    </>
+  );
+}
+
 const PREVIEW = 3; // baris per cabang sebelum "lihat semua"
 
 export function CashSessionHistory({ rows }: { rows: CashSessionRow[] }) {
@@ -54,12 +66,12 @@ export function CashSessionHistory({ rows }: { rows: CashSessionRow[] }) {
                           <td className="py-2 whitespace-nowrap text-muted-foreground">{tgl(r.date)}</td>
                           <td className="py-2 whitespace-nowrap text-emerald-600">{jam(r.openAt)}</td>
                           <td className="py-2">{r.openBy}</td>
-                          <td className="py-2 text-right font-semibold whitespace-nowrap">{rupiah(total(r.open))}</td>
+                          <td className="py-2 text-right whitespace-nowrap"><Saldo b={r.open} /></td>
                           {r.closeAt ? (
                             <>
                               <td className="py-2 whitespace-nowrap text-destructive">{jam(r.closeAt)}</td>
                               <td className="py-2">{r.closeBy}</td>
-                              <td className="py-2 text-right font-semibold whitespace-nowrap">{rupiah(total(r.close!))}</td>
+                              <td className="py-2 text-right whitespace-nowrap"><Saldo b={r.close!} /></td>
                             </>
                           ) : (
                             <td className="py-2 text-amber-600" colSpan={3}>Belum ditutup</td>
