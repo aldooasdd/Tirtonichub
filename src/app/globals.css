@@ -160,3 +160,78 @@
 @media (prefers-reduced-motion: reduce) {
   .reveal { animation: none; }
 }
+
+/* --- Loader kubus titik (components/ui/abstract-cube-isometric-loader) --- */
+@keyframes dot-idle {
+  0%,
+  100% {
+    opacity: 0.08;
+    transform: scale(0.75);
+  }
+  50% {
+    opacity: 0.22;
+    transform: scale(0.9);
+  }
+}
+
+@keyframes dot-active {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes dot-orbit {
+  0% {
+    opacity: 0.15;
+    transform: scale(0.8);
+  }
+  20% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  60% {
+    opacity: 0.35;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 0.15;
+    transform: scale(0.8);
+  }
+}
+
+.dot-loader {
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--dot-size));
+  grid-template-rows: repeat(var(--rows), var(--dot-size));
+  gap: var(--gap);
+}
+.dot-loader span {
+  grid-column: var(--x);
+  grid-row: var(--y);
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 9999px;
+  background: var(--dot-color);
+  opacity: var(--idle-opacity);
+  animation: dot-idle var(--speed) ease-in-out var(--delay) infinite;
+}
+.dot-loader[data-motion="orbit"] span.active {
+  animation-name: dot-orbit;
+}
+.dot-loader.has-bloom span.active {
+  box-shadow: 0 0 calc(var(--dot-size) * 1.5) var(--dot-color);
+}
+@media (prefers-reduced-motion: reduce) {
+  .dot-loader span {
+    animation: none;
+  }
+  .dot-loader span.active {
+    opacity: 1;
+  }
+}
