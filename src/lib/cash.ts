@@ -11,15 +11,33 @@ export const BUCKET_LABEL: Record<keyof Buckets, string> = {
 };
 
 /** Metode bayar POS → penempatan saldo kasir.
- *  Daftar POS: Tunai; CC/Debit/Debit Selain/QRIS/Transfer + {BCA,BRI,Mandiri} → EDC bank itu.
- *  SHOPEE/TOKOPEDIA/WEBSITE = online (duit ke marketplace, bukan laci/EDC) → null, tak masuk kasir. */
+ *  Daftar POS: Tunai; CC/Debit/Debit Selain/QRIS + {BCA,BRI,Mandiri} → EDC bank itu.
+ *  SHOPEE/TOKOPEDIA/WEBSITE = online (duit ke marketplace) dan Transfer (langsung ke rekening
+ *  an Yupie Milenia, lihat lib/rekening) → null, tak masuk laci/EDC. */
 export function bucketOf(method: string): keyof Buckets | null {
   const m = (method || "").toLowerCase();
-  if (/shopee|tokopedia|website|tiktok|lazada|blibli|online|marketplace/.test(m)) return null;
+  if (/shopee|tokopedia|website|tiktok|lazada|blibli|online|marketplace|transfer/.test(m)) return null;
   if (m.includes("mandiri")) return "mandiri";
   if (m.includes("bca")) return "bca";
   if (m.includes("bri")) return "bri";
   return "cash"; // Tunai & lainnya
+}
+
+type Pay = { method?: string; amount?: number };
+
+/** Pembayaran satu nota → uang masuk per laci/EDC. Total bayar > grandTotal = ada kembalian:
+ *  kelebihan dipotong dari cash (kembalian keluar dari laci). */
+export function notaBuckets(pays: Pay[], grandTotal: number): Buckets {
+  const b = zeroBuckets();
+  let paid = 0;
+  for (const p of pays) {
+    const amt = Math.max(0, Math.round(p.amount ?? 0));
+    paid += amt;
+    const bk = bucketOf(p.method ?? "");
+    if (bk) b[bk] += amt;
+  }
+  if (grandTotal > 0 && paid > grandTotal) b.cash = Math.max(0, b.cash - (paid - grandTotal));
+  return b;
 }
 
 export type KasirShift = "PAGI" | "SIANG";
@@ -100,8 +118,8 @@ export async function loadCashMovements(dateKey: Date, take = 400, days = 30): P
   const start = new Date(dayRange(dateKey).start.getTime() - (days - 1) * 86_400_000);
   const [sales, cashouts] = await Promise.all([
     prisma.salesReport.findMany({
-      where: { channel: "offline", branchId: { not: null }, createdAt: { gte: start, lt: end } },
-      select: { id: true, createdAt: true, branchName: true, payments: true, notaNo: true },
+      where: { channel: "offline", branchId: { not: null }, soldAt: { gte: start, lt: end } },
+      select: { id: true, soldAt: true, branchName: true, payments: true, grandTotal: true, notaNo: true },
     }),
     prisma.cashout.findMany({
       where: { branchId: { not: null }, createdAt: { gte: start, lt: end } },
@@ -111,12 +129,10 @@ export async function loadCashMovements(dateKey: Date, take = 400, days = 30): P
 
   const out: CashMovement[] = [];
   for (const s of sales) {
-    const pays = (Array.isArray(s.payments) ? s.payments : []) as { method?: string; amount?: number }[];
-    for (const [i, p] of pays.entries()) {
-      const amt = Math.max(0, Math.round(p.amount ?? 0));
-      const bk = bucketOf(p.method ?? "");
-      if (amt <= 0 || !bk) continue; // online (SHOPEE/dll) tak masuk kasir
-      out.push({ id: `${s.id}-${i}`, at: s.createdAt, branch: s.branchName ?? "-", kind: "in", bucket: bk, amount: amt, note: s.notaNo ? `Nota ${s.notaNo}` : "Penjualan" });
+    const b = notaBuckets((Array.isArray(s.payments) ? s.payments : []) as Pay[], s.grandTotal);
+    for (const bk of Object.keys(b) as (keyof Buckets)[]) {
+      if (b[bk] <= 0) continue; // online/transfer tak masuk kasir
+      out.push({ id: `${s.id}-${bk}`, at: s.soldAt, branch: s.branchName ?? "-", kind: "in", bucket: bk, amount: b[bk], note: s.notaNo ? `Nota ${s.notaNo}` : "Penjualan" });
     }
   }
   for (const c of cashouts)
@@ -235,19 +251,16 @@ export async function computeBranchCash(branchId: string, dateKey: Date, open: B
   const { start, end } = dayRange(dateKey);
   const [sales, cashoutAgg] = await Promise.all([
     prisma.salesReport.findMany({
-      where: { channel: "offline", branchId, createdAt: { gte: start, lt: end } },
-      select: { payments: true },
+      where: { channel: "offline", branchId, soldAt: { gte: start, lt: end } },
+      select: { payments: true, grandTotal: true },
     }),
     prisma.cashout.aggregate({ where: { branchId, createdAt: { gte: start, lt: end } }, _sum: { amount: true } }),
   ]);
 
   const masuk = zeroBuckets();
   for (const s of sales) {
-    const pays = (Array.isArray(s.payments) ? s.payments : []) as { method?: string; amount?: number }[];
-    for (const p of pays) {
-      const bk = bucketOf(p.method ?? "");
-      if (bk) masuk[bk] += Math.max(0, Math.round(p.amount ?? 0)); // online tak masuk saldo kasir
-    }
+    const b = notaBuckets((Array.isArray(s.payments) ? s.payments : []) as Pay[], s.grandTotal);
+    for (const bk of Object.keys(b) as (keyof Buckets)[]) masuk[bk] += b[bk]; // online/transfer tak masuk
   }
   const cashout = cashoutAgg._sum.amount ?? 0;
   const expected: Buckets = {
