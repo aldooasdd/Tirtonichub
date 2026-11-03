@@ -2,16 +2,16 @@
 // Nomor: MediaMember.phone (No. WhatsApp di Tim & Aktivitas), bila kosong User.waNumber.
 // Penerima = penerima push yang sama: tim Media (Zaki, Rayhan, Aulia, Salma) untuk semua notifikasi Studio,
 // penerima Foto katalog (PUSH_KATALOG_EMAILS, bawaan ridho@tirtonichub.com) hanya untuk "Foto katalog ready".
-// Pengirim: nomor WA di GOWA (STUDIO_GOWA_URL, mis. https://gowa.tirtonichub.com; kosong = GOWA_URL milik OTP) — permintaan Zaki 3 Nov 2026.
-// STUDIO_WA_VIA=n8n memakai webhook n8n (N8N_WA_WEBHOOK_URL). Tidak ada pindah jalur otomatis. STUDIO_WA=0 mematikan WA.
+// Pengirim: webhook n8n (N8N_WA_WEBHOOK_URL) = nomor Tirtonic Costumer Care — kembali ke jalur awal (permintaan Zaki 3 Nov 2026).
+// STUDIO_WA_VIA=gowa memakai GOWA (STUDIO_GOWA_URL, kosong = GOWA_URL milik OTP). Tidak ada pindah jalur otomatis. STUDIO_WA=0 mematikan WA.
 import { prisma } from "@/server/db";
 import { gowaSender, sendGowa, sendWa, type GowaConf } from "@/server/wa";
 import { katalogOnly, waText } from "./logic";
 
 export type WaVia = "n8n" | "gowa" | "";
 export function waVia(): WaVia {
-  if (process.env.STUDIO_WA_VIA === "n8n") return process.env.N8N_WA_WEBHOOK_URL ? "n8n" : "";
-  return studioGowa().base ? "gowa" : "";
+  if (process.env.STUDIO_WA_VIA === "gowa") return studioGowa().base ? "gowa" : "";
+  return process.env.N8N_WA_WEBHOOK_URL ? "n8n" : "";
 }
 
 /** GOWA untuk notifikasi Studio: STUDIO_GOWA_URL (mis. https://gowa.tirtonichub.com) + STUDIO_GOWA_BASIC_AUTH,

@@ -105,4 +105,6 @@ test("sakelar WA Foto katalog hanya admin penuh", () => {
   assert.equal(canWrite(aulia, "update", "settings/main", { idccDay: 3, katalogWa: true }, { idccDay: 4, katalogWa: true }), null);
   assert.equal(canWrite(zaki, "update", "settings/main", { idccDay: 3 }, { idccDay: 3, katalogWa: true }), null);
   assert.notEqual(canWrite(rayhan, "update", "settings/main", {}, { idccDay: 4 }), null);
+  assert.notEqual(canWrite(aulia, "update", "settings/main", { katalogTo: ["a@x.com"] }, { katalogTo: ["b@x.com"] }), null);
+  assert.equal(canWrite(zaki, "update", "settings/main", { katalogTo: ["a@x.com"] }, { katalogTo: ["b@x.com"] }), null);
 });
