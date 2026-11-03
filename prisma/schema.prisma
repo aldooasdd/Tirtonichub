@@ -749,6 +749,23 @@ model PushLog {
 }
 
 // Antrean barang masuk Studio; dikirim bergabung tiap 2 menit lalu sentAt diisi.
+// Notifikasi WA "Foto katalog siap" (ke penerima PUSH_KATALOG_EMAILS, nomor dari MediaMember.phone).
+// Antrean sekaligus log: kartu yang masuk Ready dalam 10 menit digabung satu pesan (batchId). Gagal → failedAt + error.
+model KatalogNotif {
+  id       String    @id @default(cuid())
+  taskId   String
+  driveUrl String
+  movedBy  String
+  movedAt  DateTime  @default(now())
+  batchId  String?
+  sentAt   DateTime?
+  failedAt DateTime?
+  error    String?
+
+  @@index([sentAt, failedAt])
+  @@index([taskId])
+}
+
 model PushItemQueue {
   id        String    @id @default(cuid())
   itemId    String

@@ -2,7 +2,9 @@
 // Alamat dokumen sama seperti versi Firebase (items/{id}, tasks/{id}, members/{email}, ...).
 
 import { randomBytes } from "node:crypto";
-import { notifyKatalog, queueNewItem } from "@/server/push/jobs";
+import { queueNewItem } from "@/server/push/jobs";
+import { queueKatalog } from "@/server/push/katalog";
+import { katalogEntersReady } from "@/server/push/katalog-logic";
 import type { Prisma } from "@/generated/prisma";
 import { prisma } from "@/server/db";
 import { makeKey, putObject, multipartStart, multipartPart, multipartFinish, multipartAbort } from "@/server/storage";
@@ -162,9 +164,8 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
       break;
     }
     case "tasks": {
-      // Foto katalog: file sudah ada di File, jadi saat dipindah ke Ready langsung Tayang + kabari tim online shop (sekali per kartu).
-      const DONE = ["Ready", "Tayang"];
-      const ktlDone = after.type === "ktl" && DONE.includes(String(after.status)) && !DONE.includes(String(before?.status ?? ""));
+      // Foto katalog: saat dipindah ke Ready langsung Tayang + WA "Foto katalog siap" ke Ridho (queueKatalog, gabung 10 menit, sekali per kartu).
+      const ktlDone = katalogEntersReady(before, after);
       if (after.type === "ktl" && after.status === "Ready" && before?.status !== "Ready") {
         const day = new Date(Date.now() + 7 * 3600_000).toISOString().slice(0, 10); // WIB
         after.status = "Tayang";
@@ -176,7 +177,7 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
       const okItem = itemId ? !!(await prisma.mediaItem.findUnique({ where: { id: itemId }, select: { id: true } })) : false;
       const data = { ...row, itemId: okItem ? itemId : null, extra: json(row.extra), history: row.history === undefined ? undefined : json(row.history) } as Prisma.MediaTaskUncheckedCreateInput;
       await prisma.mediaTask.upsert({ where: { id }, create: { ...data, id }, update: data });
-      if (ktlDone && !opts.trusted) await notifyKatalog({ taskId: id, itemId: okItem ? itemId : null, title: String(after.title ?? "") });
+      if (ktlDone && !opts.trusted) await queueKatalog({ taskId: id, driveUrl: String(after.driveUrl ?? ""), by: u.name, extra: after });
       break;
     }
     case "settings": {

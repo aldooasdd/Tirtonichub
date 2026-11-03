@@ -86,3 +86,34 @@ test("File Konten: semua anggota boleh ganti nama/warna, folder berwarna", () =>
   assert.equal(canWrite(rayhan, "delete", "folders/f1", nf, null), null);
   assert.equal(canRead(rayhan, "uploads/x"), false);
 });
+
+test("Foto katalog wajib Link folder Drive saat masuk Ready; kartu lama tidak tersentuh", () => {
+  const ktl = { type: "ktl", status: "Editing", producer: "R", editor: "R", driveUrl: "" };
+  const drive = "https://drive.google.com/drive/folders/abc";
+  assert.notEqual(canWrite(zaki, "update", "tasks/k", ktl, { ...ktl, status: "Ready" }), null);
+  assert.notEqual(canWrite(rayhan, "update", "tasks/k", ktl, { ...ktl, status: "Ready" }), null);
+  assert.notEqual(canWrite(zaki, "update", "tasks/k", ktl, { ...ktl, status: "Ready", driveUrl: "/api/file?key=x" }), null);
+  assert.equal(canWrite(rayhan, "update", "tasks/k", ktl, { ...ktl, status: "Ready", driveUrl: drive }), null);
+  assert.equal(canWrite(zaki, "update", "tasks/k", ktl, { ...ktl, status: "Tayang", driveUrl: drive }), null);
+  assert.notEqual(canWrite(zaki, "update", "tasks/k", ktl, { ...ktl, status: "Tayang" }), null);
+  // kartu lama sudah Ready/Tayang tanpa link: tetap bisa diubah
+  const old = { ...ktl, status: "Ready", driveUrl: "/api/file?key=x" };
+  assert.equal(canWrite(zaki, "update", "tasks/k", old, { ...old, status: "Tayang" }), null);
+  // jenis lain tidak terpengaruh
+  const igf = { ...ktl, type: "igf" };
+  assert.equal(canWrite(zaki, "update", "tasks/i", igf, { ...igf, status: "Ready" }), null);
+});
+
+test("tanda notifikasi Foto katalog hanya diisi server", () => {
+  const k = { type: "ktl", status: "Tayang", ktlNotifErr: 5 };
+  assert.notEqual(canWrite(zaki, "update", "tasks/k", k, { ...k, ktlNotifErr: null }), null);
+  assert.notEqual(canWrite(zaki, "set", "tasks/n", null, { type: "ktl", status: "Terdata", ktlNotifAt: 1 }), null);
+  assert.equal(canWrite(zaki, "update", "tasks/k", k, { ...k, note: "x" }), null);
+});
+
+test("sakelar WA Foto katalog hanya admin penuh", () => {
+  assert.notEqual(canWrite(aulia, "update", "settings/main", { idccDay: 3 }, { idccDay: 3, katalogWa: true }), null);
+  assert.equal(canWrite(aulia, "update", "settings/main", { idccDay: 3, katalogWa: true }, { idccDay: 4, katalogWa: true }), null);
+  assert.equal(canWrite(zaki, "update", "settings/main", { idccDay: 3 }, { idccDay: 3, katalogWa: true }), null);
+  assert.notEqual(canWrite(rayhan, "update", "settings/main", {}, { idccDay: 4 }), null);
+});
