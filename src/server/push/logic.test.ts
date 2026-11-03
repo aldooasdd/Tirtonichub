@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { expired, inMorningWindow, itemsMessage, itemsReady, morningKey, morningPushes, wibKey, type MMember, type MTask } from "./logic";
+import { expired, morningWaText, inMorningWindow, itemsMessage, itemsReady, morningKey, morningPushes, wibKey, type MMember, type MTask } from "./logic";
 
 // Jumat 30 Okt 2026 07.00 WIB = 00.00 UTC
 const FRI_7 = new Date("2026-10-30T00:00:00Z");
@@ -45,6 +45,25 @@ test("isi notifikasi pagi: hari ini + talent + terlambat", () => {
   assert.equal(p[0].title, "Syuting hari ini · 3 konten");
   assert.equal(p[0].body, "Foto Instagram – Asics Gel Resolution 9 (talent Salma) · Video produk – Yonex Ezone 100 · 1 terlambat");
   assert.equal(p[0].url, "/studio/?p=pipeline");
+  process.env.APP_URL = "https://tirtonichub.com";
+  const again = morningPushes(tasks, members, FRI_7)[0];
+  assert.equal(
+    again.wa,
+    [
+      "📋 *Rencana syuting hari ini* · Jumat 30 Oktober",
+      "1. Foto Instagram – Asics Gel Resolution 9 (talent Salma)",
+      "2. Video produk – Yonex Ezone 100",
+      "",
+      "Terlambat:",
+      "• Video review – Lama (rencana Sel 27 Okt)",
+      "",
+      "Buka Tirtonic Studio: https://tirtonichub.com/studio/?p=pipeline",
+    ].join("\n"),
+  );
+});
+
+test("WA pagi tanpa syuting baru, hanya terlambat", () => {
+  assert.match(morningWaText("2026-10-30", [], ["Video review – Lama (rencana Sel 27 Okt)"], "/studio/?p=pipeline"), /Tidak ada syuting baru hari ini\.\n\nTerlambat:/);
 });
 
 test("talent/script ikut menerima; libur pribadi & tanpa tugas tidak dikirim", () => {

@@ -16,7 +16,7 @@ export function pushConfigured(): boolean {
 
 export const vapidPublicKey = () => process.env.VAPID_PUBLIC_KEY || "";
 
-export type PushMsg = { type: string; title: string; body?: string; url: string };
+export type PushMsg = { type: string; title: string; body?: string; url: string; wa?: string }; // wa = teks khusus WhatsApp (opsional)
 
 /** Kirim ke semua perangkat milik userIds. Langganan yang ditolak (404/410) dihapus. Mengembalikan jumlah perangkat terkirim. */
 export async function sendPush(userIds: string[], msg: PushMsg, opts: { record?: boolean; wa?: boolean } = {}): Promise<number> {

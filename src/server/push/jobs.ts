@@ -49,7 +49,7 @@ export async function runMorning(now = new Date()) {
       continue;
     }
     const p = byUser.get(m.userId);
-    if (p) await sendPush([p.userId], { type: "studio_pagi", title: p.title, body: p.body, url: p.url });
+    if (p) await sendPush([p.userId], { type: "studio_pagi", title: p.title, body: p.body, url: p.url, wa: p.wa });
   }
 }
 

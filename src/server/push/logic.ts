@@ -45,7 +45,7 @@ export type MTask = {
   createdAt: Date;
 };
 export type MMember = { userId: string; code: string; name: string; offDays: number[] };
-export type Push = { userId: string; title: string; body: string; url: string };
+export type Push = { userId: string; title: string; body: string; url: string; wa?: string };
 
 /** Konten hangus 1 bulan setelah dibuat (sama dengan expiryOf di UI): tidak diingatkan lagi. */
 export function expired(createdAt: Date, dayKey: string): boolean {
@@ -68,6 +68,24 @@ const MAX_LIST = 6;
  * Notifikasi "Syuting hari ini" per anggota. Kamis tim libur; libur pribadi (offDays 0=Min…6=Sab) dilewati;
  * tanpa tugas = tidak dikirim. Tanggal merah tetap dikirim bila ada jadwal (keputusan Zaki).
  */
+const dayFmt = (key: string, o: Intl.DateTimeFormatOptions) => new Intl.DateTimeFormat("id-ID", { timeZone: "UTC", ...o }).format(new Date(key + "T00:00:00Z"));
+/** 'YYYY-MM-DD' → 'Sel 3 Nov'. */
+export const shortDay = (key: string) => dayFmt(key, { weekday: "short", day: "numeric", month: "short" }).replace(/,/g, "").replace(/\./g, "");
+
+/** Pesan WA rencana syuting pagi: daftar bernomor hari ini + daftar terlambat (khusus WA; push tetap ringkas). */
+export function morningWaText(day: string, today: string[], late: string[], url: string): string {
+  const base = (process.env.APP_URL || "https://tirtonichub.com").replace(/\/$/, "");
+  const out = [`📋 *Rencana syuting hari ini* · ${dayFmt(day, { weekday: "long", day: "numeric", month: "long" }).replace(/,/g, "")}`];
+  if (today.length) today.forEach((l, i) => out.push(`${i + 1}. ${l}`));
+  else out.push("Tidak ada syuting baru hari ini.");
+  if (late.length) {
+    out.push("", "Terlambat:");
+    late.forEach((l) => out.push(`• ${l}`));
+  }
+  out.push("", `Buka Tirtonic Studio: ${base}${url}`);
+  return out.join("\n");
+}
+
 export function morningPushes(tasks: MTask[], members: MMember[], now: Date): Push[] {
   const day = wibKey(now);
   const dow = wib(now).getUTCDay();
@@ -89,7 +107,8 @@ export function morningPushes(tasks: MTask[], members: MMember[], now: Date): Pu
     const parts = today.slice(0, MAX_LIST).map(line);
     if (today.length > MAX_LIST) parts.push(`+${today.length - MAX_LIST} lagi`);
     if (late) parts.push(`${late} terlambat`);
-    out.push({ userId: m.userId, title: `Syuting hari ini · ${mine.length} konten`, body: parts.join(" · "), url: "/studio/?p=pipeline" });
+    const url = "/studio/?p=pipeline";
+    out.push({ userId: m.userId, title: `Syuting hari ini · ${mine.length} konten`, body: parts.join(" · "), url, wa: morningWaText(day, today.map(line), mine.filter((t) => t.shootPlan !== day).sort((a, b) => String(a.shootPlan).localeCompare(String(b.shootPlan))).map((t) => { const l = line(t), r = `rencana ${shortDay(t.shootPlan!)}`; return l.endsWith(")") ? l.slice(0, -1) + ` · ${r})` : `${l} (${r})`; }), url) });
   }
   return out;
 }
