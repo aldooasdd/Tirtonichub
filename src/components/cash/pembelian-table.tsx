@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { toggleCashoutChecked, updateCashout } from "@/server/actions/cashout";
+import { deleteCashout, toggleCashoutChecked, updateCashout } from "@/server/actions/cashout";
 import { fmtInt } from "@/lib/money-input";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
@@ -40,6 +40,17 @@ export function PembelianTable({ rows, branches }: { rows: PembelianRow[]; branc
       const r = await toggleCashoutChecked(id, next);
       setBusyId(null);
       if (!r.ok) alert(r.message ?? "Gagal.");
+      else router.refresh();
+    });
+  }
+
+  function remove(r: PembelianRow) {
+    if (!confirm(`Hapus pembelian "${r.description}" (${rupiah(r.amount)})? Tidak bisa dibatalkan.`)) return;
+    setBusyId(r.id);
+    start(async () => {
+      const res = await deleteCashout(r.id).catch(() => ({ ok: false, message: "Gagal hapus. Muat ulang halaman lalu coba lagi." }));
+      setBusyId(null);
+      if (!res.ok) alert(res.message ?? "Gagal hapus.");
       else router.refresh();
     });
   }
@@ -177,9 +188,14 @@ export function PembelianTable({ rows, branches }: { rows: PembelianRow[]; branc
                       )}
                     </td>
                     <td className="p-3">
-                      <button type="button" onClick={() => openEdit(r)} disabled={editId !== null} className="text-primary disabled:opacity-40">
-                        Edit
-                      </button>
+                      <div className="flex gap-3 whitespace-nowrap">
+                        <button type="button" onClick={() => openEdit(r)} disabled={editId !== null || pending} className="text-primary disabled:opacity-40">
+                          Edit
+                        </button>
+                        <button type="button" onClick={() => remove(r)} disabled={editId !== null || pending} className="text-destructive disabled:opacity-40">
+                          {pending && busyId === r.id ? "…" : "Hapus"}
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ),

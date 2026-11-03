@@ -182,6 +182,25 @@ export async function updateCashout(
   return { ok: true };
 }
 
+/** Finance/Boss/Admin: hapus pembelian dari Rekap Pembelian (data lama dicatat di log aktivitas). */
+export async function deleteCashout(id: string): Promise<ActionResult> {
+  const ctx = await requireFinance();
+  const row = id ? await prisma.cashout.findUnique({ where: { id } }) : null;
+  if (!row) return { ok: false, message: "Tidak ditemukan." };
+  await prisma.cashout.delete({ where: { id } });
+  const { ip } = await clientMeta();
+  await logActivity(
+    { ...ctx, ip },
+    {
+      action: "cashout_delete",
+      entity: "Cashout",
+      entityId: id,
+      before: { spentAt: row.spentAt.toISOString(), category: row.category, branchName: row.branchName, description: row.description, amount: row.amount, photoKey: row.photoKey },
+    },
+  );
+  return { ok: true };
+}
+
 /** Finance/Boss/Admin: tolak pengeluaran (hapus). */
 export async function rejectCashout(id: string): Promise<ActionResult> {
   const ctx = await requireFinance();
