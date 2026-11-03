@@ -11,7 +11,7 @@ import type { KatalogNotif, Prisma } from "@/generated/prisma";
 import { prisma } from "@/server/db";
 import { sendPush } from "./send";
 import { katalogOnly } from "./logic";
-import { studioWaSend, waVia } from "./wa";
+import { studioSender, studioWaSend, waVia } from "./wa";
 import { isDriveFolderLink, katalogBatchDue, katalogShouldQueue, katalogWaText, maskPhone, type KatalogLine } from "./katalog-logic";
 
 const obj = (v: unknown): Record<string, unknown> => (v && typeof v === "object" && !Array.isArray(v) ? (v as Record<string, unknown>) : {});
@@ -79,7 +79,7 @@ type SendResult = { ok: boolean; error?: string; sent: number };
 async function sendToRecipients(text: string): Promise<SendResult & { recips: Awaited<ReturnType<typeof katalogRecipients>> }> {
   const recips = await katalogRecipients();
   const via = waVia();
-  if (!via) return { ok: false, error: process.env.STUDIO_WA_VIA === "n8n" ? "Alamat webhook n8n (N8N_WA_WEBHOOK_URL) belum diisi di server." : "WA Tirtonichub (GOWA_URL) belum diisi di server.", sent: 0, recips };
+  if (!via) return { ok: false, error: process.env.STUDIO_WA_VIA === "n8n" ? "Alamat webhook n8n (N8N_WA_WEBHOOK_URL) belum diisi di server." : "Alamat GOWA (STUDIO_GOWA_URL / GOWA_URL) belum diisi di server.", sent: 0, recips };
   const withPhone = recips.filter((r) => r.phone);
   if (!withPhone.length) return { ok: false, error: recips.some((r) => r.member) ? "Nomor WA penerima belum diisi di Tim & Aktivitas." : "Penerima belum terdaftar di Media (Tim & Aktivitas).", sent: 0, recips };
   let sent = 0;
@@ -156,15 +156,17 @@ export async function testKatalog(by: string): Promise<SendResult> {
 
 /** Ringkasan untuk panel Tim & Aktivitas. */
 export async function katalogStatus() {
-  const [on, recips, pending, lastFail] = await Promise.all([
+  const [on, recips, pending, lastFail, sender] = await Promise.all([
     katalogOn(),
     katalogRecipients(),
     prisma.katalogNotif.count({ where: { sentAt: null, failedAt: null } }),
     prisma.katalogNotif.findFirst({ where: { failedAt: { not: null } }, orderBy: { failedAt: "desc" }, select: { failedAt: true, error: true } }),
+    studioSender(),
   ]);
   return {
     on,
     via: waVia(),
+    sender: { host: sender.host, number: sender.number ? maskPhone(sender.number) : "", ok: sender.ok, error: sender.error ?? "" },
     recipients: recips.map((r) => ({ name: r.name, member: r.member, phone: r.phone ? maskPhone(r.phone) : "" })),
     pending,
     lastFail: lastFail ? { at: lastFail.failedAt!.getTime(), error: lastFail.error ?? "" } : null,
