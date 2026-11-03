@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { openCashSession, closeCashSession } from "@/server/actions/cash";
+import { fmtInt, parseInt0 } from "@/lib/money-input";
 
 type Amounts = { cash: number; mandiri: number; bca: number; bri: number };
 const empty: Amounts = { cash: 0, mandiri: 0, bca: 0, bri: 0 };
@@ -23,8 +24,8 @@ function AmountGrid({ v, set }: { v: Amounts; set: (a: Amounts) => void }) {
           <span className="block text-12 text-muted-foreground">{f.label}</span>
           <Input
             inputMode="numeric"
-            value={v[f.key] || ""}
-            onChange={(e) => set({ ...v, [f.key]: Number(e.target.value.replace(/\D/g, "")) })}
+            value={fmtInt(v[f.key])}
+            onChange={(e) => set({ ...v, [f.key]: parseInt0(e.target.value) })}
           />
         </label>
       ))}

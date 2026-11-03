@@ -8,6 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { compressImage } from "@/lib/image";
 import { scanCashoutNota, saveCashout } from "@/server/actions/cashout";
+import { fmtInt, parseInt0 } from "@/lib/money-input";
 
 export type CashoutRow = {
   id: string;
@@ -154,8 +155,8 @@ export function CashoutForm({ rows, categories }: { rows: CashoutRow[]; categori
           <Field label="Jumlah (Rp)">
             <Input
               inputMode="numeric"
-              value={draft.amount || ""}
-              onChange={(e) => upd({ amount: Number(e.target.value.replace(/\D/g, "")) })}
+              value={fmtInt(draft.amount)}
+              onChange={(e) => upd({ amount: parseInt0(e.target.value) })}
             />
           </Field>
           <Field label="Keterangan">

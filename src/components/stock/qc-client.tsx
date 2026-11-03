@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { compressImage } from "@/lib/image";
 import { qcDecision } from "@/server/actions/raw-products";
+import { fmtInt } from "@/lib/money-input";
 
 function blobToBase64(blob: Blob): Promise<string> {
   return new Promise((resolve, reject) => {
@@ -141,7 +142,7 @@ export function QcClient({ items }: { items: Item[] }) {
               </label>
               <label className="block space-y-1">
                 <span className="block text-12 text-muted-foreground">Harga jual</span>
-                <Input type="number" value={val(i, "sellPrice")} onChange={(e) => setField(i.id, "sellPrice", e.target.value)} />
+                <Input inputMode="numeric" value={fmtInt(val(i, "sellPrice"))} onChange={(e) => setField(i.id, "sellPrice", e.target.value.replace(/\D/g, ""))} />
               </label>
             </div>
             <label className="block space-y-1">

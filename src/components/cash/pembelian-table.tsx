@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toggleCashoutChecked, updateCashout } from "@/server/actions/cashout";
+import { fmtInt } from "@/lib/money-input";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 const CATS = ["Keperluan Kantor", "Ongkos Kirim"]; // sama dengan form Input Pembelian
@@ -134,7 +135,7 @@ export function PembelianTable({ rows, branches }: { rows: PembelianRow[]; branc
                     </td>
                     <td className="p-3">{r.by}</td>
                     <td className="p-3">
-                      <input inputMode="numeric" value={form.amount} onChange={set("amount")} className={`${field} min-w-28 text-right`} aria-label="Jumlah" />
+                      <input inputMode="numeric" value={fmtInt(form.amount)} onChange={(e) => setForm((f) => ({ ...f, amount: e.target.value.replace(/\D/g, "") }))} className={`${field} min-w-28 text-right`} aria-label="Jumlah" />
                     </td>
                     <td className="p-3" />
                     <td className="p-3">
