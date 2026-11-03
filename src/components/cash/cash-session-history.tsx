@@ -13,8 +13,11 @@ function Saldo({ b }: { b: Buckets }) {
   return (
     <>
       <div className="font-semibold">{rupiah(total(b))}</div>
-      <div className="text-12 font-normal text-muted-foreground">
-        Cash {rupiah(b.cash)} · Mandiri {rupiah(b.mandiri)} · BCA {rupiah(b.bca)} · BRI {rupiah(b.bri)}
+      <div className="flex flex-wrap justify-end gap-x-2 text-12 font-normal text-muted-foreground">
+        <span>Cash {rupiah(b.cash)}</span>
+        <span>Mandiri {rupiah(b.mandiri)}</span>
+        <span>BCA {rupiah(b.bca)}</span>
+        <span>BRI {rupiah(b.bri)}</span>
       </div>
     </>
   );
@@ -66,12 +69,12 @@ export function CashSessionHistory({ rows }: { rows: CashSessionRow[] }) {
                           <td className="py-2 whitespace-nowrap text-muted-foreground">{tgl(r.date)}</td>
                           <td className="py-2 whitespace-nowrap text-emerald-600">{jam(r.openAt)}</td>
                           <td className="py-2">{r.openBy}</td>
-                          <td className="py-2 text-right whitespace-nowrap"><Saldo b={r.open} /></td>
+                          <td className="py-2 text-right"><Saldo b={r.open} /></td>
                           {r.closeAt ? (
                             <>
                               <td className="py-2 whitespace-nowrap text-destructive">{jam(r.closeAt)}</td>
                               <td className="py-2">{r.closeBy}</td>
-                              <td className="py-2 text-right whitespace-nowrap"><Saldo b={r.close!} /></td>
+                              <td className="py-2 text-right"><Saldo b={r.close!} /></td>
                             </>
                           ) : (
                             <td className="py-2 text-amber-600" colSpan={3}>Belum ditutup</td>

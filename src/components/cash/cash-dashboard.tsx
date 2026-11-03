@@ -9,6 +9,7 @@ import { CashSessionHistory } from "./cash-session-history";
  *  Dipakai Finance (/finance, /finance/kas) dan beranda Boss/Admin. */
 export function CashDashboard({ boards, trends, moves, sessions, movesDay }: { boards: BranchCashBoardData[]; trends: SalesTrends; moves: CashMovement[]; sessions: CashSessionRow[]; movesDay?: string }) {
   return (
+    <div className="flex flex-col gap-5">
     <div className="flex flex-col gap-5 lg:flex-row lg:items-start">
       <div className="reveal min-w-0 flex-1" style={{ animationDelay: "0ms" }}>
         <BranchCashTreemap
@@ -30,9 +31,11 @@ export function CashDashboard({ boards, trends, moves, sessions, movesDay }: { b
         <div className="reveal" style={{ animationDelay: "180ms" }}>
           <TotalSalesChart trends={trends} />
         </div>
-        <div className="reveal rounded-xl border bg-card p-4 sm:p-5" style={{ animationDelay: "240ms" }}>
-          <CashSessionHistory rows={sessions} />
-        </div>
+      </div>
+    </div>
+      {/* Lebar penuh: kolom saldo buka/tutup + rincian EDC butuh ruang. */}
+      <div className="reveal rounded-xl border bg-card p-4 sm:p-5" style={{ animationDelay: "240ms" }}>
+        <CashSessionHistory rows={sessions} />
       </div>
     </div>
   );
