@@ -8,13 +8,13 @@ export function katalogBatchDue(pending: { movedAt: Date }[], now: Date): boolea
   return now.getTime() - oldest >= KATALOG_BATCH_MS;
 }
 
-/** Link folder Google Drive yang sah (wajib untuk Foto katalog masuk Ready). */
-export const isDriveFolderLink = (u: unknown): boolean => typeof u === "string" && u.length <= 500 && /^https:\/\/(drive|docs)\.google\.com\/\S+$/.test(u.trim());
+/** Kirim sekali per kartu: bolak-balik Ready–Editing–Ready tidak mengirim ulang. */
+export const katalogShouldQueue = (task: { ktlNotifAt?: unknown }): boolean => !task.ktlNotifAt;
 
-/** Kirim sekali per kartu: bolak-balik Ready–Editing–Ready tidak mengirim ulang, kecuali link folder berubah. */
-export function katalogShouldQueue(task: { ktlNotifAt?: unknown; ktlNotifUrl?: unknown }, driveUrl: string): boolean {
-  if (!task.ktlNotifAt) return true;
-  return String(task.ktlNotifUrl ?? "") !== driveUrl;
+/** Link folder barang di menu File Studio (dibuka langsung di bagian Foto katalog). */
+export function studioFolderLink(itemId: string | null | undefined): string {
+  const base = (process.env.APP_URL || "https://tirtonichub.com").replace(/\/$/, "");
+  return base + "/studio/?p=hasil" + (itemId ? "&f=" + encodeURIComponent(itemId) + "&s=ktl" : "");
 }
 
 /** Status kartu Foto katalog berpindah dari tahap awal ke Ready (server langsung menjadikannya Tayang) atau langsung ke Tayang. */
@@ -30,7 +30,7 @@ const wibParts = (d: Date) => {
   return { day, time };
 };
 
-export type KatalogLine = { name: string; gender?: string | null; color?: string | null; driveUrl: string; movedBy: string; movedAt: Date };
+export type KatalogLine = { name: string; gender?: string | null; color?: string | null; link: string; movedBy: string; movedAt: Date };
 
 /** Isi pesan WA: judul, per barang (nama, gender, warna, link folder), lalu siapa yang memindahkan dan hari/jam WIB. */
 export function katalogWaText(lines: KatalogLine[], opts: { test?: boolean } = {}): string {
@@ -39,7 +39,7 @@ export function katalogWaText(lines: KatalogLine[], opts: { test?: boolean } = {
     out.push(`${lines.length > 1 ? i + 1 + ". " : ""}*${l.name.trim()}*`);
     const meta = [l.gender && GENDER[l.gender] ? "Gender: " + GENDER[l.gender] : "", l.color ? "Warna: " + l.color.trim() : ""].filter(Boolean).join(" · ");
     if (meta) out.push(meta);
-    out.push("Folder: " + l.driveUrl.trim());
+    out.push("Folder: " + l.link.trim());
     out.push("");
   });
   const by = [...new Set(lines.map((l) => l.movedBy.trim()).filter(Boolean))];

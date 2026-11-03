@@ -177,7 +177,7 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
       const okItem = itemId ? !!(await prisma.mediaItem.findUnique({ where: { id: itemId }, select: { id: true } })) : false;
       const data = { ...row, itemId: okItem ? itemId : null, extra: json(row.extra), history: row.history === undefined ? undefined : json(row.history) } as Prisma.MediaTaskUncheckedCreateInput;
       await prisma.mediaTask.upsert({ where: { id }, create: { ...data, id }, update: data });
-      if (ktlDone && !opts.trusted) await queueKatalog({ taskId: id, driveUrl: String(after.driveUrl ?? ""), by: u.name, extra: after });
+      if (ktlDone && !opts.trusted) await queueKatalog({ taskId: id, by: u.name, extra: after });
       break;
     }
     case "settings": {
