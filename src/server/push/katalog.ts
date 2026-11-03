@@ -3,15 +3,15 @@
 // - Pemicu: MediaTask ktl masuk Ready lewat /api/studio/write (store.ts → queueKatalog). Sekali per kartu (ktlNotifAt/ktlNotifUrl
 //   di extra task), kirim ulang hanya bila link folder berubah.
 // - Kartu yang Ready dalam 10 menit digabung satu pesan (runKatalog, dijalankan pushTick tiap menit).
-// - Kirim lewat webhook n8n (sendWa, sama dengan pesan Laporan karyawan). Gagal → status kartu tetap, log di KatalogNotif,
+// - Kirim dari nomor WA Tirtonichub lewat GOWA (studioWaSend, sama dengan pengirim OTP; STUDIO_WA_VIA=n8n = n8n). Gagal → status kartu tetap, log di KatalogNotif,
 //   tanda ktlNotifErr di kartu (admin bisa kirim ulang).
 // - Sakelar: MediaSettings.extra.katalogWa (Tim & Aktivitas, admin penuh). Bawaan mati.
 import { randomBytes } from "node:crypto";
 import type { KatalogNotif, Prisma } from "@/generated/prisma";
 import { prisma } from "@/server/db";
-import { sendWa } from "@/server/wa";
 import { sendPush } from "./send";
 import { katalogOnly } from "./logic";
+import { studioWaSend, waVia } from "./wa";
 import { isDriveFolderLink, katalogBatchDue, katalogShouldQueue, katalogWaText, maskPhone, type KatalogLine } from "./katalog-logic";
 
 const obj = (v: unknown): Record<string, unknown> => (v && typeof v === "object" && !Array.isArray(v) ? (v as Record<string, unknown>) : {});
@@ -75,15 +75,16 @@ async function linesOf(rows: Pick<KatalogNotif, "taskId" | "driveUrl" | "movedBy
 
 type SendResult = { ok: boolean; error?: string; sent: number };
 
-/** Kirim teks ke semua penerima yang punya nomor, lewat n8n. */
+/** Kirim teks ke semua penerima yang punya nomor, dari WA Tirtonichub (GOWA). */
 async function sendToRecipients(text: string): Promise<SendResult & { recips: Awaited<ReturnType<typeof katalogRecipients>> }> {
   const recips = await katalogRecipients();
-  if (!process.env.N8N_WA_WEBHOOK_URL) return { ok: false, error: "Alamat webhook n8n (N8N_WA_WEBHOOK_URL) belum diisi di server.", sent: 0, recips };
+  const via = waVia();
+  if (!via) return { ok: false, error: process.env.STUDIO_WA_VIA === "n8n" ? "Alamat webhook n8n (N8N_WA_WEBHOOK_URL) belum diisi di server." : "WA Tirtonichub (GOWA_URL) belum diisi di server.", sent: 0, recips };
   const withPhone = recips.filter((r) => r.phone);
   if (!withPhone.length) return { ok: false, error: recips.some((r) => r.member) ? "Nomor WA penerima belum diisi di Tim & Aktivitas." : "Penerima belum terdaftar di Media (Tim & Aktivitas).", sent: 0, recips };
   let sent = 0;
-  for (const r of withPhone) if (await sendWa(r.phone, text)) sent++;
-  return sent ? { ok: true, sent, recips } : { ok: false, error: "n8n menolak atau tidak bisa dihubungi.", sent: 0, recips };
+  for (const r of withPhone) if (await studioWaSend(r.phone, text)) sent++;
+  return sent ? { ok: true, sent, recips } : { ok: false, error: (via === "gowa" ? "WA Tirtonichub (GOWA)" : "n8n") + " menolak atau tidak bisa dihubungi.", sent: 0, recips };
 }
 
 /** Kirim satu kelompok (sudah diklaim batchId), catat hasil di log + kartu. */
@@ -163,7 +164,7 @@ export async function katalogStatus() {
   ]);
   return {
     on,
-    n8n: !!process.env.N8N_WA_WEBHOOK_URL,
+    via: waVia(),
     recipients: recips.map((r) => ({ name: r.name, member: r.member, phone: r.phone ? maskPhone(r.phone) : "" })),
     pending,
     lastFail: lastFail ? { at: lastFail.failedAt!.getTime(), error: lastFail.error ?? "" } : null,

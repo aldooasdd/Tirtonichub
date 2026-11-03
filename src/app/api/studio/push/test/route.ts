@@ -3,7 +3,7 @@ import { StudioError } from "@/server/studio/store";
 import { pushConfigured, sendPush } from "@/server/push/send";
 import { sendStudioWa } from "@/server/push/wa";
 
-// Admin: kirim notifikasi uji ke semua perangkat miliknya sendiri + WA ke nomor akunnya (cek jalur n8n/GOWA).
+// Admin: kirim notifikasi uji ke semua perangkat miliknya sendiri + WA ke nomor akunnya (cek WA Tirtonichub/GOWA).
 export async function POST() {
   return guarded(async (u) => {
     if (!u.full) throw new StudioError("permission-denied", "Hanya admin.");
