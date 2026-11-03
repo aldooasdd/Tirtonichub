@@ -119,3 +119,14 @@ export function katalogMessage(title: string, files: string[]): { title: string;
     body: n ? `${title} · ${n} foto${n > 1 ? ": " + shown + (n > 3 ? ", …" : "") : ""}` : `${title} · file ada di File`,
   };
 }
+
+// ---- WhatsApp (wa.ts) ----
+/** Penerima khusus Foto katalog (sama dengan jobs.ts notifyKatalog). */
+export const katalogOnly = () =>
+  (process.env.PUSH_KATALOG_EMAILS || "ridho@tirtonichub.com").split(",").map((e) => e.trim().toLowerCase()).filter(Boolean);
+
+export function waText(msg: { title: string; body?: string; url: string }): string {
+  const base = (process.env.APP_URL || "https://tirtonichub.com").replace(/\/$/, "");
+  const link = /^https?:\/\//.test(msg.url) ? msg.url : base + (msg.url.startsWith("/") ? "" : "/") + msg.url;
+  return [`*${msg.title}*`, msg.body?.trim(), "", `Buka Tirtonic Studio: ${link}`].filter((x) => x !== undefined && x !== null).join("\n").replace(/\n{3,}/g, "\n\n");
+}

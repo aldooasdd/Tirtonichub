@@ -1,6 +1,7 @@
 // Kirim notifikasi push (Web Push/VAPID) + catat di tabel Notification supaya muncul di /notifikasi.
 import webpush from "web-push";
 import { prisma } from "@/server/db";
+import { sendStudioWa } from "./wa";
 
 let ready: boolean | null = null;
 /** Kunci VAPID hanya dari .env server (VAPID_PUBLIC_KEY, VAPID_PRIVATE_KEY, VAPID_SUBJECT). */
@@ -18,13 +19,15 @@ export const vapidPublicKey = () => process.env.VAPID_PUBLIC_KEY || "";
 export type PushMsg = { type: string; title: string; body?: string; url: string };
 
 /** Kirim ke semua perangkat milik userIds. Langganan yang ditolak (404/410) dihapus. Mengembalikan jumlah perangkat terkirim. */
-export async function sendPush(userIds: string[], msg: PushMsg, opts: { record?: boolean } = {}): Promise<number> {
+export async function sendPush(userIds: string[], msg: PushMsg, opts: { record?: boolean; wa?: boolean } = {}): Promise<number> {
   if (!userIds.length) return 0;
   if (opts.record !== false) {
     await prisma.notification.createMany({
       data: userIds.map((userId) => ({ userId, type: msg.type, title: msg.title, body: msg.body ?? null, link: msg.url })),
     });
   }
+  // WhatsApp: semua notifikasi Studio (studio_*) ikut dikirim ke WA penerima yang sama, tidak menunggu/menggagalkan push.
+  if (msg.type.startsWith("studio_") && opts.wa !== false) void sendStudioWa(userIds, msg);
   if (!pushConfigured()) return 0;
   const subs = await prisma.pushSubscription.findMany({ where: { userId: { in: userIds } } });
   const payload = JSON.stringify({ title: msg.title, body: msg.body ?? "", url: msg.url, tag: msg.type });
