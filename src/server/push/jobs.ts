@@ -3,6 +3,7 @@ import { prisma } from "@/server/db";
 import { inMorningWindow, itemsMessage, itemsReady, morningKey, morningPushes, wibKey } from "./logic";
 import { sendPush } from "./send";
 import { runKatalog } from "./katalog";
+import { markTick } from "./tick";
 
 /** Catat barang Studio BARU (bukan stok lama) ke antrean "Barang masuk". Jangan pernah menggagalkan penyimpanan barang. */
 export async function queueNewItem(item: { id: string; name: string; color?: string | null; old?: boolean }) {
@@ -65,6 +66,7 @@ export async function runItems(now = new Date()) {
 }
 
 export async function pushTick(now = new Date()) {
+  markTick();
   for (const job of [runMorning, runItems, runKatalog]) {
     try {
       await job(now);

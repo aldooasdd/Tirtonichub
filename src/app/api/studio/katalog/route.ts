@@ -1,7 +1,7 @@
 import { NextRequest } from "next/server";
 import { guarded, ok } from "@/server/studio/http";
 import { StudioError } from "@/server/studio/store";
-import { katalogStatus, resendKatalog, setKatalogOn, setKatalogTo, testKatalog } from "@/server/push/katalog";
+import { flushKatalog, katalogStatus, resendKatalog, setKatalogOn, setKatalogTo, testKatalog } from "@/server/push/katalog";
 
 // WA "Foto katalog siap" (lihat src/server/push/katalog.ts).
 // GET  = status untuk panel Tim & Aktivitas (admin penuh).
@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
       await setKatalogTo((b as { emails?: unknown } | null)?.emails);
       return ok({ ok: true, ...(await katalogStatus()) });
     }
+    if (action === "flush") return ok({ ok: true, result: await flushKatalog() });
     if (action === "test") return ok({ ok: true, result: await testKatalog(u.name) });
     throw new StudioError("invalid-argument", "Aksi tidak dikenal.");
   }, { allowUnattended: true });
