@@ -1,8 +1,6 @@
 // Aturan akses UI Tirtonic Studio (/studio): port dari firestore.rules repo tirtonic-studio.
 // Fungsi murni, diuji di rules.test.ts. Server WAJIB memanggil ini sebelum baca/tulis.
 
-import { isDriveFolderLink, katalogEntersReady } from "@/server/push/katalog-logic";
-
 export type Doc = Record<string, unknown>;
 
 export type StudioUser = {
@@ -187,8 +185,6 @@ export function canWrite(
       return u.staff ? null : deny("hanya admin");
     case "tasks": {
       if (after) {
-        // Foto katalog wajib Link folder Drive saat masuk Ready (kartu lama yang sudah Ready tidak tersentuh: hanya saat berpindah)
-        if (katalogEntersReady(before, after) && !isDriveFolderLink(after.driveUrl)) return deny("Foto katalog wajib diisi Link folder Drive (Google Drive) sebelum Ready");
         // tanda kirim notifikasi Foto katalog hanya diisi server
         if (before && changedKeys(before, after).some((k) => KTL_SERVER_KEYS.includes(k))) return deny("tanda notifikasi diatur server");
         if (!before && KTL_SERVER_KEYS.some((k) => after[k] != null)) return deny("tanda notifikasi diatur server");

@@ -1,7 +1,7 @@
 // Notifikasi WA "Foto katalog siap" ke Ridho (penerima PUSH_KATALOG_EMAILS, bawaan ridho@tirtonichub.com).
 // - Nomor WA dibaca dari MediaMember.phone (kolom "No. WhatsApp" di Tim & Aktivitas Studio). Tidak ada nomor di kode/.env.
-// - Pemicu: MediaTask ktl masuk Ready lewat /api/studio/write (store.ts → queueKatalog). Sekali per kartu (ktlNotifAt/ktlNotifUrl
-//   di extra task), kirim ulang hanya bila link folder berubah.
+// - Pemicu: MediaTask ktl masuk Ready lewat /api/studio/write (store.ts → queueKatalog). Sekali per kartu (ktlNotifAt di extra task).
+//   Tidak ada link Drive (dihapus 3 Nov 2026): baris Folder = link folder barang di File Studio (studioFolderLink).
 // - Kartu yang Ready dalam 10 menit digabung satu pesan (runKatalog, dijalankan pushTick tiap menit).
 // - Kirim dari nomor WA Tirtonichub lewat GOWA (studioWaSend, sama dengan pengirim OTP; STUDIO_WA_VIA=n8n = n8n). Gagal → status kartu tetap, log di KatalogNotif,
 //   tanda ktlNotifErr di kartu (admin bisa kirim ulang).
@@ -12,7 +12,7 @@ import { prisma } from "@/server/db";
 import { sendPush } from "./send";
 import { katalogOnly } from "./logic";
 import { studioSender, studioWaSend, waVia } from "./wa";
-import { isDriveFolderLink, katalogBatchDue, katalogShouldQueue, katalogWaText, maskPhone, type KatalogLine } from "./katalog-logic";
+import { katalogBatchDue, katalogShouldQueue, katalogWaText, maskPhone, studioFolderLink, type KatalogLine } from "./katalog-logic";
 
 const obj = (v: unknown): Record<string, unknown> => (v && typeof v === "object" && !Array.isArray(v) ? (v as Record<string, unknown>) : {});
 
@@ -52,24 +52,23 @@ async function setTaskExtra(taskId: string, patch: Record<string, unknown>) {
 }
 
 /** Dipanggil store.ts setelah kartu ktl masuk Ready. Tidak pernah menggagalkan penyimpanan kartu. */
-export async function queueKatalog(t: { taskId: string; driveUrl: string; by: string; extra: Record<string, unknown> }) {
+export async function queueKatalog(t: { taskId: string; by: string; extra: Record<string, unknown> }) {
   try {
-    if (!(await katalogOn()) || !isDriveFolderLink(t.driveUrl)) return;
-    if (!katalogShouldQueue(t.extra, t.driveUrl)) return;
+    if (!(await katalogOn()) || !katalogShouldQueue(t.extra)) return;
     const waiting = await prisma.katalogNotif.findFirst({ where: { taskId: t.taskId, sentAt: null, failedAt: null, batchId: null } });
-    if (waiting) await prisma.katalogNotif.update({ where: { id: waiting.id }, data: { driveUrl: t.driveUrl, movedBy: t.by } });
-    else await prisma.katalogNotif.create({ data: { taskId: t.taskId, driveUrl: t.driveUrl, movedBy: t.by } });
+    if (waiting) await prisma.katalogNotif.update({ where: { id: waiting.id }, data: { movedBy: t.by } });
+    else await prisma.katalogNotif.create({ data: { taskId: t.taskId, driveUrl: "", movedBy: t.by } });   // kolom driveUrl tidak dipakai lagi
   } catch (e) {
     console.error("[katalog] antrean", e);
   }
 }
 
-async function linesOf(rows: Pick<KatalogNotif, "taskId" | "driveUrl" | "movedBy" | "movedAt">[]): Promise<KatalogLine[]> {
-  const tasks = await prisma.mediaTask.findMany({ where: { id: { in: rows.map((r) => r.taskId) } }, select: { id: true, title: true, item: { select: { name: true, color: true, gender: true } } } });
+async function linesOf(rows: Pick<KatalogNotif, "taskId" | "movedBy" | "movedAt">[]): Promise<KatalogLine[]> {
+  const tasks = await prisma.mediaTask.findMany({ where: { id: { in: rows.map((r) => r.taskId) } }, select: { id: true, title: true, itemId: true, item: { select: { name: true, color: true, gender: true } } } });
   const T = new Map(tasks.map((t) => [t.id, t]));
   return rows.map((r) => {
     const t = T.get(r.taskId);
-    return { name: t?.item?.name || t?.title || "Barang", gender: t?.item?.gender ?? null, color: t?.item?.color ?? null, driveUrl: r.driveUrl, movedBy: r.movedBy, movedAt: r.movedAt };
+    return { name: t?.item?.name || t?.title || "Barang", gender: t?.item?.gender ?? null, color: t?.item?.color ?? null, link: studioFolderLink(t?.item ? t.itemId : null), movedBy: r.movedBy, movedAt: r.movedAt };
   });
 }
 
@@ -95,7 +94,7 @@ async function deliver(batchId: string, now: Date, notify = true): Promise<SendR
   const r = await sendToRecipients(katalogWaText(lines));
   if (r.ok) {
     await prisma.katalogNotif.updateMany({ where: { batchId }, data: { sentAt: now } });
-    for (const x of rows) await setTaskExtra(x.taskId, { ktlNotifAt: now.getTime(), ktlNotifUrl: x.driveUrl, ktlNotifErr: null, ktlNotifWhy: null });
+    for (const x of rows) await setTaskExtra(x.taskId, { ktlNotifAt: now.getTime(), ktlNotifErr: null, ktlNotifWhy: null });
   } else {
     console.error("[katalog] gagal kirim:", r.error);
     await prisma.katalogNotif.updateMany({ where: { batchId }, data: { failedAt: now, error: r.error ?? "gagal" } });
@@ -130,11 +129,10 @@ export async function runKatalog(now = new Date()) {
 
 /** Admin: kirim ulang kartu yang gagal (langsung, tanpa menunggu 10 menit). */
 export async function resendKatalog(taskId: string, by: string): Promise<SendResult> {
-  const t = await prisma.mediaTask.findUnique({ where: { id: taskId }, select: { type: true, driveUrl: true } });
+  const t = await prisma.mediaTask.findUnique({ where: { id: taskId }, select: { type: true } });
   if (!t || t.type !== "ktl") return { ok: false, error: "Kartu Foto katalog tidak ditemukan.", sent: 0 };
-  if (!isDriveFolderLink(t.driveUrl)) return { ok: false, error: "Link folder Drive kartu ini belum benar.", sent: 0 };
   const last = await prisma.katalogNotif.findFirst({ where: { taskId }, orderBy: { movedAt: "desc" } });
-  const row = await prisma.katalogNotif.create({ data: { taskId, driveUrl: t.driveUrl!, movedBy: last?.movedBy || by, movedAt: last?.movedAt ?? new Date() } });
+  const row = await prisma.katalogNotif.create({ data: { taskId, driveUrl: "", movedBy: last?.movedBy || by, movedAt: last?.movedAt ?? new Date() } });
   const batchId = await claim([row.id]);
   return batchId ? deliver(batchId, new Date(), false) : { ok: false, error: "Sedang dikirim.", sent: 0 };
 }
@@ -144,8 +142,8 @@ export async function testKatalog(by: string): Promise<SendResult> {
   const now = new Date();
   const text = katalogWaText(
     [
-      { name: "Contoh Sepatu Tenis A", gender: "men", color: "putih-biru", driveUrl: "https://drive.google.com/drive/folders/CONTOH-A", movedBy: by, movedAt: new Date(now.getTime() - 4 * 60_000) },
-      { name: "Contoh Raket B", gender: null, color: "hitam", driveUrl: "https://drive.google.com/drive/folders/CONTOH-B", movedBy: by, movedAt: now },
+      { name: "Contoh Sepatu Tenis A", gender: "men", color: "putih-biru", link: studioFolderLink(null), movedBy: by, movedAt: new Date(now.getTime() - 4 * 60_000) },
+      { name: "Contoh Raket B", gender: null, color: "hitam", link: studioFolderLink(null), movedBy: by, movedAt: now },
     ],
     { test: true },
   );

@@ -87,21 +87,10 @@ test("File Konten: semua anggota boleh ganti nama/warna, folder berwarna", () =>
   assert.equal(canRead(rayhan, "uploads/x"), false);
 });
 
-test("Foto katalog wajib Link folder Drive saat masuk Ready; kartu lama tidak tersentuh", () => {
+test("Foto katalog boleh masuk Ready tanpa link", () => {
   const ktl = { type: "ktl", status: "Editing", producer: "R", editor: "R", driveUrl: "" };
-  const drive = "https://drive.google.com/drive/folders/abc";
-  assert.notEqual(canWrite(zaki, "update", "tasks/k", ktl, { ...ktl, status: "Ready" }), null);
-  assert.notEqual(canWrite(rayhan, "update", "tasks/k", ktl, { ...ktl, status: "Ready" }), null);
-  assert.notEqual(canWrite(zaki, "update", "tasks/k", ktl, { ...ktl, status: "Ready", driveUrl: "/api/file?key=x" }), null);
-  assert.equal(canWrite(rayhan, "update", "tasks/k", ktl, { ...ktl, status: "Ready", driveUrl: drive }), null);
-  assert.equal(canWrite(zaki, "update", "tasks/k", ktl, { ...ktl, status: "Tayang", driveUrl: drive }), null);
-  assert.notEqual(canWrite(zaki, "update", "tasks/k", ktl, { ...ktl, status: "Tayang" }), null);
-  // kartu lama sudah Ready/Tayang tanpa link: tetap bisa diubah
-  const old = { ...ktl, status: "Ready", driveUrl: "/api/file?key=x" };
-  assert.equal(canWrite(zaki, "update", "tasks/k", old, { ...old, status: "Tayang" }), null);
-  // jenis lain tidak terpengaruh
-  const igf = { ...ktl, type: "igf" };
-  assert.equal(canWrite(zaki, "update", "tasks/i", igf, { ...igf, status: "Ready" }), null);
+  assert.equal(canWrite(zaki, "update", "tasks/k", ktl, { ...ktl, status: "Ready" }), null);
+  assert.equal(canWrite(rayhan, "update", "tasks/k", ktl, { ...ktl, status: "Ready" }), null);
 });
 
 test("tanda notifikasi Foto katalog hanya diisi server", () => {
