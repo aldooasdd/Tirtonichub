@@ -178,7 +178,7 @@ export function canWrite(
     case "settings":
       if (!u.staff) return deny("hanya admin");
       // sakelar WA Foto katalog hanya admin penuh (lewat Tim & Aktivitas)
-      if (!u.full && JSON.stringify(before?.katalogWa ?? null) !== JSON.stringify(after?.katalogWa ?? null)) return deny("sakelar notifikasi hanya untuk admin");
+      if (!u.full && ["katalogWa", "katalogTo"].some((k) => JSON.stringify(before?.[k] ?? null) !== JSON.stringify(after?.[k] ?? null))) return deny("pengaturan notifikasi hanya untuk admin");
       return null;
     case "logs":
     case "locks":

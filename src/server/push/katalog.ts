@@ -28,18 +28,35 @@ export async function setKatalogOn(on: boolean) {
   if (!on) await prisma.katalogNotif.deleteMany({ where: { sentAt: null, failedAt: null, batchId: null } }); // antrean dibuang saat dimatikan
 }
 
-/** Penerima: akun dengan email PUSH_KATALOG_EMAILS yang terdaftar di Media; nomor dari MediaMember.phone. */
+/** Daftar email penerima: diatur admin di Tim & Aktivitas (MediaSettings.extra.katalogTo).
+ *  Bawaan (belum pernah diatur): PUSH_KATALOG_EMAILS (Ridho) + admin Media (Zaki). */
+export async function katalogTo(): Promise<string[]> {
+  const s = await prisma.mediaSettings.findUnique({ where: { id: 1 }, select: { extra: true } });
+  const set = obj(s?.extra).katalogTo;
+  if (Array.isArray(set)) return set.map((e) => String(e).toLowerCase());
+  const admins = await prisma.mediaMember.findMany({ where: { role: "ADMIN", user: { isActive: true } }, select: { user: { select: { email: true } } } });
+  return [...new Set([...katalogOnly(), ...admins.map((a) => a.user.email.toLowerCase())])];
+}
+
+export async function setKatalogTo(emails: unknown) {
+  const list = Array.isArray(emails) ? [...new Set(emails.map((e) => String(e).trim().toLowerCase()).filter((e) => /^[^\s@]+@[^\s@]+$/.test(e) && e.length <= 200))].slice(0, 20) : [];
+  const s = await prisma.mediaSettings.findUnique({ where: { id: 1 }, select: { extra: true } });
+  const extra = { ...obj(s?.extra), katalogTo: list } as Prisma.InputJsonValue;
+  await prisma.mediaSettings.upsert({ where: { id: 1 }, create: { id: 1, extra }, update: { extra } });
+}
+
+/** Penerima: akun di daftar katalogTo; nomor dari MediaMember.phone (No. WhatsApp di Tim & Aktivitas), bila kosong nomor akun. */
 export async function katalogRecipients() {
   const users = await prisma.user.findMany({
-    where: { email: { in: katalogOnly() }, isActive: true },
-    select: { id: true, email: true, fullName: true, nickname: true, mediaMember: { select: { phone: true, extra: true } } },
+    where: { email: { in: await katalogTo() }, isActive: true },
+    select: { id: true, email: true, fullName: true, nickname: true, waNumber: true, mediaMember: { select: { phone: true, extra: true } } },
   });
   return users.map((u) => ({
     userId: u.id,
     email: u.email,
     name: String(obj(u.mediaMember?.extra).name || u.nickname || u.fullName),
     member: !!u.mediaMember,
-    phone: u.mediaMember?.phone?.trim() || "",
+    phone: u.mediaMember?.phone?.trim() || u.waNumber || "",
   }));
 }
 
@@ -78,7 +95,7 @@ type SendResult = { ok: boolean; error?: string; sent: number };
 async function sendToRecipients(text: string): Promise<SendResult & { recips: Awaited<ReturnType<typeof katalogRecipients>> }> {
   const recips = await katalogRecipients();
   const via = waVia();
-  if (!via) return { ok: false, error: process.env.STUDIO_WA_VIA === "n8n" ? "Alamat webhook n8n (N8N_WA_WEBHOOK_URL) belum diisi di server." : "Alamat GOWA (STUDIO_GOWA_URL / GOWA_URL) belum diisi di server.", sent: 0, recips };
+  if (!via) return { ok: false, error: process.env.STUDIO_WA_VIA === "gowa" ? "Alamat GOWA (STUDIO_GOWA_URL / GOWA_URL) belum diisi di server." : "Alamat webhook n8n (N8N_WA_WEBHOOK_URL) belum diisi di server.", sent: 0, recips };
   const withPhone = recips.filter((r) => r.phone);
   if (!withPhone.length) return { ok: false, error: recips.some((r) => r.member) ? "Nomor WA penerima belum diisi di Tim & Aktivitas." : "Penerima belum terdaftar di Media (Tim & Aktivitas).", sent: 0, recips };
   let sent = 0;
@@ -154,18 +171,20 @@ export async function testKatalog(by: string): Promise<SendResult> {
 
 /** Ringkasan untuk panel Tim & Aktivitas. */
 export async function katalogStatus() {
-  const [on, recips, pending, lastFail, sender] = await Promise.all([
+  const [on, recips, pending, lastFail, sender, to] = await Promise.all([
     katalogOn(),
     katalogRecipients(),
     prisma.katalogNotif.count({ where: { sentAt: null, failedAt: null } }),
     prisma.katalogNotif.findFirst({ where: { failedAt: { not: null } }, orderBy: { failedAt: "desc" }, select: { failedAt: true, error: true } }),
     studioSender(),
+    katalogTo(),
   ]);
   return {
     on,
     via: waVia(),
+    to,
     sender: { host: sender.host, number: sender.number ? maskPhone(sender.number) : "", ok: sender.ok, error: sender.error ?? "" },
-    recipients: recips.map((r) => ({ name: r.name, member: r.member, phone: r.phone ? maskPhone(r.phone) : "" })),
+    recipients: recips.map((r) => ({ email: r.email, name: r.name, member: r.member, phone: r.phone ? maskPhone(r.phone) : "" })),
     pending,
     lastFail: lastFail ? { at: lastFail.failedAt!.getTime(), error: lastFail.error ?? "" } : null,
   };
