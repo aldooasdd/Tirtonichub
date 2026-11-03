@@ -136,6 +136,11 @@ export type RawProduct = $Result.DefaultSelection<Prisma.$RawProductPayload>
  */
 export type OcrSample = $Result.DefaultSelection<Prisma.$OcrSamplePayload>
 /**
+ * Model OnlineRecon
+ * 
+ */
+export type OnlineRecon = $Result.DefaultSelection<Prisma.$OnlineReconPayload>
+/**
  * Model MediaMember
  * 
  */
@@ -690,6 +695,16 @@ export class PrismaClient<
     * ```
     */
   get ocrSample(): Prisma.OcrSampleDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.onlineRecon`: Exposes CRUD operations for the **OnlineRecon** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more OnlineRecons
+    * const onlineRecons = await prisma.onlineRecon.findMany()
+    * ```
+    */
+  get onlineRecon(): Prisma.OnlineReconDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.mediaMember`: Exposes CRUD operations for the **MediaMember** model.
@@ -1305,6 +1320,7 @@ export namespace Prisma {
     CalendarEvent: 'CalendarEvent',
     RawProduct: 'RawProduct',
     OcrSample: 'OcrSample',
+    OnlineRecon: 'OnlineRecon',
     MediaMember: 'MediaMember',
     MediaItem: 'MediaItem',
     MediaAsset: 'MediaAsset',
@@ -1338,7 +1354,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3118,6 +3134,80 @@ export namespace Prisma {
           }
         }
       }
+      OnlineRecon: {
+        payload: Prisma.$OnlineReconPayload<ExtArgs>
+        fields: Prisma.OnlineReconFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.OnlineReconFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OnlineReconPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.OnlineReconFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OnlineReconPayload>
+          }
+          findFirst: {
+            args: Prisma.OnlineReconFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OnlineReconPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.OnlineReconFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OnlineReconPayload>
+          }
+          findMany: {
+            args: Prisma.OnlineReconFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OnlineReconPayload>[]
+          }
+          create: {
+            args: Prisma.OnlineReconCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OnlineReconPayload>
+          }
+          createMany: {
+            args: Prisma.OnlineReconCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.OnlineReconCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OnlineReconPayload>[]
+          }
+          delete: {
+            args: Prisma.OnlineReconDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OnlineReconPayload>
+          }
+          update: {
+            args: Prisma.OnlineReconUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OnlineReconPayload>
+          }
+          deleteMany: {
+            args: Prisma.OnlineReconDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.OnlineReconUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.OnlineReconUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OnlineReconPayload>[]
+          }
+          upsert: {
+            args: Prisma.OnlineReconUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$OnlineReconPayload>
+          }
+          aggregate: {
+            args: Prisma.OnlineReconAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateOnlineRecon>
+          }
+          groupBy: {
+            args: Prisma.OnlineReconGroupByArgs<ExtArgs>
+            result: $Utils.Optional<OnlineReconGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.OnlineReconCountArgs<ExtArgs>
+            result: $Utils.Optional<OnlineReconCountAggregateOutputType> | number
+          }
+        }
+      }
       MediaMember: {
         payload: Prisma.$MediaMemberPayload<ExtArgs>
         fields: Prisma.MediaMemberFieldRefs
@@ -4348,6 +4438,7 @@ export namespace Prisma {
     calendarEvent?: CalendarEventOmit
     rawProduct?: RawProductOmit
     ocrSample?: OcrSampleOmit
+    onlineRecon?: OnlineReconOmit
     mediaMember?: MediaMemberOmit
     mediaItem?: MediaItemOmit
     mediaAsset?: MediaAssetOmit
@@ -32858,6 +32949,1061 @@ export namespace Prisma {
 
 
   /**
+   * Model OnlineRecon
+   */
+
+  export type AggregateOnlineRecon = {
+    _count: OnlineReconCountAggregateOutputType | null
+    _avg: OnlineReconAvgAggregateOutputType | null
+    _sum: OnlineReconSumAggregateOutputType | null
+    _min: OnlineReconMinAggregateOutputType | null
+    _max: OnlineReconMaxAggregateOutputType | null
+  }
+
+  export type OnlineReconAvgAggregateOutputType = {
+    actual: number | null
+  }
+
+  export type OnlineReconSumAggregateOutputType = {
+    actual: number | null
+  }
+
+  export type OnlineReconMinAggregateOutputType = {
+    id: string | null
+    month: string | null
+    channel: string | null
+    actual: number | null
+    note: string | null
+    updatedById: string | null
+    updatedAt: Date | null
+  }
+
+  export type OnlineReconMaxAggregateOutputType = {
+    id: string | null
+    month: string | null
+    channel: string | null
+    actual: number | null
+    note: string | null
+    updatedById: string | null
+    updatedAt: Date | null
+  }
+
+  export type OnlineReconCountAggregateOutputType = {
+    id: number
+    month: number
+    channel: number
+    actual: number
+    note: number
+    updatedById: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type OnlineReconAvgAggregateInputType = {
+    actual?: true
+  }
+
+  export type OnlineReconSumAggregateInputType = {
+    actual?: true
+  }
+
+  export type OnlineReconMinAggregateInputType = {
+    id?: true
+    month?: true
+    channel?: true
+    actual?: true
+    note?: true
+    updatedById?: true
+    updatedAt?: true
+  }
+
+  export type OnlineReconMaxAggregateInputType = {
+    id?: true
+    month?: true
+    channel?: true
+    actual?: true
+    note?: true
+    updatedById?: true
+    updatedAt?: true
+  }
+
+  export type OnlineReconCountAggregateInputType = {
+    id?: true
+    month?: true
+    channel?: true
+    actual?: true
+    note?: true
+    updatedById?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type OnlineReconAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OnlineRecon to aggregate.
+     */
+    where?: OnlineReconWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OnlineRecons to fetch.
+     */
+    orderBy?: OnlineReconOrderByWithRelationInput | OnlineReconOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: OnlineReconWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OnlineRecons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OnlineRecons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned OnlineRecons
+    **/
+    _count?: true | OnlineReconCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: OnlineReconAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: OnlineReconSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: OnlineReconMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: OnlineReconMaxAggregateInputType
+  }
+
+  export type GetOnlineReconAggregateType<T extends OnlineReconAggregateArgs> = {
+        [P in keyof T & keyof AggregateOnlineRecon]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateOnlineRecon[P]>
+      : GetScalarType<T[P], AggregateOnlineRecon[P]>
+  }
+
+
+
+
+  export type OnlineReconGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: OnlineReconWhereInput
+    orderBy?: OnlineReconOrderByWithAggregationInput | OnlineReconOrderByWithAggregationInput[]
+    by: OnlineReconScalarFieldEnum[] | OnlineReconScalarFieldEnum
+    having?: OnlineReconScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: OnlineReconCountAggregateInputType | true
+    _avg?: OnlineReconAvgAggregateInputType
+    _sum?: OnlineReconSumAggregateInputType
+    _min?: OnlineReconMinAggregateInputType
+    _max?: OnlineReconMaxAggregateInputType
+  }
+
+  export type OnlineReconGroupByOutputType = {
+    id: string
+    month: string
+    channel: string
+    actual: number
+    note: string | null
+    updatedById: string
+    updatedAt: Date
+    _count: OnlineReconCountAggregateOutputType | null
+    _avg: OnlineReconAvgAggregateOutputType | null
+    _sum: OnlineReconSumAggregateOutputType | null
+    _min: OnlineReconMinAggregateOutputType | null
+    _max: OnlineReconMaxAggregateOutputType | null
+  }
+
+  type GetOnlineReconGroupByPayload<T extends OnlineReconGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<OnlineReconGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof OnlineReconGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], OnlineReconGroupByOutputType[P]>
+            : GetScalarType<T[P], OnlineReconGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type OnlineReconSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    month?: boolean
+    channel?: boolean
+    actual?: boolean
+    note?: boolean
+    updatedById?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["onlineRecon"]>
+
+  export type OnlineReconSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    month?: boolean
+    channel?: boolean
+    actual?: boolean
+    note?: boolean
+    updatedById?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["onlineRecon"]>
+
+  export type OnlineReconSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    month?: boolean
+    channel?: boolean
+    actual?: boolean
+    note?: boolean
+    updatedById?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["onlineRecon"]>
+
+  export type OnlineReconSelectScalar = {
+    id?: boolean
+    month?: boolean
+    channel?: boolean
+    actual?: boolean
+    note?: boolean
+    updatedById?: boolean
+    updatedAt?: boolean
+  }
+
+  export type OnlineReconOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "month" | "channel" | "actual" | "note" | "updatedById" | "updatedAt", ExtArgs["result"]["onlineRecon"]>
+
+  export type $OnlineReconPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "OnlineRecon"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      month: string
+      channel: string
+      actual: number
+      note: string | null
+      updatedById: string
+      updatedAt: Date
+    }, ExtArgs["result"]["onlineRecon"]>
+    composites: {}
+  }
+
+  type OnlineReconGetPayload<S extends boolean | null | undefined | OnlineReconDefaultArgs> = $Result.GetResult<Prisma.$OnlineReconPayload, S>
+
+  type OnlineReconCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<OnlineReconFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: OnlineReconCountAggregateInputType | true
+    }
+
+  export interface OnlineReconDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['OnlineRecon'], meta: { name: 'OnlineRecon' } }
+    /**
+     * Find zero or one OnlineRecon that matches the filter.
+     * @param {OnlineReconFindUniqueArgs} args - Arguments to find a OnlineRecon
+     * @example
+     * // Get one OnlineRecon
+     * const onlineRecon = await prisma.onlineRecon.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends OnlineReconFindUniqueArgs>(args: SelectSubset<T, OnlineReconFindUniqueArgs<ExtArgs>>): Prisma__OnlineReconClient<$Result.GetResult<Prisma.$OnlineReconPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one OnlineRecon that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {OnlineReconFindUniqueOrThrowArgs} args - Arguments to find a OnlineRecon
+     * @example
+     * // Get one OnlineRecon
+     * const onlineRecon = await prisma.onlineRecon.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends OnlineReconFindUniqueOrThrowArgs>(args: SelectSubset<T, OnlineReconFindUniqueOrThrowArgs<ExtArgs>>): Prisma__OnlineReconClient<$Result.GetResult<Prisma.$OnlineReconPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OnlineRecon that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OnlineReconFindFirstArgs} args - Arguments to find a OnlineRecon
+     * @example
+     * // Get one OnlineRecon
+     * const onlineRecon = await prisma.onlineRecon.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends OnlineReconFindFirstArgs>(args?: SelectSubset<T, OnlineReconFindFirstArgs<ExtArgs>>): Prisma__OnlineReconClient<$Result.GetResult<Prisma.$OnlineReconPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first OnlineRecon that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OnlineReconFindFirstOrThrowArgs} args - Arguments to find a OnlineRecon
+     * @example
+     * // Get one OnlineRecon
+     * const onlineRecon = await prisma.onlineRecon.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends OnlineReconFindFirstOrThrowArgs>(args?: SelectSubset<T, OnlineReconFindFirstOrThrowArgs<ExtArgs>>): Prisma__OnlineReconClient<$Result.GetResult<Prisma.$OnlineReconPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more OnlineRecons that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OnlineReconFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all OnlineRecons
+     * const onlineRecons = await prisma.onlineRecon.findMany()
+     * 
+     * // Get first 10 OnlineRecons
+     * const onlineRecons = await prisma.onlineRecon.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const onlineReconWithIdOnly = await prisma.onlineRecon.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends OnlineReconFindManyArgs>(args?: SelectSubset<T, OnlineReconFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OnlineReconPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a OnlineRecon.
+     * @param {OnlineReconCreateArgs} args - Arguments to create a OnlineRecon.
+     * @example
+     * // Create one OnlineRecon
+     * const OnlineRecon = await prisma.onlineRecon.create({
+     *   data: {
+     *     // ... data to create a OnlineRecon
+     *   }
+     * })
+     * 
+     */
+    create<T extends OnlineReconCreateArgs>(args: SelectSubset<T, OnlineReconCreateArgs<ExtArgs>>): Prisma__OnlineReconClient<$Result.GetResult<Prisma.$OnlineReconPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many OnlineRecons.
+     * @param {OnlineReconCreateManyArgs} args - Arguments to create many OnlineRecons.
+     * @example
+     * // Create many OnlineRecons
+     * const onlineRecon = await prisma.onlineRecon.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends OnlineReconCreateManyArgs>(args?: SelectSubset<T, OnlineReconCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many OnlineRecons and returns the data saved in the database.
+     * @param {OnlineReconCreateManyAndReturnArgs} args - Arguments to create many OnlineRecons.
+     * @example
+     * // Create many OnlineRecons
+     * const onlineRecon = await prisma.onlineRecon.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many OnlineRecons and only return the `id`
+     * const onlineReconWithIdOnly = await prisma.onlineRecon.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends OnlineReconCreateManyAndReturnArgs>(args?: SelectSubset<T, OnlineReconCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OnlineReconPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a OnlineRecon.
+     * @param {OnlineReconDeleteArgs} args - Arguments to delete one OnlineRecon.
+     * @example
+     * // Delete one OnlineRecon
+     * const OnlineRecon = await prisma.onlineRecon.delete({
+     *   where: {
+     *     // ... filter to delete one OnlineRecon
+     *   }
+     * })
+     * 
+     */
+    delete<T extends OnlineReconDeleteArgs>(args: SelectSubset<T, OnlineReconDeleteArgs<ExtArgs>>): Prisma__OnlineReconClient<$Result.GetResult<Prisma.$OnlineReconPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one OnlineRecon.
+     * @param {OnlineReconUpdateArgs} args - Arguments to update one OnlineRecon.
+     * @example
+     * // Update one OnlineRecon
+     * const onlineRecon = await prisma.onlineRecon.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends OnlineReconUpdateArgs>(args: SelectSubset<T, OnlineReconUpdateArgs<ExtArgs>>): Prisma__OnlineReconClient<$Result.GetResult<Prisma.$OnlineReconPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more OnlineRecons.
+     * @param {OnlineReconDeleteManyArgs} args - Arguments to filter OnlineRecons to delete.
+     * @example
+     * // Delete a few OnlineRecons
+     * const { count } = await prisma.onlineRecon.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends OnlineReconDeleteManyArgs>(args?: SelectSubset<T, OnlineReconDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OnlineRecons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OnlineReconUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many OnlineRecons
+     * const onlineRecon = await prisma.onlineRecon.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends OnlineReconUpdateManyArgs>(args: SelectSubset<T, OnlineReconUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more OnlineRecons and returns the data updated in the database.
+     * @param {OnlineReconUpdateManyAndReturnArgs} args - Arguments to update many OnlineRecons.
+     * @example
+     * // Update many OnlineRecons
+     * const onlineRecon = await prisma.onlineRecon.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more OnlineRecons and only return the `id`
+     * const onlineReconWithIdOnly = await prisma.onlineRecon.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends OnlineReconUpdateManyAndReturnArgs>(args: SelectSubset<T, OnlineReconUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$OnlineReconPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one OnlineRecon.
+     * @param {OnlineReconUpsertArgs} args - Arguments to update or create a OnlineRecon.
+     * @example
+     * // Update or create a OnlineRecon
+     * const onlineRecon = await prisma.onlineRecon.upsert({
+     *   create: {
+     *     // ... data to create a OnlineRecon
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the OnlineRecon we want to update
+     *   }
+     * })
+     */
+    upsert<T extends OnlineReconUpsertArgs>(args: SelectSubset<T, OnlineReconUpsertArgs<ExtArgs>>): Prisma__OnlineReconClient<$Result.GetResult<Prisma.$OnlineReconPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of OnlineRecons.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OnlineReconCountArgs} args - Arguments to filter OnlineRecons to count.
+     * @example
+     * // Count the number of OnlineRecons
+     * const count = await prisma.onlineRecon.count({
+     *   where: {
+     *     // ... the filter for the OnlineRecons we want to count
+     *   }
+     * })
+    **/
+    count<T extends OnlineReconCountArgs>(
+      args?: Subset<T, OnlineReconCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], OnlineReconCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a OnlineRecon.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OnlineReconAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends OnlineReconAggregateArgs>(args: Subset<T, OnlineReconAggregateArgs>): Prisma.PrismaPromise<GetOnlineReconAggregateType<T>>
+
+    /**
+     * Group by OnlineRecon.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {OnlineReconGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends OnlineReconGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: OnlineReconGroupByArgs['orderBy'] }
+        : { orderBy?: OnlineReconGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, OnlineReconGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetOnlineReconGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the OnlineRecon model
+   */
+  readonly fields: OnlineReconFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for OnlineRecon.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__OnlineReconClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the OnlineRecon model
+   */
+  interface OnlineReconFieldRefs {
+    readonly id: FieldRef<"OnlineRecon", 'String'>
+    readonly month: FieldRef<"OnlineRecon", 'String'>
+    readonly channel: FieldRef<"OnlineRecon", 'String'>
+    readonly actual: FieldRef<"OnlineRecon", 'Int'>
+    readonly note: FieldRef<"OnlineRecon", 'String'>
+    readonly updatedById: FieldRef<"OnlineRecon", 'String'>
+    readonly updatedAt: FieldRef<"OnlineRecon", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * OnlineRecon findUnique
+   */
+  export type OnlineReconFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OnlineRecon
+     */
+    select?: OnlineReconSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OnlineRecon
+     */
+    omit?: OnlineReconOmit<ExtArgs> | null
+    /**
+     * Filter, which OnlineRecon to fetch.
+     */
+    where: OnlineReconWhereUniqueInput
+  }
+
+  /**
+   * OnlineRecon findUniqueOrThrow
+   */
+  export type OnlineReconFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OnlineRecon
+     */
+    select?: OnlineReconSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OnlineRecon
+     */
+    omit?: OnlineReconOmit<ExtArgs> | null
+    /**
+     * Filter, which OnlineRecon to fetch.
+     */
+    where: OnlineReconWhereUniqueInput
+  }
+
+  /**
+   * OnlineRecon findFirst
+   */
+  export type OnlineReconFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OnlineRecon
+     */
+    select?: OnlineReconSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OnlineRecon
+     */
+    omit?: OnlineReconOmit<ExtArgs> | null
+    /**
+     * Filter, which OnlineRecon to fetch.
+     */
+    where?: OnlineReconWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OnlineRecons to fetch.
+     */
+    orderBy?: OnlineReconOrderByWithRelationInput | OnlineReconOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OnlineRecons.
+     */
+    cursor?: OnlineReconWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OnlineRecons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OnlineRecons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OnlineRecons.
+     */
+    distinct?: OnlineReconScalarFieldEnum | OnlineReconScalarFieldEnum[]
+  }
+
+  /**
+   * OnlineRecon findFirstOrThrow
+   */
+  export type OnlineReconFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OnlineRecon
+     */
+    select?: OnlineReconSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OnlineRecon
+     */
+    omit?: OnlineReconOmit<ExtArgs> | null
+    /**
+     * Filter, which OnlineRecon to fetch.
+     */
+    where?: OnlineReconWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OnlineRecons to fetch.
+     */
+    orderBy?: OnlineReconOrderByWithRelationInput | OnlineReconOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for OnlineRecons.
+     */
+    cursor?: OnlineReconWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OnlineRecons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OnlineRecons.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of OnlineRecons.
+     */
+    distinct?: OnlineReconScalarFieldEnum | OnlineReconScalarFieldEnum[]
+  }
+
+  /**
+   * OnlineRecon findMany
+   */
+  export type OnlineReconFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OnlineRecon
+     */
+    select?: OnlineReconSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OnlineRecon
+     */
+    omit?: OnlineReconOmit<ExtArgs> | null
+    /**
+     * Filter, which OnlineRecons to fetch.
+     */
+    where?: OnlineReconWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of OnlineRecons to fetch.
+     */
+    orderBy?: OnlineReconOrderByWithRelationInput | OnlineReconOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing OnlineRecons.
+     */
+    cursor?: OnlineReconWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` OnlineRecons from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` OnlineRecons.
+     */
+    skip?: number
+    distinct?: OnlineReconScalarFieldEnum | OnlineReconScalarFieldEnum[]
+  }
+
+  /**
+   * OnlineRecon create
+   */
+  export type OnlineReconCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OnlineRecon
+     */
+    select?: OnlineReconSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OnlineRecon
+     */
+    omit?: OnlineReconOmit<ExtArgs> | null
+    /**
+     * The data needed to create a OnlineRecon.
+     */
+    data: XOR<OnlineReconCreateInput, OnlineReconUncheckedCreateInput>
+  }
+
+  /**
+   * OnlineRecon createMany
+   */
+  export type OnlineReconCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many OnlineRecons.
+     */
+    data: OnlineReconCreateManyInput | OnlineReconCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * OnlineRecon createManyAndReturn
+   */
+  export type OnlineReconCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OnlineRecon
+     */
+    select?: OnlineReconSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OnlineRecon
+     */
+    omit?: OnlineReconOmit<ExtArgs> | null
+    /**
+     * The data used to create many OnlineRecons.
+     */
+    data: OnlineReconCreateManyInput | OnlineReconCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * OnlineRecon update
+   */
+  export type OnlineReconUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OnlineRecon
+     */
+    select?: OnlineReconSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OnlineRecon
+     */
+    omit?: OnlineReconOmit<ExtArgs> | null
+    /**
+     * The data needed to update a OnlineRecon.
+     */
+    data: XOR<OnlineReconUpdateInput, OnlineReconUncheckedUpdateInput>
+    /**
+     * Choose, which OnlineRecon to update.
+     */
+    where: OnlineReconWhereUniqueInput
+  }
+
+  /**
+   * OnlineRecon updateMany
+   */
+  export type OnlineReconUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update OnlineRecons.
+     */
+    data: XOR<OnlineReconUpdateManyMutationInput, OnlineReconUncheckedUpdateManyInput>
+    /**
+     * Filter which OnlineRecons to update
+     */
+    where?: OnlineReconWhereInput
+    /**
+     * Limit how many OnlineRecons to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * OnlineRecon updateManyAndReturn
+   */
+  export type OnlineReconUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OnlineRecon
+     */
+    select?: OnlineReconSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the OnlineRecon
+     */
+    omit?: OnlineReconOmit<ExtArgs> | null
+    /**
+     * The data used to update OnlineRecons.
+     */
+    data: XOR<OnlineReconUpdateManyMutationInput, OnlineReconUncheckedUpdateManyInput>
+    /**
+     * Filter which OnlineRecons to update
+     */
+    where?: OnlineReconWhereInput
+    /**
+     * Limit how many OnlineRecons to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * OnlineRecon upsert
+   */
+  export type OnlineReconUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OnlineRecon
+     */
+    select?: OnlineReconSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OnlineRecon
+     */
+    omit?: OnlineReconOmit<ExtArgs> | null
+    /**
+     * The filter to search for the OnlineRecon to update in case it exists.
+     */
+    where: OnlineReconWhereUniqueInput
+    /**
+     * In case the OnlineRecon found by the `where` argument doesn't exist, create a new OnlineRecon with this data.
+     */
+    create: XOR<OnlineReconCreateInput, OnlineReconUncheckedCreateInput>
+    /**
+     * In case the OnlineRecon was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<OnlineReconUpdateInput, OnlineReconUncheckedUpdateInput>
+  }
+
+  /**
+   * OnlineRecon delete
+   */
+  export type OnlineReconDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OnlineRecon
+     */
+    select?: OnlineReconSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OnlineRecon
+     */
+    omit?: OnlineReconOmit<ExtArgs> | null
+    /**
+     * Filter which OnlineRecon to delete.
+     */
+    where: OnlineReconWhereUniqueInput
+  }
+
+  /**
+   * OnlineRecon deleteMany
+   */
+  export type OnlineReconDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which OnlineRecons to delete
+     */
+    where?: OnlineReconWhereInput
+    /**
+     * Limit how many OnlineRecons to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * OnlineRecon without action
+   */
+  export type OnlineReconDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the OnlineRecon
+     */
+    select?: OnlineReconSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the OnlineRecon
+     */
+    omit?: OnlineReconOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model MediaMember
    */
 
@@ -49675,6 +50821,19 @@ export namespace Prisma {
   export type OcrSampleScalarFieldEnum = (typeof OcrSampleScalarFieldEnum)[keyof typeof OcrSampleScalarFieldEnum]
 
 
+  export const OnlineReconScalarFieldEnum: {
+    id: 'id',
+    month: 'month',
+    channel: 'channel',
+    actual: 'actual',
+    note: 'note',
+    updatedById: 'updatedById',
+    updatedAt: 'updatedAt'
+  };
+
+  export type OnlineReconScalarFieldEnum = (typeof OnlineReconScalarFieldEnum)[keyof typeof OnlineReconScalarFieldEnum]
+
+
   export const MediaMemberScalarFieldEnum: {
     userId: 'userId',
     code: 'code',
@@ -52167,6 +53326,71 @@ export namespace Prisma {
     finalRows?: StringNullableWithAggregatesFilter<"OcrSample"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"OcrSample"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"OcrSample"> | Date | string
+  }
+
+  export type OnlineReconWhereInput = {
+    AND?: OnlineReconWhereInput | OnlineReconWhereInput[]
+    OR?: OnlineReconWhereInput[]
+    NOT?: OnlineReconWhereInput | OnlineReconWhereInput[]
+    id?: StringFilter<"OnlineRecon"> | string
+    month?: StringFilter<"OnlineRecon"> | string
+    channel?: StringFilter<"OnlineRecon"> | string
+    actual?: IntFilter<"OnlineRecon"> | number
+    note?: StringNullableFilter<"OnlineRecon"> | string | null
+    updatedById?: StringFilter<"OnlineRecon"> | string
+    updatedAt?: DateTimeFilter<"OnlineRecon"> | Date | string
+  }
+
+  export type OnlineReconOrderByWithRelationInput = {
+    id?: SortOrder
+    month?: SortOrder
+    channel?: SortOrder
+    actual?: SortOrder
+    note?: SortOrderInput | SortOrder
+    updatedById?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OnlineReconWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    month_channel?: OnlineReconMonthChannelCompoundUniqueInput
+    AND?: OnlineReconWhereInput | OnlineReconWhereInput[]
+    OR?: OnlineReconWhereInput[]
+    NOT?: OnlineReconWhereInput | OnlineReconWhereInput[]
+    month?: StringFilter<"OnlineRecon"> | string
+    channel?: StringFilter<"OnlineRecon"> | string
+    actual?: IntFilter<"OnlineRecon"> | number
+    note?: StringNullableFilter<"OnlineRecon"> | string | null
+    updatedById?: StringFilter<"OnlineRecon"> | string
+    updatedAt?: DateTimeFilter<"OnlineRecon"> | Date | string
+  }, "id" | "month_channel">
+
+  export type OnlineReconOrderByWithAggregationInput = {
+    id?: SortOrder
+    month?: SortOrder
+    channel?: SortOrder
+    actual?: SortOrder
+    note?: SortOrderInput | SortOrder
+    updatedById?: SortOrder
+    updatedAt?: SortOrder
+    _count?: OnlineReconCountOrderByAggregateInput
+    _avg?: OnlineReconAvgOrderByAggregateInput
+    _max?: OnlineReconMaxOrderByAggregateInput
+    _min?: OnlineReconMinOrderByAggregateInput
+    _sum?: OnlineReconSumOrderByAggregateInput
+  }
+
+  export type OnlineReconScalarWhereWithAggregatesInput = {
+    AND?: OnlineReconScalarWhereWithAggregatesInput | OnlineReconScalarWhereWithAggregatesInput[]
+    OR?: OnlineReconScalarWhereWithAggregatesInput[]
+    NOT?: OnlineReconScalarWhereWithAggregatesInput | OnlineReconScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"OnlineRecon"> | string
+    month?: StringWithAggregatesFilter<"OnlineRecon"> | string
+    channel?: StringWithAggregatesFilter<"OnlineRecon"> | string
+    actual?: IntWithAggregatesFilter<"OnlineRecon"> | number
+    note?: StringNullableWithAggregatesFilter<"OnlineRecon"> | string | null
+    updatedById?: StringWithAggregatesFilter<"OnlineRecon"> | string
+    updatedAt?: DateTimeWithAggregatesFilter<"OnlineRecon"> | Date | string
   }
 
   export type MediaMemberWhereInput = {
@@ -55559,6 +56783,76 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type OnlineReconCreateInput = {
+    id?: string
+    month: string
+    channel: string
+    actual: number
+    note?: string | null
+    updatedById: string
+    updatedAt?: Date | string
+  }
+
+  export type OnlineReconUncheckedCreateInput = {
+    id?: string
+    month: string
+    channel: string
+    actual: number
+    note?: string | null
+    updatedById: string
+    updatedAt?: Date | string
+  }
+
+  export type OnlineReconUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    month?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    actual?: IntFieldUpdateOperationsInput | number
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedById?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OnlineReconUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    month?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    actual?: IntFieldUpdateOperationsInput | number
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedById?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OnlineReconCreateManyInput = {
+    id?: string
+    month: string
+    channel: string
+    actual: number
+    note?: string | null
+    updatedById: string
+    updatedAt?: Date | string
+  }
+
+  export type OnlineReconUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    month?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    actual?: IntFieldUpdateOperationsInput | number
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedById?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type OnlineReconUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    month?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    actual?: IntFieldUpdateOperationsInput | number
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedById?: StringFieldUpdateOperationsInput | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type MediaMemberCreateInput = {
     code: string
     role?: $Enums.MediaRole
@@ -58611,6 +59905,49 @@ export namespace Prisma {
     finalRows?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type OnlineReconMonthChannelCompoundUniqueInput = {
+    month: string
+    channel: string
+  }
+
+  export type OnlineReconCountOrderByAggregateInput = {
+    id?: SortOrder
+    month?: SortOrder
+    channel?: SortOrder
+    actual?: SortOrder
+    note?: SortOrder
+    updatedById?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OnlineReconAvgOrderByAggregateInput = {
+    actual?: SortOrder
+  }
+
+  export type OnlineReconMaxOrderByAggregateInput = {
+    id?: SortOrder
+    month?: SortOrder
+    channel?: SortOrder
+    actual?: SortOrder
+    note?: SortOrder
+    updatedById?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OnlineReconMinOrderByAggregateInput = {
+    id?: SortOrder
+    month?: SortOrder
+    channel?: SortOrder
+    actual?: SortOrder
+    note?: SortOrder
+    updatedById?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type OnlineReconSumOrderByAggregateInput = {
+    actual?: SortOrder
   }
 
   export type EnumMediaRoleFilter<$PrismaModel = never> = {

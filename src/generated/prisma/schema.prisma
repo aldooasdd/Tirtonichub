@@ -526,6 +526,19 @@ model OcrSample {
   @@index([brandKey, updatedAt])
 }
 
+// --- Rekap online bulanan: uang asli per kanal (dari Finance) vs total penjualan di app ---
+model OnlineRecon {
+  id          String   @id @default(cuid())
+  month       String // "YYYY-MM" (WIB)
+  channel     String // SHOPEE | TOKOPEDIA | WEBSITE (lib/online-recon)
+  actual      Int // nominal uang asli bulan itu (rupiah)
+  note        String?
+  updatedById String
+  updatedAt   DateTime @updatedAt
+
+  @@unique([month, channel])
+}
+
 // --- Media (Tirtonic Studio): produksi konten IG, port dari app media Zaki ---
 enum MediaRole {
   ADMIN // admin penuh (Zaki); kelola kode Louis1, tim, laporan

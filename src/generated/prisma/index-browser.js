@@ -430,6 +430,16 @@ exports.Prisma.OcrSampleScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.OnlineReconScalarFieldEnum = {
+  id: 'id',
+  month: 'month',
+  channel: 'channel',
+  actual: 'actual',
+  note: 'note',
+  updatedById: 'updatedById',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.MediaMemberScalarFieldEnum = {
   userId: 'userId',
   code: 'code',
@@ -728,6 +738,7 @@ exports.Prisma.ModelName = {
   CalendarEvent: 'CalendarEvent',
   RawProduct: 'RawProduct',
   OcrSample: 'OcrSample',
+  OnlineRecon: 'OnlineRecon',
   MediaMember: 'MediaMember',
   MediaItem: 'MediaItem',
   MediaAsset: 'MediaAsset',
