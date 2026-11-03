@@ -139,6 +139,49 @@ export async function toggleCashoutChecked(id: string, checked: boolean): Promis
   return { ok: true };
 }
 
+/** Finance/Boss/Admin: koreksi data pembelian di Rekap Pembelian. */
+export async function updateCashout(
+  id: string,
+  input: { spentAt: string; category: string; branchId: string | null; description: string; amount: number },
+): Promise<ActionResult> {
+  const ctx = await requireFinance();
+  const before = await prisma.cashout.findUnique({ where: { id } });
+  if (!before) return { ok: false, message: "Tidak ditemukan." };
+  const amount = Math.max(0, Math.round(input.amount) || 0);
+  const description = input.description?.trim();
+  if (amount <= 0) return { ok: false, message: "Jumlah harus lebih dari 0." };
+  if (!description) return { ok: false, message: "Keterangan wajib diisi." };
+  if (!input.spentAt || Number.isNaN(Date.parse(input.spentAt))) return { ok: false, message: "Tanggal tidak valid." };
+  const br = input.branchId
+    ? await prisma.branch.findUnique({ where: { id: input.branchId }, select: { id: true, name: true } })
+    : null;
+  if (input.branchId && !br) return { ok: false, message: "Cabang tidak ditemukan." };
+
+  const after = await prisma.cashout.update({
+    where: { id },
+    data: {
+      spentAt: parseWIB(input.spentAt),
+      category: input.category?.trim().slice(0, 60) || null,
+      branchId: br?.id ?? null,
+      branchName: br?.name ?? null,
+      description: description.slice(0, 500),
+      amount,
+    },
+  });
+  const { ip } = await clientMeta();
+  await logActivity(
+    { ...ctx, ip },
+    {
+      action: "cashout_edit",
+      entity: "Cashout",
+      entityId: id,
+      before: { spentAt: before.spentAt.toISOString(), category: before.category, branchName: before.branchName, description: before.description, amount: before.amount },
+      after: { spentAt: after.spentAt.toISOString(), category: after.category, branchName: after.branchName, description: after.description, amount: after.amount },
+    },
+  );
+  return { ok: true };
+}
+
 /** Finance/Boss/Admin: tolak pengeluaran (hapus). */
 export async function rejectCashout(id: string): Promise<ActionResult> {
   const ctx = await requireFinance();

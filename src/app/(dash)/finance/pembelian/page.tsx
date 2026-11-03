@@ -17,12 +17,15 @@ export default async function FinancePembelianPage() {
     ? await prisma.user.findMany({ where: { id: { in: checkerIds } }, select: { id: true, fullName: true } })
     : [];
   const checkerName = new Map(checkers.map((u) => [u.id, u.fullName]));
+  const branches = await prisma.branch.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true } });
 
   const data: PembelianRow[] = rows.map((r) => ({
     id: r.id,
     tgl: fmtWIB(r.spentAt),
+    spentAtLocal: new Date(r.spentAt.getTime() + 7 * 3600_000).toISOString().slice(0, 16), // datetime-local WIB
     category: r.category ?? "-",
     branch: r.branchName ?? "-",
+    branchId: r.branchId,
     description: r.description,
     by: r.createdBy.fullName,
     amount: r.amount,
@@ -31,5 +34,5 @@ export default async function FinancePembelianPage() {
     checkedBy: r.checkedById ? checkerName.get(r.checkedById) ?? null : null,
   }));
 
-  return <PembelianTable rows={data} />;
+  return <PembelianTable rows={data} branches={branches} />;
 }
