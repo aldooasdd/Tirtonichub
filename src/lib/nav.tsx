@@ -20,9 +20,10 @@ import {
   Warehouse,
   AlertCircle,
   Inbox,
+  Store,
   type LucideIcon,
 } from "lucide-react";
-import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, ORDER_SPECIALIST_ROLES, HEAD_BRANCH_ROLES, ADMIN_ROLES, roleAttends, type RoleCode } from "./roles";
+import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, ORDER_SPECIALIST_ROLES, HEAD_BRANCH_ROLES, CHANNEL_ROLES, ADMIN_ROLES, roleAttends, type RoleCode } from "./roles";
 import { ABSEN_ON } from "./flags";
 
 export type NavItem = {
@@ -126,6 +127,18 @@ export function navForRole(role: RoleCode): NavGroup[] {
       title: "Order Specialist",
       icon: Globe,
       items: [{ label: "Approval Online", href: "/penjualan-online", icon: ClipboardCheck }],
+    });
+  }
+
+  if (CHANNEL_ROLES.includes(role)) {
+    groups.push({
+      title: "Tirtonic Channel",
+      icon: Store,
+      items: [
+        { label: "Toko & Order", href: "/channel", icon: Store },
+        { label: "Produk & Stok", href: "/channel/produk", icon: Boxes },
+        { label: "Dana Cair", href: "/channel/dana", icon: Wallet },
+      ],
     });
   }
 

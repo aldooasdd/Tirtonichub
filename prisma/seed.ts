@@ -17,6 +17,7 @@ const ROLES: { code: RoleCode; name: string }[] = [
   { code: "HEAD_BRANCH", name: "Head Branch" },
   { code: "SALES", name: "Sales" },
   { code: "ORDER_SPECIALIST", name: "Order Specialist" },
+  { code: "CHANNEL", name: "Tirtonic Channel" },
 ];
 
 const BRANCHES = ["Tirtonic Jogja", "Tirtonic Solo", "Tirtonic Semarang", "Tirtonic Office"];

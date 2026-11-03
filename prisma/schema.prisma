@@ -22,6 +22,7 @@ enum RoleCode {
   SALES
   ORDER_SPECIALIST
   ADMIN
+  CHANNEL // Tirtonic Channel: kelola toko Shopee & Tokopedia
 }
 
 enum AttendanceStatus {
@@ -535,6 +536,73 @@ model CashDeposit {
 
   @@index([branchId, depositedAt])
   @@index([depositedAt])
+}
+
+// --- Tirtonic Channel: toko Shopee & Tokopedia (TikTok Shop API) tersambung ke dashboard ---
+// shopId "demo" = data contoh (mode uji coba tanpa API asli).
+model MarketplaceShop {
+  id           String    @id @default(cuid())
+  platform     String // SHOPEE | TOKOPEDIA
+  shopId       String
+  shopName     String?
+  cipher       String? // TikTok Shop: shop_cipher
+  accessToken  String
+  refreshToken String
+  expiresAt    DateTime
+  connectedAt  DateTime  @default(now())
+  lastSyncAt   DateTime?
+
+  @@unique([platform, shopId])
+}
+
+model MarketplaceOrder {
+  id          String   @id @default(cuid())
+  platform    String
+  shopId      String
+  orderSn     String
+  status      String
+  buyer       String?
+  items       Json // [{name, sku, qty, price}]
+  total       Int // dibayar pembeli
+  netAmount   Int? // dana cair ke penjual (Shopee escrow) bila sudah ada
+  trackingNo  String?
+  orderedAt   DateTime
+  updatedAtMp DateTime
+  syncedAt    DateTime @updatedAt
+
+  @@unique([platform, orderSn])
+  @@index([orderedAt])
+}
+
+model MarketplaceItem {
+  id          String   @id @default(cuid())
+  platform    String
+  shopId      String
+  itemId      String
+  modelId     String // varian (Shopee model_id / TikTok sku id); "" bila tanpa varian
+  name        String
+  sku         String?
+  price       Int
+  stock       Int
+  warehouseId String? // TikTok Shop
+  syncedAt    DateTime @updatedAt
+
+  @@unique([platform, itemId, modelId])
+}
+
+// Dana cair per settlement (TikTok Shop statement / Shopee escrow per order).
+model MarketplacePayout {
+  id       String   @id @default(cuid())
+  platform String
+  shopId   String
+  refId    String // statement id / order_sn
+  revenue  Int // penjualan kotor
+  fee      Int // potongan marketplace (positif)
+  amount   Int // uang bersih cair
+  paidAt   DateTime
+
+  @@unique([platform, refId])
+  @@index([paidAt])
 }
 
 // --- Rekap online bulanan: uang asli per kanal (dari Finance) vs total penjualan di app ---

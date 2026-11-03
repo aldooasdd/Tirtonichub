@@ -441,6 +441,60 @@ exports.Prisma.CashDepositScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.MarketplaceShopScalarFieldEnum = {
+  id: 'id',
+  platform: 'platform',
+  shopId: 'shopId',
+  shopName: 'shopName',
+  cipher: 'cipher',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  expiresAt: 'expiresAt',
+  connectedAt: 'connectedAt',
+  lastSyncAt: 'lastSyncAt'
+};
+
+exports.Prisma.MarketplaceOrderScalarFieldEnum = {
+  id: 'id',
+  platform: 'platform',
+  shopId: 'shopId',
+  orderSn: 'orderSn',
+  status: 'status',
+  buyer: 'buyer',
+  items: 'items',
+  total: 'total',
+  netAmount: 'netAmount',
+  trackingNo: 'trackingNo',
+  orderedAt: 'orderedAt',
+  updatedAtMp: 'updatedAtMp',
+  syncedAt: 'syncedAt'
+};
+
+exports.Prisma.MarketplaceItemScalarFieldEnum = {
+  id: 'id',
+  platform: 'platform',
+  shopId: 'shopId',
+  itemId: 'itemId',
+  modelId: 'modelId',
+  name: 'name',
+  sku: 'sku',
+  price: 'price',
+  stock: 'stock',
+  warehouseId: 'warehouseId',
+  syncedAt: 'syncedAt'
+};
+
+exports.Prisma.MarketplacePayoutScalarFieldEnum = {
+  id: 'id',
+  platform: 'platform',
+  shopId: 'shopId',
+  refId: 'refId',
+  revenue: 'revenue',
+  fee: 'fee',
+  amount: 'amount',
+  paidAt: 'paidAt'
+};
+
 exports.Prisma.OnlineReconScalarFieldEnum = {
   id: 'id',
   month: 'month',
@@ -672,7 +726,8 @@ exports.RoleCode = exports.$Enums.RoleCode = {
   HEAD_BRANCH: 'HEAD_BRANCH',
   SALES: 'SALES',
   ORDER_SPECIALIST: 'ORDER_SPECIALIST',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  CHANNEL: 'CHANNEL'
 };
 
 exports.AttendanceStatus = exports.$Enums.AttendanceStatus = {
@@ -750,6 +805,10 @@ exports.Prisma.ModelName = {
   RawProduct: 'RawProduct',
   OcrSample: 'OcrSample',
   CashDeposit: 'CashDeposit',
+  MarketplaceShop: 'MarketplaceShop',
+  MarketplaceOrder: 'MarketplaceOrder',
+  MarketplaceItem: 'MarketplaceItem',
+  MarketplacePayout: 'MarketplacePayout',
   OnlineRecon: 'OnlineRecon',
   MediaMember: 'MediaMember',
   MediaItem: 'MediaItem',

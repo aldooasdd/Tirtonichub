@@ -8,6 +8,7 @@ export const ROLE_CODES = [
   "SALES",
   "ORDER_SPECIALIST",
   "ADMIN",
+  "CHANNEL",
 ] as const;
 
 export type RoleCode = (typeof ROLE_CODES)[number];
@@ -22,6 +23,7 @@ export const ROLE_LABELS: Record<RoleCode, string> = {
   SALES: "Sales",
   ORDER_SPECIALIST: "Order Specialist",
   ADMIN: "Admin",
+  CHANNEL: "Tirtonic Channel",
 };
 
 // Admin = super user (akses penuh seperti BOSS) → ikut di semua modul.
@@ -39,6 +41,8 @@ export const SALES_ROLES: RoleCode[] = ["BOSS", "ADMIN", "SALES"];
 export const ADMIN_ROLES: RoleCode[] = ["BOSS", "ADMIN"];
 /** Order Specialist: approve penjualan online dari Sales sebelum masuk Finance. */
 export const ORDER_SPECIALIST_ROLES: RoleCode[] = ["BOSS", "ADMIN", "ORDER_SPECIALIST"];
+/** Tirtonic Channel: kelola toko Shopee & Tokopedia dari dashboard. */
+export const CHANNEL_ROLES: RoleCode[] = ["BOSS", "ADMIN", "CHANNEL"];
 /** Kepala Cabang: ACC penjualan offline cabang sebelum masuk Finance. */
 export const HEAD_BRANCH_ROLES: RoleCode[] = ["BOSS", "ADMIN", "HEAD_BRANCH"];
 

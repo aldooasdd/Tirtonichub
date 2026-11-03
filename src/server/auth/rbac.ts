@@ -101,6 +101,13 @@ export async function requireHeadBranch(): Promise<AuthContext> {
   return ctx;
 }
 
+/** Tirtonic Channel: kelola toko Shopee & Tokopedia. */
+export async function requireChannel(): Promise<AuthContext> {
+  const ctx = await requireAuth();
+  assert(ctx.allRoles.some(can.manageChannel));
+  return ctx;
+}
+
 /** Untuk halaman laporan masuk (Admin/Boss). */
 export async function requireReports(): Promise<AuthContext> {
   const ctx = await requireAuth();
