@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { expired, inMorningWindow, itemsMessage, itemsReady, morningKey, morningPushes, wibKey, type MMember, type MTask } from "./logic";
+import { expired, inMorningWindow, itemGroups, itemsMessage, itemsReady, morningKey, morningPushes, wibKey, type MMember, type MTask } from "./logic";
 
 // Jumat 30 Okt 2026 07.00 WIB = 00.00 UTC
 const FRI_7 = new Date("2026-10-30T00:00:00Z");
@@ -81,4 +81,11 @@ test("barang masuk digabung per 2 menit", () => {
   const m = itemsMessage(["A", "B", "C", "D", "E", "F"]);
   assert.equal(m.title, "6 barang masuk");
   assert.equal(m.body, "A, B, C, D, E, …");
+});
+
+test("barang dari + Konten tidak ikut WhatsApp", () => {
+  const q = [{ itemId: "a", name: "Asics" }, { itemId: "k", name: "Konten" }, { itemId: "b", name: "Yonex" }];
+  assert.deepEqual(itemGroups(q, new Set(["k"])), [{ wa: true, names: ["Asics", "Yonex"] }, { wa: false, names: ["Konten"] }]);
+  assert.deepEqual(itemGroups(q.slice(1, 2), new Set(["k"])), [{ wa: false, names: ["Konten"] }]);
+  assert.deepEqual(itemGroups(q.slice(0, 1), new Set()), [{ wa: true, names: ["Asics"] }]);
 });
