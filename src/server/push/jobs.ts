@@ -1,6 +1,6 @@
 // Tugas terjadwal notifikasi Studio. Dijalankan tiap menit oleh src/instrumentation.ts (satu proses server).
 import { prisma } from "@/server/db";
-import { inMorningWindow, itemsMessage, itemsReady, morningKey, morningPushes, wibKey } from "./logic";
+import { inMorningWindow, itemGroups, itemsMessage, itemsReady, morningKey, morningPushes, wibKey } from "./logic";
 import { sendPush } from "./send";
 import { runKatalog } from "./katalog";
 import { markTick } from "./tick";
@@ -60,8 +60,11 @@ export async function runItems(now = new Date()) {
   if (!itemsReady(queue, now)) return;
   const r = await prisma.pushItemQueue.updateMany({ where: { id: { in: queue.map((q) => q.id) }, sentAt: null }, data: { sentAt: now } });
   if (r.count !== queue.length) return; // diambil proses lain
-  const msg = itemsMessage(queue.map((q) => q.name));
-  await sendPush(await studioUsers(), { type: "studio_barang", ...msg, url: "/studio/?p=masuk" });
+  // Barang yang dibuat otomatis dari "+ Konten" FlowSpace (src: konten) tidak dikirim ke WhatsApp; push & lonceng tetap.
+  const items = await prisma.mediaItem.findMany({ where: { id: { in: queue.map((q) => q.itemId) } }, select: { id: true, extra: true } });
+  const konten = new Set(items.filter((i) => (i.extra as { src?: unknown } | null)?.src === "konten").map((i) => i.id));
+  const users = await studioUsers();
+  for (const g of itemGroups(queue, konten)) await sendPush(users, { type: "studio_barang", ...itemsMessage(g.names), url: "/studio/?p=masuk" }, { wa: g.wa });
   await prisma.pushItemQueue.deleteMany({ where: { sentAt: { lt: new Date(now.getTime() - 30 * 86400_000) } } });
 }
 

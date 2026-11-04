@@ -119,3 +119,10 @@ export function waText(msg: { title: string; body?: string; url: string }): stri
   const link = /^https?:\/\//.test(msg.url) ? msg.url : base + (msg.url.startsWith("/") ? "" : "/") + msg.url;
   return [`*${msg.title}*`, msg.body?.trim(), "", `Buka Tirtonic Studio: ${link}`].filter((x) => x !== undefined && x !== null).join("\n").replace(/\n{3,}/g, "\n\n");
 }
+
+/** Pisahkan antrean barang masuk: barang biasa ikut WhatsApp, barang dari "+ Konten" FlowSpace tidak. Kelompok kosong dibuang. */
+export function itemGroups(queue: { itemId: string; name: string }[], konten: Set<string>) {
+  return [true, false]
+    .map((wa) => ({ wa, names: queue.filter((q) => konten.has(q.itemId) !== wa).map((q) => q.name) }))
+    .filter((g) => g.names.length);
+}
