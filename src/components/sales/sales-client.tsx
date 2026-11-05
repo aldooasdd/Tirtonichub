@@ -8,11 +8,7 @@ import { compressImage } from "@/lib/image";
 import { scanSalesNota, saveSalesReport, uploadSalesPhoto, reportSalesError } from "@/server/actions/sales";
 import { REPORT_CATEGORIES, REPORT_LABEL } from "@/lib/sales-report";
 import type { SalesItem, SalesPayment } from "@/server/n8n-sales";
-import { StringingScanClient } from "@/components/stringing/stringing-scan-client";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
-
-// Nota mengandung jasa stringing/pasang senar → wajib scan raket dulu.
-const isStringingItem = (name: string) => /string|senar|pasang\s*senar/i.test(name);
 
 export type SalesRow = {
   id: string;
@@ -154,9 +150,7 @@ export function SalesClient({
   const [photoKey, setPhotoKey] = useState<string | null>(null);
   const [productKeys, setProductKeys] = useState<string[]>([]);
   const [draft, setDraft] = useState<Draft | null>(null);
-  const [stringingDone, setStringingDone] = useState(false);
 
-  const needsStringing = !online && !!draft && draft.items.some((it) => isStringingItem(it.name));
 
   // Foto pertama = nota (dibaca AI), sisanya = foto produk (hanya diupload).
   async function onCapture(files: FileList) {
@@ -213,7 +207,6 @@ export function SalesClient({
     setDraft(null);
     setPhotoKey(null);
     setProductKeys([]);
-    setStringingDone(false);
     setMsg("");
   }
 
@@ -349,21 +342,6 @@ export function SalesClient({
             <Field label="Total"><Input inputMode="numeric" value={fmtInt(draft.total)} onChange={(e) => upd({ total: parseInt0(e.target.value) })} /></Field>
             <Field label="Grand total"><Input inputMode="numeric" value={fmtInt(draft.grandTotal)} onChange={(e) => upd({ grandTotal: parseInt0(e.target.value) })} /></Field>
           </div>
-
-          {needsStringing && (
-            <div className="space-y-2 rounded-lg border border-amber-300 bg-amber-50 p-3 dark:border-amber-900 dark:bg-amber-950/30">
-              {stringingDone ? (
-                <p className="text-14 font-medium text-emerald-600">✓ Stringing sudah discan & diselesaikan.</p>
-              ) : (
-                <>
-                  <p className="text-13 font-medium text-amber-700 dark:text-amber-400">
-                    Nota ini ada stringing. Scan barcode raket (tandai selesai + WA customer) — opsional, boleh kirim tanpa scan.
-                  </p>
-                  <StringingScanClient embedded onDone={() => setStringingDone(true)} />
-                </>
-              )}
-            </div>
-          )}
 
           <div className="flex flex-wrap gap-2">
             <Button disabled={busy} onClick={submit}>
