@@ -25,6 +25,7 @@ const jpOnly = (d: Doc | null) => !d || ((str(d.tier) || "JP") === "JP" && !d.se
 
 const PEOPLE = ["Z", "R", "A", "S"];
 const KTL_SERVER_KEYS = ["ktlNotifAt", "ktlNotifUrl", "ktlNotifErr", "ktlNotifWhy"];
+const SUSPEND_KEYS = ["suspendedAt", "suspendedBy", "pausedMs"];
 function shareWhy(s: unknown): string | null {
   if (s === undefined || s === null) return null;
   if (typeof s !== "object" || Array.isArray(s)) return "pengaturan bagikan tidak valid";
@@ -188,6 +189,11 @@ export function canWrite(
         // tanda kirim notifikasi Foto katalog hanya diisi server
         if (before && changedKeys(before, after).some((k) => KTL_SERVER_KEYS.includes(k))) return deny("tanda notifikasi diatur server");
         if (!before && KTL_SERVER_KEYS.some((k) => after[k] != null)) return deny("tanda notifikasi diatur server");
+        // menangguhkan konten hanya untuk admin penuh
+        if (!u.full && (before ? changedKeys(before, after).some((k) => SUSPEND_KEYS.includes(k)) : SUSPEND_KEYS.some((k) => after[k] != null))) return deny("tangguhkan hanya untuk admin");
+        // link skrip: hanya Google Docs (dibuka sebagai tautan di kartu semua anggota)
+        const su = str(after.scriptUrl);
+        if (su && (su.length > 500 || !su.startsWith("https://docs.google.com/"))) return deny("link skrip harus dari Google Docs");
       }
       if (u.staff) return null;
       if (op === "delete") return deny("hanya admin");
@@ -205,7 +211,7 @@ export function canWrite(
 
 const EARLY = ["Rencana", "Siap Produksi", "Diproduksi", "Editing", "QC", "Terdata", "Ready"];
 const MEMBER_TO = ["Terdata", "Diproduksi", "Editing", "Ready"];
-const MEMBER_KEYS = ["status", "shotAt", "readyAt", "note", "driveUrl", "history", "updatedAt", "updatedBy"];
+const MEMBER_KEYS = ["status", "shotAt", "readyAt", "note", "driveUrl", "scriptUrl", "history", "updatedAt", "updatedBy"];
 
 /** Anggota: hanya kartu miliknya, hanya status s.d. Ready, catatan, link file, riwayat. */
 function memberStatusUpdate(u: StudioUser, before: Doc, after: Doc): string | null {

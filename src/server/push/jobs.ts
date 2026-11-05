@@ -30,10 +30,13 @@ export async function runMorning(now = new Date()) {
     (await prisma.pushLog.findMany({ where: { key: { in: members.map((m) => morningKey(day, m.userId)) } }, select: { key: true } })).map((r) => r.key),
   );
   if (members.every((m) => done.has(morningKey(day, m.userId)))) return;
-  const tasks = await prisma.mediaTask.findMany({
-    where: { status: "Terdata", shootPlan: { not: null, lte: day } },
-    select: { type: true, title: true, status: true, shootPlan: true, producer: true, talent: true, script: true, createdAt: true },
-  });
+  // Konten yang ditangguhkan admin (extra.suspendedAt) tidak masuk rencana syuting pagi.
+  const tasks = (
+    await prisma.mediaTask.findMany({
+      where: { status: "Terdata", shootPlan: { not: null, lte: day } },
+      select: { type: true, title: true, status: true, shootPlan: true, producer: true, talent: true, script: true, createdAt: true, extra: true },
+    })
+  ).filter((t) => !(t.extra as { suspendedAt?: unknown } | null)?.suspendedAt);
   const pushes = morningPushes(
     tasks,
     members.map((m) => ({ userId: m.userId, code: m.code, name: m.user.fullName, offDays: m.offDays })),
