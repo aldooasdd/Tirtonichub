@@ -3318,7 +3318,7 @@ function renderHasil(){const g=$('hfGrid');if(!g||S.tab!=='hasil')return;if(S.de
     if(only)ks=ks.filter(k=>isCust(k)||filesIn(k).length);html=ks.map(hfTile).join('')}
   else if(brg)html=Object.keys(CATLBL).map(c=>catTile(c,rootItems.filter(i=>catOf(i)===c))).join('');
   else if(cat)html=rootItems.filter(i=>catOf(i)===cat).sort((a,b)=>(b.arrived||'').localeCompare(a.arrived||'')||(a.name||'').localeCompare(b.name||'')).map(i=>hfTile(i.id)).join('');
-  else html=ktlTile('')+brgTile(rootItems)+subsOf('').filter(isCust).map(hfTile).join('');
+  else html=brgTile(rootItems)+subsOf('').filter(isCust).map(hfTile).join(''); /* folder Foto Katalog disembunyikan (5 Nov 2026); tampilan @ktl tetap hidup untuk tautan WA Foto katalog (deepOpen) */
   g.innerHTML=html||'<div class="empty hfempty">'+(q||only?'Tidak ada folder yang cocok.':'Belum ada folder.')+'</div>';
   if(cat){$('hfFiles').hidden=$('hfFilesH').hidden=true;return}
   /* file & catatan di halaman utama (saat mencari: semua yang cocok) */
@@ -5149,7 +5149,7 @@ function start(db,me){S.db=db;S.me=me;S.isAdmin2=me.role==='admin2';S.full=me.ro
       if(S.foldersLoaded&&s.docs.some(d=>!old[d.id])&&db.resync){clearTimeout(S.rsT);S.rsT=setTimeout(()=>db.resync(),800)}S.foldersLoaded=true;renderHasil();renderFinder();renderPins()},fail);
     db.collection('docs').onSnapshot(s=>{S.docs={};s.docs.forEach(d=>{S.docs[d.id]=d.data()});renderHasil();renderFinder();docSync();renderPins()},fail);
     if(me.email)db.doc('pins/'+me.email.toLowerCase()).onSnapshot(d=>{S.pins=d.exists?((d.data()||{}).items||[]):[];renderPins()},fail)}
-  db.collection('tasks').onSnapshot(s=>{S.allTasks=s.docs.map(d=>Object.assign({id:d.id},d.data()));splitTasks();const first=!S.tasksLoaded;S.tasksLoaded=true;renderAll();renderTeam();if(first)queueBalance()},fail);
+  db.collection('tasks').onSnapshot(s=>{S.allTasks=s.docs.map(d=>Object.assign({id:d.id},d.data()));splitTasks();const first=!S.tasksLoaded;S.tasksLoaded=true;renderAll();renderTeam();renderHasil();if(first)queueBalance()},fail);
   db.doc('logs/balance').onSnapshot(s=>{S.balLog=s.exists?(s.data().entries||[]):[];renderBalLog()},fail);
   if(S.full){db.collection('reports').onSnapshot(s=>{const m={};s.docs.forEach(d=>{m[d.id]=d.data()});S.reports=m;renderReports()},fail);setInterval(()=>renderReports(),60*1000)}
   if(S.isAdmin||me.idcc)db.collection('idcc').onSnapshot(s=>{S.idcc.history=s.docs.map(d=>Object.assign({id:d.id},d.data())).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0));renderIdccHistory()},()=>{});
