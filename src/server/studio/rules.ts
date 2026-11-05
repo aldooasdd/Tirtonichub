@@ -188,6 +188,9 @@ export function canWrite(
         // tanda kirim notifikasi Foto katalog hanya diisi server
         if (before && changedKeys(before, after).some((k) => KTL_SERVER_KEYS.includes(k))) return deny("tanda notifikasi diatur server");
         if (!before && KTL_SERVER_KEYS.some((k) => after[k] != null)) return deny("tanda notifikasi diatur server");
+        // link skrip: hanya Google Docs (dibuka sebagai tautan di kartu semua anggota)
+        const su = str(after.scriptUrl);
+        if (su && (su.length > 500 || !su.startsWith("https://docs.google.com/"))) return deny("link skrip harus dari Google Docs");
       }
       if (u.staff) return null;
       if (op === "delete") return deny("hanya admin");
@@ -205,7 +208,7 @@ export function canWrite(
 
 const EARLY = ["Rencana", "Siap Produksi", "Diproduksi", "Editing", "QC", "Terdata", "Ready"];
 const MEMBER_TO = ["Terdata", "Diproduksi", "Editing", "Ready"];
-const MEMBER_KEYS = ["status", "shotAt", "readyAt", "note", "driveUrl", "history", "updatedAt", "updatedBy"];
+const MEMBER_KEYS = ["status", "shotAt", "readyAt", "note", "driveUrl", "scriptUrl", "history", "updatedAt", "updatedBy"];
 
 /** Anggota: hanya kartu miliknya, hanya status s.d. Ready, catatan, link file, riwayat. */
 function memberStatusUpdate(u: StudioUser, before: Doc, after: Doc): string | null {

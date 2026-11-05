@@ -100,6 +100,16 @@ test("tanda notifikasi Foto katalog hanya diisi server", () => {
   assert.equal(canWrite(zaki, "update", "tasks/k", k, { ...k, note: "x" }), null);
 });
 
+test("link skrip: anggota kartu boleh, hanya Google Docs", () => {
+  const k = { type: "vrv", status: "Terdata", producer: "R", editor: "R" };
+  const url = "https://docs.google.com/document/d/abc/edit?tab=t.1";
+  assert.equal(canWrite(rayhan, "update", "tasks/k", k, { ...k, scriptUrl: url }), null);
+  assert.equal(canWrite(zaki, "update", "tasks/k", k, { ...k, scriptUrl: url }), null);
+  assert.notEqual(canWrite(rayhan, "update", "tasks/k", k, { ...k, scriptUrl: "https://contoh.com/x" }), null);
+  assert.notEqual(canWrite(zaki, "update", "tasks/k", k, { ...k, scriptUrl: "javascript:alert(1)" }), null);
+  assert.notEqual(canWrite(rayhan, "update", "tasks/k", { ...k, producer: "A", editor: "A" }, { ...k, producer: "A", editor: "A", scriptUrl: url }), null);
+});
+
 test("sakelar WA Foto katalog hanya admin penuh", () => {
   assert.notEqual(canWrite(aulia, "update", "settings/main", { idccDay: 3 }, { idccDay: 3, katalogWa: true }), null);
   assert.equal(canWrite(aulia, "update", "settings/main", { idccDay: 3, katalogWa: true }, { idccDay: 4, katalogWa: true }), null);
