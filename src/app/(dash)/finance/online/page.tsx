@@ -1,6 +1,7 @@
 import { requireFinance } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { CHANNEL_LABEL, ONLINE_CHANNELS } from "@/lib/online-recon";
+import { DEMO } from "@/server/marketplace/sync";
 import { OnlineReconTable } from "@/components/finance/online-recon-table";
 
 function monthNow(): string {
@@ -13,13 +14,27 @@ export default async function FinanceOnlinePage({ searchParams }: { searchParams
   const sp = await searchParams;
   const bulan = sp.bulan && /^\d{4}-\d{2}$/.test(sp.bulan) ? sp.bulan : monthNow();
 
-  const saved = await prisma.onlineRecon.findMany({ where: { month: bulan } });
+  const [y, m] = bulan.split("-").map(Number);
+  const from = new Date(`${bulan}-01T00:00:00+07:00`);
+  const to = new Date(`${m === 12 ? y + 1 : y}-${String(m === 12 ? 1 : m + 1).padStart(2, "0")}-01T00:00:00+07:00`);
+
+  const [saved, cair] = await Promise.all([
+    prisma.onlineRecon.findMany({ where: { month: bulan } }),
+    // Dana cair dari API marketplace (Tirtonic Channel), tanpa data Mode Contoh.
+    prisma.marketplacePayout.groupBy({
+      by: ["platform"],
+      where: { paidAt: { gte: from, lt: to }, shopId: { not: DEMO } },
+      _sum: { amount: true },
+    }),
+  ]);
   const byCh = new Map(saved.map((s) => [s.channel, s]));
+  const cairBy = new Map(cair.map((c) => [c.platform, c._sum.amount ?? 0]));
   const rows = ONLINE_CHANNELS.map((c) => ({
     channel: c,
     label: CHANNEL_LABEL[c],
     actual: byCh.get(c)?.actual ?? null,
     note: byCh.get(c)?.note ?? "",
+    cair: cairBy.has(c) ? cairBy.get(c)! : null,
   }));
 
   return (
