@@ -12,6 +12,7 @@ export type OnlineReconRow = {
   label: string;
   actual: number | null; // null = belum diisi
   note: string;
+  cair: number | null; // dana cair otomatis dari marketplace bulan ini (null = tak ada data)
 };
 
 /** Dompet online: saldo per kanal per bulan, diisi & disimpan Finance. */
@@ -54,6 +55,20 @@ export function OnlineReconTable({ month, rows }: { month: string; rows: OnlineR
                   className="h-9 w-full rounded-md border bg-background px-2 text-right text-14"
                 />
               </label>
+              {r.cair != null && (
+                <div className="flex items-center justify-between gap-2 rounded-md bg-muted px-2 py-1.5 text-12">
+                  <span>
+                    Dana cair otomatis: <b className="tabular-nums">{rupiah(r.cair)}</b>
+                  </span>
+                  <button
+                    type="button"
+                    onClick={() => setDraft({ ...draft, [r.channel]: { ...d, actual: r.cair ?? 0 } })}
+                    className="rounded border bg-card px-2 py-0.5 font-medium"
+                  >
+                    Pakai
+                  </button>
+                </div>
+              )}
               <label className="block space-y-1">
                 <span className="text-12 text-muted-foreground">Catatan</span>
                 <textarea
