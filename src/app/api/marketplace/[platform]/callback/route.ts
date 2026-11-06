@@ -7,13 +7,15 @@ import { shopeeShopName, shopeeTokenFromCode } from "@/server/marketplace/shopee
 import { tiktokShops, tiktokTokenFromCode } from "@/server/marketplace/tiktok";
 import { saveShop, syncItems, syncOrders } from "@/server/marketplace/sync";
 
-const back = (req: NextRequest, msg: string) => NextResponse.redirect(new URL(`/channel?pesan=${encodeURIComponent(msg)}`, req.url));
+// req.url di dalam container = localhost:3000, jadi redirect pakai APP_URL.
+const base = () => (process.env.APP_URL || "https://tirtonichub.com").replace(/\/$/, "");
+const back = (_req: NextRequest, msg: string) => NextResponse.redirect(`${base()}/channel?pesan=${encodeURIComponent(msg)}`);
 
 /** Balikan izin toko dari Shopee / TikTok Shop: tukar code → token, simpan, sinkron awal. */
 export async function GET(req: NextRequest, { params }: { params: Promise<{ platform: string }> }) {
   const { platform } = await params;
   const s = await getSession();
-  if (!s || !s.roles.some(can.manageChannel)) return NextResponse.redirect(new URL("/login", req.url));
+  if (!s || !s.roles.some(can.manageChannel)) return NextResponse.redirect(`${base()}/login`);
 
   const q = req.nextUrl.searchParams;
   const jar = await cookies();
