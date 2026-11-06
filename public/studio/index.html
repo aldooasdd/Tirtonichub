@@ -143,7 +143,7 @@ details.kmore[open]{display:grid;gap:8px}
 details.kmore[open] summary{margin-bottom:4px}
 .kgrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 8px}
 .kgrid select,.kgrid input{padding:6px 8px;font-size:13px}
-.krow{display:flex;justify-content:space-between;align-items:center;gap:8px}.kacts{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}
+.krow{display:flex;justify-content:space-between;align-items:center;gap:8px}.kacts{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:8px}.kacts .ghost.danger:hover{background:color-mix(in srgb,var(--crit) 12%,var(--surface));animation:kactPop .32s cubic-bezier(.2,.8,.2,1)}@keyframes kactPop{0%,100%{transform:scale(1)}45%{transform:scale(1.1)}}@media (prefers-reduced-motion:reduce){.kacts .ghost.danger:hover{animation:none}}
 .addph2{cursor:pointer;border-style:dashed}
 .addph2:hover{color:var(--navy);border-color:var(--navy)}
 @media (max-width:820px){.kanban{grid-auto-columns:86%;scroll-snap-type:x mandatory}}
@@ -4001,7 +4001,7 @@ function cardInner(t){const me=S.me&&S.me.code;const adm=S.isAdmin;const canNote
     more+='<div class="rolestxt">'+(IDX[t.status]<=0?dl('Syuting',t.shootPlan):'')+(IDX[t.status]<IDX['Ready']?dl('Edit selesai',t.due||t.editPlan):'')+dl(t.sugg?'Saran tayang':'Tayang',t.sugg?t.suggAt:t.postAt)+(timeOf(t)?'<span>pukul <b>'+fmtTime(timeOf(t))+'</b></span>':'')+'</div>'}
   more+=noteHtml(t,canNote)+scriptHtml(t,canNote)+(S.hub?fileFinalHtml(t,canNote):driveHtml(t,canNote))+(adm?capHtml(t)+metaHtml(t):'')+
     '<div class="fname"><code>'+esc(fileName(t))+'</code><button class="ghost" data-act="copy">Salin</button></div>'+histHtml(t)+
-    (adm?'<div class="krow">'+lifeChip(t)+'<span class="kacts">'+(S.full&&t.status!=='Tayang'?'<button class="ghost" data-act="suspend">Tangguhkan</button>':'')+'<button class="ghost danger" data-act="delTask">'+'Hapus'+'</button></span></div>':'');
+    (adm?'<div class="krow">'+lifeChip(t)+'<span class="kacts">'+(S.full&&t.status!=='Tayang'?'<button class="ghost danger" data-act="suspend">Tangguhkan</button>':'')+'<button class="ghost danger" data-act="delTask">'+'Hapus'+'</button></span></div>':'');
   const hasNote=!!(t.note||t.driveUrl);const open=!!S.kmRendering;   /* Detail hanya terbuka di jendela tengah, kartu di papan selalu ringkas */
   return'<article class="card k ty ty-'+esc(t.type)+(late(t)?' late':'')+'" data-id="'+esc(t.id)+'">'+
     '<div class="khead"><h4 class="ktype">'+tyIc(t.type)+esc(TYPES[t.type].label)+'</h4>'+dlHtml(t)+'</div>'+
