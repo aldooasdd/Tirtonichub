@@ -5,7 +5,7 @@ import { fmtWIB } from "@/lib/datetime";
 
 type Item = { name: string; qty: number };
 type Ch = "online" | "offline";
-type SP = { semua?: string; dari?: string; sampai?: string; cabang?: string };
+type SP = { semua?: string; tanggal?: string; cabang?: string };
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 const ymd = (s?: string) => (s && /^\d{4}-\d{2}-\d{2}$/.test(s) ? s : "");
@@ -15,17 +15,13 @@ const ALL_CAP = 500; // ponytail: "tampilkan semua" dibatasi 500 baris; tambah p
 export default async function RiwayatPenjualanPage({ searchParams }: { searchParams: Promise<SP> }) {
   await requireOnlineSales();
   const sp = await searchParams;
-  const dari = ymd(sp.dari);
-  const sampai = ymd(sp.sampai);
+  const tanggal = ymd(sp.tanggal);
   const cabang = sp.cabang ?? "";
   const semua: Ch | null = sp.semua === "online" || sp.semua === "offline" ? sp.semua : null;
 
-  // Filter tanggal = tanggal disetujui (WIB).
-  const approvedAt = {
-    not: null,
-    ...(dari ? { gte: new Date(`${dari}T00:00:00+07:00`) } : {}),
-    ...(sampai ? { lt: new Date(new Date(`${sampai}T00:00:00+07:00`).getTime() + 86400_000) } : {}),
-  };
+  // Filter tanggal = hari disetujui (WIB).
+  const day = tanggal ? new Date(`${tanggal}T00:00:00+07:00`) : null;
+  const approvedAt = { not: null, ...(day ? { gte: day, lt: new Date(day.getTime() + 86400_000) } : {}) };
 
   const branches = await prisma.branch.findMany({ select: { id: true, name: true }, orderBy: { name: "asc" } });
 
@@ -43,25 +39,14 @@ export default async function RiwayatPenjualanPage({ searchParams }: { searchPar
   const nameOf = new Map(users.map((u) => [u.id, u.fullName]));
 
   const qs = (extra: Record<string, string>) => {
-    const p = new URLSearchParams({ ...(dari && { dari }), ...(sampai && { sampai }), ...(cabang && { cabang }), ...extra });
+    const p = new URLSearchParams({ ...(tanggal && { tanggal }), ...(cabang && { cabang }), ...extra });
     const s = p.toString();
     return s ? `?${s}` : "?";
   };
 
   const card = (ch: Ch, rows: typeof online) => (
     <section className="space-y-3 rounded-lg border bg-card p-4">
-      <div className="flex items-center justify-between gap-2">
-        <h2 className="font-semibold">{ch === "online" ? "Penjualan Online" : "Penjualan Offline (Cabang)"}</h2>
-        {semua === ch ? (
-          <Link href={qs({})} className="text-14 font-medium text-primary">
-            Tampilkan 5 terbaru
-          </Link>
-        ) : (
-          <Link href={qs({ semua: ch })} className="text-14 font-medium text-primary">
-            Tampilkan semua
-          </Link>
-        )}
-      </div>
+      <h2 className="font-semibold">{ch === "online" ? "Penjualan Online" : "Penjualan Offline (Cabang)"}</h2>
       {rows.length === 0 ? (
         <p className="text-14 text-muted-foreground">Belum ada riwayat.</p>
       ) : (
@@ -96,9 +81,17 @@ export default async function RiwayatPenjualanPage({ searchParams }: { searchPar
             </tbody>
           </table>
           {semua === ch && rows.length === ALL_CAP && (
-            <p className="pt-2 text-12 text-muted-foreground">Menampilkan {ALL_CAP} terbaru. Persempit tanggal untuk melihat yang lebih lama.</p>
+            <p className="pt-2 text-12 text-muted-foreground">Menampilkan {ALL_CAP} terbaru. Pilih tanggal untuk melihat yang lebih lama.</p>
           )}
         </div>
+      )}
+      {(semua === ch || rows.length === 5) && (
+        <Link
+          href={semua === ch ? qs({}) : qs({ semua: ch })}
+          className="block w-full rounded-md border py-2 text-center text-14 font-medium hover:bg-muted"
+        >
+          {semua === ch ? "Show less" : "Show more"}
+        </Link>
       )}
     </section>
   );
@@ -113,12 +106,8 @@ export default async function RiwayatPenjualanPage({ searchParams }: { searchPar
       <form method="get" className="flex flex-wrap items-end gap-2">
         {semua && <input type="hidden" name="semua" value={semua} />}
         <label className="flex flex-col gap-1 text-12 text-muted-foreground">
-          Dari
-          <input type="date" name="dari" defaultValue={dari} className="h-9 rounded-md border bg-card px-2 text-14" />
-        </label>
-        <label className="flex flex-col gap-1 text-12 text-muted-foreground">
-          Sampai
-          <input type="date" name="sampai" defaultValue={sampai} className="h-9 rounded-md border bg-card px-2 text-14" />
+          Tanggal disetujui
+          <input type="date" name="tanggal" defaultValue={tanggal} className="h-9 rounded-md border bg-card px-2 text-14" />
         </label>
         <label className="flex flex-col gap-1 text-12 text-muted-foreground">
           Cabang (offline)
@@ -134,7 +123,7 @@ export default async function RiwayatPenjualanPage({ searchParams }: { searchPar
         <button type="submit" className="h-9 rounded-md border bg-card px-3 text-14 font-medium">
           Terapkan
         </button>
-        {(dari || sampai || cabang) && (
+        {(tanggal || cabang) && (
           <Link href={semua ? `?semua=${semua}` : "?"} className="h-9 px-2 text-14 leading-9 text-muted-foreground">
             Reset
           </Link>
