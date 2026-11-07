@@ -7,6 +7,7 @@ import { fmtWIB } from "@/lib/datetime";
 import { productStatus } from "@/lib/channel-status";
 import { DEMO, PLATFORM_LABEL } from "@/server/marketplace/sync";
 import { ItemTable } from "@/components/channel/item-table";
+import { ProductOps } from "@/components/channel/product-ops";
 
 const TAG: Record<string, string> = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600" };
 
@@ -135,6 +136,13 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
                 ))}
               </dl>
             </div>
+          )}
+          {platform === "TOKOPEDIA" && items[0]?.shopId !== DEMO && (
+            <ProductOps
+              productId={itemId}
+              active={d?.status === "ACTIVATE"}
+              variants={Object.fromEntries(items.map((i) => [i.modelId, i.variant ?? i.sku ?? i.name]))}
+            />
           )}
           {!d && <p className="rounded-md bg-amber-500/10 p-3 text-14 text-amber-700">Detail produk belum tersinkron. Sinkron detail berjalan bertahap tiap jam.</p>}
         </div>

@@ -20,7 +20,7 @@ export async function activeShop(platform: Platform): Promise<Shop | null> {
 }
 
 /** Token masih segar? Kalau ≤5 menit lagi habis → refresh & simpan. */
-async function fresh(shop: Shop): Promise<Shop> {
+export async function fresh(shop: Shop): Promise<Shop> {
   if (shop.shopId === DEMO || shop.expiresAt.getTime() - Date.now() > 5 * 60_000) return shop;
   const t =
     shop.platform === "SHOPEE" ? await shopee.shopeeRefresh(shop.refreshToken, shop.shopId) : await tiktok.tiktokRefresh(shop.refreshToken);
@@ -120,7 +120,7 @@ async function upsertOrders(platform: Platform, shopId: string, orders: MpOrder[
       total: o.total,
       ...(o.trackingNo ? { trackingNo: o.trackingNo } : {}),
       // Detail pengiriman: hanya timpa bila sumber mengirim nilai.
-      ...Object.fromEntries((["recipient", "phone", "address", "courier", "buyerNote", "payment"] as const).filter((k) => o[k]).map((k) => [k, o[k]])),
+      ...Object.fromEntries((["recipient", "phone", "address", "courier", "buyerNote", "payment", "packageId", "deliveryOptionId", "shippingType"] as const).filter((k) => o[k]).map((k) => [k, o[k]])),
       orderedAt: o.orderedAt,
       updatedAtMp: o.updatedAt,
     };

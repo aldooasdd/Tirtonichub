@@ -5,6 +5,7 @@ import { fmtWIB } from "@/lib/datetime";
 import { ORDER_TABS, statusLabel, statusTone } from "@/lib/channel-status";
 import { DEMO, PLATFORMS, PLATFORM_LABEL, apiReady } from "@/server/marketplace/sync";
 import { ShopPanel } from "@/components/channel/shop-panel";
+import { OrderActions } from "@/components/channel/order-actions";
 import type { Prisma } from "@/generated/prisma";
 import type { OrderFinance } from "@/server/marketplace/tiktok";
 
@@ -273,6 +274,9 @@ export default async function ChannelPage({ searchParams }: { searchParams: Prom
                     </div>
                   </div>
                 </div>
+                {o.platform === "TOKOPEDIA" && o.shopId !== DEMO && (
+                  <OrderActions o={{ id: o.id, status: o.status, shippingType: o.shippingType, packageId: o.packageId, trackingNo: o.trackingNo }} />
+                )}
               </article>
             );
           })}

@@ -52,3 +52,16 @@ const PRODUCT_STATUS: Record<string, { label: string; tone: string }> = {
 /** Status produk TikTok Shop → label & warna. */
 export const productStatus = (s: string | null | undefined) => (s ? PRODUCT_STATUS[s] ?? { label: s, tone: "text-muted-foreground" } : null);
 
+
+/** Alasan gagal antar (TikTok Update Package Delivery Status). */
+export const FAIL_REASONS: Record<string, string> = {
+  INVALID_ADDRESS: "Alamat tidak valid",
+  UNABLE_RECEIVE: "Pembeli tidak bisa menerima",
+  UNABLE_CONTACT_BUYER: "Pembeli tidak bisa dihubungi",
+  BUYER_REFUSED: "Pembeli menolak",
+  DELAY_DELIVERY: "Pengiriman tertunda",
+  PACKAGE_LOST: "Paket hilang",
+  PACKAGE_DAMAGE: "Paket rusak",
+  FORCE_MAJEURE: "Keadaan kahar",
+  OTHER: "Lainnya",
+};

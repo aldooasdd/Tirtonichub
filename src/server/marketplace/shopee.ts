@@ -82,6 +82,9 @@ export type MpOrder = {
   courier?: string | null;
   buyerNote?: string | null;
   payment?: string | null;
+  packageId?: string | null;
+  deliveryOptionId?: string | null;
+  shippingType?: string | null;
 };
 
 /** Order yang berubah sejak `from` (maks 15 hari per jendela, aturan Shopee). */

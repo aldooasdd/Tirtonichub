@@ -14,7 +14,7 @@ const sec = (d: Date) => Math.floor(d.getTime() / 1000);
 
 type Tok = { accessToken: string; refreshToken: string; expiresAt: Date };
 
-async function call<T>(path: string, opts: { method?: "GET" | "POST"; query?: Record<string, string | number>; body?: unknown; token: string; cipher?: string }): Promise<T> {
+export async function call<T>(path: string, opts: { method?: "GET" | "POST"; query?: Record<string, string | number>; body?: unknown; token: string; cipher?: string }): Promise<T> {
   const query: Record<string, string> = { app_key: key(), timestamp: String(Math.floor(Date.now() / 1000)) };
   if (opts.cipher) query.shop_cipher = opts.cipher;
   for (const [k, v] of Object.entries(opts.query ?? {})) query[k] = String(v);
@@ -76,6 +76,9 @@ export async function tiktokOrders(token: string, cipher: string, from: Date): P
         delivery_option_name?: string;
         buyer_message?: string;
         payment_method_name?: string;
+        packages?: { id: string }[];
+        delivery_option_id?: string;
+        shipping_type?: string;
         create_time: number;
         update_time: number;
         payment?: { total_amount?: string };
@@ -112,6 +115,9 @@ export async function tiktokOrders(token: string, cipher: string, from: Date): P
         courier: o.shipping_provider || o.delivery_option_name || null,
         buyerNote: o.buyer_message || null,
         payment: o.payment_method_name || null,
+        packageId: o.packages?.[0]?.id || null,
+        deliveryOptionId: o.delivery_option_id || null,
+        shippingType: o.shipping_type || null,
         orderedAt: new Date(o.create_time * 1000),
         updatedAt: new Date(o.update_time * 1000),
       });

@@ -20,7 +20,8 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 export type User = $Result.DefaultSelection<Prisma.$UserPayload>
 /**
  * Model Report
- * * Laporan/keluhan error dari karyawan → ditangani Admin.
+ * *
+ *  * Laporan/keluhan error dari karyawan → ditangani Admin.
  */
 export type Report = $Result.DefaultSelection<Prisma.$ReportPayload>
 /**
@@ -65,9 +66,10 @@ export type Session = $Result.DefaultSelection<Prisma.$SessionPayload>
 export type Branch = $Result.DefaultSelection<Prisma.$BranchPayload>
 /**
  * Model CashSession
- * * Saldo kasir per cabang per hari (laci + 3 EDC). 1 kasir/hari: dibuka wakil shift
- *  *  pertama (Pagi) saat absen masuk, ditutup wakil shift terakhir (Siang) saat absen
- *  *  pulang (boleh beda orang). Rekonsiliasi vs penjualan+pembelian.
+ * *
+ *  * Saldo kasir per cabang per hari (laci + 3 EDC). 1 kasir/hari: dibuka wakil shift
+ *  * pertama (Pagi) saat absen masuk, ditutup wakil shift terakhir (Siang) saat absen
+ *  * pulang (boleh beda orang). Rekonsiliasi vs penjualan+pembelian.
  */
 export type CashSession = $Result.DefaultSelection<Prisma.$CashSessionPayload>
 /**
@@ -35844,6 +35846,9 @@ export namespace Prisma {
     buyerNote: string | null
     payment: string | null
     financeAt: Date | null
+    packageId: string | null
+    deliveryOptionId: string | null
+    shippingType: string | null
     orderedAt: Date | null
     updatedAtMp: Date | null
     syncedAt: Date | null
@@ -35866,6 +35871,9 @@ export namespace Prisma {
     buyerNote: string | null
     payment: string | null
     financeAt: Date | null
+    packageId: string | null
+    deliveryOptionId: string | null
+    shippingType: string | null
     orderedAt: Date | null
     updatedAtMp: Date | null
     syncedAt: Date | null
@@ -35890,6 +35898,9 @@ export namespace Prisma {
     payment: number
     finance: number
     financeAt: number
+    packageId: number
+    deliveryOptionId: number
+    shippingType: number
     orderedAt: number
     updatedAtMp: number
     syncedAt: number
@@ -35924,6 +35935,9 @@ export namespace Prisma {
     buyerNote?: true
     payment?: true
     financeAt?: true
+    packageId?: true
+    deliveryOptionId?: true
+    shippingType?: true
     orderedAt?: true
     updatedAtMp?: true
     syncedAt?: true
@@ -35946,6 +35960,9 @@ export namespace Prisma {
     buyerNote?: true
     payment?: true
     financeAt?: true
+    packageId?: true
+    deliveryOptionId?: true
+    shippingType?: true
     orderedAt?: true
     updatedAtMp?: true
     syncedAt?: true
@@ -35970,6 +35987,9 @@ export namespace Prisma {
     payment?: true
     finance?: true
     financeAt?: true
+    packageId?: true
+    deliveryOptionId?: true
+    shippingType?: true
     orderedAt?: true
     updatedAtMp?: true
     syncedAt?: true
@@ -36081,6 +36101,9 @@ export namespace Prisma {
     payment: string | null
     finance: JsonValue | null
     financeAt: Date | null
+    packageId: string | null
+    deliveryOptionId: string | null
+    shippingType: string | null
     orderedAt: Date
     updatedAtMp: Date
     syncedAt: Date
@@ -36124,6 +36147,9 @@ export namespace Prisma {
     payment?: boolean
     finance?: boolean
     financeAt?: boolean
+    packageId?: boolean
+    deliveryOptionId?: boolean
+    shippingType?: boolean
     orderedAt?: boolean
     updatedAtMp?: boolean
     syncedAt?: boolean
@@ -36148,6 +36174,9 @@ export namespace Prisma {
     payment?: boolean
     finance?: boolean
     financeAt?: boolean
+    packageId?: boolean
+    deliveryOptionId?: boolean
+    shippingType?: boolean
     orderedAt?: boolean
     updatedAtMp?: boolean
     syncedAt?: boolean
@@ -36172,6 +36201,9 @@ export namespace Prisma {
     payment?: boolean
     finance?: boolean
     financeAt?: boolean
+    packageId?: boolean
+    deliveryOptionId?: boolean
+    shippingType?: boolean
     orderedAt?: boolean
     updatedAtMp?: boolean
     syncedAt?: boolean
@@ -36196,12 +36228,15 @@ export namespace Prisma {
     payment?: boolean
     finance?: boolean
     financeAt?: boolean
+    packageId?: boolean
+    deliveryOptionId?: boolean
+    shippingType?: boolean
     orderedAt?: boolean
     updatedAtMp?: boolean
     syncedAt?: boolean
   }
 
-  export type MarketplaceOrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "shopId" | "orderSn" | "status" | "buyer" | "items" | "total" | "netAmount" | "trackingNo" | "recipient" | "phone" | "address" | "courier" | "buyerNote" | "payment" | "finance" | "financeAt" | "orderedAt" | "updatedAtMp" | "syncedAt", ExtArgs["result"]["marketplaceOrder"]>
+  export type MarketplaceOrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "shopId" | "orderSn" | "status" | "buyer" | "items" | "total" | "netAmount" | "trackingNo" | "recipient" | "phone" | "address" | "courier" | "buyerNote" | "payment" | "finance" | "financeAt" | "packageId" | "deliveryOptionId" | "shippingType" | "orderedAt" | "updatedAtMp" | "syncedAt", ExtArgs["result"]["marketplaceOrder"]>
 
   export type $MarketplaceOrderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MarketplaceOrder"
@@ -36225,6 +36260,9 @@ export namespace Prisma {
       payment: string | null
       finance: Prisma.JsonValue | null
       financeAt: Date | null
+      packageId: string | null
+      deliveryOptionId: string | null
+      shippingType: string | null
       orderedAt: Date
       updatedAtMp: Date
       syncedAt: Date
@@ -36669,6 +36707,9 @@ export namespace Prisma {
     readonly payment: FieldRef<"MarketplaceOrder", 'String'>
     readonly finance: FieldRef<"MarketplaceOrder", 'Json'>
     readonly financeAt: FieldRef<"MarketplaceOrder", 'DateTime'>
+    readonly packageId: FieldRef<"MarketplaceOrder", 'String'>
+    readonly deliveryOptionId: FieldRef<"MarketplaceOrder", 'String'>
+    readonly shippingType: FieldRef<"MarketplaceOrder", 'String'>
     readonly orderedAt: FieldRef<"MarketplaceOrder", 'DateTime'>
     readonly updatedAtMp: FieldRef<"MarketplaceOrder", 'DateTime'>
     readonly syncedAt: FieldRef<"MarketplaceOrder", 'DateTime'>
@@ -60543,6 +60584,9 @@ export namespace Prisma {
     payment: 'payment',
     finance: 'finance',
     financeAt: 'financeAt',
+    packageId: 'packageId',
+    deliveryOptionId: 'deliveryOptionId',
+    shippingType: 'shippingType',
     orderedAt: 'orderedAt',
     updatedAtMp: 'updatedAtMp',
     syncedAt: 'syncedAt'
@@ -63318,6 +63362,9 @@ export namespace Prisma {
     payment?: StringNullableFilter<"MarketplaceOrder"> | string | null
     finance?: JsonNullableFilter<"MarketplaceOrder">
     financeAt?: DateTimeNullableFilter<"MarketplaceOrder"> | Date | string | null
+    packageId?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    deliveryOptionId?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    shippingType?: StringNullableFilter<"MarketplaceOrder"> | string | null
     orderedAt?: DateTimeFilter<"MarketplaceOrder"> | Date | string
     updatedAtMp?: DateTimeFilter<"MarketplaceOrder"> | Date | string
     syncedAt?: DateTimeFilter<"MarketplaceOrder"> | Date | string
@@ -63342,6 +63389,9 @@ export namespace Prisma {
     payment?: SortOrderInput | SortOrder
     finance?: SortOrderInput | SortOrder
     financeAt?: SortOrderInput | SortOrder
+    packageId?: SortOrderInput | SortOrder
+    deliveryOptionId?: SortOrderInput | SortOrder
+    shippingType?: SortOrderInput | SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
@@ -63370,6 +63420,9 @@ export namespace Prisma {
     payment?: StringNullableFilter<"MarketplaceOrder"> | string | null
     finance?: JsonNullableFilter<"MarketplaceOrder">
     financeAt?: DateTimeNullableFilter<"MarketplaceOrder"> | Date | string | null
+    packageId?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    deliveryOptionId?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    shippingType?: StringNullableFilter<"MarketplaceOrder"> | string | null
     orderedAt?: DateTimeFilter<"MarketplaceOrder"> | Date | string
     updatedAtMp?: DateTimeFilter<"MarketplaceOrder"> | Date | string
     syncedAt?: DateTimeFilter<"MarketplaceOrder"> | Date | string
@@ -63394,6 +63447,9 @@ export namespace Prisma {
     payment?: SortOrderInput | SortOrder
     finance?: SortOrderInput | SortOrder
     financeAt?: SortOrderInput | SortOrder
+    packageId?: SortOrderInput | SortOrder
+    deliveryOptionId?: SortOrderInput | SortOrder
+    shippingType?: SortOrderInput | SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
@@ -63426,6 +63482,9 @@ export namespace Prisma {
     payment?: StringNullableWithAggregatesFilter<"MarketplaceOrder"> | string | null
     finance?: JsonNullableWithAggregatesFilter<"MarketplaceOrder">
     financeAt?: DateTimeNullableWithAggregatesFilter<"MarketplaceOrder"> | Date | string | null
+    packageId?: StringNullableWithAggregatesFilter<"MarketplaceOrder"> | string | null
+    deliveryOptionId?: StringNullableWithAggregatesFilter<"MarketplaceOrder"> | string | null
+    shippingType?: StringNullableWithAggregatesFilter<"MarketplaceOrder"> | string | null
     orderedAt?: DateTimeWithAggregatesFilter<"MarketplaceOrder"> | Date | string
     updatedAtMp?: DateTimeWithAggregatesFilter<"MarketplaceOrder"> | Date | string
     syncedAt?: DateTimeWithAggregatesFilter<"MarketplaceOrder"> | Date | string
@@ -67525,6 +67584,9 @@ export namespace Prisma {
     payment?: string | null
     finance?: NullableJsonNullValueInput | InputJsonValue
     financeAt?: Date | string | null
+    packageId?: string | null
+    deliveryOptionId?: string | null
+    shippingType?: string | null
     orderedAt: Date | string
     updatedAtMp: Date | string
     syncedAt?: Date | string
@@ -67549,6 +67611,9 @@ export namespace Prisma {
     payment?: string | null
     finance?: NullableJsonNullValueInput | InputJsonValue
     financeAt?: Date | string | null
+    packageId?: string | null
+    deliveryOptionId?: string | null
+    shippingType?: string | null
     orderedAt: Date | string
     updatedAtMp: Date | string
     syncedAt?: Date | string
@@ -67573,6 +67638,9 @@ export namespace Prisma {
     payment?: NullableStringFieldUpdateOperationsInput | string | null
     finance?: NullableJsonNullValueInput | InputJsonValue
     financeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    shippingType?: NullableStringFieldUpdateOperationsInput | string | null
     orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -67597,6 +67665,9 @@ export namespace Prisma {
     payment?: NullableStringFieldUpdateOperationsInput | string | null
     finance?: NullableJsonNullValueInput | InputJsonValue
     financeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    shippingType?: NullableStringFieldUpdateOperationsInput | string | null
     orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -67621,6 +67692,9 @@ export namespace Prisma {
     payment?: string | null
     finance?: NullableJsonNullValueInput | InputJsonValue
     financeAt?: Date | string | null
+    packageId?: string | null
+    deliveryOptionId?: string | null
+    shippingType?: string | null
     orderedAt: Date | string
     updatedAtMp: Date | string
     syncedAt?: Date | string
@@ -67645,6 +67719,9 @@ export namespace Prisma {
     payment?: NullableStringFieldUpdateOperationsInput | string | null
     finance?: NullableJsonNullValueInput | InputJsonValue
     financeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    shippingType?: NullableStringFieldUpdateOperationsInput | string | null
     orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -67669,6 +67746,9 @@ export namespace Prisma {
     payment?: NullableStringFieldUpdateOperationsInput | string | null
     finance?: NullableJsonNullValueInput | InputJsonValue
     financeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    packageId?: NullableStringFieldUpdateOperationsInput | string | null
+    deliveryOptionId?: NullableStringFieldUpdateOperationsInput | string | null
+    shippingType?: NullableStringFieldUpdateOperationsInput | string | null
     orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -71439,6 +71519,9 @@ export namespace Prisma {
     payment?: SortOrder
     finance?: SortOrder
     financeAt?: SortOrder
+    packageId?: SortOrder
+    deliveryOptionId?: SortOrder
+    shippingType?: SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
@@ -71466,6 +71549,9 @@ export namespace Prisma {
     buyerNote?: SortOrder
     payment?: SortOrder
     financeAt?: SortOrder
+    packageId?: SortOrder
+    deliveryOptionId?: SortOrder
+    shippingType?: SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
@@ -71488,6 +71574,9 @@ export namespace Prisma {
     buyerNote?: SortOrder
     payment?: SortOrder
     financeAt?: SortOrder
+    packageId?: SortOrder
+    deliveryOptionId?: SortOrder
+    shippingType?: SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
