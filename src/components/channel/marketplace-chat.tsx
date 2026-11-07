@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useRef, useState, useTransition } from "react";
 import { chatMessages, listChats, sendChat, type ChatConv } from "@/server/actions/marketplace-chat";
 import type { MpMsg } from "@/server/marketplace/shopee";
+import { DEMO_MSGS } from "./marketplace-chat-demo";
 
 const LABEL = { SHOPEE: "Shopee", TOKOPEDIA: "Tokopedia" } as const;
 const TAG = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600" } as const;
@@ -10,7 +11,8 @@ const jam = (ms: number) =>
   ms ? new Date(ms).toLocaleString("id-ID", { timeZone: "Asia/Jakarta", day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit" }) : "";
 
 /** Inbox chat Shopee + Tokopedia. Daftar diperbarui tiap 15 dtk, chat terbuka tiap 10 dtk. */
-export function MarketplaceChat({ initial }: { initial: { convs: ChatConv[]; errors: string[] } }) {
+/** demo = data contoh lokal: tidak memanggil API, balasan hanya tampil di layar. */
+export function MarketplaceChat({ initial, demo = false }: { initial: { convs: ChatConv[]; errors: string[] }; demo?: boolean }) {
   const [convs, setConvs] = useState(initial.convs);
   const [errors, setErrors] = useState(initial.errors);
   const [open, setOpen] = useState<ChatConv | null>(null);
@@ -21,19 +23,21 @@ export function MarketplaceChat({ initial }: { initial: { convs: ChatConv[]; err
   const bottom = useRef<HTMLDivElement>(null);
 
   const refreshList = useCallback(async () => {
+    if (demo) return;
     const r = await listChats().catch(() => null);
     if (!r) return;
     setConvs(r.convs);
     setErrors(r.errors);
-  }, []);
+  }, [demo]);
 
   const loadMsgs = useCallback(async (c: ChatConv) => {
+    if (demo) return setMsgs(DEMO_MSGS[c.id] ?? []);
     const r = await chatMessages(c.platform, c.id).catch(() => ({ ok: false, message: "Gagal memuat. Muat ulang halaman." }) as const);
     if (r.ok && "messages" in r && r.messages) {
       setMsgs(r.messages);
       setMsgErr(null);
     } else setMsgErr(r.message ?? "Gagal memuat chat.");
-  }, []);
+  }, [demo]);
 
   useEffect(() => {
     const t = setInterval(() => void refreshList(), 15_000);
@@ -52,6 +56,7 @@ export function MarketplaceChat({ initial }: { initial: { convs: ChatConv[]; err
 
   function pick(c: ChatConv) {
     setOpen(c);
+    setConvs((cs) => cs.map((x) => (x.id === c.id && x.platform === c.platform ? { ...x, unread: 0 } : x)));
     setMsgs([]);
     setMsgErr(null);
     void loadMsgs(c);
@@ -61,6 +66,14 @@ export function MarketplaceChat({ initial }: { initial: { convs: ChatConv[]; err
     if (!open || !text.trim()) return;
     const c = open;
     const body = text;
+    if (demo) {
+      const msg: MpMsg = { id: String(Date.now()), mine: true, text: body.trim(), image: null, at: Date.now() };
+      DEMO_MSGS[c.id] = [...(DEMO_MSGS[c.id] ?? []), msg];
+      setMsgs(DEMO_MSGS[c.id]);
+      setConvs((cs) => cs.map((x) => (x.id === c.id ? { ...x, last: msg.text, at: msg.at, unread: 0 } : x)));
+      setText("");
+      return;
+    }
     startSend(async () => {
       const r = await sendChat(c.platform, c.id, c.toId, body).catch(() => ({ ok: false, message: "Gagal kirim. Muat ulang halaman." }));
       if (!r.ok) {
