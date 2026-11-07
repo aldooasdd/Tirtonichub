@@ -1,30 +1,47 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState, useTransition } from "react";
-import {
-  chatMessages,
-  listChats,
-  sendChat,
-  type ChatConv,
-} from "@/server/actions/marketplace-chat";
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
+import { ChevronLeft, Search, SendHorizontal } from "lucide-react";
+import { chatMessages, listChats, sendChat, type ChatConv } from "@/server/actions/marketplace-chat";
 import type { MpMsg } from "@/server/marketplace/shopee";
 import { DEMO_MSGS } from "./marketplace-chat-demo";
 
 const LABEL = { SHOPEE: "Shopee", TOKOPEDIA: "Tokopedia" } as const;
-const TAG = {
-  SHOPEE: "bg-orange-500/15 text-orange-600",
-  TOKOPEDIA: "bg-emerald-500/15 text-emerald-600",
-} as const;
-const jam = (ms: number) =>
-  ms
-    ? new Date(ms).toLocaleString("id-ID", {
-        timeZone: "Asia/Jakarta",
-        day: "2-digit",
-        month: "short",
-        hour: "2-digit",
-        minute: "2-digit",
-      })
-    : "";
+const TAG = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600" } as const;
+const DOT = { SHOPEE: "bg-orange-500", TOKOPEDIA: "bg-emerald-500" } as const;
+const TABS = [
+  { key: "semua", label: "Semua" },
+  { key: "unread", label: "Belum dibaca" },
+  { key: "SHOPEE", label: "Shopee" },
+  { key: "TOKOPEDIA", label: "Tokopedia" },
+] as const;
+
+const TZ = "Asia/Jakarta";
+const dayKey = (ms: number) => new Date(ms).toLocaleDateString("en-CA", { timeZone: TZ });
+const pukul = (ms: number) => (ms ? new Date(ms).toLocaleTimeString("id-ID", { timeZone: TZ, hour: "2-digit", minute: "2-digit" }) : "");
+/** Hari ini → jam; selain itu tanggal singkat. */
+const waktuList = (ms: number) =>
+  !ms ? "" : dayKey(ms) === dayKey(Date.now()) ? pukul(ms) : new Date(ms).toLocaleDateString("id-ID", { timeZone: TZ, day: "2-digit", month: "short" });
+const labelHari = (ms: number) => {
+  const k = dayKey(ms);
+  if (k === dayKey(Date.now())) return "Hari ini";
+  if (k === dayKey(Date.now() - 86400_000)) return "Kemarin";
+  return new Date(ms).toLocaleDateString("id-ID", { timeZone: TZ, day: "numeric", month: "long", year: "numeric" });
+};
+
+function Avatar({ c, size = "size-10" }: { c: ChatConv; size?: string }) {
+  return (
+    <span className={`relative shrink-0 ${size}`}>
+      {c.avatar ? (
+        // eslint-disable-next-line @next/next/no-img-element -- avatar dari CDN marketplace
+        <img src={c.avatar} alt="" className={`${size} rounded-full object-cover`} />
+      ) : (
+        <span className={`flex ${size} items-center justify-center rounded-full bg-muted text-14 font-semibold uppercase`}>{c.name.slice(0, 1)}</span>
+      )}
+      <span className={`absolute -right-0.5 -bottom-0.5 size-3 rounded-full ring-2 ring-card ${DOT[c.platform]}`} title={LABEL[c.platform]} />
+    </span>
+  );
+}
 
 /** Inbox chat Shopee + Tokopedia. Daftar diperbarui tiap 15 dtk, chat terbuka tiap 10 dtk. */
 /** demo = data contoh lokal: tidak memanggil API, balasan hanya tampil di layar. */
@@ -134,126 +151,142 @@ export function MarketplaceChat({
     });
   }
 
+  const [q, setQ] = useState("");
+  const [tab, setTab] = useState<(typeof TABS)[number]["key"]>("semua");
+  const shown = useMemo(() => {
+    const k = q.trim().toLowerCase();
+    return convs.filter(
+      (c) =>
+        (tab === "semua" || (tab === "unread" ? c.unread > 0 : c.platform === tab)) &&
+        (!k || c.name.toLowerCase().includes(k) || c.last.toLowerCase().includes(k)),
+    );
+  }, [convs, q, tab]);
+
   return (
-    <div className="grid h-[calc(100dvh-10rem)] min-h-[420px] md:h-[calc(100dvh-7rem)] overflow-hidden rounded-lg border bg-card md:grid-cols-[320px_1fr]">
+    <div className="grid h-[calc(100dvh-10rem)] min-h-[420px] gap-4 md:h-[calc(100dvh-7rem)] md:grid-cols-[340px_1fr]">
       {/* Daftar chat */}
-      <div
-        className={`flex min-h-0 flex-col border-r ${open ? "hidden md:flex" : "flex"}`}
-      >
+      <aside className={`min-h-0 flex-col gap-3 rounded-xl border bg-card p-3 ${open ? "hidden md:flex" : "flex"}`}>
+        <label className="flex h-10 items-center gap-2 rounded-lg border bg-background px-3">
+          <Search className="size-4 text-muted-foreground" aria-hidden />
+          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Cari pembeli atau pesan" aria-label="Cari chat" className="w-full bg-transparent text-14 outline-none" />
+        </label>
+        <div className="grid grid-cols-4 gap-1 rounded-lg bg-muted p-1" role="tablist">
+          {TABS.map((t) => (
+            <button
+              key={t.key}
+              type="button"
+              role="tab"
+              aria-selected={tab === t.key}
+              onClick={() => setTab(t.key)}
+              className={`truncate rounded-md px-1 py-1.5 text-12 font-medium ${tab === t.key ? "bg-card shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+            >
+              {t.label}
+            </button>
+          ))}
+        </div>
         {errors.map((e) => (
-          <p key={e} className="border-b p-2 text-12 text-destructive">
+          <p key={e} className="rounded-md bg-destructive/10 p-2 text-12 text-destructive">
             {e}
           </p>
         ))}
-        <ul className="min-h-0 flex-1 overflow-y-auto">
-          {convs.length === 0 && (
-            <li className="p-4 text-14 text-muted-foreground">
-              Belum ada chat. Pastikan toko tersambung dan izin Chat aktif.
-            </li>
+        <ul className="-mx-1 min-h-0 flex-1 space-y-1 overflow-y-auto px-1">
+          {shown.length === 0 && (
+            <li className="p-4 text-center text-14 text-muted-foreground">{convs.length ? "Tidak ada chat yang cocok." : "Belum ada chat. Pastikan toko tersambung dan izin Chat aktif."}</li>
           )}
-          {convs.map((c) => (
-            <li key={`${c.platform}:${c.id}`}>
-              <button
-                type="button"
-                onClick={() => pick(c)}
-                className={`flex w-full flex-col gap-1 border-b p-3 text-left hover:bg-muted ${open?.id === c.id && open.platform === c.platform ? "bg-muted" : ""}`}
-              >
-                <span className="flex items-center gap-2">
-                  <span
-                    className={`rounded px-1.5 py-0.5 text-12 font-medium ${TAG[c.platform]}`}
-                  >
-                    {LABEL[c.platform]}
-                  </span>
-                  <span className="flex-1 truncate font-medium">{c.name}</span>
-                  {c.unread > 0 && (
-                    <span className="rounded-full bg-primary px-1.5 text-12 font-medium text-primary-foreground">
-                      {c.unread}
+          {shown.map((c) => {
+            const active = open?.id === c.id && open.platform === c.platform;
+            return (
+              <li key={`${c.platform}:${c.id}`}>
+                <button type="button" onClick={() => pick(c)} className={`flex w-full items-center gap-3 rounded-lg p-2.5 text-left ${active ? "bg-muted" : "hover:bg-muted/60"}`}>
+                  <Avatar c={c} />
+                  <span className="min-w-0 flex-1">
+                    <span className="flex items-baseline gap-2">
+                      <span className={`flex-1 truncate text-14 ${c.unread ? "font-semibold" : "font-medium"}`}>{c.name}</span>
+                      <span className="shrink-0 text-12 text-muted-foreground">{waktuList(c.at)}</span>
                     </span>
-                  )}
-                </span>
-                <span className="flex items-center gap-2 text-12 text-muted-foreground">
-                  <span className="flex-1 truncate">{c.last || "-"}</span>
-                  <span className="shrink-0">{jam(c.at)}</span>
-                </span>
-              </button>
-            </li>
-          ))}
+                    <span className="flex items-center gap-2">
+                      <span className={`flex-1 truncate text-12 ${c.unread ? "text-foreground" : "text-muted-foreground"}`}>{c.last || "-"}</span>
+                      {c.unread > 0 && <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-semibold text-primary-foreground">{c.unread}</span>}
+                    </span>
+                  </span>
+                </button>
+              </li>
+            );
+          })}
         </ul>
-      </div>
+      </aside>
 
       {/* Isi chat */}
-      <div className={`min-h-0 flex-col ${open ? "flex" : "hidden md:flex"}`}>
+      <section className={`min-h-0 flex-col overflow-hidden rounded-xl border bg-card ${open ? "flex" : "hidden md:flex"}`}>
         {!open ? (
-          <p className="m-auto text-14 text-muted-foreground">
-            Pilih chat di kiri.
-          </p>
+          <p className="m-auto text-14 text-muted-foreground">Pilih chat untuk mulai membalas.</p>
         ) : (
           <>
-            <div className="flex items-center gap-2 border-b p-3">
-              <button
-                type="button"
-                onClick={() => setOpen(null)}
-                className="rounded border px-2 py-0.5 text-14 md:hidden"
-              >
-                Kembali
+            <header className="flex items-center gap-3 border-b px-4 py-3">
+              <button type="button" onClick={() => setOpen(null)} aria-label="Kembali ke daftar chat" className="-ml-1 rounded-md p-1 hover:bg-muted md:hidden">
+                <ChevronLeft className="size-5" />
               </button>
-              <span
-                className={`rounded px-1.5 py-0.5 text-12 font-medium ${TAG[open.platform]}`}
-              >
-                {LABEL[open.platform]}
-              </span>
-              <span className="truncate font-semibold">{open.name}</span>
-            </div>
-            <div className="min-h-0 flex-1 space-y-2 overflow-y-auto p-3">
-              {msgs.map((m) =>
-                m.system ? (
-                  <div key={m.id} className="flex justify-center">
-                    <p className="max-w-[85%] rounded-md border border-dashed px-3 py-1.5 text-center text-12 whitespace-pre-wrap text-muted-foreground">
-                      <span className="font-medium">Otomatis · </span>
-                      {m.text || "Pesan sistem"} · {jam(m.at)}
-                    </p>
-                  </div>
-                ) : (
-                  <div
-                    key={m.id}
-                    className={`flex ${m.mine ? "justify-end" : "justify-start"}`}
-                  >
-                    <div
-                      className={`max-w-[75%] rounded-lg px-3 py-2 text-14 ${m.mine ? "bg-primary text-primary-foreground" : "bg-muted"}`}
-                    >
-                      {m.image && (
-                        // eslint-disable-next-line @next/next/no-img-element -- gambar dari CDN marketplace
-                        <img
-                          src={m.image}
-                          alt="Gambar dari pembeli"
-                          className="mb-1 max-h-60 rounded"
-                        />
-                      )}
-                      {m.text && (
-                        <p className="whitespace-pre-wrap break-words">
-                          {m.text}
+              <Avatar c={open} />
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-semibold">{open.name}</p>
+                <span className={`rounded px-1.5 py-0.5 text-[11px] font-medium ${TAG[open.platform]}`}>{LABEL[open.platform]}</span>
+              </div>
+            </header>
+
+            <div className="min-h-0 flex-1 space-y-3 overflow-y-auto bg-muted/30 px-4 py-4">
+              {msgs.map((m, i) => {
+                const newDay = i === 0 || dayKey(msgs[i - 1].at) !== dayKey(m.at);
+                const prevBuyer = i > 0 && !msgs[i - 1].mine && !msgs[i - 1].system && !newDay;
+                return (
+                  <div key={m.id} className="space-y-3">
+                    {newDay && (
+                      <div className="flex justify-center">
+                        <span className="rounded-full border bg-card px-3 py-1 text-12 font-medium">{labelHari(m.at)}</span>
+                      </div>
+                    )}
+                    {m.system ? (
+                      <div className="flex justify-center">
+                        <p className="max-w-[85%] rounded-full border bg-card px-3 py-1 text-center text-12 whitespace-pre-wrap text-muted-foreground">
+                          {m.text || "Pesan sistem"} · {pukul(m.at)}
                         </p>
-                      )}
-                      <p className="mt-1 text-right text-[11px] opacity-70">
-                        {jam(m.at)}
-                      </p>
-                    </div>
+                      </div>
+                    ) : m.mine ? (
+                      <div className="flex flex-col items-end">
+                        <div className="max-w-[75%] rounded-2xl rounded-br-md bg-primary px-4 py-2.5 text-14 text-primary-foreground">
+                          {m.image && (
+                            // eslint-disable-next-line @next/next/no-img-element -- gambar dari CDN marketplace
+                            <img src={m.image} alt="" className="mb-1 max-h-64 rounded-lg" />
+                          )}
+                          {m.text && <p className="break-words whitespace-pre-wrap">{m.text}</p>}
+                        </div>
+                        <span className="mt-1 text-[11px] text-muted-foreground">{pukul(m.at)}</span>
+                      </div>
+                    ) : (
+                      <div className="flex items-end gap-2">
+                        {prevBuyer ? <span className="size-8 shrink-0" /> : <Avatar c={open} size="size-8" />}
+                        <div className="flex max-w-[75%] flex-col items-start">
+                          {m.image && (
+                            // eslint-disable-next-line @next/next/no-img-element -- gambar dari pembeli
+                            <img src={m.image} alt="Gambar dari pembeli" className="mb-1 max-h-64 rounded-2xl border" />
+                          )}
+                          {m.text && <p className="rounded-2xl rounded-bl-md border bg-card px-4 py-2.5 text-14 break-words whitespace-pre-wrap">{m.text}</p>}
+                          <span className="mt-1 text-[11px] text-muted-foreground">{pukul(m.at)}</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                ),
-              )}
+                );
+              })}
               <div ref={bottom} />
             </div>
-            {msgErr && (
-              <p className="border-t px-3 py-2 text-12 text-destructive">
-                {msgErr}
-              </p>
-            )}
+
+            {msgErr && <p className="border-t bg-destructive/10 px-4 py-2 text-12 text-destructive">{msgErr}</p>}
             <form
               onSubmit={(e) => {
                 e.preventDefault();
                 send();
               }}
-              className="flex gap-2 border-t p-3"
+              className="flex items-end gap-2 border-t p-3"
             >
               <textarea
                 value={text}
@@ -264,23 +297,24 @@ export function MarketplaceChat({
                     send();
                   }
                 }}
-                rows={2}
+                rows={1}
                 maxLength={1000}
-                placeholder="Tulis balasan… (Enter kirim, Shift+Enter baris baru)"
+                placeholder="Tulis pesan…"
                 aria-label="Balasan"
-                className="min-h-0 flex-1 resize-none rounded-md border bg-background px-2 py-1 text-14"
+                className="max-h-32 min-h-11 flex-1 resize-none rounded-3xl border bg-background px-4 py-2.5 text-14 outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
               />
               <button
                 type="submit"
                 disabled={sending || !text.trim()}
-                className="self-end rounded-md bg-primary px-4 py-2 text-14 font-medium text-primary-foreground disabled:opacity-50"
+                aria-label={sending ? "Mengirim" : "Kirim"}
+                className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground disabled:opacity-50"
               >
-                {sending ? "Mengirim…" : "Kirim"}
+                <SendHorizontal className="size-5" />
               </button>
             </form>
           </>
         )}
-      </div>
+      </section>
     </div>
   );
 }
