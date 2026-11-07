@@ -572,6 +572,8 @@ model MarketplaceOrder {
   courier     String?
   buyerNote   String?
   payment     String? // metode bayar
+  finance     Json? // rincian dana per pesanan (TikTok Get Transactions by Order)
+  financeAt   DateTime?
   orderedAt   DateTime
   updatedAtMp DateTime
   syncedAt    DateTime @updatedAt
@@ -636,9 +638,29 @@ model MarketplacePayout {
   fee      Int // potongan marketplace (positif)
   amount   Int // uang bersih cair
   paidAt   DateTime
+  adjustment Int      @default(0) // penyesuaian dari marketplace (denda/kompensasi)
+  payStatus  String? // PAID | FAILED | PROCESSING
+  paymentId  String? // → MarketplaceTransfer
+  payTime    DateTime?
 
   @@unique([platform, refId])
   @@index([paidAt])
+}
+
+// Transfer dana marketplace ke rekening bank penjual (TikTok Shop Get Payments).
+model MarketplaceTransfer {
+  id          String    @id @default(cuid())
+  platform    String
+  paymentId   String
+  status      String // PAID | FAILED | PROCESSING
+  amount      Int
+  bankAccount String? // 4 digit terakhir
+  createdAtMp DateTime
+  paidTime    DateTime?
+  syncedAt    DateTime  @updatedAt
+
+  @@unique([platform, paymentId])
+  @@index([createdAtMp])
 }
 
 // --- Rekap online bulanan: uang asli per kanal (dari Finance) vs total penjualan di app ---

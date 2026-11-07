@@ -471,6 +471,8 @@ exports.Prisma.MarketplaceOrderScalarFieldEnum = {
   courier: 'courier',
   buyerNote: 'buyerNote',
   payment: 'payment',
+  finance: 'finance',
+  financeAt: 'financeAt',
   orderedAt: 'orderedAt',
   updatedAtMp: 'updatedAtMp',
   syncedAt: 'syncedAt'
@@ -525,7 +527,23 @@ exports.Prisma.MarketplacePayoutScalarFieldEnum = {
   revenue: 'revenue',
   fee: 'fee',
   amount: 'amount',
-  paidAt: 'paidAt'
+  paidAt: 'paidAt',
+  adjustment: 'adjustment',
+  payStatus: 'payStatus',
+  paymentId: 'paymentId',
+  payTime: 'payTime'
+};
+
+exports.Prisma.MarketplaceTransferScalarFieldEnum = {
+  id: 'id',
+  platform: 'platform',
+  paymentId: 'paymentId',
+  status: 'status',
+  amount: 'amount',
+  bankAccount: 'bankAccount',
+  createdAtMp: 'createdAtMp',
+  paidTime: 'paidTime',
+  syncedAt: 'syncedAt'
 };
 
 exports.Prisma.OnlineReconScalarFieldEnum = {
@@ -851,6 +869,7 @@ exports.Prisma.ModelName = {
   MarketplaceItem: 'MarketplaceItem',
   MarketplaceProduct: 'MarketplaceProduct',
   MarketplacePayout: 'MarketplacePayout',
+  MarketplaceTransfer: 'MarketplaceTransfer',
   OnlineRecon: 'OnlineRecon',
   MediaMember: 'MediaMember',
   MediaItem: 'MediaItem',

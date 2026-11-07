@@ -166,6 +166,11 @@ export type MarketplaceProduct = $Result.DefaultSelection<Prisma.$MarketplacePro
  */
 export type MarketplacePayout = $Result.DefaultSelection<Prisma.$MarketplacePayoutPayload>
 /**
+ * Model MarketplaceTransfer
+ * 
+ */
+export type MarketplaceTransfer = $Result.DefaultSelection<Prisma.$MarketplaceTransferPayload>
+/**
  * Model OnlineRecon
  * 
  */
@@ -791,6 +796,16 @@ export class PrismaClient<
     * ```
     */
   get marketplacePayout(): Prisma.MarketplacePayoutDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.marketplaceTransfer`: Exposes CRUD operations for the **MarketplaceTransfer** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MarketplaceTransfers
+    * const marketplaceTransfers = await prisma.marketplaceTransfer.findMany()
+    * ```
+    */
+  get marketplaceTransfer(): Prisma.MarketplaceTransferDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.onlineRecon`: Exposes CRUD operations for the **OnlineRecon** model.
@@ -1432,6 +1447,7 @@ export namespace Prisma {
     MarketplaceItem: 'MarketplaceItem',
     MarketplaceProduct: 'MarketplaceProduct',
     MarketplacePayout: 'MarketplacePayout',
+    MarketplaceTransfer: 'MarketplaceTransfer',
     OnlineRecon: 'OnlineRecon',
     MediaMember: 'MediaMember',
     MediaItem: 'MediaItem',
@@ -1467,7 +1483,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3691,6 +3707,80 @@ export namespace Prisma {
           }
         }
       }
+      MarketplaceTransfer: {
+        payload: Prisma.$MarketplaceTransferPayload<ExtArgs>
+        fields: Prisma.MarketplaceTransferFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MarketplaceTransferFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceTransferPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MarketplaceTransferFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceTransferPayload>
+          }
+          findFirst: {
+            args: Prisma.MarketplaceTransferFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceTransferPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MarketplaceTransferFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceTransferPayload>
+          }
+          findMany: {
+            args: Prisma.MarketplaceTransferFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceTransferPayload>[]
+          }
+          create: {
+            args: Prisma.MarketplaceTransferCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceTransferPayload>
+          }
+          createMany: {
+            args: Prisma.MarketplaceTransferCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MarketplaceTransferCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceTransferPayload>[]
+          }
+          delete: {
+            args: Prisma.MarketplaceTransferDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceTransferPayload>
+          }
+          update: {
+            args: Prisma.MarketplaceTransferUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceTransferPayload>
+          }
+          deleteMany: {
+            args: Prisma.MarketplaceTransferDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MarketplaceTransferUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MarketplaceTransferUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceTransferPayload>[]
+          }
+          upsert: {
+            args: Prisma.MarketplaceTransferUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceTransferPayload>
+          }
+          aggregate: {
+            args: Prisma.MarketplaceTransferAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMarketplaceTransfer>
+          }
+          groupBy: {
+            args: Prisma.MarketplaceTransferGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MarketplaceTransferGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MarketplaceTransferCountArgs<ExtArgs>
+            result: $Utils.Optional<MarketplaceTransferCountAggregateOutputType> | number
+          }
+        }
+      }
       OnlineRecon: {
         payload: Prisma.$OnlineReconPayload<ExtArgs>
         fields: Prisma.OnlineReconFieldRefs
@@ -5075,6 +5165,7 @@ export namespace Prisma {
     marketplaceItem?: MarketplaceItemOmit
     marketplaceProduct?: MarketplaceProductOmit
     marketplacePayout?: MarketplacePayoutOmit
+    marketplaceTransfer?: MarketplaceTransferOmit
     onlineRecon?: OnlineReconOmit
     mediaMember?: MediaMemberOmit
     mediaItem?: MediaItemOmit
@@ -35752,6 +35843,7 @@ export namespace Prisma {
     courier: string | null
     buyerNote: string | null
     payment: string | null
+    financeAt: Date | null
     orderedAt: Date | null
     updatedAtMp: Date | null
     syncedAt: Date | null
@@ -35773,6 +35865,7 @@ export namespace Prisma {
     courier: string | null
     buyerNote: string | null
     payment: string | null
+    financeAt: Date | null
     orderedAt: Date | null
     updatedAtMp: Date | null
     syncedAt: Date | null
@@ -35795,6 +35888,8 @@ export namespace Prisma {
     courier: number
     buyerNote: number
     payment: number
+    finance: number
+    financeAt: number
     orderedAt: number
     updatedAtMp: number
     syncedAt: number
@@ -35828,6 +35923,7 @@ export namespace Prisma {
     courier?: true
     buyerNote?: true
     payment?: true
+    financeAt?: true
     orderedAt?: true
     updatedAtMp?: true
     syncedAt?: true
@@ -35849,6 +35945,7 @@ export namespace Prisma {
     courier?: true
     buyerNote?: true
     payment?: true
+    financeAt?: true
     orderedAt?: true
     updatedAtMp?: true
     syncedAt?: true
@@ -35871,6 +35968,8 @@ export namespace Prisma {
     courier?: true
     buyerNote?: true
     payment?: true
+    finance?: true
+    financeAt?: true
     orderedAt?: true
     updatedAtMp?: true
     syncedAt?: true
@@ -35980,6 +36079,8 @@ export namespace Prisma {
     courier: string | null
     buyerNote: string | null
     payment: string | null
+    finance: JsonValue | null
+    financeAt: Date | null
     orderedAt: Date
     updatedAtMp: Date
     syncedAt: Date
@@ -36021,6 +36122,8 @@ export namespace Prisma {
     courier?: boolean
     buyerNote?: boolean
     payment?: boolean
+    finance?: boolean
+    financeAt?: boolean
     orderedAt?: boolean
     updatedAtMp?: boolean
     syncedAt?: boolean
@@ -36043,6 +36146,8 @@ export namespace Prisma {
     courier?: boolean
     buyerNote?: boolean
     payment?: boolean
+    finance?: boolean
+    financeAt?: boolean
     orderedAt?: boolean
     updatedAtMp?: boolean
     syncedAt?: boolean
@@ -36065,6 +36170,8 @@ export namespace Prisma {
     courier?: boolean
     buyerNote?: boolean
     payment?: boolean
+    finance?: boolean
+    financeAt?: boolean
     orderedAt?: boolean
     updatedAtMp?: boolean
     syncedAt?: boolean
@@ -36087,12 +36194,14 @@ export namespace Prisma {
     courier?: boolean
     buyerNote?: boolean
     payment?: boolean
+    finance?: boolean
+    financeAt?: boolean
     orderedAt?: boolean
     updatedAtMp?: boolean
     syncedAt?: boolean
   }
 
-  export type MarketplaceOrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "shopId" | "orderSn" | "status" | "buyer" | "items" | "total" | "netAmount" | "trackingNo" | "recipient" | "phone" | "address" | "courier" | "buyerNote" | "payment" | "orderedAt" | "updatedAtMp" | "syncedAt", ExtArgs["result"]["marketplaceOrder"]>
+  export type MarketplaceOrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "shopId" | "orderSn" | "status" | "buyer" | "items" | "total" | "netAmount" | "trackingNo" | "recipient" | "phone" | "address" | "courier" | "buyerNote" | "payment" | "finance" | "financeAt" | "orderedAt" | "updatedAtMp" | "syncedAt", ExtArgs["result"]["marketplaceOrder"]>
 
   export type $MarketplaceOrderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MarketplaceOrder"
@@ -36114,6 +36223,8 @@ export namespace Prisma {
       courier: string | null
       buyerNote: string | null
       payment: string | null
+      finance: Prisma.JsonValue | null
+      financeAt: Date | null
       orderedAt: Date
       updatedAtMp: Date
       syncedAt: Date
@@ -36556,6 +36667,8 @@ export namespace Prisma {
     readonly courier: FieldRef<"MarketplaceOrder", 'String'>
     readonly buyerNote: FieldRef<"MarketplaceOrder", 'String'>
     readonly payment: FieldRef<"MarketplaceOrder", 'String'>
+    readonly finance: FieldRef<"MarketplaceOrder", 'Json'>
+    readonly financeAt: FieldRef<"MarketplaceOrder", 'DateTime'>
     readonly orderedAt: FieldRef<"MarketplaceOrder", 'DateTime'>
     readonly updatedAtMp: FieldRef<"MarketplaceOrder", 'DateTime'>
     readonly syncedAt: FieldRef<"MarketplaceOrder", 'DateTime'>
@@ -39316,12 +39429,14 @@ export namespace Prisma {
     revenue: number | null
     fee: number | null
     amount: number | null
+    adjustment: number | null
   }
 
   export type MarketplacePayoutSumAggregateOutputType = {
     revenue: number | null
     fee: number | null
     amount: number | null
+    adjustment: number | null
   }
 
   export type MarketplacePayoutMinAggregateOutputType = {
@@ -39333,6 +39448,10 @@ export namespace Prisma {
     fee: number | null
     amount: number | null
     paidAt: Date | null
+    adjustment: number | null
+    payStatus: string | null
+    paymentId: string | null
+    payTime: Date | null
   }
 
   export type MarketplacePayoutMaxAggregateOutputType = {
@@ -39344,6 +39463,10 @@ export namespace Prisma {
     fee: number | null
     amount: number | null
     paidAt: Date | null
+    adjustment: number | null
+    payStatus: string | null
+    paymentId: string | null
+    payTime: Date | null
   }
 
   export type MarketplacePayoutCountAggregateOutputType = {
@@ -39355,6 +39478,10 @@ export namespace Prisma {
     fee: number
     amount: number
     paidAt: number
+    adjustment: number
+    payStatus: number
+    paymentId: number
+    payTime: number
     _all: number
   }
 
@@ -39363,12 +39490,14 @@ export namespace Prisma {
     revenue?: true
     fee?: true
     amount?: true
+    adjustment?: true
   }
 
   export type MarketplacePayoutSumAggregateInputType = {
     revenue?: true
     fee?: true
     amount?: true
+    adjustment?: true
   }
 
   export type MarketplacePayoutMinAggregateInputType = {
@@ -39380,6 +39509,10 @@ export namespace Prisma {
     fee?: true
     amount?: true
     paidAt?: true
+    adjustment?: true
+    payStatus?: true
+    paymentId?: true
+    payTime?: true
   }
 
   export type MarketplacePayoutMaxAggregateInputType = {
@@ -39391,6 +39524,10 @@ export namespace Prisma {
     fee?: true
     amount?: true
     paidAt?: true
+    adjustment?: true
+    payStatus?: true
+    paymentId?: true
+    payTime?: true
   }
 
   export type MarketplacePayoutCountAggregateInputType = {
@@ -39402,6 +39539,10 @@ export namespace Prisma {
     fee?: true
     amount?: true
     paidAt?: true
+    adjustment?: true
+    payStatus?: true
+    paymentId?: true
+    payTime?: true
     _all?: true
   }
 
@@ -39500,6 +39641,10 @@ export namespace Prisma {
     fee: number
     amount: number
     paidAt: Date
+    adjustment: number
+    payStatus: string | null
+    paymentId: string | null
+    payTime: Date | null
     _count: MarketplacePayoutCountAggregateOutputType | null
     _avg: MarketplacePayoutAvgAggregateOutputType | null
     _sum: MarketplacePayoutSumAggregateOutputType | null
@@ -39530,6 +39675,10 @@ export namespace Prisma {
     fee?: boolean
     amount?: boolean
     paidAt?: boolean
+    adjustment?: boolean
+    payStatus?: boolean
+    paymentId?: boolean
+    payTime?: boolean
   }, ExtArgs["result"]["marketplacePayout"]>
 
   export type MarketplacePayoutSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -39541,6 +39690,10 @@ export namespace Prisma {
     fee?: boolean
     amount?: boolean
     paidAt?: boolean
+    adjustment?: boolean
+    payStatus?: boolean
+    paymentId?: boolean
+    payTime?: boolean
   }, ExtArgs["result"]["marketplacePayout"]>
 
   export type MarketplacePayoutSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -39552,6 +39705,10 @@ export namespace Prisma {
     fee?: boolean
     amount?: boolean
     paidAt?: boolean
+    adjustment?: boolean
+    payStatus?: boolean
+    paymentId?: boolean
+    payTime?: boolean
   }, ExtArgs["result"]["marketplacePayout"]>
 
   export type MarketplacePayoutSelectScalar = {
@@ -39563,9 +39720,13 @@ export namespace Prisma {
     fee?: boolean
     amount?: boolean
     paidAt?: boolean
+    adjustment?: boolean
+    payStatus?: boolean
+    paymentId?: boolean
+    payTime?: boolean
   }
 
-  export type MarketplacePayoutOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "shopId" | "refId" | "revenue" | "fee" | "amount" | "paidAt", ExtArgs["result"]["marketplacePayout"]>
+  export type MarketplacePayoutOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "shopId" | "refId" | "revenue" | "fee" | "amount" | "paidAt" | "adjustment" | "payStatus" | "paymentId" | "payTime", ExtArgs["result"]["marketplacePayout"]>
 
   export type $MarketplacePayoutPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MarketplacePayout"
@@ -39579,6 +39740,10 @@ export namespace Prisma {
       fee: number
       amount: number
       paidAt: Date
+      adjustment: number
+      payStatus: string | null
+      paymentId: string | null
+      payTime: Date | null
     }, ExtArgs["result"]["marketplacePayout"]>
     composites: {}
   }
@@ -40010,6 +40175,10 @@ export namespace Prisma {
     readonly fee: FieldRef<"MarketplacePayout", 'Int'>
     readonly amount: FieldRef<"MarketplacePayout", 'Int'>
     readonly paidAt: FieldRef<"MarketplacePayout", 'DateTime'>
+    readonly adjustment: FieldRef<"MarketplacePayout", 'Int'>
+    readonly payStatus: FieldRef<"MarketplacePayout", 'String'>
+    readonly paymentId: FieldRef<"MarketplacePayout", 'String'>
+    readonly payTime: FieldRef<"MarketplacePayout", 'DateTime'>
   }
     
 
@@ -40373,6 +40542,1087 @@ export namespace Prisma {
      * Omit specific fields from the MarketplacePayout
      */
     omit?: MarketplacePayoutOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MarketplaceTransfer
+   */
+
+  export type AggregateMarketplaceTransfer = {
+    _count: MarketplaceTransferCountAggregateOutputType | null
+    _avg: MarketplaceTransferAvgAggregateOutputType | null
+    _sum: MarketplaceTransferSumAggregateOutputType | null
+    _min: MarketplaceTransferMinAggregateOutputType | null
+    _max: MarketplaceTransferMaxAggregateOutputType | null
+  }
+
+  export type MarketplaceTransferAvgAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type MarketplaceTransferSumAggregateOutputType = {
+    amount: number | null
+  }
+
+  export type MarketplaceTransferMinAggregateOutputType = {
+    id: string | null
+    platform: string | null
+    paymentId: string | null
+    status: string | null
+    amount: number | null
+    bankAccount: string | null
+    createdAtMp: Date | null
+    paidTime: Date | null
+    syncedAt: Date | null
+  }
+
+  export type MarketplaceTransferMaxAggregateOutputType = {
+    id: string | null
+    platform: string | null
+    paymentId: string | null
+    status: string | null
+    amount: number | null
+    bankAccount: string | null
+    createdAtMp: Date | null
+    paidTime: Date | null
+    syncedAt: Date | null
+  }
+
+  export type MarketplaceTransferCountAggregateOutputType = {
+    id: number
+    platform: number
+    paymentId: number
+    status: number
+    amount: number
+    bankAccount: number
+    createdAtMp: number
+    paidTime: number
+    syncedAt: number
+    _all: number
+  }
+
+
+  export type MarketplaceTransferAvgAggregateInputType = {
+    amount?: true
+  }
+
+  export type MarketplaceTransferSumAggregateInputType = {
+    amount?: true
+  }
+
+  export type MarketplaceTransferMinAggregateInputType = {
+    id?: true
+    platform?: true
+    paymentId?: true
+    status?: true
+    amount?: true
+    bankAccount?: true
+    createdAtMp?: true
+    paidTime?: true
+    syncedAt?: true
+  }
+
+  export type MarketplaceTransferMaxAggregateInputType = {
+    id?: true
+    platform?: true
+    paymentId?: true
+    status?: true
+    amount?: true
+    bankAccount?: true
+    createdAtMp?: true
+    paidTime?: true
+    syncedAt?: true
+  }
+
+  export type MarketplaceTransferCountAggregateInputType = {
+    id?: true
+    platform?: true
+    paymentId?: true
+    status?: true
+    amount?: true
+    bankAccount?: true
+    createdAtMp?: true
+    paidTime?: true
+    syncedAt?: true
+    _all?: true
+  }
+
+  export type MarketplaceTransferAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MarketplaceTransfer to aggregate.
+     */
+    where?: MarketplaceTransferWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MarketplaceTransfers to fetch.
+     */
+    orderBy?: MarketplaceTransferOrderByWithRelationInput | MarketplaceTransferOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MarketplaceTransferWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MarketplaceTransfers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MarketplaceTransfers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MarketplaceTransfers
+    **/
+    _count?: true | MarketplaceTransferCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MarketplaceTransferAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MarketplaceTransferSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MarketplaceTransferMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MarketplaceTransferMaxAggregateInputType
+  }
+
+  export type GetMarketplaceTransferAggregateType<T extends MarketplaceTransferAggregateArgs> = {
+        [P in keyof T & keyof AggregateMarketplaceTransfer]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMarketplaceTransfer[P]>
+      : GetScalarType<T[P], AggregateMarketplaceTransfer[P]>
+  }
+
+
+
+
+  export type MarketplaceTransferGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MarketplaceTransferWhereInput
+    orderBy?: MarketplaceTransferOrderByWithAggregationInput | MarketplaceTransferOrderByWithAggregationInput[]
+    by: MarketplaceTransferScalarFieldEnum[] | MarketplaceTransferScalarFieldEnum
+    having?: MarketplaceTransferScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MarketplaceTransferCountAggregateInputType | true
+    _avg?: MarketplaceTransferAvgAggregateInputType
+    _sum?: MarketplaceTransferSumAggregateInputType
+    _min?: MarketplaceTransferMinAggregateInputType
+    _max?: MarketplaceTransferMaxAggregateInputType
+  }
+
+  export type MarketplaceTransferGroupByOutputType = {
+    id: string
+    platform: string
+    paymentId: string
+    status: string
+    amount: number
+    bankAccount: string | null
+    createdAtMp: Date
+    paidTime: Date | null
+    syncedAt: Date
+    _count: MarketplaceTransferCountAggregateOutputType | null
+    _avg: MarketplaceTransferAvgAggregateOutputType | null
+    _sum: MarketplaceTransferSumAggregateOutputType | null
+    _min: MarketplaceTransferMinAggregateOutputType | null
+    _max: MarketplaceTransferMaxAggregateOutputType | null
+  }
+
+  type GetMarketplaceTransferGroupByPayload<T extends MarketplaceTransferGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MarketplaceTransferGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MarketplaceTransferGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MarketplaceTransferGroupByOutputType[P]>
+            : GetScalarType<T[P], MarketplaceTransferGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MarketplaceTransferSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    platform?: boolean
+    paymentId?: boolean
+    status?: boolean
+    amount?: boolean
+    bankAccount?: boolean
+    createdAtMp?: boolean
+    paidTime?: boolean
+    syncedAt?: boolean
+  }, ExtArgs["result"]["marketplaceTransfer"]>
+
+  export type MarketplaceTransferSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    platform?: boolean
+    paymentId?: boolean
+    status?: boolean
+    amount?: boolean
+    bankAccount?: boolean
+    createdAtMp?: boolean
+    paidTime?: boolean
+    syncedAt?: boolean
+  }, ExtArgs["result"]["marketplaceTransfer"]>
+
+  export type MarketplaceTransferSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    platform?: boolean
+    paymentId?: boolean
+    status?: boolean
+    amount?: boolean
+    bankAccount?: boolean
+    createdAtMp?: boolean
+    paidTime?: boolean
+    syncedAt?: boolean
+  }, ExtArgs["result"]["marketplaceTransfer"]>
+
+  export type MarketplaceTransferSelectScalar = {
+    id?: boolean
+    platform?: boolean
+    paymentId?: boolean
+    status?: boolean
+    amount?: boolean
+    bankAccount?: boolean
+    createdAtMp?: boolean
+    paidTime?: boolean
+    syncedAt?: boolean
+  }
+
+  export type MarketplaceTransferOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "paymentId" | "status" | "amount" | "bankAccount" | "createdAtMp" | "paidTime" | "syncedAt", ExtArgs["result"]["marketplaceTransfer"]>
+
+  export type $MarketplaceTransferPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MarketplaceTransfer"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      platform: string
+      paymentId: string
+      status: string
+      amount: number
+      bankAccount: string | null
+      createdAtMp: Date
+      paidTime: Date | null
+      syncedAt: Date
+    }, ExtArgs["result"]["marketplaceTransfer"]>
+    composites: {}
+  }
+
+  type MarketplaceTransferGetPayload<S extends boolean | null | undefined | MarketplaceTransferDefaultArgs> = $Result.GetResult<Prisma.$MarketplaceTransferPayload, S>
+
+  type MarketplaceTransferCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MarketplaceTransferFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MarketplaceTransferCountAggregateInputType | true
+    }
+
+  export interface MarketplaceTransferDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MarketplaceTransfer'], meta: { name: 'MarketplaceTransfer' } }
+    /**
+     * Find zero or one MarketplaceTransfer that matches the filter.
+     * @param {MarketplaceTransferFindUniqueArgs} args - Arguments to find a MarketplaceTransfer
+     * @example
+     * // Get one MarketplaceTransfer
+     * const marketplaceTransfer = await prisma.marketplaceTransfer.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MarketplaceTransferFindUniqueArgs>(args: SelectSubset<T, MarketplaceTransferFindUniqueArgs<ExtArgs>>): Prisma__MarketplaceTransferClient<$Result.GetResult<Prisma.$MarketplaceTransferPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MarketplaceTransfer that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MarketplaceTransferFindUniqueOrThrowArgs} args - Arguments to find a MarketplaceTransfer
+     * @example
+     * // Get one MarketplaceTransfer
+     * const marketplaceTransfer = await prisma.marketplaceTransfer.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MarketplaceTransferFindUniqueOrThrowArgs>(args: SelectSubset<T, MarketplaceTransferFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MarketplaceTransferClient<$Result.GetResult<Prisma.$MarketplaceTransferPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MarketplaceTransfer that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarketplaceTransferFindFirstArgs} args - Arguments to find a MarketplaceTransfer
+     * @example
+     * // Get one MarketplaceTransfer
+     * const marketplaceTransfer = await prisma.marketplaceTransfer.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MarketplaceTransferFindFirstArgs>(args?: SelectSubset<T, MarketplaceTransferFindFirstArgs<ExtArgs>>): Prisma__MarketplaceTransferClient<$Result.GetResult<Prisma.$MarketplaceTransferPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MarketplaceTransfer that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarketplaceTransferFindFirstOrThrowArgs} args - Arguments to find a MarketplaceTransfer
+     * @example
+     * // Get one MarketplaceTransfer
+     * const marketplaceTransfer = await prisma.marketplaceTransfer.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MarketplaceTransferFindFirstOrThrowArgs>(args?: SelectSubset<T, MarketplaceTransferFindFirstOrThrowArgs<ExtArgs>>): Prisma__MarketplaceTransferClient<$Result.GetResult<Prisma.$MarketplaceTransferPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MarketplaceTransfers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarketplaceTransferFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MarketplaceTransfers
+     * const marketplaceTransfers = await prisma.marketplaceTransfer.findMany()
+     * 
+     * // Get first 10 MarketplaceTransfers
+     * const marketplaceTransfers = await prisma.marketplaceTransfer.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const marketplaceTransferWithIdOnly = await prisma.marketplaceTransfer.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MarketplaceTransferFindManyArgs>(args?: SelectSubset<T, MarketplaceTransferFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarketplaceTransferPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MarketplaceTransfer.
+     * @param {MarketplaceTransferCreateArgs} args - Arguments to create a MarketplaceTransfer.
+     * @example
+     * // Create one MarketplaceTransfer
+     * const MarketplaceTransfer = await prisma.marketplaceTransfer.create({
+     *   data: {
+     *     // ... data to create a MarketplaceTransfer
+     *   }
+     * })
+     * 
+     */
+    create<T extends MarketplaceTransferCreateArgs>(args: SelectSubset<T, MarketplaceTransferCreateArgs<ExtArgs>>): Prisma__MarketplaceTransferClient<$Result.GetResult<Prisma.$MarketplaceTransferPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MarketplaceTransfers.
+     * @param {MarketplaceTransferCreateManyArgs} args - Arguments to create many MarketplaceTransfers.
+     * @example
+     * // Create many MarketplaceTransfers
+     * const marketplaceTransfer = await prisma.marketplaceTransfer.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MarketplaceTransferCreateManyArgs>(args?: SelectSubset<T, MarketplaceTransferCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MarketplaceTransfers and returns the data saved in the database.
+     * @param {MarketplaceTransferCreateManyAndReturnArgs} args - Arguments to create many MarketplaceTransfers.
+     * @example
+     * // Create many MarketplaceTransfers
+     * const marketplaceTransfer = await prisma.marketplaceTransfer.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MarketplaceTransfers and only return the `id`
+     * const marketplaceTransferWithIdOnly = await prisma.marketplaceTransfer.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MarketplaceTransferCreateManyAndReturnArgs>(args?: SelectSubset<T, MarketplaceTransferCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarketplaceTransferPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MarketplaceTransfer.
+     * @param {MarketplaceTransferDeleteArgs} args - Arguments to delete one MarketplaceTransfer.
+     * @example
+     * // Delete one MarketplaceTransfer
+     * const MarketplaceTransfer = await prisma.marketplaceTransfer.delete({
+     *   where: {
+     *     // ... filter to delete one MarketplaceTransfer
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MarketplaceTransferDeleteArgs>(args: SelectSubset<T, MarketplaceTransferDeleteArgs<ExtArgs>>): Prisma__MarketplaceTransferClient<$Result.GetResult<Prisma.$MarketplaceTransferPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MarketplaceTransfer.
+     * @param {MarketplaceTransferUpdateArgs} args - Arguments to update one MarketplaceTransfer.
+     * @example
+     * // Update one MarketplaceTransfer
+     * const marketplaceTransfer = await prisma.marketplaceTransfer.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MarketplaceTransferUpdateArgs>(args: SelectSubset<T, MarketplaceTransferUpdateArgs<ExtArgs>>): Prisma__MarketplaceTransferClient<$Result.GetResult<Prisma.$MarketplaceTransferPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MarketplaceTransfers.
+     * @param {MarketplaceTransferDeleteManyArgs} args - Arguments to filter MarketplaceTransfers to delete.
+     * @example
+     * // Delete a few MarketplaceTransfers
+     * const { count } = await prisma.marketplaceTransfer.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MarketplaceTransferDeleteManyArgs>(args?: SelectSubset<T, MarketplaceTransferDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MarketplaceTransfers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarketplaceTransferUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MarketplaceTransfers
+     * const marketplaceTransfer = await prisma.marketplaceTransfer.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MarketplaceTransferUpdateManyArgs>(args: SelectSubset<T, MarketplaceTransferUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MarketplaceTransfers and returns the data updated in the database.
+     * @param {MarketplaceTransferUpdateManyAndReturnArgs} args - Arguments to update many MarketplaceTransfers.
+     * @example
+     * // Update many MarketplaceTransfers
+     * const marketplaceTransfer = await prisma.marketplaceTransfer.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MarketplaceTransfers and only return the `id`
+     * const marketplaceTransferWithIdOnly = await prisma.marketplaceTransfer.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MarketplaceTransferUpdateManyAndReturnArgs>(args: SelectSubset<T, MarketplaceTransferUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarketplaceTransferPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MarketplaceTransfer.
+     * @param {MarketplaceTransferUpsertArgs} args - Arguments to update or create a MarketplaceTransfer.
+     * @example
+     * // Update or create a MarketplaceTransfer
+     * const marketplaceTransfer = await prisma.marketplaceTransfer.upsert({
+     *   create: {
+     *     // ... data to create a MarketplaceTransfer
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MarketplaceTransfer we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MarketplaceTransferUpsertArgs>(args: SelectSubset<T, MarketplaceTransferUpsertArgs<ExtArgs>>): Prisma__MarketplaceTransferClient<$Result.GetResult<Prisma.$MarketplaceTransferPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MarketplaceTransfers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarketplaceTransferCountArgs} args - Arguments to filter MarketplaceTransfers to count.
+     * @example
+     * // Count the number of MarketplaceTransfers
+     * const count = await prisma.marketplaceTransfer.count({
+     *   where: {
+     *     // ... the filter for the MarketplaceTransfers we want to count
+     *   }
+     * })
+    **/
+    count<T extends MarketplaceTransferCountArgs>(
+      args?: Subset<T, MarketplaceTransferCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MarketplaceTransferCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MarketplaceTransfer.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarketplaceTransferAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MarketplaceTransferAggregateArgs>(args: Subset<T, MarketplaceTransferAggregateArgs>): Prisma.PrismaPromise<GetMarketplaceTransferAggregateType<T>>
+
+    /**
+     * Group by MarketplaceTransfer.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarketplaceTransferGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MarketplaceTransferGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MarketplaceTransferGroupByArgs['orderBy'] }
+        : { orderBy?: MarketplaceTransferGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MarketplaceTransferGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMarketplaceTransferGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MarketplaceTransfer model
+   */
+  readonly fields: MarketplaceTransferFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MarketplaceTransfer.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MarketplaceTransferClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MarketplaceTransfer model
+   */
+  interface MarketplaceTransferFieldRefs {
+    readonly id: FieldRef<"MarketplaceTransfer", 'String'>
+    readonly platform: FieldRef<"MarketplaceTransfer", 'String'>
+    readonly paymentId: FieldRef<"MarketplaceTransfer", 'String'>
+    readonly status: FieldRef<"MarketplaceTransfer", 'String'>
+    readonly amount: FieldRef<"MarketplaceTransfer", 'Int'>
+    readonly bankAccount: FieldRef<"MarketplaceTransfer", 'String'>
+    readonly createdAtMp: FieldRef<"MarketplaceTransfer", 'DateTime'>
+    readonly paidTime: FieldRef<"MarketplaceTransfer", 'DateTime'>
+    readonly syncedAt: FieldRef<"MarketplaceTransfer", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MarketplaceTransfer findUnique
+   */
+  export type MarketplaceTransferFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceTransfer
+     */
+    select?: MarketplaceTransferSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceTransfer
+     */
+    omit?: MarketplaceTransferOmit<ExtArgs> | null
+    /**
+     * Filter, which MarketplaceTransfer to fetch.
+     */
+    where: MarketplaceTransferWhereUniqueInput
+  }
+
+  /**
+   * MarketplaceTransfer findUniqueOrThrow
+   */
+  export type MarketplaceTransferFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceTransfer
+     */
+    select?: MarketplaceTransferSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceTransfer
+     */
+    omit?: MarketplaceTransferOmit<ExtArgs> | null
+    /**
+     * Filter, which MarketplaceTransfer to fetch.
+     */
+    where: MarketplaceTransferWhereUniqueInput
+  }
+
+  /**
+   * MarketplaceTransfer findFirst
+   */
+  export type MarketplaceTransferFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceTransfer
+     */
+    select?: MarketplaceTransferSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceTransfer
+     */
+    omit?: MarketplaceTransferOmit<ExtArgs> | null
+    /**
+     * Filter, which MarketplaceTransfer to fetch.
+     */
+    where?: MarketplaceTransferWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MarketplaceTransfers to fetch.
+     */
+    orderBy?: MarketplaceTransferOrderByWithRelationInput | MarketplaceTransferOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MarketplaceTransfers.
+     */
+    cursor?: MarketplaceTransferWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MarketplaceTransfers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MarketplaceTransfers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MarketplaceTransfers.
+     */
+    distinct?: MarketplaceTransferScalarFieldEnum | MarketplaceTransferScalarFieldEnum[]
+  }
+
+  /**
+   * MarketplaceTransfer findFirstOrThrow
+   */
+  export type MarketplaceTransferFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceTransfer
+     */
+    select?: MarketplaceTransferSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceTransfer
+     */
+    omit?: MarketplaceTransferOmit<ExtArgs> | null
+    /**
+     * Filter, which MarketplaceTransfer to fetch.
+     */
+    where?: MarketplaceTransferWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MarketplaceTransfers to fetch.
+     */
+    orderBy?: MarketplaceTransferOrderByWithRelationInput | MarketplaceTransferOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MarketplaceTransfers.
+     */
+    cursor?: MarketplaceTransferWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MarketplaceTransfers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MarketplaceTransfers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MarketplaceTransfers.
+     */
+    distinct?: MarketplaceTransferScalarFieldEnum | MarketplaceTransferScalarFieldEnum[]
+  }
+
+  /**
+   * MarketplaceTransfer findMany
+   */
+  export type MarketplaceTransferFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceTransfer
+     */
+    select?: MarketplaceTransferSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceTransfer
+     */
+    omit?: MarketplaceTransferOmit<ExtArgs> | null
+    /**
+     * Filter, which MarketplaceTransfers to fetch.
+     */
+    where?: MarketplaceTransferWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MarketplaceTransfers to fetch.
+     */
+    orderBy?: MarketplaceTransferOrderByWithRelationInput | MarketplaceTransferOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MarketplaceTransfers.
+     */
+    cursor?: MarketplaceTransferWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MarketplaceTransfers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MarketplaceTransfers.
+     */
+    skip?: number
+    distinct?: MarketplaceTransferScalarFieldEnum | MarketplaceTransferScalarFieldEnum[]
+  }
+
+  /**
+   * MarketplaceTransfer create
+   */
+  export type MarketplaceTransferCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceTransfer
+     */
+    select?: MarketplaceTransferSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceTransfer
+     */
+    omit?: MarketplaceTransferOmit<ExtArgs> | null
+    /**
+     * The data needed to create a MarketplaceTransfer.
+     */
+    data: XOR<MarketplaceTransferCreateInput, MarketplaceTransferUncheckedCreateInput>
+  }
+
+  /**
+   * MarketplaceTransfer createMany
+   */
+  export type MarketplaceTransferCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MarketplaceTransfers.
+     */
+    data: MarketplaceTransferCreateManyInput | MarketplaceTransferCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MarketplaceTransfer createManyAndReturn
+   */
+  export type MarketplaceTransferCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceTransfer
+     */
+    select?: MarketplaceTransferSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceTransfer
+     */
+    omit?: MarketplaceTransferOmit<ExtArgs> | null
+    /**
+     * The data used to create many MarketplaceTransfers.
+     */
+    data: MarketplaceTransferCreateManyInput | MarketplaceTransferCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MarketplaceTransfer update
+   */
+  export type MarketplaceTransferUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceTransfer
+     */
+    select?: MarketplaceTransferSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceTransfer
+     */
+    omit?: MarketplaceTransferOmit<ExtArgs> | null
+    /**
+     * The data needed to update a MarketplaceTransfer.
+     */
+    data: XOR<MarketplaceTransferUpdateInput, MarketplaceTransferUncheckedUpdateInput>
+    /**
+     * Choose, which MarketplaceTransfer to update.
+     */
+    where: MarketplaceTransferWhereUniqueInput
+  }
+
+  /**
+   * MarketplaceTransfer updateMany
+   */
+  export type MarketplaceTransferUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MarketplaceTransfers.
+     */
+    data: XOR<MarketplaceTransferUpdateManyMutationInput, MarketplaceTransferUncheckedUpdateManyInput>
+    /**
+     * Filter which MarketplaceTransfers to update
+     */
+    where?: MarketplaceTransferWhereInput
+    /**
+     * Limit how many MarketplaceTransfers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MarketplaceTransfer updateManyAndReturn
+   */
+  export type MarketplaceTransferUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceTransfer
+     */
+    select?: MarketplaceTransferSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceTransfer
+     */
+    omit?: MarketplaceTransferOmit<ExtArgs> | null
+    /**
+     * The data used to update MarketplaceTransfers.
+     */
+    data: XOR<MarketplaceTransferUpdateManyMutationInput, MarketplaceTransferUncheckedUpdateManyInput>
+    /**
+     * Filter which MarketplaceTransfers to update
+     */
+    where?: MarketplaceTransferWhereInput
+    /**
+     * Limit how many MarketplaceTransfers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MarketplaceTransfer upsert
+   */
+  export type MarketplaceTransferUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceTransfer
+     */
+    select?: MarketplaceTransferSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceTransfer
+     */
+    omit?: MarketplaceTransferOmit<ExtArgs> | null
+    /**
+     * The filter to search for the MarketplaceTransfer to update in case it exists.
+     */
+    where: MarketplaceTransferWhereUniqueInput
+    /**
+     * In case the MarketplaceTransfer found by the `where` argument doesn't exist, create a new MarketplaceTransfer with this data.
+     */
+    create: XOR<MarketplaceTransferCreateInput, MarketplaceTransferUncheckedCreateInput>
+    /**
+     * In case the MarketplaceTransfer was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MarketplaceTransferUpdateInput, MarketplaceTransferUncheckedUpdateInput>
+  }
+
+  /**
+   * MarketplaceTransfer delete
+   */
+  export type MarketplaceTransferDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceTransfer
+     */
+    select?: MarketplaceTransferSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceTransfer
+     */
+    omit?: MarketplaceTransferOmit<ExtArgs> | null
+    /**
+     * Filter which MarketplaceTransfer to delete.
+     */
+    where: MarketplaceTransferWhereUniqueInput
+  }
+
+  /**
+   * MarketplaceTransfer deleteMany
+   */
+  export type MarketplaceTransferDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MarketplaceTransfers to delete
+     */
+    where?: MarketplaceTransferWhereInput
+    /**
+     * Limit how many MarketplaceTransfers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MarketplaceTransfer without action
+   */
+  export type MarketplaceTransferDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceTransfer
+     */
+    select?: MarketplaceTransferSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceTransfer
+     */
+    omit?: MarketplaceTransferOmit<ExtArgs> | null
   }
 
 
@@ -59291,6 +60541,8 @@ export namespace Prisma {
     courier: 'courier',
     buyerNote: 'buyerNote',
     payment: 'payment',
+    finance: 'finance',
+    financeAt: 'financeAt',
     orderedAt: 'orderedAt',
     updatedAtMp: 'updatedAtMp',
     syncedAt: 'syncedAt'
@@ -59354,10 +60606,29 @@ export namespace Prisma {
     revenue: 'revenue',
     fee: 'fee',
     amount: 'amount',
-    paidAt: 'paidAt'
+    paidAt: 'paidAt',
+    adjustment: 'adjustment',
+    payStatus: 'payStatus',
+    paymentId: 'paymentId',
+    payTime: 'payTime'
   };
 
   export type MarketplacePayoutScalarFieldEnum = (typeof MarketplacePayoutScalarFieldEnum)[keyof typeof MarketplacePayoutScalarFieldEnum]
+
+
+  export const MarketplaceTransferScalarFieldEnum: {
+    id: 'id',
+    platform: 'platform',
+    paymentId: 'paymentId',
+    status: 'status',
+    amount: 'amount',
+    bankAccount: 'bankAccount',
+    createdAtMp: 'createdAtMp',
+    paidTime: 'paidTime',
+    syncedAt: 'syncedAt'
+  };
+
+  export type MarketplaceTransferScalarFieldEnum = (typeof MarketplaceTransferScalarFieldEnum)[keyof typeof MarketplaceTransferScalarFieldEnum]
 
 
   export const OnlineReconScalarFieldEnum: {
@@ -62045,6 +63316,8 @@ export namespace Prisma {
     courier?: StringNullableFilter<"MarketplaceOrder"> | string | null
     buyerNote?: StringNullableFilter<"MarketplaceOrder"> | string | null
     payment?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    finance?: JsonNullableFilter<"MarketplaceOrder">
+    financeAt?: DateTimeNullableFilter<"MarketplaceOrder"> | Date | string | null
     orderedAt?: DateTimeFilter<"MarketplaceOrder"> | Date | string
     updatedAtMp?: DateTimeFilter<"MarketplaceOrder"> | Date | string
     syncedAt?: DateTimeFilter<"MarketplaceOrder"> | Date | string
@@ -62067,6 +63340,8 @@ export namespace Prisma {
     courier?: SortOrderInput | SortOrder
     buyerNote?: SortOrderInput | SortOrder
     payment?: SortOrderInput | SortOrder
+    finance?: SortOrderInput | SortOrder
+    financeAt?: SortOrderInput | SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
@@ -62093,6 +63368,8 @@ export namespace Prisma {
     courier?: StringNullableFilter<"MarketplaceOrder"> | string | null
     buyerNote?: StringNullableFilter<"MarketplaceOrder"> | string | null
     payment?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    finance?: JsonNullableFilter<"MarketplaceOrder">
+    financeAt?: DateTimeNullableFilter<"MarketplaceOrder"> | Date | string | null
     orderedAt?: DateTimeFilter<"MarketplaceOrder"> | Date | string
     updatedAtMp?: DateTimeFilter<"MarketplaceOrder"> | Date | string
     syncedAt?: DateTimeFilter<"MarketplaceOrder"> | Date | string
@@ -62115,6 +63392,8 @@ export namespace Prisma {
     courier?: SortOrderInput | SortOrder
     buyerNote?: SortOrderInput | SortOrder
     payment?: SortOrderInput | SortOrder
+    finance?: SortOrderInput | SortOrder
+    financeAt?: SortOrderInput | SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
@@ -62145,6 +63424,8 @@ export namespace Prisma {
     courier?: StringNullableWithAggregatesFilter<"MarketplaceOrder"> | string | null
     buyerNote?: StringNullableWithAggregatesFilter<"MarketplaceOrder"> | string | null
     payment?: StringNullableWithAggregatesFilter<"MarketplaceOrder"> | string | null
+    finance?: JsonNullableWithAggregatesFilter<"MarketplaceOrder">
+    financeAt?: DateTimeNullableWithAggregatesFilter<"MarketplaceOrder"> | Date | string | null
     orderedAt?: DateTimeWithAggregatesFilter<"MarketplaceOrder"> | Date | string
     updatedAtMp?: DateTimeWithAggregatesFilter<"MarketplaceOrder"> | Date | string
     syncedAt?: DateTimeWithAggregatesFilter<"MarketplaceOrder"> | Date | string
@@ -62397,6 +63678,10 @@ export namespace Prisma {
     fee?: IntFilter<"MarketplacePayout"> | number
     amount?: IntFilter<"MarketplacePayout"> | number
     paidAt?: DateTimeFilter<"MarketplacePayout"> | Date | string
+    adjustment?: IntFilter<"MarketplacePayout"> | number
+    payStatus?: StringNullableFilter<"MarketplacePayout"> | string | null
+    paymentId?: StringNullableFilter<"MarketplacePayout"> | string | null
+    payTime?: DateTimeNullableFilter<"MarketplacePayout"> | Date | string | null
   }
 
   export type MarketplacePayoutOrderByWithRelationInput = {
@@ -62408,6 +63693,10 @@ export namespace Prisma {
     fee?: SortOrder
     amount?: SortOrder
     paidAt?: SortOrder
+    adjustment?: SortOrder
+    payStatus?: SortOrderInput | SortOrder
+    paymentId?: SortOrderInput | SortOrder
+    payTime?: SortOrderInput | SortOrder
   }
 
   export type MarketplacePayoutWhereUniqueInput = Prisma.AtLeast<{
@@ -62423,6 +63712,10 @@ export namespace Prisma {
     fee?: IntFilter<"MarketplacePayout"> | number
     amount?: IntFilter<"MarketplacePayout"> | number
     paidAt?: DateTimeFilter<"MarketplacePayout"> | Date | string
+    adjustment?: IntFilter<"MarketplacePayout"> | number
+    payStatus?: StringNullableFilter<"MarketplacePayout"> | string | null
+    paymentId?: StringNullableFilter<"MarketplacePayout"> | string | null
+    payTime?: DateTimeNullableFilter<"MarketplacePayout"> | Date | string | null
   }, "id" | "platform_refId">
 
   export type MarketplacePayoutOrderByWithAggregationInput = {
@@ -62434,6 +63727,10 @@ export namespace Prisma {
     fee?: SortOrder
     amount?: SortOrder
     paidAt?: SortOrder
+    adjustment?: SortOrder
+    payStatus?: SortOrderInput | SortOrder
+    paymentId?: SortOrderInput | SortOrder
+    payTime?: SortOrderInput | SortOrder
     _count?: MarketplacePayoutCountOrderByAggregateInput
     _avg?: MarketplacePayoutAvgOrderByAggregateInput
     _max?: MarketplacePayoutMaxOrderByAggregateInput
@@ -62453,6 +63750,85 @@ export namespace Prisma {
     fee?: IntWithAggregatesFilter<"MarketplacePayout"> | number
     amount?: IntWithAggregatesFilter<"MarketplacePayout"> | number
     paidAt?: DateTimeWithAggregatesFilter<"MarketplacePayout"> | Date | string
+    adjustment?: IntWithAggregatesFilter<"MarketplacePayout"> | number
+    payStatus?: StringNullableWithAggregatesFilter<"MarketplacePayout"> | string | null
+    paymentId?: StringNullableWithAggregatesFilter<"MarketplacePayout"> | string | null
+    payTime?: DateTimeNullableWithAggregatesFilter<"MarketplacePayout"> | Date | string | null
+  }
+
+  export type MarketplaceTransferWhereInput = {
+    AND?: MarketplaceTransferWhereInput | MarketplaceTransferWhereInput[]
+    OR?: MarketplaceTransferWhereInput[]
+    NOT?: MarketplaceTransferWhereInput | MarketplaceTransferWhereInput[]
+    id?: StringFilter<"MarketplaceTransfer"> | string
+    platform?: StringFilter<"MarketplaceTransfer"> | string
+    paymentId?: StringFilter<"MarketplaceTransfer"> | string
+    status?: StringFilter<"MarketplaceTransfer"> | string
+    amount?: IntFilter<"MarketplaceTransfer"> | number
+    bankAccount?: StringNullableFilter<"MarketplaceTransfer"> | string | null
+    createdAtMp?: DateTimeFilter<"MarketplaceTransfer"> | Date | string
+    paidTime?: DateTimeNullableFilter<"MarketplaceTransfer"> | Date | string | null
+    syncedAt?: DateTimeFilter<"MarketplaceTransfer"> | Date | string
+  }
+
+  export type MarketplaceTransferOrderByWithRelationInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    paymentId?: SortOrder
+    status?: SortOrder
+    amount?: SortOrder
+    bankAccount?: SortOrderInput | SortOrder
+    createdAtMp?: SortOrder
+    paidTime?: SortOrderInput | SortOrder
+    syncedAt?: SortOrder
+  }
+
+  export type MarketplaceTransferWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    platform_paymentId?: MarketplaceTransferPlatformPaymentIdCompoundUniqueInput
+    AND?: MarketplaceTransferWhereInput | MarketplaceTransferWhereInput[]
+    OR?: MarketplaceTransferWhereInput[]
+    NOT?: MarketplaceTransferWhereInput | MarketplaceTransferWhereInput[]
+    platform?: StringFilter<"MarketplaceTransfer"> | string
+    paymentId?: StringFilter<"MarketplaceTransfer"> | string
+    status?: StringFilter<"MarketplaceTransfer"> | string
+    amount?: IntFilter<"MarketplaceTransfer"> | number
+    bankAccount?: StringNullableFilter<"MarketplaceTransfer"> | string | null
+    createdAtMp?: DateTimeFilter<"MarketplaceTransfer"> | Date | string
+    paidTime?: DateTimeNullableFilter<"MarketplaceTransfer"> | Date | string | null
+    syncedAt?: DateTimeFilter<"MarketplaceTransfer"> | Date | string
+  }, "id" | "platform_paymentId">
+
+  export type MarketplaceTransferOrderByWithAggregationInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    paymentId?: SortOrder
+    status?: SortOrder
+    amount?: SortOrder
+    bankAccount?: SortOrderInput | SortOrder
+    createdAtMp?: SortOrder
+    paidTime?: SortOrderInput | SortOrder
+    syncedAt?: SortOrder
+    _count?: MarketplaceTransferCountOrderByAggregateInput
+    _avg?: MarketplaceTransferAvgOrderByAggregateInput
+    _max?: MarketplaceTransferMaxOrderByAggregateInput
+    _min?: MarketplaceTransferMinOrderByAggregateInput
+    _sum?: MarketplaceTransferSumOrderByAggregateInput
+  }
+
+  export type MarketplaceTransferScalarWhereWithAggregatesInput = {
+    AND?: MarketplaceTransferScalarWhereWithAggregatesInput | MarketplaceTransferScalarWhereWithAggregatesInput[]
+    OR?: MarketplaceTransferScalarWhereWithAggregatesInput[]
+    NOT?: MarketplaceTransferScalarWhereWithAggregatesInput | MarketplaceTransferScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MarketplaceTransfer"> | string
+    platform?: StringWithAggregatesFilter<"MarketplaceTransfer"> | string
+    paymentId?: StringWithAggregatesFilter<"MarketplaceTransfer"> | string
+    status?: StringWithAggregatesFilter<"MarketplaceTransfer"> | string
+    amount?: IntWithAggregatesFilter<"MarketplaceTransfer"> | number
+    bankAccount?: StringNullableWithAggregatesFilter<"MarketplaceTransfer"> | string | null
+    createdAtMp?: DateTimeWithAggregatesFilter<"MarketplaceTransfer"> | Date | string
+    paidTime?: DateTimeNullableWithAggregatesFilter<"MarketplaceTransfer"> | Date | string | null
+    syncedAt?: DateTimeWithAggregatesFilter<"MarketplaceTransfer"> | Date | string
   }
 
   export type OnlineReconWhereInput = {
@@ -66147,6 +67523,8 @@ export namespace Prisma {
     courier?: string | null
     buyerNote?: string | null
     payment?: string | null
+    finance?: NullableJsonNullValueInput | InputJsonValue
+    financeAt?: Date | string | null
     orderedAt: Date | string
     updatedAtMp: Date | string
     syncedAt?: Date | string
@@ -66169,6 +67547,8 @@ export namespace Prisma {
     courier?: string | null
     buyerNote?: string | null
     payment?: string | null
+    finance?: NullableJsonNullValueInput | InputJsonValue
+    financeAt?: Date | string | null
     orderedAt: Date | string
     updatedAtMp: Date | string
     syncedAt?: Date | string
@@ -66191,6 +67571,8 @@ export namespace Prisma {
     courier?: NullableStringFieldUpdateOperationsInput | string | null
     buyerNote?: NullableStringFieldUpdateOperationsInput | string | null
     payment?: NullableStringFieldUpdateOperationsInput | string | null
+    finance?: NullableJsonNullValueInput | InputJsonValue
+    financeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66213,6 +67595,8 @@ export namespace Prisma {
     courier?: NullableStringFieldUpdateOperationsInput | string | null
     buyerNote?: NullableStringFieldUpdateOperationsInput | string | null
     payment?: NullableStringFieldUpdateOperationsInput | string | null
+    finance?: NullableJsonNullValueInput | InputJsonValue
+    financeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66235,6 +67619,8 @@ export namespace Prisma {
     courier?: string | null
     buyerNote?: string | null
     payment?: string | null
+    finance?: NullableJsonNullValueInput | InputJsonValue
+    financeAt?: Date | string | null
     orderedAt: Date | string
     updatedAtMp: Date | string
     syncedAt?: Date | string
@@ -66257,6 +67643,8 @@ export namespace Prisma {
     courier?: NullableStringFieldUpdateOperationsInput | string | null
     buyerNote?: NullableStringFieldUpdateOperationsInput | string | null
     payment?: NullableStringFieldUpdateOperationsInput | string | null
+    finance?: NullableJsonNullValueInput | InputJsonValue
+    financeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66279,6 +67667,8 @@ export namespace Prisma {
     courier?: NullableStringFieldUpdateOperationsInput | string | null
     buyerNote?: NullableStringFieldUpdateOperationsInput | string | null
     payment?: NullableStringFieldUpdateOperationsInput | string | null
+    finance?: NullableJsonNullValueInput | InputJsonValue
+    financeAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66580,6 +67970,10 @@ export namespace Prisma {
     fee: number
     amount: number
     paidAt: Date | string
+    adjustment?: number
+    payStatus?: string | null
+    paymentId?: string | null
+    payTime?: Date | string | null
   }
 
   export type MarketplacePayoutUncheckedCreateInput = {
@@ -66591,6 +67985,10 @@ export namespace Prisma {
     fee: number
     amount: number
     paidAt: Date | string
+    adjustment?: number
+    payStatus?: string | null
+    paymentId?: string | null
+    payTime?: Date | string | null
   }
 
   export type MarketplacePayoutUpdateInput = {
@@ -66602,6 +68000,10 @@ export namespace Prisma {
     fee?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     paidAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    adjustment?: IntFieldUpdateOperationsInput | number
+    payStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    payTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type MarketplacePayoutUncheckedUpdateInput = {
@@ -66613,6 +68015,10 @@ export namespace Prisma {
     fee?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     paidAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    adjustment?: IntFieldUpdateOperationsInput | number
+    payStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    payTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type MarketplacePayoutCreateManyInput = {
@@ -66624,6 +68030,10 @@ export namespace Prisma {
     fee: number
     amount: number
     paidAt: Date | string
+    adjustment?: number
+    payStatus?: string | null
+    paymentId?: string | null
+    payTime?: Date | string | null
   }
 
   export type MarketplacePayoutUpdateManyMutationInput = {
@@ -66635,6 +68045,10 @@ export namespace Prisma {
     fee?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     paidAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    adjustment?: IntFieldUpdateOperationsInput | number
+    payStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    payTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type MarketplacePayoutUncheckedUpdateManyInput = {
@@ -66646,6 +68060,94 @@ export namespace Prisma {
     fee?: IntFieldUpdateOperationsInput | number
     amount?: IntFieldUpdateOperationsInput | number
     paidAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    adjustment?: IntFieldUpdateOperationsInput | number
+    payStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    paymentId?: NullableStringFieldUpdateOperationsInput | string | null
+    payTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type MarketplaceTransferCreateInput = {
+    id?: string
+    platform: string
+    paymentId: string
+    status: string
+    amount: number
+    bankAccount?: string | null
+    createdAtMp: Date | string
+    paidTime?: Date | string | null
+    syncedAt?: Date | string
+  }
+
+  export type MarketplaceTransferUncheckedCreateInput = {
+    id?: string
+    platform: string
+    paymentId: string
+    status: string
+    amount: number
+    bankAccount?: string | null
+    createdAtMp: Date | string
+    paidTime?: Date | string | null
+    syncedAt?: Date | string
+  }
+
+  export type MarketplaceTransferUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: StringFieldUpdateOperationsInput | string
+    paymentId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    bankAccount?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
+    paidTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MarketplaceTransferUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: StringFieldUpdateOperationsInput | string
+    paymentId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    bankAccount?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
+    paidTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MarketplaceTransferCreateManyInput = {
+    id?: string
+    platform: string
+    paymentId: string
+    status: string
+    amount: number
+    bankAccount?: string | null
+    createdAtMp: Date | string
+    paidTime?: Date | string | null
+    syncedAt?: Date | string
+  }
+
+  export type MarketplaceTransferUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: StringFieldUpdateOperationsInput | string
+    paymentId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    bankAccount?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
+    paidTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MarketplaceTransferUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: StringFieldUpdateOperationsInput | string
+    paymentId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    amount?: IntFieldUpdateOperationsInput | number
+    bankAccount?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
+    paidTime?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type OnlineReconCreateInput = {
@@ -69935,6 +71437,8 @@ export namespace Prisma {
     courier?: SortOrder
     buyerNote?: SortOrder
     payment?: SortOrder
+    finance?: SortOrder
+    financeAt?: SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
@@ -69961,6 +71465,7 @@ export namespace Prisma {
     courier?: SortOrder
     buyerNote?: SortOrder
     payment?: SortOrder
+    financeAt?: SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
@@ -69982,6 +71487,7 @@ export namespace Prisma {
     courier?: SortOrder
     buyerNote?: SortOrder
     payment?: SortOrder
+    financeAt?: SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
@@ -70165,12 +71671,17 @@ export namespace Prisma {
     fee?: SortOrder
     amount?: SortOrder
     paidAt?: SortOrder
+    adjustment?: SortOrder
+    payStatus?: SortOrder
+    paymentId?: SortOrder
+    payTime?: SortOrder
   }
 
   export type MarketplacePayoutAvgOrderByAggregateInput = {
     revenue?: SortOrder
     fee?: SortOrder
     amount?: SortOrder
+    adjustment?: SortOrder
   }
 
   export type MarketplacePayoutMaxOrderByAggregateInput = {
@@ -70182,6 +71693,10 @@ export namespace Prisma {
     fee?: SortOrder
     amount?: SortOrder
     paidAt?: SortOrder
+    adjustment?: SortOrder
+    payStatus?: SortOrder
+    paymentId?: SortOrder
+    payTime?: SortOrder
   }
 
   export type MarketplacePayoutMinOrderByAggregateInput = {
@@ -70193,11 +71708,65 @@ export namespace Prisma {
     fee?: SortOrder
     amount?: SortOrder
     paidAt?: SortOrder
+    adjustment?: SortOrder
+    payStatus?: SortOrder
+    paymentId?: SortOrder
+    payTime?: SortOrder
   }
 
   export type MarketplacePayoutSumOrderByAggregateInput = {
     revenue?: SortOrder
     fee?: SortOrder
+    amount?: SortOrder
+    adjustment?: SortOrder
+  }
+
+  export type MarketplaceTransferPlatformPaymentIdCompoundUniqueInput = {
+    platform: string
+    paymentId: string
+  }
+
+  export type MarketplaceTransferCountOrderByAggregateInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    paymentId?: SortOrder
+    status?: SortOrder
+    amount?: SortOrder
+    bankAccount?: SortOrder
+    createdAtMp?: SortOrder
+    paidTime?: SortOrder
+    syncedAt?: SortOrder
+  }
+
+  export type MarketplaceTransferAvgOrderByAggregateInput = {
+    amount?: SortOrder
+  }
+
+  export type MarketplaceTransferMaxOrderByAggregateInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    paymentId?: SortOrder
+    status?: SortOrder
+    amount?: SortOrder
+    bankAccount?: SortOrder
+    createdAtMp?: SortOrder
+    paidTime?: SortOrder
+    syncedAt?: SortOrder
+  }
+
+  export type MarketplaceTransferMinOrderByAggregateInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    paymentId?: SortOrder
+    status?: SortOrder
+    amount?: SortOrder
+    bankAccount?: SortOrder
+    createdAtMp?: SortOrder
+    paidTime?: SortOrder
+    syncedAt?: SortOrder
+  }
+
+  export type MarketplaceTransferSumOrderByAggregateInput = {
     amount?: SortOrder
   }
 
