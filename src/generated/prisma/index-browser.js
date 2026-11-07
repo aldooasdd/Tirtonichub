@@ -465,6 +465,12 @@ exports.Prisma.MarketplaceOrderScalarFieldEnum = {
   total: 'total',
   netAmount: 'netAmount',
   trackingNo: 'trackingNo',
+  recipient: 'recipient',
+  phone: 'phone',
+  address: 'address',
+  courier: 'courier',
+  buyerNote: 'buyerNote',
+  payment: 'payment',
   orderedAt: 'orderedAt',
   updatedAtMp: 'updatedAtMp',
   syncedAt: 'syncedAt'

@@ -35564,6 +35564,12 @@ export namespace Prisma {
     total: number | null
     netAmount: number | null
     trackingNo: string | null
+    recipient: string | null
+    phone: string | null
+    address: string | null
+    courier: string | null
+    buyerNote: string | null
+    payment: string | null
     orderedAt: Date | null
     updatedAtMp: Date | null
     syncedAt: Date | null
@@ -35579,6 +35585,12 @@ export namespace Prisma {
     total: number | null
     netAmount: number | null
     trackingNo: string | null
+    recipient: string | null
+    phone: string | null
+    address: string | null
+    courier: string | null
+    buyerNote: string | null
+    payment: string | null
     orderedAt: Date | null
     updatedAtMp: Date | null
     syncedAt: Date | null
@@ -35595,6 +35607,12 @@ export namespace Prisma {
     total: number
     netAmount: number
     trackingNo: number
+    recipient: number
+    phone: number
+    address: number
+    courier: number
+    buyerNote: number
+    payment: number
     orderedAt: number
     updatedAtMp: number
     syncedAt: number
@@ -35622,6 +35640,12 @@ export namespace Prisma {
     total?: true
     netAmount?: true
     trackingNo?: true
+    recipient?: true
+    phone?: true
+    address?: true
+    courier?: true
+    buyerNote?: true
+    payment?: true
     orderedAt?: true
     updatedAtMp?: true
     syncedAt?: true
@@ -35637,6 +35661,12 @@ export namespace Prisma {
     total?: true
     netAmount?: true
     trackingNo?: true
+    recipient?: true
+    phone?: true
+    address?: true
+    courier?: true
+    buyerNote?: true
+    payment?: true
     orderedAt?: true
     updatedAtMp?: true
     syncedAt?: true
@@ -35653,6 +35683,12 @@ export namespace Prisma {
     total?: true
     netAmount?: true
     trackingNo?: true
+    recipient?: true
+    phone?: true
+    address?: true
+    courier?: true
+    buyerNote?: true
+    payment?: true
     orderedAt?: true
     updatedAtMp?: true
     syncedAt?: true
@@ -35756,6 +35792,12 @@ export namespace Prisma {
     total: number
     netAmount: number | null
     trackingNo: string | null
+    recipient: string | null
+    phone: string | null
+    address: string | null
+    courier: string | null
+    buyerNote: string | null
+    payment: string | null
     orderedAt: Date
     updatedAtMp: Date
     syncedAt: Date
@@ -35791,6 +35833,12 @@ export namespace Prisma {
     total?: boolean
     netAmount?: boolean
     trackingNo?: boolean
+    recipient?: boolean
+    phone?: boolean
+    address?: boolean
+    courier?: boolean
+    buyerNote?: boolean
+    payment?: boolean
     orderedAt?: boolean
     updatedAtMp?: boolean
     syncedAt?: boolean
@@ -35807,6 +35855,12 @@ export namespace Prisma {
     total?: boolean
     netAmount?: boolean
     trackingNo?: boolean
+    recipient?: boolean
+    phone?: boolean
+    address?: boolean
+    courier?: boolean
+    buyerNote?: boolean
+    payment?: boolean
     orderedAt?: boolean
     updatedAtMp?: boolean
     syncedAt?: boolean
@@ -35823,6 +35877,12 @@ export namespace Prisma {
     total?: boolean
     netAmount?: boolean
     trackingNo?: boolean
+    recipient?: boolean
+    phone?: boolean
+    address?: boolean
+    courier?: boolean
+    buyerNote?: boolean
+    payment?: boolean
     orderedAt?: boolean
     updatedAtMp?: boolean
     syncedAt?: boolean
@@ -35839,12 +35899,18 @@ export namespace Prisma {
     total?: boolean
     netAmount?: boolean
     trackingNo?: boolean
+    recipient?: boolean
+    phone?: boolean
+    address?: boolean
+    courier?: boolean
+    buyerNote?: boolean
+    payment?: boolean
     orderedAt?: boolean
     updatedAtMp?: boolean
     syncedAt?: boolean
   }
 
-  export type MarketplaceOrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "shopId" | "orderSn" | "status" | "buyer" | "items" | "total" | "netAmount" | "trackingNo" | "orderedAt" | "updatedAtMp" | "syncedAt", ExtArgs["result"]["marketplaceOrder"]>
+  export type MarketplaceOrderOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "shopId" | "orderSn" | "status" | "buyer" | "items" | "total" | "netAmount" | "trackingNo" | "recipient" | "phone" | "address" | "courier" | "buyerNote" | "payment" | "orderedAt" | "updatedAtMp" | "syncedAt", ExtArgs["result"]["marketplaceOrder"]>
 
   export type $MarketplaceOrderPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MarketplaceOrder"
@@ -35860,6 +35926,12 @@ export namespace Prisma {
       total: number
       netAmount: number | null
       trackingNo: string | null
+      recipient: string | null
+      phone: string | null
+      address: string | null
+      courier: string | null
+      buyerNote: string | null
+      payment: string | null
       orderedAt: Date
       updatedAtMp: Date
       syncedAt: Date
@@ -36296,6 +36368,12 @@ export namespace Prisma {
     readonly total: FieldRef<"MarketplaceOrder", 'Int'>
     readonly netAmount: FieldRef<"MarketplaceOrder", 'Int'>
     readonly trackingNo: FieldRef<"MarketplaceOrder", 'String'>
+    readonly recipient: FieldRef<"MarketplaceOrder", 'String'>
+    readonly phone: FieldRef<"MarketplaceOrder", 'String'>
+    readonly address: FieldRef<"MarketplaceOrder", 'String'>
+    readonly courier: FieldRef<"MarketplaceOrder", 'String'>
+    readonly buyerNote: FieldRef<"MarketplaceOrder", 'String'>
+    readonly payment: FieldRef<"MarketplaceOrder", 'String'>
     readonly orderedAt: FieldRef<"MarketplaceOrder", 'DateTime'>
     readonly updatedAtMp: FieldRef<"MarketplaceOrder", 'DateTime'>
     readonly syncedAt: FieldRef<"MarketplaceOrder", 'DateTime'>
@@ -56766,6 +56844,12 @@ export namespace Prisma {
     total: 'total',
     netAmount: 'netAmount',
     trackingNo: 'trackingNo',
+    recipient: 'recipient',
+    phone: 'phone',
+    address: 'address',
+    courier: 'courier',
+    buyerNote: 'buyerNote',
+    payment: 'payment',
     orderedAt: 'orderedAt',
     updatedAtMp: 'updatedAtMp',
     syncedAt: 'syncedAt'
@@ -59473,6 +59557,12 @@ export namespace Prisma {
     total?: IntFilter<"MarketplaceOrder"> | number
     netAmount?: IntNullableFilter<"MarketplaceOrder"> | number | null
     trackingNo?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    recipient?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    phone?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    address?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    courier?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    buyerNote?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    payment?: StringNullableFilter<"MarketplaceOrder"> | string | null
     orderedAt?: DateTimeFilter<"MarketplaceOrder"> | Date | string
     updatedAtMp?: DateTimeFilter<"MarketplaceOrder"> | Date | string
     syncedAt?: DateTimeFilter<"MarketplaceOrder"> | Date | string
@@ -59489,6 +59579,12 @@ export namespace Prisma {
     total?: SortOrder
     netAmount?: SortOrderInput | SortOrder
     trackingNo?: SortOrderInput | SortOrder
+    recipient?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
+    courier?: SortOrderInput | SortOrder
+    buyerNote?: SortOrderInput | SortOrder
+    payment?: SortOrderInput | SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
@@ -59509,6 +59605,12 @@ export namespace Prisma {
     total?: IntFilter<"MarketplaceOrder"> | number
     netAmount?: IntNullableFilter<"MarketplaceOrder"> | number | null
     trackingNo?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    recipient?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    phone?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    address?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    courier?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    buyerNote?: StringNullableFilter<"MarketplaceOrder"> | string | null
+    payment?: StringNullableFilter<"MarketplaceOrder"> | string | null
     orderedAt?: DateTimeFilter<"MarketplaceOrder"> | Date | string
     updatedAtMp?: DateTimeFilter<"MarketplaceOrder"> | Date | string
     syncedAt?: DateTimeFilter<"MarketplaceOrder"> | Date | string
@@ -59525,6 +59627,12 @@ export namespace Prisma {
     total?: SortOrder
     netAmount?: SortOrderInput | SortOrder
     trackingNo?: SortOrderInput | SortOrder
+    recipient?: SortOrderInput | SortOrder
+    phone?: SortOrderInput | SortOrder
+    address?: SortOrderInput | SortOrder
+    courier?: SortOrderInput | SortOrder
+    buyerNote?: SortOrderInput | SortOrder
+    payment?: SortOrderInput | SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
@@ -59549,6 +59657,12 @@ export namespace Prisma {
     total?: IntWithAggregatesFilter<"MarketplaceOrder"> | number
     netAmount?: IntNullableWithAggregatesFilter<"MarketplaceOrder"> | number | null
     trackingNo?: StringNullableWithAggregatesFilter<"MarketplaceOrder"> | string | null
+    recipient?: StringNullableWithAggregatesFilter<"MarketplaceOrder"> | string | null
+    phone?: StringNullableWithAggregatesFilter<"MarketplaceOrder"> | string | null
+    address?: StringNullableWithAggregatesFilter<"MarketplaceOrder"> | string | null
+    courier?: StringNullableWithAggregatesFilter<"MarketplaceOrder"> | string | null
+    buyerNote?: StringNullableWithAggregatesFilter<"MarketplaceOrder"> | string | null
+    payment?: StringNullableWithAggregatesFilter<"MarketplaceOrder"> | string | null
     orderedAt?: DateTimeWithAggregatesFilter<"MarketplaceOrder"> | Date | string
     updatedAtMp?: DateTimeWithAggregatesFilter<"MarketplaceOrder"> | Date | string
     syncedAt?: DateTimeWithAggregatesFilter<"MarketplaceOrder"> | Date | string
@@ -63343,6 +63457,12 @@ export namespace Prisma {
     total: number
     netAmount?: number | null
     trackingNo?: string | null
+    recipient?: string | null
+    phone?: string | null
+    address?: string | null
+    courier?: string | null
+    buyerNote?: string | null
+    payment?: string | null
     orderedAt: Date | string
     updatedAtMp: Date | string
     syncedAt?: Date | string
@@ -63359,6 +63479,12 @@ export namespace Prisma {
     total: number
     netAmount?: number | null
     trackingNo?: string | null
+    recipient?: string | null
+    phone?: string | null
+    address?: string | null
+    courier?: string | null
+    buyerNote?: string | null
+    payment?: string | null
     orderedAt: Date | string
     updatedAtMp: Date | string
     syncedAt?: Date | string
@@ -63375,6 +63501,12 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     netAmount?: NullableIntFieldUpdateOperationsInput | number | null
     trackingNo?: NullableStringFieldUpdateOperationsInput | string | null
+    recipient?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    courier?: NullableStringFieldUpdateOperationsInput | string | null
+    buyerNote?: NullableStringFieldUpdateOperationsInput | string | null
+    payment?: NullableStringFieldUpdateOperationsInput | string | null
     orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63391,6 +63523,12 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     netAmount?: NullableIntFieldUpdateOperationsInput | number | null
     trackingNo?: NullableStringFieldUpdateOperationsInput | string | null
+    recipient?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    courier?: NullableStringFieldUpdateOperationsInput | string | null
+    buyerNote?: NullableStringFieldUpdateOperationsInput | string | null
+    payment?: NullableStringFieldUpdateOperationsInput | string | null
     orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63407,6 +63545,12 @@ export namespace Prisma {
     total: number
     netAmount?: number | null
     trackingNo?: string | null
+    recipient?: string | null
+    phone?: string | null
+    address?: string | null
+    courier?: string | null
+    buyerNote?: string | null
+    payment?: string | null
     orderedAt: Date | string
     updatedAtMp: Date | string
     syncedAt?: Date | string
@@ -63423,6 +63567,12 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     netAmount?: NullableIntFieldUpdateOperationsInput | number | null
     trackingNo?: NullableStringFieldUpdateOperationsInput | string | null
+    recipient?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    courier?: NullableStringFieldUpdateOperationsInput | string | null
+    buyerNote?: NullableStringFieldUpdateOperationsInput | string | null
+    payment?: NullableStringFieldUpdateOperationsInput | string | null
     orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -63439,6 +63589,12 @@ export namespace Prisma {
     total?: IntFieldUpdateOperationsInput | number
     netAmount?: NullableIntFieldUpdateOperationsInput | number | null
     trackingNo?: NullableStringFieldUpdateOperationsInput | string | null
+    recipient?: NullableStringFieldUpdateOperationsInput | string | null
+    phone?: NullableStringFieldUpdateOperationsInput | string | null
+    address?: NullableStringFieldUpdateOperationsInput | string | null
+    courier?: NullableStringFieldUpdateOperationsInput | string | null
+    buyerNote?: NullableStringFieldUpdateOperationsInput | string | null
+    payment?: NullableStringFieldUpdateOperationsInput | string | null
     orderedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAtMp?: DateTimeFieldUpdateOperationsInput | Date | string
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -66844,6 +67000,12 @@ export namespace Prisma {
     total?: SortOrder
     netAmount?: SortOrder
     trackingNo?: SortOrder
+    recipient?: SortOrder
+    phone?: SortOrder
+    address?: SortOrder
+    courier?: SortOrder
+    buyerNote?: SortOrder
+    payment?: SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
@@ -66864,6 +67026,12 @@ export namespace Prisma {
     total?: SortOrder
     netAmount?: SortOrder
     trackingNo?: SortOrder
+    recipient?: SortOrder
+    phone?: SortOrder
+    address?: SortOrder
+    courier?: SortOrder
+    buyerNote?: SortOrder
+    payment?: SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
@@ -66879,6 +67047,12 @@ export namespace Prisma {
     total?: SortOrder
     netAmount?: SortOrder
     trackingNo?: SortOrder
+    recipient?: SortOrder
+    phone?: SortOrder
+    address?: SortOrder
+    courier?: SortOrder
+    buyerNote?: SortOrder
+    payment?: SortOrder
     orderedAt?: SortOrder
     updatedAtMp?: SortOrder
     syncedAt?: SortOrder
