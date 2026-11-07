@@ -105,7 +105,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Rekap Pembelian", href: "/finance/pembelian", icon: Wallet },
         { label: "Saldo Kasir", href: "/finance/kas", icon: Wallet },
         { label: "Rekap Rekening", href: "/finance/rekening", icon: Wallet },
-        { label: "Dana Cair", href: "/finance/online", icon: Wallet },
+        { label: "Settlement Marketplace", href: "/finance/online", icon: Wallet },
         { label: "Sinkronisasi Accurate", href: "/finance/sinkronisasi", icon: FileText },
       ],
     });
@@ -141,7 +141,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
       items: [
         { label: "Kelola Pesanan", href: "/channel", icon: Store },
         { label: "Produk Master", href: "/channel/produk", icon: Boxes },
-        { label: "Dana Cair", href: "/channel/dana", icon: Wallet },
+        { label: "Settlement Marketplace", href: "/channel/dana", icon: Wallet },
       ],
     });
   }

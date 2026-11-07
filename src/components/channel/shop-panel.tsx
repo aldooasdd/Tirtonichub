@@ -93,7 +93,7 @@ export function ShopPanel({ shops, anyDemo }: { shops: ShopCard[]; anyDemo: bool
             Hapus data contoh
           </Button>
         ) : (
-          <Button size="sm" variant="outline" disabled={pending} onClick={() => run(demoOn, "Toko contoh siap. Coba Sinkron, ubah stok, lihat Dana Cair.")}>
+          <Button size="sm" variant="outline" disabled={pending} onClick={() => run(demoOn, "Toko contoh siap. Coba Sinkron, ubah stok, lihat Settlement Marketplace.")}>
             Mulai Mode Contoh
           </Button>
         )}
