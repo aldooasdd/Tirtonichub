@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
-import { ChevronLeft, Search, SendHorizontal } from "lucide-react";
+import { ChevronLeft, Search, SendHorizontal, Smile } from "lucide-react";
 import { chatMessages, listChats, sendChat, type ChatConv } from "@/server/actions/marketplace-chat";
 import type { MpMsg } from "@/server/marketplace/shopee";
 import { DEMO_MSGS } from "./marketplace-chat-demo";
@@ -15,6 +15,9 @@ const TABS = [
   { key: "SHOPEE", label: "Shopee" },
   { key: "TOKOPEDIA", label: "Tokopedia" },
 ] as const;
+
+// ponytail: daftar emoji tetap (emoji = teks biasa, aman untuk API Shopee & TikTok); pakai library picker kalau butuh pencarian.
+const EMOJI = "😊 😀 😁 😄 🤗 🙏 👍 👌 👏 🙌 💪 ✨ 🎾 🏆 🔥 ❤️ 💯 ✅ 📦 🚚 🛍️ 🎁 💰 🤔 😅 😂 🥰 😍 😉 🙂 😔 😢 😮 👋 🤝 ⏰ 📍 ☺️".split(" ");
 
 const TZ = "Asia/Jakarta";
 const dayKey = (ms: number) => new Date(ms).toLocaleDateString("en-CA", { timeZone: TZ });
@@ -58,6 +61,19 @@ export function MarketplaceChat({
   const [msgs, setMsgs] = useState<MpMsg[]>([]);
   const [msgErr, setMsgErr] = useState<string | null>(null);
   const [text, setText] = useState("");
+  const [emojiOpen, setEmojiOpen] = useState(false);
+  const input = useRef<HTMLTextAreaElement>(null);
+  /** Sisipkan emoji di posisi kursor. */
+  function addEmoji(e: string) {
+    const el = input.current;
+    const at = el?.selectionStart ?? text.length;
+    const end = el?.selectionEnd ?? at;
+    setText(text.slice(0, at) + e + text.slice(end));
+    requestAnimationFrame(() => {
+      el?.focus();
+      el?.setSelectionRange(at + e.length, at + e.length);
+    });
+  }
   const [sending, startSend] = useTransition();
   const bottom = useRef<HTMLDivElement>(null);
 
@@ -146,6 +162,7 @@ export function MarketplaceChat({
         return;
       }
       setText("");
+      setEmojiOpen(false);
       await loadMsgs(c);
       void refreshList();
     });
@@ -295,12 +312,32 @@ export function MarketplaceChat({
                 e.preventDefault();
                 send();
               }}
-              className="flex items-end gap-2 border-t p-3"
+              className="relative flex items-end gap-2 border-t p-3"
             >
+              {emojiOpen && (
+                <div className="absolute bottom-full left-3 mb-2 grid w-72 grid-cols-8 gap-1 rounded-lg border bg-card p-2 shadow-lg" role="listbox" aria-label="Pilih emoji">
+                  {EMOJI.map((e) => (
+                    <button key={e} type="button" onClick={() => addEmoji(e)} className="rounded-md p-1 text-18 hover:bg-muted" aria-label={`Emoji ${e}`}>
+                      {e}
+                    </button>
+                  ))}
+                </div>
+              )}
+              <button
+                type="button"
+                onClick={() => setEmojiOpen((v) => !v)}
+                aria-label="Emoji"
+                aria-expanded={emojiOpen}
+                className={`flex size-11 shrink-0 items-center justify-center rounded-lg border ${emojiOpen ? "bg-muted" : "hover:bg-muted"}`}
+              >
+                <Smile className="size-5" />
+              </button>
               <textarea
+                ref={input}
                 value={text}
                 onChange={(e) => setText(e.target.value)}
                 onKeyDown={(e) => {
+                  if (e.key === "Escape") setEmojiOpen(false);
                   if (e.key === "Enter" && !e.shiftKey) {
                     e.preventDefault();
                     send();
