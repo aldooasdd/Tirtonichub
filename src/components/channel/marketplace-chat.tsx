@@ -87,7 +87,7 @@ export function MarketplaceChat({ initial, demo = false }: { initial: { convs: C
   }
 
   return (
-    <div className="grid h-[calc(100vh-14rem)] min-h-[420px] overflow-hidden rounded-lg border bg-card md:grid-cols-[320px_1fr]">
+    <div className="grid h-[calc(100dvh-10rem)] min-h-[420px] md:h-[calc(100dvh-7rem)] overflow-hidden rounded-lg border bg-card md:grid-cols-[320px_1fr]">
       {/* Daftar chat */}
       <div className={`flex min-h-0 flex-col border-r ${open ? "hidden md:flex" : "flex"}`}>
         {errors.map((e) => (
