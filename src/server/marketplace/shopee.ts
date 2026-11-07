@@ -225,3 +225,49 @@ export async function shopeeSetPrice(token: string, shopId: string, itemId: stri
     body: { item_id: Number(itemId), price_list: [{ model_id: Number(modelId || 0), original_price: price }] },
   });
 }
+
+// --- Seller chat (butuh izin Chat API dari Shopee) ---
+export type MpConv = { id: string; name: string; avatar: string | null; last: string; at: number; unread: number; toId: string };
+export type MpMsg = { id: string; mine: boolean; text: string; image: string | null; at: number };
+
+/** Shopee campur detik / milidetik / nanodetik → milidetik. */
+const toMs = (t: unknown) => {
+  const v = Number(t) || 0;
+  return v > 1e15 ? Math.floor(v / 1e6) : v > 1e12 ? v : v * 1000;
+};
+
+export async function shopeeConversations(token: string, shopId: string): Promise<MpConv[]> {
+  const j = await call<{
+    response?: {
+      conversations?: { conversation_id: string | number; to_id: number; to_name: string; to_avatar?: string; unread_count?: number; latest_message_content?: { text?: string }; latest_message_type?: string; last_message_timestamp?: number }[];
+    };
+  }>("/api/v2/sellerchat/get_conversation_list", { token, shopId, query: { direction: "latest", type: "all", page_size: 30 } });
+  return (j.response?.conversations ?? []).map((c) => ({
+    id: String(c.conversation_id),
+    name: c.to_name,
+    avatar: c.to_avatar || null,
+    last: c.latest_message_content?.text ?? (c.latest_message_type ? `[${c.latest_message_type}]` : ""),
+    at: toMs(c.last_message_timestamp),
+    unread: c.unread_count ?? 0,
+    toId: String(c.to_id),
+  }));
+}
+
+export async function shopeeMessages(token: string, shopId: string, convId: string): Promise<MpMsg[]> {
+  const j = await call<{
+    response?: { messages?: { message_id: string; from_shop_id?: number; message_type: string; content?: { text?: string; url?: string }; created_timestamp: number }[] };
+  }>("/api/v2/sellerchat/get_message", { token, shopId, query: { conversation_id: convId, page_size: 50 } });
+  return (j.response?.messages ?? [])
+    .map((m) => ({
+      id: m.message_id,
+      mine: String(m.from_shop_id ?? "") === shopId,
+      text: m.content?.text ?? (m.message_type === "image" ? "" : `[${m.message_type}]`),
+      image: m.message_type === "image" ? m.content?.url ?? null : null,
+      at: toMs(m.created_timestamp),
+    }))
+    .sort((a, b) => a.at - b.at);
+}
+
+export async function shopeeSendText(token: string, shopId: string, toId: string, text: string): Promise<void> {
+  await call("/api/v2/sellerchat/send_message", { method: "POST", token, shopId, body: { to_id: Number(toId), message_type: "text", content: { text } } });
+}

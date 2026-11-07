@@ -12,6 +12,7 @@ import {
   ScrollText,
   MonitorSmartphone,
   Receipt,
+  MessageSquare,
   Wallet,
   ShoppingCart,
   Globe,
@@ -129,6 +130,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
       items: [
         { label: "Approval Online", href: "/penjualan-online", icon: ClipboardCheck },
         { label: "Riwayat Penjualan", href: "/penjualan-online/riwayat", icon: Receipt },
+        { label: "Chat Pembeli", href: "/penjualan-online/chat", icon: MessageSquare },
       ],
     });
   }
