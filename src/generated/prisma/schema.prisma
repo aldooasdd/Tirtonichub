@@ -560,27 +560,30 @@ model MarketplaceShop {
 }
 
 model MarketplaceOrder {
-  id          String    @id @default(cuid())
-  platform    String
-  shopId      String
-  orderSn     String
-  status      String
-  buyer       String?
-  items       Json // [{name, sku, qty, price}]
-  total       Int // dibayar pembeli
-  netAmount   Int? // dana cair ke penjual (Shopee escrow) bila sudah ada
-  trackingNo  String?
-  recipient   String? // nama penerima
-  phone       String? // bisa tersamar dari marketplace
-  address     String?
-  courier     String?
-  buyerNote   String?
-  payment     String? // metode bayar
-  finance     Json? // rincian dana per pesanan (TikTok Get Transactions by Order)
-  financeAt   DateTime?
-  orderedAt   DateTime
-  updatedAtMp DateTime
-  syncedAt    DateTime  @updatedAt
+  id               String    @id @default(cuid())
+  platform         String
+  shopId           String
+  orderSn          String
+  status           String
+  buyer            String?
+  items            Json // [{name, sku, qty, price}]
+  total            Int // dibayar pembeli
+  netAmount        Int? // dana cair ke penjual (Shopee escrow) bila sudah ada
+  trackingNo       String?
+  recipient        String? // nama penerima
+  phone            String? // bisa tersamar dari marketplace
+  address          String?
+  courier          String?
+  buyerNote        String?
+  payment          String? // metode bayar
+  finance          Json? // rincian dana per pesanan (TikTok Get Transactions by Order)
+  financeAt        DateTime?
+  packageId        String? // TikTok package id (kirim, label, lacak)
+  deliveryOptionId String?
+  shippingType     String? // TIKTOK (kurir platform) | SELLER (kirim sendiri)
+  orderedAt        DateTime
+  updatedAtMp      DateTime
+  syncedAt         DateTime  @updatedAt
 
   @@unique([platform, orderSn])
   @@index([orderedAt])

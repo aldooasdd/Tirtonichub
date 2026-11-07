@@ -64,62 +64,64 @@ enum RawProductStatus {
 }
 
 model User {
-  id         String    @id @default(cuid())
-  fullName   String
-  nickname   String?
-  email        String  @unique
-  waNumber     String  @unique
-  passwordHash String? // scrypt "saltHex:hashHex"; default "kucing123" sampai user ganti
-  resetCodeHash  String?   // OTP reset password (hashValue); 1 aktif per user
+  id             String    @id @default(cuid())
+  fullName       String
+  nickname       String?
+  email          String    @unique
+  waNumber       String    @unique
+  passwordHash   String? // scrypt "saltHex:hashHex"; default "kucing123" sampai user ganti
+  resetCodeHash  String? // OTP reset password (hashValue); 1 aktif per user
   resetExpiresAt DateTime? // kedaluwarsa OTP
   resetAttempts  Int       @default(0) // cap percobaan verifikasi OTP
-  avatarKey    String?
-  bio        String?
-  branchId   String?
-  joinedAt   DateTime? // tgl mulai kerja, untuk kuota cuti (≥1 thn) — §11.3
-  birthDate  DateTime? @db.Date // tanggal lahir (opsional)
-  isActive   Boolean   @default(true)
-  themePref  String    @default("system")
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  avatarKey      String?
+  bio            String?
+  branchId       String?
+  joinedAt       DateTime? // tgl mulai kerja, untuk kuota cuti (≥1 thn) — §11.3
+  birthDate      DateTime? @db.Date // tanggal lahir (opsional)
+  isActive       Boolean   @default(true)
+  themePref      String    @default("system")
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
-  branch        Branch?        @relation(fields: [branchId], references: [id])
-  roles         UserRole[]     @relation("UserRoles")
-  assignedRoles UserRole[]     @relation("RoleAssigner")
-  sessions      Session[]
-  schedules     UserSchedule[]
-  attendances   Attendance[]
-  requests      Request[]      @relation("Requester")
-  reviewed      Request[]      @relation("Reviewer")
-  notifications Notification[]
-  pushSubs      PushSubscription[]
-  activityLogs  ActivityLog[]
-  chatMembers   ChatMember[]
-  chatMessages  ChatMessage[]
-  rawCreated    RawProduct[]   @relation("RawProductCreator")
-  rawQc         RawProduct[]   @relation("RawProductQc")
-  calendarEvents CalendarEvent[] @relation("CalendarCreator")
-  mediaMember    MediaMember?
-  mediaItems     MediaItem[]       @relation("MediaItemCreator")
+  branch            Branch?            @relation(fields: [branchId], references: [id])
+  roles             UserRole[]         @relation("UserRoles")
+  assignedRoles     UserRole[]         @relation("RoleAssigner")
+  sessions          Session[]
+  schedules         UserSchedule[]
+  attendances       Attendance[]
+  requests          Request[]          @relation("Requester")
+  reviewed          Request[]          @relation("Reviewer")
+  notifications     Notification[]
+  pushSubs          PushSubscription[]
+  activityLogs      ActivityLog[]
+  chatMembers       ChatMember[]
+  chatMessages      ChatMessage[]
+  rawCreated        RawProduct[]       @relation("RawProductCreator")
+  rawQc             RawProduct[]       @relation("RawProductQc")
+  calendarEvents    CalendarEvent[]    @relation("CalendarCreator")
+  mediaMember       MediaMember?
+  mediaItems        MediaItem[]        @relation("MediaItemCreator")
   personalCalEvents PersonalCalEvent[]
-  mediaPcal      MediaPcal?
-  salesReports   SalesReport[]     @relation("SalesReportCreator")
-  shifts         Shift[]
-  cashouts       Cashout[]         @relation("CashoutCreator")
-  reports        Report[]          @relation("ReportCreator")
+  mediaPcal         MediaPcal?
+  salesReports      SalesReport[]      @relation("SalesReportCreator")
+  shifts            Shift[]
+  cashouts          Cashout[]          @relation("CashoutCreator")
+  reports           Report[]           @relation("ReportCreator")
 
   @@index([branchId])
 }
 
-/** Laporan/keluhan error dari karyawan → ditangani Admin. */
+/**
+ * Laporan/keluhan error dari karyawan → ditangani Admin.
+ */
 model Report {
-  id          String    @id @default(cuid())
-  message     String // keterangan kenapa
-  photoKey    String? // screenshot di storage
-  createdById String
-  createdBy   User      @relation("ReportCreator", fields: [createdById], references: [id])
-  createdAt   DateTime  @default(now())
-  resolvedAt  DateTime?
+  id           String    @id @default(cuid())
+  message      String // keterangan kenapa
+  photoKey     String? // screenshot di storage
+  createdById  String
+  createdBy    User      @relation("ReportCreator", fields: [createdById], references: [id])
+  createdAt    DateTime  @default(now())
+  resolvedAt   DateTime?
   resolvedById String?
 
   @@index([resolvedAt])
@@ -170,32 +172,32 @@ model Cashout {
 
 // Nota penjualan difoto Sales → AI (n8n) ekstrak → masuk ke Finance (rekap harian).
 model SalesReport {
-  id          String   @id @default(cuid())
-  notaNo      String? // nomor nota di struk
-  soldAt      DateTime // waktu transaksi di struk
-  customer    String? // Pelanggan
-  phone       String? // nomor WA pelanggan (loyalty Ace Points, dinormalkan 62xxxx)
-  salesman    String? // Salesman di struk
-  employee    String? // Karyawan di struk
-  items       Json // [{name, qty, price, total, note}]
-  subtotal    Int      @default(0)
-  total       Int      @default(0)
-  grandTotal  Int      @default(0)
-  payments    Json // [{method, amount}]
-  channel     String   @default("offline") // offline=nota Sales, online=input Admin dari marketplace
-  branchName  String? // cabang asal (dari user pengirim)
-  branchId    String? // cabang asal (utk filter approval Kepala Cabang)
-  photoKey    String // foto nota / screenshot di storage (foto pertama, dibaca AI)
+  id               String   @id @default(cuid())
+  notaNo           String? // nomor nota di struk
+  soldAt           DateTime // waktu transaksi di struk
+  customer         String? // Pelanggan
+  phone            String? // nomor WA pelanggan (loyalty Ace Points, dinormalkan 62xxxx)
+  salesman         String? // Salesman di struk
+  employee         String? // Karyawan di struk
+  items            Json // [{name, qty, price, total, note}]
+  subtotal         Int      @default(0)
+  total            Int      @default(0)
+  grandTotal       Int      @default(0)
+  payments         Json // [{method, amount}]
+  channel          String   @default("offline") // offline=nota Sales, online=input Admin dari marketplace
+  branchName       String? // cabang asal (dari user pengirim)
+  branchId         String? // cabang asal (utk filter approval Kepala Cabang)
+  photoKey         String // foto nota / screenshot di storage (foto pertama, dibaca AI)
   productPhotoKeys String[] @default([]) // foto produk tambahan (tak dibaca AI)
-  createdById String // user yang mengirim (Sales / Admin)
-  createdAt   DateTime @default(now())
+  createdById      String // user yang mengirim (Sales / Admin)
+  createdAt        DateTime @default(now())
 
   // Approval 2 tahap (offline): Kepala Cabang dulu, lalu Finance.
   // branchApprovedAt != null = lolos Kepala Cabang. approvedAt != null = masuk Finance (final).
   branchApprovedAt   DateTime?
   branchApprovedById String?
-  approvedAt   DateTime?
-  approvedById String?
+  approvedAt         DateTime?
+  approvedById       String?
 
   // Report salah-input dari Sales: TENAGA_PENJUAL | STOK | PEMBAYARAN + keterangan.
   // Report terbuka (reportAt != null, reportResolvedAt == null) → Kepala Cabang
@@ -254,16 +256,16 @@ model UserRole {
 }
 
 model Session {
-  id            String    @id @default(cuid())
-  userId        String
+  id             String    @id @default(cuid())
+  userId         String
   activeRoleCode RoleCode?
-  tokenHash     String    @unique
-  userAgent     String?
-  ip            String?
-  expiresAt     DateTime
-  lastActiveAt  DateTime  @default(now())
-  revokedAt     DateTime?
-  createdAt     DateTime  @default(now())
+  tokenHash      String    @unique
+  userAgent      String?
+  ip             String?
+  expiresAt      DateTime
+  lastActiveAt   DateTime  @default(now())
+  revokedAt      DateTime?
+  createdAt      DateTime  @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -277,25 +279,27 @@ model Branch {
   latitude  Float?
   longitude Float?
 
-  users       User[]
-  attendances Attendance[]
+  users        User[]
+  attendances  Attendance[]
   cashSessions CashSession[]
 }
 
-/** Saldo kasir per cabang per hari (laci + 3 EDC). 1 kasir/hari: dibuka wakil shift
- *  pertama (Pagi) saat absen masuk, ditutup wakil shift terakhir (Siang) saat absen
- *  pulang (boleh beda orang). Rekonsiliasi vs penjualan+pembelian. */
+/**
+ * Saldo kasir per cabang per hari (laci + 3 EDC). 1 kasir/hari: dibuka wakil shift
+ * pertama (Pagi) saat absen masuk, ditutup wakil shift terakhir (Siang) saat absen
+ * pulang (boleh beda orang). Rekonsiliasi vs penjualan+pembelian.
+ */
 model CashSession {
-  id          String   @id @default(cuid())
-  branchId    String
-  branch      Branch   @relation(fields: [branchId], references: [id])
-  date        DateTime @db.Date
-  openCash    Int      @default(0)
-  openMandiri Int      @default(0)
-  openBca     Int      @default(0)
-  openBri     Int      @default(0)
-  openedById  String
-  openedAt    DateTime @default(now())
+  id           String    @id @default(cuid())
+  branchId     String
+  branch       Branch    @relation(fields: [branchId], references: [id])
+  date         DateTime  @db.Date
+  openCash     Int       @default(0)
+  openMandiri  Int       @default(0)
+  openBca      Int       @default(0)
+  openBri      Int       @default(0)
+  openedById   String
+  openedAt     DateTime  @default(now())
   closeCash    Int?
   closeMandiri Int?
   closeBca     Int?
@@ -307,11 +311,11 @@ model CashSession {
 }
 
 model WorkSchedule {
-  id              String  @id @default(cuid())
-  name            String
-  workDays        Int[] // 1=Sen .. 7=Min
-  startTime       String // "09:00"
-  endTime         String // "17:00"
+  id               String @id @default(cuid())
+  name             String
+  workDays         Int[] // 1=Sen .. 7=Min
+  startTime        String // "09:00"
+  endTime          String // "17:00"
   lateToleranceMin Int    @default(0)
 
   users UserSchedule[]
@@ -336,22 +340,22 @@ model Holiday {
 }
 
 model Attendance {
-  id              String           @id @default(cuid())
-  userId          String
-  date            DateTime         @db.Date // kunci hari (WIB) — §16
-  branchId        String?
-  checkInAt       DateTime?
-  checkInPhotoKey String?
-  checkInLat      Float?
-  checkInLng      Float?
-  checkInAccuracy Float?
-  checkOutAt      DateTime?
+  id               String           @id @default(cuid())
+  userId           String
+  date             DateTime         @db.Date // kunci hari (WIB) — §16
+  branchId         String?
+  checkInAt        DateTime?
+  checkInPhotoKey  String?
+  checkInLat       Float?
+  checkInLng       Float?
+  checkInAccuracy  Float?
+  checkOutAt       DateTime?
   checkOutPhotoKey String?
-  checkOutLat     Float?
-  checkOutLng     Float?
+  checkOutLat      Float?
+  checkOutLng      Float?
   checkOutAccuracy Float?
-  status          AttendanceStatus
-  lateMinutes     Int              @default(0)
+  status           AttendanceStatus
+  lateMinutes      Int              @default(0)
 
   user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   branch Branch? @relation(fields: [branchId], references: [id])
@@ -361,19 +365,19 @@ model Attendance {
 }
 
 model Request {
-  id           String        @id @default(cuid())
-  userId       String
-  type         RequestType
-  startDate    DateTime      @db.Date
-  endDate      DateTime      @db.Date
-  reason       String
+  id            String        @id @default(cuid())
+  userId        String
+  type          RequestType
+  startDate     DateTime      @db.Date
+  endDate       DateTime      @db.Date
+  reason        String
   attachmentKey String?
-  payload      Json? // untuk koreksi absen
-  status       RequestStatus @default(PENDING)
-  reviewedById String?
-  reviewedAt   DateTime?
-  reviewNote   String?
-  createdAt    DateTime      @default(now())
+  payload       Json? // untuk koreksi absen
+  status        RequestStatus @default(PENDING)
+  reviewedById  String?
+  reviewedAt    DateTime?
+  reviewNote    String?
+  createdAt     DateTime      @default(now())
 
   user       User  @relation("Requester", fields: [userId], references: [id], onDelete: Cascade)
   reviewedBy User? @relation("Reviewer", fields: [reviewedById], references: [id])
@@ -490,7 +494,7 @@ model RawProduct {
   listPrice    Float            @default(0) // @Harga per unit (harga list, sesuai PI). IDR bulat, SGD desimal
   discount     Float            @default(0) // Diskon baris, sesuai PI
   unitPrice    Float            @default(0) // modal net/unit = (listPrice×qty − discount)/qty
-  sellPrice    Int?             // harga jual (Rp) = unitPrice(net)×135%×115%, bulat ke atas 5000. null utk non-IDR
+  sellPrice    Int? // harga jual (Rp) = unitPrice(net)×135%×115%, bulat ke atas 5000. null utk non-IDR
   supplier     String?
   notaDate     DateTime?        @db.Date
   notaPhotoKey String?
@@ -556,27 +560,30 @@ model MarketplaceShop {
 }
 
 model MarketplaceOrder {
-  id          String   @id @default(cuid())
-  platform    String
-  shopId      String
-  orderSn     String
-  status      String
-  buyer       String?
-  items       Json // [{name, sku, qty, price}]
-  total       Int // dibayar pembeli
-  netAmount   Int? // dana cair ke penjual (Shopee escrow) bila sudah ada
-  trackingNo  String?
-  recipient   String? // nama penerima
-  phone       String? // bisa tersamar dari marketplace
-  address     String?
-  courier     String?
-  buyerNote   String?
-  payment     String? // metode bayar
-  finance     Json? // rincian dana per pesanan (TikTok Get Transactions by Order)
-  financeAt   DateTime?
-  orderedAt   DateTime
-  updatedAtMp DateTime
-  syncedAt    DateTime @updatedAt
+  id               String    @id @default(cuid())
+  platform         String
+  shopId           String
+  orderSn          String
+  status           String
+  buyer            String?
+  items            Json // [{name, sku, qty, price}]
+  total            Int // dibayar pembeli
+  netAmount        Int? // dana cair ke penjual (Shopee escrow) bila sudah ada
+  trackingNo       String?
+  recipient        String? // nama penerima
+  phone            String? // bisa tersamar dari marketplace
+  address          String?
+  courier          String?
+  buyerNote        String?
+  payment          String? // metode bayar
+  finance          Json? // rincian dana per pesanan (TikTok Get Transactions by Order)
+  financeAt        DateTime?
+  packageId        String? // TikTok package id (kirim, label, lacak)
+  deliveryOptionId String?
+  shippingType     String? // TIKTOK (kurir platform) | SELLER (kirim sendiri)
+  orderedAt        DateTime
+  updatedAtMp      DateTime
+  syncedAt         DateTime  @updatedAt
 
   @@unique([platform, orderSn])
   @@index([orderedAt])
@@ -603,7 +610,7 @@ model MarketplaceItem {
 
 // Detail produk marketplace (Produk Master) dari TikTok Shop Get Product. Varian/stok di MarketplaceItem.
 model MarketplaceProduct {
-  id          String   @id @default(cuid())
+  id          String    @id @default(cuid())
   platform    String
   productId   String
   title       String
@@ -623,22 +630,22 @@ model MarketplaceProduct {
   detailUrl   String?
   createdAtMp DateTime?
   updatedAtMp DateTime?
-  syncedAt    DateTime @updatedAt
+  syncedAt    DateTime  @updatedAt
 
   @@unique([platform, productId])
 }
 
 // Dana cair per settlement (TikTok Shop statement / Shopee escrow per order).
 model MarketplacePayout {
-  id       String   @id @default(cuid())
-  platform String
-  shopId   String
-  refId    String // statement id / order_sn
-  revenue  Int // penjualan kotor
-  fee      Int // potongan marketplace (positif)
-  amount   Int // uang bersih cair
-  paidAt   DateTime
-  adjustment Int      @default(0) // penyesuaian dari marketplace (denda/kompensasi)
+  id         String    @id @default(cuid())
+  platform   String
+  shopId     String
+  refId      String // statement id / order_sn
+  revenue    Int // penjualan kotor
+  fee        Int // potongan marketplace (positif)
+  amount     Int // uang bersih cair
+  paidAt     DateTime
+  adjustment Int       @default(0) // penyesuaian dari marketplace (denda/kompensasi)
   payStatus  String? // PAID | FAILED | PROCESSING
   paymentId  String? // → MarketplaceTransfer
   payTime    DateTime?
@@ -763,12 +770,12 @@ model MediaAsset {
 // Satu tugas konten (ktl/igf/vpr/vrv/idc/idf/evt/khs/cmp). Tanggal sbg string 'YYYY-MM-DD'
 // agar mesin penjadwalan diport 1:1 (hitung hari kerja pakai string, tanpa bug zona waktu).
 model MediaTask {
-  id        String   @id @default(cuid())
+  id        String    @id @default(cuid())
   itemId    String?
   type      String
   title     String
   cat       String?
-  status    String   @default("Terdata") // Terdata/Diproduksi/Editing/Ready/Tayang
+  status    String    @default("Terdata") // Terdata/Diproduksi/Editing/Ready/Tayang
   source    String? // 'baru' | 'lama'
   reason    String? // 'idcc' dst
   producer  String? // kode orang (Z/R/A/S)
@@ -783,8 +790,8 @@ model MediaTask {
   target    String?
   shotAt    String? // tanggal mulai syuting (status ≥ Diproduksi)
   readyAt   String? // tanggal file final siap (status ≥ Ready)
-  locked    Boolean  @default(false)
-  checked   Boolean  @default(false) // dicek Zaki
+  locked    Boolean   @default(false)
+  checked   Boolean   @default(false) // dicek Zaki
   metaAt    DateTime? // sudah dijadwalkan di Meta (null = belum)
   driveUrl  String?
   caption   String? // caption Instagram final
@@ -794,8 +801,8 @@ model MediaTask {
   eventKey  String?
   readyBy   String? // Louis2: tanggal wajib Ready 'YYYY-MM-DD'
   extra     Json? // isian UI Tirtonic Studio tanpa kolom (prio, updatedBy, checkedBy, dst.)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
   item MediaItem? @relation(fields: [itemId], references: [id], onDelete: SetNull)
 

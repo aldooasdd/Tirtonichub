@@ -473,6 +473,9 @@ exports.Prisma.MarketplaceOrderScalarFieldEnum = {
   payment: 'payment',
   finance: 'finance',
   financeAt: 'financeAt',
+  packageId: 'packageId',
+  deliveryOptionId: 'deliveryOptionId',
+  shippingType: 'shippingType',
   orderedAt: 'orderedAt',
   updatedAtMp: 'updatedAtMp',
   syncedAt: 'syncedAt'
