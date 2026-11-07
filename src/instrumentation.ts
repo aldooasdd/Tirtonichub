@@ -9,4 +9,9 @@ export async function register() {
   setTimeout(() => void pushTick(), 15_000).unref(); // susulan cepat setelah restart
   g.__pushTimer = setInterval(() => void pushTick(), 60_000);
   g.__pushTimer.unref();
+
+  // Sinkron Shopee/Tokopedia otomatis tiap 10 menit (order, dana cair; produk tiap jam).
+  const { autoSyncTick } = await import("./server/marketplace/sync");
+  setTimeout(() => void autoSyncTick(), 60_000).unref();
+  setInterval(() => void autoSyncTick(), 10 * 60_000).unref();
 }

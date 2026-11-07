@@ -221,3 +221,23 @@ export async function pushItem(id: string, change: { stock?: number; price?: num
   }
   await prisma.marketplaceItem.update({ where: { id }, data: change });
 }
+
+let running = false;
+let tick = 0;
+/** Sinkron otomatis (dipanggil timer di instrumentation.ts tiap 10 menit): order 3 hari terakhir
+ *  + dana cair; produk/stok tiap jam. Toko contoh & yang belum tersambung dilewati. */
+export async function autoSyncTick() {
+  if (running) return; // ponytail: kunci per proses; cukup karena web jalan 1 container
+  running = true;
+  const withItems = tick++ % 6 === 0;
+  try {
+    for (const p of PLATFORMS) {
+      const shop = await activeShop(p);
+      if (!shop || shop.shopId === DEMO) continue;
+      await syncOrders(p, 3).catch((e) => console.error(`[auto-sync] ${p} order:`, e instanceof Error ? e.message : e));
+      if (withItems) await syncItems(p).catch((e) => console.error(`[auto-sync] ${p} produk:`, e instanceof Error ? e.message : e));
+    }
+  } finally {
+    running = false;
+  }
+}
