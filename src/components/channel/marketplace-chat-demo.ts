@@ -1,5 +1,5 @@
 // Data contoh Chat Pembeli (/penjualan-online/chat?contoh=1) untuk screenshot pengajuan izin Chat API.
-import type { ChatConv } from "@/server/actions/marketplace-chat";
+import type { ChatConv, ChatTpl } from "@/server/actions/marketplace-chat";
 import type { MpMsg } from "@/server/marketplace/shopee";
 
 const ago = (min: number) => Date.now() - min * 60_000;
@@ -39,3 +39,12 @@ export const DEMO_MSGS: Record<string, MpMsg[]> = {
     m("2", true, "Bisa kak, nanti kami bungkus rapi. Mau ditambah kartu ucapan?", 60 * 25),
   ],
 };
+
+
+export const DEMO_TPLS: ChatTpl[] = [
+  { id: "t1", shortcut: "halo", text: "Halo kak ada yang bisa kami bantu?😊", grup: "tirtonic" },
+  { id: "t2", shortcut: "offline", text: "Halo kak, harga produk di toko offline kami sama dengan di Tokopedia ya.", grup: "tirtonic" },
+  { id: "t3", shortcut: "harga", text: "Untuk harga sudah paling pas ya, tapi kakak bisa banget pakai voucher toko kami.", grup: "tirtonic" },
+  { id: "t4", shortcut: "packing", text: "Untuk packing kami dijamin aman karena menggunakan bubble wrap & kardus tebal.", grup: "tirtonic" },
+  { id: "t5", shortcut: "restock", text: "Kami belum tau pastinya kapan kak untuk restocknya, mohon ditunggu updatenya ya 🙏", grup: "tirtonic" },
+];

@@ -1,10 +1,11 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
-import { ChevronLeft, Search, SendHorizontal, Smile } from "lucide-react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { ChevronLeft, Search } from "lucide-react";
 import { chatMessages, listChats, sendChat, type ChatConv } from "@/server/actions/marketplace-chat";
 import type { MpMsg } from "@/server/marketplace/shopee";
 import { DEMO_MSGS } from "./marketplace-chat-demo";
+import { ChatComposer } from "./chat-composer";
 
 const LABEL = { SHOPEE: "Shopee", TOKOPEDIA: "Tokopedia" } as const;
 const TAG = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600" } as const;
@@ -16,8 +17,10 @@ const TABS = [
   { key: "TOKOPEDIA", label: "Tokopedia" },
 ] as const;
 
-// ponytail: daftar emoji tetap (emoji = teks biasa, aman untuk API Shopee & TikTok); pakai library picker kalau butuh pencarian.
-const EMOJI = "😊 😀 😁 😄 🤗 🙏 👍 👌 👏 🙌 💪 ✨ 🎾 🏆 🔥 ❤️ 💯 ✅ 📦 🚚 🛍️ 🎁 💰 🤔 😅 😂 🥰 😍 😉 🙂 😔 😢 😮 👋 🤝 ⏰ 📍 ☺️".split(" ");
+// Kuota API TikTok 10.000 request/hari → polling jarang & berhenti saat tab tak terlihat.
+const LIST_MS = 30_000;
+const MSG_MS = 15_000;
+const visible = () => typeof document === "undefined" || document.visibilityState === "visible";
 
 const TZ = "Asia/Jakarta";
 const dayKey = (ms: number) => new Date(ms).toLocaleDateString("en-CA", { timeZone: TZ });
@@ -46,7 +49,7 @@ function Avatar({ c, size = "size-10" }: { c: ChatConv; size?: string }) {
   );
 }
 
-/** Inbox chat Shopee + Tokopedia. Daftar diperbarui tiap 15 dtk, chat terbuka tiap 10 dtk. */
+/** Inbox chat Shopee + Tokopedia. Daftar diperbarui tiap 30 dtk, chat terbuka tiap 15 dtk (hanya saat tab terlihat). */
 /** demo = data contoh lokal: tidak memanggil API, balasan hanya tampil di layar. */
 export function MarketplaceChat({
   initial,
@@ -60,21 +63,6 @@ export function MarketplaceChat({
   const [open, setOpen] = useState<ChatConv | null>(null);
   const [msgs, setMsgs] = useState<MpMsg[]>([]);
   const [msgErr, setMsgErr] = useState<string | null>(null);
-  const [text, setText] = useState("");
-  const [emojiOpen, setEmojiOpen] = useState(false);
-  const input = useRef<HTMLTextAreaElement>(null);
-  /** Sisipkan emoji di posisi kursor. */
-  function addEmoji(e: string) {
-    const el = input.current;
-    const at = el?.selectionStart ?? text.length;
-    const end = el?.selectionEnd ?? at;
-    setText(text.slice(0, at) + e + text.slice(end));
-    requestAnimationFrame(() => {
-      el?.focus();
-      el?.setSelectionRange(at + e.length, at + e.length);
-    });
-  }
-  const [sending, startSend] = useTransition();
   const bottom = useRef<HTMLDivElement>(null);
 
   const refreshList = useCallback(async () => {
@@ -104,13 +92,13 @@ export function MarketplaceChat({
   );
 
   useEffect(() => {
-    const t = setInterval(() => void refreshList(), 15_000);
+    const t = setInterval(() => visible() && void refreshList(), LIST_MS);
     return () => clearInterval(t);
   }, [refreshList]);
 
   useEffect(() => {
     if (!open) return;
-    const t = setInterval(() => void loadMsgs(open), 10_000);
+    const t = setInterval(() => visible() && void loadMsgs(open), MSG_MS);
     return () => clearInterval(t);
   }, [open, loadMsgs]);
 
@@ -130,42 +118,30 @@ export function MarketplaceChat({
     void loadMsgs(c);
   }
 
-  function send() {
-    if (!open || !text.trim()) return;
+  /** Kirim teks; true = berhasil (composer mengosongkan kolom). */
+  async function sendText(body: string): Promise<boolean> {
+    if (!open) return false;
     const c = open;
-    const body = text;
     if (demo) {
-      const msg: MpMsg = {
-        id: String(Date.now()),
-        mine: true,
-        text: body.trim(),
-        image: null,
-        at: Date.now(),
-      };
+      const msg: MpMsg = { id: String(Date.now()), mine: true, text: body, image: null, at: Date.now() };
       DEMO_MSGS[c.id] = [...(DEMO_MSGS[c.id] ?? []), msg];
       setMsgs(DEMO_MSGS[c.id]);
-      setConvs((cs) =>
-        cs.map((x) =>
-          x.id === c.id ? { ...x, last: msg.text, at: msg.at, unread: 0 } : x,
-        ),
-      );
-      setText("");
-      return;
+      setConvs((cs) => cs.map((x) => (x.id === c.id ? { ...x, last: msg.text, at: msg.at, unread: 0 } : x)));
+      return true;
     }
-    startSend(async () => {
-      const r = await sendChat(c.platform, c.id, c.toId, body).catch(() => ({
-        ok: false,
-        message: "Gagal kirim. Muat ulang halaman.",
-      }));
-      if (!r.ok) {
-        setMsgErr(r.message ?? "Gagal kirim.");
-        return;
-      }
-      setText("");
-      setEmojiOpen(false);
-      await loadMsgs(c);
-      void refreshList();
-    });
+    const r = await sendChat(c.platform, c.id, c.toId, body).catch(() => ({ ok: false, message: "Gagal kirim. Muat ulang halaman." }));
+    if (!r.ok) {
+      setMsgErr(r.message ?? "Gagal kirim.");
+      return false;
+    }
+    afterSend();
+    return true;
+  }
+  function afterSend() {
+    if (!open) return;
+    setMsgErr(null);
+    void loadMsgs(open);
+    void refreshList();
   }
 
   const [q, setQ] = useState("");
@@ -261,7 +237,15 @@ export function MarketplaceChat({
                         <span className="rounded-md border bg-card px-3 py-1 text-12 font-medium">{labelHari(m.at)}</span>
                       </div>
                     )}
-                    {m.bot ? (
+                    {m.card ? (
+                      <div className={`flex flex-col ${m.mine ? "items-end" : "items-start"}`}>
+                        <div className="w-full max-w-sm rounded-lg border bg-card p-3 text-14">
+                          <p className="mb-1 text-12 font-semibold text-muted-foreground">{m.card.title}</p>
+                          <p className="text-12 break-words whitespace-pre-wrap">{m.card.body || "-"}</p>
+                        </div>
+                        <span className="mt-1 text-[11px] text-muted-foreground">{pukul(m.at)}</span>
+                      </div>
+                    ) : m.bot ? (
                       <div className="flex justify-center">
                         <div className="w-full max-w-md rounded-xl border bg-card px-4 py-3 text-14">
                           <p className="mb-1 text-12 font-medium text-muted-foreground">Balasan otomatis · {pukul(m.at)}</p>
@@ -307,57 +291,15 @@ export function MarketplaceChat({
             </div>
 
             {msgErr && <p className="border-t bg-destructive/10 px-4 py-2 text-12 text-destructive">{msgErr}</p>}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                send();
-              }}
-              className="relative flex items-end gap-2 border-t p-3"
-            >
-              {emojiOpen && (
-                <div className="absolute bottom-full left-3 mb-2 grid w-72 grid-cols-8 gap-1 rounded-lg border bg-card p-2 shadow-lg" role="listbox" aria-label="Pilih emoji">
-                  {EMOJI.map((e) => (
-                    <button key={e} type="button" onClick={() => addEmoji(e)} className="rounded-md p-1 text-18 hover:bg-muted" aria-label={`Emoji ${e}`}>
-                      {e}
-                    </button>
-                  ))}
-                </div>
-              )}
-              <button
-                type="button"
-                onClick={() => setEmojiOpen((v) => !v)}
-                aria-label="Emoji"
-                aria-expanded={emojiOpen}
-                className={`flex size-11 shrink-0 items-center justify-center rounded-lg border ${emojiOpen ? "bg-muted" : "hover:bg-muted"}`}
-              >
-                <Smile className="size-5" />
-              </button>
-              <textarea
-                ref={input}
-                value={text}
-                onChange={(e) => setText(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Escape") setEmojiOpen(false);
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    send();
-                  }
-                }}
-                rows={1}
-                maxLength={1000}
-                placeholder="Tulis pesan…"
-                aria-label="Balasan"
-                className="max-h-32 min-h-11 flex-1 resize-none rounded-lg border bg-background px-4 py-2.5 text-14 outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
-              />
-              <button
-                type="submit"
-                disabled={sending || !text.trim()}
-                aria-label={sending ? "Mengirim" : "Kirim"}
-                className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground disabled:opacity-50"
-              >
-                <SendHorizontal className="size-5" />
-              </button>
-            </form>
+            <ChatComposer
+              key={`${open.platform}:${open.id}`}
+              platform={open.platform}
+              convId={open.id}
+              demo={demo}
+              onSendText={sendText}
+              onSent={afterSend}
+              onError={setMsgErr}
+            />
           </>
         )}
       </section>

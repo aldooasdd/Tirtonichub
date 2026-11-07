@@ -911,3 +911,12 @@ model PushItemQueue {
 
   @@index([sentAt])
 }
+
+// Template balasan cepat Chat Pembeli (TikTok/Shopee tak sediakan API template).
+model ChatTemplate {
+  id        String   @id @default(cuid())
+  shortcut  String   @unique // tanpa "/", mis. "harga"
+  text      String
+  grup      String   @default("tirtonic")
+  createdAt DateTime @default(now())
+}
