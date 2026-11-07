@@ -219,10 +219,21 @@ const TT_TYPE: Record<string, string> = {
   BUYER_ENTER_FROM_ORDER: "Pembeli membuka chat dari pesanan",
   VIDEO: "Video",
   EMOTICONS: "Stiker",
+  LOGISTICS_CARD: "Kartu pengiriman",
+  RETURN_REFUND_CARD: "Kartu retur",
+  OTHER: "Pesan lain",
 };
+// Notifikasi sistem TikTok berbahasa Inggris → Indonesia.
+const TT_NOTE: [RegExp, string][] = [
+  [/timed out due to customer inactivity/i, "Chat berakhir karena pembeli tidak aktif"],
+  [/chat (has been )?ended/i, "Chat berakhir"],
+  [/transferred/i, "Chat dialihkan"],
+];
+const ttNote = (t: string) => TT_NOTE.find(([re]) => re.test(t))?.[1] ?? t;
 const ttText = (type: string, raw: unknown) => {
   const c = ttContent(raw);
-  if (type === "TEXT" || type === "NOTIFICATION") return c.content ?? "";
+  if (type === "TEXT") return c.content ?? "";
+  if (type === "NOTIFICATION") return ttNote(c.content ?? "");
   if (type === "IMAGE") return "";
   return TT_TYPE[type] ?? type.toLowerCase().replace(/_/g, " ");
 };
@@ -266,6 +277,7 @@ export async function tiktokMessages(token: string, cipher: string, convId: stri
       id: m.id,
       mine: SHOP_SIDE.has(m.sender?.role ?? ""),
       system: BOT_SIDE.has(m.sender?.role ?? "") || !["TEXT", "IMAGE", "EMOTICONS", "VIDEO"].includes(m.type),
+      bot: m.sender?.role === "ROBOT" && m.type === "TEXT",
       text: ttText(m.type, m.content),
       image: m.type === "IMAGE" ? ttContent(m.content).url ?? null : null,
       at: m.create_time * 1000,
