@@ -139,7 +139,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
       title: "Tirtonic Channel",
       icon: Store,
       items: [
-        { label: "Toko & Order", href: "/channel", icon: Store },
+        { label: "Kelola Pesanan", href: "/channel", icon: Store },
         { label: "Produk & Stok", href: "/channel/produk", icon: Boxes },
         { label: "Dana Cair", href: "/channel/dana", icon: Wallet },
       ],
