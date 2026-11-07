@@ -40,7 +40,7 @@ export async function syncNow(platform: string): Promise<Res> {
   if (!isPlatform(platform)) return { ok: false, message: "Platform tidak dikenal." };
   try {
     const o = await syncOrders(platform);
-    const i = await syncItems(platform, 500); // manual: ambil detail Produk Master sekaligus
+    const i = await syncItems(platform);
     return { ok: true, message: `${PLATFORM_LABEL[platform]}: ${o.total} order dicek (${o.baru} baru), ${i} produk.` };
   } catch (e) {
     return { ok: false, message: errMsg(e) };

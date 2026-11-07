@@ -64,7 +64,7 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
         <p className="text-14 text-muted-foreground">
           {all.length} produk dari marketplace{habis ? ` · ${habis} stok habis` : ""}. Klik produk untuk detail lengkap & ubah stok / harga per varian.
         </p>
-        {tanpaDetail > 0 && <p className="mt-1 text-12 text-amber-600">{tanpaDetail} produk Tokopedia detailnya masih disinkron bertahap (otomatis tiap jam, atau klik Sinkron sekarang di Kelola Pesanan).</p>}
+        {tanpaDetail > 0 && <p className="mt-1 text-12 text-amber-600">{tanpaDetail} produk Tokopedia detailnya (foto, kategori, merek, deskripsi) sedang disinkron di latar belakang. Muat ulang halaman beberapa menit lagi.</p>}
       </div>
 
       <form method="get" className="flex flex-wrap items-end gap-2 rounded-lg border bg-card p-4">
