@@ -206,7 +206,7 @@ export function MarketplaceChat({
                     </span>
                     <span className="flex items-center gap-2">
                       <span className={`flex-1 truncate text-12 ${c.unread ? "text-foreground" : "text-muted-foreground"}`}>{c.last || "-"}</span>
-                      {c.unread > 0 && <span className="flex size-5 shrink-0 items-center justify-center rounded-full bg-primary text-[11px] font-semibold text-primary-foreground">{c.unread}</span>}
+                      {c.unread > 0 && <span className="flex size-5 shrink-0 items-center justify-center rounded-md bg-primary text-[11px] font-semibold text-primary-foreground">{c.unread}</span>}
                     </span>
                   </span>
                 </button>
@@ -241,7 +241,7 @@ export function MarketplaceChat({
                   <div key={m.id} className="space-y-3">
                     {newDay && (
                       <div className="flex justify-center">
-                        <span className="rounded-full border bg-card px-3 py-1 text-12 font-medium">{labelHari(m.at)}</span>
+                        <span className="rounded-md border bg-card px-3 py-1 text-12 font-medium">{labelHari(m.at)}</span>
                       </div>
                     )}
                     {m.bot ? (
@@ -253,13 +253,13 @@ export function MarketplaceChat({
                       </div>
                     ) : m.system ? (
                       <div className="flex justify-center">
-                        <p className="max-w-[85%] rounded-full border bg-card px-3 py-1 text-center text-12 whitespace-pre-wrap text-muted-foreground">
+                        <p className="max-w-[85%] rounded-md border bg-card px-3 py-1 text-center text-12 whitespace-pre-wrap text-muted-foreground">
                           {m.text || "Pesan sistem"} · {pukul(m.at)}
                         </p>
                       </div>
                     ) : m.mine ? (
                       <div className="flex flex-col items-end">
-                        <div className="max-w-[75%] rounded-2xl rounded-br-md bg-primary px-4 py-2.5 text-14 text-primary-foreground">
+                        <div className="max-w-[75%] rounded-lg bg-primary px-4 py-2.5 text-14 text-primary-foreground">
                           {m.image && (
                             // eslint-disable-next-line @next/next/no-img-element -- gambar dari CDN marketplace
                             <img src={m.image} alt="" className="mb-1 max-h-64 rounded-lg" />
@@ -275,9 +275,9 @@ export function MarketplaceChat({
                           <div className="flex max-w-[75%] flex-col items-start gap-1">
                             {m.image && (
                               // eslint-disable-next-line @next/next/no-img-element -- gambar dari pembeli
-                              <img src={m.image} alt="Gambar dari pembeli" className="max-h-64 rounded-2xl border" />
+                              <img src={m.image} alt="Gambar dari pembeli" className="max-h-64 rounded-lg border" />
                             )}
-                            {m.text && <p className="rounded-2xl rounded-bl-md border bg-card px-4 py-2.5 text-14 break-words whitespace-pre-wrap">{m.text}</p>}
+                            {m.text && <p className="rounded-lg border bg-card px-4 py-2.5 text-14 break-words whitespace-pre-wrap">{m.text}</p>}
                           </div>
                         </div>
                         <span className="mt-1 ml-10 block text-[11px] text-muted-foreground">{pukul(m.at)}</span>
@@ -310,13 +310,13 @@ export function MarketplaceChat({
                 maxLength={1000}
                 placeholder="Tulis pesan…"
                 aria-label="Balasan"
-                className="max-h-32 min-h-11 flex-1 resize-none rounded-3xl border bg-background px-4 py-2.5 text-14 outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+                className="max-h-32 min-h-11 flex-1 resize-none rounded-lg border bg-background px-4 py-2.5 text-14 outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
               />
               <button
                 type="submit"
                 disabled={sending || !text.trim()}
                 aria-label={sending ? "Mengirim" : "Kirim"}
-                className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground disabled:opacity-50"
+                className="flex size-11 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground disabled:opacity-50"
               >
                 <SendHorizontal className="size-5" />
               </button>
