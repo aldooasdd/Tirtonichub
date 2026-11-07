@@ -14,7 +14,7 @@ const sec = (d: Date) => Math.floor(d.getTime() / 1000);
 
 type Tok = { accessToken: string; refreshToken: string; expiresAt: Date };
 
-export async function call<T>(path: string, opts: { method?: "GET" | "POST"; query?: Record<string, string | number>; body?: unknown; token: string; cipher?: string }): Promise<T> {
+export async function call<T>(path: string, opts: { method?: "GET" | "POST" | "PUT"; query?: Record<string, string | number>; body?: unknown; token: string; cipher?: string }): Promise<T> {
   const query: Record<string, string> = { app_key: key(), timestamp: String(Math.floor(Date.now() / 1000)) };
   if (opts.cipher) query.shop_cipher = opts.cipher;
   for (const [k, v] of Object.entries(opts.query ?? {})) query[k] = String(v);

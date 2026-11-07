@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Plus } from "lucide-react";
 import { requireChannel } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { DEMO, PLATFORM_LABEL } from "@/server/marketplace/sync";
@@ -59,12 +60,17 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
 
   return (
     <div className="space-y-5">
-      <div>
-        <h1 className="text-24 font-semibold">Produk Master</h1>
-        <p className="text-14 text-muted-foreground">
-          {all.length} produk dari marketplace{habis ? ` · ${habis} stok habis` : ""}. Klik produk untuk detail lengkap & ubah stok / harga per varian.
-        </p>
-        {tanpaDetail > 0 && <p className="mt-1 text-12 text-amber-600">{tanpaDetail} produk Tokopedia detailnya (foto, kategori, merek, deskripsi) sedang disinkron di latar belakang. Muat ulang halaman beberapa menit lagi.</p>}
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="text-24 font-semibold">Produk Master</h1>
+          <p className="text-14 text-muted-foreground">
+            {all.length} produk dari marketplace{habis ? ` · ${habis} stok habis` : ""}. Klik produk untuk detail lengkap & ubah stok / harga per varian.
+          </p>
+          {tanpaDetail > 0 && <p className="mt-1 text-12 text-amber-600">{tanpaDetail} produk Tokopedia detailnya (foto, kategori, merek, deskripsi) sedang disinkron di latar belakang. Muat ulang halaman beberapa menit lagi.</p>}
+        </div>
+        <Link href="/channel/produk/baru" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-md bg-primary px-4 text-14 font-medium text-primary-foreground">
+          <Plus className="size-4" /> Tambah produk
+        </Link>
       </div>
 
       <form method="get" className="flex flex-wrap items-end gap-2 rounded-lg border bg-card p-4">

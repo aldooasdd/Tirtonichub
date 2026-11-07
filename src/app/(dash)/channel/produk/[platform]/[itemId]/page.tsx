@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ChevronLeft, ExternalLink } from "lucide-react";
+import { ChevronLeft, ExternalLink, Pencil } from "lucide-react";
 import { requireChannel } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
@@ -100,6 +100,11 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
               {items[0]?.shopId === DEMO && <span className="text-amber-600">contoh</span>}
             </div>
             <h1 className="text-24 font-semibold">{title}</h1>
+            {platform === "TOKOPEDIA" && items[0]?.shopId !== DEMO && (
+              <Link href={`/channel/produk/${platform}/${itemId}/edit`} className="mr-4 inline-flex items-center gap-1 text-14 font-medium text-primary hover:underline">
+                <Pencil className="size-3.5" /> Edit produk
+              </Link>
+            )}
             {d?.detailUrl && (
               <a href={d.detailUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 text-14 text-primary hover:underline">
                 Lihat di marketplace <ExternalLink className="size-3.5" />
