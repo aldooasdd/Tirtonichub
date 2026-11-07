@@ -225,7 +225,7 @@ async function syncProductDetails(shop: Shop, items: MpItem[]) {
   try {
     await runProductDetails(shop, items);
   } catch (e) {
-    console.error("[produk-master]", e instanceof Error ? e.message : e);
+    console.error("[produk-master] berhenti:", e);
   } finally {
     detailRunning = false;
   }
@@ -242,12 +242,17 @@ async function runProductDetails(shop: Shop, items: MpItem[]) {
   let lastErr = "";
   const queue = [...todo];
   const worker = async () => {
-    for (let id = queue.shift(); id; id = queue.shift()) await saveDetail(id);
+    for (let id = queue.shift(); id; id = queue.shift()) {
+      await saveDetail(id).catch((e) => {
+        gagal++;
+        lastErr = `simpan ${id}: ${e instanceof Error ? e.message.slice(0, 300) : String(e)}`;
+      });
+    }
   };
   const saveDetail = async (id: string) => {
     const d = await tiktok.tiktokProductDetail(shop.accessToken, shop.cipher ?? "", id).catch((e) => {
       gagal++;
-      lastErr = e instanceof Error ? e.message : String(e);
+      lastErr = `ambil ${id}: ${e instanceof Error ? e.message.slice(0, 300) : String(e)}`;
       return null;
     });
     if (!d) return;
