@@ -70,12 +70,16 @@ export async function tiktokOrders(token: string, cipher: string, from: Date): P
         id: string;
         status: string;
         buyer_email?: string;
-        recipient_address?: { name?: string };
+        recipient_address?: { name?: string; phone_number?: string; full_address?: string };
         tracking_number?: string;
+        shipping_provider?: string;
+        delivery_option_name?: string;
+        buyer_message?: string;
+        payment_method_name?: string;
         create_time: number;
         update_time: number;
         payment?: { total_amount?: string };
-        line_items?: { product_name: string; sku_name?: string; seller_sku?: string; sale_price?: string }[];
+        line_items?: { product_name: string; sku_name?: string; seller_sku?: string; sale_price?: string; sku_image?: string }[];
       }[];
       next_page_token?: string;
     }>("/order/202309/orders/search", {
@@ -87,13 +91,13 @@ export async function tiktokOrders(token: string, cipher: string, from: Date): P
     });
     for (const o of d.orders ?? []) {
       // line_items TikTok = 1 baris per unit → gabung per SKU.
-      const items = new Map<string, { name: string; sku: string | null; qty: number; price: number }>();
+      const items = new Map<string, { name: string; sku: string | null; qty: number; price: number; image: string | null }>();
       for (const li of o.line_items ?? []) {
         const name = li.sku_name ? `${li.product_name} - ${li.sku_name}` : li.product_name;
         const k = `${name}|${li.seller_sku ?? ""}`;
         const cur = items.get(k);
         if (cur) cur.qty += 1;
-        else items.set(k, { name, sku: li.seller_sku || null, qty: 1, price: n(li.sale_price) });
+        else items.set(k, { name, sku: li.seller_sku || null, qty: 1, price: n(li.sale_price), image: li.sku_image || null });
       }
       out.push({
         orderSn: o.id,
@@ -102,6 +106,12 @@ export async function tiktokOrders(token: string, cipher: string, from: Date): P
         items: [...items.values()],
         total: n(o.payment?.total_amount),
         trackingNo: o.tracking_number || null,
+        recipient: o.recipient_address?.name || null,
+        phone: o.recipient_address?.phone_number || null,
+        address: o.recipient_address?.full_address || null,
+        courier: o.shipping_provider || o.delivery_option_name || null,
+        buyerNote: o.buyer_message || null,
+        payment: o.payment_method_name || null,
         orderedAt: new Date(o.create_time * 1000),
         updatedAt: new Date(o.update_time * 1000),
       });

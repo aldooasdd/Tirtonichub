@@ -18,6 +18,18 @@ const LABEL: Record<string, string> = {
   ON_HOLD: "Ditahan",
 };
 
+/** Tab Kelola Pesanan → status mentah Shopee/TikTok. */
+export const ORDER_TABS = [
+  { key: "semua", label: "Semua Pesanan", statuses: null },
+  { key: "belum-bayar", label: "Belum Dibayar", statuses: ["UNPAID"] },
+  { key: "perlu-kirim", label: "Perlu Dikirim", statuses: ["AWAITING_SHIPMENT", "READY_TO_SHIP", "RETRY_SHIP"] },
+  { key: "menunggu-kurir", label: "Menunggu Kurir", statuses: ["PROCESSED", "AWAITING_COLLECTION"] },
+  { key: "dikirim", label: "Dikirim", statuses: ["SHIPPED", "IN_TRANSIT", "TO_CONFIRM_RECEIVE", "DELIVERED"] },
+  { key: "selesai", label: "Selesai", statuses: ["COMPLETED"] },
+  { key: "batal", label: "Pembatalan", statuses: ["IN_CANCEL", "CANCELLED", "CANCEL"] },
+  { key: "retur", label: "Pengembalian", statuses: ["TO_RETURN"] },
+] as const;
+
 export const statusLabel = (s: string) => LABEL[s] ?? s;
 /** Warna status: perlu tindakan (amber), selesai (hijau), batal/retur (merah). */
 export function statusTone(s: string): "warn" | "ok" | "bad" | "muted" {

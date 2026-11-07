@@ -76,6 +76,12 @@ function demoOrder(platform: Platform, at: Date): MpOrder {
     items: [{ name: p.name, sku: p.sku, qty, price: p.price }],
     total: p.price * qty,
     trackingNo: status === "SHIPPED" || status === "COMPLETED" ? "SPX" + Math.floor(Math.random() * 1e10) : null,
+    recipient: "Budi Santoso",
+    phone: "62812****678",
+    address: "Jl. Raya Darmo No. 10, Wonokromo, Surabaya, Jawa Timur 60241",
+    courier: platform === "SHOPEE" ? "SPX Standard" : "J&T Express",
+    buyerNote: Math.random() < 0.3 ? "Tolong dibungkus rapi ya kak" : null,
+    payment: pick(["Transfer Bank", "COD", "ShopeePay", "GoPay"]),
     orderedAt: at,
     updatedAt: at,
   };
@@ -112,6 +118,8 @@ async function upsertOrders(platform: Platform, shopId: string, orders: MpOrder[
       items: o.items,
       total: o.total,
       ...(o.trackingNo ? { trackingNo: o.trackingNo } : {}),
+      // Detail pengiriman: hanya timpa bila sumber mengirim nilai.
+      ...Object.fromEntries((["recipient", "phone", "address", "courier", "buyerNote", "payment"] as const).filter((k) => o[k]).map((k) => [k, o[k]])),
       orderedAt: o.orderedAt,
       updatedAtMp: o.updatedAt,
     };
