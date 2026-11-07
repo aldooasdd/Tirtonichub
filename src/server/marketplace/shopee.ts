@@ -254,7 +254,8 @@ export async function shopeeSetPrice(token: string, shopId: string, itemId: stri
 
 // --- Seller chat (butuh izin Chat API dari Shopee) ---
 export type MpConv = { id: string; name: string; avatar: string | null; last: string; at: number; unread: number; toId: string };
-export type MpMsg = { id: string; mine: boolean; text: string; image: string | null; at: number };
+// system = pesan otomatis/robot/sistem marketplace (bukan ketikan toko maupun pembeli).
+export type MpMsg = { id: string; mine: boolean; text: string; image: string | null; at: number; system?: boolean };
 
 /** Shopee campur detik / milidetik / nanodetik → milidetik. */
 const toMs = (t: unknown) => {
