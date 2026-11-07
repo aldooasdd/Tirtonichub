@@ -196,11 +196,8 @@ export async function syncOrders(platform: Platform, days = 7): Promise<{ total:
   return { total: orders.length, baru };
 }
 
-// ponytail: batasi Get Product per sinkron otomatis (kuota API); sisanya menyusul. Tombol Sinkron sekarang pakai batas besar.
-const DETAIL_PER_RUN = 60;
-
 /** Tarik daftar produk + stok + harga dari marketplace. */
-export async function syncItems(platform: Platform, detailLimit = DETAIL_PER_RUN): Promise<number> {
+export async function syncItems(platform: Platform): Promise<number> {
   const shop = await mustShop(platform);
   if (shop.shopId === DEMO) return prisma.marketplaceItem.count({ where: { platform, shopId: DEMO } });
   const items: MpItem[] =
@@ -213,21 +210,47 @@ export async function syncItems(platform: Platform, detailLimit = DETAIL_PER_RUN
       update: data,
     });
   }
-  if (platform === "TOKOPEDIA") await syncProductDetails(shop, items, detailLimit).catch((e) => console.error("[produk-master]", e instanceof Error ? e.message : e));
+  // Detail produk jalan di latar belakang: tombol Sinkron tak menunggu ribuan Get Product.
+  if (platform === "TOKOPEDIA") void syncProductDetails(shop, items);
   return items.length;
 }
 
 /** Produk Master: ambil detail (Get Product) untuk produk baru / yang berubah sejak sinkron terakhir. */
-async function syncProductDetails(shop: Shop, items: MpItem[], limit: number) {
+let detailRunning = false;
+const DETAIL_CONCURRENCY = 5; // ponytail: 5 Get Product paralel; turunkan bila kena limit QPS TikTok
+
+async function syncProductDetails(shop: Shop, items: MpItem[]) {
+  if (detailRunning) return; // satu proses per server
+  detailRunning = true;
+  try {
+    await runProductDetails(shop, items);
+  } catch (e) {
+    console.error("[produk-master]", e instanceof Error ? e.message : e);
+  } finally {
+    detailRunning = false;
+  }
+}
+
+async function runProductDetails(shop: Shop, items: MpItem[]) {
   const latest = new Map<string, number>();
   for (const it of items) latest.set(it.itemId, Math.max(latest.get(it.itemId) ?? 0, it.productUpdatedAt ?? 0));
   const stored = await prisma.marketplaceProduct.findMany({ where: { platform: "TOKOPEDIA" }, select: { productId: true, updatedAtMp: true } });
   const known = new Map(stored.map((p) => [p.productId, p.updatedAtMp ? p.updatedAtMp.getTime() / 1000 : 0]));
-  const todo = [...latest].filter(([id, upd]) => !known.has(id) || (upd && upd > (known.get(id) ?? 0))).map(([id]) => id).slice(0, limit);
+  const todo = [...latest].filter(([id, upd]) => !known.has(id) || (upd && upd > (known.get(id) ?? 0))).map(([id]) => id);
 
-  for (const id of todo) {
-    const d = await tiktok.tiktokProductDetail(shop.accessToken, shop.cipher ?? "", id).catch(() => null);
-    if (!d) continue;
+  let gagal = 0;
+  let lastErr = "";
+  const queue = [...todo];
+  const worker = async () => {
+    for (let id = queue.shift(); id; id = queue.shift()) await saveDetail(id);
+  };
+  const saveDetail = async (id: string) => {
+    const d = await tiktok.tiktokProductDetail(shop.accessToken, shop.cipher ?? "", id).catch((e) => {
+      gagal++;
+      lastErr = e instanceof Error ? e.message : String(e);
+      return null;
+    });
+    if (!d) return;
     const data = {
       title: d.title,
       status: d.status,
@@ -258,7 +281,9 @@ async function syncProductDetails(shop: Shop, items: MpItem[], limit: number) {
         data: { variant: sku.variant, image: sku.image ?? d.images[0] ?? null, skuStatus: sku.status },
       });
     }
-  }
+  };
+  await Promise.all(Array.from({ length: DETAIL_CONCURRENCY }, worker));
+  if (todo.length) console.log(`[produk-master] detail ${todo.length - gagal}/${todo.length} produk${gagal ? `, gagal ${gagal}: ${lastErr}` : ""}`);
 }
 
 /** Ubah stok/harga 1 produk di marketplace, lalu simpan di DB. Toko contoh: hanya DB. */
