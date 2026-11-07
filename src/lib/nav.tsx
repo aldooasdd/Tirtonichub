@@ -126,7 +126,10 @@ export function navForRole(role: RoleCode): NavGroup[] {
     groups.push({
       title: "Order Specialist",
       icon: Globe,
-      items: [{ label: "Approval Online", href: "/penjualan-online", icon: ClipboardCheck }],
+      items: [
+        { label: "Approval Online", href: "/penjualan-online", icon: ClipboardCheck },
+        { label: "Riwayat Penjualan", href: "/penjualan-online/riwayat", icon: Receipt },
+      ],
     });
   }
 
