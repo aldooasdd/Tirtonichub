@@ -1,6 +1,7 @@
 import { requireChannel } from "@/server/auth/rbac";
 import { DEMO, activeShop, fresh } from "@/server/marketplace/sync";
 import * as ops from "@/server/marketplace/tiktok-ops";
+import { authorizedCategoryAssets } from "@/server/marketplace/tiktok-product";
 
 const WH_TYPE: Record<string, string> = { SALES_WAREHOUSE: "Gudang kirim", RETURN_WAREHOUSE: "Gudang retur" };
 const OPT_TYPE: Record<string, string> = {
@@ -34,12 +35,14 @@ export default async function GudangPage() {
 
   let error = "";
   let shops: { id: string; region: string }[] = [];
+  let assets: { id: number; name: string; market: string }[] = [];
   let whs: (ops.Warehouse & { options: ops.DeliveryOption[] | null })[] = [];
   try {
     const s = await fresh(shop);
     const c = { token: s.accessToken, cipher: s.cipher ?? "" };
-    const [act, list] = await Promise.all([ops.activeShops(c).catch(() => []), ops.warehouses(c)]);
+    const [act, list, cat] = await Promise.all([ops.activeShops(c).catch(() => []), ops.warehouses(c), authorizedCategoryAssets(s.accessToken).catch(() => [])]);
     shops = act;
+    assets = cat;
     whs = await Promise.all(
       list.map(async (w) => ({ ...w, options: w.type === "SALES_WAREHOUSE" ? await ops.warehouseDeliveryOptions(c, w.id).catch(() => null) : null })),
     );
@@ -65,6 +68,12 @@ export default async function GudangPage() {
             <span className="text-muted-foreground">-</span>
           )}
         </span>
+        {assets.length > 0 && (
+          <span>
+            <span className="text-muted-foreground">Kategori bisnis app: </span>
+            {assets.map((a) => `${a.name}${a.market ? ` (${a.market})` : ""}`).join(", ")}
+          </span>
+        )}
         {shops[0]?.region && (
           <span>
             <span className="text-muted-foreground">Wilayah: </span>
