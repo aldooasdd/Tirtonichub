@@ -140,7 +140,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
       icon: Store,
       items: [
         { label: "Kelola Pesanan", href: "/channel", icon: Store },
-        { label: "Produk & Stok", href: "/channel/produk", icon: Boxes },
+        { label: "Produk Master", href: "/channel/produk", icon: Boxes },
         { label: "Dana Cair", href: "/channel/dana", icon: Wallet },
       ],
     });

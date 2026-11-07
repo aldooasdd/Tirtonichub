@@ -150,6 +150,7 @@ export async function tiktokItems(token: string, cipher: string): Promise<MpItem
       products?: {
         id: string;
         title: string;
+        update_time?: number;
         skus?: { id: string; seller_sku?: string; price?: { sale_price?: string; tax_exclusive_price?: string }; inventory?: { quantity: number; warehouse_id: string }[] }[];
       }[];
       next_page_token?: string;
@@ -158,7 +159,7 @@ export async function tiktokItems(token: string, cipher: string): Promise<MpItem
       token,
       cipher,
       query: { page_size: 100, ...(pageToken ? { page_token: pageToken } : {}) },
-      body: { status: "ACTIVATE" },
+      body: {}, // tanpa filter status → semua produk (aktif, nonaktif, draft)
     });
     for (const p of d.products ?? []) {
       for (const s of p.skus ?? []) {
@@ -171,12 +172,100 @@ export async function tiktokItems(token: string, cipher: string): Promise<MpItem
           price: n(s.price?.sale_price ?? s.price?.tax_exclusive_price),
           stock: n(s.inventory?.reduce((a, x) => a + x.quantity, 0)),
           warehouseId: inv?.warehouse_id ?? null,
+          productUpdatedAt: p.update_time,
         });
       }
     }
     pageToken = d.next_page_token ?? "";
   } while (pageToken);
   return out;
+}
+
+type TtImg = { urls?: string[]; thumb_urls?: string[] };
+export type MpProductDetail = {
+  productId: string;
+  title: string;
+  status: string;
+  tokoStatus: string | null;
+  description: string | null;
+  category: string | null;
+  brand: string | null;
+  images: string[];
+  video: { url: string; cover: string | null } | null;
+  attributes: { name: string; value: string }[];
+  weight: string | null;
+  dimensions: string | null;
+  minOrder: number | null;
+  isCod: boolean | null;
+  preOwned: boolean | null;
+  detailUrl: string | null;
+  createdAt: Date | null;
+  updatedAt: Date | null;
+  skus: { id: string; variant: string | null; image: string | null; status: string | null }[];
+};
+
+/** Detail lengkap 1 produk (dokumen Get Product 202309). */
+export async function tiktokProductDetail(token: string, cipher: string, productId: string): Promise<MpProductDetail> {
+  const d = await call<{
+    id: string;
+    title: string;
+    status: string;
+    integrated_platform_statuses?: { platform: string; status: string }[];
+    description?: string;
+    category_chains?: { id: string; parent_id: string; local_name: string; is_leaf: boolean }[];
+    brand?: { id: string; name: string };
+    main_images?: TtImg[];
+    video?: { url?: string; cover_url?: string };
+    product_attributes?: { name: string; values?: { name: string }[] }[];
+    package_weight?: { value?: string; unit?: string };
+    package_dimensions?: { length?: string; width?: string; height?: string; unit?: string };
+    minimum_order_quantity?: number;
+    is_cod_allowed?: boolean;
+    is_pre_owned?: boolean;
+    product_detail_url?: string;
+    create_time?: number;
+    update_time?: number;
+    skus?: { id: string; status_info?: { status?: string }; sales_attributes?: { name: string; value_name?: string; sku_img?: TtImg }[] }[];
+  }>(`/product/202309/products/${encodeURIComponent(productId)}`, { token, cipher, query: { locale: "id-ID" } });
+  // Urutkan rantai kategori dari akar (parent_id "0") ke daun.
+  const chain = d.category_chains ?? [];
+  const ordered: string[] = [];
+  let parent = "0";
+  for (let i = 0; i < chain.length; i++) {
+    const c = chain.find((x) => x.parent_id === parent);
+    if (!c) break;
+    ordered.push(c.local_name);
+    parent = c.id;
+  }
+  const img = (i?: TtImg) => i?.urls?.[0] ?? i?.thumb_urls?.[0] ?? null;
+  const w = d.package_weight;
+  const dm = d.package_dimensions;
+  return {
+    productId: d.id,
+    title: d.title,
+    status: d.status,
+    tokoStatus: d.integrated_platform_statuses?.find((x) => x.platform === "TOKOPEDIA")?.status ?? null,
+    description: d.description || null,
+    category: (ordered.length ? ordered : chain.map((c) => c.local_name)).join(" › ") || null,
+    brand: d.brand?.name || null,
+    images: (d.main_images ?? []).map(img).filter((x): x is string => !!x),
+    video: d.video?.url ? { url: d.video.url, cover: d.video.cover_url ?? null } : null,
+    attributes: (d.product_attributes ?? []).map((a) => ({ name: a.name, value: (a.values ?? []).map((v) => v.name).join(", ") })).filter((a) => a.value),
+    weight: w?.value ? `${w.value} ${w.unit ?? ""}`.trim() : null,
+    dimensions: dm?.length ? `${dm.length}×${dm.width}×${dm.height} ${dm.unit ?? ""}`.trim() : null,
+    minOrder: d.minimum_order_quantity ?? null,
+    isCod: d.is_cod_allowed ?? null,
+    preOwned: d.is_pre_owned ?? null,
+    detailUrl: d.product_detail_url || null,
+    createdAt: d.create_time ? new Date(d.create_time * 1000) : null,
+    updatedAt: d.update_time ? new Date(d.update_time * 1000) : null,
+    skus: (d.skus ?? []).map((s) => ({
+      id: s.id,
+      variant: (s.sales_attributes ?? []).map((a) => (a.value_name ? `${a.name}: ${a.value_name}` : "")).filter(Boolean).join(", ") || null,
+      image: img((s.sales_attributes ?? []).find((a) => a.sku_img)?.sku_img),
+      status: s.status_info?.status ?? null,
+    })),
+  };
 }
 
 export async function tiktokSetStock(token: string, cipher: string, productId: string, skuId: string, warehouseId: string | null, stock: number): Promise<void> {

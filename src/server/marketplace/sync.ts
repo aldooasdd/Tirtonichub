@@ -196,8 +196,11 @@ export async function syncOrders(platform: Platform, days = 7): Promise<{ total:
   return { total: orders.length, baru };
 }
 
+// ponytail: batasi Get Product per sinkron otomatis (kuota API); sisanya menyusul. Tombol Sinkron sekarang pakai batas besar.
+const DETAIL_PER_RUN = 60;
+
 /** Tarik daftar produk + stok + harga dari marketplace. */
-export async function syncItems(platform: Platform): Promise<number> {
+export async function syncItems(platform: Platform, detailLimit = DETAIL_PER_RUN): Promise<number> {
   const shop = await mustShop(platform);
   if (shop.shopId === DEMO) return prisma.marketplaceItem.count({ where: { platform, shopId: DEMO } });
   const items: MpItem[] =
@@ -210,7 +213,52 @@ export async function syncItems(platform: Platform): Promise<number> {
       update: data,
     });
   }
+  if (platform === "TOKOPEDIA") await syncProductDetails(shop, items, detailLimit).catch((e) => console.error("[produk-master]", e instanceof Error ? e.message : e));
   return items.length;
+}
+
+/** Produk Master: ambil detail (Get Product) untuk produk baru / yang berubah sejak sinkron terakhir. */
+async function syncProductDetails(shop: Shop, items: MpItem[], limit: number) {
+  const latest = new Map<string, number>();
+  for (const it of items) latest.set(it.itemId, Math.max(latest.get(it.itemId) ?? 0, it.productUpdatedAt ?? 0));
+  const stored = await prisma.marketplaceProduct.findMany({ where: { platform: "TOKOPEDIA" }, select: { productId: true, updatedAtMp: true } });
+  const known = new Map(stored.map((p) => [p.productId, p.updatedAtMp ? p.updatedAtMp.getTime() / 1000 : 0]));
+  const todo = [...latest].filter(([id, upd]) => !known.has(id) || (upd && upd > (known.get(id) ?? 0))).map(([id]) => id).slice(0, limit);
+
+  for (const id of todo) {
+    const d = await tiktok.tiktokProductDetail(shop.accessToken, shop.cipher ?? "", id).catch(() => null);
+    if (!d) continue;
+    const data = {
+      title: d.title,
+      status: d.status,
+      tokoStatus: d.tokoStatus,
+      description: d.description,
+      category: d.category,
+      brand: d.brand,
+      images: d.images,
+      video: d.video ?? undefined,
+      attributes: d.attributes,
+      weight: d.weight,
+      dimensions: d.dimensions,
+      minOrder: d.minOrder,
+      isCod: d.isCod,
+      preOwned: d.preOwned,
+      detailUrl: d.detailUrl,
+      createdAtMp: d.createdAt,
+      updatedAtMp: d.updatedAt,
+    };
+    await prisma.marketplaceProduct.upsert({
+      where: { platform_productId: { platform: "TOKOPEDIA", productId: id } },
+      create: { platform: "TOKOPEDIA", productId: id, ...data },
+      update: data,
+    });
+    for (const sku of d.skus) {
+      await prisma.marketplaceItem.updateMany({
+        where: { platform: "TOKOPEDIA", itemId: id, modelId: sku.id },
+        data: { variant: sku.variant, image: sku.image ?? d.images[0] ?? null, skuStatus: sku.status },
+      });
+    }
+  }
 }
 
 /** Ubah stok/harga 1 produk di marketplace, lalu simpan di DB. Toko contoh: hanya DB. */

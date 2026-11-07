@@ -595,9 +595,39 @@ model MarketplaceItem {
   price       Int
   stock       Int
   warehouseId String? // TikTok Shop
+  variant     String? // label varian, mis. "Warna: Putih, Ukuran: 1.30mm"
+  image       String? // foto varian
+  skuStatus   String? // NORMAL | DEACTIVATED
   syncedAt    DateTime @updatedAt
 
   @@unique([platform, itemId, modelId])
+}
+
+// Detail produk marketplace (Produk Master) dari TikTok Shop Get Product. Varian/stok di MarketplaceItem.
+model MarketplaceProduct {
+  id          String    @id @default(cuid())
+  platform    String
+  productId   String
+  title       String
+  status      String // ACTIVATE | SELLER_DEACTIVATED | DRAFT | ...
+  tokoStatus  String? // status di Tokopedia (integrated_platform_statuses)
+  description String? // HTML dari marketplace
+  category    String? // rantai kategori, dipisah " › "
+  brand       String?
+  images      Json // string[] url foto utama
+  video       Json? // {url, cover}
+  attributes  Json // [{name, value}]
+  weight      String? // "1.2 KILOGRAM"
+  dimensions  String? // "10×10×10 CENTIMETER"
+  minOrder    Int?
+  isCod       Boolean?
+  preOwned    Boolean?
+  detailUrl   String?
+  createdAtMp DateTime?
+  updatedAtMp DateTime?
+  syncedAt    DateTime  @updatedAt
+
+  @@unique([platform, productId])
 }
 
 // Dana cair per settlement (TikTok Shop statement / Shopee escrow per order).

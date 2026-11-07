@@ -487,6 +487,33 @@ exports.Prisma.MarketplaceItemScalarFieldEnum = {
   price: 'price',
   stock: 'stock',
   warehouseId: 'warehouseId',
+  variant: 'variant',
+  image: 'image',
+  skuStatus: 'skuStatus',
+  syncedAt: 'syncedAt'
+};
+
+exports.Prisma.MarketplaceProductScalarFieldEnum = {
+  id: 'id',
+  platform: 'platform',
+  productId: 'productId',
+  title: 'title',
+  status: 'status',
+  tokoStatus: 'tokoStatus',
+  description: 'description',
+  category: 'category',
+  brand: 'brand',
+  images: 'images',
+  video: 'video',
+  attributes: 'attributes',
+  weight: 'weight',
+  dimensions: 'dimensions',
+  minOrder: 'minOrder',
+  isCod: 'isCod',
+  preOwned: 'preOwned',
+  detailUrl: 'detailUrl',
+  createdAtMp: 'createdAtMp',
+  updatedAtMp: 'updatedAtMp',
   syncedAt: 'syncedAt'
 };
 
@@ -822,6 +849,7 @@ exports.Prisma.ModelName = {
   MarketplaceShop: 'MarketplaceShop',
   MarketplaceOrder: 'MarketplaceOrder',
   MarketplaceItem: 'MarketplaceItem',
+  MarketplaceProduct: 'MarketplaceProduct',
   MarketplacePayout: 'MarketplacePayout',
   OnlineRecon: 'OnlineRecon',
   MediaMember: 'MediaMember',

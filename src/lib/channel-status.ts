@@ -38,3 +38,17 @@ export function statusTone(s: string): "warn" | "ok" | "bad" | "muted" {
   if (["CANCELLED", "CANCEL", "IN_CANCEL", "TO_RETURN"].includes(s)) return "bad";
   return "muted";
 }
+
+const PRODUCT_STATUS: Record<string, { label: string; tone: string }> = {
+  ACTIVATE: { label: "Aktif", tone: "text-emerald-600" },
+  SELLER_DEACTIVATED: { label: "Nonaktif", tone: "text-muted-foreground" },
+  PLATFORM_DEACTIVATED: { label: "Dinonaktifkan platform", tone: "text-destructive" },
+  DRAFT: { label: "Draft", tone: "text-amber-600" },
+  PENDING: { label: "Ditinjau", tone: "text-amber-600" },
+  FAILED: { label: "Gagal tinjau", tone: "text-destructive" },
+  FREEZE: { label: "Dibekukan", tone: "text-destructive" },
+  DELETED: { label: "Dihapus", tone: "text-muted-foreground" },
+};
+/** Status produk TikTok Shop → label & warna. */
+export const productStatus = (s: string | null | undefined) => (s ? PRODUCT_STATUS[s] ?? { label: s, tone: "text-muted-foreground" } : null);
+
