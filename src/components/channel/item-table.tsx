@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { updateChannelItem } from "@/server/actions/channel";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
 
-export type ItemRow = { id: string; platform: string; demo: boolean; name: string; sku: string | null; price: number; stock: number };
+export type ItemRow = { id: string; platform: string; demo: boolean; name: string; sku: string | null; price: number; stock: number; image?: string | null; inactive?: boolean };
 
 /** Produk marketplace: ubah stok & harga per baris → langsung dikirim ke Shopee / Tokopedia. */
 export function ItemTable({ rows }: { rows: ItemRow[] }) {
@@ -48,7 +48,18 @@ export function ItemTable({ rows }: { rows: ItemRow[] }) {
                   {r.platform === "SHOPEE" ? "Shopee" : "Tokopedia"}
                   {r.demo && <span className="ml-1 text-12 text-amber-600">contoh</span>}
                 </td>
-                <td className="p-3">{r.name}</td>
+                <td className="p-3">
+                  <span className="flex items-center gap-2">
+                    {r.image && (
+                      // eslint-disable-next-line @next/next/no-img-element -- foto varian dari CDN marketplace
+                      <img src={r.image} alt="" className="size-10 shrink-0 rounded-md border object-cover" />
+                    )}
+                    <span>
+                      {r.name}
+                      {r.inactive && <span className="ml-1 text-12 text-muted-foreground">(nonaktif)</span>}
+                    </span>
+                  </span>
+                </td>
                 <td className="p-3 font-mono text-12">{r.sku ?? "-"}</td>
                 <td className="p-3">
                   <input

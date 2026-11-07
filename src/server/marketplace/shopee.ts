@@ -177,7 +177,7 @@ export async function shopeeTracking(token: string, shopId: string, orderSn: str
   return j?.response.tracking_number || null;
 }
 
-export type MpItem = { itemId: string; modelId: string; name: string; sku: string | null; price: number; stock: number; warehouseId: string | null };
+export type MpItem = { itemId: string; modelId: string; name: string; sku: string | null; price: number; stock: number; warehouseId: string | null; productUpdatedAt?: number };
 
 export async function shopeeItems(token: string, shopId: string): Promise<MpItem[]> {
   const ids: number[] = [];

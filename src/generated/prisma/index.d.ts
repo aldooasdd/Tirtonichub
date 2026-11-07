@@ -156,6 +156,11 @@ export type MarketplaceOrder = $Result.DefaultSelection<Prisma.$MarketplaceOrder
  */
 export type MarketplaceItem = $Result.DefaultSelection<Prisma.$MarketplaceItemPayload>
 /**
+ * Model MarketplaceProduct
+ * 
+ */
+export type MarketplaceProduct = $Result.DefaultSelection<Prisma.$MarketplaceProductPayload>
+/**
  * Model MarketplacePayout
  * 
  */
@@ -761,6 +766,16 @@ export class PrismaClient<
     * ```
     */
   get marketplaceItem(): Prisma.MarketplaceItemDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.marketplaceProduct`: Exposes CRUD operations for the **MarketplaceProduct** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more MarketplaceProducts
+    * const marketplaceProducts = await prisma.marketplaceProduct.findMany()
+    * ```
+    */
+  get marketplaceProduct(): Prisma.MarketplaceProductDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.marketplacePayout`: Exposes CRUD operations for the **MarketplacePayout** model.
@@ -1400,6 +1415,7 @@ export namespace Prisma {
     MarketplaceShop: 'MarketplaceShop',
     MarketplaceOrder: 'MarketplaceOrder',
     MarketplaceItem: 'MarketplaceItem',
+    MarketplaceProduct: 'MarketplaceProduct',
     MarketplacePayout: 'MarketplacePayout',
     OnlineRecon: 'OnlineRecon',
     MediaMember: 'MediaMember',
@@ -1435,7 +1451,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplacePayout" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -3511,6 +3527,80 @@ export namespace Prisma {
           }
         }
       }
+      MarketplaceProduct: {
+        payload: Prisma.$MarketplaceProductPayload<ExtArgs>
+        fields: Prisma.MarketplaceProductFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.MarketplaceProductFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceProductPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.MarketplaceProductFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceProductPayload>
+          }
+          findFirst: {
+            args: Prisma.MarketplaceProductFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceProductPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.MarketplaceProductFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceProductPayload>
+          }
+          findMany: {
+            args: Prisma.MarketplaceProductFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceProductPayload>[]
+          }
+          create: {
+            args: Prisma.MarketplaceProductCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceProductPayload>
+          }
+          createMany: {
+            args: Prisma.MarketplaceProductCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.MarketplaceProductCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceProductPayload>[]
+          }
+          delete: {
+            args: Prisma.MarketplaceProductDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceProductPayload>
+          }
+          update: {
+            args: Prisma.MarketplaceProductUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceProductPayload>
+          }
+          deleteMany: {
+            args: Prisma.MarketplaceProductDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.MarketplaceProductUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.MarketplaceProductUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceProductPayload>[]
+          }
+          upsert: {
+            args: Prisma.MarketplaceProductUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$MarketplaceProductPayload>
+          }
+          aggregate: {
+            args: Prisma.MarketplaceProductAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateMarketplaceProduct>
+          }
+          groupBy: {
+            args: Prisma.MarketplaceProductGroupByArgs<ExtArgs>
+            result: $Utils.Optional<MarketplaceProductGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.MarketplaceProductCountArgs<ExtArgs>
+            result: $Utils.Optional<MarketplaceProductCountAggregateOutputType> | number
+          }
+        }
+      }
       MarketplacePayout: {
         payload: Prisma.$MarketplacePayoutPayload<ExtArgs>
         fields: Prisma.MarketplacePayoutFieldRefs
@@ -4893,6 +4983,7 @@ export namespace Prisma {
     marketplaceShop?: MarketplaceShopOmit
     marketplaceOrder?: MarketplaceOrderOmit
     marketplaceItem?: MarketplaceItemOmit
+    marketplaceProduct?: MarketplaceProductOmit
     marketplacePayout?: MarketplacePayoutOmit
     onlineRecon?: OnlineReconOmit
     mediaMember?: MediaMemberOmit
@@ -36776,6 +36867,9 @@ export namespace Prisma {
     price: number | null
     stock: number | null
     warehouseId: string | null
+    variant: string | null
+    image: string | null
+    skuStatus: string | null
     syncedAt: Date | null
   }
 
@@ -36790,6 +36884,9 @@ export namespace Prisma {
     price: number | null
     stock: number | null
     warehouseId: string | null
+    variant: string | null
+    image: string | null
+    skuStatus: string | null
     syncedAt: Date | null
   }
 
@@ -36804,6 +36901,9 @@ export namespace Prisma {
     price: number
     stock: number
     warehouseId: number
+    variant: number
+    image: number
+    skuStatus: number
     syncedAt: number
     _all: number
   }
@@ -36830,6 +36930,9 @@ export namespace Prisma {
     price?: true
     stock?: true
     warehouseId?: true
+    variant?: true
+    image?: true
+    skuStatus?: true
     syncedAt?: true
   }
 
@@ -36844,6 +36947,9 @@ export namespace Prisma {
     price?: true
     stock?: true
     warehouseId?: true
+    variant?: true
+    image?: true
+    skuStatus?: true
     syncedAt?: true
   }
 
@@ -36858,6 +36964,9 @@ export namespace Prisma {
     price?: true
     stock?: true
     warehouseId?: true
+    variant?: true
+    image?: true
+    skuStatus?: true
     syncedAt?: true
     _all?: true
   }
@@ -36959,6 +37068,9 @@ export namespace Prisma {
     price: number
     stock: number
     warehouseId: string | null
+    variant: string | null
+    image: string | null
+    skuStatus: string | null
     syncedAt: Date
     _count: MarketplaceItemCountAggregateOutputType | null
     _avg: MarketplaceItemAvgAggregateOutputType | null
@@ -36992,6 +37104,9 @@ export namespace Prisma {
     price?: boolean
     stock?: boolean
     warehouseId?: boolean
+    variant?: boolean
+    image?: boolean
+    skuStatus?: boolean
     syncedAt?: boolean
   }, ExtArgs["result"]["marketplaceItem"]>
 
@@ -37006,6 +37121,9 @@ export namespace Prisma {
     price?: boolean
     stock?: boolean
     warehouseId?: boolean
+    variant?: boolean
+    image?: boolean
+    skuStatus?: boolean
     syncedAt?: boolean
   }, ExtArgs["result"]["marketplaceItem"]>
 
@@ -37020,6 +37138,9 @@ export namespace Prisma {
     price?: boolean
     stock?: boolean
     warehouseId?: boolean
+    variant?: boolean
+    image?: boolean
+    skuStatus?: boolean
     syncedAt?: boolean
   }, ExtArgs["result"]["marketplaceItem"]>
 
@@ -37034,10 +37155,13 @@ export namespace Prisma {
     price?: boolean
     stock?: boolean
     warehouseId?: boolean
+    variant?: boolean
+    image?: boolean
+    skuStatus?: boolean
     syncedAt?: boolean
   }
 
-  export type MarketplaceItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "shopId" | "itemId" | "modelId" | "name" | "sku" | "price" | "stock" | "warehouseId" | "syncedAt", ExtArgs["result"]["marketplaceItem"]>
+  export type MarketplaceItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "shopId" | "itemId" | "modelId" | "name" | "sku" | "price" | "stock" | "warehouseId" | "variant" | "image" | "skuStatus" | "syncedAt", ExtArgs["result"]["marketplaceItem"]>
 
   export type $MarketplaceItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MarketplaceItem"
@@ -37053,6 +37177,9 @@ export namespace Prisma {
       price: number
       stock: number
       warehouseId: string | null
+      variant: string | null
+      image: string | null
+      skuStatus: string | null
       syncedAt: Date
     }, ExtArgs["result"]["marketplaceItem"]>
     composites: {}
@@ -37487,6 +37614,9 @@ export namespace Prisma {
     readonly price: FieldRef<"MarketplaceItem", 'Int'>
     readonly stock: FieldRef<"MarketplaceItem", 'Int'>
     readonly warehouseId: FieldRef<"MarketplaceItem", 'String'>
+    readonly variant: FieldRef<"MarketplaceItem", 'String'>
+    readonly image: FieldRef<"MarketplaceItem", 'String'>
+    readonly skuStatus: FieldRef<"MarketplaceItem", 'String'>
     readonly syncedAt: FieldRef<"MarketplaceItem", 'DateTime'>
   }
     
@@ -37851,6 +37981,1231 @@ export namespace Prisma {
      * Omit specific fields from the MarketplaceItem
      */
     omit?: MarketplaceItemOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model MarketplaceProduct
+   */
+
+  export type AggregateMarketplaceProduct = {
+    _count: MarketplaceProductCountAggregateOutputType | null
+    _avg: MarketplaceProductAvgAggregateOutputType | null
+    _sum: MarketplaceProductSumAggregateOutputType | null
+    _min: MarketplaceProductMinAggregateOutputType | null
+    _max: MarketplaceProductMaxAggregateOutputType | null
+  }
+
+  export type MarketplaceProductAvgAggregateOutputType = {
+    minOrder: number | null
+  }
+
+  export type MarketplaceProductSumAggregateOutputType = {
+    minOrder: number | null
+  }
+
+  export type MarketplaceProductMinAggregateOutputType = {
+    id: string | null
+    platform: string | null
+    productId: string | null
+    title: string | null
+    status: string | null
+    tokoStatus: string | null
+    description: string | null
+    category: string | null
+    brand: string | null
+    weight: string | null
+    dimensions: string | null
+    minOrder: number | null
+    isCod: boolean | null
+    preOwned: boolean | null
+    detailUrl: string | null
+    createdAtMp: Date | null
+    updatedAtMp: Date | null
+    syncedAt: Date | null
+  }
+
+  export type MarketplaceProductMaxAggregateOutputType = {
+    id: string | null
+    platform: string | null
+    productId: string | null
+    title: string | null
+    status: string | null
+    tokoStatus: string | null
+    description: string | null
+    category: string | null
+    brand: string | null
+    weight: string | null
+    dimensions: string | null
+    minOrder: number | null
+    isCod: boolean | null
+    preOwned: boolean | null
+    detailUrl: string | null
+    createdAtMp: Date | null
+    updatedAtMp: Date | null
+    syncedAt: Date | null
+  }
+
+  export type MarketplaceProductCountAggregateOutputType = {
+    id: number
+    platform: number
+    productId: number
+    title: number
+    status: number
+    tokoStatus: number
+    description: number
+    category: number
+    brand: number
+    images: number
+    video: number
+    attributes: number
+    weight: number
+    dimensions: number
+    minOrder: number
+    isCod: number
+    preOwned: number
+    detailUrl: number
+    createdAtMp: number
+    updatedAtMp: number
+    syncedAt: number
+    _all: number
+  }
+
+
+  export type MarketplaceProductAvgAggregateInputType = {
+    minOrder?: true
+  }
+
+  export type MarketplaceProductSumAggregateInputType = {
+    minOrder?: true
+  }
+
+  export type MarketplaceProductMinAggregateInputType = {
+    id?: true
+    platform?: true
+    productId?: true
+    title?: true
+    status?: true
+    tokoStatus?: true
+    description?: true
+    category?: true
+    brand?: true
+    weight?: true
+    dimensions?: true
+    minOrder?: true
+    isCod?: true
+    preOwned?: true
+    detailUrl?: true
+    createdAtMp?: true
+    updatedAtMp?: true
+    syncedAt?: true
+  }
+
+  export type MarketplaceProductMaxAggregateInputType = {
+    id?: true
+    platform?: true
+    productId?: true
+    title?: true
+    status?: true
+    tokoStatus?: true
+    description?: true
+    category?: true
+    brand?: true
+    weight?: true
+    dimensions?: true
+    minOrder?: true
+    isCod?: true
+    preOwned?: true
+    detailUrl?: true
+    createdAtMp?: true
+    updatedAtMp?: true
+    syncedAt?: true
+  }
+
+  export type MarketplaceProductCountAggregateInputType = {
+    id?: true
+    platform?: true
+    productId?: true
+    title?: true
+    status?: true
+    tokoStatus?: true
+    description?: true
+    category?: true
+    brand?: true
+    images?: true
+    video?: true
+    attributes?: true
+    weight?: true
+    dimensions?: true
+    minOrder?: true
+    isCod?: true
+    preOwned?: true
+    detailUrl?: true
+    createdAtMp?: true
+    updatedAtMp?: true
+    syncedAt?: true
+    _all?: true
+  }
+
+  export type MarketplaceProductAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MarketplaceProduct to aggregate.
+     */
+    where?: MarketplaceProductWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MarketplaceProducts to fetch.
+     */
+    orderBy?: MarketplaceProductOrderByWithRelationInput | MarketplaceProductOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: MarketplaceProductWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MarketplaceProducts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MarketplaceProducts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned MarketplaceProducts
+    **/
+    _count?: true | MarketplaceProductCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: MarketplaceProductAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: MarketplaceProductSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: MarketplaceProductMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: MarketplaceProductMaxAggregateInputType
+  }
+
+  export type GetMarketplaceProductAggregateType<T extends MarketplaceProductAggregateArgs> = {
+        [P in keyof T & keyof AggregateMarketplaceProduct]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateMarketplaceProduct[P]>
+      : GetScalarType<T[P], AggregateMarketplaceProduct[P]>
+  }
+
+
+
+
+  export type MarketplaceProductGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: MarketplaceProductWhereInput
+    orderBy?: MarketplaceProductOrderByWithAggregationInput | MarketplaceProductOrderByWithAggregationInput[]
+    by: MarketplaceProductScalarFieldEnum[] | MarketplaceProductScalarFieldEnum
+    having?: MarketplaceProductScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: MarketplaceProductCountAggregateInputType | true
+    _avg?: MarketplaceProductAvgAggregateInputType
+    _sum?: MarketplaceProductSumAggregateInputType
+    _min?: MarketplaceProductMinAggregateInputType
+    _max?: MarketplaceProductMaxAggregateInputType
+  }
+
+  export type MarketplaceProductGroupByOutputType = {
+    id: string
+    platform: string
+    productId: string
+    title: string
+    status: string
+    tokoStatus: string | null
+    description: string | null
+    category: string | null
+    brand: string | null
+    images: JsonValue
+    video: JsonValue | null
+    attributes: JsonValue
+    weight: string | null
+    dimensions: string | null
+    minOrder: number | null
+    isCod: boolean | null
+    preOwned: boolean | null
+    detailUrl: string | null
+    createdAtMp: Date | null
+    updatedAtMp: Date | null
+    syncedAt: Date
+    _count: MarketplaceProductCountAggregateOutputType | null
+    _avg: MarketplaceProductAvgAggregateOutputType | null
+    _sum: MarketplaceProductSumAggregateOutputType | null
+    _min: MarketplaceProductMinAggregateOutputType | null
+    _max: MarketplaceProductMaxAggregateOutputType | null
+  }
+
+  type GetMarketplaceProductGroupByPayload<T extends MarketplaceProductGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<MarketplaceProductGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof MarketplaceProductGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], MarketplaceProductGroupByOutputType[P]>
+            : GetScalarType<T[P], MarketplaceProductGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type MarketplaceProductSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    platform?: boolean
+    productId?: boolean
+    title?: boolean
+    status?: boolean
+    tokoStatus?: boolean
+    description?: boolean
+    category?: boolean
+    brand?: boolean
+    images?: boolean
+    video?: boolean
+    attributes?: boolean
+    weight?: boolean
+    dimensions?: boolean
+    minOrder?: boolean
+    isCod?: boolean
+    preOwned?: boolean
+    detailUrl?: boolean
+    createdAtMp?: boolean
+    updatedAtMp?: boolean
+    syncedAt?: boolean
+  }, ExtArgs["result"]["marketplaceProduct"]>
+
+  export type MarketplaceProductSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    platform?: boolean
+    productId?: boolean
+    title?: boolean
+    status?: boolean
+    tokoStatus?: boolean
+    description?: boolean
+    category?: boolean
+    brand?: boolean
+    images?: boolean
+    video?: boolean
+    attributes?: boolean
+    weight?: boolean
+    dimensions?: boolean
+    minOrder?: boolean
+    isCod?: boolean
+    preOwned?: boolean
+    detailUrl?: boolean
+    createdAtMp?: boolean
+    updatedAtMp?: boolean
+    syncedAt?: boolean
+  }, ExtArgs["result"]["marketplaceProduct"]>
+
+  export type MarketplaceProductSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    platform?: boolean
+    productId?: boolean
+    title?: boolean
+    status?: boolean
+    tokoStatus?: boolean
+    description?: boolean
+    category?: boolean
+    brand?: boolean
+    images?: boolean
+    video?: boolean
+    attributes?: boolean
+    weight?: boolean
+    dimensions?: boolean
+    minOrder?: boolean
+    isCod?: boolean
+    preOwned?: boolean
+    detailUrl?: boolean
+    createdAtMp?: boolean
+    updatedAtMp?: boolean
+    syncedAt?: boolean
+  }, ExtArgs["result"]["marketplaceProduct"]>
+
+  export type MarketplaceProductSelectScalar = {
+    id?: boolean
+    platform?: boolean
+    productId?: boolean
+    title?: boolean
+    status?: boolean
+    tokoStatus?: boolean
+    description?: boolean
+    category?: boolean
+    brand?: boolean
+    images?: boolean
+    video?: boolean
+    attributes?: boolean
+    weight?: boolean
+    dimensions?: boolean
+    minOrder?: boolean
+    isCod?: boolean
+    preOwned?: boolean
+    detailUrl?: boolean
+    createdAtMp?: boolean
+    updatedAtMp?: boolean
+    syncedAt?: boolean
+  }
+
+  export type MarketplaceProductOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "productId" | "title" | "status" | "tokoStatus" | "description" | "category" | "brand" | "images" | "video" | "attributes" | "weight" | "dimensions" | "minOrder" | "isCod" | "preOwned" | "detailUrl" | "createdAtMp" | "updatedAtMp" | "syncedAt", ExtArgs["result"]["marketplaceProduct"]>
+
+  export type $MarketplaceProductPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "MarketplaceProduct"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      platform: string
+      productId: string
+      title: string
+      status: string
+      tokoStatus: string | null
+      description: string | null
+      category: string | null
+      brand: string | null
+      images: Prisma.JsonValue
+      video: Prisma.JsonValue | null
+      attributes: Prisma.JsonValue
+      weight: string | null
+      dimensions: string | null
+      minOrder: number | null
+      isCod: boolean | null
+      preOwned: boolean | null
+      detailUrl: string | null
+      createdAtMp: Date | null
+      updatedAtMp: Date | null
+      syncedAt: Date
+    }, ExtArgs["result"]["marketplaceProduct"]>
+    composites: {}
+  }
+
+  type MarketplaceProductGetPayload<S extends boolean | null | undefined | MarketplaceProductDefaultArgs> = $Result.GetResult<Prisma.$MarketplaceProductPayload, S>
+
+  type MarketplaceProductCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<MarketplaceProductFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: MarketplaceProductCountAggregateInputType | true
+    }
+
+  export interface MarketplaceProductDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['MarketplaceProduct'], meta: { name: 'MarketplaceProduct' } }
+    /**
+     * Find zero or one MarketplaceProduct that matches the filter.
+     * @param {MarketplaceProductFindUniqueArgs} args - Arguments to find a MarketplaceProduct
+     * @example
+     * // Get one MarketplaceProduct
+     * const marketplaceProduct = await prisma.marketplaceProduct.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends MarketplaceProductFindUniqueArgs>(args: SelectSubset<T, MarketplaceProductFindUniqueArgs<ExtArgs>>): Prisma__MarketplaceProductClient<$Result.GetResult<Prisma.$MarketplaceProductPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one MarketplaceProduct that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {MarketplaceProductFindUniqueOrThrowArgs} args - Arguments to find a MarketplaceProduct
+     * @example
+     * // Get one MarketplaceProduct
+     * const marketplaceProduct = await prisma.marketplaceProduct.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends MarketplaceProductFindUniqueOrThrowArgs>(args: SelectSubset<T, MarketplaceProductFindUniqueOrThrowArgs<ExtArgs>>): Prisma__MarketplaceProductClient<$Result.GetResult<Prisma.$MarketplaceProductPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MarketplaceProduct that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarketplaceProductFindFirstArgs} args - Arguments to find a MarketplaceProduct
+     * @example
+     * // Get one MarketplaceProduct
+     * const marketplaceProduct = await prisma.marketplaceProduct.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends MarketplaceProductFindFirstArgs>(args?: SelectSubset<T, MarketplaceProductFindFirstArgs<ExtArgs>>): Prisma__MarketplaceProductClient<$Result.GetResult<Prisma.$MarketplaceProductPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first MarketplaceProduct that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarketplaceProductFindFirstOrThrowArgs} args - Arguments to find a MarketplaceProduct
+     * @example
+     * // Get one MarketplaceProduct
+     * const marketplaceProduct = await prisma.marketplaceProduct.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends MarketplaceProductFindFirstOrThrowArgs>(args?: SelectSubset<T, MarketplaceProductFindFirstOrThrowArgs<ExtArgs>>): Prisma__MarketplaceProductClient<$Result.GetResult<Prisma.$MarketplaceProductPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more MarketplaceProducts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarketplaceProductFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all MarketplaceProducts
+     * const marketplaceProducts = await prisma.marketplaceProduct.findMany()
+     * 
+     * // Get first 10 MarketplaceProducts
+     * const marketplaceProducts = await prisma.marketplaceProduct.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const marketplaceProductWithIdOnly = await prisma.marketplaceProduct.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends MarketplaceProductFindManyArgs>(args?: SelectSubset<T, MarketplaceProductFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarketplaceProductPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a MarketplaceProduct.
+     * @param {MarketplaceProductCreateArgs} args - Arguments to create a MarketplaceProduct.
+     * @example
+     * // Create one MarketplaceProduct
+     * const MarketplaceProduct = await prisma.marketplaceProduct.create({
+     *   data: {
+     *     // ... data to create a MarketplaceProduct
+     *   }
+     * })
+     * 
+     */
+    create<T extends MarketplaceProductCreateArgs>(args: SelectSubset<T, MarketplaceProductCreateArgs<ExtArgs>>): Prisma__MarketplaceProductClient<$Result.GetResult<Prisma.$MarketplaceProductPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many MarketplaceProducts.
+     * @param {MarketplaceProductCreateManyArgs} args - Arguments to create many MarketplaceProducts.
+     * @example
+     * // Create many MarketplaceProducts
+     * const marketplaceProduct = await prisma.marketplaceProduct.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends MarketplaceProductCreateManyArgs>(args?: SelectSubset<T, MarketplaceProductCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many MarketplaceProducts and returns the data saved in the database.
+     * @param {MarketplaceProductCreateManyAndReturnArgs} args - Arguments to create many MarketplaceProducts.
+     * @example
+     * // Create many MarketplaceProducts
+     * const marketplaceProduct = await prisma.marketplaceProduct.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many MarketplaceProducts and only return the `id`
+     * const marketplaceProductWithIdOnly = await prisma.marketplaceProduct.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends MarketplaceProductCreateManyAndReturnArgs>(args?: SelectSubset<T, MarketplaceProductCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarketplaceProductPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a MarketplaceProduct.
+     * @param {MarketplaceProductDeleteArgs} args - Arguments to delete one MarketplaceProduct.
+     * @example
+     * // Delete one MarketplaceProduct
+     * const MarketplaceProduct = await prisma.marketplaceProduct.delete({
+     *   where: {
+     *     // ... filter to delete one MarketplaceProduct
+     *   }
+     * })
+     * 
+     */
+    delete<T extends MarketplaceProductDeleteArgs>(args: SelectSubset<T, MarketplaceProductDeleteArgs<ExtArgs>>): Prisma__MarketplaceProductClient<$Result.GetResult<Prisma.$MarketplaceProductPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one MarketplaceProduct.
+     * @param {MarketplaceProductUpdateArgs} args - Arguments to update one MarketplaceProduct.
+     * @example
+     * // Update one MarketplaceProduct
+     * const marketplaceProduct = await prisma.marketplaceProduct.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends MarketplaceProductUpdateArgs>(args: SelectSubset<T, MarketplaceProductUpdateArgs<ExtArgs>>): Prisma__MarketplaceProductClient<$Result.GetResult<Prisma.$MarketplaceProductPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more MarketplaceProducts.
+     * @param {MarketplaceProductDeleteManyArgs} args - Arguments to filter MarketplaceProducts to delete.
+     * @example
+     * // Delete a few MarketplaceProducts
+     * const { count } = await prisma.marketplaceProduct.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends MarketplaceProductDeleteManyArgs>(args?: SelectSubset<T, MarketplaceProductDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MarketplaceProducts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarketplaceProductUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many MarketplaceProducts
+     * const marketplaceProduct = await prisma.marketplaceProduct.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends MarketplaceProductUpdateManyArgs>(args: SelectSubset<T, MarketplaceProductUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more MarketplaceProducts and returns the data updated in the database.
+     * @param {MarketplaceProductUpdateManyAndReturnArgs} args - Arguments to update many MarketplaceProducts.
+     * @example
+     * // Update many MarketplaceProducts
+     * const marketplaceProduct = await prisma.marketplaceProduct.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more MarketplaceProducts and only return the `id`
+     * const marketplaceProductWithIdOnly = await prisma.marketplaceProduct.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends MarketplaceProductUpdateManyAndReturnArgs>(args: SelectSubset<T, MarketplaceProductUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MarketplaceProductPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one MarketplaceProduct.
+     * @param {MarketplaceProductUpsertArgs} args - Arguments to update or create a MarketplaceProduct.
+     * @example
+     * // Update or create a MarketplaceProduct
+     * const marketplaceProduct = await prisma.marketplaceProduct.upsert({
+     *   create: {
+     *     // ... data to create a MarketplaceProduct
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the MarketplaceProduct we want to update
+     *   }
+     * })
+     */
+    upsert<T extends MarketplaceProductUpsertArgs>(args: SelectSubset<T, MarketplaceProductUpsertArgs<ExtArgs>>): Prisma__MarketplaceProductClient<$Result.GetResult<Prisma.$MarketplaceProductPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of MarketplaceProducts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarketplaceProductCountArgs} args - Arguments to filter MarketplaceProducts to count.
+     * @example
+     * // Count the number of MarketplaceProducts
+     * const count = await prisma.marketplaceProduct.count({
+     *   where: {
+     *     // ... the filter for the MarketplaceProducts we want to count
+     *   }
+     * })
+    **/
+    count<T extends MarketplaceProductCountArgs>(
+      args?: Subset<T, MarketplaceProductCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], MarketplaceProductCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a MarketplaceProduct.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarketplaceProductAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends MarketplaceProductAggregateArgs>(args: Subset<T, MarketplaceProductAggregateArgs>): Prisma.PrismaPromise<GetMarketplaceProductAggregateType<T>>
+
+    /**
+     * Group by MarketplaceProduct.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {MarketplaceProductGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends MarketplaceProductGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: MarketplaceProductGroupByArgs['orderBy'] }
+        : { orderBy?: MarketplaceProductGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, MarketplaceProductGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetMarketplaceProductGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the MarketplaceProduct model
+   */
+  readonly fields: MarketplaceProductFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for MarketplaceProduct.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__MarketplaceProductClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the MarketplaceProduct model
+   */
+  interface MarketplaceProductFieldRefs {
+    readonly id: FieldRef<"MarketplaceProduct", 'String'>
+    readonly platform: FieldRef<"MarketplaceProduct", 'String'>
+    readonly productId: FieldRef<"MarketplaceProduct", 'String'>
+    readonly title: FieldRef<"MarketplaceProduct", 'String'>
+    readonly status: FieldRef<"MarketplaceProduct", 'String'>
+    readonly tokoStatus: FieldRef<"MarketplaceProduct", 'String'>
+    readonly description: FieldRef<"MarketplaceProduct", 'String'>
+    readonly category: FieldRef<"MarketplaceProduct", 'String'>
+    readonly brand: FieldRef<"MarketplaceProduct", 'String'>
+    readonly images: FieldRef<"MarketplaceProduct", 'Json'>
+    readonly video: FieldRef<"MarketplaceProduct", 'Json'>
+    readonly attributes: FieldRef<"MarketplaceProduct", 'Json'>
+    readonly weight: FieldRef<"MarketplaceProduct", 'String'>
+    readonly dimensions: FieldRef<"MarketplaceProduct", 'String'>
+    readonly minOrder: FieldRef<"MarketplaceProduct", 'Int'>
+    readonly isCod: FieldRef<"MarketplaceProduct", 'Boolean'>
+    readonly preOwned: FieldRef<"MarketplaceProduct", 'Boolean'>
+    readonly detailUrl: FieldRef<"MarketplaceProduct", 'String'>
+    readonly createdAtMp: FieldRef<"MarketplaceProduct", 'DateTime'>
+    readonly updatedAtMp: FieldRef<"MarketplaceProduct", 'DateTime'>
+    readonly syncedAt: FieldRef<"MarketplaceProduct", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * MarketplaceProduct findUnique
+   */
+  export type MarketplaceProductFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceProduct
+     */
+    select?: MarketplaceProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceProduct
+     */
+    omit?: MarketplaceProductOmit<ExtArgs> | null
+    /**
+     * Filter, which MarketplaceProduct to fetch.
+     */
+    where: MarketplaceProductWhereUniqueInput
+  }
+
+  /**
+   * MarketplaceProduct findUniqueOrThrow
+   */
+  export type MarketplaceProductFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceProduct
+     */
+    select?: MarketplaceProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceProduct
+     */
+    omit?: MarketplaceProductOmit<ExtArgs> | null
+    /**
+     * Filter, which MarketplaceProduct to fetch.
+     */
+    where: MarketplaceProductWhereUniqueInput
+  }
+
+  /**
+   * MarketplaceProduct findFirst
+   */
+  export type MarketplaceProductFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceProduct
+     */
+    select?: MarketplaceProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceProduct
+     */
+    omit?: MarketplaceProductOmit<ExtArgs> | null
+    /**
+     * Filter, which MarketplaceProduct to fetch.
+     */
+    where?: MarketplaceProductWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MarketplaceProducts to fetch.
+     */
+    orderBy?: MarketplaceProductOrderByWithRelationInput | MarketplaceProductOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MarketplaceProducts.
+     */
+    cursor?: MarketplaceProductWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MarketplaceProducts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MarketplaceProducts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MarketplaceProducts.
+     */
+    distinct?: MarketplaceProductScalarFieldEnum | MarketplaceProductScalarFieldEnum[]
+  }
+
+  /**
+   * MarketplaceProduct findFirstOrThrow
+   */
+  export type MarketplaceProductFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceProduct
+     */
+    select?: MarketplaceProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceProduct
+     */
+    omit?: MarketplaceProductOmit<ExtArgs> | null
+    /**
+     * Filter, which MarketplaceProduct to fetch.
+     */
+    where?: MarketplaceProductWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MarketplaceProducts to fetch.
+     */
+    orderBy?: MarketplaceProductOrderByWithRelationInput | MarketplaceProductOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for MarketplaceProducts.
+     */
+    cursor?: MarketplaceProductWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MarketplaceProducts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MarketplaceProducts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of MarketplaceProducts.
+     */
+    distinct?: MarketplaceProductScalarFieldEnum | MarketplaceProductScalarFieldEnum[]
+  }
+
+  /**
+   * MarketplaceProduct findMany
+   */
+  export type MarketplaceProductFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceProduct
+     */
+    select?: MarketplaceProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceProduct
+     */
+    omit?: MarketplaceProductOmit<ExtArgs> | null
+    /**
+     * Filter, which MarketplaceProducts to fetch.
+     */
+    where?: MarketplaceProductWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of MarketplaceProducts to fetch.
+     */
+    orderBy?: MarketplaceProductOrderByWithRelationInput | MarketplaceProductOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing MarketplaceProducts.
+     */
+    cursor?: MarketplaceProductWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` MarketplaceProducts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` MarketplaceProducts.
+     */
+    skip?: number
+    distinct?: MarketplaceProductScalarFieldEnum | MarketplaceProductScalarFieldEnum[]
+  }
+
+  /**
+   * MarketplaceProduct create
+   */
+  export type MarketplaceProductCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceProduct
+     */
+    select?: MarketplaceProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceProduct
+     */
+    omit?: MarketplaceProductOmit<ExtArgs> | null
+    /**
+     * The data needed to create a MarketplaceProduct.
+     */
+    data: XOR<MarketplaceProductCreateInput, MarketplaceProductUncheckedCreateInput>
+  }
+
+  /**
+   * MarketplaceProduct createMany
+   */
+  export type MarketplaceProductCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many MarketplaceProducts.
+     */
+    data: MarketplaceProductCreateManyInput | MarketplaceProductCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MarketplaceProduct createManyAndReturn
+   */
+  export type MarketplaceProductCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceProduct
+     */
+    select?: MarketplaceProductSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceProduct
+     */
+    omit?: MarketplaceProductOmit<ExtArgs> | null
+    /**
+     * The data used to create many MarketplaceProducts.
+     */
+    data: MarketplaceProductCreateManyInput | MarketplaceProductCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * MarketplaceProduct update
+   */
+  export type MarketplaceProductUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceProduct
+     */
+    select?: MarketplaceProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceProduct
+     */
+    omit?: MarketplaceProductOmit<ExtArgs> | null
+    /**
+     * The data needed to update a MarketplaceProduct.
+     */
+    data: XOR<MarketplaceProductUpdateInput, MarketplaceProductUncheckedUpdateInput>
+    /**
+     * Choose, which MarketplaceProduct to update.
+     */
+    where: MarketplaceProductWhereUniqueInput
+  }
+
+  /**
+   * MarketplaceProduct updateMany
+   */
+  export type MarketplaceProductUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update MarketplaceProducts.
+     */
+    data: XOR<MarketplaceProductUpdateManyMutationInput, MarketplaceProductUncheckedUpdateManyInput>
+    /**
+     * Filter which MarketplaceProducts to update
+     */
+    where?: MarketplaceProductWhereInput
+    /**
+     * Limit how many MarketplaceProducts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MarketplaceProduct updateManyAndReturn
+   */
+  export type MarketplaceProductUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceProduct
+     */
+    select?: MarketplaceProductSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceProduct
+     */
+    omit?: MarketplaceProductOmit<ExtArgs> | null
+    /**
+     * The data used to update MarketplaceProducts.
+     */
+    data: XOR<MarketplaceProductUpdateManyMutationInput, MarketplaceProductUncheckedUpdateManyInput>
+    /**
+     * Filter which MarketplaceProducts to update
+     */
+    where?: MarketplaceProductWhereInput
+    /**
+     * Limit how many MarketplaceProducts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * MarketplaceProduct upsert
+   */
+  export type MarketplaceProductUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceProduct
+     */
+    select?: MarketplaceProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceProduct
+     */
+    omit?: MarketplaceProductOmit<ExtArgs> | null
+    /**
+     * The filter to search for the MarketplaceProduct to update in case it exists.
+     */
+    where: MarketplaceProductWhereUniqueInput
+    /**
+     * In case the MarketplaceProduct found by the `where` argument doesn't exist, create a new MarketplaceProduct with this data.
+     */
+    create: XOR<MarketplaceProductCreateInput, MarketplaceProductUncheckedCreateInput>
+    /**
+     * In case the MarketplaceProduct was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<MarketplaceProductUpdateInput, MarketplaceProductUncheckedUpdateInput>
+  }
+
+  /**
+   * MarketplaceProduct delete
+   */
+  export type MarketplaceProductDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceProduct
+     */
+    select?: MarketplaceProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceProduct
+     */
+    omit?: MarketplaceProductOmit<ExtArgs> | null
+    /**
+     * Filter which MarketplaceProduct to delete.
+     */
+    where: MarketplaceProductWhereUniqueInput
+  }
+
+  /**
+   * MarketplaceProduct deleteMany
+   */
+  export type MarketplaceProductDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which MarketplaceProducts to delete
+     */
+    where?: MarketplaceProductWhereInput
+    /**
+     * Limit how many MarketplaceProducts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * MarketplaceProduct without action
+   */
+  export type MarketplaceProductDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the MarketplaceProduct
+     */
+    select?: MarketplaceProductSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the MarketplaceProduct
+     */
+    omit?: MarketplaceProductOmit<ExtArgs> | null
   }
 
 
@@ -56869,10 +58224,40 @@ export namespace Prisma {
     price: 'price',
     stock: 'stock',
     warehouseId: 'warehouseId',
+    variant: 'variant',
+    image: 'image',
+    skuStatus: 'skuStatus',
     syncedAt: 'syncedAt'
   };
 
   export type MarketplaceItemScalarFieldEnum = (typeof MarketplaceItemScalarFieldEnum)[keyof typeof MarketplaceItemScalarFieldEnum]
+
+
+  export const MarketplaceProductScalarFieldEnum: {
+    id: 'id',
+    platform: 'platform',
+    productId: 'productId',
+    title: 'title',
+    status: 'status',
+    tokoStatus: 'tokoStatus',
+    description: 'description',
+    category: 'category',
+    brand: 'brand',
+    images: 'images',
+    video: 'video',
+    attributes: 'attributes',
+    weight: 'weight',
+    dimensions: 'dimensions',
+    minOrder: 'minOrder',
+    isCod: 'isCod',
+    preOwned: 'preOwned',
+    detailUrl: 'detailUrl',
+    createdAtMp: 'createdAtMp',
+    updatedAtMp: 'updatedAtMp',
+    syncedAt: 'syncedAt'
+  };
+
+  export type MarketplaceProductScalarFieldEnum = (typeof MarketplaceProductScalarFieldEnum)[keyof typeof MarketplaceProductScalarFieldEnum]
 
 
   export const MarketplacePayoutScalarFieldEnum: {
@@ -59682,6 +61067,9 @@ export namespace Prisma {
     price?: IntFilter<"MarketplaceItem"> | number
     stock?: IntFilter<"MarketplaceItem"> | number
     warehouseId?: StringNullableFilter<"MarketplaceItem"> | string | null
+    variant?: StringNullableFilter<"MarketplaceItem"> | string | null
+    image?: StringNullableFilter<"MarketplaceItem"> | string | null
+    skuStatus?: StringNullableFilter<"MarketplaceItem"> | string | null
     syncedAt?: DateTimeFilter<"MarketplaceItem"> | Date | string
   }
 
@@ -59696,6 +61084,9 @@ export namespace Prisma {
     price?: SortOrder
     stock?: SortOrder
     warehouseId?: SortOrderInput | SortOrder
+    variant?: SortOrderInput | SortOrder
+    image?: SortOrderInput | SortOrder
+    skuStatus?: SortOrderInput | SortOrder
     syncedAt?: SortOrder
   }
 
@@ -59714,6 +61105,9 @@ export namespace Prisma {
     price?: IntFilter<"MarketplaceItem"> | number
     stock?: IntFilter<"MarketplaceItem"> | number
     warehouseId?: StringNullableFilter<"MarketplaceItem"> | string | null
+    variant?: StringNullableFilter<"MarketplaceItem"> | string | null
+    image?: StringNullableFilter<"MarketplaceItem"> | string | null
+    skuStatus?: StringNullableFilter<"MarketplaceItem"> | string | null
     syncedAt?: DateTimeFilter<"MarketplaceItem"> | Date | string
   }, "id" | "platform_itemId_modelId">
 
@@ -59728,6 +61122,9 @@ export namespace Prisma {
     price?: SortOrder
     stock?: SortOrder
     warehouseId?: SortOrderInput | SortOrder
+    variant?: SortOrderInput | SortOrder
+    image?: SortOrderInput | SortOrder
+    skuStatus?: SortOrderInput | SortOrder
     syncedAt?: SortOrder
     _count?: MarketplaceItemCountOrderByAggregateInput
     _avg?: MarketplaceItemAvgOrderByAggregateInput
@@ -59750,7 +61147,145 @@ export namespace Prisma {
     price?: IntWithAggregatesFilter<"MarketplaceItem"> | number
     stock?: IntWithAggregatesFilter<"MarketplaceItem"> | number
     warehouseId?: StringNullableWithAggregatesFilter<"MarketplaceItem"> | string | null
+    variant?: StringNullableWithAggregatesFilter<"MarketplaceItem"> | string | null
+    image?: StringNullableWithAggregatesFilter<"MarketplaceItem"> | string | null
+    skuStatus?: StringNullableWithAggregatesFilter<"MarketplaceItem"> | string | null
     syncedAt?: DateTimeWithAggregatesFilter<"MarketplaceItem"> | Date | string
+  }
+
+  export type MarketplaceProductWhereInput = {
+    AND?: MarketplaceProductWhereInput | MarketplaceProductWhereInput[]
+    OR?: MarketplaceProductWhereInput[]
+    NOT?: MarketplaceProductWhereInput | MarketplaceProductWhereInput[]
+    id?: StringFilter<"MarketplaceProduct"> | string
+    platform?: StringFilter<"MarketplaceProduct"> | string
+    productId?: StringFilter<"MarketplaceProduct"> | string
+    title?: StringFilter<"MarketplaceProduct"> | string
+    status?: StringFilter<"MarketplaceProduct"> | string
+    tokoStatus?: StringNullableFilter<"MarketplaceProduct"> | string | null
+    description?: StringNullableFilter<"MarketplaceProduct"> | string | null
+    category?: StringNullableFilter<"MarketplaceProduct"> | string | null
+    brand?: StringNullableFilter<"MarketplaceProduct"> | string | null
+    images?: JsonFilter<"MarketplaceProduct">
+    video?: JsonNullableFilter<"MarketplaceProduct">
+    attributes?: JsonFilter<"MarketplaceProduct">
+    weight?: StringNullableFilter<"MarketplaceProduct"> | string | null
+    dimensions?: StringNullableFilter<"MarketplaceProduct"> | string | null
+    minOrder?: IntNullableFilter<"MarketplaceProduct"> | number | null
+    isCod?: BoolNullableFilter<"MarketplaceProduct"> | boolean | null
+    preOwned?: BoolNullableFilter<"MarketplaceProduct"> | boolean | null
+    detailUrl?: StringNullableFilter<"MarketplaceProduct"> | string | null
+    createdAtMp?: DateTimeNullableFilter<"MarketplaceProduct"> | Date | string | null
+    updatedAtMp?: DateTimeNullableFilter<"MarketplaceProduct"> | Date | string | null
+    syncedAt?: DateTimeFilter<"MarketplaceProduct"> | Date | string
+  }
+
+  export type MarketplaceProductOrderByWithRelationInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    productId?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    tokoStatus?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    category?: SortOrderInput | SortOrder
+    brand?: SortOrderInput | SortOrder
+    images?: SortOrder
+    video?: SortOrderInput | SortOrder
+    attributes?: SortOrder
+    weight?: SortOrderInput | SortOrder
+    dimensions?: SortOrderInput | SortOrder
+    minOrder?: SortOrderInput | SortOrder
+    isCod?: SortOrderInput | SortOrder
+    preOwned?: SortOrderInput | SortOrder
+    detailUrl?: SortOrderInput | SortOrder
+    createdAtMp?: SortOrderInput | SortOrder
+    updatedAtMp?: SortOrderInput | SortOrder
+    syncedAt?: SortOrder
+  }
+
+  export type MarketplaceProductWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    platform_productId?: MarketplaceProductPlatformProductIdCompoundUniqueInput
+    AND?: MarketplaceProductWhereInput | MarketplaceProductWhereInput[]
+    OR?: MarketplaceProductWhereInput[]
+    NOT?: MarketplaceProductWhereInput | MarketplaceProductWhereInput[]
+    platform?: StringFilter<"MarketplaceProduct"> | string
+    productId?: StringFilter<"MarketplaceProduct"> | string
+    title?: StringFilter<"MarketplaceProduct"> | string
+    status?: StringFilter<"MarketplaceProduct"> | string
+    tokoStatus?: StringNullableFilter<"MarketplaceProduct"> | string | null
+    description?: StringNullableFilter<"MarketplaceProduct"> | string | null
+    category?: StringNullableFilter<"MarketplaceProduct"> | string | null
+    brand?: StringNullableFilter<"MarketplaceProduct"> | string | null
+    images?: JsonFilter<"MarketplaceProduct">
+    video?: JsonNullableFilter<"MarketplaceProduct">
+    attributes?: JsonFilter<"MarketplaceProduct">
+    weight?: StringNullableFilter<"MarketplaceProduct"> | string | null
+    dimensions?: StringNullableFilter<"MarketplaceProduct"> | string | null
+    minOrder?: IntNullableFilter<"MarketplaceProduct"> | number | null
+    isCod?: BoolNullableFilter<"MarketplaceProduct"> | boolean | null
+    preOwned?: BoolNullableFilter<"MarketplaceProduct"> | boolean | null
+    detailUrl?: StringNullableFilter<"MarketplaceProduct"> | string | null
+    createdAtMp?: DateTimeNullableFilter<"MarketplaceProduct"> | Date | string | null
+    updatedAtMp?: DateTimeNullableFilter<"MarketplaceProduct"> | Date | string | null
+    syncedAt?: DateTimeFilter<"MarketplaceProduct"> | Date | string
+  }, "id" | "platform_productId">
+
+  export type MarketplaceProductOrderByWithAggregationInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    productId?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    tokoStatus?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    category?: SortOrderInput | SortOrder
+    brand?: SortOrderInput | SortOrder
+    images?: SortOrder
+    video?: SortOrderInput | SortOrder
+    attributes?: SortOrder
+    weight?: SortOrderInput | SortOrder
+    dimensions?: SortOrderInput | SortOrder
+    minOrder?: SortOrderInput | SortOrder
+    isCod?: SortOrderInput | SortOrder
+    preOwned?: SortOrderInput | SortOrder
+    detailUrl?: SortOrderInput | SortOrder
+    createdAtMp?: SortOrderInput | SortOrder
+    updatedAtMp?: SortOrderInput | SortOrder
+    syncedAt?: SortOrder
+    _count?: MarketplaceProductCountOrderByAggregateInput
+    _avg?: MarketplaceProductAvgOrderByAggregateInput
+    _max?: MarketplaceProductMaxOrderByAggregateInput
+    _min?: MarketplaceProductMinOrderByAggregateInput
+    _sum?: MarketplaceProductSumOrderByAggregateInput
+  }
+
+  export type MarketplaceProductScalarWhereWithAggregatesInput = {
+    AND?: MarketplaceProductScalarWhereWithAggregatesInput | MarketplaceProductScalarWhereWithAggregatesInput[]
+    OR?: MarketplaceProductScalarWhereWithAggregatesInput[]
+    NOT?: MarketplaceProductScalarWhereWithAggregatesInput | MarketplaceProductScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"MarketplaceProduct"> | string
+    platform?: StringWithAggregatesFilter<"MarketplaceProduct"> | string
+    productId?: StringWithAggregatesFilter<"MarketplaceProduct"> | string
+    title?: StringWithAggregatesFilter<"MarketplaceProduct"> | string
+    status?: StringWithAggregatesFilter<"MarketplaceProduct"> | string
+    tokoStatus?: StringNullableWithAggregatesFilter<"MarketplaceProduct"> | string | null
+    description?: StringNullableWithAggregatesFilter<"MarketplaceProduct"> | string | null
+    category?: StringNullableWithAggregatesFilter<"MarketplaceProduct"> | string | null
+    brand?: StringNullableWithAggregatesFilter<"MarketplaceProduct"> | string | null
+    images?: JsonWithAggregatesFilter<"MarketplaceProduct">
+    video?: JsonNullableWithAggregatesFilter<"MarketplaceProduct">
+    attributes?: JsonWithAggregatesFilter<"MarketplaceProduct">
+    weight?: StringNullableWithAggregatesFilter<"MarketplaceProduct"> | string | null
+    dimensions?: StringNullableWithAggregatesFilter<"MarketplaceProduct"> | string | null
+    minOrder?: IntNullableWithAggregatesFilter<"MarketplaceProduct"> | number | null
+    isCod?: BoolNullableWithAggregatesFilter<"MarketplaceProduct"> | boolean | null
+    preOwned?: BoolNullableWithAggregatesFilter<"MarketplaceProduct"> | boolean | null
+    detailUrl?: StringNullableWithAggregatesFilter<"MarketplaceProduct"> | string | null
+    createdAtMp?: DateTimeNullableWithAggregatesFilter<"MarketplaceProduct"> | Date | string | null
+    updatedAtMp?: DateTimeNullableWithAggregatesFilter<"MarketplaceProduct"> | Date | string | null
+    syncedAt?: DateTimeWithAggregatesFilter<"MarketplaceProduct"> | Date | string
   }
 
   export type MarketplacePayoutWhereInput = {
@@ -63611,6 +65146,9 @@ export namespace Prisma {
     price: number
     stock: number
     warehouseId?: string | null
+    variant?: string | null
+    image?: string | null
+    skuStatus?: string | null
     syncedAt?: Date | string
   }
 
@@ -63625,6 +65163,9 @@ export namespace Prisma {
     price: number
     stock: number
     warehouseId?: string | null
+    variant?: string | null
+    image?: string | null
+    skuStatus?: string | null
     syncedAt?: Date | string
   }
 
@@ -63639,6 +65180,9 @@ export namespace Prisma {
     price?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
     warehouseId?: NullableStringFieldUpdateOperationsInput | string | null
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    skuStatus?: NullableStringFieldUpdateOperationsInput | string | null
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -63653,6 +65197,9 @@ export namespace Prisma {
     price?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
     warehouseId?: NullableStringFieldUpdateOperationsInput | string | null
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    skuStatus?: NullableStringFieldUpdateOperationsInput | string | null
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -63667,6 +65214,9 @@ export namespace Prisma {
     price: number
     stock: number
     warehouseId?: string | null
+    variant?: string | null
+    image?: string | null
+    skuStatus?: string | null
     syncedAt?: Date | string
   }
 
@@ -63681,6 +65231,9 @@ export namespace Prisma {
     price?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
     warehouseId?: NullableStringFieldUpdateOperationsInput | string | null
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    skuStatus?: NullableStringFieldUpdateOperationsInput | string | null
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -63695,6 +65248,177 @@ export namespace Prisma {
     price?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
     warehouseId?: NullableStringFieldUpdateOperationsInput | string | null
+    variant?: NullableStringFieldUpdateOperationsInput | string | null
+    image?: NullableStringFieldUpdateOperationsInput | string | null
+    skuStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MarketplaceProductCreateInput = {
+    id?: string
+    platform: string
+    productId: string
+    title: string
+    status: string
+    tokoStatus?: string | null
+    description?: string | null
+    category?: string | null
+    brand?: string | null
+    images: JsonNullValueInput | InputJsonValue
+    video?: NullableJsonNullValueInput | InputJsonValue
+    attributes: JsonNullValueInput | InputJsonValue
+    weight?: string | null
+    dimensions?: string | null
+    minOrder?: number | null
+    isCod?: boolean | null
+    preOwned?: boolean | null
+    detailUrl?: string | null
+    createdAtMp?: Date | string | null
+    updatedAtMp?: Date | string | null
+    syncedAt?: Date | string
+  }
+
+  export type MarketplaceProductUncheckedCreateInput = {
+    id?: string
+    platform: string
+    productId: string
+    title: string
+    status: string
+    tokoStatus?: string | null
+    description?: string | null
+    category?: string | null
+    brand?: string | null
+    images: JsonNullValueInput | InputJsonValue
+    video?: NullableJsonNullValueInput | InputJsonValue
+    attributes: JsonNullValueInput | InputJsonValue
+    weight?: string | null
+    dimensions?: string | null
+    minOrder?: number | null
+    isCod?: boolean | null
+    preOwned?: boolean | null
+    detailUrl?: string | null
+    createdAtMp?: Date | string | null
+    updatedAtMp?: Date | string | null
+    syncedAt?: Date | string
+  }
+
+  export type MarketplaceProductUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    tokoStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: JsonNullValueInput | InputJsonValue
+    video?: NullableJsonNullValueInput | InputJsonValue
+    attributes?: JsonNullValueInput | InputJsonValue
+    weight?: NullableStringFieldUpdateOperationsInput | string | null
+    dimensions?: NullableStringFieldUpdateOperationsInput | string | null
+    minOrder?: NullableIntFieldUpdateOperationsInput | number | null
+    isCod?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    preOwned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    detailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAtMp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAtMp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MarketplaceProductUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    tokoStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: JsonNullValueInput | InputJsonValue
+    video?: NullableJsonNullValueInput | InputJsonValue
+    attributes?: JsonNullValueInput | InputJsonValue
+    weight?: NullableStringFieldUpdateOperationsInput | string | null
+    dimensions?: NullableStringFieldUpdateOperationsInput | string | null
+    minOrder?: NullableIntFieldUpdateOperationsInput | number | null
+    isCod?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    preOwned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    detailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAtMp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAtMp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MarketplaceProductCreateManyInput = {
+    id?: string
+    platform: string
+    productId: string
+    title: string
+    status: string
+    tokoStatus?: string | null
+    description?: string | null
+    category?: string | null
+    brand?: string | null
+    images: JsonNullValueInput | InputJsonValue
+    video?: NullableJsonNullValueInput | InputJsonValue
+    attributes: JsonNullValueInput | InputJsonValue
+    weight?: string | null
+    dimensions?: string | null
+    minOrder?: number | null
+    isCod?: boolean | null
+    preOwned?: boolean | null
+    detailUrl?: string | null
+    createdAtMp?: Date | string | null
+    updatedAtMp?: Date | string | null
+    syncedAt?: Date | string
+  }
+
+  export type MarketplaceProductUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    tokoStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: JsonNullValueInput | InputJsonValue
+    video?: NullableJsonNullValueInput | InputJsonValue
+    attributes?: JsonNullValueInput | InputJsonValue
+    weight?: NullableStringFieldUpdateOperationsInput | string | null
+    dimensions?: NullableStringFieldUpdateOperationsInput | string | null
+    minOrder?: NullableIntFieldUpdateOperationsInput | number | null
+    isCod?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    preOwned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    detailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAtMp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAtMp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type MarketplaceProductUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    platform?: StringFieldUpdateOperationsInput | string
+    productId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    tokoStatus?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    category?: NullableStringFieldUpdateOperationsInput | string | null
+    brand?: NullableStringFieldUpdateOperationsInput | string | null
+    images?: JsonNullValueInput | InputJsonValue
+    video?: NullableJsonNullValueInput | InputJsonValue
+    attributes?: JsonNullValueInput | InputJsonValue
+    weight?: NullableStringFieldUpdateOperationsInput | string | null
+    dimensions?: NullableStringFieldUpdateOperationsInput | string | null
+    minOrder?: NullableIntFieldUpdateOperationsInput | number | null
+    isCod?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    preOwned?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    detailUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAtMp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    updatedAtMp?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -67080,6 +68804,9 @@ export namespace Prisma {
     price?: SortOrder
     stock?: SortOrder
     warehouseId?: SortOrder
+    variant?: SortOrder
+    image?: SortOrder
+    skuStatus?: SortOrder
     syncedAt?: SortOrder
   }
 
@@ -67099,6 +68826,9 @@ export namespace Prisma {
     price?: SortOrder
     stock?: SortOrder
     warehouseId?: SortOrder
+    variant?: SortOrder
+    image?: SortOrder
+    skuStatus?: SortOrder
     syncedAt?: SortOrder
   }
 
@@ -67113,12 +68843,107 @@ export namespace Prisma {
     price?: SortOrder
     stock?: SortOrder
     warehouseId?: SortOrder
+    variant?: SortOrder
+    image?: SortOrder
+    skuStatus?: SortOrder
     syncedAt?: SortOrder
   }
 
   export type MarketplaceItemSumOrderByAggregateInput = {
     price?: SortOrder
     stock?: SortOrder
+  }
+
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type MarketplaceProductPlatformProductIdCompoundUniqueInput = {
+    platform: string
+    productId: string
+  }
+
+  export type MarketplaceProductCountOrderByAggregateInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    productId?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    tokoStatus?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    brand?: SortOrder
+    images?: SortOrder
+    video?: SortOrder
+    attributes?: SortOrder
+    weight?: SortOrder
+    dimensions?: SortOrder
+    minOrder?: SortOrder
+    isCod?: SortOrder
+    preOwned?: SortOrder
+    detailUrl?: SortOrder
+    createdAtMp?: SortOrder
+    updatedAtMp?: SortOrder
+    syncedAt?: SortOrder
+  }
+
+  export type MarketplaceProductAvgOrderByAggregateInput = {
+    minOrder?: SortOrder
+  }
+
+  export type MarketplaceProductMaxOrderByAggregateInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    productId?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    tokoStatus?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    brand?: SortOrder
+    weight?: SortOrder
+    dimensions?: SortOrder
+    minOrder?: SortOrder
+    isCod?: SortOrder
+    preOwned?: SortOrder
+    detailUrl?: SortOrder
+    createdAtMp?: SortOrder
+    updatedAtMp?: SortOrder
+    syncedAt?: SortOrder
+  }
+
+  export type MarketplaceProductMinOrderByAggregateInput = {
+    id?: SortOrder
+    platform?: SortOrder
+    productId?: SortOrder
+    title?: SortOrder
+    status?: SortOrder
+    tokoStatus?: SortOrder
+    description?: SortOrder
+    category?: SortOrder
+    brand?: SortOrder
+    weight?: SortOrder
+    dimensions?: SortOrder
+    minOrder?: SortOrder
+    isCod?: SortOrder
+    preOwned?: SortOrder
+    detailUrl?: SortOrder
+    createdAtMp?: SortOrder
+    updatedAtMp?: SortOrder
+    syncedAt?: SortOrder
+  }
+
+  export type MarketplaceProductSumOrderByAggregateInput = {
+    minOrder?: SortOrder
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type MarketplacePayoutPlatformRefIdCompoundUniqueInput = {
@@ -69555,6 +71380,10 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutRawQcInput, UserUpdateWithoutRawQcInput>, UserUncheckedUpdateWithoutRawQcInput>
   }
 
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
   export type MediaMemberCreateoffDaysInput = {
     set: number[]
   }
@@ -70154,6 +71983,19 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumRawProductStatusFilter<$PrismaModel>
     _max?: NestedEnumRawProductStatusFilter<$PrismaModel>
+  }
+
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumMediaRoleFilter<$PrismaModel = never> = {
