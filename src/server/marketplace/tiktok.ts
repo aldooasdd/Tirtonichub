@@ -208,11 +208,27 @@ const ttContent = (raw: unknown): TtContent => {
     return { content: raw };
   }
 };
+// Jenis pesan non-teks → label Indonesia.
+const TT_TYPE: Record<string, string> = {
+  ALLOCATED_SERVICE: "Chat dialihkan ke CS toko",
+  ORDER_CARD: "Kartu pesanan",
+  PRODUCT_CARD: "Kartu produk",
+  COUPON_CARD: "Kupon",
+  BUYER_ENTER_FROM_TRANSFER: "Pembeli masuk dari chat lain",
+  BUYER_ENTER_FROM_PRODUCT: "Pembeli membuka chat dari produk",
+  BUYER_ENTER_FROM_ORDER: "Pembeli membuka chat dari pesanan",
+  VIDEO: "Video",
+  EMOTICONS: "Stiker",
+};
 const ttText = (type: string, raw: unknown) => {
   const c = ttContent(raw);
-  return type === "TEXT" ? c.content ?? "" : type === "IMAGE" ? "" : `[${type.toLowerCase()}]`;
+  if (type === "TEXT" || type === "NOTIFICATION") return c.content ?? "";
+  if (type === "IMAGE") return "";
+  return TT_TYPE[type] ?? type.toLowerCase().replace(/_/g, " ");
 };
-const SHOP_SIDE = new Set(["SHOP", "CUSTOMER_SERVICE", "ROBOT", "SYSTEM"]);
+// Diketik toko (atau CS toko) → kanan. Robot & sistem → catatan tengah.
+const SHOP_SIDE = new Set(["SHOP", "CUSTOMER_SERVICE"]);
+const BOT_SIDE = new Set(["ROBOT", "SYSTEM"]);
 
 export async function tiktokConversations(token: string, cipher: string): Promise<MpConv[]> {
   const d = await call<{
@@ -249,6 +265,7 @@ export async function tiktokMessages(token: string, cipher: string, convId: stri
     .map((m) => ({
       id: m.id,
       mine: SHOP_SIDE.has(m.sender?.role ?? ""),
+      system: BOT_SIDE.has(m.sender?.role ?? "") || !["TEXT", "IMAGE", "EMOTICONS", "VIDEO"].includes(m.type),
       text: ttText(m.type, m.content),
       image: m.type === "IMAGE" ? ttContent(m.content).url ?? null : null,
       at: m.create_time * 1000,
