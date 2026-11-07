@@ -8,13 +8,5 @@ export default async function ChatMarketplacePage({ searchParams }: { searchPara
   // ?contoh=1 → data contoh (untuk screenshot), tanpa memanggil API marketplace.
   const demo = (await searchParams).contoh === "1";
   const first = demo ? { convs: DEMO_CONVS, errors: [] } : await listChats();
-  return (
-    <div className="space-y-4">
-      <div>
-        <h1 className="text-24 font-semibold">Chat Pembeli</h1>
-        <p className="text-14 text-muted-foreground">Balas chat pembeli Shopee & Tokopedia dari sini.</p>
-      </div>
-      <MarketplaceChat key={demo ? "contoh" : "asli"} initial={first} demo={demo} />
-    </div>
-  );
+  return <MarketplaceChat key={demo ? "contoh" : "asli"} initial={first} demo={demo} />;
 }
