@@ -1,7 +1,7 @@
 // Tokopedia via TikTok Shop Partner API (versi 202309). Env: TIKTOK_APP_KEY, TIKTOK_APP_SECRET, TIKTOK_SERVICE_ID.
 // ponytail: endpoint sesuai dokumen Partner Center publik; belum dites ke API asli (nunggu app disetujui).
 import { tiktokSign } from "./sign";
-import type { MpItem, MpOrder } from "./shopee";
+import type { MpConv, MpItem, MpMsg, MpOrder } from "./shopee";
 
 const API = "https://open-api.tiktokglobalshop.com";
 const AUTH = "https://auth.tiktok-shops.com";
@@ -184,5 +184,73 @@ export async function tiktokSetPrice(token: string, cipher: string, productId: s
     token,
     cipher,
     body: { skus: [{ id: skuId, price: { amount: String(price), currency: "IDR" } }] },
+  });
+}
+
+// --- Customer Service chat (scope Customer Service wajib aktif di Partner Center) ---
+
+type TtContent = { content?: string; url?: string };
+const ttContent = (raw: unknown): TtContent => {
+  if (typeof raw !== "string") return {};
+  try {
+    return JSON.parse(raw) as TtContent;
+  } catch {
+    return { content: raw };
+  }
+};
+const ttText = (type: string, raw: unknown) => {
+  const c = ttContent(raw);
+  return type === "TEXT" ? c.content ?? "" : type === "IMAGE" ? "" : `[${type.toLowerCase()}]`;
+};
+const SHOP_SIDE = new Set(["SHOP", "CUSTOMER_SERVICE", "ROBOT", "SYSTEM"]);
+
+export async function tiktokConversations(token: string, cipher: string): Promise<MpConv[]> {
+  const d = await call<{
+    conversations?: {
+      id: string;
+      unread_count?: number;
+      create_time?: number;
+      participants?: { role: string; nickname?: string; avatar?: string; im_user_id?: string }[];
+      latest_message?: { type: string; content?: string; create_time?: number };
+    }[];
+  }>("/customer_service/202309/conversations", { token, cipher, query: { page_size: 20 } });
+  return (d.conversations ?? []).map((c) => {
+    const buyer = c.participants?.find((p) => p.role === "BUYER");
+    return {
+      id: c.id,
+      name: buyer?.nickname || "Pembeli",
+      avatar: buyer?.avatar || null,
+      last: c.latest_message ? ttText(c.latest_message.type, c.latest_message.content) || "[gambar]" : "",
+      at: (c.latest_message?.create_time ?? c.create_time ?? 0) * 1000,
+      unread: c.unread_count ?? 0,
+      toId: buyer?.im_user_id ?? "",
+    };
+  });
+}
+
+export async function tiktokMessages(token: string, cipher: string, convId: string): Promise<MpMsg[]> {
+  const d = await call<{
+    messages?: { id: string; type: string; content?: string; create_time: number; is_visible?: boolean; sender?: { role?: string } }[];
+  }>(`/customer_service/202309/conversations/${encodeURIComponent(convId)}/messages`, { token, cipher, query: { page_size: 10, sort_order: "DESC", sort_field: "create_time" } });
+  // Tandai sudah dibaca (gagal tak masalah).
+  void call(`/customer_service/202309/conversations/${encodeURIComponent(convId)}/messages/read`, { method: "POST", token, cipher, body: {} }).catch(() => null);
+  return (d.messages ?? [])
+    .filter((m) => m.is_visible !== false)
+    .map((m) => ({
+      id: m.id,
+      mine: SHOP_SIDE.has(m.sender?.role ?? ""),
+      text: ttText(m.type, m.content),
+      image: m.type === "IMAGE" ? ttContent(m.content).url ?? null : null,
+      at: m.create_time * 1000,
+    }))
+    .sort((a, b) => a.at - b.at);
+}
+
+export async function tiktokSendText(token: string, cipher: string, convId: string, text: string): Promise<void> {
+  await call(`/customer_service/202309/conversations/${encodeURIComponent(convId)}/messages`, {
+    method: "POST",
+    token,
+    cipher,
+    body: { type: "TEXT", content: JSON.stringify({ content: text }) },
   });
 }

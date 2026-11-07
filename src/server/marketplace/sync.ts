@@ -26,7 +26,7 @@ async function fresh(shop: Shop): Promise<Shop> {
   return prisma.marketplaceShop.update({ where: { id: shop.id }, data: t });
 }
 
-async function mustShop(platform: Platform): Promise<Shop> {
+export async function mustShop(platform: Platform): Promise<Shop> {
   const s = await activeShop(platform);
   if (!s) throw new Error(`${PLATFORM_LABEL[platform]} belum tersambung.`);
   return fresh(s);
