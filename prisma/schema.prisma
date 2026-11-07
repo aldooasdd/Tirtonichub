@@ -566,6 +566,12 @@ model MarketplaceOrder {
   total       Int // dibayar pembeli
   netAmount   Int? // dana cair ke penjual (Shopee escrow) bila sudah ada
   trackingNo  String?
+  recipient   String? // nama penerima
+  phone       String? // bisa tersamar dari marketplace
+  address     String?
+  courier     String?
+  buyerNote   String?
+  payment     String? // metode bayar
   orderedAt   DateTime
   updatedAtMp DateTime
   syncedAt    DateTime @updatedAt

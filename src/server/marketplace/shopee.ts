@@ -70,11 +70,18 @@ export type MpOrder = {
   orderSn: string;
   status: string;
   buyer: string | null;
-  items: { name: string; sku: string | null; qty: number; price: number }[];
+  items: { name: string; sku: string | null; qty: number; price: number; image?: string | null }[];
   total: number;
   trackingNo: string | null;
   orderedAt: Date;
   updatedAt: Date;
+  // Detail pengiriman (opsional; tidak semua sumber punya).
+  recipient?: string | null;
+  phone?: string | null;
+  address?: string | null;
+  courier?: string | null;
+  buyerNote?: string | null;
+  payment?: string | null;
 };
 
 /** Order yang berubah sejak `from` (maks 15 hari per jendela, aturan Shopee). */
@@ -104,13 +111,25 @@ export async function shopeeOrders(token: string, shopId: string, from: Date): P
           total_amount?: number;
           create_time: number;
           update_time: number;
-          item_list?: { item_name: string; model_name?: string; item_sku?: string; model_sku?: string; model_quantity_purchased: number; model_discounted_price: number }[];
+          item_list?: {
+            item_name: string;
+            model_name?: string;
+            item_sku?: string;
+            model_sku?: string;
+            model_quantity_purchased: number;
+            model_discounted_price: number;
+            image_info?: { image_url?: string };
+          }[];
+          recipient_address?: { name?: string; phone?: string; full_address?: string };
+          message_to_seller?: string;
+          shipping_carrier?: string;
+          payment_method?: string;
         }[];
       };
     }>("/api/v2/order/get_order_detail", {
       token,
       shopId,
-      query: { order_sn_list: sns.slice(i, i + 50).join(","), response_optional_fields: "buyer_username,item_list,total_amount" },
+      query: { order_sn_list: sns.slice(i, i + 50).join(","), response_optional_fields: "buyer_username,item_list,total_amount,recipient_address,message_to_seller,shipping_carrier,payment_method" },
     });
     for (const o of j.response.order_list) {
       out.push({
@@ -122,9 +141,16 @@ export async function shopeeOrders(token: string, shopId: string, from: Date): P
           sku: it.model_sku || it.item_sku || null,
           qty: it.model_quantity_purchased,
           price: n(it.model_discounted_price),
+          image: it.image_info?.image_url ?? null,
         })),
         total: n(o.total_amount),
         trackingNo: null,
+        recipient: o.recipient_address?.name || null,
+        phone: o.recipient_address?.phone || null,
+        address: o.recipient_address?.full_address || null,
+        courier: o.shipping_carrier || null,
+        buyerNote: o.message_to_seller || null,
+        payment: o.payment_method || null,
         orderedAt: new Date(o.create_time * 1000),
         updatedAt: new Date(o.update_time * 1000),
       });
