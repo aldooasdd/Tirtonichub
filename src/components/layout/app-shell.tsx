@@ -2,26 +2,16 @@
 
 import { Sidebar } from "./sidebar";
 import { Header } from "./header";
-import type { RightNotif, RightMember } from "./right-panel";
+import type { RightNotif } from "./right-panel";
 import { BottomNav } from "./bottom-nav";
-import { FloatingChat, type Presence } from "@/components/chat/floating-chat";
-import type { RoomListItem } from "@/server/chat/queries";
 
 export function AppShell({
   children,
   notifications,
-  members,
-  rooms,
-  presence,
-  me,
   notifCount,
 }: {
   children: React.ReactNode;
   notifications: RightNotif[];
-  members: RightMember[];
-  rooms: RoomListItem[];
-  presence: Presence[];
-  me: string;
   notifCount: number;
 }) {
   return (
@@ -34,7 +24,6 @@ export function AppShell({
         </main>
       </div>
       <BottomNav />
-      <FloatingChat rooms={rooms} presence={presence} members={members} me={me} />
     </div>
   );
 }
