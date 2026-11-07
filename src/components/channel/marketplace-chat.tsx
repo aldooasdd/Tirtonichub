@@ -38,7 +38,7 @@ function Avatar({ c, size = "size-10" }: { c: ChatConv; size?: string }) {
       ) : (
         <span className={`flex ${size} items-center justify-center rounded-full bg-muted text-14 font-semibold uppercase`}>{c.name.slice(0, 1)}</span>
       )}
-      <span className={`absolute -right-0.5 -bottom-0.5 size-3 rounded-full ring-2 ring-card ${DOT[c.platform]}`} title={LABEL[c.platform]} />
+      <span className={`absolute right-0 bottom-0 size-2.5 rounded-full ring-2 ring-card ${DOT[c.platform]}`} title={LABEL[c.platform]} />
     </span>
   );
 }
@@ -170,7 +170,7 @@ export function MarketplaceChat({
           <Search className="size-4 text-muted-foreground" aria-hidden />
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Cari pembeli atau pesan" aria-label="Cari chat" className="w-full bg-transparent text-14 outline-none" />
         </label>
-        <div className="grid grid-cols-4 gap-1 rounded-lg bg-muted p-1" role="tablist">
+        <div className="flex gap-1 rounded-lg bg-muted p-1" role="tablist">
           {TABS.map((t) => (
             <button
               key={t.key}
@@ -178,7 +178,7 @@ export function MarketplaceChat({
               role="tab"
               aria-selected={tab === t.key}
               onClick={() => setTab(t.key)}
-              className={`truncate rounded-md px-1 py-1.5 text-12 font-medium ${tab === t.key ? "bg-card shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
+              className={`flex-auto rounded-md px-2 py-1.5 text-12 font-medium whitespace-nowrap outline-none focus-visible:ring-2 focus-visible:ring-ring/50 ${tab === t.key ? "bg-card shadow-sm" : "text-muted-foreground hover:text-foreground"}`}
             >
               {t.label}
             </button>
@@ -197,7 +197,7 @@ export function MarketplaceChat({
             const active = open?.id === c.id && open.platform === c.platform;
             return (
               <li key={`${c.platform}:${c.id}`}>
-                <button type="button" onClick={() => pick(c)} className={`flex w-full items-center gap-3 rounded-lg p-2.5 text-left ${active ? "bg-muted" : "hover:bg-muted/60"}`}>
+                <button type="button" onClick={() => pick(c)} className={`flex w-full items-center gap-3 rounded-lg p-2.5 text-left outline-none focus-visible:ring-2 focus-visible:ring-ring/50 ${active ? "bg-muted" : "hover:bg-muted/60"}`}>
                   <Avatar c={c} />
                   <span className="min-w-0 flex-1">
                     <span className="flex items-baseline gap-2">
@@ -244,7 +244,14 @@ export function MarketplaceChat({
                         <span className="rounded-full border bg-card px-3 py-1 text-12 font-medium">{labelHari(m.at)}</span>
                       </div>
                     )}
-                    {m.system ? (
+                    {m.bot ? (
+                      <div className="flex justify-center">
+                        <div className="w-full max-w-md rounded-xl border bg-card px-4 py-3 text-14">
+                          <p className="mb-1 text-12 font-medium text-muted-foreground">Balasan otomatis · {pukul(m.at)}</p>
+                          <p className="break-words whitespace-pre-wrap">{m.text}</p>
+                        </div>
+                      </div>
+                    ) : m.system ? (
                       <div className="flex justify-center">
                         <p className="max-w-[85%] rounded-full border bg-card px-3 py-1 text-center text-12 whitespace-pre-wrap text-muted-foreground">
                           {m.text || "Pesan sistem"} · {pukul(m.at)}
@@ -262,16 +269,18 @@ export function MarketplaceChat({
                         <span className="mt-1 text-[11px] text-muted-foreground">{pukul(m.at)}</span>
                       </div>
                     ) : (
-                      <div className="flex items-end gap-2">
-                        {prevBuyer ? <span className="size-8 shrink-0" /> : <Avatar c={open} size="size-8" />}
-                        <div className="flex max-w-[75%] flex-col items-start">
-                          {m.image && (
-                            // eslint-disable-next-line @next/next/no-img-element -- gambar dari pembeli
-                            <img src={m.image} alt="Gambar dari pembeli" className="mb-1 max-h-64 rounded-2xl border" />
-                          )}
-                          {m.text && <p className="rounded-2xl rounded-bl-md border bg-card px-4 py-2.5 text-14 break-words whitespace-pre-wrap">{m.text}</p>}
-                          <span className="mt-1 text-[11px] text-muted-foreground">{pukul(m.at)}</span>
+                      <div>
+                        <div className="flex items-end gap-2">
+                          {prevBuyer ? <span className="size-8 shrink-0" /> : <Avatar c={open} size="size-8" />}
+                          <div className="flex max-w-[75%] flex-col items-start gap-1">
+                            {m.image && (
+                              // eslint-disable-next-line @next/next/no-img-element -- gambar dari pembeli
+                              <img src={m.image} alt="Gambar dari pembeli" className="max-h-64 rounded-2xl border" />
+                            )}
+                            {m.text && <p className="rounded-2xl rounded-bl-md border bg-card px-4 py-2.5 text-14 break-words whitespace-pre-wrap">{m.text}</p>}
+                          </div>
                         </div>
+                        <span className="mt-1 ml-10 block text-[11px] text-muted-foreground">{pukul(m.at)}</span>
                       </div>
                     )}
                   </div>
