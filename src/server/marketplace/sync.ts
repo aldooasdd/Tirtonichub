@@ -1,5 +1,6 @@
 // Sinkron toko Shopee & Tokopedia ke DB. shopId "demo" = data contoh (uji coba tanpa API asli).
 import { prisma } from "@/server/db";
+import { Prisma } from "@/generated/prisma";
 import { notifyRole } from "@/server/notify";
 import * as shopee from "./shopee";
 import * as tiktok from "./tiktok";
@@ -191,9 +192,62 @@ export async function syncOrders(platform: Platform, days = 7): Promise<{ total:
         update: s,
       });
     }
+    const pays = await tiktok.tiktokPayments(shop.accessToken, shop.cipher ?? "", new Date(Date.now() - 35 * 86400_000)).catch((e) => {
+      console.error("[keuangan] payments:", e instanceof Error ? e.message : e);
+      return [];
+    });
+    for (const p of pays) {
+      const data = { status: p.status, amount: p.amount, bankAccount: p.bankAccount, createdAtMp: p.createdAt, paidTime: p.paidTime };
+      await prisma.marketplaceTransfer.upsert({ where: { platform_paymentId: { platform, paymentId: p.paymentId } }, create: { platform, paymentId: p.paymentId, ...data }, update: data });
+    }
+    void syncOrderFinance(shop);
   }
   await prisma.marketplaceShop.update({ where: { id: shop.id }, data: { lastSyncAt: new Date() } });
   return { total: orders.length, baru };
+}
+
+let financeRunning = false;
+const FINANCE_BATCH = 200; // ponytail: maks 200 order per putaran (tiap 10 menit); cukup utk volume toko sekarang
+/** Rincian dana (Get Transactions by Order) untuk order Tokopedia selesai yang belum punya rincian.
+ *  Belum settle (respons kosong) → dicoba lagi paling cepat 6 jam kemudian. */
+async function syncOrderFinance(shop: Shop) {
+  if (financeRunning) return;
+  financeRunning = true;
+  try {
+    const orders = await prisma.marketplaceOrder.findMany({
+      where: {
+        platform: "TOKOPEDIA",
+        shopId: shop.shopId,
+        status: "COMPLETED",
+        finance: { equals: Prisma.DbNull },
+        OR: [{ financeAt: null }, { financeAt: { lt: new Date(Date.now() - 6 * 3600_000) } }],
+      },
+      orderBy: { orderedAt: "desc" },
+      take: FINANCE_BATCH,
+      select: { id: true, orderSn: true },
+    });
+    let ok = 0;
+    let lastErr = "";
+    const queue = [...orders];
+    const worker = async () => {
+      for (let o = queue.shift(); o; o = queue.shift()) {
+        try {
+          const f = await tiktok.tiktokOrderFinance(shop.accessToken, shop.cipher ?? "", o.orderSn);
+          await prisma.marketplaceOrder.update({
+            where: { id: o.id },
+            data: f ? { finance: f, financeAt: new Date(), netAmount: f.settlement } : { financeAt: new Date() },
+          });
+          if (f) ok++;
+        } catch (e) {
+          lastErr = `${o.orderSn}: ${e instanceof Error ? e.message.slice(-300) : String(e)}`;
+        }
+      }
+    };
+    await Promise.all(Array.from({ length: 3 }, worker));
+    if (orders.length) console.log(`[keuangan] rincian dana ${ok}/${orders.length} order${lastErr ? `, error terakhir ${lastErr}` : ""}`);
+  } finally {
+    financeRunning = false;
+  }
 }
 
 /** Tarik daftar produk + stok + harga dari marketplace. */
@@ -245,7 +299,7 @@ async function runProductDetails(shop: Shop, items: MpItem[]) {
     for (let id = queue.shift(); id; id = queue.shift()) {
       await saveDetail(id).catch((e) => {
         gagal++;
-        lastErr = `simpan ${id}: ${e instanceof Error ? e.message.slice(0, 300) : String(e)}`;
+        lastErr = `simpan ${id}: ${e instanceof Error ? e.message.slice(-400) : String(e)}`; // ekor pesan Prisma = alasan error
       });
     }
   };

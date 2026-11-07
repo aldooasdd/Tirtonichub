@@ -6,9 +6,33 @@ import { ORDER_TABS, statusLabel, statusTone } from "@/lib/channel-status";
 import { DEMO, PLATFORMS, PLATFORM_LABEL, apiReady } from "@/server/marketplace/sync";
 import { ShopPanel } from "@/components/channel/shop-panel";
 import type { Prisma } from "@/generated/prisma";
+import type { OrderFinance } from "@/server/marketplace/tiktok";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 const TONE = { warn: "text-amber-600", ok: "text-emerald-600", bad: "text-destructive", muted: "text-muted-foreground" };
+/** Rincian dana 1 order Tokopedia (Get Transactions by Order), bisa dibuka-tutup. */
+function FinanceDetail({ f }: { f: OrderFinance }) {
+  const row = (label: string, v: number, strong = false) => (
+    <div key={label} className={`flex justify-between gap-3 ${strong ? "font-semibold" : ""}`}>
+      <span className={strong ? "" : "text-muted-foreground first-letter:uppercase"}>{label}</span>
+      <span className={`tabular-nums ${v < 0 ? "text-destructive" : ""}`}>{rupiah(v)}</span>
+    </div>
+  );
+  return (
+    <details className="mt-1 text-12">
+      <summary className="cursor-pointer text-primary">Rincian dana</summary>
+      <div className="mt-1 space-y-0.5 rounded-md border bg-muted/30 p-2">
+        {row("Penjualan", f.revenue, true)}
+        {f.lines.filter((l) => l.group === "penjualan").map((l) => row(l.label, l.amount))}
+        {row("Ongkos kirim", f.shipping, true)}
+        {f.lines.filter((l) => l.group === "ongkir").map((l) => row(l.label, l.amount))}
+        {row("Biaya & pajak", f.feeTax, true)}
+        {f.lines.filter((l) => l.group === "potongan").map((l) => row(l.label, l.amount))}
+        <div className="border-t pt-0.5">{row("Bersih diterima", f.settlement, true)}</div>
+      </div>
+    </details>
+  );
+}
 const BAR = { warn: "bg-amber-500", ok: "bg-emerald-500", bad: "bg-destructive", muted: "bg-muted-foreground/40" };
 const TAG = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600" } as Record<string, string>;
 const PER_PAGE = 20;
@@ -224,6 +248,7 @@ export default async function ChannelPage({ searchParams }: { searchParams: Prom
                     <p className="font-semibold">{rupiah(o.total)}</p>
                     {o.payment && <p className="text-12 text-muted-foreground">{o.payment}</p>}
                     {o.netAmount != null && <p className="mt-1 text-12 text-emerald-600">Dana cair {rupiah(o.netAmount)}</p>}
+                    {o.finance != null && <FinanceDetail f={o.finance as unknown as OrderFinance} />}
                   </div>
                   <div>
                     <p className="text-12 font-medium text-muted-foreground">Alamat</p>

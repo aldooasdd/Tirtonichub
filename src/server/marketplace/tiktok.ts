@@ -121,13 +121,35 @@ export async function tiktokOrders(token: string, cipher: string, from: Date): P
   return out;
 }
 
-/** Statement dana cair sejak `from`. */
-export async function tiktokStatements(token: string, cipher: string, from: Date): Promise<{ refId: string; revenue: number; fee: number; amount: number; paidAt: Date }[]> {
-  const out: { refId: string; revenue: number; fee: number; amount: number; paidAt: Date }[] = [];
+export type TtStatement = {
+  refId: string;
+  revenue: number;
+  fee: number;
+  amount: number;
+  paidAt: Date;
+  adjustment: number;
+  payStatus: string | null;
+  paymentId: string | null;
+  payTime: Date | null;
+};
+
+/** Statement dana cair sejak `from` (dokumen Get Statements 202309). */
+export async function tiktokStatements(token: string, cipher: string, from: Date): Promise<TtStatement[]> {
+  const out: TtStatement[] = [];
   let pageToken = "";
   do {
     const d = await call<{
-      statements?: { id: string; statement_time: number; revenue_amount?: string; fee_amount?: string; settlement_amount?: string }[];
+      statements?: {
+        id: string;
+        statement_time: number;
+        revenue_amount?: string;
+        fee_amount?: string;
+        settlement_amount?: string;
+        adjustment_amount?: string;
+        payment_status?: string;
+        payment_id?: string;
+        payment_time?: number;
+      }[];
       next_page_token?: string;
     }>("/finance/202309/statements", {
       token,
@@ -135,11 +157,158 @@ export async function tiktokStatements(token: string, cipher: string, from: Date
       query: { statement_time_ge: sec(from), sort_field: "statement_time", page_size: 100, ...(pageToken ? { page_token: pageToken } : {}) },
     });
     for (const s of d.statements ?? []) {
-      out.push({ refId: s.id, revenue: n(s.revenue_amount), fee: Math.abs(n(s.fee_amount)), amount: n(s.settlement_amount), paidAt: new Date(s.statement_time * 1000) });
+      out.push({
+        refId: s.id,
+        revenue: n(s.revenue_amount),
+        fee: Math.abs(n(s.fee_amount)),
+        amount: n(s.settlement_amount),
+        paidAt: new Date(s.statement_time * 1000),
+        adjustment: n(s.adjustment_amount),
+        payStatus: s.payment_status || null,
+        paymentId: s.payment_id || null,
+        payTime: s.payment_time ? new Date(s.payment_time * 1000) : null,
+      });
     }
     pageToken = d.next_page_token ?? "";
   } while (pageToken);
   return out;
+}
+
+export type TtTransfer = { paymentId: string; status: string; amount: number; bankAccount: string | null; createdAt: Date; paidTime: Date | null };
+
+/** Transfer ke rekening bank sejak `from` (dokumen Get Payments 202605). */
+export async function tiktokPayments(token: string, cipher: string, from: Date): Promise<TtTransfer[]> {
+  const out: TtTransfer[] = [];
+  let pageToken = "";
+  do {
+    const d = await call<{
+      payments?: { id: string; status: string; create_time: number; paid_time?: number; amount?: { value?: string }; settlement_amount?: { value?: string }; bank_account?: string }[];
+      next_page_token?: string;
+    }>("/finance/202605/payments", {
+      token,
+      cipher,
+      query: { create_time_ge: sec(from), sort_field: "create_time", page_size: 100, ...(pageToken ? { page_token: pageToken } : {}) },
+    });
+    for (const p of d.payments ?? []) {
+      out.push({
+        paymentId: p.id,
+        status: p.status,
+        amount: n(p.amount?.value ?? p.settlement_amount?.value),
+        bankAccount: p.bank_account || null,
+        createdAt: new Date(p.create_time * 1000),
+        paidTime: p.paid_time ? new Date(p.paid_time * 1000) : null,
+      });
+    }
+    pageToken = d.next_page_token ?? "";
+  } while (pageToken);
+  return out;
+}
+
+// Label Indonesia untuk komponen rincian dana yang umum di Indonesia; sisanya dari nama field.
+const FIN_LABEL: Record<string, string> = {
+  subtotal_before_discount_amount: "Harga produk (sebelum diskon)",
+  seller_discount_amount: "Diskon dari toko",
+  refund_subtotal_before_discount_amount: "Refund produk",
+  seller_discount_refund_amount: "Pengembalian diskon toko",
+  actual_shipping_fee_amount: "Ongkir aktual",
+  shipping_fee_discount_amount: "Subsidi ongkir platform",
+  customer_paid_shipping_fee_amount: "Ongkir dibayar pembeli",
+  return_shipping_fee_amount: "Ongkir retur",
+  replacement_shipping_fee_amount: "Ongkir penggantian barang",
+  exchange_shipping_fee_amount: "Ongkir tukar barang",
+  shipping_insurance_fee_amount: "Asuransi pengiriman",
+  seller_self_shipping_service_fee_amount: "Biaya kirim sendiri",
+  logistics_service_fee: "Biaya layanan logistik",
+  tiktok_shop_shipping_incentive_amount: "Insentif ongkir",
+  platform_commission_amount: "Komisi platform",
+  transaction_fee_amount: "Biaya transaksi",
+  credit_card_handling_fee_amount: "Biaya kartu kredit",
+  affiliate_commission_amount: "Komisi afiliasi",
+  affiliate_partner_commission_amount: "Komisi partner afiliasi",
+  affiliate_ads_commission_amount: "Komisi iklan afiliasi",
+  sfp_service_fee_amount: "Biaya Gratis Ongkir",
+  live_specials_fee_amount: "Biaya LIVE Specials",
+  bonus_cashback_service_fee_amount: "Biaya bonus cashback",
+  mall_service_fee_amount: "Biaya Mall",
+  voucher_xtra_service_fee_amount: "Biaya Voucher Xtra",
+  flash_sales_service_fee_amount: "Biaya flash sale",
+  cofunded_promotion_service_fee_amount: "Biaya promo bersama",
+  pre_order_service_fee_amount: "Biaya pre-order",
+  dt_handling_fee_amount: "Biaya Dilayani Tokopedia",
+  dynamic_commission_amount: "Komisi dinamis",
+  seller_paylater_handling_fee_amount: "Biaya PayLater",
+  seller_growth_fee_amount: "Biaya pertumbuhan toko",
+  gmv_max_ad_fee_amount: "Biaya iklan GMV Max",
+  smart_promotion_fee_amount: "Biaya Smart Promotion",
+  insurance_fee: "Asuransi",
+  local_vat_amount: "PPN",
+  pit_amount: "PPh",
+};
+const finLabel = (k: string) => FIN_LABEL[k] ?? k.replace(/_amount$/, "").replace(/_/g, " ");
+
+export type OrderFinance = {
+  revenue: number;
+  shipping: number;
+  feeTax: number;
+  settlement: number;
+  // Komponen ≠ 0, dikelompokkan: penjualan, ongkir, potongan.
+  lines: { group: "penjualan" | "ongkir" | "potongan"; key: string; label: string; amount: number }[];
+  skus: { skuId: string; sku: string; product: string; qty: number; revenue: number; settlement: number }[];
+};
+
+/** Rincian dana 1 pesanan (dokumen Get Transactions by Order 202501). null = belum ada settlement. */
+export async function tiktokOrderFinance(token: string, cipher: string, orderId: string): Promise<OrderFinance | null> {
+  type Obj = Record<string, unknown>;
+  const d = await call<{
+    revenue_amount?: string;
+    fee_and_tax_amount?: string;
+    shipping_cost_amount?: string;
+    settlement_amount?: string;
+    sku_transactions?: {
+      sku_id: string;
+      sku_name?: string;
+      product_name?: string;
+      quantity?: string;
+      settlement_amount?: string;
+      revenue_amount?: string;
+      revenue_breakdown?: Obj;
+      shipping_cost_breakdown?: Obj;
+      fee_tax_breakdown?: { fee?: Obj; tax?: Obj };
+    }[];
+  }>(`/finance/202501/orders/${encodeURIComponent(orderId)}/statement_transactions`, { token, cipher });
+  const skus = d.sku_transactions ?? [];
+  if (!skus.length) return null;
+  const sums = new Map<string, { group: OrderFinance["lines"][number]["group"]; amount: number }>();
+  const add = (group: OrderFinance["lines"][number]["group"], o: Obj | undefined) => {
+    for (const [k, v] of Object.entries(o ?? {})) {
+      if (typeof v !== "string" && typeof v !== "number") continue; // lewati objek bersarang (supplementary_component: hanya referensi)
+      const amt = n(v);
+      if (!amt) continue;
+      const cur = sums.get(k);
+      sums.set(k, { group, amount: (cur?.amount ?? 0) + amt });
+    }
+  };
+  for (const s of skus) {
+    add("penjualan", s.revenue_breakdown);
+    add("ongkir", s.shipping_cost_breakdown);
+    add("potongan", s.fee_tax_breakdown?.fee);
+    add("potongan", s.fee_tax_breakdown?.tax);
+  }
+  return {
+    revenue: n(d.revenue_amount),
+    shipping: n(d.shipping_cost_amount),
+    feeTax: n(d.fee_and_tax_amount),
+    settlement: n(d.settlement_amount),
+    lines: [...sums].map(([key, v]) => ({ group: v.group, key, label: finLabel(key), amount: v.amount })),
+    skus: skus.map((s) => ({
+      skuId: s.sku_id,
+      sku: s.sku_name ?? "",
+      product: s.product_name ?? "",
+      qty: n(s.quantity),
+      revenue: n(s.revenue_amount),
+      settlement: n(s.settlement_amount),
+    })),
+  };
 }
 
 export async function tiktokItems(token: string, cipher: string): Promise<MpItem[]> {
@@ -242,10 +411,10 @@ export async function tiktokProductDetail(token: string, cipher: string, product
   const dm = d.package_dimensions;
   return {
     productId: d.id,
-    title: d.title,
-    status: d.status,
+    title: d.title || productId,
+    status: d.status || "UNKNOWN",
     tokoStatus: d.integrated_platform_statuses?.find((x) => x.platform === "TOKOPEDIA")?.status ?? null,
-    description: d.description || null,
+    description: d.description?.replace(/\u0000/g, "") || null, // Postgres tolak byte NUL
     category: (ordered.length ? ordered : chain.map((c) => c.local_name)).join(" › ") || null,
     brand: d.brand?.name || null,
     images: (d.main_images ?? []).map(img).filter((x): x is string => !!x),
@@ -253,7 +422,7 @@ export async function tiktokProductDetail(token: string, cipher: string, product
     attributes: (d.product_attributes ?? []).map((a) => ({ name: a.name, value: (a.values ?? []).map((v) => v.name).join(", ") })).filter((a) => a.value),
     weight: w?.value ? `${w.value} ${w.unit ?? ""}`.trim() : null,
     dimensions: dm?.length ? `${dm.length}×${dm.width}×${dm.height} ${dm.unit ?? ""}`.trim() : null,
-    minOrder: d.minimum_order_quantity ?? null,
+    minOrder: Number.isInteger(Number(d.minimum_order_quantity)) && d.minimum_order_quantity != null ? Number(d.minimum_order_quantity) : null,
     isCod: d.is_cod_allowed ?? null,
     preOwned: d.is_pre_owned ?? null,
     detailUrl: d.product_detail_url || null,
