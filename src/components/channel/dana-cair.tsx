@@ -49,7 +49,7 @@ export async function DanaCair({ searchParams, channel = false }: { searchParams
     <div className="space-y-5">
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-24 font-semibold">Dana Cair</h1>
+          <h1 className="text-24 font-semibold">Settlement Marketplace</h1>
           <p className="text-14 text-muted-foreground">Uang dari Shopee & Tokopedia per bulan: penjualan, potongan marketplace, dan uang bersih yang cair.</p>
         </div>
         <form method="get" className="flex items-end gap-2">

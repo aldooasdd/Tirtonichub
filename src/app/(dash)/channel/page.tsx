@@ -247,7 +247,7 @@ export default async function ChannelPage({ searchParams }: { searchParams: Prom
                     <p className="text-12 font-medium text-muted-foreground">Total Harga</p>
                     <p className="font-semibold">{rupiah(o.total)}</p>
                     {o.payment && <p className="text-12 text-muted-foreground">{o.payment}</p>}
-                    {o.netAmount != null && <p className="mt-1 text-12 text-emerald-600">Dana cair {rupiah(o.netAmount)}</p>}
+                    {o.netAmount != null && <p className="mt-1 text-12 text-emerald-600">Settlement {rupiah(o.netAmount)}</p>}
                     {o.finance != null && <FinanceDetail f={o.finance as unknown as OrderFinance} />}
                   </div>
                   <div>
