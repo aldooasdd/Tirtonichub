@@ -694,6 +694,14 @@ exports.Prisma.PushItemQueueScalarFieldEnum = {
   sentAt: 'sentAt'
 };
 
+exports.Prisma.ChatTemplateScalarFieldEnum = {
+  id: 'id',
+  shortcut: 'shortcut',
+  text: 'text',
+  grup: 'grup',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -830,7 +838,8 @@ exports.Prisma.ModelName = {
   PushSubscription: 'PushSubscription',
   PushLog: 'PushLog',
   KatalogNotif: 'KatalogNotif',
-  PushItemQueue: 'PushItemQueue'
+  PushItemQueue: 'PushItemQueue',
+  ChatTemplate: 'ChatTemplate'
 };
 
 /**

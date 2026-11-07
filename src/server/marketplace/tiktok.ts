@@ -237,6 +237,14 @@ const ttText = (type: string, raw: unknown) => {
   if (type === "IMAGE") return "";
   return TT_TYPE[type] ?? type.toLowerCase().replace(/_/g, " ");
 };
+// Kartu (produk/pesanan/pengiriman/kupon/retur) → kotak berisi teks plaintext dari TikTok.
+const CARD_TYPES = new Set(["PRODUCT_CARD", "ORDER_CARD", "LOGISTICS_CARD", "COUPON_CARD", "RETURN_REFUND_CARD"]);
+const SYSTEM_TYPES = new Set(["ALLOCATED_SERVICE", "NOTIFICATION", "BUYER_ENTER_FROM_TRANSFER", "BUYER_ENTER_FROM_PRODUCT", "BUYER_ENTER_FROM_ORDER", "OTHER"]);
+const cardBody = (plain: string | undefined, raw: unknown) => {
+  if (plain) return plain.split(/\n?(?:View full details at|Lihat detail lengkap di):/)[0].trim();
+  const c = ttContent(raw) as Record<string, unknown>;
+  return Object.entries(c).map(([k, v]) => `${k}: ${String(v)}`).join("\n");
+};
 // Diketik toko (atau CS toko) → kanan. Robot & sistem → catatan tengah.
 const SHOP_SIDE = new Set(["SHOP", "CUSTOMER_SERVICE"]);
 const BOT_SIDE = new Set(["ROBOT", "SYSTEM"]);
@@ -267,8 +275,13 @@ export async function tiktokConversations(token: string, cipher: string): Promis
 
 export async function tiktokMessages(token: string, cipher: string, convId: string): Promise<MpMsg[]> {
   const d = await call<{
-    messages?: { id: string; type: string; content?: string; create_time: number; is_visible?: boolean; sender?: { role?: string } }[];
-  }>(`/customer_service/202309/conversations/${encodeURIComponent(convId)}/messages`, { token, cipher, query: { page_size: 10, sort_order: "DESC", sort_field: "create_time" } });
+    messages?: { id: string; type: string; content?: string; plaintext?: string; create_time: number; is_visible?: boolean; sender?: { role?: string } }[];
+  }>(`/customer_service/202309/conversations/${encodeURIComponent(convId)}/messages`, {
+    token,
+    cipher,
+    // locale id-ID → pesan sistem sudah Bahasa Indonesia; plaintext → isi kartu produk/pesanan terbaca.
+    query: { page_size: 10, sort_order: "DESC", sort_field: "create_time", locale: "id-ID", need_plaintext: "true", time_zone: "Asia/Jakarta" },
+  });
   // Tandai sudah dibaca (gagal tak masalah).
   void call(`/customer_service/202309/conversations/${encodeURIComponent(convId)}/messages/read`, { method: "POST", token, cipher, body: {} }).catch(() => null);
   return (d.messages ?? [])
@@ -276,20 +289,44 @@ export async function tiktokMessages(token: string, cipher: string, convId: stri
     .map((m) => ({
       id: m.id,
       mine: SHOP_SIDE.has(m.sender?.role ?? ""),
-      system: BOT_SIDE.has(m.sender?.role ?? "") || !["TEXT", "IMAGE", "EMOTICONS", "VIDEO"].includes(m.type),
+      system: (BOT_SIDE.has(m.sender?.role ?? "") && !CARD_TYPES.has(m.type)) || SYSTEM_TYPES.has(m.type),
       bot: m.sender?.role === "ROBOT" && m.type === "TEXT",
-      text: ttText(m.type, m.content),
+      text: CARD_TYPES.has(m.type) ? "" : ttText(m.type, m.content),
+      card: CARD_TYPES.has(m.type) ? { title: TT_TYPE[m.type] ?? m.type, body: cardBody(m.plaintext, m.content) } : null,
       image: m.type === "IMAGE" ? ttContent(m.content).url ?? null : null,
       at: m.create_time * 1000,
     }))
     .sort((a, b) => a.at - b.at);
 }
 
-export async function tiktokSendText(token: string, cipher: string, convId: string, text: string): Promise<void> {
+export type TtSendType = "TEXT" | "IMAGE" | "PRODUCT_CARD" | "ORDER_CARD";
+
+/** Kirim pesan (dokumen Send Message): content = JSON string sesuai tipe. */
+export async function tiktokSend(token: string, cipher: string, convId: string, type: TtSendType, content: Record<string, unknown>): Promise<void> {
   await call(`/customer_service/202309/conversations/${encodeURIComponent(convId)}/messages`, {
     method: "POST",
     token,
     cipher,
-    body: { type: "TEXT", content: JSON.stringify({ content: text }) },
+    body: { type, content: JSON.stringify(content), sender_role: "CUSTOMER_SERVICE" },
   });
+}
+
+export const tiktokSendText = (token: string, cipher: string, convId: string, text: string) => tiktokSend(token, cipher, convId, "TEXT", { content: text });
+
+/** Upload gambar untuk chat (multipart field "data", maks 10MB) → url, width, height. Body multipart tidak ikut sign. */
+export async function tiktokUploadChatImage(token: string, cipher: string, file: Blob, name: string): Promise<{ url: string; width: number; height: number }> {
+  const path = "/customer_service/202309/images/upload";
+  const query: Record<string, string> = { app_key: key(), timestamp: String(Math.floor(Date.now() / 1000)), shop_cipher: cipher };
+  query.sign = tiktokSign(secret(), path, query);
+  const fd = new FormData();
+  fd.append("data", file, name);
+  const res = await fetch(`${API}${path}?${new URLSearchParams(query)}`, {
+    method: "POST",
+    headers: { "x-tts-access-token": token },
+    body: fd,
+    signal: AbortSignal.timeout(30_000),
+  });
+  const j = (await res.json().catch(() => ({}))) as { code?: number; message?: string; data?: { url: string; width: number; height: number } };
+  if (!res.ok || j.code !== 0 || !j.data) throw new Error(`TikTok upload gambar: ${j.code ?? res.status} ${j.message ?? ""}`.trim());
+  return j.data;
 }
