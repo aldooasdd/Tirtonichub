@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { compressImage } from "@/lib/image";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
 import { saveCashDeposit } from "@/server/actions/cash-deposit";
+import { RupiahInput } from "@/components/ui/rupiah-input";
 
 export type SetorRow = { id: string; tgl: string; branch: string; by: string; amount: number; photoKey: string };
 type Branch = { id: string; name: string };
@@ -82,7 +83,7 @@ export function SetorTunaiForm({ rows, akun, branches, defaultBranchId }: { rows
         )}
         <label className="block space-y-1">
           <span className="block text-12 text-muted-foreground">Nominal (Rp)</span>
-          <Input inputMode="numeric" value={fmtInt(amount)} onChange={(e) => setAmount(parseInt0(e.target.value))} placeholder="0" />
+          <RupiahInput inputMode="numeric" value={fmtInt(amount)} onChange={(e) => setAmount(parseInt0(e.target.value))} placeholder="0" />
         </label>
         <label className="block space-y-1">
           <span className="block text-12 text-muted-foreground">Tanggal & jam setor</span>

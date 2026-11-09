@@ -10,6 +10,7 @@ import { notaJpeg } from "@/lib/image";
 import { CASHOUT_SOURCES, sourceLabel } from "@/lib/cashout-source";
 import { scanCashoutNota, saveCashout } from "@/server/actions/cashout";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
+import { RupiahInput } from "@/components/ui/rupiah-input";
 
 export type CashoutRow = {
   id: string;
@@ -160,7 +161,7 @@ export function CashoutForm({ rows, categories, branches, defaultBranchId }: { r
         <div className="space-y-4 rounded-lg border bg-card p-4">
           {msg && <p className="text-12 text-muted-foreground">{msg}</p>}
           <Field label="Jumlah (Rp)">
-            <Input
+            <RupiahInput
               inputMode="numeric"
               value={fmtInt(draft.amount)}
               onChange={(e) => upd({ amount: parseInt0(e.target.value) })}

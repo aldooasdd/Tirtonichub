@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { updateChannelItem } from "@/server/actions/channel";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
+import { RupiahInput } from "@/components/ui/rupiah-input";
 
 export type ItemRow = { id: string; platform: string; demo: boolean; name: string; sku: string | null; price: number; stock: number; image?: string | null; inactive?: boolean };
 
@@ -71,7 +72,7 @@ export function ItemTable({ rows }: { rows: ItemRow[] }) {
                   />
                 </td>
                 <td className="p-3">
-                  <input
+                  <RupiahInput plain
                     inputMode="numeric"
                     value={fmtInt(d.price)}
                     onChange={(e) => setDraft({ ...draft, [r.id]: { ...d, price: parseInt0(e.target.value) } })}

@@ -4,6 +4,7 @@ import { useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { deleteSalesReport, updateSalesReport } from "@/server/actions/sales";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
+import { RupiahInput } from "@/components/ui/rupiah-input";
 
 const rupiah = (n: number) => `Rp ${new Intl.NumberFormat("id-ID").format(n)}`;
 
@@ -264,8 +265,8 @@ export function EditNotaModal({
             <div key={i} className="grid gap-2 sm:grid-cols-[1fr_60px_100px_100px_auto]">
               <input className={inp} placeholder="Nama" value={it.name} onChange={(e) => setItem(i, { name: e.target.value })} />
               <input className={inp} type="number" placeholder="Qty" value={it.qty} onChange={(e) => setItem(i, { qty: Number(e.target.value) })} />
-              <input className={inp} inputMode="numeric" placeholder="Harga" value={fmtInt(it.price)} onChange={(e) => setItem(i, { price: parseInt0(e.target.value) })} />
-              <input className={inp} inputMode="numeric" placeholder="Total" value={fmtInt(it.total)} onChange={(e) => setItem(i, { total: parseInt0(e.target.value) })} />
+              <RupiahInput plain className={inp} inputMode="numeric" placeholder="Harga" value={fmtInt(it.price)} onChange={(e) => setItem(i, { price: parseInt0(e.target.value) })} />
+              <RupiahInput plain className={inp} inputMode="numeric" placeholder="Total" value={fmtInt(it.total)} onChange={(e) => setItem(i, { total: parseInt0(e.target.value) })} />
               <button className="text-12 text-red-500" onClick={() => setD({ ...d, items: d.items.filter((_, j) => j !== i) })}>Hapus</button>
             </div>
           ))}
@@ -277,7 +278,7 @@ export function EditNotaModal({
           {d.payments.map((p, i) => (
             <div key={i} className="grid gap-2 sm:grid-cols-[1fr_120px_auto]">
               <input className={inp} placeholder="Metode" value={p.method} onChange={(e) => setPay(i, { method: e.target.value })} />
-              <input className={inp} inputMode="numeric" placeholder="Jumlah" value={fmtInt(p.amount)} onChange={(e) => setPay(i, { amount: parseInt0(e.target.value) })} />
+              <RupiahInput plain className={inp} inputMode="numeric" placeholder="Jumlah" value={fmtInt(p.amount)} onChange={(e) => setPay(i, { amount: parseInt0(e.target.value) })} />
               <button className="text-12 text-red-500" onClick={() => setD({ ...d, payments: d.payments.filter((_, j) => j !== i) })}>Hapus</button>
             </div>
           ))}
@@ -285,9 +286,9 @@ export function EditNotaModal({
         </div>
 
         <div className="grid gap-3 sm:grid-cols-3">
-          <label className="block space-y-1"><span className="text-12 text-muted-foreground">Subtotal</span><input className={inp} inputMode="numeric" value={fmtInt(d.subtotal)} onChange={(e) => setD({ ...d, subtotal: parseInt0(e.target.value) })} /></label>
-          <label className="block space-y-1"><span className="text-12 text-muted-foreground">Total</span><input className={inp} inputMode="numeric" value={fmtInt(d.total)} onChange={(e) => setD({ ...d, total: parseInt0(e.target.value) })} /></label>
-          <label className="block space-y-1"><span className="text-12 text-muted-foreground">Grand total</span><input className={inp} inputMode="numeric" value={fmtInt(d.grandTotal)} onChange={(e) => setD({ ...d, grandTotal: parseInt0(e.target.value) })} /></label>
+          <label className="block space-y-1"><span className="text-12 text-muted-foreground">Subtotal</span><RupiahInput plain className={inp} inputMode="numeric" value={fmtInt(d.subtotal)} onChange={(e) => setD({ ...d, subtotal: parseInt0(e.target.value) })} /></label>
+          <label className="block space-y-1"><span className="text-12 text-muted-foreground">Total</span><RupiahInput plain className={inp} inputMode="numeric" value={fmtInt(d.total)} onChange={(e) => setD({ ...d, total: parseInt0(e.target.value) })} /></label>
+          <label className="block space-y-1"><span className="text-12 text-muted-foreground">Grand total</span><RupiahInput plain className={inp} inputMode="numeric" value={fmtInt(d.grandTotal)} onChange={(e) => setD({ ...d, grandTotal: parseInt0(e.target.value) })} /></label>
         </div>
 
         <div className="flex justify-end gap-2">

@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { deleteCashout, toggleCashoutChecked, updateCashout } from "@/server/actions/cashout";
 import { fmtInt } from "@/lib/money-input";
 import { CASHOUT_SOURCES, sourceLabel } from "@/lib/cashout-source";
+import { RupiahInput } from "@/components/ui/rupiah-input";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 const CATS = ["Keperluan Kantor", "Ongkos Kirim"]; // sama dengan form Input Pembelian
@@ -179,7 +180,7 @@ export function PembelianTable({ rows: allRows, branches }: { rows: PembelianRow
                     </td>
                     <td className="p-3">{r.by}</td>
                     <td className="p-3">
-                      <input inputMode="numeric" value={fmtInt(form.amount)} onChange={(e) => setForm((f) => ({ ...f, amount: e.target.value.replace(/\D/g, "") }))} className={`${field} min-w-28 text-right`} aria-label="Jumlah" />
+                      <RupiahInput plain inputMode="numeric" value={fmtInt(form.amount)} onChange={(e) => setForm((f) => ({ ...f, amount: e.target.value.replace(/\D/g, "") }))} className={`${field} min-w-28 text-right`} aria-label="Jumlah" />
                     </td>
                     <td className="p-3" />
                     <td className="p-3">

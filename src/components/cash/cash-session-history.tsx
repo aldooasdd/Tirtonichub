@@ -6,6 +6,7 @@ import { Pencil } from "lucide-react";
 import type { CashSessionRow, Buckets } from "@/lib/cash";
 import { updateCashSession } from "@/server/actions/cash";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
+import { RupiahInput } from "@/components/ui/rupiah-input";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 const total = (b: Buckets) => b.cash + b.mandiri + b.bca + b.bri;
@@ -47,7 +48,7 @@ function EditRow({ r, onDone }: { r: CashSessionRow; onDone: () => void }) {
       {KEYS.map(([k, label]) => (
         <label key={k} className="flex flex-col gap-1 text-12 text-muted-foreground">
           {label}
-          <input inputMode="numeric" value={v[k]} onChange={(e) => set({ ...v, [k]: fmtInt(e.target.value) })} className="h-8 rounded-md border bg-background px-2 text-right text-14 text-foreground tabular-nums" />
+          <RupiahInput plain inputMode="numeric" value={v[k]} onChange={(e) => set({ ...v, [k]: fmtInt(e.target.value) })} className="h-8 rounded-md border bg-background px-2 text-right text-14 text-foreground tabular-nums" />
         </label>
       ))}
     </div>
