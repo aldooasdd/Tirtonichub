@@ -9,6 +9,7 @@ import { scanSalesNota, saveSalesReport, uploadSalesPhoto, reportSalesError } fr
 import { REPORT_CATEGORIES, REPORT_LABEL } from "@/lib/sales-report";
 import type { SalesItem, SalesPayment } from "@/server/n8n-sales";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
+import { RupiahInput } from "@/components/ui/rupiah-input";
 
 export type SalesRow = {
   id: string;
@@ -317,8 +318,8 @@ export function SalesClient({
               <div key={i} className="grid gap-2 sm:grid-cols-[1fr_70px_110px_110px_auto]">
                 <Input placeholder="Nama item" value={it.name} onChange={(e) => setItem(i, { name: e.target.value })} />
                 <Input type="number" placeholder="Qty" value={it.qty} onChange={(e) => setItem(i, { qty: Number(e.target.value) })} />
-                <Input inputMode="numeric" placeholder="Harga" value={fmtInt(it.price)} onChange={(e) => setItem(i, { price: parseInt0(e.target.value) })} />
-                <Input inputMode="numeric" placeholder="Total" value={fmtInt(it.total)} onChange={(e) => setItem(i, { total: parseInt0(e.target.value) })} />
+                <RupiahInput inputMode="numeric" placeholder="Harga" value={fmtInt(it.price)} onChange={(e) => setItem(i, { price: parseInt0(e.target.value) })} />
+                <RupiahInput inputMode="numeric" placeholder="Total" value={fmtInt(it.total)} onChange={(e) => setItem(i, { total: parseInt0(e.target.value) })} />
                 <Button variant="outline" size="sm" onClick={() => upd({ items: draft.items.filter((_, j) => j !== i) })}>Hapus</Button>
               </div>
             ))}
@@ -330,7 +331,7 @@ export function SalesClient({
             {draft.payments.map((p, i) => (
               <div key={i} className="grid gap-2 sm:grid-cols-[1fr_140px_auto]">
                 <Input placeholder="Metode (mis. Transfer Mandiri)" value={p.method} onChange={(e) => setPay(i, { method: e.target.value })} />
-                <Input inputMode="numeric" placeholder="Jumlah" value={fmtInt(p.amount)} onChange={(e) => setPay(i, { amount: parseInt0(e.target.value) })} />
+                <RupiahInput inputMode="numeric" placeholder="Jumlah" value={fmtInt(p.amount)} onChange={(e) => setPay(i, { amount: parseInt0(e.target.value) })} />
                 <Button variant="outline" size="sm" onClick={() => upd({ payments: draft.payments.filter((_, j) => j !== i) })}>Hapus</Button>
               </div>
             ))}
@@ -338,9 +339,9 @@ export function SalesClient({
           </div>
 
           <div className="grid gap-3 sm:grid-cols-3">
-            <Field label="Subtotal"><Input inputMode="numeric" value={fmtInt(draft.subtotal)} onChange={(e) => upd({ subtotal: parseInt0(e.target.value) })} /></Field>
-            <Field label="Total"><Input inputMode="numeric" value={fmtInt(draft.total)} onChange={(e) => upd({ total: parseInt0(e.target.value) })} /></Field>
-            <Field label="Grand total"><Input inputMode="numeric" value={fmtInt(draft.grandTotal)} onChange={(e) => upd({ grandTotal: parseInt0(e.target.value) })} /></Field>
+            <Field label="Subtotal"><RupiahInput inputMode="numeric" value={fmtInt(draft.subtotal)} onChange={(e) => upd({ subtotal: parseInt0(e.target.value) })} /></Field>
+            <Field label="Total"><RupiahInput inputMode="numeric" value={fmtInt(draft.total)} onChange={(e) => upd({ total: parseInt0(e.target.value) })} /></Field>
+            <Field label="Grand total"><RupiahInput inputMode="numeric" value={fmtInt(draft.grandTotal)} onChange={(e) => upd({ grandTotal: parseInt0(e.target.value) })} /></Field>
           </div>
 
           <div className="flex flex-wrap gap-2">

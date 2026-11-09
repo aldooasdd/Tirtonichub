@@ -24,6 +24,7 @@ import {
   submitBatchToQc,
   addRawItem,
 } from "@/server/actions/raw-products";
+import { RupiahInput } from "@/components/ui/rupiah-input";
 
 type Item = {
   id: string;
@@ -488,7 +489,7 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
                 <Input value={head.unit} onChange={(e) => setShared(ids, "unit", e.target.value)} placeholder="pcs" />
               </Field>
               <Field label="@Harga">
-                <Input inputMode="decimal" value={fmtDec(head.listPrice)} onChange={(e) => setShared(ids, "listPrice", parseDec(e.target.value))} placeholder="@Harga" />
+                <RupiahInput symbol={currency === "IDR" ? "Rp " : "S$ "} inputMode="decimal" value={fmtDec(head.listPrice)} onChange={(e) => setShared(ids, "listPrice", parseDec(e.target.value))} placeholder="@Harga" />
               </Field>
             </div>
             <div className="grid grid-cols-2 gap-2">
@@ -513,7 +514,7 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
                   <div className="grid grid-cols-[1fr_auto_1fr_1.2fr_auto] items-center gap-2">
                     <Input value={row.size} onChange={(e) => setSize(row.id, "size", e.target.value)} placeholder="Ukuran" />
                     <Input type="number" className="w-16" value={row.qty} onChange={(e) => setSize(row.id, "qty", e.target.value)} placeholder="Qty" />
-                    <Input inputMode="decimal" value={fmtDec(row.discount)} onChange={(e) => setSize(row.id, "discount", parseDec(e.target.value))} placeholder="0" />
+                    <RupiahInput symbol={currency === "IDR" ? "Rp " : "S$ "} inputMode="decimal" value={fmtDec(row.discount)} onChange={(e) => setSize(row.id, "discount", parseDec(e.target.value))} placeholder="0" />
                     <Input value={row.sku} onChange={(e) => setSize(row.id, "sku", e.target.value)} placeholder="SKU" />
                     <Button size="icon" variant="ghost" disabled={pending} onClick={() => deleteSize(row.id)} aria-label="Hapus ukuran">
                       <Trash2 className="h-4 w-4" />
