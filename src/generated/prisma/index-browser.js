@@ -168,6 +168,7 @@ exports.Prisma.CashoutScalarFieldEnum = {
   branchId: 'branchId',
   branchName: 'branchName',
   photoKey: 'photoKey',
+  source: 'source',
   createdById: 'createdById',
   createdAt: 'createdAt',
   approvedAt: 'approvedAt',

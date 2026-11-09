@@ -8,6 +8,7 @@ import { makeKey, putObject } from "@/server/storage";
 import { notifyBosses, notifyRole } from "@/server/notify";
 import { parseSalesNotaViaN8n } from "@/server/n8n-sales";
 import { parseWIB } from "@/lib/datetime";
+import { isCashoutSource } from "@/lib/cashout-source";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -16,6 +17,8 @@ type SaveInput = {
   description: string;
   spentAt?: string | null; // ISO; kosong → sekarang
   category?: string | null;
+  source?: string | null; // KASIR | MANDIRI | BCA | BRI
+  branchId?: string | null; // cabang yang mengeluarkan uang; kosong → cabang user
   photoKey?: string | null; // foto nota hasil scan (sudah diupload)
   imageBase64?: string | null; // atau foto mentah (diupload saat simpan)
   mimeType?: string | null;
@@ -65,10 +68,13 @@ export async function saveCashout(input: SaveInput): Promise<ActionResult> {
   if (amount <= 0) return { ok: false, message: "Jumlah harus lebih dari 0." };
   if (!description) return { ok: false, message: "Keterangan wajib diisi." };
 
-  // Cabang yang mengeluarkan uang = cabang user pengirim.
-  const br = ctx.branchId
-    ? await prisma.branch.findUnique({ where: { id: ctx.branchId }, select: { name: true } })
-    : null;
+  const source = input.source ?? "KASIR";
+  if (!isCashoutSource(source)) return { ok: false, message: "Pilih sumber uang." };
+  // Cabang yang mengeluarkan uang: pilihan di form, default cabang user pengirim.
+  const branchId = input.branchId || ctx.branchId || null;
+  const br = branchId ? await prisma.branch.findUnique({ where: { id: branchId }, select: { id: true, name: true } }) : null;
+  if (branchId && !br) return { ok: false, message: "Cabang tidak ditemukan." };
+  if (source === "KASIR" && !br) return { ok: false, message: "Pilih cabang kasir yang mengeluarkan uang." };
 
   let photoKey: string | null = input.photoKey ?? null;
   if (!photoKey && input.imageBase64) {
@@ -88,8 +94,9 @@ export async function saveCashout(input: SaveInput): Promise<ActionResult> {
       amount,
       description: description.slice(0, 500),
       category: input.category?.trim()?.slice(0, 60) || null,
-      branchId: ctx.branchId ?? null,
+      branchId: br?.id ?? null,
       branchName: br?.name ?? null,
+      source,
       photoKey,
       createdById: ctx.userId,
       // Langsung masuk rekap Finance tanpa approval.
@@ -142,7 +149,7 @@ export async function toggleCashoutChecked(id: string, checked: boolean): Promis
 /** Finance/Boss/Admin: koreksi data pembelian di Rekap Pembelian. */
 export async function updateCashout(
   id: string,
-  input: { spentAt: string; category: string; branchId: string | null; description: string; amount: number },
+  input: { spentAt: string; category: string; branchId: string | null; description: string; amount: number; source?: string },
 ): Promise<ActionResult> {
   const ctx = await requireFinance();
   const before = await prisma.cashout.findUnique({ where: { id } });
@@ -156,6 +163,7 @@ export async function updateCashout(
     ? await prisma.branch.findUnique({ where: { id: input.branchId }, select: { id: true, name: true } })
     : null;
   if (input.branchId && !br) return { ok: false, message: "Cabang tidak ditemukan." };
+  if (input.source && !isCashoutSource(input.source)) return { ok: false, message: "Sumber uang tidak dikenal." };
 
   const after = await prisma.cashout.update({
     where: { id },
@@ -166,6 +174,7 @@ export async function updateCashout(
       branchName: br?.name ?? null,
       description: description.slice(0, 500),
       amount,
+      ...(input.source ? { source: input.source } : {}),
     },
   });
   const { ip } = await clientMeta();
@@ -175,8 +184,8 @@ export async function updateCashout(
       action: "cashout_edit",
       entity: "Cashout",
       entityId: id,
-      before: { spentAt: before.spentAt.toISOString(), category: before.category, branchName: before.branchName, description: before.description, amount: before.amount },
-      after: { spentAt: after.spentAt.toISOString(), category: after.category, branchName: after.branchName, description: after.description, amount: after.amount },
+      before: { spentAt: before.spentAt.toISOString(), category: before.category, branchName: before.branchName, source: before.source, description: before.description, amount: before.amount },
+      after: { spentAt: after.spentAt.toISOString(), category: after.category, branchName: after.branchName, source: after.source, description: after.description, amount: after.amount },
     },
   );
   return { ok: true };

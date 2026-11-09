@@ -9740,6 +9740,7 @@ export namespace Prisma {
     branchId: string | null
     branchName: string | null
     photoKey: string | null
+    source: string | null
     createdById: string | null
     createdAt: Date | null
     approvedAt: Date | null
@@ -9757,6 +9758,7 @@ export namespace Prisma {
     branchId: string | null
     branchName: string | null
     photoKey: string | null
+    source: string | null
     createdById: string | null
     createdAt: Date | null
     approvedAt: Date | null
@@ -9774,6 +9776,7 @@ export namespace Prisma {
     branchId: number
     branchName: number
     photoKey: number
+    source: number
     createdById: number
     createdAt: number
     approvedAt: number
@@ -9801,6 +9804,7 @@ export namespace Prisma {
     branchId?: true
     branchName?: true
     photoKey?: true
+    source?: true
     createdById?: true
     createdAt?: true
     approvedAt?: true
@@ -9818,6 +9822,7 @@ export namespace Prisma {
     branchId?: true
     branchName?: true
     photoKey?: true
+    source?: true
     createdById?: true
     createdAt?: true
     approvedAt?: true
@@ -9835,6 +9840,7 @@ export namespace Prisma {
     branchId?: true
     branchName?: true
     photoKey?: true
+    source?: true
     createdById?: true
     createdAt?: true
     approvedAt?: true
@@ -9939,6 +9945,7 @@ export namespace Prisma {
     branchId: string | null
     branchName: string | null
     photoKey: string | null
+    source: string
     createdById: string
     createdAt: Date
     approvedAt: Date | null
@@ -9975,6 +9982,7 @@ export namespace Prisma {
     branchId?: boolean
     branchName?: boolean
     photoKey?: boolean
+    source?: boolean
     createdById?: boolean
     createdAt?: boolean
     approvedAt?: boolean
@@ -9993,6 +10001,7 @@ export namespace Prisma {
     branchId?: boolean
     branchName?: boolean
     photoKey?: boolean
+    source?: boolean
     createdById?: boolean
     createdAt?: boolean
     approvedAt?: boolean
@@ -10011,6 +10020,7 @@ export namespace Prisma {
     branchId?: boolean
     branchName?: boolean
     photoKey?: boolean
+    source?: boolean
     createdById?: boolean
     createdAt?: boolean
     approvedAt?: boolean
@@ -10029,6 +10039,7 @@ export namespace Prisma {
     branchId?: boolean
     branchName?: boolean
     photoKey?: boolean
+    source?: boolean
     createdById?: boolean
     createdAt?: boolean
     approvedAt?: boolean
@@ -10037,7 +10048,7 @@ export namespace Prisma {
     checkedById?: boolean
   }
 
-  export type CashoutOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "spentAt" | "amount" | "description" | "category" | "branchId" | "branchName" | "photoKey" | "createdById" | "createdAt" | "approvedAt" | "approvedById" | "checkedAt" | "checkedById", ExtArgs["result"]["cashout"]>
+  export type CashoutOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "spentAt" | "amount" | "description" | "category" | "branchId" | "branchName" | "photoKey" | "source" | "createdById" | "createdAt" | "approvedAt" | "approvedById" | "checkedAt" | "checkedById", ExtArgs["result"]["cashout"]>
   export type CashoutInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -10062,6 +10073,7 @@ export namespace Prisma {
       branchId: string | null
       branchName: string | null
       photoKey: string | null
+      source: string
       createdById: string
       createdAt: Date
       approvedAt: Date | null
@@ -10500,6 +10512,7 @@ export namespace Prisma {
     readonly branchId: FieldRef<"Cashout", 'String'>
     readonly branchName: FieldRef<"Cashout", 'String'>
     readonly photoKey: FieldRef<"Cashout", 'String'>
+    readonly source: FieldRef<"Cashout", 'String'>
     readonly createdById: FieldRef<"Cashout", 'String'>
     readonly createdAt: FieldRef<"Cashout", 'DateTime'>
     readonly approvedAt: FieldRef<"Cashout", 'DateTime'>
@@ -60210,6 +60223,7 @@ export namespace Prisma {
     branchId: 'branchId',
     branchName: 'branchName',
     photoKey: 'photoKey',
+    source: 'source',
     createdById: 'createdById',
     createdAt: 'createdAt',
     approvedAt: 'approvedAt',
@@ -61491,6 +61505,7 @@ export namespace Prisma {
     branchId?: StringNullableFilter<"Cashout"> | string | null
     branchName?: StringNullableFilter<"Cashout"> | string | null
     photoKey?: StringNullableFilter<"Cashout"> | string | null
+    source?: StringFilter<"Cashout"> | string
     createdById?: StringFilter<"Cashout"> | string
     createdAt?: DateTimeFilter<"Cashout"> | Date | string
     approvedAt?: DateTimeNullableFilter<"Cashout"> | Date | string | null
@@ -61509,6 +61524,7 @@ export namespace Prisma {
     branchId?: SortOrderInput | SortOrder
     branchName?: SortOrderInput | SortOrder
     photoKey?: SortOrderInput | SortOrder
+    source?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     approvedAt?: SortOrderInput | SortOrder
@@ -61530,6 +61546,7 @@ export namespace Prisma {
     branchId?: StringNullableFilter<"Cashout"> | string | null
     branchName?: StringNullableFilter<"Cashout"> | string | null
     photoKey?: StringNullableFilter<"Cashout"> | string | null
+    source?: StringFilter<"Cashout"> | string
     createdById?: StringFilter<"Cashout"> | string
     createdAt?: DateTimeFilter<"Cashout"> | Date | string
     approvedAt?: DateTimeNullableFilter<"Cashout"> | Date | string | null
@@ -61548,6 +61565,7 @@ export namespace Prisma {
     branchId?: SortOrderInput | SortOrder
     branchName?: SortOrderInput | SortOrder
     photoKey?: SortOrderInput | SortOrder
+    source?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     approvedAt?: SortOrderInput | SortOrder
@@ -61573,6 +61591,7 @@ export namespace Prisma {
     branchId?: StringNullableWithAggregatesFilter<"Cashout"> | string | null
     branchName?: StringNullableWithAggregatesFilter<"Cashout"> | string | null
     photoKey?: StringNullableWithAggregatesFilter<"Cashout"> | string | null
+    source?: StringWithAggregatesFilter<"Cashout"> | string
     createdById?: StringWithAggregatesFilter<"Cashout"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Cashout"> | Date | string
     approvedAt?: DateTimeNullableWithAggregatesFilter<"Cashout"> | Date | string | null
@@ -65503,6 +65522,7 @@ export namespace Prisma {
     branchId?: string | null
     branchName?: string | null
     photoKey?: string | null
+    source?: string
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
@@ -65520,6 +65540,7 @@ export namespace Prisma {
     branchId?: string | null
     branchName?: string | null
     photoKey?: string | null
+    source?: string
     createdById: string
     createdAt?: Date | string
     approvedAt?: Date | string | null
@@ -65537,6 +65558,7 @@ export namespace Prisma {
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
@@ -65554,6 +65576,7 @@ export namespace Prisma {
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -65571,6 +65594,7 @@ export namespace Prisma {
     branchId?: string | null
     branchName?: string | null
     photoKey?: string | null
+    source?: string
     createdById: string
     createdAt?: Date | string
     approvedAt?: Date | string | null
@@ -65588,6 +65612,7 @@ export namespace Prisma {
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
@@ -65604,6 +65629,7 @@ export namespace Prisma {
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
@@ -70135,6 +70161,7 @@ export namespace Prisma {
     branchId?: SortOrder
     branchName?: SortOrder
     photoKey?: SortOrder
+    source?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     approvedAt?: SortOrder
@@ -70156,6 +70183,7 @@ export namespace Prisma {
     branchId?: SortOrder
     branchName?: SortOrder
     photoKey?: SortOrder
+    source?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     approvedAt?: SortOrder
@@ -70173,6 +70201,7 @@ export namespace Prisma {
     branchId?: SortOrder
     branchName?: SortOrder
     photoKey?: SortOrder
+    source?: SortOrder
     createdById?: SortOrder
     createdAt?: SortOrder
     approvedAt?: SortOrder
@@ -75725,6 +75754,7 @@ export namespace Prisma {
     branchId?: string | null
     branchName?: string | null
     photoKey?: string | null
+    source?: string
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
@@ -75741,6 +75771,7 @@ export namespace Prisma {
     branchId?: string | null
     branchName?: string | null
     photoKey?: string | null
+    source?: string
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
@@ -76493,6 +76524,7 @@ export namespace Prisma {
     branchId?: StringNullableFilter<"Cashout"> | string | null
     branchName?: StringNullableFilter<"Cashout"> | string | null
     photoKey?: StringNullableFilter<"Cashout"> | string | null
+    source?: StringFilter<"Cashout"> | string
     createdById?: StringFilter<"Cashout"> | string
     createdAt?: DateTimeFilter<"Cashout"> | Date | string
     approvedAt?: DateTimeNullableFilter<"Cashout"> | Date | string | null
@@ -82290,6 +82322,7 @@ export namespace Prisma {
     branchId?: string | null
     branchName?: string | null
     photoKey?: string | null
+    source?: string
     createdAt?: Date | string
     approvedAt?: Date | string | null
     approvedById?: string | null
@@ -83105,6 +83138,7 @@ export namespace Prisma {
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
@@ -83121,6 +83155,7 @@ export namespace Prisma {
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null
@@ -83137,6 +83172,7 @@ export namespace Prisma {
     branchId?: NullableStringFieldUpdateOperationsInput | string | null
     branchName?: NullableStringFieldUpdateOperationsInput | string | null
     photoKey?: NullableStringFieldUpdateOperationsInput | string | null
+    source?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     approvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     approvedById?: NullableStringFieldUpdateOperationsInput | string | null

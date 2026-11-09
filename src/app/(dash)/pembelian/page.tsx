@@ -10,14 +10,15 @@ const FINANCE_CATS = ["Keperluan Kantor", "Ongkos Kirim"]; // ponytail: samakan 
 export default async function PembelianPage() {
   const ctx = await requireCashoutInput();
   const categories = ctx.activeRole === "FINANCE" ? FINANCE_CATS : SALES_CATS;
-  const rows = await prisma.cashout.findMany({
-    where: { createdById: ctx.userId },
-    orderBy: { createdAt: "desc" },
-    take: 50,
-  });
+  const [rows, branches] = await Promise.all([
+    prisma.cashout.findMany({ where: { createdById: ctx.userId }, orderBy: { createdAt: "desc" }, take: 50 }),
+    prisma.branch.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true } }),
+  ]);
   return (
     <CashoutForm
       categories={categories}
+      branches={branches}
+      defaultBranchId={ctx.branchId ?? null}
       rows={rows.map((r) => ({
         id: r.id,
         spentAt: fmtWIB(r.spentAt),
@@ -25,6 +26,7 @@ export default async function PembelianPage() {
         description: r.description,
         category: r.category,
         branch: r.branchName ?? "-",
+        source: r.source,
         approved: r.approvedAt != null,
       }))}
     />

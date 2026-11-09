@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { compressImage } from "@/lib/image";
+import { notaJpeg } from "@/lib/image";
+import { CASHOUT_SOURCES, sourceLabel } from "@/lib/cashout-source";
 import { scanCashoutNota, saveCashout } from "@/server/actions/cashout";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
 
@@ -17,8 +18,10 @@ export type CashoutRow = {
   description: string;
   category: string | null;
   branch: string;
+  source: string;
   approved: boolean;
 };
+type Branch = { id: string; name: string };
 
 const rupiah = (n: number) => `Rp ${new Intl.NumberFormat("id-ID").format(n)}`;
 
@@ -31,7 +34,7 @@ function blobToBase64(blob: Blob): Promise<string> {
   });
 }
 
-type Draft = { amount: number; description: string; spentAt: string };
+type Draft = { amount: number; description: string; spentAt: string; source: string; branchId: string };
 
 const Field = ({ label, children }: { label: string; children: React.ReactNode }) => (
   <label className="block space-y-1">
@@ -40,7 +43,7 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
   </label>
 );
 
-export function CashoutForm({ rows, categories }: { rows: CashoutRow[]; categories: string[] }) {
+export function CashoutForm({ rows, categories, branches, defaultBranchId }: { rows: CashoutRow[]; categories: string[]; branches: Branch[]; defaultBranchId: string | null }) {
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
@@ -53,7 +56,7 @@ export function CashoutForm({ rows, categories }: { rows: CashoutRow[]; categori
     setBusy(true);
     setMsg("Memindai nota…");
     try {
-      const b64 = await blobToBase64(await compressImage(file));
+      const b64 = await blobToBase64(await notaJpeg(file));
       const r = await scanCashoutNota(b64, "image/jpeg");
       if (!r.ok || !r.photoKey) {
         setMsg(r.message ?? "Gagal pindai.");
@@ -61,10 +64,13 @@ export function CashoutForm({ rows, categories }: { rows: CashoutRow[]; categori
       }
       setPhotoKey(r.photoKey);
       const p = r.parsed!;
-      setDraft({ amount: p.amount, description: p.description, spentAt: p.spentAt ? p.spentAt.slice(0, 16) : "" });
+      setDraft({ amount: p.amount, description: p.description, spentAt: p.spentAt ? p.spentAt.slice(0, 16) : "", source: "KASIR", branchId: defaultBranchId ?? "" });
       setMsg(r.ocr ? "AI mengisi otomatis. Periksa lalu kirim." : "AI tak terbaca — isi manual.");
+    } catch {
+      setMsg("File tidak bisa dibaca. Pakai foto JPG/PNG atau PDF.");
     } finally {
       setBusy(false);
+      if (fileRef.current) fileRef.current.value = "";
     }
   }
 
@@ -77,7 +83,7 @@ export function CashoutForm({ rows, categories }: { rows: CashoutRow[]; categori
   }
 
   function manual() {
-    setDraft({ amount: 0, description: "", spentAt: "" });
+    setDraft({ amount: 0, description: "", spentAt: "", source: "KASIR", branchId: defaultBranchId ?? "" });
     setPhotoKey(null);
     setMsg("Isi manual lalu kirim.");
   }
@@ -90,6 +96,8 @@ export function CashoutForm({ rows, categories }: { rows: CashoutRow[]; categori
       description: draft.description,
       spentAt: draft.spentAt || null,
       category,
+      source: draft.source,
+      branchId: draft.branchId || null,
       photoKey,
     });
     setBusy(false);
@@ -108,21 +116,20 @@ export function CashoutForm({ rows, categories }: { rows: CashoutRow[]; categori
         <div>
           <h1 className="text-24 font-semibold">Rekap Pembelian</h1>
           <p className="text-14 text-muted-foreground">
-            Foto nota pembelian, AI isi datanya, lalu kirim ke Finance untuk disetujui.
+            Foto / PDF nota pembelian, AI isi datanya, lalu kirim ke Finance untuk disetujui.
           </p>
         </div>
         <input
           ref={fileRef}
           type="file"
-          accept="image/*"
-          capture="environment"
+          accept="image/*,application/pdf"
           className="hidden"
           onChange={(e) => e.target.files?.[0] && onCapture(e.target.files[0])}
         />
         {!draft && (
           <div className="flex shrink-0 gap-2">
             <Button disabled={busy || !category} onClick={() => fileRef.current?.click()}>
-              {busy ? "Memindai…" : "Foto nota pembelian"}
+              {busy ? "Memindai…" : "Foto / PDF nota"}
             </Button>
             <Button variant="outline" disabled={busy || !category} onClick={manual}>
               Input manual
@@ -162,12 +169,38 @@ export function CashoutForm({ rows, categories }: { rows: CashoutRow[]; categori
           <Field label="Keterangan">
             <Textarea value={draft.description} onChange={(e) => upd({ description: e.target.value })} rows={2} placeholder="Beli apa / untuk apa" />
           </Field>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Field label="Uang keluar dari">
+              <select value={draft.source} onChange={(e) => upd({ source: e.target.value })} className="h-9 w-full rounded-md border bg-background px-2 text-14">
+                {CASHOUT_SOURCES.map((s) => (
+                  <option key={s.key} value={s.key}>
+                    {s.label}
+                  </option>
+                ))}
+              </select>
+            </Field>
+            <Field label="Cabang">
+              <select value={draft.branchId} onChange={(e) => upd({ branchId: e.target.value })} className="h-9 w-full rounded-md border bg-background px-2 text-14">
+                <option value="">{draft.source === "KASIR" ? "Pilih cabang" : "- (bukan cabang / pusat)"}</option>
+                {branches.map((b) => (
+                  <option key={b.id} value={b.id}>
+                    {b.name}
+                  </option>
+                ))}
+              </select>
+            </Field>
+          </div>
+          {draft.source === "KASIR" ? (
+            <p className="text-12 text-muted-foreground">Mengurangi saldo cash laci kasir cabang ini.</p>
+          ) : (
+            <p className="text-12 text-muted-foreground">Dibayar dari rekening {sourceLabel(draft.source).replace("Bank ", "")}: tidak mengurangi saldo kasir.</p>
+          )}
           <Field label="Waktu (opsional)">
             <Input type="datetime-local" value={draft.spentAt} onChange={(e) => upd({ spentAt: e.target.value })} />
           </Field>
           <p className="text-12 text-muted-foreground">Jenis: {category || "-"}</p>
           <div className="flex flex-wrap gap-2">
-            <Button disabled={busy || !category || !draft.amount || !draft.description.trim()} onClick={submit}>
+            <Button disabled={busy || !category || !draft.amount || !draft.description.trim() || (draft.source === "KASIR" && !draft.branchId)} onClick={submit}>
               {busy ? "Menyimpan…" : "Kirim ke Finance"}
             </Button>
             <Button variant="outline" disabled={busy} onClick={reset}>Batal</Button>
@@ -188,6 +221,7 @@ export function CashoutForm({ rows, categories }: { rows: CashoutRow[]; categori
                   <p className="text-11 text-muted-foreground">
                     {r.spentAt}
                     {r.category ? ` · ${r.category}` : ""}
+                    {` · ${sourceLabel(r.source)}${r.branch !== "-" ? `, ${r.branch}` : ""}`}
                     {r.description ? ` · ${r.description}` : ""}
                   </p>
                 </div>
