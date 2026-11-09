@@ -6,6 +6,7 @@ import { PLATFORM_LABEL } from "@/server/marketplace/sync";
 import { loadProductGroups } from "@/server/marketplace/product-groups";
 import { productStatus as statusInfo } from "@/lib/channel-status";
 import { PRODUK_KE_MARKETPLACE, PRODUK_OFF_MSG } from "@/lib/flags";
+import { PushWebButton } from "@/components/channel/push-web-button";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 const TAG: Record<string, string> = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600", WEBSITE: "bg-sky-500/15 text-sky-600" };
@@ -56,6 +57,7 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
           {tanpaDetail > 0 && <p className="mt-1 text-12 text-amber-600">{tanpaDetail} produk Tokopedia detailnya (foto, kategori, merek, deskripsi) sedang disinkron di latar belakang. Muat ulang halaman beberapa menit lagi.</p>}
         </div>
         <div className="flex shrink-0 flex-wrap items-start gap-2">
+        <PushWebButton />
         <Link href="/channel/produk/sampah" className="inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-14 font-medium">
           <Trash2 className="size-4" /> Sampah{sampah.length ? ` (${sampah.length})` : ""}
         </Link>

@@ -7,6 +7,7 @@ import { requireChannel } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { loadProductGroupOf } from "@/server/marketplace/product-groups";
+import { pushTokopediaToWebCore } from "@/server/marketplace/website-import";
 
 type Res = { ok: boolean; message?: string };
 
@@ -63,4 +64,13 @@ export async function restoreProduct(platform: string, itemId: string): Promise<
   await log("produk_restore", `${platform}:${itemId}`, {});
   revalidatePath("/channel/produk");
   return { ok: true, message: "Produk dipulihkan." };
+}
+
+/** Tombol "Export ke Web" di Produk Master: kirim produk Tokopedia ke tirtonic.com. */
+export async function pushTokopediaToWeb(): Promise<Res> {
+  await requireChannel();
+  const r = await pushTokopediaToWebCore();
+  if (r.total >= 0) await log("produk_ke_web", "TOKOPEDIA", { total: r.total, created: r.created, updated: r.updated, skipped: r.skipped, failed: r.failed.length });
+  revalidatePath("/channel/produk");
+  return { ok: r.ok, message: r.message };
 }

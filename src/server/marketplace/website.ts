@@ -104,3 +104,21 @@ export async function websiteUpdate(productId: string, variantId: string, change
 export async function websiteShip(sn: string, resi: string, kurir: string): Promise<void> {
   await hub({ body: { action: "ship", sn, resi, kurir } });
 }
+
+export type WebImportProduct = {
+  ref: string;
+  name: string;
+  brand?: string | null;
+  category?: string | null;
+  description?: string | null;
+  weightGram?: number | null;
+  images?: string[];
+  price?: number;
+  stock?: number;
+  variants?: { warna: string; ukuran?: string; price: number; stock: number; image?: string | null }[];
+};
+
+/** Buat / perbarui produk di tirtonic.com (upsert per `ref`). */
+export async function websiteImport(product: WebImportProduct): Promise<{ created: boolean; skipped?: boolean }> {
+  return hub<{ created: boolean; skipped?: boolean }>({ body: { action: "import", product } });
+}
