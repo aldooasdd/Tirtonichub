@@ -318,7 +318,41 @@ export async function syncItems(platform: Platform): Promise<number> {
   }
   // Detail produk jalan di latar belakang: tombol Sinkron tak menunggu ribuan Get Product.
   if (platform === "TOKOPEDIA") void syncProductDetails(shop, items);
+  if (platform === "SHOPEE") void syncShopeeDetails(shop, [...new Set(items.map((i) => i.itemId))]);
   return items.length;
+}
+
+/** Produk Master Shopee: detail (foto, kategori, merek, deskripsi, atribut, berat) per produk, 50 per panggilan. */
+async function syncShopeeDetails(shop: Shop, itemIds: string[]) {
+  try {
+    const ds = await shopee.shopeeProductDetails(shop.accessToken, shop.shopId, itemIds);
+    for (const d of ds) {
+      const data = {
+        title: d.title,
+        status: d.status,
+        description: d.description,
+        category: d.category,
+        brand: d.brand,
+        images: d.images,
+        video: d.video ?? undefined,
+        attributes: d.attributes,
+        weight: d.weight,
+        dimensions: d.dimensions,
+        preOwned: d.preOwned,
+        detailUrl: d.detailUrl,
+        createdAtMp: d.createdAt,
+        updatedAtMp: d.updatedAt,
+      };
+      await prisma.marketplaceProduct.upsert({
+        where: { platform_productId: { platform: "SHOPEE", productId: d.productId } },
+        create: { platform: "SHOPEE", productId: d.productId, ...data },
+        update: data,
+      });
+    }
+    console.log(`[produk-master] Shopee detail ${ds.length}/${itemIds.length} produk`);
+  } catch (e) {
+    console.error("[produk-master] Shopee detail gagal:", e instanceof Error ? e.message.slice(-300) : e);
+  }
 }
 
 /** Produk Master: ambil detail (Get Product) untuk produk baru / yang berubah sejak sinkron terakhir. */

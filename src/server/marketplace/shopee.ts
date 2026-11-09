@@ -327,3 +327,78 @@ export async function shopeeMessages(token: string, shopId: string, convId: stri
 export async function shopeeSendText(token: string, shopId: string, toId: string, text: string): Promise<void> {
   await call("/api/v2/sellerchat/send_message", { method: "POST", token, shopId, body: { to_id: Number(toId), message_type: "text", content: { text } } });
 }
+
+/** Detail produk Shopee (get_item_base_info + nama kategori) untuk Produk Master. Format sama dengan detail Tokopedia. */
+export async function shopeeProductDetails(token: string, shopId: string, itemIds: string[]): Promise<import("./tiktok").MpProductDetail[]> {
+  // Nama kategori: sekali per sinkron (bahasa Indonesia), lalu rangkai dari induk ke anak.
+  const cat = await call<{ response?: { category_list?: { category_id: number; parent_category_id: number; original_category_name: string; display_category_name?: string }[] } }>(
+    "/api/v2/product/get_category",
+    { token, shopId, query: { language: "id" } },
+  ).catch(() => null);
+  const cats = new Map((cat?.response?.category_list ?? []).map((c) => [c.category_id, c]));
+  const chain = (id: number) => {
+    const out: string[] = [];
+    for (let c = cats.get(id); c && out.length < 8; c = cats.get(c.parent_category_id)) out.unshift(c.display_category_name || c.original_category_name);
+    return out.join(" › ") || null;
+  };
+
+  const STATUS: Record<string, string> = { NORMAL: "ACTIVATE", UNLIST: "SELLER_DEACTIVATED", BANNED: "PLATFORM_DEACTIVATED", REVIEWING: "PENDING" };
+  const out: import("./tiktok").MpProductDetail[] = [];
+  for (let i = 0; i < itemIds.length; i += 50) {
+    const j = await call<{
+      response: {
+        item_list: {
+          item_id: number;
+          item_name: string;
+          item_status: string;
+          category_id: number;
+          description?: string;
+          description_type?: string;
+          description_info?: { extended_description?: { field_list?: { field_type: string; text?: string; image_info?: { image_url?: string } }[] } };
+          image?: { image_url_list?: string[] };
+          video_info?: { video_url?: string; thumbnail_url?: string }[];
+          attribute_list?: { original_attribute_name: string; attribute_value_list?: { original_value_name?: string; value_unit?: string }[] }[];
+          weight?: string | number;
+          dimension?: { package_length?: number; package_width?: number; package_height?: number };
+          condition?: string;
+          brand?: { original_brand_name?: string };
+          create_time?: number;
+          update_time?: number;
+        }[];
+      };
+    }>("/api/v2/product/get_item_base_info", { token, shopId, query: { item_id_list: itemIds.slice(i, i + 50).join(",") } });
+    for (const it of j.response.item_list) {
+      const ext = it.description_info?.extended_description?.field_list ?? [];
+      const description =
+        it.description_type === "extended" && ext.length
+          ? ext.map((f) => (f.field_type === "image" && f.image_info?.image_url ? `<img src="${f.image_info.image_url}">` : (f.text ?? "").replace(/</g, "&lt;"))).join("\n")
+          : it.description || null;
+      const dm = it.dimension;
+      const brand = it.brand?.original_brand_name;
+      out.push({
+        productId: String(it.item_id),
+        title: it.item_name,
+        status: STATUS[it.item_status] ?? it.item_status,
+        tokoStatus: null,
+        description: description?.replace(/\u0000/g, "") || null,
+        category: chain(it.category_id),
+        brand: brand && !/^no ?brand$/i.test(brand) ? brand : null,
+        images: it.image?.image_url_list ?? [],
+        video: it.video_info?.[0]?.video_url ? { url: it.video_info[0].video_url, cover: it.video_info[0].thumbnail_url ?? null } : null,
+        attributes: (it.attribute_list ?? [])
+          .map((a) => ({ name: a.original_attribute_name, value: (a.attribute_value_list ?? []).map((v) => [v.original_value_name, v.value_unit].filter(Boolean).join(" ")).join(", ") }))
+          .filter((a) => a.value),
+        weight: it.weight ? `${it.weight} KILOGRAM` : null,
+        dimensions: dm?.package_length ? `${dm.package_length}×${dm.package_width}×${dm.package_height} CENTIMETER` : null,
+        minOrder: null,
+        isCod: null,
+        preOwned: it.condition ? it.condition === "USED" : null,
+        detailUrl: `https://shopee.co.id/product/${shopId}/${it.item_id}`,
+        createdAt: it.create_time ? new Date(it.create_time * 1000) : null,
+        updatedAt: it.update_time ? new Date(it.update_time * 1000) : null,
+        skus: [],
+      });
+    }
+  }
+  return out;
+}

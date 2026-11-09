@@ -63,7 +63,7 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
   const desc = readDescription(d?.description ?? null);
   const st = productStatus(d?.status);
   const toko = productStatus(d?.tokoStatus);
-  const title = d?.title ?? items[0]?.name ?? itemId;
+  const title = d?.title ?? listings.find((l) => l.platform === platform && l.itemId === itemId)?.title ?? items[0]?.name ?? itemId;
   const stock = items.reduce((n, v) => n + v.stock, 0);
 
   return (
@@ -171,7 +171,7 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
               variants={Object.fromEntries(items.map((i) => [i.modelId, i.variant ?? i.sku ?? i.name]))}
             />
           )}
-          {!d && <p className="rounded-md bg-amber-500/10 p-3 text-14 text-amber-700">Detail produk belum tersinkron. Sinkron detail berjalan bertahap tiap jam.</p>}
+          {!d && platform !== "WEBSITE" && <p className="rounded-md bg-amber-500/10 p-3 text-14 text-amber-700">Detail produk belum tersinkron. Sinkron detail berjalan bertahap tiap jam.</p>}
         </div>
       </section>
 
