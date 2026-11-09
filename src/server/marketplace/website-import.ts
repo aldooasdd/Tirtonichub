@@ -20,17 +20,17 @@ function splitVariant(label: string): { warna: string; ukuran: string } {
 type PushResult = { ok: boolean; message: string; total: number; created: number; updated: number; skipped: number; failed: string[] };
 
 /** Kirim SEMUA produk Tokopedia di Produk Master ke tirtonic.com (detail + varian + stok).
- *  Upsert per produk (ref TOKOPEDIA:<itemId>) → aman diulang untuk update. Produk yang sudah ada
- *  di web (nama sama, dibuat manual) dilewati oleh web. */
-export async function pushTokopediaToWebCore(): Promise<PushResult> {
+ *  Upsert per produk (ref TOKOPEDIA:<itemId>) → aman diulang untuk update. Produk web bernama sama
+ *  (dibuat manual) ditimpa oleh web. */
+export async function pushTokopediaToWebCore(itemIds?: string[]): Promise<PushResult> {
   if (!websiteReady()) return { ok: false, message: "POINTS_API_SECRET belum diset — Tirtonichub belum tersambung ke tirtonic.com.", total: -1, created: 0, updated: 0, skipped: 0, failed: [] };
 
   const [items, details] = await Promise.all([
     prisma.marketplaceItem.findMany({
-      where: { platform: "TOKOPEDIA", deletedAt: null, shopId: { not: DEMO }, NOT: { skuStatus: "DEACTIVATED" } },
+      where: { platform: "TOKOPEDIA", deletedAt: null, shopId: { not: DEMO }, NOT: { skuStatus: "DEACTIVATED" }, ...(itemIds ? { itemId: { in: itemIds } } : {}) },
       orderBy: { modelId: "asc" },
     }),
-    prisma.marketplaceProduct.findMany({ where: { platform: "TOKOPEDIA" } }),
+    prisma.marketplaceProduct.findMany({ where: { platform: "TOKOPEDIA", ...(itemIds ? { productId: { in: itemIds } } : {}) } }),
   ]);
   const det = new Map(details.map((d) => [d.productId, d]));
   const groups = new Map<string, typeof items>();
@@ -66,6 +66,6 @@ export async function pushTokopediaToWebCore(): Promise<PushResult> {
       }
     }));
   }
-  const msg = `${payloads.length} produk Tokopedia → tirtonic.com: ${created} baru, ${updated} diperbarui, ${skipped} dilewati (sudah ada di web)${failed.length ? `, ${failed.length} gagal (${failed.slice(0, 3).join("; ")})` : ""}.`;
+  const msg = `${payloads.length} produk Tokopedia → tirtonic.com: ${created} baru, ${updated} diperbarui${failed.length ? `, ${failed.length} gagal (${failed.slice(0, 3).join("; ")})` : ""}.`;
   return { ok: failed.length === 0, message: msg, total: payloads.length, created, updated, skipped, failed };
 }

@@ -3,32 +3,31 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Globe } from "lucide-react";
-import { pushTokopediaToWeb } from "@/server/actions/produk-master";
+import { pushProductToWeb } from "@/server/actions/produk-master";
 
-/** Kirim semua produk Tokopedia ke tirtonic.com (bisa diklik ulang untuk update stok/detail). */
-export function PushWebButton() {
+/** Export 1 produk Tokopedia ke tirtonic.com (detail, foto, varian, stok). Kalau sudah ada di web → ditimpa. */
+export function PushWebButton({ itemId, onWeb }: { itemId: string; onWeb: boolean }) {
   const router = useRouter();
   const [pending, start] = useTransition();
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   return (
-    <div className="flex flex-col items-end gap-1">
+    <div className="flex flex-col items-start gap-1">
       <button
         type="button"
         disabled={pending}
-        onClick={() => {
-          if (!confirm("Export semua produk Tokopedia (detail, foto, varian, stok) ke tirtonic.com? Produk yang sudah ada di web dilewati.")) return;
-          setMsg(null);
+        onClick={() =>
+          (!onWeb || confirm("Produk ini sudah ada di tirtonic.com. Timpa dengan data Tokopedia (nama, foto, deskripsi, varian, harga, stok)?")) &&
           start(async () => {
-            const r = await pushTokopediaToWeb();
+            const r = await pushProductToWeb(itemId).catch(() => ({ ok: false, message: "Gagal. Coba lagi." }));
             setMsg({ ok: r.ok, text: r.message ?? "" });
-            router.refresh();
-          });
-        }}
-        className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-md border px-3 text-14 font-medium text-sky-600 disabled:opacity-40"
+            if (r.ok) router.refresh();
+          })
+        }
+        className="inline-flex h-8 items-center gap-1 whitespace-nowrap rounded-md border px-2.5 text-12 font-medium text-sky-600 disabled:opacity-40"
       >
-        <Globe className="size-4" /> {pending ? "Mengekspor…" : "Export ke Web"}
+        <Globe className="size-3.5" /> {pending ? "Mengirim…" : onWeb ? "Export ulang" : "Export ke Web"}
       </button>
-      {msg && <p className={`max-w-xs text-right text-12 ${msg.ok ? "text-emerald-600" : "text-amber-700"}`}>{msg.text}</p>}
+      {msg && <p className={`max-w-[160px] text-12 ${msg.ok ? "text-emerald-600" : "text-destructive"}`}>{msg.text}</p>}
     </div>
   );
 }

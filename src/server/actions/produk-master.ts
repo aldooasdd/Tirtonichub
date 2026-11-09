@@ -66,11 +66,13 @@ export async function restoreProduct(platform: string, itemId: string): Promise<
   return { ok: true, message: "Produk dipulihkan." };
 }
 
-/** Tombol "Export ke Web" di Produk Master: kirim produk Tokopedia ke tirtonic.com. */
-export async function pushTokopediaToWeb(): Promise<Res> {
+/** Tombol "Export ke Web" per produk di Produk Master: kirim 1 produk Tokopedia ke tirtonic.com. */
+export async function pushProductToWeb(itemId: string): Promise<Res> {
   await requireChannel();
-  const r = await pushTokopediaToWebCore();
-  if (r.total >= 0) await log("produk_ke_web", "TOKOPEDIA", { total: r.total, created: r.created, updated: r.updated, skipped: r.skipped, failed: r.failed.length });
+  const r = await pushTokopediaToWebCore([itemId]);
+  if (r.total === 0) return { ok: false, message: "Produk Tokopedia tidak ditemukan / nonaktif." };
+  if (r.total > 0) await log("produk_ke_web", `TOKOPEDIA:${itemId}`, { created: r.created, updated: r.updated });
   revalidatePath("/channel/produk");
-  return { ok: r.ok, message: r.message };
+  if (r.failed.length) return { ok: false, message: r.failed[0] };
+  return { ok: true, message: r.created ? "Masuk ke web." : "Diperbarui di web (ditimpa)." };
 }

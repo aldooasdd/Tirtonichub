@@ -57,7 +57,6 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
           {tanpaDetail > 0 && <p className="mt-1 text-12 text-amber-600">{tanpaDetail} produk Tokopedia detailnya (foto, kategori, merek, deskripsi) sedang disinkron di latar belakang. Muat ulang halaman beberapa menit lagi.</p>}
         </div>
         <div className="flex shrink-0 flex-wrap items-start gap-2">
-        <PushWebButton />
         <Link href="/channel/produk/sampah" className="inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-14 font-medium">
           <Trash2 className="size-4" /> Sampah{sampah.length ? ` (${sampah.length})` : ""}
         </Link>
@@ -112,6 +111,7 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
                 <th className="p-3">Dijual di (stok)</th>
                 <th className="p-3">Kategori</th>
                 <th className="p-3 text-right">Harga</th>
+                <th className="p-3">Web</th>
               </tr>
             </thead>
             <tbody>
@@ -155,6 +155,13 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
                     </td>
                     <td className="p-3 text-muted-foreground">{g.category ?? "-"}</td>
                     <td className="p-3 text-right whitespace-nowrap tabular-nums">{min === max ? rupiah(min) : `${rupiah(min)} – ${rupiah(max)}`}</td>
+                    <td className="p-3">
+                      {(() => {
+                        const toko = g.listings.find((l) => l.platform === "TOKOPEDIA" && !l.demo);
+                        const onWeb = g.listings.some((l) => l.platform === "WEBSITE");
+                        return toko ? <PushWebButton itemId={toko.itemId} onWeb={onWeb} /> : <span className="text-12 text-muted-foreground">-</span>;
+                      })()}
+                    </td>
                   </tr>
                 );
               })}
