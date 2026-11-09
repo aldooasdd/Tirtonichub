@@ -1,7 +1,11 @@
 "use client";
 
 import * as React from "react";
+import { useRouter } from "next/navigation";
+import { Pencil } from "lucide-react";
 import type { CashSessionRow, Buckets } from "@/lib/cash";
+import { updateCashSession } from "@/server/actions/cash";
+import { fmtInt, parseInt0 } from "@/lib/money-input";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 const total = (b: Buckets) => b.cash + b.mandiri + b.bca + b.bri;
@@ -23,10 +27,77 @@ function Saldo({ b }: { b: Buckets }) {
   );
 }
 
+const KEYS = [
+  ["cash", "Cash"],
+  ["mandiri", "Mandiri"],
+  ["bca", "BCA"],
+  ["bri", "BRI"],
+] as const;
+
+/** Finance: koreksi saldo buka (+ tutup bila sudah ditutup). */
+function EditRow({ r, onDone }: { r: CashSessionRow; onDone: () => void }) {
+  const router = useRouter();
+  const [pending, start] = React.useTransition();
+  const [err, setErr] = React.useState("");
+  const [open, setOpen] = React.useState(() => Object.fromEntries(KEYS.map(([k]) => [k, fmtInt(r.open[k])])) as Record<keyof Buckets, string>);
+  const [close, setClose] = React.useState(() => Object.fromEntries(KEYS.map(([k]) => [k, fmtInt(r.close?.[k] ?? 0)])) as Record<keyof Buckets, string>);
+  const num = (v: Record<keyof Buckets, string>): Buckets => ({ cash: parseInt0(v.cash), mandiri: parseInt0(v.mandiri), bca: parseInt0(v.bca), bri: parseInt0(v.bri) });
+  const inputs = (v: Record<keyof Buckets, string>, set: (x: Record<keyof Buckets, string>) => void) => (
+    <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
+      {KEYS.map(([k, label]) => (
+        <label key={k} className="flex flex-col gap-1 text-12 text-muted-foreground">
+          {label}
+          <input inputMode="numeric" value={v[k]} onChange={(e) => set({ ...v, [k]: fmtInt(e.target.value) })} className="h-8 rounded-md border bg-background px-2 text-right text-14 text-foreground tabular-nums" />
+        </label>
+      ))}
+    </div>
+  );
+  return (
+    <tr>
+      <td colSpan={8} className="pb-3">
+        <form
+          className="space-y-3 rounded-lg border bg-muted/30 p-3"
+          onSubmit={(e) => {
+            e.preventDefault();
+            setErr("");
+            start(async () => {
+              const res = await updateCashSession(r.id, num(open), r.closeAt ? num(close) : null).catch(() => ({ ok: false, message: "Gagal. Muat ulang halaman." }));
+              if (!res.ok) return setErr(res.message ?? "Gagal.");
+              onDone();
+              router.refresh();
+            });
+          }}
+        >
+          <div>
+            <p className="mb-1 text-12 font-semibold">Saldo buka</p>
+            {inputs(open, setOpen)}
+          </div>
+          {r.closeAt && (
+            <div>
+              <p className="mb-1 text-12 font-semibold">Saldo tutup</p>
+              {inputs(close, setClose)}
+            </div>
+          )}
+          <div className="flex flex-wrap items-center justify-end gap-2">
+            {err && <span className="mr-auto text-12 text-destructive">{err}</span>}
+            <button type="button" onClick={onDone} className="h-8 px-3 text-12 text-muted-foreground">
+              Batal
+            </button>
+            <button type="submit" disabled={pending} className="h-8 rounded-md bg-primary px-3 text-12 font-medium text-primary-foreground disabled:opacity-50">
+              {pending ? "Menyimpan…" : "Simpan koreksi"}
+            </button>
+          </div>
+        </form>
+      </td>
+    </tr>
+  );
+}
+
 const PREVIEW = 3; // baris per cabang sebelum "lihat semua"
 
 export function CashSessionHistory({ rows }: { rows: CashSessionRow[] }) {
   const [all, setAll] = React.useState(false);
+  const [editing, setEditing] = React.useState<string | null>(null);
 
   // Kelompokkan per cabang, urutan cabang ikut kemunculan pertama (terbaru dulu sudah dari loader).
   const groups = new Map<string, { name: string; rows: CashSessionRow[] }>();
@@ -61,11 +132,13 @@ export function CashSessionHistory({ rows }: { rows: CashSessionRow[] }) {
                         <th className="pb-2 text-left font-medium">Tutup</th>
                         <th className="pb-2 text-left font-medium">Oleh</th>
                         <th className="pb-2 text-right font-medium">Saldo tutup</th>
+                        <th className="pb-2" />
                       </tr>
                     </thead>
                     <tbody>
                       {shown.map((r) => (
-                        <tr key={r.id} className="border-t align-top">
+                        <React.Fragment key={r.id}>
+                        <tr className="border-t align-top">
                           <td className="py-2 whitespace-nowrap text-muted-foreground">{tgl(r.date)}</td>
                           <td className="py-2 whitespace-nowrap text-emerald-600">{jam(r.openAt)}</td>
                           <td className="py-2">{r.openBy}</td>
@@ -79,7 +152,14 @@ export function CashSessionHistory({ rows }: { rows: CashSessionRow[] }) {
                           ) : (
                             <td className="py-2 text-amber-600" colSpan={3}>Belum ditutup</td>
                           )}
+                          <td className="py-2 text-right">
+                            <button type="button" aria-label="Ubah saldo" title="Ubah saldo (Finance)" onClick={() => setEditing(editing === r.id ? null : r.id)} className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground">
+                              <Pencil className="size-3.5" />
+                            </button>
+                          </td>
                         </tr>
+                        {editing === r.id && <EditRow r={r} onDone={() => setEditing(null)} />}
+                        </React.Fragment>
                       ))}
                     </tbody>
                   </table>
