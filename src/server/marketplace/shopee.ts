@@ -191,6 +191,7 @@ export type MpItem = {
   productUpdatedAt?: number;
   image?: string | null; // Shopee: foto produk
   active?: boolean; // Shopee: false = UNLIST (tidak tayang)
+  variant?: string | null; // Shopee: nama model
 };
 
 export async function shopeeItems(token: string, shopId: string): Promise<MpItem[]> {
@@ -254,6 +255,7 @@ export async function shopeeItems(token: string, shopId: string): Promise<MpItem
           warehouseId: null,
           image,
           active,
+          variant: md.model_name || null,
         });
       }
     }
