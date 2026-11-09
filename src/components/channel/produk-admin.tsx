@@ -68,7 +68,7 @@ export function ProdukAdmin({ platform, itemId, title, deleted }: { platform: st
         )}
       </div>
       {msg && <p className={`text-12 ${msg.ok ? "text-emerald-600" : "text-destructive"}`}>{msg.text}</p>}
-      <p className="text-12 text-muted-foreground">Nama, SKU & hapus hanya berlaku di Tirtonichub, tidak mengubah Shopee / Tokopedia / Tirtonic.com.</p>
+      <p className="text-12 text-muted-foreground">Nama ikut diubah di Tirtonic.com. SKU & hapus hanya di Tirtonichub. Shopee / Tokopedia tidak diubah.</p>
     </div>
   );
 }

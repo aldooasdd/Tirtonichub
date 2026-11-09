@@ -101,6 +101,10 @@ export async function websiteUpdate(productId: string, variantId: string, change
   await hub({ body: { action: "update", productId, variantId: variantId || undefined, ...change } });
 }
 
+export async function websiteRename(productId: string, name: string): Promise<void> {
+  await hub({ body: { action: "update", productId, name } });
+}
+
 export async function websiteShip(sn: string, resi: string, kurir: string): Promise<void> {
   await hub({ body: { action: "ship", sn, resi, kurir } });
 }
