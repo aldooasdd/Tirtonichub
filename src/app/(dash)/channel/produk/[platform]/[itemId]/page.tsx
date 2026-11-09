@@ -7,6 +7,7 @@ import { fmtWIB } from "@/lib/datetime";
 import { productStatus } from "@/lib/channel-status";
 import { DEMO, PLATFORM_LABEL } from "@/server/marketplace/sync";
 import { ItemTable } from "@/components/channel/item-table";
+import { loadProductGroupOf } from "@/server/marketplace/product-groups";
 import { ProductOps } from "@/components/channel/product-ops";
 
 const TAG: Record<string, string> = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600", WEBSITE: "bg-sky-500/15 text-sky-600" };
@@ -43,10 +44,17 @@ function Info({ label, children }: { label: string; children: React.ReactNode })
 export default async function ProdukDetailPage({ params }: { params: Promise<{ platform: string; itemId: string }> }) {
   await requireChannel();
   const { platform, itemId } = await params;
-  const [items, d] = await Promise.all([
+  const [items, d, group] = await Promise.all([
     prisma.marketplaceItem.findMany({ where: { platform, itemId }, orderBy: [{ variant: "asc" }, { name: "asc" }] }),
     prisma.marketplaceProduct.findUnique({ where: { platform_productId: { platform, productId: itemId } } }),
+    loadProductGroupOf(platform, itemId),
   ]);
+  // Produk bernama sama di toko lain → harga & stok per marketplace di satu halaman.
+  const listings = group?.listings ?? [];
+  const others = listings.filter((l) => !(l.platform === platform && l.itemId === itemId));
+  const otherItems = others.length
+    ? await prisma.marketplaceItem.findMany({ where: { OR: others.map((l) => ({ platform: l.platform, itemId: l.itemId })) }, orderBy: [{ variant: "asc" }, { name: "asc" }] })
+    : [];
   if (items.length === 0 && !d) notFound();
 
   const images = (d?.images as string[] | undefined) ?? [];
@@ -99,6 +107,20 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
               {toko && d?.tokoStatus !== d?.status && <span className={toko.tone}>Tokopedia: {toko.label}</span>}
               {items[0]?.shopId === DEMO && <span className="text-amber-600">contoh</span>}
             </div>
+            {listings.length > 1 && (
+              <div className="flex flex-wrap items-center gap-1.5 text-12">
+                <span className="text-muted-foreground">Dijual di:</span>
+                {listings.map((l) => (
+                  <Link
+                    key={`${l.platform}:${l.itemId}`}
+                    href={`/channel/produk/${l.platform}/${l.itemId}`}
+                    className={`rounded px-1.5 py-0.5 font-medium ${TAG[l.platform] ?? "bg-muted"} ${l.platform === platform && l.itemId === itemId ? "ring-1 ring-current" : "hover:underline"}`}
+                  >
+                    {PLATFORM_LABEL[l.platform as keyof typeof PLATFORM_LABEL] ?? l.platform} · stok {l.stock}
+                  </Link>
+                ))}
+              </div>
+            )}
             <h1 className="text-24 font-semibold">{title}</h1>
             {platform === "TOKOPEDIA" && items[0]?.shopId !== DEMO && (
               <Link href={`/channel/produk/${platform}/${itemId}/edit`} className="mr-4 inline-flex items-center gap-1 text-14 font-medium text-primary hover:underline">
@@ -153,10 +175,19 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
         </div>
       </section>
 
-      <section className="space-y-2">
-        <h2 className="text-18 font-semibold">Varian ({items.length})</h2>
+      {[{ platform, rows: items }, ...others.map((l) => ({ platform: l.platform, rows: otherItems.filter((i) => i.platform === l.platform && i.itemId === l.itemId) }))].map((sec, n) => (
+      <section key={`${sec.platform}-${n}`} className="space-y-2">
+        <h2 className="text-18 font-semibold">
+          {listings.length > 1 ? (
+            <>
+              Harga & stok di <span className={`rounded px-1.5 py-0.5 text-14 ${TAG[sec.platform] ?? "bg-muted"}`}>{PLATFORM_LABEL[sec.platform as keyof typeof PLATFORM_LABEL] ?? sec.platform}</span> ({sec.rows.length} varian)
+            </>
+          ) : (
+            <>Varian ({sec.rows.length})</>
+          )}
+        </h2>
         <ItemTable
-          rows={items.map((i) => ({
+          rows={sec.rows.map((i) => ({
             id: i.id,
             platform: i.platform,
             demo: i.shopId === DEMO,
@@ -169,6 +200,7 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
           }))}
         />
       </section>
+      ))}
 
       {(desc.text || desc.images.length > 0) && (
         <section className="space-y-3 rounded-lg border bg-card p-4">

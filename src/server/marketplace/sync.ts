@@ -307,6 +307,7 @@ export async function syncItems(platform: Platform): Promise<number> {
       stock: it.stock,
       warehouseId: it.warehouseId,
       ...(it.image ? { image: it.image } : {}),
+      ...(it.variant ? { variant: it.variant } : {}),
       ...(it.active !== undefined ? { skuStatus: it.active ? "NORMAL" : "DEACTIVATED" } : {}),
     };
     await prisma.marketplaceItem.upsert({
