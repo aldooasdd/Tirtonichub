@@ -1,3 +1,5 @@
+import Link from "next/link";
+import { ShopeeGudang } from "@/components/channel/shopee-gudang";
 import { requireChannel } from "@/server/auth/rbac";
 import { DEMO, activeShop, fresh } from "@/server/marketplace/sync";
 import * as ops from "@/server/marketplace/tiktok-ops";
@@ -16,8 +18,26 @@ const OPT_TYPE: Record<string, string> = {
 };
 
 /** Gudang & Pengiriman Tokopedia: status toko, daftar gudang, opsi pengiriman aktif per gudang. */
-export default async function GudangPage() {
+export default async function GudangPage({ searchParams }: { searchParams: Promise<{ p?: string }> }) {
   await requireChannel();
+  const isShopee = (await searchParams).p === "SHOPEE";
+  const tabs = (
+    <nav className="flex gap-2">
+      <Link href="/channel/gudang" className={`rounded-md px-3 py-1.5 text-14 font-medium ${!isShopee ? "bg-emerald-500/15 text-emerald-600" : "border text-muted-foreground"}`}>Tokopedia</Link>
+      <Link href="/channel/gudang?p=SHOPEE" className={`rounded-md px-3 py-1.5 text-14 font-medium ${isShopee ? "bg-orange-500/15 text-orange-600" : "border text-muted-foreground"}`}>Shopee</Link>
+    </nav>
+  );
+  if (isShopee)
+    return (
+      <div className="space-y-5">
+        <div>
+          <h1 className="text-24 font-semibold">Gudang & Pengiriman</h1>
+          <p className="text-14 text-muted-foreground">Alamat toko dan kurir Shopee. Data langsung dari Shopee.</p>
+        </div>
+        {tabs}
+        <ShopeeGudang />
+      </div>
+    );
   const shop = await activeShop("TOKOPEDIA");
   const head = (
     <div>
@@ -29,6 +49,7 @@ export default async function GudangPage() {
     return (
       <div className="space-y-5">
         {head}
+        {tabs}
         <p className="rounded-lg border bg-card py-10 text-center text-muted-foreground">Sambungkan toko Tokopedia asli dulu di Kelola Pesanan.</p>
       </div>
     );
@@ -53,6 +74,7 @@ export default async function GudangPage() {
   return (
     <div className="space-y-5">
       {head}
+      {tabs}
       <section className="flex flex-wrap items-center gap-x-6 gap-y-1 rounded-lg border bg-card p-4 text-14">
         <span>
           <span className="text-muted-foreground">Toko: </span>

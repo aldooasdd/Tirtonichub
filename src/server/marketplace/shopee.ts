@@ -33,6 +33,25 @@ export async function call<T>(path: string, opts: { method?: "GET" | "POST"; que
   return j;
 }
 
+/** Panggilan yang balasannya file (mis. label PDF). Error Shopee tetap JSON. */
+export async function callFile(path: string, opts: { body: unknown; token: string; shopId: string }): Promise<{ data: ArrayBuffer; type: string }> {
+  const ts = now();
+  const q = new URLSearchParams({ partner_id: pid(), timestamp: String(ts), access_token: opts.token, shop_id: opts.shopId });
+  q.set("sign", shopeeSign(pkey(), pid(), path, ts, opts.token, opts.shopId));
+  const res = await fetch(`${host()}${path}?${q}`, {
+    method: "POST",
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(opts.body),
+    signal: AbortSignal.timeout(30_000),
+  });
+  const type = res.headers.get("content-type") ?? "";
+  if (!res.ok || type.includes("json")) {
+    const j = (await res.json().catch(() => ({}))) as { error?: string; message?: string };
+    throw new Error(`Shopee ${path}: ${j.error || res.status} ${j.message ?? ""}`.trim());
+  }
+  return { data: await res.arrayBuffer(), type: type || "application/pdf" };
+}
+
 /** Link izin toko (dibuka user sekali). */
 export function shopeeAuthUrl(redirect: string): string {
   const path = "/api/v2/shop/auth_partner";

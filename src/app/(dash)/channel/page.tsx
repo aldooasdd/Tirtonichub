@@ -7,6 +7,7 @@ import { CHANNELS, DEMO, PLATFORM_LABEL, apiReady } from "@/server/marketplace/s
 import { ShopPanel } from "@/components/channel/shop-panel";
 import { OrderActions } from "@/components/channel/order-actions";
 import { WebShip } from "@/components/channel/web-ship";
+import { ShopeeMassShip, ShopeeOrderActions } from "@/components/channel/shopee-order-actions";
 import type { Prisma } from "@/generated/prisma";
 import type { OrderFinance } from "@/server/marketplace/tiktok";
 
@@ -98,6 +99,9 @@ export default async function ChannelPage({ searchParams }: { searchParams: Prom
     };
   });
   const shopName = new Map(shops.map((s) => [s.platform, s.shopName]));
+  const shopeeToShip = (
+    await prisma.marketplaceOrder.findMany({ where: { platform: "SHOPEE", status: "READY_TO_SHIP", shopId: { not: DEMO } }, select: { orderSn: true }, orderBy: { orderedAt: "asc" }, take: 100 })
+  ).map((o) => o.orderSn);
 
   const href = (over: Partial<SP>) => {
     const v = { tab: tab.key === "semua" ? "" : tab.key, q, dari, sampai, p: platform ?? "", ...over };
@@ -171,6 +175,11 @@ export default async function ChannelPage({ searchParams }: { searchParams: Prom
             </Link>
           )}
         </form>
+        {shopeeToShip.length > 0 && (
+          <div className="px-4 pb-4">
+            <ShopeeMassShip sns={shopeeToShip} />
+          </div>
+        )}
       </section>
 
       <div className="flex items-center justify-between text-14 text-muted-foreground">
@@ -276,6 +285,7 @@ export default async function ChannelPage({ searchParams }: { searchParams: Prom
                   </div>
                 </div>
                 {o.platform === "WEBSITE" && <WebShip id={o.id} status={o.status} resi={o.trackingNo} kurir={o.courier} />}
+                {o.platform === "SHOPEE" && o.shopId !== DEMO && <ShopeeOrderActions sn={o.orderSn} status={o.status} trackingNo={o.trackingNo} />}
                 {o.platform === "TOKOPEDIA" && o.shopId !== DEMO && (
                   <OrderActions o={{ id: o.id, status: o.status, shippingType: o.shippingType, packageId: o.packageId, trackingNo: o.trackingNo }} />
                 )}
