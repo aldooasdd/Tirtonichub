@@ -51,7 +51,7 @@ export async function syncNow(platform: string): Promise<Res> {
   await requireChannel();
   if (!isChannel(platform)) return { ok: false, message: "Platform tidak dikenal." };
   try {
-    const o = await syncOrders(platform);
+    const o = await syncOrders(platform, 90); // manual: tarik 90 hari supaya pesanan lama ikut masuk
     const i = await syncItems(platform);
     return { ok: true, message: `${PLATFORM_LABEL[platform]}: ${o.total} order dicek (${o.baru} baru), ${i} produk${o.settlement ? `, ${o.settlement}` : ""}.` };
   } catch (e) {

@@ -299,7 +299,16 @@ export async function syncItems(platform: Platform): Promise<number> {
   const items: MpItem[] =
     platform === "SHOPEE" ? await shopee.shopeeItems(shop.accessToken, shop.shopId) : await tiktok.tiktokItems(shop.accessToken, shop.cipher ?? "");
   for (const it of items) {
-    const data = { shopId: shop.shopId, name: it.name, sku: it.sku, price: it.price, stock: it.stock, warehouseId: it.warehouseId };
+    const data = {
+      shopId: shop.shopId,
+      name: it.name,
+      sku: it.sku,
+      price: it.price,
+      stock: it.stock,
+      warehouseId: it.warehouseId,
+      ...(it.image ? { image: it.image } : {}),
+      ...(it.active !== undefined ? { skuStatus: it.active ? "NORMAL" : "DEACTIVATED" } : {}),
+    };
     await prisma.marketplaceItem.upsert({
       where: { platform_itemId_modelId: { platform, itemId: it.itemId, modelId: it.modelId } },
       create: { platform, itemId: it.itemId, modelId: it.modelId, ...data },
