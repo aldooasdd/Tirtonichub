@@ -151,9 +151,18 @@ async function upsertOrders(platform: Platform, shopId: string, orders: MpOrder[
   return fresh.length;
 }
 
+const backfilled = new Set<string>();
+
 /** Tarik order (default 7 hari terakhir) + dana cair + resi. Kembalikan jumlah order & order baru. */
-export async function syncOrders(platform: Platform, days = 7): Promise<{ total: number; baru: number }> {
+export async function syncOrders(platform: Platform, days = 7): Promise<{ total: number; baru: number; settlement?: string }> {
   const shop = await mustShop(platform);
+  // Belum punya riwayat (tak ada pesanan >14 hari): tarik 90 hari sekali per proses server (pesanan lama + settlement-nya).
+  if (shop.shopId !== DEMO && !backfilled.has(shop.id)) {
+    backfilled.add(shop.id);
+    const old = await prisma.marketplaceOrder.findFirst({ where: { platform, shopId: shop.shopId, orderedAt: { lt: new Date(Date.now() - 14 * 86400_000) } }, select: { id: true } });
+    if (!old) days = Math.max(days, 90);
+  }
+  let settlement: string | undefined;
   const from = new Date(Date.now() - days * 86400_000);
   let orders: MpOrder[];
   if (shop.shopId === DEMO) {
@@ -168,17 +177,27 @@ export async function syncOrders(platform: Platform, days = 7): Promise<{ total:
   const baru = await upsertOrders(platform, shop.shopId, orders, true);
 
   if (shop.shopId !== DEMO && platform === "SHOPEE") {
-    // Dana cair & resi per order (maks 30 per sinkron biar tak kena limit).
-    const needEscrow = await prisma.marketplaceOrder.findMany({ where: { platform, shopId: shop.shopId, status: "COMPLETED", netAmount: null }, take: 30 });
+    // Settlement & resi per order (maks 100 per sinkron biar tak kena limit; sisanya sinkron berikutnya).
+    const needEscrow = await prisma.marketplaceOrder.findMany({ where: { platform, shopId: shop.shopId, status: "COMPLETED", netAmount: null }, orderBy: { orderedAt: "desc" }, take: 100 });
+    let okE = 0;
+    let errE = "";
     for (const o of needEscrow) {
-      const e = await shopee.shopeeEscrow(shop.accessToken, shop.shopId, o.orderSn).catch(() => null);
+      const e = await shopee.shopeeEscrow(shop.accessToken, shop.shopId, o.orderSn).catch((x) => {
+        errE = x instanceof Error ? x.message : String(x);
+        return null;
+      });
       if (!e) continue;
+      okE++;
       await prisma.marketplaceOrder.update({ where: { id: o.id }, data: { netAmount: e.amount } });
       await prisma.marketplacePayout.upsert({
         where: { platform_refId: { platform, refId: o.orderSn } },
         create: { platform, shopId: shop.shopId, refId: o.orderSn, ...e, paidAt: o.updatedAtMp },
         update: e,
       });
+    }
+    if (needEscrow.length) {
+      settlement = `settlement ${okE}/${needEscrow.length} pesanan selesai${errE ? ` (error: ${errE.slice(0, 200)})` : ""}`;
+      if (errE) console.error(`[settlement] Shopee ${settlement}`);
     }
     const needResi = await prisma.marketplaceOrder.findMany({
       where: { platform, shopId: shop.shopId, trackingNo: null, status: { in: ["READY_TO_SHIP", "PROCESSED", "SHIPPED"] } },
@@ -209,7 +228,7 @@ export async function syncOrders(platform: Platform, days = 7): Promise<{ total:
     void syncOrderFinance(shop);
   }
   await prisma.marketplaceShop.update({ where: { id: shop.id }, data: { lastSyncAt: new Date() } });
-  return { total: orders.length, baru };
+  return { total: orders.length, baru, settlement };
 }
 
 let financeRunning = false;
