@@ -144,7 +144,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Produk Master", href: "/channel/produk", icon: Boxes },
         { label: "Settlement Marketplace", href: "/channel/dana", icon: Wallet },
         { label: "Gudang & Pengiriman", href: "/channel/gudang", icon: Warehouse },
-        { label: "Iklan Shopee", href: "/channel/iklan", icon: Megaphone },
+        { label: "Iklan", href: "/channel/iklan", icon: Megaphone },
       ],
     });
   }
