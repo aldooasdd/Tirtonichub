@@ -11,7 +11,7 @@ export default async function PembelianPage() {
   const ctx = await requireCashoutInput();
   const categories = ctx.activeRole === "FINANCE" ? FINANCE_CATS : SALES_CATS;
   const [rows, branches] = await Promise.all([
-    prisma.cashout.findMany({ where: { createdById: ctx.userId }, orderBy: { createdAt: "desc" }, take: 50 }),
+    prisma.cashout.findMany({ where: { createdById: ctx.userId }, orderBy: { createdAt: "desc" }, take: 50, include: { createdBy: { select: { branch: { select: { name: true } } } } } }),
     prisma.branch.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true } }),
   ]);
   return (
@@ -25,7 +25,7 @@ export default async function PembelianPage() {
         amount: r.amount,
         description: r.description,
         category: r.category,
-        branch: r.branchName ?? "-",
+        branch: r.branchName ?? r.createdBy.branch?.name ?? "-", // data lama tanpa cabang → cabang akun penginput
         source: r.source,
         approved: r.approvedAt != null,
       }))}

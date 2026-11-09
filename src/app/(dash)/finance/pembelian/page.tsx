@@ -10,7 +10,7 @@ export default async function FinancePembelianPage() {
     where: { approvedAt: { not: null } },
     orderBy: { createdAt: "desc" },
     take: 500,
-    include: { createdBy: { select: { fullName: true } } },
+    include: { createdBy: { select: { fullName: true, branch: { select: { name: true } } } } },
   });
   const checkerIds = [...new Set(rows.map((r) => r.checkedById).filter(Boolean) as string[])];
   const checkers = checkerIds.length
@@ -24,11 +24,11 @@ export default async function FinancePembelianPage() {
     tgl: fmtWIB(r.spentAt),
     spentAtLocal: new Date(r.spentAt.getTime() + 7 * 3600_000).toISOString().slice(0, 16), // datetime-local WIB
     category: r.category ?? "-",
-    branch: r.branchName ?? "-",
+    branch: r.branchName ?? r.createdBy.branch?.name ?? "-", // data lama tanpa cabang → cabang akun penginput
     branchId: r.branchId,
     source: r.source,
     description: r.description,
-    by: r.createdBy.fullName,
+    by: r.createdBy.fullName + (r.createdBy.branch?.name ? ` · ${r.createdBy.branch.name}` : ""),
     amount: r.amount,
     photoKey: r.photoKey,
     checked: r.checkedAt != null,

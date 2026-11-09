@@ -217,11 +217,14 @@ export function CashoutForm({ rows, categories, branches, defaultBranchId }: { r
             {rows.map((r) => (
               <div key={r.id} className="flex items-center justify-between gap-2 px-4 py-2">
                 <div className="min-w-0">
-                  <p className="truncate font-medium">{rupiah(r.amount)}</p>
+                  <p className="truncate font-medium">
+                    {rupiah(r.amount)}
+                    {r.branch !== "-" && <span className="ml-2 rounded bg-muted px-1.5 py-0.5 text-12 font-normal text-muted-foreground">{r.branch}</span>}
+                  </p>
                   <p className="text-11 text-muted-foreground">
                     {r.spentAt}
                     {r.category ? ` · ${r.category}` : ""}
-                    {` · ${sourceLabel(r.source)}${r.branch !== "-" ? `, ${r.branch}` : ""}`}
+                    {` · ${sourceLabel(r.source)}`}
                     {r.description ? ` · ${r.description}` : ""}
                   </p>
                 </div>
