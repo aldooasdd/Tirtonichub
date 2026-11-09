@@ -22,6 +22,7 @@ import {
   deleteBatch,
   submitItemToQc,
   submitBatchToQc,
+  addRawItem,
 } from "@/server/actions/raw-products";
 
 type Item = {
@@ -390,6 +391,51 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
       router.refresh();
     });
   }
+  // Tambah baris baru ke batch (disimpan dulu supaya punya id), lalu tampil di form.
+  function addRow(base: Row) {
+    start(async () => {
+      const r = await addRawItem(batchId, toFields(base));
+      if (!r.ok || !r.id) {
+        alert(r.message ?? "Gagal menambah.");
+        return;
+      }
+      setRows((rs) => [...rs, { ...base, id: r.id! }]);
+    });
+  }
+  function addSize(head: Row) {
+    addRow({ ...head, id: "", size: "", qty: "1", discount: "0", sku: "" });
+  }
+  function addProduct() {
+    const h = rows[0];
+    addRow({
+      id: "",
+      name: `Produk baru ${groups.length + 1}`,
+      brand: h?.brand ?? "",
+      color: "",
+      size: "",
+      sku: "",
+      qty: "1",
+      unit: h?.unit ?? "",
+      listPrice: "0",
+      discount: "0",
+      supplier: h?.supplier ?? "",
+      notaDate: h?.notaDate ?? "",
+    });
+  }
+  function deleteGroup(g: Row[]) {
+    if (!confirm(`Hapus produk "${g[0].name}" (${g.length} ukuran) dari draft?`)) return;
+    start(async () => {
+      for (const row of g) {
+        const r = await deleteRawProduct(row.id);
+        if (!r.ok) {
+          alert(r.message);
+          break;
+        }
+        setRows((rs) => rs.filter((x) => x.id !== row.id));
+      }
+      router.refresh();
+    });
+  }
   function deleteSize(id: string) {
     start(async () => {
       const r = await deleteRawProduct(id);
@@ -421,9 +467,16 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
         const groupNet = g.reduce((s, r) => s + rowTotal(r), 0);
         return (
           <div key={g.map((r) => r.id).sort().join(",")} className="space-y-2 rounded-md border p-3">
-            <Field label="Nama barang">
-              <Input value={head.name} onChange={(e) => setShared(ids, "name", e.target.value)} placeholder="Nama barang" />
-            </Field>
+            <div className="flex items-end gap-2">
+              <div className="flex-1">
+                <Field label="Nama barang">
+                  <Input value={head.name} onChange={(e) => setShared(ids, "name", e.target.value)} placeholder="Nama barang" />
+                </Field>
+              </div>
+              <Button size="sm" variant="ghost" disabled={pending} onClick={() => deleteGroup(g)} className="text-destructive" aria-label="Hapus produk">
+                <Trash2 className="mr-1 h-4 w-4" /> Hapus produk
+              </Button>
+            </div>
             <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
               <Field label="Merek">
                 <Input value={head.brand} onChange={(e) => setShared(ids, "brand", e.target.value)} placeholder="Merek" />
@@ -469,6 +522,9 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
                   <p className="pl-1 text-12 text-muted-foreground">Total Harga: {money(rowTotal(row), currency)}</p>
                 </div>
               ))}
+              <Button size="sm" variant="ghost" disabled={pending} onClick={() => addSize(head)}>
+                <Plus className="mr-1 h-4 w-4" /> Tambah ukuran
+              </Button>
             </div>
 
             {currency === "IDR" && (
@@ -482,6 +538,9 @@ function DraftBatch({ batchId, items }: { batchId: string; items: Item[] }) {
           </div>
         );
       })}
+      <Button variant="outline" className="w-full border-dashed" disabled={pending} onClick={addProduct}>
+        <Plus className="mr-1 h-4 w-4" /> Tambah produk
+      </Button>
     </div>
   );
 }

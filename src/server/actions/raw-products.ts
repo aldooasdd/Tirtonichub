@@ -386,3 +386,36 @@ export async function qcDecision(
   );
   return { ok: true };
 }
+
+/** Tambah 1 baris (produk / ukuran baru) ke batch draft yang sudah ada. Kembalikan id barunya. */
+export async function addRawItem(batchId: string, item: SaveItem): Promise<ActionResult & { id?: string }> {
+  const ctx = await requireFinance();
+  const ref = await prisma.rawProduct.findFirst({ where: { batchId, status: "DRAFT", ...ownerWhere(ctx) }, select: { currency: true, notaPhotoKey: true } });
+  if (!ref) return { ok: false, message: "Batch draft tidak ditemukan." };
+  const currency = currencyOf(ref.currency);
+  const p = priceCols(item, currency);
+  const row = await prisma.rawProduct.create({
+    data: {
+      batchId,
+      name: item.name.trim().slice(0, 200) || "Produk baru",
+      brand: clean(item.brand, 80),
+      color: clean(item.color, 40),
+      size: clean(item.size, 40),
+      sku: clean(item.sku, 60),
+      qty: Math.max(1, Math.round(item.qty) || 1),
+      unit: item.unit?.trim() || null,
+      currency,
+      listPrice: p.listPrice,
+      discount: p.discount,
+      unitPrice: p.unitPrice,
+      sellPrice: p.sellPrice,
+      supplier: item.supplier?.trim() || null,
+      notaDate: item.notaDate ? new Date(item.notaDate) : null,
+      notaPhotoKey: ref.notaPhotoKey,
+      status: "DRAFT",
+      createdById: ctx.userId,
+    },
+    select: { id: true },
+  });
+  return { ok: true, id: row.id };
+}
