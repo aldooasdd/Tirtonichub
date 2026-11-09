@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { requireChannel } from "@/server/auth/rbac";
 import { DEMO, activeShop, fresh } from "@/server/marketplace/sync";
+import { CreateView, GmsView, HourlyView, RecommendView } from "@/components/channel/shopee-ads-views";
 import { shopeeAdsBalance, shopeeAdsCampaigns, shopeeAdsDaily, type AdsCampaign, type AdsDay, type AdsMetric } from "@/server/marketplace/shopee";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(Math.round(n));
@@ -14,7 +15,15 @@ const wibDate = (d: Date) => new Date(d.getTime() + 7 * 3600_000).toISOString().
 const toShopee = (iso: string) => iso.split("-").reverse().join("-");
 const ISO = /^\d{4}-\d{2}-\d{2}$/;
 
-type SP = { from?: string; to?: string; p?: string };
+type SP = { from?: string; to?: string; p?: string; v?: string; d?: string; item?: string };
+
+const SUB = [
+  { key: "ringkasan", label: "Ringkasan" },
+  { key: "jam", label: "Per jam" },
+  { key: "gmv", label: "GMV Max" },
+  { key: "rekomendasi", label: "Saran produk" },
+  { key: "buat", label: "Buat iklan" },
+];
 
 const TABS = [
   { key: "SHOPEE", label: "Shopee", on: "bg-orange-500/15 text-orange-600" },
@@ -39,6 +48,7 @@ export default async function IklanPage({ searchParams }: { searchParams: Promis
   const sp = await searchParams;
   const { today, from, to } = range(sp);
   const tab = sp.p === "TOKOPEDIA" ? "TOKOPEDIA" : "SHOPEE";
+  const v = SUB.some((x) => x.key === sp.v) ? sp.v! : "ringkasan";
 
   const head = (
     <div className="space-y-3">
@@ -53,6 +63,15 @@ export default async function IklanPage({ searchParams }: { searchParams: Promis
           </Link>
         ))}
       </nav>
+      {tab === "SHOPEE" && (
+        <nav className="flex flex-wrap gap-1 border-b">
+          {SUB.map((x) => (
+            <Link key={x.key} href={`/channel/iklan?v=${x.key}`} className={`-mb-px border-b-2 px-3 py-2 text-14 ${v === x.key ? "border-orange-500 font-medium text-orange-600" : "border-transparent text-muted-foreground"}`}>
+              {x.label}
+            </Link>
+          ))}
+        </nav>
+      )}
     </div>
   );
   if (tab === "TOKOPEDIA")
@@ -78,6 +97,22 @@ export default async function IklanPage({ searchParams }: { searchParams: Promis
     );
 
   const s = await fresh(shop);
+  const conn = { token: s.accessToken, shopId: s.shopId };
+  if (v !== "ringkasan")
+    return (
+      <div className="space-y-5">
+        {head}
+        {v === "jam" ? (
+          <HourlyView c={conn} date={sp.d && ISO.test(sp.d) ? sp.d : today} today={today} />
+        ) : v === "gmv" ? (
+          <GmsView c={conn} from={from} to={to} />
+        ) : v === "rekomendasi" ? (
+          <RecommendView c={conn} />
+        ) : (
+          <CreateView item={sp.item} />
+        )}
+      </div>
+    );
   const [a, b, c] = await Promise.allSettled([
     shopeeAdsBalance(s.accessToken, s.shopId),
     shopeeAdsDaily(s.accessToken, s.shopId, toShopee(from), toShopee(to)),
@@ -206,7 +241,7 @@ export default async function IklanPage({ searchParams }: { searchParams: Promis
                 camps.map((x) => (
                   <tr key={x.id} className="border-b align-top last:border-b-0">
                     <td className="p-3">
-                      <span className="line-clamp-2 font-medium">{x.name}</span>
+                      <Link href={`/channel/iklan/shopee/${x.id}`} className="line-clamp-2 font-medium hover:underline">{x.name}</Link>
                       <span className="text-12 text-muted-foreground">
                         {x.type === "auto" ? "Otomatis" : x.type === "manual" ? "Manual" : x.type}
                         {x.placement ? ` · ${x.placement}` : ""}
