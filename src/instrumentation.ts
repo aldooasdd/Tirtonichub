@@ -14,8 +14,4 @@ export async function register() {
   const { autoSyncTick } = await import("./server/marketplace/sync");
   setTimeout(() => void autoSyncTick(), 60_000).unref();
   setInterval(() => void autoSyncTick(), 10 * 60_000).unref();
-
-  // Pindah produk Tokopedia → tirtonic.com, sekali (dilewati kalau web sudah punya). Tunggu sinkron awal dulu.
-  const { autoPushTokopediaOnce } = await import("./server/marketplace/website-import");
-  setTimeout(() => void autoPushTokopediaOnce(), 5 * 60_000).unref();
 }
