@@ -21,6 +21,7 @@ import {
   Warehouse,
   Megaphone,
   Undo2,
+  Star,
   AlertCircle,
   Inbox,
   Store,
@@ -147,6 +148,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Saldo Shopee", href: "/channel/saldo-shopee", icon: Wallet },
         { label: "Gudang & Pengiriman", href: "/channel/gudang", icon: Warehouse },
         { label: "Retur Shopee", href: "/channel/retur", icon: Undo2 },
+        { label: "Ulasan Shopee", href: "/channel/ulasan", icon: Star },
         { label: "Iklan", href: "/channel/iklan", icon: Megaphone },
       ],
     });
