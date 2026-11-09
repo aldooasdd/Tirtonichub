@@ -604,6 +604,10 @@ model MarketplaceItem {
   variant     String? // label varian, mis. "Warna: Putih, Ukuran: 1.30mm"
   image       String? // foto varian
   skuStatus   String? // NORMAL | DEACTIVATED
+  // Editan Produk Master (lokal, tidak ditimpa sinkron & tidak dikirim ke marketplace).
+  localName   String? // nama produk pengganti (sama di semua varian produk ini)
+  localSku    String? // SKU pengganti varian ini
+  deletedAt   DateTime? // masuk Sampah Produk Master; null = tampil
   syncedAt    DateTime @updatedAt
 
   @@unique([platform, itemId, modelId])

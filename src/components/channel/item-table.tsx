@@ -3,6 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { updateChannelItem } from "@/server/actions/channel";
+import { setItemSku } from "@/server/actions/produk-master";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
 import { PRODUK_KE_MARKETPLACE } from "@/lib/flags";
 
@@ -18,6 +19,16 @@ export function ItemTable({ rows }: { rows: ItemRow[] }) {
   const [pending, start] = useTransition();
   const [draft, setDraft] = useState(() => Object.fromEntries(rows.map((r) => [r.id, { stock: String(r.stock), price: r.price }])));
   const [msg, setMsg] = useState<Record<string, { ok: boolean; text: string }>>({});
+  const [sku, setSku] = useState(() => Object.fromEntries(rows.map((r) => [r.id, r.sku ?? ""])));
+
+  function saveSku(r: ItemRow) {
+    if (sku[r.id] === (r.sku ?? "")) return;
+    start(async () => {
+      const res = await setItemSku(r.id, sku[r.id]).catch(() => ({ ok: false, message: "Gagal. Muat ulang halaman." }));
+      setMsg((m) => ({ ...m, [r.id]: { ok: res.ok, text: res.message ?? "" } }));
+      if (res.ok) router.refresh();
+    });
+  }
 
   function save(r: ItemRow) {
     const d = draft[r.id];
@@ -65,7 +76,19 @@ export function ItemTable({ rows }: { rows: ItemRow[] }) {
                     </span>
                   </span>
                 </td>
-                <td className="p-3 font-mono text-12">{r.sku ?? "-"}</td>
+                <td className="p-3">
+                  <input
+                    value={sku[r.id]}
+                    onChange={(e) => setSku({ ...sku, [r.id]: e.target.value })}
+                    onBlur={() => saveSku(r)}
+                    onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
+                    placeholder="-"
+                    aria-label={`SKU ${r.name}`}
+                    title="Ubah SKU (hanya di Tirtonichub). Kosongkan untuk kembali ke SKU marketplace."
+                    className="h-9 w-36 rounded-md border bg-background px-2 font-mono text-12"
+                  />
+                  {!PRODUK_KE_MARKETPLACE && msg[r.id] && <p className={msg[r.id].ok ? "mt-1 text-12 text-emerald-600" : "mt-1 text-12 text-destructive"}>{msg[r.id].text}</p>}
+                </td>
                 {!PRODUK_KE_MARKETPLACE ? (
                   <>
                     <td className={`p-3 tabular-nums ${r.stock === 0 ? "font-semibold text-destructive" : ""}`}>{r.stock}</td>

@@ -50,8 +50,12 @@ export type ProductGroup = {
 
 const ORDER: Record<string, number> = { TOKOPEDIA: 0, SHOPEE: 1, WEBSITE: 2 };
 
-export async function loadProductGroups(): Promise<ProductGroup[]> {
-  const [items, details] = await Promise.all([prisma.marketplaceItem.findMany({ orderBy: { name: "asc" } }), prisma.marketplaceProduct.findMany()]);
+/** trash=true → hanya produk di Sampah. */
+export async function loadProductGroups(trash = false): Promise<ProductGroup[]> {
+  const [items, details] = await Promise.all([
+    prisma.marketplaceItem.findMany({ where: { deletedAt: trash ? { not: null } : null }, orderBy: { name: "asc" } }),
+    prisma.marketplaceProduct.findMany(),
+  ]);
   const det = new Map<string, DetailRow>(details.map((d) => [`${d.platform}:${d.productId}`, d]));
 
   const byProduct = new Map<string, ItemRow[]>();
@@ -63,7 +67,7 @@ export async function loadProductGroups(): Promise<ProductGroup[]> {
   const groups = new Map<string, ProductGroup>();
   for (const [k, vs] of byProduct) {
     const d = det.get(k);
-    const title = d?.title ?? baseTitle(vs);
+    const title = vs.find((v) => v.localName)?.localName ?? d?.title ?? baseTitle(vs);
     const prices = vs.map((v) => v.price);
     const listing: Listing = {
       platform: vs[0].platform,
@@ -88,14 +92,14 @@ export async function loadProductGroups(): Promise<ProductGroup[]> {
         category: d?.category?.split(" › ").pop() ?? null,
         brand: d?.brand ?? null,
         listings: [listing],
-        skus: vs.map((v) => v.sku ?? "").join(" "),
+        skus: vs.map((v) => v.localSku ?? v.sku ?? "").join(" "),
       });
     } else {
       g.listings.push(listing);
       g.image ??= image;
       g.category ??= d?.category?.split(" › ").pop() ?? null;
       g.brand ??= d?.brand ?? null;
-      g.skus += " " + vs.map((v) => v.sku ?? "").join(" ");
+      g.skus += " " + vs.map((v) => v.localSku ?? v.sku ?? "").join(" ");
     }
   }
   for (const g of groups.values()) g.listings.sort((a, b) => (ORDER[a.platform] ?? 9) - (ORDER[b.platform] ?? 9));
@@ -103,6 +107,6 @@ export async function loadProductGroups(): Promise<ProductGroup[]> {
 }
 
 /** Grup yang memuat produk (platform, itemId) ini. */
-export async function loadProductGroupOf(platform: string, itemId: string): Promise<ProductGroup | null> {
-  return (await loadProductGroups()).find((g) => g.listings.some((l) => l.platform === platform && l.itemId === itemId)) ?? null;
+export async function loadProductGroupOf(platform: string, itemId: string, trash = false): Promise<ProductGroup | null> {
+  return (await loadProductGroups(trash)).find((g) => g.listings.some((l) => l.platform === platform && l.itemId === itemId)) ?? null;
 }

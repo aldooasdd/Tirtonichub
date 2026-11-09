@@ -10,6 +10,7 @@ import { ItemTable } from "@/components/channel/item-table";
 import { loadProductGroupOf } from "@/server/marketplace/product-groups";
 import { PRODUK_KE_MARKETPLACE } from "@/lib/flags";
 import { ProductOps } from "@/components/channel/product-ops";
+import { ProdukAdmin } from "@/components/channel/produk-admin";
 
 const TAG: Record<string, string> = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600", WEBSITE: "bg-sky-500/15 text-sky-600" };
 
@@ -50,8 +51,10 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
     prisma.marketplaceProduct.findUnique({ where: { platform_productId: { platform, productId: itemId } } }),
     loadProductGroupOf(platform, itemId),
   ]);
+  const deleted = items.length > 0 && items.every((i) => i.deletedAt);
+  const grp = group ?? (deleted ? await loadProductGroupOf(platform, itemId, true) : null);
   // Produk bernama sama di toko lain → harga & stok per marketplace di satu halaman.
-  const listings = group?.listings ?? [];
+  const listings = grp?.listings ?? [];
   const others = listings.filter((l) => !(l.platform === platform && l.itemId === itemId));
   const otherItems = others.length
     ? await prisma.marketplaceItem.findMany({ where: { OR: others.map((l) => ({ platform: l.platform, itemId: l.itemId })) }, orderBy: [{ variant: "asc" }, { name: "asc" }] })
@@ -64,7 +67,7 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
   const desc = readDescription(d?.description ?? null);
   const st = productStatus(d?.status);
   const toko = productStatus(d?.tokoStatus);
-  const title = d?.title ?? listings.find((l) => l.platform === platform && l.itemId === itemId)?.title ?? items[0]?.name ?? itemId;
+  const title = items.find((i) => i.localName)?.localName ?? d?.title ?? listings.find((l) => l.platform === platform && l.itemId === itemId)?.title ?? items[0]?.name ?? itemId;
   const stock = items.reduce((n, v) => n + v.stock, 0);
 
   return (
@@ -122,7 +125,7 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
                 ))}
               </div>
             )}
-            <h1 className="text-24 font-semibold">{title}</h1>
+            <ProdukAdmin platform={platform} itemId={itemId} title={title} deleted={deleted} />
             {PRODUK_KE_MARKETPLACE && platform === "TOKOPEDIA" && items[0]?.shopId !== DEMO && (
               <Link href={`/channel/produk/${platform}/${itemId}/edit`} className="mr-4 inline-flex items-center gap-1 text-14 font-medium text-primary hover:underline">
                 <Pencil className="size-3.5" /> Edit produk
@@ -193,7 +196,7 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
             platform: i.platform,
             demo: i.shopId === DEMO,
             name: i.variant ?? i.name,
-            sku: i.sku,
+            sku: i.localSku ?? i.sku,
             price: i.price,
             stock: i.stock,
             image: i.image,

@@ -496,6 +496,9 @@ exports.Prisma.MarketplaceItemScalarFieldEnum = {
   variant: 'variant',
   image: 'image',
   skuStatus: 'skuStatus',
+  localName: 'localName',
+  localSku: 'localSku',
+  deletedAt: 'deletedAt',
   syncedAt: 'syncedAt'
 };
 
