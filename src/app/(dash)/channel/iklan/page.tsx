@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { requireChannel } from "@/server/auth/rbac";
 import { DEMO, activeShop, fresh } from "@/server/marketplace/sync";
 import { shopeeAdsBalance, shopeeAdsCampaigns, shopeeAdsDaily, type AdsCampaign, type AdsDay, type AdsMetric } from "@/server/marketplace/shopee";
@@ -13,7 +14,12 @@ const wibDate = (d: Date) => new Date(d.getTime() + 7 * 3600_000).toISOString().
 const toShopee = (iso: string) => iso.split("-").reverse().join("-");
 const ISO = /^\d{4}-\d{2}-\d{2}$/;
 
-type SP = { from?: string; to?: string };
+type SP = { from?: string; to?: string; p?: string };
+
+const TABS = [
+  { key: "SHOPEE", label: "Shopee", on: "bg-orange-500/15 text-orange-600" },
+  { key: "TOKOPEDIA", label: "Tokopedia", on: "bg-emerald-500/15 text-emerald-600" },
+];
 
 /** Rentang tanggal dari URL; default 7 hari terakhir. */
 function range(sp: SP) {
@@ -27,18 +33,41 @@ function range(sp: SP) {
   return { today, from, to };
 }
 
-/** Iklan Shopee: saldo iklan, performa harian & per iklan produk. Data langsung dari Shopee Ads API. */
+/** Iklan: tab per marketplace. Shopee: saldo iklan, performa harian & per iklan produk. Data langsung dari Shopee Ads API. */
 export default async function IklanPage({ searchParams }: { searchParams: Promise<SP> }) {
   await requireChannel();
   const sp = await searchParams;
   const { today, from, to } = range(sp);
+  const tab = sp.p === "TOKOPEDIA" ? "TOKOPEDIA" : "SHOPEE";
 
   const head = (
-    <div>
-      <h1 className="text-24 font-semibold">Iklan Shopee</h1>
-      <p className="text-14 text-muted-foreground">Biaya & hasil iklan (Shopee Ads) langsung dari Shopee. Maksimal 30 hari sekali tarik.</p>
+    <div className="space-y-3">
+      <div>
+        <h1 className="text-24 font-semibold">Iklan</h1>
+        <p className="text-14 text-muted-foreground">Biaya & hasil iklan marketplace, langsung dari tokonya. Maksimal 30 hari sekali tarik.</p>
+      </div>
+      <nav className="flex gap-2">
+        {TABS.map((t) => (
+          <Link key={t.key} href={`/channel/iklan?p=${t.key}`} className={`rounded-md px-3 py-1.5 text-14 font-medium ${tab === t.key ? t.on : "border text-muted-foreground"}`}>
+            {t.label}
+          </Link>
+        ))}
+      </nav>
     </div>
   );
+  if (tab === "TOKOPEDIA")
+    return (
+      <div className="space-y-5">
+        {head}
+        <div className="space-y-2 rounded-lg border bg-card p-4 text-14">
+          <p className="font-medium">Data iklan Tokopedia belum bisa ditarik otomatis.</p>
+          <p className="text-muted-foreground">
+            API TikTok Shop (yang dipakai untuk pesanan & produk Tokopedia) tidak menyediakan data iklan. Iklan Tokopedia / TikTok Shop (GMV Max) ada di TikTok
+            Marketing API terpisah: perlu daftar app di TikTok for Business Developers dan izin akun iklan.
+          </p>
+        </div>
+      </div>
+    );
   const shop = await activeShop("SHOPEE");
   if (!shop || shop.shopId === DEMO)
     return (
@@ -70,6 +99,7 @@ export default async function IklanPage({ searchParams }: { searchParams: Promis
     <div className="space-y-5">
       {head}
       <form method="get" className="flex flex-wrap items-end gap-2 rounded-lg border bg-card p-4">
+        <input type="hidden" name="p" value={tab} />
         <label className="flex flex-col gap-1 text-12 text-muted-foreground">
           Dari
           <input type="date" name="from" defaultValue={from} max={today} className={field} />
