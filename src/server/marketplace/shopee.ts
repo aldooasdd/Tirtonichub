@@ -402,3 +402,72 @@ export async function shopeeProductDetails(token: string, shopId: string, itemId
   }
   return out;
 }
+
+// ── Iklan (Shopee Ads) ─────────────────────────────────────────────
+// Tanggal Shopee Ads: "DD-MM-YYYY". Angka uang dalam rupiah (float).
+export type AdsMetric = { impression: number; clicks: number; expense: number; order: number; gmv: number; itemSold: number };
+export type AdsDay = AdsMetric & { date: string };
+export type AdsCampaign = AdsMetric & { id: string; name: string; type: string; placement: string };
+
+const f = (v: unknown) => Number(v) || 0;
+
+export async function shopeeAdsBalance(token: string, shopId: string): Promise<number> {
+  const j = await call<{ response?: { total_balance?: number } }>("/api/v2/ads/get_total_balance", { token, shopId });
+  return f(j.response?.total_balance);
+}
+
+/** Performa harian semua iklan CPC (broad = termasuk order tidak langsung). */
+export async function shopeeAdsDaily(token: string, shopId: string, start: string, end: string): Promise<AdsDay[]> {
+  type D = { date: string; impression: number; clicks: number; expense: number; broad_order: number; broad_gmv: number; broad_item_sold: number };
+  const j = await call<{ response?: D[] }>("/api/v2/ads/get_all_cpc_ads_daily_performance", { token, shopId, query: { start_date: start, end_date: end } });
+  return (j.response ?? []).map((d) => ({
+    date: d.date,
+    impression: f(d.impression),
+    clicks: f(d.clicks),
+    expense: f(d.expense),
+    order: f(d.broad_order),
+    gmv: f(d.broad_gmv),
+    itemSold: f(d.broad_item_sold),
+  }));
+}
+
+/** Performa per iklan produk (total dalam rentang tanggal). */
+export async function shopeeAdsCampaigns(token: string, shopId: string, start: string, end: string): Promise<AdsCampaign[]> {
+  const ids: string[] = [];
+  for (let offset = 0; offset < 50_000; offset += 5000) {
+    const j = await call<{ response?: { has_next_page?: boolean; campaign_list?: { campaign_id: number }[] } }>("/api/v2/ads/get_product_level_campaign_id_list", {
+      token,
+      shopId,
+      query: { ad_type: "all", offset, limit: 5000 },
+    });
+    ids.push(...(j.response?.campaign_list ?? []).map((c) => String(c.campaign_id)));
+    if (!j.response?.has_next_page) break;
+  }
+  type M = { impression: number; clicks: number; expense: number; broad_order: number; broad_gmv: number };
+  type C = { campaign_id: number; ad_type: string; campaign_placement: string; ad_name: string; metrics_list?: M[] };
+  const out: AdsCampaign[] = [];
+  for (let i = 0; i < ids.length; i += 100) {
+    const j = await call<{ response?: { campaign_list?: C[] }[] }>("/api/v2/ads/get_product_campaign_daily_performance", {
+      token,
+      shopId,
+      query: { start_date: start, end_date: end, campaign_id_list: ids.slice(i, i + 100).join(",") },
+    });
+    for (const c of (j.response ?? []).flatMap((r) => r.campaign_list ?? [])) {
+      const ms = c.metrics_list ?? [];
+      const sum = (k: keyof M) => ms.reduce((n, m) => n + f(m[k]), 0);
+      out.push({
+        id: String(c.campaign_id),
+        name: c.ad_name || String(c.campaign_id),
+        type: c.ad_type,
+        placement: c.campaign_placement,
+        impression: sum("impression"),
+        clicks: sum("clicks"),
+        expense: sum("expense"),
+        order: sum("broad_order"),
+        gmv: sum("broad_gmv"),
+        itemSold: 0,
+      });
+    }
+  }
+  return out;
+}
