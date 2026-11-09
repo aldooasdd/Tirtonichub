@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { updateChannelItem } from "@/server/actions/channel";
 import { setItemSku } from "@/server/actions/produk-master";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
-import { PRODUK_KE_MARKETPLACE } from "@/lib/flags";
+import { bolehUbah } from "@/lib/flags";
 
 const TOKO: Record<string, string> = { SHOPEE: "Shopee", TOKOPEDIA: "Tokopedia", WEBSITE: "Tirtonic.com" };
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
@@ -87,9 +87,9 @@ export function ItemTable({ rows }: { rows: ItemRow[] }) {
                     title="Ubah SKU (hanya di Tirtonichub). Kosongkan untuk kembali ke SKU marketplace."
                     className="h-9 w-36 rounded-md border bg-background px-2 font-mono text-12"
                   />
-                  {!PRODUK_KE_MARKETPLACE && msg[r.id] && <p className={msg[r.id].ok ? "mt-1 text-12 text-emerald-600" : "mt-1 text-12 text-destructive"}>{msg[r.id].text}</p>}
+                  {!bolehUbah(r.platform) && msg[r.id] && <p className={msg[r.id].ok ? "mt-1 text-12 text-emerald-600" : "mt-1 text-12 text-destructive"}>{msg[r.id].text}</p>}
                 </td>
-                {!PRODUK_KE_MARKETPLACE ? (
+                {!bolehUbah(r.platform) ? (
                   <>
                     <td className={`p-3 tabular-nums ${r.stock === 0 ? "font-semibold text-destructive" : ""}`}>{r.stock}</td>
                     <td className="p-3 whitespace-nowrap tabular-nums">{rupiah(r.price)}</td>

@@ -5,7 +5,7 @@ import { notifyRole } from "@/server/notify";
 import * as shopee from "./shopee";
 import * as tiktok from "./tiktok";
 import * as website from "./website";
-import { PRODUK_KE_MARKETPLACE, PRODUK_OFF_MSG } from "@/lib/flags";
+import { PRODUK_OFF_MSG, bolehUbah } from "@/lib/flags";
 import type { MpItem, MpOrder } from "./shopee";
 
 export type Marketplace = "SHOPEE" | "TOKOPEDIA";
@@ -444,9 +444,9 @@ async function runProductDetails(shop: Shop, items: MpItem[]) {
 
 /** Ubah stok/harga 1 produk di marketplace, lalu simpan di DB. Toko contoh: hanya DB. */
 export async function pushItem(id: string, change: { stock?: number; price?: number }) {
-  if (!PRODUK_KE_MARKETPLACE) throw new Error(PRODUK_OFF_MSG);
   const it = await prisma.marketplaceItem.findUnique({ where: { id } });
   if (!it || !isChannel(it.platform)) throw new Error("Produk tidak ditemukan.");
+  if (!bolehUbah(it.platform)) throw new Error(PRODUK_OFF_MSG);
   if (it.platform === "WEBSITE") await website.websiteUpdate(it.itemId, it.modelId, change);
   else if (it.shopId !== DEMO) {
     const shop = await mustShop(it.platform);

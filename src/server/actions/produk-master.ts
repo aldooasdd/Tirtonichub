@@ -7,6 +7,9 @@ import { requireChannel } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { loadProductGroupOf } from "@/server/marketplace/product-groups";
+import { websiteRename } from "@/server/marketplace/website";
+import { DEMO } from "@/server/marketplace/sync";
+import { WEB_IKUT_PRODUK_MASTER } from "@/lib/flags";
 import { pushTokopediaToWebCore } from "@/server/marketplace/website-import";
 
 type Res = { ok: boolean; message?: string };
@@ -30,10 +33,19 @@ export async function renameProduct(platform: string, itemId: string, name: stri
   if (n.length < 3) return { ok: false, message: "Nama minimal 3 huruf." };
   if (n.length > 255) return { ok: false, message: "Nama maksimal 255 huruf." };
   const where = await groupWhere(platform, itemId, false);
+  // Tirtonic.com ikut Produk Master: kirim nama ke web dulu; gagal → tidak disimpan.
+  const web = WEB_IKUT_PRODUK_MASTER
+    ? [...new Set((await prisma.marketplaceItem.findMany({ where: { AND: [where, { platform: "WEBSITE", shopId: { not: DEMO } }] }, select: { itemId: true } })).map((i) => i.itemId))]
+    : [];
+  try {
+    for (const id of web) await websiteRename(id, n);
+  } catch (e) {
+    return { ok: false, message: e instanceof Error ? e.message : "Gagal kirim ke Tirtonic.com." };
+  }
   await prisma.marketplaceItem.updateMany({ where, data: { localName: n } });
-  await log("produk_rename", `${platform}:${itemId}`, { name: n });
+  await log("produk_rename", `${platform}:${itemId}`, { name: n, web });
   revalidatePath("/channel/produk");
-  return { ok: true, message: "Nama tersimpan (hanya di Tirtonichub)." };
+  return { ok: true, message: web.length ? "Nama tersimpan & Tirtonic.com ikut diubah." : "Nama tersimpan (Shopee/Tokopedia tidak diubah)." };
 }
 
 export async function setItemSku(id: string, sku: string): Promise<Res> {
