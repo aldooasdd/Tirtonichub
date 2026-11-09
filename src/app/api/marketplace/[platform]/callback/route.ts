@@ -30,9 +30,10 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ plat
       const shopId = q.get("shop_id") ?? "";
       const t = await shopeeTokenFromCode(code, shopId);
       await saveShop("SHOPEE", { shopId, shopName: await shopeeShopName(t.accessToken, shopId), ...t });
-      await syncOrders("SHOPEE", 30).catch(() => null);
-      await syncItems("SHOPEE").catch(() => null);
-      return back(req, "Shopee tersambung.");
+      const err = (e: unknown) => (e instanceof Error ? e.message : "error");
+      const o = await syncOrders("SHOPEE", 90).then((r) => `${r.total} pesanan (90 hari)`, (e) => `pesanan gagal: ${err(e)}`);
+      const i = await syncItems("SHOPEE").then((n) => `${n} produk`, (e) => `produk gagal: ${err(e)}`);
+      return back(req, `Shopee tersambung: ${o}, ${i}.`);
     }
     if (platform === "tokopedia") {
       const t = await tiktokTokenFromCode(code);

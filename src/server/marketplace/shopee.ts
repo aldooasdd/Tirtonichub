@@ -180,30 +180,50 @@ export async function shopeeTracking(token: string, shopId: string, orderSn: str
   return j?.response.tracking_number || null;
 }
 
-export type MpItem = { itemId: string; modelId: string; name: string; sku: string | null; price: number; stock: number; warehouseId: string | null; productUpdatedAt?: number };
+export type MpItem = {
+  itemId: string;
+  modelId: string;
+  name: string;
+  sku: string | null;
+  price: number;
+  stock: number;
+  warehouseId: string | null;
+  productUpdatedAt?: number;
+  image?: string | null; // Shopee: foto produk
+  active?: boolean; // Shopee: false = UNLIST (tidak tayang)
+};
 
 export async function shopeeItems(token: string, shopId: string): Promise<MpItem[]> {
+  // Produk tayang (NORMAL) + tidak tayang (UNLIST); yang dihapus/diblokir dilewati.
   const ids: number[] = [];
-  let offset = 0;
-  for (;;) {
-    const j = await call<{ response: { item?: { item_id: number }[]; has_next_page: boolean; next_offset: number } }>("/api/v2/product/get_item_list", {
-      token,
-      shopId,
-      query: { offset, page_size: 100, item_status: "NORMAL" },
-    });
-    ids.push(...(j.response.item ?? []).map((i) => i.item_id));
-    if (!j.response.has_next_page) break;
-    offset = j.response.next_offset;
+  const unlisted = new Set<number>();
+  for (const status of ["NORMAL", "UNLIST"]) {
+    let offset = 0;
+    for (;;) {
+      const j = await call<{ response: { item?: { item_id: number }[]; has_next_page: boolean; next_offset: number } }>("/api/v2/product/get_item_list", {
+        token,
+        shopId,
+        query: { offset, page_size: 100, item_status: status },
+      });
+      for (const i of j.response.item ?? []) {
+        ids.push(i.item_id);
+        if (status === "UNLIST") unlisted.add(i.item_id);
+      }
+      if (!j.response.has_next_page) break;
+      offset = j.response.next_offset;
+    }
   }
   type Stock = { stock_info_v2?: { summary_info?: { total_available_stock?: number } } };
   type Price = { price_info?: { current_price?: number; original_price?: number }[] };
   const out: MpItem[] = [];
   for (let i = 0; i < ids.length; i += 50) {
-    const j = await call<{ response: { item_list: ({ item_id: number; item_name: string; item_sku?: string; has_model: boolean } & Stock & Price)[] } }>(
+    const j = await call<{ response: { item_list: ({ item_id: number; item_name: string; item_sku?: string; has_model: boolean; image?: { image_url_list?: string[] } } & Stock & Price)[] } }>(
       "/api/v2/product/get_item_base_info",
       { token, shopId, query: { item_id_list: ids.slice(i, i + 50).join(",") } },
     );
     for (const it of j.response.item_list) {
+      const image = it.image?.image_url_list?.[0] ?? null;
+      const active = !unlisted.has(it.item_id);
       if (!it.has_model) {
         out.push({
           itemId: String(it.item_id),
@@ -213,6 +233,8 @@ export async function shopeeItems(token: string, shopId: string): Promise<MpItem
           price: n(it.price_info?.[0]?.original_price ?? it.price_info?.[0]?.current_price),
           stock: n(it.stock_info_v2?.summary_info?.total_available_stock),
           warehouseId: null,
+          image,
+          active,
         });
         continue;
       }
@@ -230,6 +252,8 @@ export async function shopeeItems(token: string, shopId: string): Promise<MpItem
           price: n(md.price_info?.[0]?.original_price ?? md.price_info?.[0]?.current_price),
           stock: n(md.stock_info_v2?.summary_info?.total_available_stock),
           warehouseId: null,
+          image,
+          active,
         });
       }
     }
