@@ -3,9 +3,10 @@ import { requireChannel } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
 import { ORDER_TABS, statusLabel, statusTone } from "@/lib/channel-status";
-import { DEMO, PLATFORMS, PLATFORM_LABEL, apiReady } from "@/server/marketplace/sync";
+import { CHANNELS, DEMO, PLATFORM_LABEL, apiReady } from "@/server/marketplace/sync";
 import { ShopPanel } from "@/components/channel/shop-panel";
 import { OrderActions } from "@/components/channel/order-actions";
+import { WebShip } from "@/components/channel/web-ship";
 import type { Prisma } from "@/generated/prisma";
 import type { OrderFinance } from "@/server/marketplace/tiktok";
 
@@ -35,7 +36,7 @@ function FinanceDetail({ f }: { f: OrderFinance }) {
   );
 }
 const BAR = { warn: "bg-amber-500", ok: "bg-emerald-500", bad: "bg-destructive", muted: "bg-muted-foreground/40" };
-const TAG = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600" } as Record<string, string>;
+const TAG = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600", WEBSITE: "bg-sky-500/15 text-sky-600" } as Record<string, string>;
 const PER_PAGE = 20;
 const ymd = (s?: string) => (s && /^\d{4}-\d{2}-\d{2}$/.test(s) ? s : "");
 type Item = { name: string; sku: string | null; qty: number; price: number; image?: string | null };
@@ -46,7 +47,7 @@ export default async function ChannelPage({ searchParams }: { searchParams: Prom
   await requireChannel();
   const sp = await searchParams;
   const tab = ORDER_TABS.find((t) => t.key === sp.tab) ?? ORDER_TABS[0];
-  const platform = PLATFORMS.find((x) => x === sp.p);
+  const platform = CHANNELS.find((x) => x === sp.p);
   const q = (sp.q ?? "").trim().slice(0, 100);
   const dari = ymd(sp.dari);
   const sampai = ymd(sp.sampai);
@@ -85,7 +86,7 @@ export default async function ChannelPage({ searchParams }: { searchParams: Prom
     byStatus.filter((s) => !statuses || statuses.includes(s.status)).reduce((n, s) => n + s._count._all, 0);
   const pages = Math.max(1, Math.ceil(total / PER_PAGE));
 
-  const cards = PLATFORMS.map((p) => {
+  const cards = CHANNELS.map((p) => {
     const s = shops.find((x) => x.platform === p);
     return {
       platform: p,
@@ -109,7 +110,7 @@ export default async function ChannelPage({ searchParams }: { searchParams: Prom
     <div className="space-y-5">
       <div>
         <h1 className="text-24 font-semibold">Tirtonic Channel</h1>
-        <p className="text-14 text-muted-foreground">Toko Shopee & Tokopedia tersambung ke dashboard: order masuk sendiri, stok & dana cair terpantau.</p>
+        <p className="text-14 text-muted-foreground">Toko Shopee, Tokopedia & Tirtonic.com tersambung ke dashboard: order masuk sendiri, stok & dana cair terpantau.</p>
       </div>
       {sp.pesan && <p className="rounded-md border bg-card p-3 text-14">{sp.pesan}</p>}
 
@@ -146,7 +147,7 @@ export default async function ChannelPage({ searchParams }: { searchParams: Prom
             Toko
             <select name="p" defaultValue={platform ?? ""} className={field}>
               <option value="">Semua toko</option>
-              {PLATFORMS.map((p) => (
+              {CHANNELS.map((p) => (
                 <option key={p} value={p}>
                   {PLATFORM_LABEL[p]}
                 </option>
@@ -274,6 +275,7 @@ export default async function ChannelPage({ searchParams }: { searchParams: Prom
                     </div>
                   </div>
                 </div>
+                {o.platform === "WEBSITE" && <WebShip id={o.id} status={o.status} resi={o.trackingNo} kurir={o.courier} />}
                 {o.platform === "TOKOPEDIA" && o.shopId !== DEMO && (
                   <OrderActions o={{ id: o.id, status: o.status, shippingType: o.shippingType, packageId: o.packageId, trackingNo: o.trackingNo }} />
                 )}

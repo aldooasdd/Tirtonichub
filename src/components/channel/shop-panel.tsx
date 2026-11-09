@@ -34,7 +34,7 @@ export function ShopPanel({ shops, anyDemo }: { shops: ShopCard[]; anyDemo: bool
 
   return (
     <div className="space-y-3">
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {shops.map((s) => (
           <div key={s.platform} className="space-y-3 rounded-lg border bg-card p-4">
             <div className="flex items-start justify-between gap-2">

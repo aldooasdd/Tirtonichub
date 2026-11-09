@@ -1,17 +1,21 @@
-// Sinkron toko Shopee & Tokopedia ke DB. shopId "demo" = data contoh (uji coba tanpa API asli).
+// Sinkron toko Shopee, Tokopedia & Tirtonic.com ke DB. shopId "demo" = data contoh (uji coba tanpa API asli).
 import { prisma } from "@/server/db";
 import { Prisma } from "@/generated/prisma";
 import { notifyRole } from "@/server/notify";
 import * as shopee from "./shopee";
 import * as tiktok from "./tiktok";
+import * as website from "./website";
 import type { MpItem, MpOrder } from "./shopee";
 
-export type Platform = "SHOPEE" | "TOKOPEDIA";
-export const PLATFORMS: Platform[] = ["SHOPEE", "TOKOPEDIA"];
-export const PLATFORM_LABEL: Record<Platform, string> = { SHOPEE: "Shopee", TOKOPEDIA: "Tokopedia" };
+export type Marketplace = "SHOPEE" | "TOKOPEDIA";
+export type Platform = Marketplace | "WEBSITE"; // WEBSITE = tirtonic.com (web toko sendiri, tanpa chat/settlement)
+export const PLATFORMS: Marketplace[] = ["SHOPEE", "TOKOPEDIA"];
+export const CHANNELS: Platform[] = ["SHOPEE", "TOKOPEDIA", "WEBSITE"];
+export const PLATFORM_LABEL: Record<Platform, string> = { SHOPEE: "Shopee", TOKOPEDIA: "Tokopedia", WEBSITE: "Tirtonic.com" };
 export const DEMO = "demo";
-export const isPlatform = (p: string): p is Platform => p === "SHOPEE" || p === "TOKOPEDIA";
-export const apiReady = (p: Platform) => (p === "SHOPEE" ? shopee.shopeeReady() : tiktok.tiktokReady());
+export const isPlatform = (p: string): p is Marketplace => p === "SHOPEE" || p === "TOKOPEDIA";
+export const isChannel = (p: string): p is Platform => isPlatform(p) || p === "WEBSITE";
+export const apiReady = (p: Platform) => (p === "SHOPEE" ? shopee.shopeeReady() : p === "TOKOPEDIA" ? tiktok.tiktokReady() : website.websiteReady());
 
 type Shop = NonNullable<Awaited<ReturnType<typeof prisma.marketplaceShop.findFirst>>>;
 
@@ -21,7 +25,7 @@ export async function activeShop(platform: Platform): Promise<Shop | null> {
 
 /** Token masih segar? Kalau ≤5 menit lagi habis → refresh & simpan. */
 export async function fresh(shop: Shop): Promise<Shop> {
-  if (shop.shopId === DEMO || shop.expiresAt.getTime() - Date.now() > 5 * 60_000) return shop;
+  if (shop.shopId === DEMO || shop.platform === "WEBSITE" || shop.expiresAt.getTime() - Date.now() > 5 * 60_000) return shop;
   const t =
     shop.platform === "SHOPEE" ? await shopee.shopeeRefresh(shop.refreshToken, shop.shopId) : await tiktok.tiktokRefresh(shop.refreshToken);
   return prisma.marketplaceShop.update({ where: { id: shop.id }, data: t });
@@ -156,6 +160,8 @@ export async function syncOrders(platform: Platform, days = 7): Promise<{ total:
     orders = Array.from({ length: 1 + Math.floor(Math.random() * 2) }, () => demoOrder(platform, new Date()));
   } else if (platform === "SHOPEE") {
     orders = await shopee.shopeeOrders(shop.accessToken, shop.shopId, from);
+  } else if (platform === "WEBSITE") {
+    orders = await website.websiteOrders(from);
   } else {
     orders = await tiktok.tiktokOrders(shop.accessToken, shop.cipher ?? "", from);
   }
@@ -254,6 +260,23 @@ async function syncOrderFinance(shop: Shop) {
 export async function syncItems(platform: Platform): Promise<number> {
   const shop = await mustShop(platform);
   if (shop.shopId === DEMO) return prisma.marketplaceItem.count({ where: { platform, shopId: DEMO } });
+  if (platform === "WEBSITE") {
+    const items = await website.websiteItems();
+    for (const it of items) {
+      const data = { shopId: shop.shopId, name: it.name, sku: it.sku, price: it.price, stock: it.stock, image: it.image, variant: it.variant, skuStatus: it.active ? "NORMAL" : "DEACTIVATED" };
+      await prisma.marketplaceItem.upsert({
+        where: { platform_itemId_modelId: { platform, itemId: it.itemId, modelId: it.modelId } },
+        create: { platform, itemId: it.itemId, modelId: it.modelId, ...data },
+        update: data,
+      });
+    }
+    // Produk / varian yang sudah dihapus di web → hapus juga di sini.
+    const keep = new Set(items.map((i) => `${i.itemId}:${i.modelId}`));
+    const stale = (await prisma.marketplaceItem.findMany({ where: { platform }, select: { id: true, itemId: true, modelId: true } })).filter((i) => !keep.has(`${i.itemId}:${i.modelId}`));
+    if (stale.length) await prisma.marketplaceItem.deleteMany({ where: { id: { in: stale.map((i) => i.id) } } });
+    await prisma.marketplaceShop.update({ where: { id: shop.id }, data: { lastSyncAt: new Date() } });
+    return items.length;
+  }
   const items: MpItem[] =
     platform === "SHOPEE" ? await shopee.shopeeItems(shop.accessToken, shop.shopId) : await tiktok.tiktokItems(shop.accessToken, shop.cipher ?? "");
   for (const it of items) {
@@ -348,8 +371,9 @@ async function runProductDetails(shop: Shop, items: MpItem[]) {
 /** Ubah stok/harga 1 produk di marketplace, lalu simpan di DB. Toko contoh: hanya DB. */
 export async function pushItem(id: string, change: { stock?: number; price?: number }) {
   const it = await prisma.marketplaceItem.findUnique({ where: { id } });
-  if (!it || !isPlatform(it.platform)) throw new Error("Produk tidak ditemukan.");
-  if (it.shopId !== DEMO) {
+  if (!it || !isChannel(it.platform)) throw new Error("Produk tidak ditemukan.");
+  if (it.platform === "WEBSITE") await website.websiteUpdate(it.itemId, it.modelId, change);
+  else if (it.shopId !== DEMO) {
     const shop = await mustShop(it.platform);
     if (it.platform === "SHOPEE") {
       if (change.stock != null) await shopee.shopeeSetStock(shop.accessToken, shop.shopId, it.itemId, it.modelId, change.stock);
@@ -371,7 +395,7 @@ export async function autoSyncTick() {
   running = true;
   const withItems = tick++ % 6 === 0;
   try {
-    for (const p of PLATFORMS) {
+    for (const p of CHANNELS) {
       const shop = await activeShop(p);
       if (!shop || shop.shopId === DEMO) continue;
       await syncOrders(p, 3).catch((e) => console.error(`[auto-sync] ${p} order:`, e instanceof Error ? e.message : e));

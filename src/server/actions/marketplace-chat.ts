@@ -4,7 +4,7 @@ import { requireOnlineSales } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
-import { DEMO, PLATFORMS, activeShop, isPlatform, mustShop, type Platform } from "@/server/marketplace/sync";
+import { DEMO, PLATFORMS, activeShop, isPlatform, mustShop, type Marketplace as Platform } from "@/server/marketplace/sync";
 import * as shopee from "@/server/marketplace/shopee";
 import * as tiktok from "@/server/marketplace/tiktok";
 import type { MpConv, MpMsg } from "@/server/marketplace/shopee";

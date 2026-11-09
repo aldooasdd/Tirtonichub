@@ -9,7 +9,7 @@ import { DEMO, PLATFORM_LABEL } from "@/server/marketplace/sync";
 import { ItemTable } from "@/components/channel/item-table";
 import { ProductOps } from "@/components/channel/product-ops";
 
-const TAG: Record<string, string> = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600" };
+const TAG: Record<string, string> = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600", WEBSITE: "bg-sky-500/15 text-sky-600" };
 
 /** Deskripsi HTML marketplace → teks aman (tanpa render HTML mentah) + daftar gambar di dalamnya. */
 function readDescription(html: string | null) {
