@@ -8,6 +8,7 @@ import { productStatus } from "@/lib/channel-status";
 import { DEMO, PLATFORM_LABEL } from "@/server/marketplace/sync";
 import { ItemTable } from "@/components/channel/item-table";
 import { loadProductGroupOf } from "@/server/marketplace/product-groups";
+import { PRODUK_KE_MARKETPLACE } from "@/lib/flags";
 import { ProductOps } from "@/components/channel/product-ops";
 
 const TAG: Record<string, string> = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600", WEBSITE: "bg-sky-500/15 text-sky-600" };
@@ -122,7 +123,7 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
               </div>
             )}
             <h1 className="text-24 font-semibold">{title}</h1>
-            {platform === "TOKOPEDIA" && items[0]?.shopId !== DEMO && (
+            {PRODUK_KE_MARKETPLACE && platform === "TOKOPEDIA" && items[0]?.shopId !== DEMO && (
               <Link href={`/channel/produk/${platform}/${itemId}/edit`} className="mr-4 inline-flex items-center gap-1 text-14 font-medium text-primary hover:underline">
                 <Pencil className="size-3.5" /> Edit produk
               </Link>

@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { ChevronLeft } from "lucide-react";
 import { requireChannel } from "@/server/auth/rbac";
+import { PRODUK_KE_MARKETPLACE } from "@/lib/flags";
 import { DEMO, activeShop, fresh } from "@/server/marketplace/sync";
 import { productRaw } from "@/server/marketplace/tiktok-product";
 import { ProductForm } from "@/components/channel/product-form";
@@ -16,6 +17,7 @@ const kg = (w?: { value?: string; unit?: string }) => {
 /** Edit produk Tokopedia: data diambil langsung dari Tokopedia (Get Product), disimpan lewat Partial Edit / Edit Product. */
 export default async function EditProdukPage({ params }: { params: Promise<{ platform: string; itemId: string }> }) {
   await requireChannel();
+  if (!PRODUK_KE_MARKETPLACE) redirect("/channel/produk");
   const { platform, itemId } = await params;
   if (platform !== "TOKOPEDIA") notFound();
   const shop = await activeShop("TOKOPEDIA");
