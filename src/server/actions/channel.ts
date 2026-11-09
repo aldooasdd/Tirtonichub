@@ -53,7 +53,7 @@ export async function syncNow(platform: string): Promise<Res> {
   try {
     const o = await syncOrders(platform);
     const i = await syncItems(platform);
-    return { ok: true, message: `${PLATFORM_LABEL[platform]}: ${o.total} order dicek (${o.baru} baru), ${i} produk.` };
+    return { ok: true, message: `${PLATFORM_LABEL[platform]}: ${o.total} order dicek (${o.baru} baru), ${i} produk${o.settlement ? `, ${o.settlement}` : ""}.` };
   } catch (e) {
     return { ok: false, message: errMsg(e) };
   }
