@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Plus } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { requireChannel } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { PLATFORM_LABEL } from "@/server/marketplace/sync";
@@ -18,7 +18,11 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
   const sp = await searchParams;
   const q = (sp.q ?? "").trim().toLowerCase();
 
-  const [all, detailCount] = await Promise.all([loadProductGroups(), prisma.marketplaceProduct.count({ where: { platform: "TOKOPEDIA" } })]);
+  const [all, detailCount, sampah] = await Promise.all([
+    loadProductGroups(),
+    prisma.marketplaceProduct.count({ where: { platform: "TOKOPEDIA" } }),
+    prisma.marketplaceItem.groupBy({ by: ["platform", "itemId"], where: { deletedAt: { not: null } } }),
+  ]);
   const stockOf = (g: (typeof all)[number]) => g.listings.reduce((n, l) => n + l.stock, 0);
 
   const rows = all
@@ -51,6 +55,10 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
           </p>
           {tanpaDetail > 0 && <p className="mt-1 text-12 text-amber-600">{tanpaDetail} produk Tokopedia detailnya (foto, kategori, merek, deskripsi) sedang disinkron di latar belakang. Muat ulang halaman beberapa menit lagi.</p>}
         </div>
+        <div className="flex shrink-0 flex-wrap items-start gap-2">
+        <Link href="/channel/produk/sampah" className="inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-14 font-medium">
+          <Trash2 className="size-4" /> Sampah{sampah.length ? ` (${sampah.length})` : ""}
+        </Link>
         {PRODUK_KE_MARKETPLACE ? (
           <Link href="/channel/produk/baru" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-md bg-primary px-4 text-14 font-medium text-primary-foreground">
             <Plus className="size-4" /> Tambah produk
@@ -58,6 +66,7 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
         ) : (
           <p className="max-w-xs rounded-md bg-amber-500/10 px-3 py-2 text-12 text-amber-700">{PRODUK_OFF_MSG}</p>
         )}
+        </div>
       </div>
 
       <form method="get" className="flex flex-wrap items-end gap-2 rounded-lg border bg-card p-4">
