@@ -7,6 +7,8 @@ import { IDX, POSTED, makeScheduler } from "@/lib/media/schedule";
 import { isExpired, mine, MEMBER_STAGES } from "@/lib/media/card";
 import { loadCtx, runBalance, todayWIB } from "@/server/media/schedule-runner";
 import type { Task } from "@/lib/media/schedule";
+import type { Prisma } from "@/generated/prisma";
+import { nextPlanLog } from "@/server/studio/plan-log";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -64,7 +66,7 @@ export async function updateTask(
   id: string,
   patch: Partial<Record<"producer" | "editor" | "talent" | "script" | "shootPlan" | "editPlan" | "postAt" | "postTime" | "locked" | "note" | "driveUrl" | "caption" | "srcDesc", string | boolean | null>>,
 ): Promise<ActionResult> {
-  const { acc, task, today } = await ctxFor(id);
+  const { acc, task, today, meName } = await ctxFor(id);
   if (!task) return { ok: false, message: "Tugas tidak ditemukan." };
   const u = toTask(task);
   if (isExpired(u, today)) return { ok: false, message: "Konten sudah hangus." };
@@ -87,6 +89,12 @@ export async function updateTask(
     data.driveUrl = v ? v.slice(0, 500) : null;
   }
   if (!Object.keys(data).length) return { ok: true };
+  // Riwayat jadwal (sama dengan Studio, plan-log.ts): catat perubahan Rencana syuting/edit dari dasbor.
+  if ("shootPlan" in data || "editPlan" in data) {
+    const ex = task.extra && typeof task.extra === "object" && !Array.isArray(task.extra) ? (task.extra as Record<string, unknown>) : {};
+    const log = nextPlanLog(ex.planLog, task, { ...task, ...data }, meName, "dasbor");
+    if (log) data.extra = { ...ex, planLog: log } as Prisma.InputJsonValue;
+  }
   await prisma.mediaTask.update({ where: { id }, data });
   // perubahan jadwal → penyeimbang
   if (["shootPlan", "editPlan", "postAt", "postTime", "locked", "producer", "editor", "talent"].some((k) => k in data)) await runBalance();
