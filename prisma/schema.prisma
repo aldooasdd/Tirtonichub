@@ -153,6 +153,7 @@ model Cashout {
   branchId    String? // cabang yang mengeluarkan uang (utk filter ACC Kepala Cabang)
   branchName  String?
   photoKey    String? // foto nota pembelian (opsional)
+  source      String   @default("KASIR") // uang keluar dari: KASIR (cash laci) | MANDIRI | BCA | BRI (rekening bank)
   createdById String
   createdAt   DateTime @default(now())
 

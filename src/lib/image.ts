@@ -68,3 +68,14 @@ export async function notaStrips(file: File): Promise<string[]> {
   }
   return strips;
 }
+
+/** Nota PDF → halaman pertama jadi JPEG (≤maxDim). Foto biasa → compressImage. Dipakai scan nota pembelian. */
+export async function notaJpeg(file: File, maxDim = 1600): Promise<Blob> {
+  if (!(file.type === "application/pdf" || /\.pdf$/i.test(file.name))) return compressImage(file);
+  const [page] = await notaPages(file);
+  if (!page) throw new Error("PDF kosong.");
+  const scale = Math.min(1, maxDim / Math.max(page.width, page.height));
+  const { c, ctx } = whiteCanvas(Math.round(page.width * scale), Math.round(page.height * scale));
+  ctx.drawImage(page, 0, 0, c.width, c.height);
+  return new Promise((resolve, reject) => c.toBlob((b) => (b ? resolve(b) : reject(new Error("toBlob null"))), "image/jpeg", 0.85));
+}

@@ -124,7 +124,7 @@ export async function loadCashMovements(dateKey: Date, take = 400, days = 30): P
       select: { id: true, soldAt: true, branchName: true, payments: true, grandTotal: true, notaNo: true },
     }),
     prisma.cashout.findMany({
-      where: { branchId: { not: null }, createdAt: { gte: start, lt: end } },
+      where: { branchId: { not: null }, source: "KASIR", createdAt: { gte: start, lt: end } }, // dari bank: bukan uang kasir
       select: { id: true, createdAt: true, branchName: true, amount: true, description: true },
     }),
     prisma.cashDeposit.findMany({
@@ -263,7 +263,7 @@ export async function computeBranchCash(branchId: string, dateKey: Date, open: B
       where: { channel: "offline", branchId, soldAt: { gte: start, lt: end } },
       select: { payments: true, grandTotal: true },
     }),
-    prisma.cashout.aggregate({ where: { branchId, createdAt: { gte: start, lt: end } }, _sum: { amount: true } }),
+    prisma.cashout.aggregate({ where: { branchId, source: "KASIR", createdAt: { gte: start, lt: end } }, _sum: { amount: true } }),
     prisma.cashDeposit.aggregate({ where: { branchId, depositedAt: { gte: start, lt: end } }, _sum: { amount: true } }),
   ]);
 

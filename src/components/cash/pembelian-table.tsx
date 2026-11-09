@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { deleteCashout, toggleCashoutChecked, updateCashout } from "@/server/actions/cashout";
 import { fmtInt } from "@/lib/money-input";
+import { CASHOUT_SOURCES, sourceLabel } from "@/lib/cashout-source";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 const CATS = ["Keperluan Kantor", "Ongkos Kirim"]; // sama dengan form Input Pembelian
@@ -15,6 +16,7 @@ export type PembelianRow = {
   category: string;
   branch: string;
   branchId: string | null;
+  source: string;
   description: string;
   by: string;
   amount: number;
@@ -31,7 +33,7 @@ export function PembelianTable({ rows, branches }: { rows: PembelianRow[]; branc
   const [pending, start] = useTransition();
   const [busyId, setBusyId] = useState<string | null>(null);
   const [editId, setEditId] = useState<string | null>(null);
-  const [form, setForm] = useState({ spentAt: "", category: "", branchId: "", description: "", amount: "" });
+  const [form, setForm] = useState({ spentAt: "", category: "", branchId: "", source: "KASIR", description: "", amount: "" });
   const [err, setErr] = useState<string | null>(null);
 
   function toggle(id: string, next: boolean) {
@@ -62,6 +64,7 @@ export function PembelianTable({ rows, branches }: { rows: PembelianRow[]; branc
       spentAt: r.spentAtLocal,
       category: r.category === "-" ? "" : r.category,
       branchId: r.branchId ?? "",
+      source: r.source,
       description: r.description,
       amount: String(r.amount),
     });
@@ -75,6 +78,7 @@ export function PembelianTable({ rows, branches }: { rows: PembelianRow[]; branc
         spentAt: form.spentAt,
         category: form.category,
         branchId: form.branchId || null,
+        source: form.source,
         description: form.description,
         amount: Number(form.amount.replace(/\D/g, "")) || 0,
       }).catch(() => ({ ok: false, message: "Gagal simpan. Muat ulang halaman lalu coba lagi." }));
@@ -107,7 +111,7 @@ export function PembelianTable({ rows, branches }: { rows: PembelianRow[]; branc
                 <th className="p-3">Cek</th>
                 <th className="p-3">Tanggal</th>
                 <th className="p-3">Jenis</th>
-                <th className="p-3">Cabang</th>
+                <th className="p-3">Cabang / sumber</th>
                 <th className="p-3">Keterangan</th>
                 <th className="p-3">Oleh</th>
                 <th className="p-3 text-right">Jumlah</th>
@@ -136,6 +140,13 @@ export function PembelianTable({ rows, branches }: { rows: PembelianRow[]; branc
                         {branches.map((b) => (
                           <option key={b.id} value={b.id}>
                             {b.name}
+                          </option>
+                        ))}
+                      </select>
+                      <select value={form.source} onChange={set("source")} className={`${field} mt-2`} aria-label="Sumber uang">
+                        {CASHOUT_SOURCES.map((x) => (
+                          <option key={x.key} value={x.key}>
+                            {x.label}
                           </option>
                         ))}
                       </select>
@@ -174,7 +185,10 @@ export function PembelianTable({ rows, branches }: { rows: PembelianRow[]; branc
                     </td>
                     <td className="p-3 whitespace-nowrap">{r.tgl}</td>
                     <td className="p-3">{r.category}</td>
-                    <td className="p-3">{r.branch}</td>
+                    <td className="p-3">
+                      {r.branch}
+                      <span className={`block text-12 ${r.source === "KASIR" ? "text-muted-foreground" : "text-sky-600"}`}>{sourceLabel(r.source)}</span>
+                    </td>
                     <td className="p-3">{r.description}</td>
                     <td className="p-3">{r.by}</td>
                     <td className="p-3 text-right font-medium whitespace-nowrap">{rupiah(r.amount)}</td>

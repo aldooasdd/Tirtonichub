@@ -26,6 +26,7 @@ export default async function FinancePembelianPage() {
     category: r.category ?? "-",
     branch: r.branchName ?? "-",
     branchId: r.branchId,
+    source: r.source,
     description: r.description,
     by: r.createdBy.fullName,
     amount: r.amount,
