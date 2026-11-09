@@ -1,6 +1,8 @@
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
 import { requireChannel } from "@/server/auth/rbac";
+import { PRODUK_KE_MARKETPLACE } from "@/lib/flags";
 import { DEMO, activeShop, fresh } from "@/server/marketplace/sync";
 import { listingPrerequisites } from "@/server/marketplace/tiktok-product";
 import { ProductForm } from "@/components/channel/product-form";
@@ -17,6 +19,7 @@ const CHECK_LABEL: Record<string, string> = {
 /** Tambah produk baru ke Tokopedia (Create Product). Syarat toko dicek dulu (Check Listing Prerequisites). */
 export default async function TambahProdukPage() {
   await requireChannel();
+  if (!PRODUK_KE_MARKETPLACE) redirect("/channel/produk");
   const shop = await activeShop("TOKOPEDIA");
   const real = !!shop && shop.shopId !== DEMO;
   let checks: { item: string; failed: boolean; reasons: string[] }[] = [];

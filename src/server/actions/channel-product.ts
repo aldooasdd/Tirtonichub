@@ -7,6 +7,7 @@ import { clientMeta } from "@/server/request-meta";
 import { DEMO, mustShop, syncItems } from "@/server/marketplace/sync";
 import * as tp from "@/server/marketplace/tiktok-product";
 import { textToHtml, type ProductDraft } from "@/lib/product-draft";
+import { PRODUK_KE_MARKETPLACE, PRODUK_OFF_MSG } from "@/lib/flags";
 
 // Buat & edit produk Tokopedia dari Tirtonic Channel.
 type Res<T = undefined> = { ok: true; data?: T } | { ok: false; message: string };
@@ -212,6 +213,7 @@ export async function checkProduct(d: ProductDraft) {
 
 export async function saveProduct(d: ProductDraft) {
   const auth = await requireChannel();
+  if (!PRODUK_KE_MARKETPLACE) return { ok: false as const, message: PRODUK_OFF_MSG };
   try {
     const { c, body } = await buildBody(d);
     const r = !d.productId

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Power, Warehouse } from "lucide-react";
 import { productSetActive, productStock } from "@/server/actions/channel-ops";
 import type { SkuStock } from "@/server/marketplace/tiktok-ops";
+import { PRODUK_KE_MARKETPLACE } from "@/lib/flags";
 
 type Stock = (Omit<SkuStock, "warehouses"> & { warehouses: { id: string; name: string; available: number; committed: number }[] })[];
 const btn = "inline-flex h-9 items-center gap-1.5 rounded-md border bg-background px-3 text-14 font-medium hover:bg-muted disabled:opacity-50";
@@ -36,9 +37,11 @@ export function ProductOps({ productId, active, variants }: { productId: string;
   return (
     <div className="space-y-3">
       <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={toggle} disabled={pending} className={`${btn} ${active ? "text-destructive" : "text-emerald-600"}`}>
-          <Power className="size-4" /> {active ? "Nonaktifkan" : "Aktifkan"}
-        </button>
+        {PRODUK_KE_MARKETPLACE && (
+          <button type="button" onClick={toggle} disabled={pending} className={`${btn} ${active ? "text-destructive" : "text-emerald-600"}`}>
+            <Power className="size-4" /> {active ? "Nonaktifkan" : "Aktifkan"}
+          </button>
+        )}
         <button type="button" onClick={loadStock} disabled={pending} className={btn}>
           <Warehouse className="size-4" /> {pending && !stock ? "Memuat…" : "Stok per gudang"}
         </button>

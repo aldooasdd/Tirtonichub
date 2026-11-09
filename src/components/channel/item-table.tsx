@@ -4,6 +4,10 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { updateChannelItem } from "@/server/actions/channel";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
+import { PRODUK_KE_MARKETPLACE } from "@/lib/flags";
+
+const TOKO: Record<string, string> = { SHOPEE: "Shopee", TOKOPEDIA: "Tokopedia", WEBSITE: "Tirtonic.com" };
+const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 import { RupiahInput } from "@/components/ui/rupiah-input";
 
 export type ItemRow = { id: string; platform: string; demo: boolean; name: string; sku: string | null; price: number; stock: number; image?: string | null; inactive?: boolean };
@@ -46,7 +50,7 @@ export function ItemTable({ rows }: { rows: ItemRow[] }) {
             return (
               <tr key={r.id} className="border-b align-top last:border-b-0">
                 <td className="p-3 whitespace-nowrap">
-                  {r.platform === "SHOPEE" ? "Shopee" : "Tokopedia"}
+                  {TOKO[r.platform] ?? r.platform}
                   {r.demo && <span className="ml-1 text-12 text-amber-600">contoh</span>}
                 </td>
                 <td className="p-3">
@@ -62,6 +66,14 @@ export function ItemTable({ rows }: { rows: ItemRow[] }) {
                   </span>
                 </td>
                 <td className="p-3 font-mono text-12">{r.sku ?? "-"}</td>
+                {!PRODUK_KE_MARKETPLACE ? (
+                  <>
+                    <td className={`p-3 tabular-nums ${r.stock === 0 ? "font-semibold text-destructive" : ""}`}>{r.stock}</td>
+                    <td className="p-3 whitespace-nowrap tabular-nums">{rupiah(r.price)}</td>
+                    <td className="p-3" />
+                  </>
+                ) : (
+                <>
                 <td className="p-3">
                   <input
                     inputMode="numeric"
@@ -91,6 +103,8 @@ export function ItemTable({ rows }: { rows: ItemRow[] }) {
                   </button>
                   {msg[r.id] && <p className={msg[r.id].ok ? "mt-1 text-12 text-emerald-600" : "mt-1 text-12 text-destructive"}>{msg[r.id].text}</p>}
                 </td>
+                </>
+                )}
               </tr>
             );
           })}

@@ -7,6 +7,7 @@ import { clientMeta } from "@/server/request-meta";
 import { DEMO, mustShop } from "@/server/marketplace/sync";
 import * as ops from "@/server/marketplace/tiktok-ops";
 import { FAIL_REASONS } from "@/lib/channel-status";
+import { PRODUK_KE_MARKETPLACE, PRODUK_OFF_MSG } from "@/lib/flags";
 
 // Aksi Tokopedia (TikTok Shop) untuk Tirtonic Channel: kirim pesanan, lacak, bukti antar, faktur, on/off produk, stok gudang.
 type Res<T = undefined> = { ok: true; data?: T; message?: string } | { ok: false; message: string };
@@ -142,6 +143,7 @@ export async function orderInvoice(id: string, fd: FormData) {
 // ---------- produk ----------
 export async function productSetActive(productId: string, active: boolean) {
   return run(async () => {
+    if (!PRODUK_KE_MARKETPLACE) throw new Error(PRODUK_OFF_MSG);
     const p = await prisma.marketplaceProduct.findUnique({ where: { platform_productId: { platform: "TOKOPEDIA", productId } } });
     await ops.setProductsActive(await ctx(), [productId], active, !!p?.tokoStatus);
     const status = active ? "ACTIVATE" : "SELLER_DEACTIVATED";

@@ -5,6 +5,7 @@ import { prisma } from "@/server/db";
 import { PLATFORM_LABEL } from "@/server/marketplace/sync";
 import { loadProductGroups } from "@/server/marketplace/product-groups";
 import { productStatus as statusInfo } from "@/lib/channel-status";
+import { PRODUK_KE_MARKETPLACE, PRODUK_OFF_MSG } from "@/lib/flags";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 const TAG: Record<string, string> = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600", WEBSITE: "bg-sky-500/15 text-sky-600" };
@@ -50,9 +51,13 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
           </p>
           {tanpaDetail > 0 && <p className="mt-1 text-12 text-amber-600">{tanpaDetail} produk Tokopedia detailnya (foto, kategori, merek, deskripsi) sedang disinkron di latar belakang. Muat ulang halaman beberapa menit lagi.</p>}
         </div>
-        <Link href="/channel/produk/baru" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-md bg-primary px-4 text-14 font-medium text-primary-foreground">
-          <Plus className="size-4" /> Tambah produk
-        </Link>
+        {PRODUK_KE_MARKETPLACE ? (
+          <Link href="/channel/produk/baru" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-md bg-primary px-4 text-14 font-medium text-primary-foreground">
+            <Plus className="size-4" /> Tambah produk
+          </Link>
+        ) : (
+          <p className="max-w-xs rounded-md bg-amber-500/10 px-3 py-2 text-12 text-amber-700">{PRODUK_OFF_MSG}</p>
+        )}
       </div>
 
       <form method="get" className="flex flex-wrap items-end gap-2 rounded-lg border bg-card p-4">
