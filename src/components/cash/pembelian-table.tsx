@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
+import { Search } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { deleteCashout, toggleCashoutChecked, updateCashout } from "@/server/actions/cashout";
 import { fmtInt } from "@/lib/money-input";
@@ -28,8 +29,17 @@ export type PembelianRow = {
 type Branch = { id: string; name: string };
 const field = "h-9 w-full rounded-md border bg-background px-2 text-14";
 
-export function PembelianTable({ rows, branches }: { rows: PembelianRow[]; branches: Branch[] }) {
+export function PembelianTable({ rows: allRows, branches }: { rows: PembelianRow[]; branches: Branch[] }) {
   const router = useRouter();
+  const [q, setQ] = useState("");
+  // Cari di semua kolom teks + jumlah (angka tanpa titik juga cocok).
+  const words = q.toLowerCase().split(/\s+/).filter(Boolean);
+  const rows = words.length
+    ? allRows.filter((r) => {
+        const hay = [r.tgl, r.category, r.branch, sourceLabel(r.source), r.description, r.by, String(r.amount), fmtInt(r.amount)].join(" ").toLowerCase();
+        return words.every((w) => hay.includes(w));
+      })
+    : allRows;
   const [pending, start] = useTransition();
   const [busyId, setBusyId] = useState<string | null>(null);
   const [editId, setEditId] = useState<string | null>(null);
@@ -101,8 +111,20 @@ export function PembelianTable({ rows, branches }: { rows: PembelianRow[]; branc
         </p>
       </div>
 
+      <label className="relative block max-w-md">
+        <Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground" aria-hidden />
+        <input
+          type="search"
+          value={q}
+          onChange={(e) => setQ(e.target.value)}
+          placeholder="Cari keterangan, jenis, cabang, sumber, nama, jumlah, tanggal…"
+          aria-label="Cari riwayat pembelian"
+          className="h-10 w-full rounded-lg border bg-card pl-9 pr-3 text-14"
+        />
+      </label>
+
       {rows.length === 0 ? (
-        <p className="rounded-lg border bg-card py-10 text-center text-muted-foreground">Belum ada pembelian.</p>
+        <p className="rounded-lg border bg-card py-10 text-center text-muted-foreground">{allRows.length ? "Tidak ada pembelian yang cocok." : "Belum ada pembelian."}</p>
       ) : (
         <div className="overflow-x-auto rounded-lg border">
           <table className="w-full text-14">
