@@ -178,16 +178,11 @@ export async function syncOrders(platform: Platform, days = 7): Promise<{ total:
   const baru = await upsertOrders(platform, shop.shopId, orders, true);
 
   if (shop.shopId !== DEMO && platform === "SHOPEE") {
-    // Settlement & resi per order (maks 100 per sinkron biar tak kena limit; sisanya sinkron berikutnya).
-    const needEscrow = await prisma.marketplaceOrder.findMany({ where: { platform, shopId: shop.shopId, status: "COMPLETED", netAmount: null }, orderBy: { orderedAt: "desc" }, take: 100 });
+    // Settlement per order: batch 20/panggilan (get_escrow_detail_batch), maks 200 per sinkron; gagal batch → satu-satu.
+    const needEscrow = await prisma.marketplaceOrder.findMany({ where: { platform, shopId: shop.shopId, status: "COMPLETED", netAmount: null }, orderBy: { orderedAt: "desc" }, take: 200 });
     let okE = 0;
     let errE = "";
-    for (const o of needEscrow) {
-      const e = await shopee.shopeeEscrow(shop.accessToken, shop.shopId, o.orderSn).catch((x) => {
-        errE = x instanceof Error ? x.message : String(x);
-        return null;
-      });
-      if (!e) continue;
+    const keep = async (o: (typeof needEscrow)[number], e: { revenue: number; fee: number; amount: number }) => {
       okE++;
       await prisma.marketplaceOrder.update({ where: { id: o.id }, data: { netAmount: e.amount } });
       await prisma.marketplacePayout.upsert({
@@ -195,6 +190,21 @@ export async function syncOrders(platform: Platform, days = 7): Promise<{ total:
         create: { platform, shopId: shop.shopId, refId: o.orderSn, ...e, paidAt: o.updatedAtMp },
         update: e,
       });
+    };
+    for (let i = 0; i < needEscrow.length; i += 20) {
+      const chunk = needEscrow.slice(i, i + 20);
+      const got = await shopee.shopeeEscrowBatch(shop.accessToken, shop.shopId, chunk.map((o) => o.orderSn)).catch(() => null);
+      for (const o of chunk) {
+        const e =
+          got?.get(o.orderSn) ??
+          (got
+            ? null
+            : await shopee.shopeeEscrow(shop.accessToken, shop.shopId, o.orderSn).catch((x) => {
+                errE = x instanceof Error ? x.message : String(x);
+                return null;
+              }));
+        if (e) await keep(o, e);
+      }
     }
     if (needEscrow.length) {
       settlement = `settlement ${okE}/${needEscrow.length} pesanan selesai${errE ? ` (error: ${errE.slice(0, 200)})` : ""}`;
