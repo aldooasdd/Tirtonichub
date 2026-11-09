@@ -6,6 +6,8 @@ import { call } from "./shopee";
 type C = { token: string; shopId: string };
 const f = (v: unknown) => Number(v) || 0;
 const ref = () => randomUUID();
+/** Shopee kadang balas objek, kadang array objek → selalu array. */
+const arr = <T>(v: T | T[] | undefined): T[] => (Array.isArray(v) ? v : v ? [v] : []);
 
 export type Metric = { impression: number; clicks: number; expense: number; order: number; gmv: number; roas: number };
 type RawM = { impression?: number; clicks?: number; expense?: number; broad_order?: number; broad_gmv?: number; broad_roi?: number; broad_roas?: number };
@@ -21,16 +23,17 @@ const metric = (m: RawM | undefined): Metric => ({
 /** Performa semua iklan CPC per jam pada 1 tanggal. */
 export async function hourlyAll(c: C, date: string): Promise<(Metric & { hour: number })[]> {
   const j = await call<{ response?: (RawM & { hour: number })[] }>("/api/v2/ads/get_all_cpc_ads_hourly_performance", { ...c, query: { performance_date: date } });
-  return (j.response ?? []).map((m) => ({ hour: f(m.hour), ...metric(m) })).sort((a, b) => a.hour - b.hour);
+  return arr(j.response).map((m) => ({ hour: f(m.hour), ...metric(m) })).sort((a, b) => a.hour - b.hour);
 }
 
 /** Performa 1 iklan produk per jam pada 1 tanggal. */
 export async function hourlyCampaign(c: C, date: string, campaignId: string): Promise<(Metric & { hour: number })[]> {
-  const j = await call<{ response?: { campaign_list?: { metrics_list?: (RawM & { hour: number })[] }[] }[] }>("/api/v2/ads/get_product_campaign_hourly_performance", {
+  type R = { campaign_list?: { metrics_list?: (RawM & { hour: number })[] }[] };
+  const j = await call<{ response?: R | R[] }>("/api/v2/ads/get_product_campaign_hourly_performance", {
     ...c,
     query: { performance_date: date, campaign_id_list: campaignId },
   });
-  return (j.response ?? [])
+  return arr(j.response)
     .flatMap((r) => r.campaign_list ?? [])
     .flatMap((x) => x.metrics_list ?? [])
     .map((m) => ({ hour: f(m.hour), ...metric(m) }))
@@ -39,11 +42,12 @@ export async function hourlyCampaign(c: C, date: string, campaignId: string): Pr
 
 /** Performa harian 1 iklan produk. */
 export async function dailyCampaign(c: C, start: string, end: string, campaignId: string): Promise<(Metric & { date: string })[]> {
-  const j = await call<{ response?: { campaign_list?: { metrics_list?: (RawM & { date: string })[] }[] }[] }>("/api/v2/ads/get_product_campaign_daily_performance", {
+  type R = { campaign_list?: { metrics_list?: (RawM & { date: string })[] }[] };
+  const j = await call<{ response?: R | R[] }>("/api/v2/ads/get_product_campaign_daily_performance", {
     ...c,
     query: { start_date: start, end_date: end, campaign_id_list: campaignId },
   });
-  return (j.response ?? []).flatMap((r) => r.campaign_list ?? []).flatMap((x) => x.metrics_list ?? []).map((m) => ({ date: m.date, ...metric(m) }));
+  return arr(j.response).flatMap((r) => r.campaign_list ?? []).flatMap((x) => x.metrics_list ?? []).map((m) => ({ date: m.date, ...metric(m) }));
 }
 
 export type Keyword = { keyword: string; status: string; match: string; bid: number };
@@ -193,7 +197,7 @@ export async function recommendedItems(c: C): Promise<{ itemId: string; status: 
     "/api/v2/ads/get_recommended_item_list",
     c,
   );
-  return (j.response ?? []).map((r) => ({ itemId: String(r.item_id), status: r.item_status_list ?? [], tags: r.sku_tag_list ?? [], ongoing: r.ongoing_ad_type_list ?? [] }));
+  return arr(j.response).map((r) => ({ itemId: String(r.item_id), status: r.item_status_list ?? [], tags: r.sku_tag_list ?? [], ongoing: r.ongoing_ad_type_list ?? [] }));
 }
 
 export async function recommendedKeywords(c: C, itemId: string, input = ""): Promise<{ keyword: string; quality: number; volume: number; bid: number }[]> {
