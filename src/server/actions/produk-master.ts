@@ -8,8 +8,10 @@ import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { loadProductGroupOf } from "@/server/marketplace/product-groups";
 import { websiteRename } from "@/server/marketplace/website";
-import { DEMO } from "@/server/marketplace/sync";
-import { WEB_IKUT_PRODUK_MASTER } from "@/lib/flags";
+import { DEMO, PLATFORM_LABEL, activeShop, fresh } from "@/server/marketplace/sync";
+import { updateItem as updateShopeeItem } from "@/server/marketplace/shopee-product";
+import { partialEditProduct } from "@/server/marketplace/tiktok-product";
+import { bolehUbah } from "@/lib/flags";
 import { pushTokopediaToWebCore } from "@/server/marketplace/website-import";
 
 type Res = { ok: boolean; message?: string };
@@ -33,19 +35,28 @@ export async function renameProduct(platform: string, itemId: string, name: stri
   if (n.length < 3) return { ok: false, message: "Nama minimal 3 huruf." };
   if (n.length > 255) return { ok: false, message: "Nama maksimal 255 huruf." };
   const where = await groupWhere(platform, itemId, false);
-  // Tirtonic.com ikut Produk Master: kirim nama ke web dulu; gagal → tidak disimpan.
-  const web = WEB_IKUT_PRODUK_MASTER
-    ? [...new Set((await prisma.marketplaceItem.findMany({ where: { AND: [where, { platform: "WEBSITE", shopId: { not: DEMO } }] }, select: { itemId: true } })).map((i) => i.itemId))]
-    : [];
-  try {
-    for (const id of web) await websiteRename(id, n);
-  } catch (e) {
-    return { ok: false, message: e instanceof Error ? e.message : "Gagal kirim ke Tirtonic.com." };
+  // Kirim nama ke tiap toko yang boleh diubah (Tirtonic.com / Shopee / Tokopedia sesuai saklar).
+  const listings = await prisma.marketplaceItem.findMany({ where: { AND: [where, { shopId: { not: DEMO } }] }, select: { platform: true, itemId: true }, distinct: ["platform", "itemId"] });
+  const sent: string[] = [];
+  const fail: string[] = [];
+  for (const l of listings.filter((x) => bolehUbah(x.platform))) {
+    try {
+      if (l.platform === "WEBSITE") await websiteRename(l.itemId, n);
+      else {
+        const shop = await fresh((await activeShop(l.platform as "SHOPEE" | "TOKOPEDIA"))!);
+        if (l.platform === "SHOPEE") await updateShopeeItem({ token: shop.accessToken, shopId: shop.shopId }, l.itemId, { name: n });
+        else await partialEditProduct({ token: shop.accessToken, cipher: shop.cipher ?? "" }, l.itemId, { title: n });
+      }
+      sent.push(PLATFORM_LABEL[l.platform as keyof typeof PLATFORM_LABEL] ?? l.platform);
+    } catch (e) {
+      fail.push(`${PLATFORM_LABEL[l.platform as keyof typeof PLATFORM_LABEL] ?? l.platform}: ${e instanceof Error ? e.message : "gagal"}`);
+    }
   }
   await prisma.marketplaceItem.updateMany({ where, data: { localName: n } });
-  await log("produk_rename", `${platform}:${itemId}`, { name: n, web });
+  await log("produk_rename", `${platform}:${itemId}`, { name: n, sent, fail });
   revalidatePath("/channel/produk");
-  return { ok: true, message: web.length ? "Nama tersimpan & Tirtonic.com ikut diubah." : "Nama tersimpan (Shopee/Tokopedia tidak diubah)." };
+  if (fail.length) return { ok: false, message: `Nama tersimpan${sent.length ? `, terkirim ke ${sent.join(", ")}` : ""}. Gagal: ${fail.join(" · ")}` };
+  return { ok: true, message: sent.length ? `Nama tersimpan & ikut diubah di ${sent.join(", ")}.` : "Nama tersimpan." };
 }
 
 export async function setItemSku(id: string, sku: string): Promise<Res> {
