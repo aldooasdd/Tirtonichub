@@ -17,8 +17,8 @@ const YEAR_MS = 365 * 24 * 60 * 60 * 1000;
 // Tier berbasis belanja 12 bulan. rpPerAce = rupiah belanja untuk dapat 1 Ace.
 // Urut dari syarat tertinggi ke terendah; tier pertama yang lolos dipakai.
 const TIERS = [
-  { name: "Prive", label: "Tirtonic Privé", qualify: 100_000_000, rpPerAce: 40_000 },
-  { name: "Signature", label: "Tirtonic Signature", qualify: 30_000_000, rpPerAce: 65_000 },
+  { name: "Prive", label: "Tirtonic Privé", qualify: 50_000_000, rpPerAce: 40_000 },
+  { name: "Signature", label: "Tirtonic Signature", qualify: 15_000_000, rpPerAce: 65_000 },
   { name: "White", label: "Tirtonic White", qualify: 0, rpPerAce: 100_000 },
 ] as const;
 

@@ -1,11 +1,11 @@
-import { AbstractCubeIsometricLoader } from "@/components/ui/abstract-cube-isometric-loader";
-
-// Tampil saat pindah halaman (server component ambil data).
+// Tampil instan saat pindah halaman (sementara server component ambil data).
 export default function Loading() {
   return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3 text-primary">
-      <AbstractCubeIsometricLoader dotSize={6} gap={4} speed={1.2} bloom />
-      <p className="text-sm text-muted-foreground">Memuat…</p>
+    <div className="space-y-4">
+      <div className="h-7 w-48 animate-pulse rounded bg-muted" />
+      <div className="h-4 w-72 animate-pulse rounded bg-muted" />
+      <div className="h-36 animate-pulse rounded-lg bg-muted" />
+      <div className="h-36 animate-pulse rounded-lg bg-muted" />
     </div>
   );
 }

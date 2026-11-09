@@ -1,11 +1,7 @@
-"use client"
-
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
-import { useFormStatus } from "react-dom"
 import { cn } from "@/lib/utils"
 import { Slot } from "radix-ui"
-import { AbstractCubeIsometricLoader } from "@/components/ui/abstract-cube-isometric-loader"
 
 const buttonVariants = cva(
   "inline-flex shrink-0 items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap transition-all outline-none focus-visible:border-ring focus-visible:ring-[3px] focus-visible:ring-ring/50 disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
@@ -46,74 +42,21 @@ function Button({
   variant = "default",
   size = "default",
   asChild = false,
-  loading,
-  disabled,
-  onClick,
-  children,
   ...props
 }: React.ComponentProps<"button"> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean
-    /** Paksa tampil loader. Kalau tak diisi, loader otomatis muncul saat tombol
-     *  diklik lalu jadi disabled (pola useTransition), saat form action pending,
-     *  atau saat onClick mengembalikan Promise. */
-    loading?: boolean
   }) {
   const Comp = asChild ? Slot.Root : "button"
-  // Pending dari <form action={...}> — aman dipanggil di luar form (balik false).
-  const { pending: formPending } = useFormStatus()
-  const [selfPending, setSelfPending] = React.useState(false)
-  const [clicked, setClicked] = React.useState(false)
-
-  // Pola existing: tombol diklik → parent set disabled={isPending}. Begitu disabled
-  // lepas, reset supaya loader hilang.
-  const [prevDisabled, setPrevDisabled] = React.useState(disabled)
-  if (disabled !== prevDisabled) {
-    setPrevDisabled(disabled)
-    if (!disabled) setClicked(false)
-  }
-
-  // asChild (mis. bungkus <Link>) tak bisa disisipi overlay — navigasi sudah
-  // ditangani loading.tsx, jadi loader di-skip.
-  const showLoader =
-    !asChild &&
-    (loading === true || selfPending || formPending || (clicked && !!disabled))
-  const isDisabled = disabled || loading === true || selfPending
-
-  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    setClicked(true)
-    const r = onClick?.(e) as unknown
-    if (r && typeof (r as Promise<unknown>).then === "function") {
-      setSelfPending(true)
-      Promise.resolve(r).finally(() => {
-        setSelfPending(false)
-        setClicked(false)
-      })
-    }
-  }
 
   return (
     <Comp
       data-slot="button"
       data-variant={variant}
       data-size={size}
-      className={cn(buttonVariants({ variant, size, className }), showLoader && "relative")}
-      disabled={asChild ? undefined : isDisabled}
-      aria-busy={showLoader || undefined}
-      onClick={asChild ? onClick : handleClick}
+      className={cn(buttonVariants({ variant, size, className }))}
       {...props}
-    >
-      {showLoader ? (
-        <>
-          <span className="absolute inset-0 flex items-center justify-center">
-            <AbstractCubeIsometricLoader dotSize={3} gap={2} speed={1} />
-          </span>
-          <span className="invisible inline-flex items-center gap-2">{children}</span>
-        </>
-      ) : (
-        children
-      )}
-    </Comp>
+    />
   )
 }
 
