@@ -6,7 +6,7 @@ import { DEMO, PLATFORM_LABEL } from "@/server/marketplace/sync";
 import { productStatus as statusInfo } from "@/lib/channel-status";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
-const TAG: Record<string, string> = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600" };
+const TAG: Record<string, string> = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600", WEBSITE: "bg-sky-500/15 text-sky-600" };
 type SP = { q?: string; status?: string; p?: string };
 
 /** Produk Master: semua produk marketplace (1 baris per produk) + ringkasan varian, stok, harga. */
@@ -94,6 +94,7 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
             <option value="">Semua toko</option>
             <option value="TOKOPEDIA">Tokopedia</option>
             <option value="SHOPEE">Shopee</option>
+            <option value="WEBSITE">Tirtonic.com</option>
           </select>
         </label>
         <button type="submit" className="h-9 rounded-md bg-primary px-4 text-14 font-medium text-primary-foreground">
