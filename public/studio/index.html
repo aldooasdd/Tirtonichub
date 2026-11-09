@@ -890,6 +890,9 @@ html[data-skin] .pnb{background:var(--glass);border-color:var(--glass-line)}
 /* dialog di tengah layar dengan latar buram (konfirmasi hapus, jadwal tayang) */
 .cdlg{position:fixed;inset:0;z-index:95;display:grid;place-items:center;padding:16px;background:color-mix(in srgb,#0b1220 38%,transparent);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}
 .cdlg[hidden]{display:none}
+/* jendela terbuka: halaman di belakang tidak ikut bergulir, gulir hanya di dalam kartu (juga tidak "tembus" saat isi kartu sudah mentok) */
+html:has(.cdlg:not([hidden]),.lb:not([hidden])),html:has(.cdlg:not([hidden]),.lb:not([hidden])) body{overflow:hidden}
+.cdlg,.lb,.cdbox,.kmodalbox,.fndw{overscroll-behavior:contain}
 /* tombol ke dashboard Tirtonichub (hanya mode Tirtonichub) */
 .hubbtn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:999px;background:var(--navy);color:var(--on-navy);font:700 13.5px/1 var(--display);text-decoration:none;white-space:nowrap;transition:transform .15s,background .15s}
 .hubbtn[hidden]{display:none}
@@ -986,6 +989,12 @@ body.qback .qready .qfold{outline:2px dashed color-mix(in srgb,var(--q) 55%,tran
 .qcell.sugg{border-color:var(--good);box-shadow:inset 0 0 0 1px var(--good)}
 .qcell.dropok{border-color:var(--navy);background:var(--navy-soft);border-style:dashed}
 html[data-skin] .qcell{background:var(--glass);border-color:var(--glass-line)}
+/* hari ini timbul di semua kalender: naik sedikit, bingkai aksen, bayangan. Hanya geser vertikal supaya tidak menambah scroll menyamping */
+.qcell.today:not(.dropok),.cal .cell.today,.pcgrid .pccell.today:not(.dropok){--today-sh:0 16px 28px -12px #000a,0 0 0 1px var(--accent);position:relative;z-index:2;transform:translateY(-5px);border-color:var(--accent);box-shadow:var(--today-sh)}
+.qcell.today:not(.dropok),html .cal .cell.today:not(.thu),.pcgrid .pccell.today:not(.dropok){background-image:linear-gradient(color-mix(in srgb,var(--accent) 20%,transparent) 0 0)}
+.qcell.today.sugg:not(.dropok){box-shadow:var(--today-sh),inset 0 0 0 1px var(--good)}
+.pcgrid .pccell.today.sel:not(.dropok){box-shadow:var(--today-sh),0 0 0 2px var(--navy)}
+@media (max-width:760px){.qcell.today:not(.dropok),.cal .cell.today,.pcgrid .pccell.today:not(.dropok){transform:translateY(-2px)}}
 .qpill{all:unset;box-sizing:border-box;display:block;min-width:0;max-width:100%;cursor:pointer;border-radius:999px}
 .qcell .dn{font:800 14px/1 var(--display);padding:4px 6px;border-radius:8px;align-self:flex-start}
 .qents{display:flex;flex-direction:column;gap:5px;min-width:0}
@@ -3046,10 +3055,10 @@ function itemCardHtml(i,byItem){const ts=(byItem[i.id]||[]).sort((a,b)=>a.prio-b
       '<div class="acts"><label class="status" for="q-'+esc(i.id)+'">Stok</label><input class="qty num" id="q-'+esc(i.id)+'" type="number" min="0" value="'+esc(i.qty)+'" data-act="qty">'+
       (i.scheduled===false?'<button class="btn" type="button" data-act="editItem">Lengkapi &amp; jadwalkan</button>':'<button class="ghost" type="button" data-act="editItem">Edit</button>')+'<button class="'+(i.thumb?'ghost':'ghost addph')+'" type="button" data-act="itemPhoto">'+(i.thumb?'Ganti foto':CAM+'Tambah foto')+'</button><button class="ghost danger" data-act="delItem">'+'Hapus'+'</button></div>'+
       '<div class="progress">'+(ts.length?ts.map(t=>'<span class="pstep ty ty-'+esc(t.type)+' '+(ready(t)?'done':late(t)?'late':'')+'"><b>'+esc(TYPES[t.type].label)+'</b> · '+esc(t.status)+(ready(t)?' ✓':'')+'</span>').join(''):'<span class="status">Tidak ada tugas konten.</span>')+'</div></div>'}
-/* Louis1: kode diubah → konten yang belum ada ditambah, dan jadwal Foto IG / Video produk / Video review yang belum
-   diproduksi (Terdata, tidak dikunci, belum dijadwalkan di Meta) dihitung ulang mulai hari ini sesuai kode baru */
+/* Louis1: kode/stok diubah → hanya konten yang belum ada yang ditambah. Sejak 8 Nov 2026 jadwal konten yang sudah ada
+   TIDAK dihitung ulang lagi (dulu menimpa tanggal produksi/edit yang sudah diedit manual oleh admin) */
 async function reTier(it){const title=it.name+(it.color?' '+it.color:'');const all=(S.allTasks||S.tasks).filter(t=>t.itemId===it.id);
-  const have=new Set(all.map(t=>t.type));const redo=all.filter(t=>t.type!=='ktl'&&IDX[t.status]<=0&&!t.locked&&!t.metaAt&&!t.postTime&&!isExpired(t));
+  const have=new Set(all.map(t=>t.type));const redo=[];
   const want=l2Types(it).filter(t=>t!=='ktl'||!have.has(t)).filter(t=>!have.has(t)||redo.some(x=>x.type===t));if(!want.length){queueBalance();return''}
   const plan=planBatch([Object.assign({},it,{after15:new Date().getHours()>=15})],today(),null,t=>redo.includes(t))[0].tasks.filter(x=>want.includes(x.type));const at=Date.now(),by=S.me?S.me.name:'';let n=0,m=0;
   for(const x of plan){const old=redo.find(t=>t.type===x.type);

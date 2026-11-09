@@ -62,8 +62,15 @@ export async function loadCtx(): Promise<Ctx> {
   };
 }
 
-/** Jalankan penyeimbang otomatis: pindahkan jadwal yang lewat/penuh, simpan patch ke DB. */
+/** Penyeimbang otomatis DIMATIKAN (8 Nov 2026), sama dengan Studio sejak 4 Nov: rencana syuting/edit hanya diubah
+ *  manual oleh admin. Dulu ini jalan tiap admin membuka /media/workflow atau mengubah tugas di dasbor, dan menimpa
+ *  tanggal produksi yang sudah diedit di Studio. */
 export async function runBalance(): Promise<number> {
+  return 0;
+}
+
+/** Penyeimbang lama (tidak dipanggil): pindahkan jadwal yang lewat/penuh, simpan patch ke DB. */
+export async function runBalanceOld(): Promise<number> {
   const ctx = await loadCtx();
   const sch = makeScheduler(ctx);
   const changes = sch.computeBalance(todayWIB(), afterThree());
