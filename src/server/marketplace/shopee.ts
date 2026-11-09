@@ -487,7 +487,9 @@ export async function shopeeAdsCampaigns(token: string, shopId: string, start: s
       shopId,
       query: { start_date: start, end_date: end, campaign_id_list: ids.slice(i, i + 100).join(",") },
     });
-    for (const c of (j.response ?? []).flatMap((r) => r.campaign_list ?? [])) {
+    // response bisa objek {campaign_list} atau array berisi objek itu.
+    const resp = j.response as unknown as { campaign_list?: C[] } | { campaign_list?: C[] }[] | undefined;
+    for (const c of (Array.isArray(resp) ? resp : resp ? [resp] : []).flatMap((r) => r.campaign_list ?? [])) {
       const ms = c.metrics_list ?? [];
       const sum = (k: keyof M) => ms.reduce((n, m) => n + f(m[k]), 0);
       out.push({
