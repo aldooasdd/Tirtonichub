@@ -12,7 +12,7 @@ const n = (v: unknown) => Math.round(Number(v) || 0);
 
 type Tok = { accessToken: string; refreshToken: string; expiresAt: Date };
 
-async function call<T>(path: string, opts: { method?: "GET" | "POST"; query?: Record<string, string | number>; body?: unknown; token?: string; shopId?: string }): Promise<T> {
+export async function call<T>(path: string, opts: { method?: "GET" | "POST"; query?: Record<string, string | number>; body?: unknown; token?: string; shopId?: string }): Promise<T> {
   const ts = now();
   const q = new URLSearchParams({ partner_id: pid(), timestamp: String(ts) });
   if (opts.token) {
@@ -173,6 +173,21 @@ export async function shopeeEscrow(token: string, shopId: string, orderSn: strin
   const revenue = n(inc.original_price ?? inc.buyer_total_amount);
   const amount = n(inc.escrow_amount);
   return { revenue, fee: Math.max(0, revenue - amount), amount };
+}
+
+/** Rincian dana cair banyak order sekaligus (maks 50, disarankan ≤20). */
+export async function shopeeEscrowBatch(token: string, shopId: string, orderSns: string[]): Promise<Map<string, { revenue: number; fee: number; amount: number }>> {
+  type R = { escrow_detail?: { order_sn: string; order_income: { escrow_amount: number; original_price?: number; buyer_total_amount?: number } } };
+  const j = await call<{ response?: R[] }>("/api/v2/payment/get_escrow_detail_batch", { method: "POST", token, shopId, body: { order_sn_list: orderSns } });
+  const out = new Map<string, { revenue: number; fee: number; amount: number }>();
+  for (const r of j.response ?? []) {
+    const d = r.escrow_detail;
+    if (!d?.order_income) continue;
+    const revenue = n(d.order_income.original_price ?? d.order_income.buyer_total_amount);
+    const amount = n(d.order_income.escrow_amount);
+    out.set(d.order_sn, { revenue, fee: Math.max(0, revenue - amount), amount });
+  }
+  return out;
 }
 
 export async function shopeeTracking(token: string, shopId: string, orderSn: string): Promise<string | null> {
