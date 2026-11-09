@@ -12,7 +12,7 @@ const n = (v: unknown) => Math.round(Number(v) || 0);
 
 type Tok = { accessToken: string; refreshToken: string; expiresAt: Date };
 
-export async function call<T>(path: string, opts: { method?: "GET" | "POST"; query?: Record<string, string | number>; body?: unknown; token?: string; shopId?: string }): Promise<T> {
+export async function call<T>(path: string, opts: { method?: "GET" | "POST"; query?: Record<string, string | number>; body?: unknown; form?: FormData; token?: string; shopId?: string }): Promise<T> {
   const ts = now();
   const q = new URLSearchParams({ partner_id: pid(), timestamp: String(ts) });
   if (opts.token) {
@@ -22,9 +22,10 @@ export async function call<T>(path: string, opts: { method?: "GET" | "POST"; que
   q.set("sign", shopeeSign(pkey(), pid(), path, ts, opts.token ?? "", opts.token ? opts.shopId ?? "" : ""));
   for (const [k, v] of Object.entries(opts.query ?? {})) q.set(k, String(v));
   const res = await fetch(`${host()}${path}?${q}`, {
-    method: opts.method ?? "GET",
-    headers: { "content-type": "application/json" },
-    body: opts.body ? JSON.stringify(opts.body) : undefined,
+    method: opts.form ? "POST" : (opts.method ?? "GET"),
+    // multipart (upload) → biar fetch yang isi content-type + boundary.
+    headers: opts.form ? undefined : { "content-type": "application/json" },
+    body: opts.form ?? (opts.body ? JSON.stringify(opts.body) : undefined),
     signal: AbortSignal.timeout(20_000),
   });
   const j = (await res.json().catch(() => ({}))) as { error?: string; message?: string } & T;
