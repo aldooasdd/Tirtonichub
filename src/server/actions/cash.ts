@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/server/db";
-import { requireAuth } from "@/server/auth/rbac";
+import { requireAuth, requireFinance } from "@/server/auth/rbac";
 import { dateKeyWIB } from "@/server/attendance/logic";
 import { effectiveShiftCode } from "@/server/attendance/shift-schedule";
 import { kasirShift } from "@/lib/cash";
@@ -73,5 +73,35 @@ export async function closeCashSession(a: Amounts): Promise<ActionResult> {
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "cash_close", entity: "CashSession", entityId: sess.id });
   revalidatePath("/beranda");
+  return { ok: true };
+}
+
+/** Finance: koreksi saldo buka / tutup kasir (salah input kasir). Tercatat di log aktivitas. */
+export async function updateCashSession(id: string, open: Amounts, close: Amounts | null): Promise<ActionResult> {
+  const ctx = await requireFinance();
+  const sess = await prisma.cashSession.findUnique({ where: { id } });
+  if (!sess) return { ok: false, message: "Data kasir tidak ditemukan." };
+  if (close && !sess.closedAt) return { ok: false, message: "Kasir belum ditutup; saldo tutup belum bisa diubah." };
+  const data = {
+    openCash: int(open.cash),
+    openMandiri: int(open.mandiri),
+    openBca: int(open.bca),
+    openBri: int(open.bri),
+    ...(close && sess.closedAt ? { closeCash: int(close.cash), closeMandiri: int(close.mandiri), closeBca: int(close.bca), closeBri: int(close.bri) } : {}),
+  };
+  await prisma.cashSession.update({ where: { id }, data });
+  const { ip } = await clientMeta();
+  await logActivity(
+    { ...ctx, ip },
+    {
+      action: "cash_session_edit",
+      entity: "CashSession",
+      entityId: id,
+      before: { openCash: sess.openCash, openMandiri: sess.openMandiri, openBca: sess.openBca, openBri: sess.openBri, closeCash: sess.closeCash, closeMandiri: sess.closeMandiri, closeBca: sess.closeBca, closeBri: sess.closeBri },
+      after: data,
+    },
+  );
+  revalidatePath("/beranda");
+  revalidatePath("/finance/kas");
   return { ok: true };
 }
