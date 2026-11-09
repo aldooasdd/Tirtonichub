@@ -11,7 +11,8 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ pla
   const sig = req.headers.get("authorization") ?? "";
 
   if (platform === "shopee") {
-    const key = process.env.SHOPEE_PARTNER_KEY ?? "";
+    // Push ditandatangani "Live Push Partner Key" (console → Push Mechanism → Generate), beda dengan API partner key.
+    const key = process.env.SHOPEE_PUSH_KEY || process.env.SHOPEE_PARTNER_KEY || "";
     const url = `${base()}/api/marketplace/shopee/webhook`;
     if (!key || !sameSig(sig, shopeePushSig(key, url, body))) return NextResponse.json({ ok: false }, { status: 401 });
     void syncOrders("SHOPEE", 1).catch(() => null);
