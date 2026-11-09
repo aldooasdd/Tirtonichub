@@ -11,6 +11,7 @@ import { loadProductGroupOf } from "@/server/marketplace/product-groups";
 import { PRODUK_KE_MARKETPLACE } from "@/lib/flags";
 import { ProductOps } from "@/components/channel/product-ops";
 import { ProdukAdmin } from "@/components/channel/produk-admin";
+import { ShopeeProductPanel } from "@/components/channel/shopee-product-panel";
 
 const TAG: Record<string, string> = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600", WEBSITE: "bg-sky-500/15 text-sky-600" };
 
@@ -178,6 +179,14 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
           {!d && platform !== "WEBSITE" && <p className="rounded-md bg-amber-500/10 p-3 text-14 text-amber-700">Detail produk belum tersinkron. Sinkron detail berjalan bertahap tiap jam.</p>}
         </div>
       </section>
+
+      {(() => {
+        const sh = platform === "SHOPEE" ? { itemId, rows: items } : (() => {
+          const l = others.find((x) => x.platform === "SHOPEE" && !x.demo);
+          return l ? { itemId: l.itemId, rows: otherItems.filter((i) => i.platform === "SHOPEE" && i.itemId === l.itemId) } : null;
+        })();
+        return sh && sh.rows[0]?.shopId !== DEMO ? <ShopeeProductPanel itemId={sh.itemId} name={title} unlisted={sh.rows.every((r) => r.skuStatus === "DEACTIVATED")} /> : null;
+      })()}
 
       {[{ platform, rows: items }, ...others.map((l) => ({ platform: l.platform, rows: otherItems.filter((i) => i.platform === l.platform && i.itemId === l.itemId) }))].map((sec, n) => (
       <section key={`${sec.platform}-${n}`} className="space-y-2">
