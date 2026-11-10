@@ -44,10 +44,10 @@ export function notaBuckets(pays: Pay[], grandTotal: number): Buckets {
 export type KasirShift = "PAGI" | "SIANG";
 export const SHIFT_LABEL: Record<KasirShift, string> = { PAGI: "Pagi", SIANG: "Siang" };
 
-/** Kode jadwal → shift kasir. P/LONG = Pagi, S = Siang, lainnya (OH/O/WFH/…) tak buka kasir. */
+/** Kode jadwal → shift kasir. P/PA/LONG = Pagi, S/SA = Siang, lainnya (OH/O/WFH/…) tak buka kasir. */
 export function kasirShift(code: string): KasirShift | null {
-  if (code === "P" || code === "LONG") return "PAGI";
-  if (code === "S") return "SIANG";
+  if (code === "P" || code === "PA" || code === "LONG") return "PAGI";
+  if (code === "S" || code === "SA") return "SIANG";
   return null;
 }
 
