@@ -11,6 +11,7 @@ import { makeKey, putObject, multipartStart, multipartPart, multipartFinish, mul
 import { canRead, canWrite, type Doc, type StudioUser } from "./rules";
 import { loadAccess } from "./access";
 import * as M from "./map";
+import { nextPlanLog } from "./plan-log";
 
 export class StudioError extends Error {
   constructor(public code: "permission-denied" | "not-found" | "invalid-argument" | "failed-precondition", msg: string) {
@@ -123,6 +124,11 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
   if (op === "update" && !before) throw new StudioError("not-found", "Data tidak ditemukan.");
   const after = op === "delete" ? null : op === "update" ? { ...before, ...(data ?? {}) } : { ...(data ?? {}) };
   if (after) delete after.id;
+  // Riwayat jadwal (planLog) milik server: kiriman klien (bisa basi) diganti yang tersimpan sebelum cek aturan.
+  if (after && col === "tasks" && !opts.trusted) {
+    if (before?.planLog !== undefined) after.planLog = before.planLog;
+    else delete after.planLog;
+  }
   const why = opts.trusted ? null : canWrite(u, op, path, before, after); // trusted: hanya skrip impor di server
   if (why) throw new StudioError("permission-denied", "Tidak diizinkan: " + why + ".");
   if (!opts.trusted && (col === "folders" || col === "docs" || col === "assets")) await checkFileAccess(u, col, id, before, after);
@@ -172,6 +178,12 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
         if (!after.postAt) after.postAt = day;
         if (!after.readyAt) after.readyAt = day;
         if (Array.isArray(after.history)) after.history = [...after.history, { at: Date.now(), by: "auto", name: "Otomatis", from: "Ready", to: "Tayang" }].slice(-30);
+      }
+      // Riwayat jadwal: hanya server yang menulis; kiriman klien diganti catatan tersimpan + perubahan baru (plan-log.ts).
+      if (!opts.trusted) {
+        const log = nextPlanLog(before?.planLog, before, after, u.name, "studio");
+        if (log) after.planLog = log;
+        else delete after.planLog;
       }
       const { row, itemId } = M.taskFromDoc(after);
       const okItem = itemId ? !!(await prisma.mediaItem.findUnique({ where: { id: itemId }, select: { id: true } })) : false;
