@@ -17,7 +17,6 @@ export default async function CabangPage() {
         latitude: b.latitude,
         longitude: b.longitude,
         userCount: b._count.users,
-        posSet: !!b.posPasswordHash,
       }))}
     />
   );

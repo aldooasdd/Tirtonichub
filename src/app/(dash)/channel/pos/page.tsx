@@ -2,6 +2,7 @@ import Link from "next/link";
 import { requireChannel } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
+import { PosPassword } from "@/components/pos/pos-password";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(Math.round(n));
 const wibDate = (d: Date) => new Date(d.getTime() + 7 * 3600_000).toISOString().slice(0, 10);
@@ -95,7 +96,7 @@ export default async function PosDashboardPage({ searchParams }: { searchParams:
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <h1 className="text-24 font-semibold">Tirtonic POS</h1>
-          <p className="text-14 text-muted-foreground">Penjualan dari mesin kasir <code>/pos</code> semua cabang.</p>
+          <p className="text-14 text-muted-foreground">Penjualan & pengaturan mesin kasir <code>/pos</code> semua cabang. Password kasir diatur di tabel Per cabang (wajib beda tiap cabang).</p>
         </div>
         <div className="flex items-center gap-2">
           {PERIODS.map((x) => (
@@ -122,7 +123,7 @@ export default async function PosDashboardPage({ searchParams }: { searchParams:
           empty="Belum ada cabang."
           rows={branches.map((b) => [
             b.name,
-            b.posPasswordHash ? "Aktif" : <span key="x" className="text-muted-foreground">Belum diatur</span>,
+            <PosPassword key={b.id} branchId={b.id} active={!!b.posPasswordHash} />,
             byBranch.get(b.id)?.n ?? 0,
             rupiah(byBranch.get(b.id)?.sum ?? 0),
           ])}

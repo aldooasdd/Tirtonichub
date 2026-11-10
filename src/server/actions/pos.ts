@@ -2,7 +2,7 @@
 
 import { prisma } from "@/server/db";
 import { hashPassword, verifyPassword } from "@/server/auth/password";
-import { requireAuth, can, assert } from "@/server/auth/rbac";
+import { requireChannel } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { rateLimit } from "@/server/rate-limit";
@@ -31,10 +31,9 @@ export async function posLogout(): Promise<Res> {
   return { ok: true };
 }
 
-/** HR: atur password kasir cabang. Ditolak bila sama dengan password cabang lain. */
+/** Tirtonic Channel: atur password kasir cabang. Ditolak bila sama dengan password cabang lain. */
 export async function setBranchPosPassword(branchId: string, password: string): Promise<Res> {
-  const ctx = await requireAuth();
-  assert(can.manageBranchSchedule(ctx.activeRole));
+  const ctx = await requireChannel();
   const pw = password.trim();
   if (pw.length < 6) return { ok: false, message: "Password kasir minimal 6 karakter." };
   const others = await prisma.branch.findMany({ where: { id: { not: branchId }, posPasswordHash: { not: null } }, select: { posPasswordHash: true } });
@@ -42,6 +41,15 @@ export async function setBranchPosPassword(branchId: string, password: string): 
   await prisma.branch.update({ where: { id: branchId }, data: { posPasswordHash: hashPassword(pw) } });
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "pos_password", entity: "Branch", entityId: branchId });
+  return { ok: true };
+}
+
+/** Tirtonic Channel: matikan kasir cabang (hapus password → semua mesin cabang itu keluar). */
+export async function clearBranchPosPassword(branchId: string): Promise<Res> {
+  const ctx = await requireChannel();
+  await prisma.branch.update({ where: { id: branchId }, data: { posPasswordHash: null } });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "pos_password_clear", entity: "Branch", entityId: branchId });
   return { ok: true };
 }
 
