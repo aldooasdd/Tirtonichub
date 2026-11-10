@@ -3593,25 +3593,36 @@ function openPreview(id){const a=S.assets.find(x=>x.id===id);if(!a)return;$('fpv
 S.heicUrl={};S.heicQ=[];S.heicBusy=false;
 /* thumbnail foto/video/HEIC di File: dibuat sekali di browser (maks 480 px) dan disimpan di Cache Storage,
    jadi foto asli (beberapa MB) tidak dimuat ulang tiap kali tampilan diperbarui; maks 3 sekaligus */
-S.thUrl={};S.thQ=[];S.thRun=0;S.thBusy=new Set();S.thTry={};
+S.thUrl={};S.thQ=[];S.thRun=0;S.thBusy=new Set();S.thTry={};S.thA={};S.thRedo={};
 const PLAY_IC='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="currentColor"/></svg>';
 const isVid=a=>/^video\//.test(a.mime||'');
 const canThumb=a=>isHeic(a)||/^image\//.test(a.mime||'')||isVid(a);
 const thFail=a=>isHeic(a)?'<span class="heicx">HEIC</span>':isVid(a)?'<span class="thv">'+PLAY_IC+'</span>':'<img src="'+esc(a.url)+'" alt="" loading="lazy">';
-function mediaThumb(a){const k=a.id;if(S.thUrl[k])return'<img src="'+S.thUrl[k]+'" alt="">'+(isVid(a)?'<span class="thpl">'+PLAY_IC+'</span>':'');if(S.thUrl[k]==='')return thFail(a);
+function mediaThumb(a){const k=a.id;S.thA[k]=a;if(S.thUrl[k])return'<img src="'+S.thUrl[k]+'" data-thk="'+esc(k)+'" alt="">'+(isVid(a)?'<span class="thpl">'+PLAY_IC+'</span>':'');if(S.thUrl[k]==='')return thFail(a);
   if(!S.thBusy.has(k)&&!S.thQ.some(x=>x.id===k))S.thQ.push(a);setTimeout(thumbRun,0);return'<img data-th="'+esc(k)+'" alt="" class="heicw">'}
 /* antrean: yang sedang terlihat di layar dulu (Finder bila terbuka), lalu yang terakhir diminta; gagal jaringan dicoba lagi */
 function thNext(){const q=S.thQ;if(q.length<2)return q.shift();const root=$('fnd')&&!$('fnd').hidden?$('fnd'):document,seen=new Set();
   root.querySelectorAll('img[data-th]').forEach(im=>{const r=im.getBoundingClientRect();if(r.width&&r.bottom>0&&r.top<innerHeight)seen.add(im.dataset.th)});
   const i=q.findIndex(x=>seen.has(x.id));return q.splice(i<0?q.length-1:i,1)[0]}
 function thumbRun(){while(S.thRun<3&&S.thQ.length){const a=thNext();if(S.thUrl[a.id]!==undefined)continue;S.thRun++;S.thBusy.add(a.id);
-  makeThumb(a).then(b=>{S.thUrl[a.id]=URL.createObjectURL(b)},()=>{const n=S.thTry[a.id]=(S.thTry[a.id]||0)+1;if(!isVid(a)&&n<3)return n;S.thUrl[a.id]=''}).then(again=>{S.thRun--;
+  makeThumb(a).then(b=>{S.thUrl[a.id]=URL.createObjectURL(b)},e=>{const n=S.thTry[a.id]=(S.thTry[a.id]||0)+1;if(e&&e.net&&n<40)return 6;   /* server mati: coba lagi tiap 30 detik, jangan menyerah */
+    if(!isVid(a)&&n<3)return n;S.thUrl[a.id]=''}).then(again=>{S.thRun--;
     if(again){setTimeout(()=>{S.thBusy.delete(a.id);S.thQ.push(a);thumbRun()},again*5000);thumbRun();return}S.thBusy.delete(a.id);
-    document.querySelectorAll('img[data-th="'+CSS.escape(a.id)+'"]').forEach(im=>{if(S.thUrl[a.id]){im.src=S.thUrl[a.id];im.classList.remove('heicw');im.removeAttribute('data-th');if(isVid(a))im.insertAdjacentHTML('afterend','<span class="thpl">'+PLAY_IC+'</span>')}else im.outerHTML=thFail(a)});thumbRun()})}}
+    document.querySelectorAll('img[data-th="'+CSS.escape(a.id)+'"]').forEach(im=>{if(S.thUrl[a.id]){im.src=S.thUrl[a.id];im.dataset.thk=a.id;im.classList.remove('heicw');im.removeAttribute('data-th');if(isVid(a))im.insertAdjacentHTML('afterend','<span class="thpl">'+PLAY_IC+'</span>')}else im.outerHTML=thFail(a)});thumbRun()})}}
+/* gambar kecil rusak ("?" di Safari: penyimpanan browser dibersihkan / blob tidak bisa dibaca): buang salinannya
+   (memori + Cache Storage) lalu buat ulang dari file asli, maks 1x per file per sesi; tetap gagal = tanda gagal biasa */
+document.addEventListener('error',e=>{const im=e.target;if(!im||im.tagName!=='IMG'||!im.dataset.thk)return;const k=im.dataset.thk,a=S.thA[k];
+  const u=S.thUrl[k];if(u&&u.startsWith('blob:')){try{URL.revokeObjectURL(u)}catch(x){}}delete S.thUrl[k];
+  caches.open('ts-thumb-v2').then(C=>C.delete(location.origin+'/__thumb/'+encodeURIComponent(k))).catch(()=>{});
+  if(!a){im.removeAttribute('src');return}
+  if(S.thRedo[k]){S.thUrl[k]='';im.outerHTML=thFail(a);return}S.thRedo[k]=1;
+  im.removeAttribute('src');im.removeAttribute('data-thk');im.dataset.th=k;im.classList.add('heicw');
+  if(!S.thBusy.has(k)&&!S.thQ.some(x=>x.id===k))S.thQ.push(a);thumbRun()},true);
 async function thFetch(url){const c=new AbortController(),to=setTimeout(()=>c.abort(),90000);
-  try{const r=await fetch(url,{credentials:'same-origin',signal:c.signal});if(!r.ok)throw new Error('http '+r.status);return await r.blob()}finally{clearTimeout(to)}}
+  try{let r;try{r=await fetch(url,{credentials:'same-origin',signal:c.signal})}catch(e){e.net=true;throw e}   /* jaringan putus / server mati */
+    if(!r.ok){const e=new Error('http '+r.status);e.net=r.status>=500||r.status===429;throw e}return await r.blob()}finally{clearTimeout(to)}}
 async function makeThumb(a){const req=location.origin+'/__thumb/'+encodeURIComponent(a.id);let C=null;
-  try{C=await caches.open('ts-thumb-v2');const hit=await C.match(req);if(hit)return await hit.blob()}catch(e){}
+  try{C=await caches.open('ts-thumb-v2');const hit=await C.match(req);if(hit){const ab=await hit.arrayBuffer();if(ab.byteLength>100)return new Blob([ab],{type:'image/jpeg'});await C.delete(req)}}catch(e){}
   let b;if(isVid(a))b=await videoThumb(a.url);
   else{const src=await thFetch(a.url);b=isHeic(a)?await heicToJpegBlob(src,480):await jpegBlob(await createImageBitmap(src,{imageOrientation:'from-image'}),480)}
   try{if(C)await C.put(req,new Response(b,{headers:{'content-type':'image/jpeg'}}))}catch(e){}return b}
