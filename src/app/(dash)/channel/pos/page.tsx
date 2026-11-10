@@ -68,6 +68,8 @@ export default async function PosDashboardPage({ searchParams }: { searchParams:
     loadWarehouses(),
   ]);
   const branchName = new Map(branches.map((b) => [b.id, b.name]));
+  // ponytail: cabang Office (kantor) bukan toko → tak ikut kasir. Tetap ada di Kelola cabang (absen).
+  const stores = branches.filter((b) => !/office/i.test(b.name));
 
   const omzet = sales.reduce((n, s) => n + s.grandTotal, 0);
   const items = sales.flatMap((s) => s.items as Item[]);
@@ -128,7 +130,7 @@ export default async function PosDashboardPage({ searchParams }: { searchParams:
           title="Per cabang"
           head={["Cabang", "Password kasir", "Gudang (stok cabang)", "Transaksi", "Omzet"]}
           empty="Belum ada cabang."
-          rows={branches.map((b) => [
+          rows={stores.map((b) => [
             b.name,
             <PosPassword key={b.id} branchId={b.id} active={!!b.posPasswordHash} />,
             <PosWarehouses key={`w${b.id}`} branchId={b.id} selected={b.warehouseIds} warehouses={warehouses} />,
@@ -172,7 +174,7 @@ export default async function PosDashboardPage({ searchParams }: { searchParams:
       />
 
       <PosCampaigns
-        branches={branches.map((b) => ({ id: b.id, name: b.name }))}
+        branches={stores.map((b) => ({ id: b.id, name: b.name }))}
         campaigns={campaigns.map((c) => ({
           id: c.id,
           title: c.title,
