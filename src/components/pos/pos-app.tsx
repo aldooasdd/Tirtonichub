@@ -3,6 +3,7 @@
 import { useDeferredValue, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { CircleAlert, CircleCheck, LogOut, Minus, Plus, ScanBarcode, Trash2, UserRound, X } from "lucide-react";
+import { DISPLAY_CHANNEL, type DisplayMsg } from "@/components/pos/customer-display";
 import { posCatalog, posLogout, posLookup, posSave, type PosCatalogItem, type PosProduct, type PosSaleResult } from "@/server/actions/pos";
 
 type User = { id: string; name: string; role: string };
@@ -54,6 +55,19 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
     setError(null);
     setStage("sale");
   }
+
+  // Layar depan (/pos/layar) ikut isi keranjang lewat BroadcastChannel di perangkat yang sama.
+  useEffect(() => {
+    let m: DisplayMsg = { type: "idle" };
+    if (stage === "done" && result) m = { type: "done", total: result.total ?? 0, change: result.change ?? 0 };
+    else if (cart.length && user)
+      m = { type: "cart", lines: cart.map((l) => ({ name: l.name, qty: l.qty, total: l.price * l.qty })), subtotal, discount, total, sales: user.name };
+    try {
+      const ch = new BroadcastChannel(DISPLAY_CHANNEL);
+      ch.postMessage(m);
+      ch.close();
+    } catch {}
+  }, [cart, discount, subtotal, total, stage, result, user]);
 
   if (!user) return <PickUser branch={branch} users={users} onPick={setUser} onLogout={() => start(async () => { await posLogout(); router.refresh(); })} />;
 

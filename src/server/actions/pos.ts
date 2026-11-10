@@ -7,6 +7,7 @@ import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { rateLimit } from "@/server/rate-limit";
 import { notifyBranchHeads } from "@/server/notify";
+import { makeKey, putObject } from "@/server/storage";
 import { clearPosCookie, getPosBranch, notaPrefix, setPosCookie } from "@/server/pos";
 
 type Res = { ok: boolean; message?: string };
@@ -202,4 +203,45 @@ export async function posSave(input: PosSaleInput): Promise<PosSaleResult> {
     link: "/cabang/approval-penjualan",
   });
   return { ok: true, notaNo, soldAt: soldAt.toISOString(), total, change: paid - total };
+}
+
+// ---------- Campaign layar depan ----------
+
+const CAMPAIGN_MIME: Record<string, { ext: string; video: boolean; max: number }> = {
+  "image/jpeg": { ext: "jpg", video: false, max: 5 << 20 },
+  "image/png": { ext: "png", video: false, max: 5 << 20 },
+  "image/webp": { ext: "webp", video: false, max: 5 << 20 },
+  "video/mp4": { ext: "mp4", video: true, max: 20 << 20 },
+};
+
+/** Tirtonic Channel: upload campaign (gambar/video) untuk layar pembeli. branchId kosong = semua cabang. */
+export async function uploadPosCampaign(input: { title: string; base64: string; mime: string; branchId: string | null }): Promise<Res> {
+  const ctx = await requireChannel();
+  const t = CAMPAIGN_MIME[input.mime];
+  if (!t) return { ok: false, message: "Format harus JPG, PNG, WebP, atau MP4." };
+  const body = Buffer.from(input.base64, "base64");
+  if (!body.length) return { ok: false, message: "File kosong." };
+  if (body.length > t.max) return { ok: false, message: `File terlalu besar (maks ${t.max >> 20} MB).` };
+  const key = makeKey("pos-campaign", t.ext);
+  await putObject(key, body, input.mime);
+  const c = await prisma.posCampaign.create({
+    data: { title: input.title.trim().slice(0, 120) || "Campaign", mediaKey: key, isVideo: t.video, branchId: input.branchId || null },
+  });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "pos_campaign_upload", entity: "PosCampaign", entityId: c.id });
+  return { ok: true };
+}
+
+export async function togglePosCampaign(id: string, active: boolean): Promise<Res> {
+  await requireChannel();
+  await prisma.posCampaign.update({ where: { id }, data: { active } });
+  return { ok: true };
+}
+
+export async function deletePosCampaign(id: string): Promise<Res> {
+  const ctx = await requireChannel();
+  await prisma.posCampaign.delete({ where: { id } });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "pos_campaign_delete", entity: "PosCampaign", entityId: id });
+  return { ok: true };
 }
