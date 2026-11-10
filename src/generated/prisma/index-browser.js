@@ -254,7 +254,8 @@ exports.Prisma.BranchScalarFieldEnum = {
   address: 'address',
   latitude: 'latitude',
   longitude: 'longitude',
-  posPasswordHash: 'posPasswordHash'
+  posPasswordHash: 'posPasswordHash',
+  warehouseIds: 'warehouseIds'
 };
 
 exports.Prisma.CashSessionScalarFieldEnum = {
@@ -495,6 +496,7 @@ exports.Prisma.MarketplaceItemScalarFieldEnum = {
   price: 'price',
   stock: 'stock',
   warehouseId: 'warehouseId',
+  whStock: 'whStock',
   variant: 'variant',
   image: 'image',
   skuStatus: 'skuStatus',

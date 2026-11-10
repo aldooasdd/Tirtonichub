@@ -91,27 +91,61 @@ export async function posLookup(code: string): Promise<PosProduct | null> {
 
 /** Katalog ringkas untuk kasir: dimuat sekali, dicari & dicocokkan SKU di perangkat (tanpa bolak-balik server). */
 export type PosCatalogItem = PosProduct & { variant: string | null; img: string | null };
-export async function posCatalog(): Promise<PosCatalogItem[]> {
-  await requireBranch();
-  const [items, details] = await Promise.all([
+export type PosCatalog = { items: PosCatalogItem[]; branchStock: boolean };
+
+/** Stok cabang = jumlah stok di gudang marketplace milik cabang. Gudang yang sama tercatat di Tokopedia
+ *  & Shopee (stok cerminan), jadi ambil satu platform saja: Tokopedia dulu, lalu Shopee. */
+function branchStockOf(items: { platform: string; whStock: unknown }[], wh: Set<string>): number | null {
+  for (const plat of ["TOKOPEDIA", "SHOPEE"]) {
+    let found = false;
+    let sum = 0;
+    for (const it of items)
+      if (it.platform === plat)
+        for (const w of (it.whStock as { id: string; stock: number }[] | null) ?? [])
+          if (wh.has(`${plat}:${w.id}`)) {
+            found = true;
+            sum += w.stock;
+          }
+    if (found) return sum;
+  }
+  return null;
+}
+
+export async function posCatalog(): Promise<PosCatalog> {
+  const branch = await requireBranch();
+  const [items, details, b] = await Promise.all([
     prisma.marketplaceItem.findMany({
       where: { deletedAt: null, OR: [{ localSku: { not: null } }, { sku: { not: null } }] },
-      select: { platform: true, itemId: true, name: true, localName: true, variant: true, sku: true, localSku: true, price: true, stock: true, image: true },
+      select: { platform: true, itemId: true, name: true, localName: true, variant: true, sku: true, localSku: true, price: true, stock: true, image: true, whStock: true },
     }),
     prisma.marketplaceProduct.findMany({ select: { platform: true, productId: true, images: true } }),
+    prisma.branch.findUnique({ where: { id: branch.id }, select: { warehouseIds: true } }),
   ]);
+  const wh = new Set(b?.warehouseIds ?? []);
   const cover = new Map(details.map((d) => [`${d.platform}:${d.productId}`, ((d.images as string[] | null) ?? [])[0] ?? null]));
   const bySku = new Map<string, (typeof items)[number][]>();
   for (const it of items) {
     const k = (it.localSku ?? it.sku ?? "").trim().toLowerCase();
     if (k) (bySku.get(k) ?? bySku.set(k, []).get(k)!).push(it);
   }
-  return [...bySku.values()]
+  const list = [...bySku.values()]
     .map((v) => {
-      const b = best(v);
-      return { ...toProduct(b), variant: b.variant, img: v.find((x) => x.image)?.image ?? cover.get(`${b.platform}:${b.itemId}`) ?? null };
+      const top = best(v);
+      const stock = wh.size ? (branchStockOf(v, wh) ?? 0) : top.stock;
+      return { ...toProduct(top), stock, variant: top.variant, img: v.find((x) => x.image)?.image ?? cover.get(`${top.platform}:${top.itemId}`) ?? null };
     })
-    .sort((a, b) => a.name.localeCompare(b.name));
+    .sort((a, c) => a.name.localeCompare(c.name));
+  return { items: list, branchStock: wh.size > 0 };
+}
+
+/** Tirtonic Channel: gudang marketplace milik cabang (dasar stok cabang di kasir). */
+export async function setBranchWarehouses(branchId: string, keys: string[]): Promise<Res> {
+  const ctx = await requireChannel();
+  const clean = [...new Set(keys.filter((k) => /^(SHOPEE|TOKOPEDIA):/.test(k)))].slice(0, 50);
+  await prisma.branch.update({ where: { id: branchId }, data: { warehouseIds: clean } });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "pos_warehouses", entity: "Branch", entityId: branchId, after: { warehouseIds: clean } });
+  return { ok: true };
 }
 
 // ---------- Simpan transaksi ----------

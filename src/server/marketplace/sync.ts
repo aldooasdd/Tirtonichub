@@ -317,6 +317,7 @@ export async function syncItems(platform: Platform): Promise<number> {
       price: it.price,
       stock: it.stock,
       warehouseId: it.warehouseId,
+      ...(it.whStock ? { whStock: it.whStock } : {}),
       ...(it.image ? { image: it.image } : {}),
       ...(it.variant ? { variant: it.variant } : {}),
       ...(it.active !== undefined ? { skuStatus: it.active ? "NORMAL" : "DEACTIVATED" } : {}),

@@ -275,12 +275,13 @@ model Session {
 }
 
 model Branch {
-  id              String  @id @default(cuid())
-  name            String  @unique
+  id              String   @id @default(cuid())
+  name            String   @unique
   address         String?
   latitude        Float?
   longitude       Float?
   posPasswordHash String? // password kasir /pos (scrypt); unik antar cabang, cabang dikenali dari password
+  warehouseIds    String[] @default([]) // gudang marketplace milik cabang ini, "PLATFORM:warehouseId" → stok cabang di /pos
 
   users        User[]
   attendances  Attendance[]
@@ -603,6 +604,7 @@ model MarketplaceItem {
   price       Int
   stock       Int
   warehouseId String? // TikTok Shop
+  whStock     Json? // stok per gudang [{id, stock}] dari sync (Shopee location_id / TikTok warehouse_id)
   variant     String? // label varian, mis. "Warna: Putih, Ukuran: 1.30mm"
   image       String? // foto varian
   skuStatus   String? // NORMAL | DEACTIVATED

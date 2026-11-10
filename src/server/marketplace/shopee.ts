@@ -227,6 +227,7 @@ export type MpItem = {
   image?: string | null; // Shopee: foto produk
   active?: boolean; // Shopee: false = UNLIST (tidak tayang)
   variant?: string | null; // Shopee: nama model
+  whStock?: { id: string; stock: number }[]; // stok per gudang
 };
 
 export async function shopeeItems(token: string, shopId: string): Promise<MpItem[]> {
@@ -249,7 +250,7 @@ export async function shopeeItems(token: string, shopId: string): Promise<MpItem
       offset = j.response.next_offset;
     }
   }
-  type Stock = { stock_info_v2?: { summary_info?: { total_available_stock?: number } } };
+  type Stock = { stock_info_v2?: { summary_info?: { total_available_stock?: number }; seller_stock?: { location_id?: string; stock?: number }[] } };
   type Price = { price_info?: { current_price?: number; original_price?: number }[] };
   const out: MpItem[] = [];
   for (let i = 0; i < ids.length; i += 50) {
@@ -269,6 +270,7 @@ export async function shopeeItems(token: string, shopId: string): Promise<MpItem
           price: n(it.price_info?.[0]?.original_price ?? it.price_info?.[0]?.current_price),
           stock: n(it.stock_info_v2?.summary_info?.total_available_stock),
           warehouseId: null,
+          whStock: locs(it.stock_info_v2),
           image,
           active,
         });
@@ -288,6 +290,7 @@ export async function shopeeItems(token: string, shopId: string): Promise<MpItem
           price: n(md.price_info?.[0]?.original_price ?? md.price_info?.[0]?.current_price),
           stock: n(md.stock_info_v2?.summary_info?.total_available_stock),
           warehouseId: null,
+          whStock: locs(md.stock_info_v2),
           image,
           active,
           variant: md.model_name || null,
@@ -512,7 +515,7 @@ export async function shopeeAdsCampaigns(token: string, shopId: string, start: s
 // ── Stok per gudang (lokasi) ──
 export type LocStock = { modelId: string; reserved: number; locations: { id: string; stock: number }[] };
 type StockV2 = { summary_info?: { total_reserved_stock?: number }; seller_stock?: { location_id?: string; stock?: number }[] };
-const locs = (s?: StockV2) => (s?.seller_stock ?? []).map((x) => ({ id: x.location_id ?? "", stock: n(x.stock) }));
+const locs = (s?: { seller_stock?: { location_id?: string; stock?: number }[] }) => (s?.seller_stock ?? []).map((x) => ({ id: x.location_id ?? "", stock: n(x.stock) }));
 
 /** Stok penjual per lokasi gudang tiap varian 1 produk. */
 export async function shopeeLocationStock(token: string, shopId: string, itemId: string): Promise<LocStock[]> {

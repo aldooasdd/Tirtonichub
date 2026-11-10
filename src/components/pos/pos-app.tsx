@@ -4,7 +4,7 @@ import { useDeferredValue, useEffect, useMemo, useRef, useState, useTransition }
 import { useRouter } from "next/navigation";
 import { CircleAlert, CircleCheck, LogOut, Minus, Plus, ScanBarcode, Trash2, UserRound, X } from "lucide-react";
 import { DISPLAY_CHANNEL, type DisplayMsg } from "@/components/pos/customer-display";
-import { posCatalog, posLogout, posLookup, posSave, type PosCatalogItem, type PosProduct, type PosSaleResult } from "@/server/actions/pos";
+import { posCatalog, posLogout, posLookup, posSave, type PosCatalog, type PosProduct, type PosSaleResult } from "@/server/actions/pos";
 
 type User = { id: string; name: string; role: string };
 type Line = PosProduct & { qty: number };
@@ -238,13 +238,13 @@ function PickUser({ branch, users, onPick, onLogout }: { branch: { name: string 
   );
 }
 
-const CACHE = "pos-katalog-v1";
+const CACHE = "pos-katalog-v2";
 const PAGE = 48;
 
 function useCatalog() {
   // Tampil instan dari cache perangkat (panel ini hanya tampil setelah pilih pengguna → sisi klien),
   // lalu segarkan dari server di belakang.
-  const [items, setItems] = useState<PosCatalogItem[] | null>(() => {
+  const [cat, setCat] = useState<PosCatalog | null>(() => {
     try {
       const c = localStorage.getItem(CACHE);
       return c ? JSON.parse(c) : null;
@@ -255,20 +255,21 @@ function useCatalog() {
   useEffect(() => {
     posCatalog()
       .then((fresh) => {
-        setItems(fresh);
+        setCat(fresh);
         try {
           localStorage.setItem(CACHE, JSON.stringify(fresh));
         } catch {}
       })
       .catch(() => {});
   }, []);
+  const items = cat?.items ?? null;
   const bySku = useMemo(() => new Map((items ?? []).map((p) => [p.sku.toLowerCase(), p])), [items]);
-  return { items, bySku };
+  return { items, bySku, branchStock: cat?.branchStock ?? false };
 }
 
 function CatalogPanel({ onAdd }: { onAdd: (p: PosProduct) => void }) {
   const ref = useRef<HTMLInputElement>(null);
-  const { items, bySku } = useCatalog();
+  const { items, bySku, branchStock } = useCatalog();
   const [q, setQ] = useState("");
   const [limit, setLimit] = useState(PAGE);
   const [flash, setFlash] = useState<Flash>(null);
@@ -364,7 +365,7 @@ function CatalogPanel({ onAdd }: { onAdd: (p: PosProduct) => void }) {
               <p className="truncate text-12 text-muted-foreground">{p.sku}{p.variant ? ` · ${p.variant}` : ""}</p>
               <div className="flex items-center justify-between">
                 <span className="text-14 font-semibold">{rp(p.price)}</span>
-                <span className={`text-12 ${p.stock <= 0 ? "text-destructive" : p.stock <= 2 ? "text-warning" : "text-muted-foreground"}`}>{p.stock <= 0 ? "Habis" : `Stok ${p.stock}`}</span>
+                <span className={`text-12 ${p.stock <= 0 ? "text-destructive" : p.stock <= 2 ? "text-warning" : "text-muted-foreground"}`}>{p.stock <= 0 ? "Habis" : `${branchStock ? "Stok cabang" : "Stok online"} ${p.stock}`}</span>
               </div>
             </button>
           ))}

@@ -16816,6 +16816,7 @@ export namespace Prisma {
     latitude: number
     longitude: number
     posPasswordHash: number
+    warehouseIds: number
     _all: number
   }
 
@@ -16855,6 +16856,7 @@ export namespace Prisma {
     latitude?: true
     longitude?: true
     posPasswordHash?: true
+    warehouseIds?: true
     _all?: true
   }
 
@@ -16951,6 +16953,7 @@ export namespace Prisma {
     latitude: number | null
     longitude: number | null
     posPasswordHash: string | null
+    warehouseIds: string[]
     _count: BranchCountAggregateOutputType | null
     _avg: BranchAvgAggregateOutputType | null
     _sum: BranchSumAggregateOutputType | null
@@ -16979,6 +16982,7 @@ export namespace Prisma {
     latitude?: boolean
     longitude?: boolean
     posPasswordHash?: boolean
+    warehouseIds?: boolean
     users?: boolean | Branch$usersArgs<ExtArgs>
     attendances?: boolean | Branch$attendancesArgs<ExtArgs>
     cashSessions?: boolean | Branch$cashSessionsArgs<ExtArgs>
@@ -16992,6 +16996,7 @@ export namespace Prisma {
     latitude?: boolean
     longitude?: boolean
     posPasswordHash?: boolean
+    warehouseIds?: boolean
   }, ExtArgs["result"]["branch"]>
 
   export type BranchSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -17001,6 +17006,7 @@ export namespace Prisma {
     latitude?: boolean
     longitude?: boolean
     posPasswordHash?: boolean
+    warehouseIds?: boolean
   }, ExtArgs["result"]["branch"]>
 
   export type BranchSelectScalar = {
@@ -17010,9 +17016,10 @@ export namespace Prisma {
     latitude?: boolean
     longitude?: boolean
     posPasswordHash?: boolean
+    warehouseIds?: boolean
   }
 
-  export type BranchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "latitude" | "longitude" | "posPasswordHash", ExtArgs["result"]["branch"]>
+  export type BranchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "latitude" | "longitude" | "posPasswordHash" | "warehouseIds", ExtArgs["result"]["branch"]>
   export type BranchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | Branch$usersArgs<ExtArgs>
     attendances?: boolean | Branch$attendancesArgs<ExtArgs>
@@ -17036,6 +17043,7 @@ export namespace Prisma {
       latitude: number | null
       longitude: number | null
       posPasswordHash: string | null
+      warehouseIds: string[]
     }, ExtArgs["result"]["branch"]>
     composites: {}
   }
@@ -17468,6 +17476,7 @@ export namespace Prisma {
     readonly latitude: FieldRef<"Branch", 'Float'>
     readonly longitude: FieldRef<"Branch", 'Float'>
     readonly posPasswordHash: FieldRef<"Branch", 'String'>
+    readonly warehouseIds: FieldRef<"Branch", 'String[]'>
   }
     
 
@@ -37282,6 +37291,7 @@ export namespace Prisma {
     price: number
     stock: number
     warehouseId: number
+    whStock: number
     variant: number
     image: number
     skuStatus: number
@@ -37354,6 +37364,7 @@ export namespace Prisma {
     price?: true
     stock?: true
     warehouseId?: true
+    whStock?: true
     variant?: true
     image?: true
     skuStatus?: true
@@ -37461,6 +37472,7 @@ export namespace Prisma {
     price: number
     stock: number
     warehouseId: string | null
+    whStock: JsonValue | null
     variant: string | null
     image: string | null
     skuStatus: string | null
@@ -37500,6 +37512,7 @@ export namespace Prisma {
     price?: boolean
     stock?: boolean
     warehouseId?: boolean
+    whStock?: boolean
     variant?: boolean
     image?: boolean
     skuStatus?: boolean
@@ -37520,6 +37533,7 @@ export namespace Prisma {
     price?: boolean
     stock?: boolean
     warehouseId?: boolean
+    whStock?: boolean
     variant?: boolean
     image?: boolean
     skuStatus?: boolean
@@ -37540,6 +37554,7 @@ export namespace Prisma {
     price?: boolean
     stock?: boolean
     warehouseId?: boolean
+    whStock?: boolean
     variant?: boolean
     image?: boolean
     skuStatus?: boolean
@@ -37560,6 +37575,7 @@ export namespace Prisma {
     price?: boolean
     stock?: boolean
     warehouseId?: boolean
+    whStock?: boolean
     variant?: boolean
     image?: boolean
     skuStatus?: boolean
@@ -37569,7 +37585,7 @@ export namespace Prisma {
     syncedAt?: boolean
   }
 
-  export type MarketplaceItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "shopId" | "itemId" | "modelId" | "name" | "sku" | "price" | "stock" | "warehouseId" | "variant" | "image" | "skuStatus" | "localName" | "localSku" | "deletedAt" | "syncedAt", ExtArgs["result"]["marketplaceItem"]>
+  export type MarketplaceItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "shopId" | "itemId" | "modelId" | "name" | "sku" | "price" | "stock" | "warehouseId" | "whStock" | "variant" | "image" | "skuStatus" | "localName" | "localSku" | "deletedAt" | "syncedAt", ExtArgs["result"]["marketplaceItem"]>
 
   export type $MarketplaceItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MarketplaceItem"
@@ -37585,6 +37601,7 @@ export namespace Prisma {
       price: number
       stock: number
       warehouseId: string | null
+      whStock: Prisma.JsonValue | null
       variant: string | null
       image: string | null
       skuStatus: string | null
@@ -38025,6 +38042,7 @@ export namespace Prisma {
     readonly price: FieldRef<"MarketplaceItem", 'Int'>
     readonly stock: FieldRef<"MarketplaceItem", 'Int'>
     readonly warehouseId: FieldRef<"MarketplaceItem", 'String'>
+    readonly whStock: FieldRef<"MarketplaceItem", 'Json'>
     readonly variant: FieldRef<"MarketplaceItem", 'String'>
     readonly image: FieldRef<"MarketplaceItem", 'String'>
     readonly skuStatus: FieldRef<"MarketplaceItem", 'String'>
@@ -61504,7 +61522,8 @@ export namespace Prisma {
     address: 'address',
     latitude: 'latitude',
     longitude: 'longitude',
-    posPasswordHash: 'posPasswordHash'
+    posPasswordHash: 'posPasswordHash',
+    warehouseIds: 'warehouseIds'
   };
 
   export type BranchScalarFieldEnum = (typeof BranchScalarFieldEnum)[keyof typeof BranchScalarFieldEnum]
@@ -61799,6 +61818,7 @@ export namespace Prisma {
     price: 'price',
     stock: 'stock',
     warehouseId: 'warehouseId',
+    whStock: 'whStock',
     variant: 'variant',
     image: 'image',
     skuStatus: 'skuStatus',
@@ -63243,6 +63263,7 @@ export namespace Prisma {
     latitude?: FloatNullableFilter<"Branch"> | number | null
     longitude?: FloatNullableFilter<"Branch"> | number | null
     posPasswordHash?: StringNullableFilter<"Branch"> | string | null
+    warehouseIds?: StringNullableListFilter<"Branch">
     users?: UserListRelationFilter
     attendances?: AttendanceListRelationFilter
     cashSessions?: CashSessionListRelationFilter
@@ -63255,6 +63276,7 @@ export namespace Prisma {
     latitude?: SortOrderInput | SortOrder
     longitude?: SortOrderInput | SortOrder
     posPasswordHash?: SortOrderInput | SortOrder
+    warehouseIds?: SortOrder
     users?: UserOrderByRelationAggregateInput
     attendances?: AttendanceOrderByRelationAggregateInput
     cashSessions?: CashSessionOrderByRelationAggregateInput
@@ -63270,6 +63292,7 @@ export namespace Prisma {
     latitude?: FloatNullableFilter<"Branch"> | number | null
     longitude?: FloatNullableFilter<"Branch"> | number | null
     posPasswordHash?: StringNullableFilter<"Branch"> | string | null
+    warehouseIds?: StringNullableListFilter<"Branch">
     users?: UserListRelationFilter
     attendances?: AttendanceListRelationFilter
     cashSessions?: CashSessionListRelationFilter
@@ -63282,6 +63305,7 @@ export namespace Prisma {
     latitude?: SortOrderInput | SortOrder
     longitude?: SortOrderInput | SortOrder
     posPasswordHash?: SortOrderInput | SortOrder
+    warehouseIds?: SortOrder
     _count?: BranchCountOrderByAggregateInput
     _avg?: BranchAvgOrderByAggregateInput
     _max?: BranchMaxOrderByAggregateInput
@@ -63299,6 +63323,7 @@ export namespace Prisma {
     latitude?: FloatNullableWithAggregatesFilter<"Branch"> | number | null
     longitude?: FloatNullableWithAggregatesFilter<"Branch"> | number | null
     posPasswordHash?: StringNullableWithAggregatesFilter<"Branch"> | string | null
+    warehouseIds?: StringNullableListFilter<"Branch">
   }
 
   export type CashSessionWhereInput = {
@@ -64728,6 +64753,7 @@ export namespace Prisma {
     price?: IntFilter<"MarketplaceItem"> | number
     stock?: IntFilter<"MarketplaceItem"> | number
     warehouseId?: StringNullableFilter<"MarketplaceItem"> | string | null
+    whStock?: JsonNullableFilter<"MarketplaceItem">
     variant?: StringNullableFilter<"MarketplaceItem"> | string | null
     image?: StringNullableFilter<"MarketplaceItem"> | string | null
     skuStatus?: StringNullableFilter<"MarketplaceItem"> | string | null
@@ -64748,6 +64774,7 @@ export namespace Prisma {
     price?: SortOrder
     stock?: SortOrder
     warehouseId?: SortOrderInput | SortOrder
+    whStock?: SortOrderInput | SortOrder
     variant?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
     skuStatus?: SortOrderInput | SortOrder
@@ -64772,6 +64799,7 @@ export namespace Prisma {
     price?: IntFilter<"MarketplaceItem"> | number
     stock?: IntFilter<"MarketplaceItem"> | number
     warehouseId?: StringNullableFilter<"MarketplaceItem"> | string | null
+    whStock?: JsonNullableFilter<"MarketplaceItem">
     variant?: StringNullableFilter<"MarketplaceItem"> | string | null
     image?: StringNullableFilter<"MarketplaceItem"> | string | null
     skuStatus?: StringNullableFilter<"MarketplaceItem"> | string | null
@@ -64792,6 +64820,7 @@ export namespace Prisma {
     price?: SortOrder
     stock?: SortOrder
     warehouseId?: SortOrderInput | SortOrder
+    whStock?: SortOrderInput | SortOrder
     variant?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
     skuStatus?: SortOrderInput | SortOrder
@@ -64820,6 +64849,7 @@ export namespace Prisma {
     price?: IntWithAggregatesFilter<"MarketplaceItem"> | number
     stock?: IntWithAggregatesFilter<"MarketplaceItem"> | number
     warehouseId?: StringNullableWithAggregatesFilter<"MarketplaceItem"> | string | null
+    whStock?: JsonNullableWithAggregatesFilter<"MarketplaceItem">
     variant?: StringNullableWithAggregatesFilter<"MarketplaceItem"> | string | null
     image?: StringNullableWithAggregatesFilter<"MarketplaceItem"> | string | null
     skuStatus?: StringNullableWithAggregatesFilter<"MarketplaceItem"> | string | null
@@ -67423,6 +67453,7 @@ export namespace Prisma {
     latitude?: number | null
     longitude?: number | null
     posPasswordHash?: string | null
+    warehouseIds?: BranchCreatewarehouseIdsInput | string[]
     users?: UserCreateNestedManyWithoutBranchInput
     attendances?: AttendanceCreateNestedManyWithoutBranchInput
     cashSessions?: CashSessionCreateNestedManyWithoutBranchInput
@@ -67435,6 +67466,7 @@ export namespace Prisma {
     latitude?: number | null
     longitude?: number | null
     posPasswordHash?: string | null
+    warehouseIds?: BranchCreatewarehouseIdsInput | string[]
     users?: UserUncheckedCreateNestedManyWithoutBranchInput
     attendances?: AttendanceUncheckedCreateNestedManyWithoutBranchInput
     cashSessions?: CashSessionUncheckedCreateNestedManyWithoutBranchInput
@@ -67447,6 +67479,7 @@ export namespace Prisma {
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    warehouseIds?: BranchUpdatewarehouseIdsInput | string[]
     users?: UserUpdateManyWithoutBranchNestedInput
     attendances?: AttendanceUpdateManyWithoutBranchNestedInput
     cashSessions?: CashSessionUpdateManyWithoutBranchNestedInput
@@ -67459,6 +67492,7 @@ export namespace Prisma {
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    warehouseIds?: BranchUpdatewarehouseIdsInput | string[]
     users?: UserUncheckedUpdateManyWithoutBranchNestedInput
     attendances?: AttendanceUncheckedUpdateManyWithoutBranchNestedInput
     cashSessions?: CashSessionUncheckedUpdateManyWithoutBranchNestedInput
@@ -67471,6 +67505,7 @@ export namespace Prisma {
     latitude?: number | null
     longitude?: number | null
     posPasswordHash?: string | null
+    warehouseIds?: BranchCreatewarehouseIdsInput | string[]
   }
 
   export type BranchUpdateManyMutationInput = {
@@ -67480,6 +67515,7 @@ export namespace Prisma {
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    warehouseIds?: BranchUpdatewarehouseIdsInput | string[]
   }
 
   export type BranchUncheckedUpdateManyInput = {
@@ -67489,6 +67525,7 @@ export namespace Prisma {
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    warehouseIds?: BranchUpdatewarehouseIdsInput | string[]
   }
 
   export type CashSessionCreateInput = {
@@ -69087,6 +69124,7 @@ export namespace Prisma {
     price: number
     stock: number
     warehouseId?: string | null
+    whStock?: NullableJsonNullValueInput | InputJsonValue
     variant?: string | null
     image?: string | null
     skuStatus?: string | null
@@ -69107,6 +69145,7 @@ export namespace Prisma {
     price: number
     stock: number
     warehouseId?: string | null
+    whStock?: NullableJsonNullValueInput | InputJsonValue
     variant?: string | null
     image?: string | null
     skuStatus?: string | null
@@ -69127,6 +69166,7 @@ export namespace Prisma {
     price?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
     warehouseId?: NullableStringFieldUpdateOperationsInput | string | null
+    whStock?: NullableJsonNullValueInput | InputJsonValue
     variant?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     skuStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -69147,6 +69187,7 @@ export namespace Prisma {
     price?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
     warehouseId?: NullableStringFieldUpdateOperationsInput | string | null
+    whStock?: NullableJsonNullValueInput | InputJsonValue
     variant?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     skuStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -69167,6 +69208,7 @@ export namespace Prisma {
     price: number
     stock: number
     warehouseId?: string | null
+    whStock?: NullableJsonNullValueInput | InputJsonValue
     variant?: string | null
     image?: string | null
     skuStatus?: string | null
@@ -69187,6 +69229,7 @@ export namespace Prisma {
     price?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
     warehouseId?: NullableStringFieldUpdateOperationsInput | string | null
+    whStock?: NullableJsonNullValueInput | InputJsonValue
     variant?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     skuStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -69207,6 +69250,7 @@ export namespace Prisma {
     price?: IntFieldUpdateOperationsInput | number
     stock?: IntFieldUpdateOperationsInput | number
     warehouseId?: NullableStringFieldUpdateOperationsInput | string | null
+    whStock?: NullableJsonNullValueInput | InputJsonValue
     variant?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     skuStatus?: NullableStringFieldUpdateOperationsInput | string | null
@@ -71974,6 +72018,7 @@ export namespace Prisma {
     latitude?: SortOrder
     longitude?: SortOrder
     posPasswordHash?: SortOrder
+    warehouseIds?: SortOrder
   }
 
   export type BranchAvgOrderByAggregateInput = {
@@ -73026,6 +73071,7 @@ export namespace Prisma {
     price?: SortOrder
     stock?: SortOrder
     warehouseId?: SortOrder
+    whStock?: SortOrder
     variant?: SortOrder
     image?: SortOrder
     skuStatus?: SortOrder
@@ -75184,6 +75230,10 @@ export namespace Prisma {
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutSessionsInput, UserUpdateWithoutSessionsInput>, UserUncheckedUpdateWithoutSessionsInput>
   }
 
+  export type BranchCreatewarehouseIdsInput = {
+    set: string[]
+  }
+
   export type UserCreateNestedManyWithoutBranchInput = {
     create?: XOR<UserCreateWithoutBranchInput, UserUncheckedCreateWithoutBranchInput> | UserCreateWithoutBranchInput[] | UserUncheckedCreateWithoutBranchInput[]
     connectOrCreate?: UserCreateOrConnectWithoutBranchInput | UserCreateOrConnectWithoutBranchInput[]
@@ -75232,6 +75282,11 @@ export namespace Prisma {
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type BranchUpdatewarehouseIdsInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type UserUpdateManyWithoutBranchNestedInput = {
@@ -76387,6 +76442,7 @@ export namespace Prisma {
     latitude?: number | null
     longitude?: number | null
     posPasswordHash?: string | null
+    warehouseIds?: BranchCreatewarehouseIdsInput | string[]
     attendances?: AttendanceCreateNestedManyWithoutBranchInput
     cashSessions?: CashSessionCreateNestedManyWithoutBranchInput
   }
@@ -76398,6 +76454,7 @@ export namespace Prisma {
     latitude?: number | null
     longitude?: number | null
     posPasswordHash?: string | null
+    warehouseIds?: BranchCreatewarehouseIdsInput | string[]
     attendances?: AttendanceUncheckedCreateNestedManyWithoutBranchInput
     cashSessions?: CashSessionUncheckedCreateNestedManyWithoutBranchInput
   }
@@ -77271,6 +77328,7 @@ export namespace Prisma {
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    warehouseIds?: BranchUpdatewarehouseIdsInput | string[]
     attendances?: AttendanceUpdateManyWithoutBranchNestedInput
     cashSessions?: CashSessionUpdateManyWithoutBranchNestedInput
   }
@@ -77282,6 +77340,7 @@ export namespace Prisma {
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    warehouseIds?: BranchUpdatewarehouseIdsInput | string[]
     attendances?: AttendanceUncheckedUpdateManyWithoutBranchNestedInput
     cashSessions?: CashSessionUncheckedUpdateManyWithoutBranchNestedInput
   }
@@ -79681,6 +79740,7 @@ export namespace Prisma {
     latitude?: number | null
     longitude?: number | null
     posPasswordHash?: string | null
+    warehouseIds?: BranchCreatewarehouseIdsInput | string[]
     users?: UserCreateNestedManyWithoutBranchInput
     attendances?: AttendanceCreateNestedManyWithoutBranchInput
   }
@@ -79692,6 +79752,7 @@ export namespace Prisma {
     latitude?: number | null
     longitude?: number | null
     posPasswordHash?: string | null
+    warehouseIds?: BranchCreatewarehouseIdsInput | string[]
     users?: UserUncheckedCreateNestedManyWithoutBranchInput
     attendances?: AttendanceUncheckedCreateNestedManyWithoutBranchInput
   }
@@ -79719,6 +79780,7 @@ export namespace Prisma {
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    warehouseIds?: BranchUpdatewarehouseIdsInput | string[]
     users?: UserUpdateManyWithoutBranchNestedInput
     attendances?: AttendanceUpdateManyWithoutBranchNestedInput
   }
@@ -79730,6 +79792,7 @@ export namespace Prisma {
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    warehouseIds?: BranchUpdatewarehouseIdsInput | string[]
     users?: UserUncheckedUpdateManyWithoutBranchNestedInput
     attendances?: AttendanceUncheckedUpdateManyWithoutBranchNestedInput
   }
@@ -80110,6 +80173,7 @@ export namespace Prisma {
     latitude?: number | null
     longitude?: number | null
     posPasswordHash?: string | null
+    warehouseIds?: BranchCreatewarehouseIdsInput | string[]
     users?: UserCreateNestedManyWithoutBranchInput
     cashSessions?: CashSessionCreateNestedManyWithoutBranchInput
   }
@@ -80121,6 +80185,7 @@ export namespace Prisma {
     latitude?: number | null
     longitude?: number | null
     posPasswordHash?: string | null
+    warehouseIds?: BranchCreatewarehouseIdsInput | string[]
     users?: UserUncheckedCreateNestedManyWithoutBranchInput
     cashSessions?: CashSessionUncheckedCreateNestedManyWithoutBranchInput
   }
@@ -80245,6 +80310,7 @@ export namespace Prisma {
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    warehouseIds?: BranchUpdatewarehouseIdsInput | string[]
     users?: UserUpdateManyWithoutBranchNestedInput
     cashSessions?: CashSessionUpdateManyWithoutBranchNestedInput
   }
@@ -80256,6 +80322,7 @@ export namespace Prisma {
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
     posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
+    warehouseIds?: BranchUpdatewarehouseIdsInput | string[]
     users?: UserUncheckedUpdateManyWithoutBranchNestedInput
     cashSessions?: CashSessionUncheckedUpdateManyWithoutBranchNestedInput
   }
