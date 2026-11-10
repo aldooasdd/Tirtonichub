@@ -273,6 +273,7 @@ const CAMPAIGN_MIME: Record<string, { ext: string; video: boolean; max: number }
   "image/jpeg": { ext: "jpg", video: false, max: 5 << 20 },
   "image/png": { ext: "png", video: false, max: 5 << 20 },
   "image/webp": { ext: "webp", video: false, max: 5 << 20 },
+  "image/gif": { ext: "gif", video: false, max: 10 << 20 },
   "video/mp4": { ext: "mp4", video: true, max: 20 << 20 },
 };
 
@@ -280,7 +281,7 @@ const CAMPAIGN_MIME: Record<string, { ext: string; video: boolean; max: number }
 export async function uploadPosCampaign(input: { title: string; base64: string; mime: string; branchId: string | null }): Promise<Res> {
   const ctx = await requireChannel();
   const t = CAMPAIGN_MIME[input.mime];
-  if (!t) return { ok: false, message: "Format harus JPG, PNG, WebP, atau MP4." };
+  if (!t) return { ok: false, message: "Format harus JPG, PNG, WebP, GIF, atau MP4." };
   const body = Buffer.from(input.base64, "base64");
   if (!body.length) return { ok: false, message: "File kosong." };
   if (body.length > t.max) return { ok: false, message: `File terlalu besar (maks ${t.max >> 20} MB).` };
