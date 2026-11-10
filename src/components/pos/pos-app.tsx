@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useDeferredValue, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { CircleAlert, CircleCheck, LogOut, Minus, Plus, ScanBarcode, Search, Trash2, UserRound, X } from "lucide-react";
-import { posLogout, posLookup, posSave, posSearch, type PosProduct, type PosSaleResult } from "@/server/actions/pos";
+import { CircleAlert, CircleCheck, LogOut, Minus, Plus, ScanBarcode, Trash2, UserRound, X } from "lucide-react";
+import { posCatalog, posLogout, posLookup, posSave, type PosCatalogItem, type PosProduct, type PosSaleResult } from "@/server/actions/pos";
 
 type User = { id: string; name: string; role: string };
 type Line = PosProduct & { qty: number };
@@ -149,7 +149,7 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
     <div className="flex h-screen flex-col bg-background">
       {header}
       <div className="flex min-h-0 flex-1">
-        <ScanPanel onAdd={add} />
+        <CatalogPanel onAdd={add} />
         <div className="flex w-[420px] shrink-0 flex-col border-l">
           <div className="space-y-2 p-5 pb-3">
             <div className="flex items-baseline justify-between">
@@ -163,7 +163,7 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
             </div>
           </div>
           <div className="min-h-0 flex-1 overflow-y-auto px-5">
-            {cart.length === 0 && <p className="py-16 text-center text-14 text-muted-foreground">Belum ada barang. Scan barcode untuk mulai.</p>}
+            {cart.length === 0 && <p className="py-16 text-center text-14 text-muted-foreground">Belum ada barang. Scan barcode atau ketuk barang di kiri.</p>}
             {cart.map((l) => (
               <div key={l.sku} className="flex items-center gap-3 border-b py-3">
                 <div className="min-w-0 flex-1">
@@ -224,100 +224,142 @@ function PickUser({ branch, users, onPick, onLogout }: { branch: { name: string 
   );
 }
 
-function ScanPanel({ onAdd }: { onAdd: (p: PosProduct) => void }) {
-  const ref = useRef<HTMLInputElement>(null);
-  const [code, setCode] = useState("");
-  const [flash, setFlash] = useState<Flash>(null);
-  const [manual, setManual] = useState(false);
-  const [pending, start] = useTransition();
+const CACHE = "pos-katalog-v1";
+const PAGE = 48;
 
-  // Scanner = keyboard: input selalu fokus kecuali sedang cari manual / isi field lain.
+function useCatalog() {
+  // Tampil instan dari cache perangkat (panel ini hanya tampil setelah pilih pengguna → sisi klien),
+  // lalu segarkan dari server di belakang.
+  const [items, setItems] = useState<PosCatalogItem[] | null>(() => {
+    try {
+      const c = localStorage.getItem(CACHE);
+      return c ? JSON.parse(c) : null;
+    } catch {
+      return null;
+    }
+  });
+  useEffect(() => {
+    posCatalog()
+      .then((fresh) => {
+        setItems(fresh);
+        try {
+          localStorage.setItem(CACHE, JSON.stringify(fresh));
+        } catch {}
+      })
+      .catch(() => {});
+  }, []);
+  const bySku = useMemo(() => new Map((items ?? []).map((p) => [p.sku.toLowerCase(), p])), [items]);
+  return { items, bySku };
+}
+
+function CatalogPanel({ onAdd }: { onAdd: (p: PosProduct) => void }) {
+  const ref = useRef<HTMLInputElement>(null);
+  const { items, bySku } = useCatalog();
+  const [q, setQ] = useState("");
+  const [limit, setLimit] = useState(PAGE);
+  const [flash, setFlash] = useState<Flash>(null);
+  const dq = useDeferredValue(q);
+
+  // Scanner = keyboard: kolom cari selalu fokus bila tak ada field lain yang aktif.
   useEffect(() => {
     const t = setInterval(() => {
       const a = document.activeElement;
-      if (!manual && (!a || a === document.body)) ref.current?.focus();
+      if (!a || a === document.body) ref.current?.focus();
     }, 500);
     return () => clearInterval(t);
-  }, [manual]);
+  }, []);
 
-  function submit(e: React.FormEvent) {
-    e.preventDefault();
-    const c = code.trim();
-    if (!c) return;
-    setCode("");
-    start(async () => {
-      const p = await posLookup(c);
-      if (p) {
-        onAdd(p);
-        beep(true);
-        setFlash({ ok: true, title: `Ditambahkan: ${p.name}`, sub: `${p.sku} · ${rp(p.price)}` });
-      } else {
-        beep(false);
-        setFlash({ ok: false, title: `SKU "${c}" tidak ditemukan di Produk Master`, sub: "Cek label, atau cari manual." });
-      }
-      ref.current?.focus();
+  const shown = useMemo(() => {
+    const t = dq.trim().toLowerCase();
+    if (!items) return [];
+    if (!t) return items;
+    const words = t.split(/\s+/);
+    return items.filter((p) => {
+      const hay = `${p.name} ${p.sku} ${p.variant ?? ""}`.toLowerCase();
+      return words.every((w) => hay.includes(w));
     });
+  }, [items, dq]);
+
+  function pick(p: PosProduct) {
+    onAdd(p);
+    beep(true);
+    setFlash({ ok: true, title: `Ditambahkan: ${p.name}`, sub: `${p.sku} · ${rp(p.price)}` });
+  }
+
+  async function submit(e: React.FormEvent) {
+    e.preventDefault();
+    const c = q.trim();
+    if (!c) return;
+    // Enter / scan: SKU persis → langsung masuk keranjang. Bukan SKU → biarkan jadi pencarian.
+    const hit = bySku.get(c.toLowerCase()) ?? (items ? null : await posLookup(c));
+    if (hit) {
+      setQ("");
+      setLimit(PAGE);
+      return pick(hit);
+    }
+    if (shown.length === 1) {
+      setQ("");
+      return pick(shown[0]);
+    }
+    if (shown.length === 0) {
+      beep(false);
+      setFlash({ ok: false, title: `"${c}" tidak ditemukan di Produk Master`, sub: "Cek label SKU, atau cari pakai nama." });
+    }
   }
 
   return (
     <div className="flex min-w-0 flex-1 flex-col gap-4 bg-muted p-6">
       <form onSubmit={submit} className="flex h-[52px] items-center gap-3 rounded-md border bg-background px-4">
         <ScanBarcode className="h-5 w-5 text-muted-foreground" />
-        <input ref={ref} autoFocus value={code} onChange={(e) => setCode(e.target.value)} placeholder="Scan barcode barang, atau ketik SKU lalu Enter" className="h-full flex-1 bg-transparent text-16 outline-none" />
-        <span className="rounded-sm bg-success/10 px-2 py-1 text-12 font-medium text-success">{pending ? "Mencari…" : "Scanner siap"}</span>
+        <input
+          ref={ref}
+          autoFocus
+          value={q}
+          onChange={(e) => { setQ(e.target.value); setLimit(PAGE); }}
+          placeholder="Scan barcode, atau cari nama / SKU"
+          className="h-full flex-1 bg-transparent text-16 outline-none"
+        />
+        {q && <button type="button" onClick={() => setQ("")}><X className="h-4 w-4 text-muted-foreground" /></button>}
+        <span className="rounded-sm bg-success/10 px-2 py-1 text-12 font-medium text-success">{items ? "Scanner siap" : "Memuat barang…"}</span>
       </form>
-      {manual ? (
-        <ManualSearch onPick={(p) => { onAdd(p); setFlash({ ok: true, title: `Ditambahkan: ${p.name}`, sub: `${p.sku} · ${rp(p.price)}` }); }} onClose={() => { setManual(false); ref.current?.focus(); }} />
-      ) : (
-        <button type="button" onClick={() => ref.current?.focus()} className="flex flex-1 flex-col items-center justify-center gap-3 rounded-xl border-2 border-dashed border-border bg-background">
-          <ScanBarcode className="h-24 w-24" strokeWidth={1.5} />
-          <p className="text-[28px] font-bold">Scan barcode barang</p>
-          <p className="text-center text-14 text-muted-foreground">Arahkan scanner ke label SKU. Barang langsung masuk keranjang.<br />Scan barang yang sama lagi = qty +1.</p>
-        </button>
-      )}
       {flash && (
-        <div className={`flex items-center gap-3 rounded-lg px-5 py-4 ${flash.ok ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive"}`}>
-          {flash.ok ? <CircleCheck className="h-7 w-7 shrink-0" /> : <CircleAlert className="h-7 w-7 shrink-0" />}
+        <div className={`flex items-center gap-3 rounded-lg px-5 py-3 ${flash.ok ? "bg-success/10 text-success" : "bg-destructive/10 text-destructive"}`}>
+          {flash.ok ? <CircleCheck className="h-6 w-6 shrink-0" /> : <CircleAlert className="h-6 w-6 shrink-0" />}
           <div className="min-w-0 flex-1">
             <p className="truncate text-16 font-semibold">{flash.title}</p>
             <p className="text-14">{flash.sub}</p>
           </div>
-          {!flash.ok && !manual && (
-            <button onClick={() => setManual(true)} className="flex items-center gap-1.5 rounded-md bg-background px-3 py-2 text-14 font-semibold text-foreground"><Search className="h-4 w-4" /> Cari manual</button>
-          )}
+          <button onClick={() => setFlash(null)}><X className="h-4 w-4" /></button>
         </div>
       )}
-      {!manual && !flash && (
-        <button onClick={() => setManual(true)} className="flex items-center gap-1.5 self-start text-14 text-muted-foreground"><Search className="h-4 w-4" /> Cari manual</button>
-      )}
-    </div>
-  );
-}
-
-function ManualSearch({ onPick, onClose }: { onPick: (p: PosProduct) => void; onClose: () => void }) {
-  const [q, setQ] = useState("");
-  const [rows, setRows] = useState<PosProduct[]>([]);
-  const [pending, start] = useTransition();
-  function search(e: React.FormEvent) {
-    e.preventDefault();
-    start(async () => setRows(await posSearch(q)));
-  }
-  return (
-    <div className="flex min-h-0 flex-1 flex-col gap-3 rounded-xl bg-background p-4">
-      <form onSubmit={search} className="flex gap-2">
-        <input autoFocus value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nama / SKU produk" className="h-11 flex-1 rounded-md border px-3 text-16 outline-none" />
-        <button className="h-11 rounded-md bg-primary px-5 text-14 font-semibold text-primary-foreground">{pending ? "…" : "Cari"}</button>
-        <button type="button" onClick={onClose} className="grid h-11 w-11 place-items-center rounded-md border"><X className="h-4 w-4" /></button>
-      </form>
-      <div className="grid min-h-0 flex-1 auto-rows-min grid-cols-2 gap-3 overflow-y-auto lg:grid-cols-3">
-        {rows.map((p) => (
-          <button key={p.sku} onClick={() => onPick(p)} className="rounded-lg border p-3 text-left hover:border-foreground">
-            <p className="line-clamp-2 text-14 font-medium">{p.name}</p>
-            <p className="text-12 text-muted-foreground">{p.sku}</p>
-            <p className="mt-1 text-14 font-semibold">{rp(p.price)}</p>
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        {!items && <p className="py-16 text-center text-14 text-muted-foreground">Memuat barang dari Produk Master…</p>}
+        {items && shown.length === 0 && <p className="py-16 text-center text-14 text-muted-foreground">Tidak ada barang cocok.</p>}
+        <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 xl:grid-cols-4">
+          {shown.slice(0, limit).map((p) => (
+            <button
+              key={p.sku}
+              onClick={() => pick(p)}
+              className="flex flex-col gap-1.5 rounded-lg border bg-background p-2.5 text-left [content-visibility:auto] [contain-intrinsic-size:auto_230px] hover:border-foreground"
+            >
+              <div className="aspect-square w-full overflow-hidden rounded-md bg-muted">
+                {/* eslint-disable-next-line @next/next/no-img-element -- foto CDN marketplace, lazy */}
+                {p.img && <img src={p.img} alt="" loading="lazy" decoding="async" className="h-full w-full object-cover" />}
+              </div>
+              <p className="line-clamp-2 text-14 font-medium leading-snug">{p.name}</p>
+              <p className="truncate text-12 text-muted-foreground">{p.sku}{p.variant ? ` · ${p.variant}` : ""}</p>
+              <div className="flex items-center justify-between">
+                <span className="text-14 font-semibold">{rp(p.price)}</span>
+                <span className={`text-12 ${p.stock <= 0 ? "text-destructive" : p.stock <= 2 ? "text-warning" : "text-muted-foreground"}`}>{p.stock <= 0 ? "Habis" : `Stok ${p.stock}`}</span>
+              </div>
+            </button>
+          ))}
+        </div>
+        {shown.length > limit && (
+          <button onClick={() => setLimit(limit + PAGE * 2)} className="mx-auto mt-4 block rounded-md border bg-background px-5 py-2 text-14">
+            Tampilkan lagi ({shown.length - limit} barang)
           </button>
-        ))}
-        {!pending && q && rows.length === 0 && <p className="text-14 text-muted-foreground">Tidak ada hasil.</p>}
+        )}
       </div>
     </div>
   );
