@@ -23,6 +23,7 @@ type Row = {
   items: Item[];
   report?: { category: string; note: string; label: string; reporter: string } | null;
   edit?: NotaEdit;
+  fixOnly?: boolean; // sudah di-ACC: cukup dibenarkan
 };
 
 export function CabangApproval({
@@ -123,7 +124,7 @@ export function CabangApproval({
                       <p className="font-medium text-red-600 dark:text-red-400">Report salah-input: {r.report.label}</p>
                       <p className="text-muted-foreground">{r.report.note}</p>
                       <p className="mt-1 text-12 text-muted-foreground">Dilaporkan oleh {r.report.reporter}</p>
-                      <p className="mt-1 text-12 text-muted-foreground">Benarkan nota ini dulu, baru bisa disetujui.</p>
+                      <p className="mt-1 text-12 text-muted-foreground">{r.fixOnly ? "Nota ini sudah disetujui. Benarkan datanya supaya report selesai." : "Benarkan nota ini dulu, baru bisa disetujui."}</p>
                     </div>
                   </div>
                 )}
@@ -138,14 +139,16 @@ export function CabangApproval({
                       {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />} Setujui
                     </Button>
                   )}
-                  <Button
-                    size="sm"
-                    variant="ghost"
-                    disabled={busy}
-                    onClick={() => act(r.id, rejectFn, "Tolak & hapus nota ini?")}
-                  >
-                    <X className="h-4 w-4" /> Tolak
-                  </Button>
+                  {!r.fixOnly && (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      disabled={busy}
+                      onClick={() => act(r.id, rejectFn, "Tolak & hapus nota ini?")}
+                    >
+                      <X className="h-4 w-4" /> Tolak
+                    </Button>
+                  )}
                 </div>
               </div>
             );
