@@ -31,7 +31,6 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
   const [user, setUser] = useState<User | null>(null);
   const [stage, setStage] = useState<"sale" | "pay" | "done">("sale");
   const [cart, setCart] = useState<Line[]>([]);
-  const [salesId, setSalesId] = useState("");
   const [customer, setCustomer] = useState("");
   const [phone, setPhone] = useState("");
   const [discount, setDiscount] = useState(0);
@@ -46,7 +45,6 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
 
   function reset() {
     setCart([]);
-    setSalesId("");
     setCustomer("");
     setPhone("");
     setDiscount(0);
@@ -75,7 +73,7 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
     start(async () => {
       const r = await posSave({
         cashierId: user!.id,
-        salesId,
+        salesId: user!.id, // sales = pengguna POS yang login
         customer,
         phone,
         items: cart.map((l) => ({ sku: l.sku, name: l.name, qty: l.qty, price: l.price })),
@@ -108,7 +106,7 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
     return (
       <div className="flex h-screen flex-col bg-muted">
         {header}
-        <Struk branch={branch.name} cashier={user.name} sales={users.find((u) => u.id === salesId)?.name ?? ""} r={result} discount={discount} />
+        <Struk branch={branch.name} cashier={user.name} sales={user.name} r={result} discount={discount} />
         <div className="flex flex-1 flex-col items-center justify-center gap-6 print:hidden">
           <CircleCheck className="h-16 w-16 text-success" />
           <div className="text-center">
@@ -158,14 +156,7 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
               <p className="text-18 font-bold">Pesanan baru</p>
               {cart.length > 0 && <button onClick={() => setCart([])} className="text-14 text-destructive">Kosongkan</button>}
             </div>
-            <select
-              value={salesId}
-              onChange={(e) => setSalesId(e.target.value)}
-              className={`h-11 w-full rounded-md border px-3 text-14 ${salesId ? "border-foreground" : "border-warning bg-warning/10"}`}
-            >
-              <option value="">Pilih sales yang melayani (masuk bonus)…</option>
-              {users.map((u) => <option key={u.id} value={u.id}>{u.name} · {u.role}</option>)}
-            </select>
+            <p className="text-14 text-muted-foreground">Sales: <span className="font-semibold text-foreground">{user.name}</span> · masuk bonus</p>
             <div className="flex gap-2">
               <input value={phone} onChange={(e) => setPhone(e.target.value)} inputMode="tel" placeholder="No. WA pelanggan (wajib)" className="h-11 min-w-0 flex-1 rounded-md bg-muted px-3 text-14 outline-none" />
               <input value={customer} onChange={(e) => setCustomer(e.target.value)} placeholder="Nama (opsional)" className="h-11 w-36 rounded-md bg-muted px-3 text-14 outline-none" />
@@ -196,11 +187,11 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
             </div>
             <div className="flex items-center justify-between py-1"><span className="text-18 font-semibold">Total</span><span className="text-24 font-bold">{rp(total)}</span></div>
             <button
-              disabled={!cart.length || !salesId || !phone.trim()}
+              disabled={!cart.length || !phone.trim()}
               onClick={() => { setPaid(0); setStage("pay"); }}
               className="h-14 w-full rounded-md bg-primary text-18 font-semibold text-primary-foreground disabled:opacity-40"
             >
-              {!cart.length ? "Bayar" : !salesId ? "Pilih sales dulu" : !phone.trim() ? "Isi no. WA dulu" : "Bayar"}
+              {!cart.length ? "Bayar"  : !phone.trim() ? "Isi no. WA dulu" : "Bayar"}
             </button>
           </div>
         </div>
