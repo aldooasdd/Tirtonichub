@@ -5,6 +5,8 @@ import { fmtWIB } from "@/lib/datetime";
 import { PosPassword } from "@/components/pos/pos-password";
 import { CabangClient } from "@/components/pos/cabang-client";
 import { PosCampaigns } from "@/components/pos/pos-campaigns";
+import { PosWarehouses } from "@/components/pos/pos-warehouses";
+import { loadWarehouses } from "@/server/pos-warehouses";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(Math.round(n));
 const wibDate = (d: Date) => new Date(d.getTime() + 7 * 3600_000).toISOString().slice(0, 10);
@@ -59,10 +61,11 @@ export default async function PosDashboardPage({ searchParams }: { searchParams:
   const period = PERIODS.find((x) => x.key === p) ?? PERIODS[0];
   const from = startOf(period.days);
 
-  const [sales, branches, campaigns] = await Promise.all([
+  const [sales, branches, campaigns, warehouses] = await Promise.all([
     prisma.salesReport.findMany({ where: { photoKey: "", soldAt: { gte: from } }, orderBy: { soldAt: "desc" } }),
     prisma.branch.findMany({ orderBy: { name: "asc" }, include: { _count: { select: { users: true } } } }),
     prisma.posCampaign.findMany({ orderBy: { createdAt: "desc" } }),
+    loadWarehouses(),
   ]);
   const branchName = new Map(branches.map((b) => [b.id, b.name]));
 
@@ -123,11 +126,12 @@ export default async function PosDashboardPage({ searchParams }: { searchParams:
       <div className="grid gap-6 lg:grid-cols-2">
         <Table
           title="Per cabang"
-          head={["Cabang", "Password kasir", "Transaksi", "Omzet"]}
+          head={["Cabang", "Password kasir", "Gudang (stok cabang)", "Transaksi", "Omzet"]}
           empty="Belum ada cabang."
           rows={branches.map((b) => [
             b.name,
             <PosPassword key={b.id} branchId={b.id} active={!!b.posPasswordHash} />,
+            <PosWarehouses key={`w${b.id}`} branchId={b.id} selected={b.warehouseIds} warehouses={warehouses} />,
             byBranch.get(b.id)?.n ?? 0,
             rupiah(byBranch.get(b.id)?.sum ?? 0),
           ])}

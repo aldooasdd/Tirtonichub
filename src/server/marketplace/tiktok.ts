@@ -347,6 +347,7 @@ export async function tiktokItems(token: string, cipher: string): Promise<MpItem
           price: n(s.price?.sale_price ?? s.price?.tax_exclusive_price),
           stock: n(s.inventory?.reduce((a, x) => a + x.quantity, 0)),
           warehouseId: inv?.warehouse_id ?? null,
+          whStock: (s.inventory ?? []).map((x) => ({ id: x.warehouse_id ?? "", stock: n(x.quantity) })),
           productUpdatedAt: p.update_time,
         });
       }
