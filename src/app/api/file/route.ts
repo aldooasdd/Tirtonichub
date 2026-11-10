@@ -37,7 +37,16 @@ export async function GET(req: NextRequest) {
     if (m) headers["content-range"] = `bytes ${r.start}-${r.end}/${r.size}`;
     if (dlName) headers["content-disposition"] = `attachment; filename*=UTF-8''${encodeURIComponent(dlName)}`;
     return new Response(r.stream, { status: m ? 206 : 200, headers });
-  } catch {
-    return new Response("Not found", { status: 404 });
+  } catch (e) {
+    // Bedakan file memang tidak ada (404) dari penyimpanan mati/tak terjangkau (503, mis. MinIO belum menyala
+    // setelah PC restart). Dulu semua jadi 404 tanpa log: unduhan berisi teks "Not found" dan foto tampil "?".
+    const err = e as { name?: string; code?: string; $metadata?: { httpStatusCode?: number } };
+    const missing = err?.name === "NotFound" || err?.name === "NoSuchKey" || err?.$metadata?.httpStatusCode === 404 || err?.code === "ENOENT";
+    if (missing) return new Response("Not found", { status: 404 });
+    console.error("[api/file] penyimpanan gagal:", err?.name || err?.code || e);
+    return new Response("Penyimpanan file sedang tidak bisa dihubungi. Coba lagi sebentar.", {
+      status: 503,
+      headers: { "retry-after": "30", "cache-control": "no-store" },
+    });
   }
 }
