@@ -756,6 +756,16 @@ exports.Prisma.ChatTemplateScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.PosCampaignScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  mediaKey: 'mediaKey',
+  isVideo: 'isVideo',
+  branchId: 'branchId',
+  active: 'active',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -895,7 +905,8 @@ exports.Prisma.ModelName = {
   PushLog: 'PushLog',
   KatalogNotif: 'KatalogNotif',
   PushItemQueue: 'PushItemQueue',
-  ChatTemplate: 'ChatTemplate'
+  ChatTemplate: 'ChatTemplate',
+  PosCampaign: 'PosCampaign'
 };
 
 /**

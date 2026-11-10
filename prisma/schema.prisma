@@ -952,3 +952,16 @@ model ChatTemplate {
   grup      String   @default("tirtonic")
   createdAt DateTime @default(now())
 }
+
+// Campaign layar depan kasir /pos (layar pembeli iMin 1280×800). branchId null = semua cabang.
+model PosCampaign {
+  id        String   @id @default(cuid())
+  title     String
+  mediaKey  String // gambar (jpg/png/webp) atau video mp4 di storage
+  isVideo   Boolean  @default(false)
+  branchId  String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@index([active])
+}

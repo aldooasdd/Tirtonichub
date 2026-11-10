@@ -4,6 +4,7 @@ import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
 import { PosPassword } from "@/components/pos/pos-password";
 import { CabangClient } from "@/components/pos/cabang-client";
+import { PosCampaigns } from "@/components/pos/pos-campaigns";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(Math.round(n));
 const wibDate = (d: Date) => new Date(d.getTime() + 7 * 3600_000).toISOString().slice(0, 10);
@@ -58,10 +59,12 @@ export default async function PosDashboardPage({ searchParams }: { searchParams:
   const period = PERIODS.find((x) => x.key === p) ?? PERIODS[0];
   const from = startOf(period.days);
 
-  const [sales, branches] = await Promise.all([
+  const [sales, branches, campaigns] = await Promise.all([
     prisma.salesReport.findMany({ where: { photoKey: "", soldAt: { gte: from } }, orderBy: { soldAt: "desc" } }),
     prisma.branch.findMany({ orderBy: { name: "asc" }, include: { _count: { select: { users: true } } } }),
+    prisma.posCampaign.findMany({ orderBy: { createdAt: "desc" } }),
   ]);
+  const branchName = new Map(branches.map((b) => [b.id, b.name]));
 
   const omzet = sales.reduce((n, s) => n + s.grandTotal, 0);
   const items = sales.flatMap((s) => s.items as Item[]);
@@ -162,6 +165,18 @@ export default async function PosDashboardPage({ searchParams }: { searchParams:
           status(s),
           rupiah(s.grandTotal),
         ])}
+      />
+
+      <PosCampaigns
+        branches={branches.map((b) => ({ id: b.id, name: b.name }))}
+        campaigns={campaigns.map((c) => ({
+          id: c.id,
+          title: c.title,
+          url: `/api/file?key=${encodeURIComponent(c.mediaKey)}`,
+          isVideo: c.isVideo,
+          branch: c.branchId ? (branchName.get(c.branchId) ?? "Cabang terhapus") : "Semua cabang",
+          active: c.active,
+        }))}
       />
 
       <CabangClient
