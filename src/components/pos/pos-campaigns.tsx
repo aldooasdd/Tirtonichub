@@ -76,14 +76,14 @@ export function PosCampaigns({ campaigns, branches }: { campaigns: Campaign[]; b
           <div className="rounded-md bg-muted p-3 text-14">
             <p className="font-semibold">Ukuran: 1280 × 800 px (landscape 16:10)</p>
             <p className="text-muted-foreground">Layar pembeli iMin D4-504, 10.1&quot;. Boleh lebih besar asal 16:10, mis. 1920 × 1200 / 2560 × 1600.</p>
-            <p className="text-muted-foreground">Gambar JPG / PNG / WebP maks 5 MB · Video MP4 maks 20 MB (tanpa suara).</p>
+            <p className="text-muted-foreground">Gambar JPG / PNG / WebP maks 5 MB · GIF maks 10 MB · Video MP4 maks 20 MB (tanpa suara).</p>
             <p className="text-muted-foreground">Taruh teks & logo penting minimal 60 px dari tepi.</p>
           </div>
           <label className="flex cursor-pointer items-center gap-3 rounded-md border-2 border-dashed px-4 py-3 hover:border-foreground">
             <ImagePlus className="h-5 w-5 shrink-0" />
-            <span className="min-w-0 flex-1 truncate text-14">{file ? file.name : "Pilih foto / video campaign"}</span>
+            <span className="min-w-0 flex-1 truncate text-14">{file ? file.name : "Pilih foto / GIF / video campaign"}</span>
             <span className="rounded-md bg-primary px-3 py-1.5 text-14 font-semibold text-primary-foreground">{file ? "Ganti" : "Pilih file"}</span>
-            <input type="file" accept="image/jpeg,image/png,image/webp,video/mp4" onChange={(e) => choose(e.target.files?.[0] ?? null)} className="hidden" />
+            <input type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4" onChange={(e) => choose(e.target.files?.[0] ?? null)} className="hidden" />
           </label>
           <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Judul campaign (mis. Promo Senar November)" className="h-10 w-full rounded-md border px-3 text-14" />
           <select value={branchId} onChange={(e) => setBranchId(e.target.value)} className="h-10 w-full rounded-md border px-3 text-14">
@@ -97,7 +97,7 @@ export function PosCampaigns({ campaigns, branches }: { campaigns: Campaign[]; b
         </div>
         <div className="space-y-1.5">
           <label className="relative block aspect-[16/10] cursor-pointer overflow-hidden rounded-md bg-[#1a1a1a]">
-            <input type="file" accept="image/jpeg,image/png,image/webp,video/mp4" onChange={(e) => choose(e.target.files?.[0] ?? null)} className="hidden" />
+            <input type="file" accept="image/jpeg,image/png,image/webp,image/gif,video/mp4" onChange={(e) => choose(e.target.files?.[0] ?? null)} className="hidden" />
             {!preview && (
               <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-14 text-white/70">
                 <ImagePlus className="h-8 w-8" /> Klik untuk pilih foto / video
