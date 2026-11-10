@@ -11,13 +11,15 @@ type Pay = { method: string; amount: number };
 
 export default async function ApprovalPenjualanCabangPage() {
   const ctx = await requireHeadBranch();
-  // Nota offline cabang sendiri yang belum di-ACC cabang.
+  // Nota offline cabang sendiri yang belum di-ACC cabang + nota cabang ini yang punya report salah-input terbuka
+  // (termasuk yang sudah di-ACC: report bisa datang belakangan → Kepala Cabang tetap harus bisa membenarkan).
   const rows = await prisma.salesReport.findMany({
     where: {
-      channel: "offline",
-      branchApprovedAt: null,
-      approvedAt: null,
       ...(ctx.branchId ? { branchId: ctx.branchId } : {}),
+      OR: [
+        { channel: "offline", branchApprovedAt: null, approvedAt: null },
+        { reportAt: { not: null }, reportResolvedAt: null },
+      ],
     },
     orderBy: { createdAt: "desc" },
     take: 200,
@@ -32,6 +34,8 @@ export default async function ApprovalPenjualanCabangPage() {
     const open = r.reportAt && !r.reportResolvedAt;
     return {
       id: r.id,
+      // Sudah di-ACC / bukan nota offline → di sini hanya untuk dibenarkan, bukan disetujui/ditolak.
+      fixOnly: r.channel !== "offline" || !!r.branchApprovedAt || !!r.approvedAt,
       soldAt: fmtWIB(r.soldAt),
       customer: r.customer || "-",
       salesman: r.salesman || "-",
