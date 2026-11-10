@@ -39,6 +39,8 @@ export async function setBranchPosPassword(branchId: string, password: string): 
   if (pw.length < 6) return { ok: false, message: "Password kasir minimal 6 karakter." };
   const others = await prisma.branch.findMany({ where: { id: { not: branchId }, posPasswordHash: { not: null } }, select: { posPasswordHash: true } });
   if (others.some((o) => verifyPassword(pw, o.posPasswordHash))) return { ok: false, message: "Password ini sudah dipakai cabang lain — harus beda." };
+  const target = await prisma.branch.findUnique({ where: { id: branchId }, select: { name: true } });
+  if (!target || /office/i.test(target.name)) return { ok: false, message: "Cabang Office tidak memakai kasir." };
   await prisma.branch.update({ where: { id: branchId }, data: { posPasswordHash: hashPassword(pw) } });
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "pos_password", entity: "Branch", entityId: branchId });
