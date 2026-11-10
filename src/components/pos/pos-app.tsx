@@ -3,11 +3,15 @@
 import { useDeferredValue, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { CircleAlert, CircleCheck, LogOut, Minus, Plus, ScanBarcode, Trash2, UserRound, X } from "lucide-react";
+import { pickSource, type BranchStock } from "@/lib/pos-source";
 import { DISPLAY_CHANNEL, type DisplayMsg } from "@/components/pos/customer-display";
 import { posCatalog, posLogout, posLookup, posSave, type PosCatalog, type PosProduct, type PosSaleResult } from "@/server/actions/pos";
 
 type User = { id: string; name: string; role: string };
-type Line = PosProduct & { qty: number };
+type Line = PosProduct & { qty: number; stocks: BranchStock[]; from: string | null; tie: string[] | null; manual: boolean };
+type Addable = PosProduct & { stocks?: BranchStock[] };
+// Sumber stok dihitung ulang tiap qty berubah, kecuali kasir sudah memilih sendiri.
+const withSource = (l: Line): Line => (l.manual ? l : { ...l, ...pickSource(l.stocks, l.qty) });
 type Flash = { ok: boolean; title: string; sub: string } | null;
 
 const rp = (n: number) => "Rp " + n.toLocaleString("id-ID");
@@ -71,16 +75,19 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
 
   if (!user) return <PickUser branch={branch} users={users} onPick={setUser} onLogout={() => start(async () => { await posLogout(); router.refresh(); })} />;
 
-  function add(p: PosProduct) {
+  function add(p: Addable) {
     setCart((c) => {
       const i = c.findIndex((l) => l.sku.toLowerCase() === p.sku.toLowerCase());
-      if (i < 0) return [...c, { ...p, qty: 1 }];
+      if (i < 0) return [...c, withSource({ ...p, stocks: p.stocks ?? [], qty: 1, from: null, tie: null, manual: false })];
       const n = [...c];
-      n[i] = { ...n[i], qty: n[i].qty + 1 };
+      n[i] = withSource({ ...n[i], qty: n[i].qty + 1 });
       return n;
     });
   }
-  const setQty = (sku: string, qty: number) => setCart((c) => (qty <= 0 ? c.filter((l) => l.sku !== sku) : c.map((l) => (l.sku === sku ? { ...l, qty } : l))));
+  const setQty = (sku: string, qty: number) => setCart((c) => (qty <= 0 ? c.filter((l) => l.sku !== sku) : c.map((l) => (l.sku === sku ? withSource({ ...l, qty }) : l))));
+  const setFrom = (sku: string, from: string) => setCart((c) => c.map((l) => (l.sku === sku ? { ...l, from, tie: null, manual: true } : l)));
+  const needPick = cart.some((l) => l.tie);
+  const labelOf = (l: Line, id: string | null) => l.stocks.find((x) => x.branchId === id)?.label ?? "";
 
   function pay() {
     setError(null);
@@ -90,7 +97,7 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
         salesId: user!.id, // sales = pengguna POS yang login
         customer,
         phone,
-        items: cart.map((l) => ({ sku: l.sku, name: l.name, qty: l.qty, price: l.price })),
+        items: cart.map((l) => ({ sku: l.sku, name: l.name, qty: l.qty, price: l.price, fromBranchId: l.from })),
         discount,
         method,
         paid: method === "Tunai" ? paid : total,
@@ -179,10 +186,17 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
           <div className="min-h-0 flex-1 overflow-y-auto px-5">
             {cart.length === 0 && <p className="py-16 text-center text-14 text-muted-foreground">Belum ada barang. Scan barcode atau ketuk barang di kiri.</p>}
             {cart.map((l) => (
-              <div key={l.sku} className="flex items-center gap-3 border-b py-3">
+              <div key={l.sku} className="flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b py-3">
                 <div className="min-w-0 flex-1">
                   <p className="truncate text-16">{l.name}</p>
-                  <p className="text-12 text-muted-foreground">{l.sku} · {rp(l.price)}</p>
+                  <p className="text-12 text-muted-foreground">
+                    {l.sku} · {rp(l.price)}
+                    {l.from && (
+                      <span className={`ml-1.5 rounded-full px-2 py-0.5 ${l.stocks.find((x) => x.branchId === l.from)?.mine ? "bg-muted" : "bg-warning/15 text-warning"}`}>
+                        Stok {labelOf(l, l.from)}
+                      </span>
+                    )}
+                  </p>
                 </div>
                 <div className="flex items-center rounded-md border">
                   <button onClick={() => setQty(l.sku, l.qty - 1)} className="grid h-9 w-9 place-items-center">{l.qty === 1 ? <Trash2 className="h-4 w-4" /> : <Minus className="h-4 w-4" />}</button>
@@ -190,6 +204,16 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
                   <button onClick={() => setQty(l.sku, l.qty + 1)} className="grid h-9 w-9 place-items-center"><Plus className="h-4 w-4" /></button>
                 </div>
                 <p className="w-24 text-right text-16 font-semibold">{rp(l.price * l.qty)}</p>
+                {l.tie && (
+                  <div className="flex w-full flex-wrap items-center gap-2 rounded-md bg-warning/10 px-3 py-2 text-12">
+                    <span className="text-warning">Stok cabang sendiri kurang, stok cabang lain sama. Ambil dari:</span>
+                    {l.tie.map((id) => (
+                      <button key={id} onClick={() => setFrom(l.sku, id)} className="rounded-full border border-warning bg-background px-3 py-1 font-semibold">
+                        {labelOf(l, id)} ({l.stocks.find((x) => x.branchId === id)?.stock})
+                      </button>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -201,11 +225,11 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
             </div>
             <div className="flex items-center justify-between py-1"><span className="text-18 font-semibold">Total</span><span className="text-24 font-bold">{rp(total)}</span></div>
             <button
-              disabled={!cart.length || !phone.trim()}
+              disabled={!cart.length || !phone.trim() || needPick}
               onClick={() => { setPaid(0); setStage("pay"); }}
               className="h-14 w-full rounded-md bg-primary text-18 font-semibold text-primary-foreground disabled:opacity-40"
             >
-              {!cart.length ? "Bayar"  : !phone.trim() ? "Isi no. WA dulu" : "Bayar"}
+              {!cart.length ? "Bayar" : needPick ? "Pilih sumber stok dulu" : !phone.trim() ? "Isi no. WA dulu" : "Bayar"}
             </button>
           </div>
         </div>
@@ -267,7 +291,7 @@ function useCatalog() {
   return { items, bySku, branchStock: cat?.branchStock ?? false };
 }
 
-function CatalogPanel({ onAdd }: { onAdd: (p: PosProduct) => void }) {
+function CatalogPanel({ onAdd }: { onAdd: (p: Addable) => void }) {
   const ref = useRef<HTMLInputElement>(null);
   const { items, bySku, branchStock } = useCatalog();
   const [q, setQ] = useState("");
@@ -295,7 +319,7 @@ function CatalogPanel({ onAdd }: { onAdd: (p: PosProduct) => void }) {
     });
   }, [items, dq]);
 
-  function pick(p: PosProduct) {
+  function pick(p: Addable) {
     onAdd(p);
     beep(true);
     setFlash({ ok: true, title: `Ditambahkan: ${p.name}`, sub: `${p.sku} · ${rp(p.price)}` });
@@ -368,14 +392,16 @@ function CatalogPanel({ onAdd }: { onAdd: (p: PosProduct) => void }) {
                 <span className={`text-12 ${p.stock <= 0 ? "text-destructive" : p.stock <= 2 ? "text-warning" : "text-muted-foreground"}`}>{p.stock <= 0 ? "Habis" : `${branchStock ? "Stok cabang" : "Stok online"} ${p.stock}`}</span>
               </div>
               {p.stocks.length > 0 && (
-                <p className="truncate text-12 text-muted-foreground" title={p.stocks.map((x) => `${x.label} ${x.stock}`).join(" · ")}>
-                  {p.stocks.map((x, k) => (
-                    <span key={x.label}>
-                      {k > 0 && " · "}
-                      <span className={x.mine ? "font-semibold text-foreground" : x.stock <= 0 ? "opacity-50" : ""}>{x.label} {x.stock}</span>
+                <div className="flex flex-wrap gap-1">
+                  {p.stocks.map((x) => (
+                    <span
+                      key={x.label}
+                      className={`rounded-full px-2 py-0.5 text-12 tabular-nums ${x.mine ? "bg-primary text-primary-foreground" : x.stock > 0 ? "bg-muted text-foreground" : "bg-muted text-muted-foreground opacity-60"}`}
+                    >
+                      {x.label} {x.stock}
                     </span>
                   ))}
-                </p>
+                </div>
               )}
             </button>
           ))}

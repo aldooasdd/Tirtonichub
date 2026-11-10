@@ -8,6 +8,7 @@ import { clientMeta } from "@/server/request-meta";
 import { rateLimit } from "@/server/rate-limit";
 import { notifyBranchHeads } from "@/server/notify";
 import { makeKey, putObject } from "@/server/storage";
+import { deductPosStock } from "@/server/pos-stock";
 import { clearPosCookie, getPosBranch, notaPrefix, setPosCookie } from "@/server/pos";
 
 type Res = { ok: boolean; message?: string };
@@ -93,7 +94,7 @@ export async function posLookup(code: string): Promise<PosProduct | null> {
 
 /** Katalog kasir: barang ber-SKU dari Produk Master (sementara, sampai SKU lengkap). Dimuat sekali,
  *  dicari & dicocokkan SKU di perangkat. `stocks` = stok tiap gudang/cabang → semua kasir lihat stok cabang lain. */
-export type PosCatalogItem = PosProduct & { key: string; variant: string | null; img: string | null; stocks: { label: string; stock: number; mine: boolean }[] };
+export type PosCatalogItem = PosProduct & { key: string; variant: string | null; img: string | null; stocks: { label: string; stock: number; mine: boolean; branchId: string | null }[] };
 export type PosCatalog = { items: PosCatalogItem[]; branchStock: boolean };
 
 type Wh = { id: string; stock: number };
@@ -119,9 +120,9 @@ export async function posCatalog(): Promise<PosCatalog> {
     warehouseNames().catch(() => new Map<string, string>()),
   ]);
   // Gudang → nama cabang pemiliknya (atau nama gudang bila belum dipetakan).
-  const owner = new Map<string, { label: string; mine: boolean }>();
+  const owner = new Map<string, { label: string; mine: boolean; branchId: string | null }>();
   for (const b of branches)
-    for (const k of b.warehouseIds) owner.set(k, { label: b.name.split(/\s+/).pop() ?? b.name, mine: b.id === branch.id });
+    for (const k of b.warehouseIds) owner.set(k, { label: b.name.split(/\s+/).pop() ?? b.name, mine: b.id === branch.id, branchId: b.id });
   const cover = new Map(details.map((d) => [`${d.platform}:${d.productId}`, ((d.images as string[] | null) ?? [])[0] ?? null]));
 
   // Satu barang = SKU sama di semua marketplace.
@@ -135,10 +136,10 @@ export async function posCatalog(): Promise<PosCatalog> {
   for (const [key, v] of groups) {
     // Gudang sama tercatat di 2 marketplace (stok cerminan) → pakai satu: Tokopedia dulu.
     const src = v.find((x) => x.platform === "TOKOPEDIA" && (x.whStock as Wh[] | null)?.length) ?? v.find((x) => (x.whStock as Wh[] | null)?.length);
-    const per = new Map<string, { label: string; stock: number; mine: boolean }>();
+    const per = new Map<string, { label: string; stock: number; mine: boolean; branchId: string | null }>();
     for (const w of (src?.whStock as Wh[] | undefined) ?? []) {
       const k = `${src!.platform}:${w.id}`;
-      const o = owner.get(k) ?? { label: names.get(k) ?? (w.id ? `Gudang ${w.id.slice(-4)}` : "Gudang utama"), mine: false };
+      const o = owner.get(k) ?? { label: names.get(k) ?? (w.id ? `Gudang ${w.id.slice(-4)}` : "Gudang utama"), mine: false, branchId: null };
       const cur = per.get(o.label) ?? { ...o, stock: 0 };
       cur.stock += w.stock;
       per.set(o.label, cur);
@@ -176,7 +177,7 @@ export type PosSaleInput = {
   salesId: string;
   customer: string;
   phone: string;
-  items: { sku: string; name: string; qty: number; price: number }[];
+  items: { sku: string; name: string; qty: number; price: number; fromBranchId?: string | null }[]; // fromBranchId = stok diambil dari cabang ini
   discount: number;
   method: string; // "Tunai" | "Debit BCA" | "Debit BRI" | "Debit Mandiri" | "Transfer"
   paid: number; // uang diterima (tunai); metode lain = total
@@ -203,13 +204,14 @@ export async function posSave(input: PosSaleInput): Promise<PosSaleResult> {
   if (!cashier) return { ok: false, message: "Pengguna kasir tidak valid — pilih ulang pengguna." };
   if (!sales) return { ok: false, message: "Pilih sales yang melayani." };
 
-  const items = input.items
-    .filter((i) => i.name?.trim())
-    .map((i) => {
-      const qty = Math.max(1, Math.round(i.qty) || 1);
-      const price = int(i.price);
-      return { name: `${i.name.trim()}${i.sku ? ` (${i.sku})` : ""}`.slice(0, 200), qty, price, total: price * qty, note: null };
-    });
+  const branchNames = new Map((await prisma.branch.findMany({ select: { id: true, name: true } })).map((b) => [b.id, b.name]));
+  const valid = input.items.filter((i) => i.name?.trim());
+  const items = valid.map((i) => {
+    const qty = Math.max(1, Math.round(i.qty) || 1);
+    const price = int(i.price);
+    const from = i.fromBranchId && branchNames.get(i.fromBranchId);
+    return { name: `${i.name.trim()}${i.sku ? ` (${i.sku})` : ""}`.slice(0, 200), qty, price, total: price * qty, note: from ? `Stok dari ${from}` : null };
+  });
   if (items.length === 0) return { ok: false, message: "Keranjang kosong." };
   const phone = normPhone(input.phone ?? "");
   if (!phone) return { ok: false, message: "Nomor WA pelanggan wajib — untuk poin member." };
@@ -251,6 +253,11 @@ export async function posSave(input: PosSaleInput): Promise<PosSaleResult> {
 
   const { ip } = await clientMeta();
   const role = cashier.roles[0]?.role.code;
+  // Potong stok gudang marketplace di belakang (kasir tak menunggu API Tokopedia/Shopee).
+  const stockLines = valid
+    .filter((i) => i.sku && i.fromBranchId && branchNames.has(i.fromBranchId))
+    .map((i) => ({ sku: i.sku, qty: Math.max(1, Math.round(i.qty) || 1), fromBranchId: i.fromBranchId! }));
+  if (stockLines.length) void deductPosStock(stockLines, { notaNo, userId: cashier.id, role }).catch(() => {});
   if (role) await logActivity({ userId: cashier.id, activeRole: role, ip }, { action: "pos_sale", entity: "SalesReport", entityId: rep.id });
   await notifyBranchHeads(branch.id, {
     type: "sales_pending",
