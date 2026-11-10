@@ -238,7 +238,7 @@ function PickUser({ branch, users, onPick, onLogout }: { branch: { name: string 
   );
 }
 
-const CACHE = "pos-katalog-v2";
+const CACHE = "pos-katalog-v3";
 const PAGE = 48;
 
 function useCatalog() {
@@ -367,6 +367,16 @@ function CatalogPanel({ onAdd }: { onAdd: (p: PosProduct) => void }) {
                 <span className="text-14 font-semibold">{rp(p.price)}</span>
                 <span className={`text-12 ${p.stock <= 0 ? "text-destructive" : p.stock <= 2 ? "text-warning" : "text-muted-foreground"}`}>{p.stock <= 0 ? "Habis" : `${branchStock ? "Stok cabang" : "Stok online"} ${p.stock}`}</span>
               </div>
+              {p.stocks.length > 0 && (
+                <p className="truncate text-12 text-muted-foreground" title={p.stocks.map((x) => `${x.label} ${x.stock}`).join(" · ")}>
+                  {p.stocks.map((x, k) => (
+                    <span key={x.label}>
+                      {k > 0 && " · "}
+                      <span className={x.mine ? "font-semibold text-foreground" : x.stock <= 0 ? "opacity-50" : ""}>{x.label} {x.stock}</span>
+                    </span>
+                  ))}
+                </p>
+              )}
             </button>
           ))}
         </div>

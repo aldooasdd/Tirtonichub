@@ -91,53 +91,72 @@ export async function posLookup(code: string): Promise<PosProduct | null> {
   return items.length ? toProduct(best(items)) : null;
 }
 
-/** Katalog ringkas untuk kasir: dimuat sekali, dicari & dicocokkan SKU di perangkat (tanpa bolak-balik server). */
-export type PosCatalogItem = PosProduct & { variant: string | null; img: string | null };
+/** Katalog kasir: barang ber-SKU dari Produk Master (sementara, sampai SKU lengkap). Dimuat sekali,
+ *  dicari & dicocokkan SKU di perangkat. `stocks` = stok tiap gudang/cabang → semua kasir lihat stok cabang lain. */
+export type PosCatalogItem = PosProduct & { key: string; variant: string | null; img: string | null; stocks: { label: string; stock: number; mine: boolean }[] };
 export type PosCatalog = { items: PosCatalogItem[]; branchStock: boolean };
 
-/** Stok cabang = jumlah stok di gudang marketplace milik cabang. Gudang yang sama tercatat di Tokopedia
- *  & Shopee (stok cerminan), jadi ambil satu platform saja: Tokopedia dulu, lalu Shopee. */
-function branchStockOf(items: { platform: string; whStock: unknown }[], wh: Set<string>): number | null {
-  for (const plat of ["TOKOPEDIA", "SHOPEE"]) {
-    let found = false;
-    let sum = 0;
-    for (const it of items)
-      if (it.platform === plat)
-        for (const w of (it.whStock as { id: string; stock: number }[] | null) ?? [])
-          if (wh.has(`${plat}:${w.id}`)) {
-            found = true;
-            sum += w.stock;
-          }
-    if (found) return sum;
-  }
-  return null;
+type Wh = { id: string; stock: number };
+let whNames: { at: number; map: Map<string, string> } | null = null;
+// ponytail: nama gudang dari API marketplace, cache 10 menit di memori server.
+async function warehouseNames() {
+  if (whNames && Date.now() - whNames.at < 600_000) return whNames.map;
+  const { loadWarehouses } = await import("@/server/pos-warehouses");
+  const map = new Map((await loadWarehouses()).map((w) => [w.key, w.name]));
+  whNames = { at: Date.now(), map };
+  return map;
 }
 
 export async function posCatalog(): Promise<PosCatalog> {
   const branch = await requireBranch();
-  const [items, details, b] = await Promise.all([
+  const [items, details, branches, names] = await Promise.all([
     prisma.marketplaceItem.findMany({
       where: { deletedAt: null, OR: [{ localSku: { not: null } }, { sku: { not: null } }] },
-      select: { platform: true, itemId: true, name: true, localName: true, variant: true, sku: true, localSku: true, price: true, stock: true, image: true, whStock: true },
+      select: { platform: true, itemId: true, modelId: true, name: true, localName: true, variant: true, sku: true, localSku: true, price: true, stock: true, image: true, whStock: true },
     }),
     prisma.marketplaceProduct.findMany({ select: { platform: true, productId: true, images: true } }),
-    prisma.branch.findUnique({ where: { id: branch.id }, select: { warehouseIds: true } }),
+    prisma.branch.findMany({ select: { id: true, name: true, warehouseIds: true } }),
+    warehouseNames().catch(() => new Map<string, string>()),
   ]);
-  const wh = new Set(b?.warehouseIds ?? []);
+  // Gudang → nama cabang pemiliknya (atau nama gudang bila belum dipetakan).
+  const owner = new Map<string, { label: string; mine: boolean }>();
+  for (const b of branches)
+    for (const k of b.warehouseIds) owner.set(k, { label: b.name.split(/\s+/).pop() ?? b.name, mine: b.id === branch.id });
   const cover = new Map(details.map((d) => [`${d.platform}:${d.productId}`, ((d.images as string[] | null) ?? [])[0] ?? null]));
-  const bySku = new Map<string, (typeof items)[number][]>();
+
+  // Satu barang = SKU sama di semua marketplace.
+  const groups = new Map<string, (typeof items)[number][]>();
   for (const it of items) {
-    const k = (it.localSku ?? it.sku ?? "").trim().toLowerCase();
-    if (k) (bySku.get(k) ?? bySku.set(k, []).get(k)!).push(it);
+    const k = toProduct(it).sku.trim().toLowerCase();
+    if (k) (groups.get(k) ?? groups.set(k, []).get(k)!).push(it);
   }
-  const list = [...bySku.values()]
-    .map((v) => {
-      const top = best(v);
-      const stock = wh.size ? (branchStockOf(v, wh) ?? 0) : top.stock;
-      return { ...toProduct(top), stock, variant: top.variant, img: v.find((x) => x.image)?.image ?? cover.get(`${top.platform}:${top.itemId}`) ?? null };
-    })
-    .sort((a, c) => a.name.localeCompare(c.name));
-  return { items: list, branchStock: wh.size > 0 };
+
+  const list: PosCatalogItem[] = [];
+  for (const [key, v] of groups) {
+    // Gudang sama tercatat di 2 marketplace (stok cerminan) → pakai satu: Tokopedia dulu.
+    const src = v.find((x) => x.platform === "TOKOPEDIA" && (x.whStock as Wh[] | null)?.length) ?? v.find((x) => (x.whStock as Wh[] | null)?.length);
+    const per = new Map<string, { label: string; stock: number; mine: boolean }>();
+    for (const w of (src?.whStock as Wh[] | undefined) ?? []) {
+      const k = `${src!.platform}:${w.id}`;
+      const o = owner.get(k) ?? { label: names.get(k) ?? (w.id ? `Gudang ${w.id.slice(-4)}` : "Gudang utama"), mine: false };
+      const cur = per.get(o.label) ?? { ...o, stock: 0 };
+      cur.stock += w.stock;
+      per.set(o.label, cur);
+    }
+    const stocks = [...per.values()].sort((a, c) => Number(c.mine) - Number(a.mine) || a.label.localeCompare(c.label));
+    const top = best(v);
+    const mine = stocks.find((x) => x.mine);
+    list.push({
+      ...toProduct(top),
+      key,
+      stock: mine ? mine.stock : stocks.length ? stocks.reduce((n, x) => n + x.stock, 0) : top.stock,
+      variant: top.variant,
+      img: v.find((x) => x.image)?.image ?? cover.get(`${top.platform}:${top.itemId}`) ?? null,
+      stocks,
+    });
+  }
+  list.sort((a, c) => a.name.localeCompare(c.name));
+  return { items: list, branchStock: owner.size > 0 && [...owner.values()].some((o) => o.mine) };
 }
 
 /** Tirtonic Channel: gudang marketplace milik cabang (dasar stok cabang di kasir). */
