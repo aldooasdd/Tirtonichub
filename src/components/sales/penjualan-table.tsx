@@ -131,7 +131,7 @@ export function PenjualanTable({ notas }: { notas: NotaRow[] }) {
                   <p className="text-12 text-muted-foreground">
                     {n.tgl} · {n.branch} · <span className="rounded-full bg-muted px-2 py-0.5 text-11">{n.saluran}</span>
                     {" · "}
-                    <a href={`/api/file?key=${encodeURIComponent(n.photoKey)}`} target="_blank" rel="noopener" className="text-primary">Lihat nota</a>
+                    {n.photoKey ? <a href={`/api/file?key=${encodeURIComponent(n.photoKey)}`} target="_blank" rel="noopener" className="text-primary">Lihat nota</a> : "Kasir POS"}
                   </p>
                 </div>
                 <div className="flex shrink-0 items-center gap-3">
