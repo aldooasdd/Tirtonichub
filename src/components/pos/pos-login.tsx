@@ -64,7 +64,7 @@ export function PosLogin() {
             {pending ? "Memeriksa…" : "Masuk"}
           </button>
           <p className="text-12 text-muted-foreground">
-            Tiap cabang punya password sendiri, diatur HR di Tirtonichub → Cabang. Ganti password = mesin cabang itu keluar.
+            Tiap cabang punya password sendiri, diatur di Tirtonichub → Tirtonic POS. Ganti password = mesin cabang itu keluar.
           </p>
         </form>
       </div>
