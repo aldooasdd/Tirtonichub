@@ -10,7 +10,9 @@ const ORDER_SPECIALIST_ROLES: RoleCode[] = ["BOSS", "ADMIN", "ORDER_SPECIALIST"]
 const SALES_INPUT_ROLES: RoleCode[] = ["BOSS", "ADMIN", "SALES"]; // input penjualan (offline/online)
 const CASHOUT_INPUT_ROLES: RoleCode[] = ["BOSS", "ADMIN", "SALES", "FINANCE"]; // input pembelian/pengeluaran
 const HEAD_BRANCH_ROLES: RoleCode[] = ["BOSS", "ADMIN", "HEAD_BRANCH"]; // ACC penjualan offline cabang sebelum masuk Finance
-const CHANNEL_ROLES: RoleCode[] = ["BOSS", "ADMIN", "CHANNEL"]; // Tirtonic Channel: toko Shopee & Tokopedia
+// Sumber: src/lib/roles.ts (menu & izin wajib sama).
+const CHANNEL_ROLES: RoleCode[] = ["BOSS", "ADMIN", "CHANNEL", "HR", "ORDER_SPECIALIST"]; // Tirtonic Channel: toko Shopee & Tokopedia
+const PRODUK_ROLES: RoleCode[] = [...CHANNEL_ROLES, "STOCK_ROOM"]; // Produk Master saja (Stock Room ikut)
 const REPORT_ROLES: RoleCode[] = ["BOSS", "ADMIN"]; // nerima laporan error/pertanyaan dari karyawan
 
 /** Izin murni (tanpa DB/next) — bisa diuji langsung. */
@@ -33,6 +35,7 @@ export const can = {
   approveBranchSales: (role: RoleCode) => HEAD_BRANCH_ROLES.includes(role),
   manageReports: (role: RoleCode) => REPORT_ROLES.includes(role),
   manageChannel: (role: RoleCode) => CHANNEL_ROLES.includes(role),
+  manageProduk: (role: RoleCode) => PRODUK_ROLES.includes(role),
 
   /** Atur role tertentu di akun targetUserId. Anti-eskalasi (PRD §3). */
   assignRole(

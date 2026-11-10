@@ -108,6 +108,13 @@ export async function requireChannel(): Promise<AuthContext> {
   return ctx;
 }
 
+/** Produk Master (Channel + Stock Room). */
+export async function requireProduk(): Promise<AuthContext> {
+  const ctx = await requireAuth();
+  assert(ctx.allRoles.some(can.manageProduk));
+  return ctx;
+}
+
 /** Untuk halaman laporan masuk (Admin/Boss). */
 export async function requireReports(): Promise<AuthContext> {
   const ctx = await requireAuth();

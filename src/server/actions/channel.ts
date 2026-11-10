@@ -3,7 +3,7 @@
 import { randomBytes } from "node:crypto";
 import { cookies } from "next/headers";
 import { prisma } from "@/server/db";
-import { requireChannel } from "@/server/auth/rbac";
+import { requireChannel, requireProduk } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { shopeeAuthUrl } from "@/server/marketplace/shopee";
@@ -60,7 +60,7 @@ export async function syncNow(platform: string): Promise<Res> {
 }
 
 export async function updateChannelItem(id: string, stock: number, price: number): Promise<Res> {
-  const ctx = await requireChannel();
+  const ctx = await requireProduk();
   const it = await prisma.marketplaceItem.findUnique({ where: { id } });
   if (!it) return { ok: false, message: "Produk tidak ditemukan." };
   const s = Math.max(0, Math.round(stock) || 0);

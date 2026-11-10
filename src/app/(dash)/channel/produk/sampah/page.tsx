@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ChevronLeft } from "lucide-react";
-import { requireChannel } from "@/server/auth/rbac";
+import { requireProduk } from "@/server/auth/rbac";
 import { PLATFORM_LABEL } from "@/server/marketplace/sync";
 import { loadProductGroups } from "@/server/marketplace/product-groups";
 import { RestoreButton } from "@/components/channel/restore-button";
@@ -10,7 +10,7 @@ const label = (p: string) => PLATFORM_LABEL[p as keyof typeof PLATFORM_LABEL] ??
 
 /** Sampah Produk Master: produk yang dihapus (tidak permanen), bisa dipulihkan. */
 export default async function SampahProdukPage() {
-  await requireChannel();
+  await requireProduk();
   const rows = (await loadProductGroups(true)).sort((a, b) => a.title.localeCompare(b.title, "id"));
   return (
     <div className="space-y-5">

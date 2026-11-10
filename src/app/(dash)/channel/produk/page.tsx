@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Plus, Trash2 } from "lucide-react";
-import { requireChannel } from "@/server/auth/rbac";
+import { requireProduk } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { PLATFORM_LABEL } from "@/server/marketplace/sync";
 import { loadProductGroups } from "@/server/marketplace/product-groups";
@@ -15,7 +15,7 @@ type SP = { q?: string; status?: string; p?: string };
 
 /** Produk Master: semua produk, yang bernama sama di beberapa marketplace digabung jadi 1 baris + badge tempat jualnya. */
 export default async function ProdukMasterPage({ searchParams }: { searchParams: Promise<SP> }) {
-  await requireChannel();
+  await requireProduk();
   const sp = await searchParams;
   const q = (sp.q ?? "").trim().toLowerCase();
 

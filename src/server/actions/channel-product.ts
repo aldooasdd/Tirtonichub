@@ -1,7 +1,7 @@
 "use server";
 
 import { randomUUID } from "node:crypto";
-import { requireChannel } from "@/server/auth/rbac";
+import { requireProduk } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { DEMO, mustShop, syncItems } from "@/server/marketplace/sync";
@@ -20,7 +20,7 @@ async function ctx() {
 }
 
 async function run<T>(fn: () => Promise<T>): Promise<Res<T>> {
-  await requireChannel();
+  await requireProduk();
   try {
     return { ok: true, data: await fn() };
   } catch (e) {
@@ -212,7 +212,7 @@ export async function checkProduct(d: ProductDraft) {
 }
 
 export async function saveProduct(d: ProductDraft) {
-  const auth = await requireChannel();
+  const auth = await requireProduk();
   if (!PRODUK_KE_MARKETPLACE) return { ok: false as const, message: PRODUK_OFF_MSG };
   try {
     const { c, body } = await buildBody(d);
