@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/server/db";
-import { requireAuth, can, assert } from "@/server/auth/rbac";
+import { requireChannel } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { branchSchema, type BranchInput } from "@/lib/validation";
@@ -9,8 +9,7 @@ import { branchSchema, type BranchInput } from "@/lib/validation";
 export type ActionResult = { ok: boolean; message?: string; id?: string };
 
 export async function createBranch(input: BranchInput): Promise<ActionResult> {
-  const ctx = await requireAuth();
-  assert(can.manageBranchSchedule(ctx.activeRole));
+  const ctx = await requireChannel(); // kelola cabang di Tirtonic POS
   const parsed = branchSchema.safeParse(input);
   if (!parsed.success)
     return { ok: false, message: parsed.error.issues[0]?.message ?? "Input tidak valid" };
@@ -25,8 +24,7 @@ export async function createBranch(input: BranchInput): Promise<ActionResult> {
 }
 
 export async function updateBranch(id: string, input: BranchInput): Promise<ActionResult> {
-  const ctx = await requireAuth();
-  assert(can.manageBranchSchedule(ctx.activeRole));
+  const ctx = await requireChannel(); // kelola cabang di Tirtonic POS
   const parsed = branchSchema.safeParse(input);
   if (!parsed.success)
     return { ok: false, message: parsed.error.issues[0]?.message ?? "Input tidak valid" };
@@ -41,8 +39,7 @@ export async function updateBranch(id: string, input: BranchInput): Promise<Acti
 }
 
 export async function deleteBranch(id: string): Promise<ActionResult> {
-  const ctx = await requireAuth();
-  assert(can.manageBranchSchedule(ctx.activeRole));
+  const ctx = await requireChannel(); // kelola cabang di Tirtonic POS
   const count = await prisma.user.count({ where: { branchId: id } });
   if (count > 0) return { ok: false, message: "Cabang masih punya karyawan, tak bisa dihapus." };
   const { ip } = await clientMeta();
