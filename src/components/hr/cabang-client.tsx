@@ -22,6 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { createBranch, updateBranch, deleteBranch } from "@/server/actions/branches";
+import { setBranchPosPassword } from "@/server/actions/pos";
 
 type Row = {
   id: string;
@@ -30,6 +31,7 @@ type Row = {
   latitude: number | null;
   longitude: number | null;
   userCount: number;
+  posSet?: boolean;
 };
 
 export function CabangClient({ branches }: { branches: Row[] }) {
@@ -74,6 +76,7 @@ export function CabangClient({ branches }: { branches: Row[] }) {
               <div className="min-w-0">
                 <p className="truncate font-medium">{b.name}</p>
                 <p className="truncate text-14 text-muted-foreground">{b.address ?? "—"}</p>
+                <p className="text-12 text-muted-foreground">Kasir /pos: {b.posSet ? "password diatur" : "belum ada password"}</p>
               </div>
               <span className="text-14 text-muted-foreground">{b.userCount} org</span>
             </div>
@@ -123,7 +126,10 @@ export function CabangClient({ branches }: { branches: Row[] }) {
             )}
             {branches.map((b) => (
               <TableRow key={b.id}>
-                <TableCell className="font-medium">{b.name}</TableCell>
+                <TableCell className="font-medium">
+                  {b.name}
+                  <p className="text-12 font-normal text-muted-foreground">Kasir /pos: {b.posSet ? "password diatur" : "belum ada password"}</p>
+                </TableCell>
                 <TableCell className="text-muted-foreground">{b.address ?? "—"}</TableCell>
                 <TableCell className="text-right">{b.userCount}</TableCell>
                 <TableCell className="text-right">
@@ -183,6 +189,7 @@ function CabangDialog({
   const [address, setAddress] = useState(editing?.address ?? "");
   const [lat, setLat] = useState(editing?.latitude?.toString() ?? "");
   const [lng, setLng] = useState(editing?.longitude?.toString() ?? "");
+  const [posPw, setPosPw] = useState("");
   const [msg, setMsg] = useState<string | null>(null);
   const [pending, start] = useTransition();
 
@@ -196,8 +203,13 @@ function CabangDialog({
         longitude: lng ? Number(lng) : null,
       };
       const r = editing ? await updateBranch(editing.id, input) : await createBranch(input);
-      if (r.ok) onSaved();
-      else setMsg(r.message ?? "Gagal.");
+      if (!r.ok) return setMsg(r.message ?? "Gagal.");
+      const id = editing?.id ?? r.id;
+      if (posPw.trim() && id) {
+        const p = await setBranchPosPassword(id, posPw);
+        if (!p.ok) return setMsg(p.message ?? "Gagal simpan password kasir.");
+      }
+      onSaved();
     });
   }
 
@@ -225,6 +237,17 @@ function CabangDialog({
               <Label>Longitude</Label>
               <Input value={lng} onChange={(e) => setLng(e.target.value)} placeholder="110.36" />
             </div>
+          </div>
+          <div className="space-y-2">
+            <Label>Password kasir /pos</Label>
+            <Input
+              type="text"
+              autoComplete="off"
+              value={posPw}
+              onChange={(e) => setPosPw(e.target.value)}
+              placeholder={editing?.posSet ? "Kosongkan = tidak diganti" : "Min. 6 karakter, beda tiap cabang"}
+            />
+            <p className="text-12 text-muted-foreground">Ganti password = semua mesin kasir cabang ini keluar.</p>
           </div>
           {msg && <p className="text-14 text-destructive">{msg}</p>}
         </div>

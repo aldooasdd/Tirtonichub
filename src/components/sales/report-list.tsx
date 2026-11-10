@@ -46,9 +46,13 @@ export function ReportList({ rows, title, desc, href, done, open }: { rows: Repo
                   <p className="font-semibold">{rupiah(r.grandTotal)}</p>
                   <p className="text-12 text-muted-foreground">{r.soldAt} · {r.branch} · Sales: {r.salesman} · oleh {r.by}</p>
                 </div>
-                <a href={`/api/file?key=${encodeURIComponent(r.photoKey)}`} target="_blank" rel="noopener" className="text-14 text-primary underline">
-                  Lihat nota
-                </a>
+                {r.photoKey ? (
+                  <a href={`/api/file?key=${encodeURIComponent(r.photoKey)}`} target="_blank" rel="noopener" className="text-14 text-primary underline">
+                    Lihat nota
+                  </a>
+                ) : (
+                  <span className="text-14 text-muted-foreground">Kasir POS</span>
+                )}
               </div>
               <div
                 className={`flex items-start gap-2 rounded-md border p-3 text-13 ${r.resolvedAt ? "border-emerald-300 bg-emerald-50 dark:border-emerald-900 dark:bg-emerald-950/30" : "border-red-300 bg-red-50 dark:border-red-900 dark:bg-red-950/30"}`}

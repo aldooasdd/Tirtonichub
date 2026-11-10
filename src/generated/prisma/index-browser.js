@@ -184,6 +184,7 @@ exports.Prisma.SalesReportScalarFieldEnum = {
   customer: 'customer',
   phone: 'phone',
   salesman: 'salesman',
+  salesUserId: 'salesUserId',
   employee: 'employee',
   items: 'items',
   subtotal: 'subtotal',
@@ -252,7 +253,8 @@ exports.Prisma.BranchScalarFieldEnum = {
   name: 'name',
   address: 'address',
   latitude: 'latitude',
-  longitude: 'longitude'
+  longitude: 'longitude',
+  posPasswordHash: 'posPasswordHash'
 };
 
 exports.Prisma.CashSessionScalarFieldEnum = {

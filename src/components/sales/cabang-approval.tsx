@@ -81,14 +81,18 @@ export function CabangApproval({
                     </p>
                     {r.customer !== "-" && <p className="text-12 text-muted-foreground">Pelanggan: {r.customer}</p>}
                   </div>
-                  <a
-                    href={`/api/file?key=${encodeURIComponent(r.photoKey)}`}
-                    target="_blank"
-                    rel="noopener"
-                    className="text-14 text-primary underline"
-                  >
-                    Lihat nota
-                  </a>
+                  {r.photoKey ? (
+                    <a
+                      href={`/api/file?key=${encodeURIComponent(r.photoKey)}`}
+                      target="_blank"
+                      rel="noopener"
+                      className="text-14 text-primary underline"
+                    >
+                      Lihat nota
+                    </a>
+                  ) : (
+                    <span className="text-14 text-muted-foreground">Kasir POS</span>
+                  )}
                 </div>
 
                 {r.productPhotoKeys && r.productPhotoKeys.length > 0 && (

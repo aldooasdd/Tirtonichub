@@ -179,6 +179,7 @@ model SalesReport {
   customer         String? // Pelanggan
   phone            String? // nomor WA pelanggan (loyalty Ace Points, dinormalkan 62xxxx)
   salesman         String? // Salesman di struk
+  salesUserId      String? // akun sales (dari /pos) — dasar bonus penjualan
   employee         String? // Karyawan di struk
   items            Json // [{name, qty, price, total, note}]
   subtotal         Int      @default(0)
@@ -274,11 +275,12 @@ model Session {
 }
 
 model Branch {
-  id        String  @id @default(cuid())
-  name      String  @unique
-  address   String?
-  latitude  Float?
-  longitude Float?
+  id              String  @id @default(cuid())
+  name            String  @unique
+  address         String?
+  latitude        Float?
+  longitude       Float?
+  posPasswordHash String? // password kasir /pos (scrypt); unik antar cabang, cabang dikenali dari password
 
   users        User[]
   attendances  Attendance[]

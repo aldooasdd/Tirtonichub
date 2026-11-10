@@ -10964,6 +10964,7 @@ export namespace Prisma {
     customer: string | null
     phone: string | null
     salesman: string | null
+    salesUserId: string | null
     employee: string | null
     subtotal: number | null
     total: number | null
@@ -10994,6 +10995,7 @@ export namespace Prisma {
     customer: string | null
     phone: string | null
     salesman: string | null
+    salesUserId: string | null
     employee: string | null
     subtotal: number | null
     total: number | null
@@ -11024,6 +11026,7 @@ export namespace Prisma {
     customer: number
     phone: number
     salesman: number
+    salesUserId: number
     employee: number
     items: number
     subtotal: number
@@ -11071,6 +11074,7 @@ export namespace Prisma {
     customer?: true
     phone?: true
     salesman?: true
+    salesUserId?: true
     employee?: true
     subtotal?: true
     total?: true
@@ -11101,6 +11105,7 @@ export namespace Prisma {
     customer?: true
     phone?: true
     salesman?: true
+    salesUserId?: true
     employee?: true
     subtotal?: true
     total?: true
@@ -11131,6 +11136,7 @@ export namespace Prisma {
     customer?: true
     phone?: true
     salesman?: true
+    salesUserId?: true
     employee?: true
     items?: true
     subtotal?: true
@@ -11251,6 +11257,7 @@ export namespace Prisma {
     customer: string | null
     phone: string | null
     salesman: string | null
+    salesUserId: string | null
     employee: string | null
     items: JsonValue
     subtotal: number
@@ -11303,6 +11310,7 @@ export namespace Prisma {
     customer?: boolean
     phone?: boolean
     salesman?: boolean
+    salesUserId?: boolean
     employee?: boolean
     items?: boolean
     subtotal?: boolean
@@ -11337,6 +11345,7 @@ export namespace Prisma {
     customer?: boolean
     phone?: boolean
     salesman?: boolean
+    salesUserId?: boolean
     employee?: boolean
     items?: boolean
     subtotal?: boolean
@@ -11371,6 +11380,7 @@ export namespace Prisma {
     customer?: boolean
     phone?: boolean
     salesman?: boolean
+    salesUserId?: boolean
     employee?: boolean
     items?: boolean
     subtotal?: boolean
@@ -11405,6 +11415,7 @@ export namespace Prisma {
     customer?: boolean
     phone?: boolean
     salesman?: boolean
+    salesUserId?: boolean
     employee?: boolean
     items?: boolean
     subtotal?: boolean
@@ -11431,7 +11442,7 @@ export namespace Prisma {
     accurateRef?: boolean
   }
 
-  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "phone" | "salesman" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "branchName" | "branchId" | "photoKey" | "productPhotoKeys" | "createdById" | "createdAt" | "branchApprovedAt" | "branchApprovedById" | "approvedAt" | "approvedById" | "reportCategory" | "reportNote" | "reportById" | "reportAt" | "reportResolvedAt" | "accurateSyncedAt" | "accurateRef", ExtArgs["result"]["salesReport"]>
+  export type SalesReportOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "notaNo" | "soldAt" | "customer" | "phone" | "salesman" | "salesUserId" | "employee" | "items" | "subtotal" | "total" | "grandTotal" | "payments" | "channel" | "branchName" | "branchId" | "photoKey" | "productPhotoKeys" | "createdById" | "createdAt" | "branchApprovedAt" | "branchApprovedById" | "approvedAt" | "approvedById" | "reportCategory" | "reportNote" | "reportById" | "reportAt" | "reportResolvedAt" | "accurateSyncedAt" | "accurateRef", ExtArgs["result"]["salesReport"]>
   export type SalesReportInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     createdBy?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -11454,6 +11465,7 @@ export namespace Prisma {
       customer: string | null
       phone: string | null
       salesman: string | null
+      salesUserId: string | null
       employee: string | null
       items: Prisma.JsonValue
       subtotal: number
@@ -11908,6 +11920,7 @@ export namespace Prisma {
     readonly customer: FieldRef<"SalesReport", 'String'>
     readonly phone: FieldRef<"SalesReport", 'String'>
     readonly salesman: FieldRef<"SalesReport", 'String'>
+    readonly salesUserId: FieldRef<"SalesReport", 'String'>
     readonly employee: FieldRef<"SalesReport", 'String'>
     readonly items: FieldRef<"SalesReport", 'Json'>
     readonly subtotal: FieldRef<"SalesReport", 'Int'>
@@ -16693,6 +16706,7 @@ export namespace Prisma {
     address: string | null
     latitude: number | null
     longitude: number | null
+    posPasswordHash: string | null
   }
 
   export type BranchMaxAggregateOutputType = {
@@ -16701,6 +16715,7 @@ export namespace Prisma {
     address: string | null
     latitude: number | null
     longitude: number | null
+    posPasswordHash: string | null
   }
 
   export type BranchCountAggregateOutputType = {
@@ -16709,6 +16724,7 @@ export namespace Prisma {
     address: number
     latitude: number
     longitude: number
+    posPasswordHash: number
     _all: number
   }
 
@@ -16729,6 +16745,7 @@ export namespace Prisma {
     address?: true
     latitude?: true
     longitude?: true
+    posPasswordHash?: true
   }
 
   export type BranchMaxAggregateInputType = {
@@ -16737,6 +16754,7 @@ export namespace Prisma {
     address?: true
     latitude?: true
     longitude?: true
+    posPasswordHash?: true
   }
 
   export type BranchCountAggregateInputType = {
@@ -16745,6 +16763,7 @@ export namespace Prisma {
     address?: true
     latitude?: true
     longitude?: true
+    posPasswordHash?: true
     _all?: true
   }
 
@@ -16840,6 +16859,7 @@ export namespace Prisma {
     address: string | null
     latitude: number | null
     longitude: number | null
+    posPasswordHash: string | null
     _count: BranchCountAggregateOutputType | null
     _avg: BranchAvgAggregateOutputType | null
     _sum: BranchSumAggregateOutputType | null
@@ -16867,6 +16887,7 @@ export namespace Prisma {
     address?: boolean
     latitude?: boolean
     longitude?: boolean
+    posPasswordHash?: boolean
     users?: boolean | Branch$usersArgs<ExtArgs>
     attendances?: boolean | Branch$attendancesArgs<ExtArgs>
     cashSessions?: boolean | Branch$cashSessionsArgs<ExtArgs>
@@ -16879,6 +16900,7 @@ export namespace Prisma {
     address?: boolean
     latitude?: boolean
     longitude?: boolean
+    posPasswordHash?: boolean
   }, ExtArgs["result"]["branch"]>
 
   export type BranchSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -16887,6 +16909,7 @@ export namespace Prisma {
     address?: boolean
     latitude?: boolean
     longitude?: boolean
+    posPasswordHash?: boolean
   }, ExtArgs["result"]["branch"]>
 
   export type BranchSelectScalar = {
@@ -16895,9 +16918,10 @@ export namespace Prisma {
     address?: boolean
     latitude?: boolean
     longitude?: boolean
+    posPasswordHash?: boolean
   }
 
-  export type BranchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "latitude" | "longitude", ExtArgs["result"]["branch"]>
+  export type BranchOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "address" | "latitude" | "longitude" | "posPasswordHash", ExtArgs["result"]["branch"]>
   export type BranchInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | Branch$usersArgs<ExtArgs>
     attendances?: boolean | Branch$attendancesArgs<ExtArgs>
@@ -16920,6 +16944,7 @@ export namespace Prisma {
       address: string | null
       latitude: number | null
       longitude: number | null
+      posPasswordHash: string | null
     }, ExtArgs["result"]["branch"]>
     composites: {}
   }
@@ -17351,6 +17376,7 @@ export namespace Prisma {
     readonly address: FieldRef<"Branch", 'String'>
     readonly latitude: FieldRef<"Branch", 'Float'>
     readonly longitude: FieldRef<"Branch", 'Float'>
+    readonly posPasswordHash: FieldRef<"Branch", 'String'>
   }
     
 
@@ -60281,6 +60307,7 @@ export namespace Prisma {
     customer: 'customer',
     phone: 'phone',
     salesman: 'salesman',
+    salesUserId: 'salesUserId',
     employee: 'employee',
     items: 'items',
     subtotal: 'subtotal',
@@ -60364,7 +60391,8 @@ export namespace Prisma {
     name: 'name',
     address: 'address',
     latitude: 'latitude',
-    longitude: 'longitude'
+    longitude: 'longitude',
+    posPasswordHash: 'posPasswordHash'
   };
 
   export type BranchScalarFieldEnum = (typeof BranchScalarFieldEnum)[keyof typeof BranchScalarFieldEnum]
@@ -61652,6 +61680,7 @@ export namespace Prisma {
     customer?: StringNullableFilter<"SalesReport"> | string | null
     phone?: StringNullableFilter<"SalesReport"> | string | null
     salesman?: StringNullableFilter<"SalesReport"> | string | null
+    salesUserId?: StringNullableFilter<"SalesReport"> | string | null
     employee?: StringNullableFilter<"SalesReport"> | string | null
     items?: JsonFilter<"SalesReport">
     subtotal?: IntFilter<"SalesReport"> | number
@@ -61686,6 +61715,7 @@ export namespace Prisma {
     customer?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
     salesman?: SortOrderInput | SortOrder
+    salesUserId?: SortOrderInput | SortOrder
     employee?: SortOrderInput | SortOrder
     items?: SortOrder
     subtotal?: SortOrder
@@ -61723,6 +61753,7 @@ export namespace Prisma {
     customer?: StringNullableFilter<"SalesReport"> | string | null
     phone?: StringNullableFilter<"SalesReport"> | string | null
     salesman?: StringNullableFilter<"SalesReport"> | string | null
+    salesUserId?: StringNullableFilter<"SalesReport"> | string | null
     employee?: StringNullableFilter<"SalesReport"> | string | null
     items?: JsonFilter<"SalesReport">
     subtotal?: IntFilter<"SalesReport"> | number
@@ -61757,6 +61788,7 @@ export namespace Prisma {
     customer?: SortOrderInput | SortOrder
     phone?: SortOrderInput | SortOrder
     salesman?: SortOrderInput | SortOrder
+    salesUserId?: SortOrderInput | SortOrder
     employee?: SortOrderInput | SortOrder
     items?: SortOrder
     subtotal?: SortOrder
@@ -61798,6 +61830,7 @@ export namespace Prisma {
     customer?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
     phone?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
     salesman?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
+    salesUserId?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
     employee?: StringNullableWithAggregatesFilter<"SalesReport"> | string | null
     items?: JsonWithAggregatesFilter<"SalesReport">
     subtotal?: IntWithAggregatesFilter<"SalesReport"> | number
@@ -62084,6 +62117,7 @@ export namespace Prisma {
     address?: StringNullableFilter<"Branch"> | string | null
     latitude?: FloatNullableFilter<"Branch"> | number | null
     longitude?: FloatNullableFilter<"Branch"> | number | null
+    posPasswordHash?: StringNullableFilter<"Branch"> | string | null
     users?: UserListRelationFilter
     attendances?: AttendanceListRelationFilter
     cashSessions?: CashSessionListRelationFilter
@@ -62095,6 +62129,7 @@ export namespace Prisma {
     address?: SortOrderInput | SortOrder
     latitude?: SortOrderInput | SortOrder
     longitude?: SortOrderInput | SortOrder
+    posPasswordHash?: SortOrderInput | SortOrder
     users?: UserOrderByRelationAggregateInput
     attendances?: AttendanceOrderByRelationAggregateInput
     cashSessions?: CashSessionOrderByRelationAggregateInput
@@ -62109,6 +62144,7 @@ export namespace Prisma {
     address?: StringNullableFilter<"Branch"> | string | null
     latitude?: FloatNullableFilter<"Branch"> | number | null
     longitude?: FloatNullableFilter<"Branch"> | number | null
+    posPasswordHash?: StringNullableFilter<"Branch"> | string | null
     users?: UserListRelationFilter
     attendances?: AttendanceListRelationFilter
     cashSessions?: CashSessionListRelationFilter
@@ -62120,6 +62156,7 @@ export namespace Prisma {
     address?: SortOrderInput | SortOrder
     latitude?: SortOrderInput | SortOrder
     longitude?: SortOrderInput | SortOrder
+    posPasswordHash?: SortOrderInput | SortOrder
     _count?: BranchCountOrderByAggregateInput
     _avg?: BranchAvgOrderByAggregateInput
     _max?: BranchMaxOrderByAggregateInput
@@ -62136,6 +62173,7 @@ export namespace Prisma {
     address?: StringNullableWithAggregatesFilter<"Branch"> | string | null
     latitude?: FloatNullableWithAggregatesFilter<"Branch"> | number | null
     longitude?: FloatNullableWithAggregatesFilter<"Branch"> | number | null
+    posPasswordHash?: StringNullableWithAggregatesFilter<"Branch"> | string | null
   }
 
   export type CashSessionWhereInput = {
@@ -65702,6 +65740,7 @@ export namespace Prisma {
     customer?: string | null
     phone?: string | null
     salesman?: string | null
+    salesUserId?: string | null
     employee?: string | null
     items: JsonNullValueInput | InputJsonValue
     subtotal?: number
@@ -65735,6 +65774,7 @@ export namespace Prisma {
     customer?: string | null
     phone?: string | null
     salesman?: string | null
+    salesUserId?: string | null
     employee?: string | null
     items: JsonNullValueInput | InputJsonValue
     subtotal?: number
@@ -65768,6 +65808,7 @@ export namespace Prisma {
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     salesman?: NullableStringFieldUpdateOperationsInput | string | null
+    salesUserId?: NullableStringFieldUpdateOperationsInput | string | null
     employee?: NullableStringFieldUpdateOperationsInput | string | null
     items?: JsonNullValueInput | InputJsonValue
     subtotal?: IntFieldUpdateOperationsInput | number
@@ -65801,6 +65842,7 @@ export namespace Prisma {
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     salesman?: NullableStringFieldUpdateOperationsInput | string | null
+    salesUserId?: NullableStringFieldUpdateOperationsInput | string | null
     employee?: NullableStringFieldUpdateOperationsInput | string | null
     items?: JsonNullValueInput | InputJsonValue
     subtotal?: IntFieldUpdateOperationsInput | number
@@ -65834,6 +65876,7 @@ export namespace Prisma {
     customer?: string | null
     phone?: string | null
     salesman?: string | null
+    salesUserId?: string | null
     employee?: string | null
     items: JsonNullValueInput | InputJsonValue
     subtotal?: number
@@ -65867,6 +65910,7 @@ export namespace Prisma {
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     salesman?: NullableStringFieldUpdateOperationsInput | string | null
+    salesUserId?: NullableStringFieldUpdateOperationsInput | string | null
     employee?: NullableStringFieldUpdateOperationsInput | string | null
     items?: JsonNullValueInput | InputJsonValue
     subtotal?: IntFieldUpdateOperationsInput | number
@@ -65899,6 +65943,7 @@ export namespace Prisma {
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     salesman?: NullableStringFieldUpdateOperationsInput | string | null
+    salesUserId?: NullableStringFieldUpdateOperationsInput | string | null
     employee?: NullableStringFieldUpdateOperationsInput | string | null
     items?: JsonNullValueInput | InputJsonValue
     subtotal?: IntFieldUpdateOperationsInput | number
@@ -66190,6 +66235,7 @@ export namespace Prisma {
     address?: string | null
     latitude?: number | null
     longitude?: number | null
+    posPasswordHash?: string | null
     users?: UserCreateNestedManyWithoutBranchInput
     attendances?: AttendanceCreateNestedManyWithoutBranchInput
     cashSessions?: CashSessionCreateNestedManyWithoutBranchInput
@@ -66201,6 +66247,7 @@ export namespace Prisma {
     address?: string | null
     latitude?: number | null
     longitude?: number | null
+    posPasswordHash?: string | null
     users?: UserUncheckedCreateNestedManyWithoutBranchInput
     attendances?: AttendanceUncheckedCreateNestedManyWithoutBranchInput
     cashSessions?: CashSessionUncheckedCreateNestedManyWithoutBranchInput
@@ -66212,6 +66259,7 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
     users?: UserUpdateManyWithoutBranchNestedInput
     attendances?: AttendanceUpdateManyWithoutBranchNestedInput
     cashSessions?: CashSessionUpdateManyWithoutBranchNestedInput
@@ -66223,6 +66271,7 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
     users?: UserUncheckedUpdateManyWithoutBranchNestedInput
     attendances?: AttendanceUncheckedUpdateManyWithoutBranchNestedInput
     cashSessions?: CashSessionUncheckedUpdateManyWithoutBranchNestedInput
@@ -66234,6 +66283,7 @@ export namespace Prisma {
     address?: string | null
     latitude?: number | null
     longitude?: number | null
+    posPasswordHash?: string | null
   }
 
   export type BranchUpdateManyMutationInput = {
@@ -66242,6 +66292,7 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type BranchUncheckedUpdateManyInput = {
@@ -66250,6 +66301,7 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type CashSessionCreateInput = {
@@ -70330,6 +70382,7 @@ export namespace Prisma {
     customer?: SortOrder
     phone?: SortOrder
     salesman?: SortOrder
+    salesUserId?: SortOrder
     employee?: SortOrder
     items?: SortOrder
     subtotal?: SortOrder
@@ -70369,6 +70422,7 @@ export namespace Prisma {
     customer?: SortOrder
     phone?: SortOrder
     salesman?: SortOrder
+    salesUserId?: SortOrder
     employee?: SortOrder
     subtotal?: SortOrder
     total?: SortOrder
@@ -70399,6 +70453,7 @@ export namespace Prisma {
     customer?: SortOrder
     phone?: SortOrder
     salesman?: SortOrder
+    salesUserId?: SortOrder
     employee?: SortOrder
     subtotal?: SortOrder
     total?: SortOrder
@@ -70661,6 +70716,7 @@ export namespace Prisma {
     address?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
+    posPasswordHash?: SortOrder
   }
 
   export type BranchAvgOrderByAggregateInput = {
@@ -70674,6 +70730,7 @@ export namespace Prisma {
     address?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
+    posPasswordHash?: SortOrder
   }
 
   export type BranchMinOrderByAggregateInput = {
@@ -70682,6 +70739,7 @@ export namespace Prisma {
     address?: SortOrder
     latitude?: SortOrder
     longitude?: SortOrder
+    posPasswordHash?: SortOrder
   }
 
   export type BranchSumOrderByAggregateInput = {
@@ -75041,6 +75099,7 @@ export namespace Prisma {
     address?: string | null
     latitude?: number | null
     longitude?: number | null
+    posPasswordHash?: string | null
     attendances?: AttendanceCreateNestedManyWithoutBranchInput
     cashSessions?: CashSessionCreateNestedManyWithoutBranchInput
   }
@@ -75051,6 +75110,7 @@ export namespace Prisma {
     address?: string | null
     latitude?: number | null
     longitude?: number | null
+    posPasswordHash?: string | null
     attendances?: AttendanceUncheckedCreateNestedManyWithoutBranchInput
     cashSessions?: CashSessionUncheckedCreateNestedManyWithoutBranchInput
   }
@@ -75743,6 +75803,7 @@ export namespace Prisma {
     customer?: string | null
     phone?: string | null
     salesman?: string | null
+    salesUserId?: string | null
     employee?: string | null
     items: JsonNullValueInput | InputJsonValue
     subtotal?: number
@@ -75775,6 +75836,7 @@ export namespace Prisma {
     customer?: string | null
     phone?: string | null
     salesman?: string | null
+    salesUserId?: string | null
     employee?: string | null
     items: JsonNullValueInput | InputJsonValue
     subtotal?: number
@@ -75921,6 +75983,7 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
     attendances?: AttendanceUpdateManyWithoutBranchNestedInput
     cashSessions?: CashSessionUpdateManyWithoutBranchNestedInput
   }
@@ -75931,6 +75994,7 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
     attendances?: AttendanceUncheckedUpdateManyWithoutBranchNestedInput
     cashSessions?: CashSessionUncheckedUpdateManyWithoutBranchNestedInput
   }
@@ -76531,6 +76595,7 @@ export namespace Prisma {
     customer?: StringNullableFilter<"SalesReport"> | string | null
     phone?: StringNullableFilter<"SalesReport"> | string | null
     salesman?: StringNullableFilter<"SalesReport"> | string | null
+    salesUserId?: StringNullableFilter<"SalesReport"> | string | null
     employee?: StringNullableFilter<"SalesReport"> | string | null
     items?: JsonFilter<"SalesReport">
     subtotal?: IntFilter<"SalesReport"> | number
@@ -78328,6 +78393,7 @@ export namespace Prisma {
     address?: string | null
     latitude?: number | null
     longitude?: number | null
+    posPasswordHash?: string | null
     users?: UserCreateNestedManyWithoutBranchInput
     attendances?: AttendanceCreateNestedManyWithoutBranchInput
   }
@@ -78338,6 +78404,7 @@ export namespace Prisma {
     address?: string | null
     latitude?: number | null
     longitude?: number | null
+    posPasswordHash?: string | null
     users?: UserUncheckedCreateNestedManyWithoutBranchInput
     attendances?: AttendanceUncheckedCreateNestedManyWithoutBranchInput
   }
@@ -78364,6 +78431,7 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
     users?: UserUpdateManyWithoutBranchNestedInput
     attendances?: AttendanceUpdateManyWithoutBranchNestedInput
   }
@@ -78374,6 +78442,7 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
     users?: UserUncheckedUpdateManyWithoutBranchNestedInput
     attendances?: AttendanceUncheckedUpdateManyWithoutBranchNestedInput
   }
@@ -78753,6 +78822,7 @@ export namespace Prisma {
     address?: string | null
     latitude?: number | null
     longitude?: number | null
+    posPasswordHash?: string | null
     users?: UserCreateNestedManyWithoutBranchInput
     cashSessions?: CashSessionCreateNestedManyWithoutBranchInput
   }
@@ -78763,6 +78833,7 @@ export namespace Prisma {
     address?: string | null
     latitude?: number | null
     longitude?: number | null
+    posPasswordHash?: string | null
     users?: UserUncheckedCreateNestedManyWithoutBranchInput
     cashSessions?: CashSessionUncheckedCreateNestedManyWithoutBranchInput
   }
@@ -78886,6 +78957,7 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
     users?: UserUpdateManyWithoutBranchNestedInput
     cashSessions?: CashSessionUpdateManyWithoutBranchNestedInput
   }
@@ -78896,6 +78968,7 @@ export namespace Prisma {
     address?: NullableStringFieldUpdateOperationsInput | string | null
     latitude?: NullableFloatFieldUpdateOperationsInput | number | null
     longitude?: NullableFloatFieldUpdateOperationsInput | number | null
+    posPasswordHash?: NullableStringFieldUpdateOperationsInput | string | null
     users?: UserUncheckedUpdateManyWithoutBranchNestedInput
     cashSessions?: CashSessionUncheckedUpdateManyWithoutBranchNestedInput
   }
@@ -82369,6 +82442,7 @@ export namespace Prisma {
     customer?: string | null
     phone?: string | null
     salesman?: string | null
+    salesUserId?: string | null
     employee?: string | null
     items: JsonNullValueInput | InputJsonValue
     subtotal?: number
@@ -83109,6 +83183,7 @@ export namespace Prisma {
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     salesman?: NullableStringFieldUpdateOperationsInput | string | null
+    salesUserId?: NullableStringFieldUpdateOperationsInput | string | null
     employee?: NullableStringFieldUpdateOperationsInput | string | null
     items?: JsonNullValueInput | InputJsonValue
     subtotal?: IntFieldUpdateOperationsInput | number
@@ -83141,6 +83216,7 @@ export namespace Prisma {
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     salesman?: NullableStringFieldUpdateOperationsInput | string | null
+    salesUserId?: NullableStringFieldUpdateOperationsInput | string | null
     employee?: NullableStringFieldUpdateOperationsInput | string | null
     items?: JsonNullValueInput | InputJsonValue
     subtotal?: IntFieldUpdateOperationsInput | number
@@ -83173,6 +83249,7 @@ export namespace Prisma {
     customer?: NullableStringFieldUpdateOperationsInput | string | null
     phone?: NullableStringFieldUpdateOperationsInput | string | null
     salesman?: NullableStringFieldUpdateOperationsInput | string | null
+    salesUserId?: NullableStringFieldUpdateOperationsInput | string | null
     employee?: NullableStringFieldUpdateOperationsInput | string | null
     items?: JsonNullValueInput | InputJsonValue
     subtotal?: IntFieldUpdateOperationsInput | number
