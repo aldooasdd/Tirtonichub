@@ -508,3 +508,35 @@ export async function shopeeAdsCampaigns(token: string, shopId: string, start: s
   }
   return out;
 }
+
+// ── Stok per gudang (lokasi) ──
+export type LocStock = { modelId: string; reserved: number; locations: { id: string; stock: number }[] };
+type StockV2 = { summary_info?: { total_reserved_stock?: number }; seller_stock?: { location_id?: string; stock?: number }[] };
+const locs = (s?: StockV2) => (s?.seller_stock ?? []).map((x) => ({ id: x.location_id ?? "", stock: n(x.stock) }));
+
+/** Stok penjual per lokasi gudang tiap varian 1 produk. */
+export async function shopeeLocationStock(token: string, shopId: string, itemId: string): Promise<LocStock[]> {
+  const m = await call<{ response?: { model?: { model_id: number; stock_info_v2?: StockV2 }[] } }>("/api/v2/product/get_model_list", { token, shopId, query: { item_id: itemId } });
+  const models = m.response?.model ?? [];
+  if (models.length)
+    return models.map((x) => ({ modelId: String(x.model_id), reserved: n(x.stock_info_v2?.summary_info?.total_reserved_stock), locations: locs(x.stock_info_v2) }));
+  const b = await call<{ response?: { item_list?: { stock_info_v2?: StockV2 }[] } }>("/api/v2/product/get_item_base_info", { token, shopId, query: { item_id_list: itemId } });
+  const s = b.response?.item_list?.[0]?.stock_info_v2;
+  return [{ modelId: "", reserved: n(s?.summary_info?.total_reserved_stock), locations: locs(s) }];
+}
+
+/** Nama gudang per location_id (kosong kalau toko tidak pakai multi-gudang). */
+export async function shopeeWarehouseNames(token: string, shopId: string): Promise<Map<string, string>> {
+  const j = await call<{ response?: { location_id?: string; warehouse_name?: string }[] }>("/api/v2/shop/get_warehouse_detail", { token, shopId, query: { warehouse_type: 1 } }).catch(() => null);
+  return new Map((j?.response ?? []).filter((w) => w.location_id).map((w) => [w.location_id!, w.warehouse_name ?? w.location_id!]));
+}
+
+/** Atur stok 1 varian di 1 lokasi gudang (lokasi kosong = toko tanpa multi-gudang). */
+export async function shopeeSetLocationStock(token: string, shopId: string, itemId: string, modelId: string, locationId: string, stock: number): Promise<void> {
+  await call("/api/v2/product/update_stock", {
+    method: "POST",
+    token,
+    shopId,
+    body: { item_id: Number(itemId), stock_list: [{ model_id: Number(modelId || 0), seller_stock: [{ ...(locationId ? { location_id: locationId } : {}), stock }] }] },
+  });
+}

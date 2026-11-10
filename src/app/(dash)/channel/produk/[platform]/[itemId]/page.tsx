@@ -11,6 +11,8 @@ import { loadProductGroupOf } from "@/server/marketplace/product-groups";
 import { PRODUK_KE_MARKETPLACE } from "@/lib/flags";
 import { ProductOps } from "@/components/channel/product-ops";
 import { ProdukAdmin } from "@/components/channel/produk-admin";
+import { StokGudang } from "@/components/channel/stok-gudang";
+import { bolehUbah } from "@/lib/flags";
 import { ShopeeProductPanel } from "@/components/channel/shopee-product-panel";
 
 const TAG: Record<string, string> = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600", WEBSITE: "bg-sky-500/15 text-sky-600" };
@@ -212,6 +214,14 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
             inactive: i.skuStatus === "DEACTIVATED",
           }))}
         />
+        {(sec.platform === "SHOPEE" || sec.platform === "TOKOPEDIA") && sec.rows[0] && sec.rows[0].shopId !== DEMO && (
+          <StokGudang
+            platform={sec.platform}
+            productId={sec.rows[0].itemId}
+            variants={Object.fromEntries(sec.rows.map((i) => [i.modelId, i.variant ?? i.localSku ?? i.sku ?? i.name]))}
+            editable={bolehUbah(sec.platform)}
+          />
+        )}
       </section>
       ))}
 
