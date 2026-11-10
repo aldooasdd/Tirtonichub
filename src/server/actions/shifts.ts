@@ -45,9 +45,14 @@ export async function saveShifts(ym: string, cells: Cell[]): Promise<ActionResul
   if (ops.length === 0) return { ok: true };
 
   // HR yang putuskan: aturan sales cuma peringatan, tidak menolak simpan.
-  const violation = await checkSalesRule(y, m, editByKey);
-
-  await prisma.$transaction(ops);
+  let violation: string | null = null;
+  try {
+    violation = await checkSalesRule(y, m, editByKey).catch(() => null); // peringatan gagal dihitung ≠ gagal simpan
+    await prisma.$transaction(ops);
+  } catch (e) {
+    console.error("[saveShifts]", e);
+    return { ok: false, message: `Gagal simpan: ${e instanceof Error ? e.message.slice(0, 200) : "error"}` };
+  }
 
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "shift_save", entity: "Shift", entityId: `${ym}:${ops.length}` });
