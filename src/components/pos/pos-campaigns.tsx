@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Trash2, Upload } from "lucide-react";
+import { ImagePlus, Trash2, Upload } from "lucide-react";
 import { deletePosCampaign, togglePosCampaign, uploadPosCampaign } from "@/server/actions/pos";
 
 type Campaign = { id: string; title: string; url: string; isVideo: boolean; branch: string; active: boolean };
@@ -79,7 +79,12 @@ export function PosCampaigns({ campaigns, branches }: { campaigns: Campaign[]; b
             <p className="text-muted-foreground">Gambar JPG / PNG / WebP maks 5 MB · Video MP4 maks 20 MB (tanpa suara).</p>
             <p className="text-muted-foreground">Taruh teks & logo penting minimal 60 px dari tepi.</p>
           </div>
-          <input type="file" accept="image/jpeg,image/png,image/webp,video/mp4" onChange={(e) => choose(e.target.files?.[0] ?? null)} className="block text-14" />
+          <label className="flex cursor-pointer items-center gap-3 rounded-md border-2 border-dashed px-4 py-3 hover:border-foreground">
+            <ImagePlus className="h-5 w-5 shrink-0" />
+            <span className="min-w-0 flex-1 truncate text-14">{file ? file.name : "Pilih foto / video campaign"}</span>
+            <span className="rounded-md bg-primary px-3 py-1.5 text-14 font-semibold text-primary-foreground">{file ? "Ganti" : "Pilih file"}</span>
+            <input type="file" accept="image/jpeg,image/png,image/webp,video/mp4" onChange={(e) => choose(e.target.files?.[0] ?? null)} className="hidden" />
+          </label>
           <input value={title} onChange={(e) => setTitle(e.target.value)} placeholder="Judul campaign (mis. Promo Senar November)" className="h-10 w-full rounded-md border px-3 text-14" />
           <select value={branchId} onChange={(e) => setBranchId(e.target.value)} className="h-10 w-full rounded-md border px-3 text-14">
             <option value="">Semua cabang</option>
@@ -91,14 +96,20 @@ export function PosCampaigns({ campaigns, branches }: { campaigns: Campaign[]; b
           </button>
         </div>
         <div className="space-y-1.5">
-          <div className="aspect-[16/10] overflow-hidden rounded-md bg-[#1a1a1a]">
+          <label className="relative block aspect-[16/10] cursor-pointer overflow-hidden rounded-md bg-[#1a1a1a]">
+            <input type="file" accept="image/jpeg,image/png,image/webp,video/mp4" onChange={(e) => choose(e.target.files?.[0] ?? null)} className="hidden" />
+            {!preview && (
+              <span className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-14 text-white/70">
+                <ImagePlus className="h-8 w-8" /> Klik untuk pilih foto / video
+              </span>
+            )}
             {preview && (file?.type.startsWith("video/") ? (
               <video src={preview} muted autoPlay loop playsInline className="h-full w-full object-cover" />
             ) : (
               // eslint-disable-next-line @next/next/no-img-element -- pratinjau lokal
               <img src={preview} alt="" className="h-full w-full object-cover" />
             ))}
-          </div>
+          </label>
           <p className={`text-12 ${ratioOk ? "text-muted-foreground" : "text-warning"}`}>
             {size ? `File: ${size} px${ratioOk ? " · pas 16:10" : " · bukan 16:10, tepi akan terpotong"}` : "Pratinjau tampilan di layar pembeli"}
           </p>
