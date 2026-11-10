@@ -143,6 +143,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
       icon: Store,
       items: [
         { label: "Kelola Pesanan", href: "/channel", icon: Store },
+        { label: "Tirtonic POS", href: "/channel/pos", icon: ShoppingCart },
         { label: "Produk Master", href: "/channel/produk", icon: Boxes },
         { label: "Settlement Marketplace", href: "/channel/dana", icon: Wallet },
         { label: "Saldo Shopee", href: "/channel/saldo-shopee", icon: Wallet },
