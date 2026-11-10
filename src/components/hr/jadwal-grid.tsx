@@ -58,7 +58,10 @@ export function JadwalGrid({
     });
     start(async () => {
       // Halaman dibuka sebelum deploy baru → server action lama hilang, lempar error.
-      const r = await saveShifts(ym, payload).catch(() => ({ ok: false, message: "Gagal simpan. Muat ulang halaman (Ctrl+R) lalu coba lagi." }));
+      const r = await saveShifts(ym, payload).catch((e: unknown) => ({
+        ok: false,
+        message: `Gagal simpan (${e instanceof Error ? e.message.slice(0, 120) : "koneksi"}). Muat ulang halaman (Ctrl+R) lalu coba lagi.`,
+      }));
       if (!r.ok) {
         setMsg(r.message ?? "Gagal simpan.");
         return;
