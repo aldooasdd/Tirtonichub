@@ -81,8 +81,18 @@ export function ItemTable({ rows }: { rows: ItemRow[] }) {
                     value={sku[r.id]}
                     onChange={(e) => setSku({ ...sku, [r.id]: e.target.value })}
                     onBlur={() => saveSku(r)}
-                    onKeyDown={(e) => e.key === "Enter" && e.currentTarget.blur()}
-                    placeholder="-"
+                    // Scanner barcode (seperti QC) mengetik kode lalu Enter → simpan & lompat ke baris berikutnya.
+                    onKeyDown={(e) => {
+                      if (e.key !== "Enter") return;
+                      e.preventDefault();
+                      const all = [...document.querySelectorAll<HTMLInputElement>("input[data-sku]")];
+                      const next = all[all.indexOf(e.currentTarget) + 1];
+                      if (next) next.focus();
+                      else e.currentTarget.blur();
+                    }}
+                    onFocus={(e) => e.currentTarget.select()}
+                    data-sku
+                    placeholder="Scan / ketik SKU"
                     aria-label={`SKU ${r.name}`}
                     title="Ubah SKU (hanya di Tirtonichub). Kosongkan untuk kembali ke SKU marketplace."
                     className="h-9 w-36 rounded-md border bg-background px-2 font-mono text-12"
