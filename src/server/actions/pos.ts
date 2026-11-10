@@ -59,14 +59,14 @@ export type PosProduct = { sku: string; name: string; price: number; stock: numb
 
 // Harga toko: pakai listing Tirtonic.com dulu, lalu Tokopedia, Shopee.
 const RANK: Record<string, number> = { WEBSITE: 0, TOKOPEDIA: 1, SHOPEE: 2 };
-type Item = { platform: string; name: string; localName: string | null; variant: string | null; sku: string | null; localSku: string | null; price: number; stock: number };
+type Item = { platform: string; itemId?: string; name: string; localName: string | null; variant: string | null; sku: string | null; localSku: string | null; price: number; stock: number };
 const toProduct = (it: Item): PosProduct => ({
   sku: it.localSku ?? it.sku ?? "",
   name: it.localName ? `${it.localName}${it.variant ? ` - ${it.variant}` : ""}` : it.name,
   price: it.price,
   stock: it.stock,
 });
-const best = (items: Item[]) => [...items].sort((a, b) => (RANK[a.platform] ?? 9) - (RANK[b.platform] ?? 9))[0];
+const best = <T extends Item>(items: T[]): T => [...items].sort((a, b) => (RANK[a.platform] ?? 9) - (RANK[b.platform] ?? 9))[0];
 
 async function requireBranch() {
   const b = await getPosBranch();
@@ -88,29 +88,29 @@ export async function posLookup(code: string): Promise<PosProduct | null> {
   return items.length ? toProduct(best(items)) : null;
 }
 
-/** Cari manual (cadangan bila label rusak / SKU tak terbaca). */
-export async function posSearch(q: string): Promise<PosProduct[]> {
+/** Katalog ringkas untuk kasir: dimuat sekali, dicari & dicocokkan SKU di perangkat (tanpa bolak-balik server). */
+export type PosCatalogItem = PosProduct & { variant: string | null; img: string | null };
+export async function posCatalog(): Promise<PosCatalogItem[]> {
   await requireBranch();
-  const t = q.trim();
-  if (t.length < 2) return [];
-  const items = await prisma.marketplaceItem.findMany({
-    where: {
-      deletedAt: null,
-      OR: [
-        { name: { contains: t, mode: "insensitive" } },
-        { localName: { contains: t, mode: "insensitive" } },
-        { sku: { contains: t, mode: "insensitive" } },
-        { localSku: { contains: t, mode: "insensitive" } },
-      ],
-    },
-    take: 150,
-  });
-  const bySku = new Map<string, Item[]>();
+  const [items, details] = await Promise.all([
+    prisma.marketplaceItem.findMany({
+      where: { deletedAt: null, OR: [{ localSku: { not: null } }, { sku: { not: null } }] },
+      select: { platform: true, itemId: true, name: true, localName: true, variant: true, sku: true, localSku: true, price: true, stock: true, image: true },
+    }),
+    prisma.marketplaceProduct.findMany({ select: { platform: true, productId: true, images: true } }),
+  ]);
+  const cover = new Map(details.map((d) => [`${d.platform}:${d.productId}`, ((d.images as string[] | null) ?? [])[0] ?? null]));
+  const bySku = new Map<string, (typeof items)[number][]>();
   for (const it of items) {
-    const k = (it.localSku ?? it.sku ?? "").toLowerCase();
+    const k = (it.localSku ?? it.sku ?? "").trim().toLowerCase();
     if (k) (bySku.get(k) ?? bySku.set(k, []).get(k)!).push(it);
   }
-  return [...bySku.values()].map((v) => toProduct(best(v))).slice(0, 30);
+  return [...bySku.values()]
+    .map((v) => {
+      const b = best(v);
+      return { ...toProduct(b), variant: b.variant, img: v.find((x) => x.image)?.image ?? cover.get(`${b.platform}:${b.itemId}`) ?? null };
+    })
+    .sort((a, b) => a.name.localeCompare(b.name));
 }
 
 // ---------- Simpan transaksi ----------
