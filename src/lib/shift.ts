@@ -1,5 +1,5 @@
 // Kode shift jadwal kerja (dari PDF Jadwal Tirtonic). Jam bisa diubah HR nanti.
-export type ShiftCode = "P" | "S" | "OH" | "LONG" | "O" | "WFH" | "CUTI" | "SAKIT" | "IZIN";
+export type ShiftCode = "P" | "S" | "PA" | "SA" | "OH" | "LONG" | "O" | "WFH" | "CUTI" | "SAKIT" | "IZIN";
 
 export type ShiftDef = {
   label: string;
@@ -12,6 +12,8 @@ export type ShiftDef = {
 export const SHIFTS: Record<ShiftCode, ShiftDef> = {
   P: { label: "Pagi 08.30–15.30", start: "08:30", end: "15:30", working: true, cls: "bg-emerald-600 text-white" },
   S: { label: "Siang 14.00–21.00", start: "14:00", end: "21:00", working: true, cls: "bg-sky-600 text-white" },
+  PA: { label: "Pagi 08.00–15.00", start: "08:00", end: "15:00", working: true, cls: "bg-teal-600 text-white" },
+  SA: { label: "Siang 14.00–21.00 (SA)", start: "14:00", end: "21:00", working: true, cls: "bg-cyan-700 text-white" },
   OH: { label: "Office 10.00–17.00", start: "10:00", end: "17:00", working: true, cls: "bg-violet-600 text-white" },
   LONG: { label: "Long 08.30–21.00", start: "08:30", end: "21:00", working: true, cls: "bg-indigo-700 text-white" },
   O: { label: "Libur", working: false, cls: "bg-red-600 text-white" },
@@ -21,7 +23,7 @@ export const SHIFTS: Record<ShiftCode, ShiftDef> = {
   IZIN: { label: "Izin", working: false, cls: "bg-pink-600 text-white" },
 };
 
-// Urutan klik sel: kosong → P → S → OH → O → WFH → CUTI → SAKIT → IZIN → kosong.
-export const SHIFT_ORDER: ShiftCode[] = ["P", "S", "OH", "LONG", "O", "WFH", "CUTI", "SAKIT", "IZIN"];
+// Urutan klik sel: kosong → P → S → PA → SA → OH → O → WFH → CUTI → SAKIT → IZIN → kosong.
+export const SHIFT_ORDER: ShiftCode[] = ["P", "S", "PA", "SA", "OH", "LONG", "O", "WFH", "CUTI", "SAKIT", "IZIN"];
 
 export const isShiftCode = (v: string): v is ShiftCode => (SHIFT_ORDER as string[]).includes(v);
