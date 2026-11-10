@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/server/db";
-import { requireChannel } from "@/server/auth/rbac";
+import { requireProduk } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { activeShop, fresh, DEMO } from "@/server/marketplace/sync";
@@ -12,7 +12,7 @@ type Res<T = undefined> = { ok: boolean; message?: string; data?: T };
 const errMsg = (e: unknown) => (e instanceof Error ? e.message : "Gagal.");
 
 async function run<T>(action: string, id: string, after: object, fn: (c: { token: string; shopId: string }) => Promise<T>, okMsg: string, path: string): Promise<Res<T>> {
-  const ctx = await requireChannel();
+  const ctx = await requireProduk();
   try {
     const shop = await activeShop("SHOPEE");
     if (!shop || shop.shopId === DEMO) throw new Error("Toko Shopee belum tersambung.");

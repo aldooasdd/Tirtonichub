@@ -174,6 +174,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Quality Control", href: "/stok/qc", icon: ClipboardCheck },
         { label: "Report Penjualan", href: "/stok/report-penjualan", icon: AlertCircle },
         { label: "Stok", href: "/stok", icon: Boxes },
+        ...(CHANNEL_ROLES.includes(role) ? [] : [{ label: "Produk Master", href: "/channel/produk", icon: Boxes }]),
       ],
     });
   }

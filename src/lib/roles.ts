@@ -43,6 +43,8 @@ export const ADMIN_ROLES: RoleCode[] = ["BOSS", "ADMIN"];
 export const ORDER_SPECIALIST_ROLES: RoleCode[] = ["BOSS", "ADMIN", "ORDER_SPECIALIST"];
 /** Tirtonic Channel: kelola toko Shopee & Tokopedia dari dashboard. HR & Order Specialist ikut lihat (2026-11-09). */
 export const CHANNEL_ROLES: RoleCode[] = ["BOSS", "ADMIN", "CHANNEL", "HR", "ORDER_SPECIALIST"];
+/** Produk Master: Channel + Stock Room (2026-11-10). Samakan dengan PRODUK_ROLES di server/auth/permissions.ts. */
+export const PRODUK_ROLES: RoleCode[] = [...CHANNEL_ROLES, "STOCK_ROOM"];
 /** Kepala Cabang: ACC penjualan offline cabang sebelum masuk Finance. */
 export const HEAD_BRANCH_ROLES: RoleCode[] = ["BOSS", "ADMIN", "HEAD_BRANCH"];
 

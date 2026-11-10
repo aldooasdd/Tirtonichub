@@ -3,7 +3,7 @@
 // Produk Master: edit nama & SKU + Sampah. Semua LOKAL di Tirtonichub — tidak dikirim ke marketplace.
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/server/db";
-import { requireChannel } from "@/server/auth/rbac";
+import { requireProduk } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { loadProductGroupOf } from "@/server/marketplace/product-groups";
@@ -24,13 +24,13 @@ async function groupWhere(platform: string, itemId: string, trash: boolean) {
 }
 
 async function log(action: string, entityId: string, after: object) {
-  const ctx = await requireChannel();
+  const ctx = await requireProduk();
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action, entity: "MarketplaceItem", entityId, after });
 }
 
 export async function renameProduct(platform: string, itemId: string, name: string): Promise<Res> {
-  await requireChannel();
+  await requireProduk();
   const n = name.replace(/\s+/g, " ").trim();
   if (n.length < 3) return { ok: false, message: "Nama minimal 3 huruf." };
   if (n.length > 255) return { ok: false, message: "Nama maksimal 255 huruf." };
@@ -60,7 +60,7 @@ export async function renameProduct(platform: string, itemId: string, name: stri
 }
 
 export async function setItemSku(id: string, sku: string): Promise<Res> {
-  await requireChannel();
+  await requireProduk();
   const it = await prisma.marketplaceItem.findUnique({ where: { id } });
   if (!it) return { ok: false, message: "Varian tidak ditemukan." };
   const s = sku.trim().slice(0, 100);
@@ -72,7 +72,7 @@ export async function setItemSku(id: string, sku: string): Promise<Res> {
 }
 
 export async function trashProduct(platform: string, itemId: string): Promise<Res> {
-  await requireChannel();
+  await requireProduk();
   const where = await groupWhere(platform, itemId, false);
   await prisma.marketplaceItem.updateMany({ where, data: { deletedAt: new Date() } });
   await log("produk_trash", `${platform}:${itemId}`, {});
@@ -81,7 +81,7 @@ export async function trashProduct(platform: string, itemId: string): Promise<Re
 }
 
 export async function restoreProduct(platform: string, itemId: string): Promise<Res> {
-  await requireChannel();
+  await requireProduk();
   const where = await groupWhere(platform, itemId, true);
   await prisma.marketplaceItem.updateMany({ where, data: { deletedAt: null } });
   await log("produk_restore", `${platform}:${itemId}`, {});
@@ -91,7 +91,7 @@ export async function restoreProduct(platform: string, itemId: string): Promise<
 
 /** Tombol "Export ke Web" per produk di Produk Master: kirim 1 produk Tokopedia ke tirtonic.com. */
 export async function pushProductToWeb(itemId: string): Promise<Res> {
-  await requireChannel();
+  await requireProduk();
   const r = await pushTokopediaToWebCore([itemId]);
   if (r.total === 0) return { ok: false, message: "Produk Tokopedia tidak ditemukan / nonaktif." };
   if (r.total > 0) await log("produk_ke_web", `TOKOPEDIA:${itemId}`, { created: r.created, updated: r.updated });

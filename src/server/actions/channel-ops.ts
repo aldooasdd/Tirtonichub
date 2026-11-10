@@ -1,7 +1,7 @@
 "use server";
 
 import { prisma } from "@/server/db";
-import { requireChannel } from "@/server/auth/rbac";
+import { requireChannel, requireProduk } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { DEMO, mustShop } from "@/server/marketplace/sync";
@@ -33,8 +33,8 @@ async function log(action: string, entityId: string, after?: unknown) {
   await logActivity({ ...c, ip }, { action, entity: "MarketplaceOrder", entityId, after: after as never });
 }
 
-async function run<T>(fn: () => Promise<T>): Promise<Res<T>> {
-  await requireChannel();
+async function run<T>(fn: () => Promise<T>, guard: () => Promise<unknown> = requireChannel): Promise<Res<T>> {
+  await guard();
   try {
     return { ok: true, data: await fn() };
   } catch (e) {
@@ -148,11 +148,11 @@ export async function productSetActive(productId: string, active: boolean) {
     await ops.setProductsActive(await ctx(), [productId], active, !!p?.tokoStatus);
     const status = active ? "ACTIVATE" : "SELLER_DEACTIVATED";
     if (p) await prisma.marketplaceProduct.update({ where: { id: p.id }, data: { status, ...(p.tokoStatus ? { tokoStatus: status } : {}) } });
-    const c = await requireChannel();
+    const c = await requireProduk();
     const { ip } = await clientMeta();
     await logActivity({ ...c, ip }, { action: active ? "channel_product_activate" : "channel_product_deactivate", entity: "MarketplaceProduct", entityId: productId });
     return undefined;
-  });
+  }, requireProduk);
 }
 
 /** Stok per gudang 1 produk (+ nama gudang). */
@@ -162,7 +162,7 @@ export async function productStock(productId: string) {
     const [inv, whs] = await Promise.all([ops.inventory(c, [productId]), ops.warehouses(c).catch(() => [])]);
     const name = new Map(whs.map((w) => [w.id, w.name]));
     return inv.map((s) => ({ ...s, warehouses: s.warehouses.map((w) => ({ ...w, name: name.get(w.id) ?? w.id })) }));
-  });
+  }, requireProduk);
 }
 
 export async function warehouseOptions(warehouseId: string) {

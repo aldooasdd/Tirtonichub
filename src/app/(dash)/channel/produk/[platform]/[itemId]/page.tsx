@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ChevronLeft, ExternalLink, Pencil } from "lucide-react";
-import { requireChannel } from "@/server/auth/rbac";
+import { requireProduk } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
 import { productStatus } from "@/lib/channel-status";
@@ -45,7 +45,7 @@ function Info({ label, children }: { label: string; children: React.ReactNode })
 
 /** Detail Produk Master: semua data produk dari marketplace + varian (ubah stok/harga). */
 export default async function ProdukDetailPage({ params }: { params: Promise<{ platform: string; itemId: string }> }) {
-  await requireChannel();
+  await requireProduk();
   const { platform, itemId } = await params;
   const [items, d, group] = await Promise.all([
     prisma.marketplaceItem.findMany({ where: { platform, itemId }, orderBy: [{ variant: "asc" }, { name: "asc" }] }),
