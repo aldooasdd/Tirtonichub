@@ -1,32 +1,10 @@
 import { requireStock } from "@/server/auth/rbac";
-import { prisma } from "@/server/db";
-import { userNames } from "@/server/user-names";
-import { fmtWIB } from "@/lib/datetime";
 import { ReportList } from "@/components/sales/report-list";
-import { REPORT_LABEL, type ReportCategory } from "@/lib/sales-report";
+import { loadSalesReports } from "@/server/sales-report-list";
 
-export default async function StokReportPenjualanPage() {
+export default async function StokReportPenjualanPage({ searchParams }: { searchParams: Promise<{ s?: string }> }) {
   await requireStock();
-  const rows = await prisma.salesReport.findMany({
-    where: { reportAt: { not: null }, reportResolvedAt: null, reportCategory: { in: ["TENAGA_PENJUAL", "STOK"] } },
-    orderBy: { reportAt: "desc" },
-    take: 200,
-    include: { createdBy: { select: { fullName: true } } },
-  });
-
-  const nameOf = await userNames(rows.map((r) => r.reportById));
-  const list = rows.map((r) => ({
-    id: r.id,
-    soldAt: fmtWIB(r.soldAt),
-    grandTotal: r.grandTotal,
-    label: REPORT_LABEL[r.reportCategory as ReportCategory] ?? r.reportCategory ?? "-",
-    note: r.reportNote || "-",
-    branch: r.branchName || "-",
-    salesman: r.salesman || "-",
-    by: r.createdBy.fullName,
-    reporter: nameOf(r.reportById),
-    photoKey: r.photoKey,
-  }));
-
-  return <ReportList rows={list} title="Report Penjualan (Stok)" desc="Salah-input tenaga penjual & stok. Perbaikan oleh Kepala Cabang." />;
+  const done = (await searchParams).s === "selesai";
+  const { rows, open } = await loadSalesReports(["TENAGA_PENJUAL", "STOK"], done);
+  return <ReportList rows={rows} open={open} done={done} href="/stok/report-penjualan" title="Report Penjualan (Stok)" desc="Salah-input tenaga penjual & stok. Perbaikan oleh Kepala Cabang (menu Cabang → Approval Penjualan)." />;
 }

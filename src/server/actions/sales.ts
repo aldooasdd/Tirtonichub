@@ -218,7 +218,8 @@ export async function approveOnlineSales(id: string): Promise<ActionResult> {
   if (rep.approvedAt) return { ok: false, message: "Sudah disetujui." };
 
   // Online tak punya Kepala Cabang; ACC Order Specialist sekalian tutup report yang terbuka.
-  await prisma.salesReport.update({ where: { id }, data: { approvedAt: new Date(), approvedById: ctx.userId, reportResolvedAt: new Date() } });
+  // Report salah-input tetap terbuka sampai dibenarkan Kepala Cabang (dulu ikut tertutup diam-diam saat ACC).
+  await prisma.salesReport.update({ where: { id }, data: { approvedAt: new Date(), approvedById: ctx.userId } });
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "sales_online_approve", entity: "SalesReport", entityId: id });
   await notifyBosses({
