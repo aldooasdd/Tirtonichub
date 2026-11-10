@@ -50,7 +50,7 @@ export function CabangClient({ branches }: { branches: Row[] }) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-24 font-semibold">Cabang</h1>
+        <h2 className="text-16 font-semibold">Kelola cabang</h2>
         <Button
           onClick={() => {
             setEditing(null);

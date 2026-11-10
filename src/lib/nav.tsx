@@ -85,7 +85,6 @@ export function navForRole(role: RoleCode): NavGroup[] {
       icon: Users,
       items: [
         { label: "Karyawan", href: "/hr/karyawan", icon: Users },
-        { label: "Cabang", href: "/hr/cabang", icon: Building2 },
         { label: "Jadwal Kerja", href: "/hr/jadwal", icon: CalendarClock },
         ...(ABSEN_ON ? [{ label: "Rekap Absen", href: "/hr/rekap", icon: ClipboardList }] : []),
         { label: "Pengajuan Masuk", href: "/hr/approval", icon: CheckSquare },

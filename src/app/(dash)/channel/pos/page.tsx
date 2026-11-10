@@ -3,6 +3,7 @@ import { requireChannel } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
 import { PosPassword } from "@/components/pos/pos-password";
+import { CabangClient } from "@/components/pos/cabang-client";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(Math.round(n));
 const wibDate = (d: Date) => new Date(d.getTime() + 7 * 3600_000).toISOString().slice(0, 10);
@@ -59,7 +60,7 @@ export default async function PosDashboardPage({ searchParams }: { searchParams:
 
   const [sales, branches] = await Promise.all([
     prisma.salesReport.findMany({ where: { photoKey: "", soldAt: { gte: from } }, orderBy: { soldAt: "desc" } }),
-    prisma.branch.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true, posPasswordHash: true } }),
+    prisma.branch.findMany({ orderBy: { name: "asc" }, include: { _count: { select: { users: true } } } }),
   ]);
 
   const omzet = sales.reduce((n, s) => n + s.grandTotal, 0);
@@ -161,6 +162,10 @@ export default async function PosDashboardPage({ searchParams }: { searchParams:
           status(s),
           rupiah(s.grandTotal),
         ])}
+      />
+
+      <CabangClient
+        branches={branches.map((b) => ({ id: b.id, name: b.name, address: b.address, latitude: b.latitude, longitude: b.longitude, userCount: b._count.users }))}
       />
     </div>
   );
