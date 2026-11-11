@@ -190,7 +190,7 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
         return sh && sh.rows[0]?.shopId !== DEMO ? <ShopeeProductPanel itemId={sh.itemId} name={title} unlisted={sh.rows.every((r) => r.skuStatus === "DEACTIVATED")} /> : null;
       })()}
 
-      {[{ platform, rows: items }, ...others.map((l) => ({ platform: l.platform, rows: otherItems.filter((i) => i.platform === l.platform && i.itemId === l.itemId) }))].map((sec, n) => (
+      {[{ platform, rows: items.filter((i) => deleted || !i.deletedAt) }, ...others.map((l) => ({ platform: l.platform, rows: otherItems.filter((i) => !i.deletedAt && i.platform === l.platform && i.itemId === l.itemId) }))].map((sec, n) => (
       <section key={`${sec.platform}-${n}`} className="space-y-2">
         <h2 className="text-18 font-semibold">
           {listings.length > 1 ? (

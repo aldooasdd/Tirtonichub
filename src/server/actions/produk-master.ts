@@ -80,6 +80,16 @@ export async function trashProduct(platform: string, itemId: string): Promise<Re
   return { ok: true, message: "Produk dipindah ke Sampah." };
 }
 
+/** Hapus 1 varian dobel dari Tirtonichub saja (marketplace tak diubah). Sync tak memulihkan; pulihkan lewat Sampah. */
+export async function trashVariant(id: string): Promise<Res> {
+  await requireProduk();
+  const it = await prisma.marketplaceItem.update({ where: { id }, data: { deletedAt: new Date() } }).catch(() => null);
+  if (!it) return { ok: false, message: "Varian tidak ditemukan." };
+  await log("produk_trash_varian", id, { platform: it.platform, itemId: it.itemId, variant: it.variant ?? it.name });
+  revalidatePath("/channel/produk");
+  return { ok: true, message: "Varian dipindah ke Sampah." };
+}
+
 export async function restoreProduct(platform: string, itemId: string): Promise<Res> {
   await requireProduk();
   const where = await groupWhere(platform, itemId, true);
