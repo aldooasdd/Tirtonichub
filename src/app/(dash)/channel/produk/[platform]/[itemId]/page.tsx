@@ -6,7 +6,7 @@ import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
 import { productStatus } from "@/lib/channel-status";
 import { DEMO, PLATFORM_LABEL } from "@/server/marketplace/sync";
-import { ItemTable } from "@/components/channel/item-table";
+import { ItemTable, TrashListingButton } from "@/components/channel/item-table";
 import { loadProductGroupOf } from "@/server/marketplace/product-groups";
 import { PRODUK_KE_MARKETPLACE } from "@/lib/flags";
 import { ProductOps } from "@/components/channel/product-ops";
@@ -196,6 +196,7 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
           {listings.length > 1 ? (
             <>
               Harga & stok di <span className={`rounded px-1.5 py-0.5 text-14 ${TAG[sec.platform] ?? "bg-muted"}`}>{PLATFORM_LABEL[sec.platform as keyof typeof PLATFORM_LABEL] ?? sec.platform}</span> ({sec.rows.length} varian)
+              {sec.rows[0] && <TrashListingButton platform={sec.platform} itemId={sec.rows[0].itemId} count={sec.rows.length} />}
             </>
           ) : (
             <>Varian ({sec.rows.length})</>
