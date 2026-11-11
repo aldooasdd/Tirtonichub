@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { updateChannelItem } from "@/server/actions/channel";
-import { setItemSku, trashVariant } from "@/server/actions/produk-master";
+import { setItemSku, trashListing, trashVariant } from "@/server/actions/produk-master";
 import { Trash2 } from "lucide-react";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
 import { bolehUbah } from "@/lib/flags";
@@ -164,5 +164,28 @@ export function ItemTable({ rows }: { rows: ItemRow[] }) {
         </tbody>
       </table>
     </div>
+  );
+}
+
+/** Tombol di judul "Harga & stok di …": hapus semua varian listing ini sekaligus. */
+export function TrashListingButton({ platform, itemId, count }: { platform: string; itemId: string; count: number }) {
+  const router = useRouter();
+  const [pending, start] = useTransition();
+  return (
+    <button
+      type="button"
+      disabled={pending || count === 0}
+      onClick={() =>
+        confirm(`Hapus semua ${count} varian ${TOKO[platform] ?? platform} ini dari Tirtonichub? Di marketplace tidak ikut terhapus. Bisa dipulihkan dari Sampah.`) &&
+        start(async () => {
+          const r = await trashListing(platform, itemId).catch(() => ({ ok: false, message: "Gagal. Muat ulang halaman." }));
+          if (!r.ok) alert(r.message);
+          router.refresh();
+        })
+      }
+      className="ml-2 inline-flex items-center gap-1 rounded-md border px-2 py-1 align-middle text-14 font-normal text-muted-foreground hover:border-destructive hover:text-destructive disabled:opacity-40"
+    >
+      <Trash2 className="size-4" /> {pending ? "Menghapus…" : "Hapus semua"}
+    </button>
   );
 }

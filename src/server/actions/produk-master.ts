@@ -90,6 +90,15 @@ export async function trashVariant(id: string): Promise<Res> {
   return { ok: true, message: "Varian dipindah ke Sampah." };
 }
 
+/** Hapus semua varian 1 listing (mis. listing lama dobel) dari Tirtonichub saja. Pulihkan lewat Sampah. */
+export async function trashListing(platform: string, itemId: string): Promise<Res> {
+  await requireProduk();
+  const { count } = await prisma.marketplaceItem.updateMany({ where: { platform, itemId, deletedAt: null }, data: { deletedAt: new Date() } });
+  await log("produk_trash_listing", `${platform}:${itemId}`, { count });
+  revalidatePath("/channel/produk");
+  return { ok: true, message: `${count} varian dipindah ke Sampah.` };
+}
+
 export async function restoreProduct(platform: string, itemId: string): Promise<Res> {
   await requireProduk();
   const where = await groupWhere(platform, itemId, true);
