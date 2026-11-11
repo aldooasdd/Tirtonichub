@@ -3,7 +3,8 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { updateChannelItem } from "@/server/actions/channel";
-import { setItemSku } from "@/server/actions/produk-master";
+import { setItemSku, trashVariant } from "@/server/actions/produk-master";
+import { Trash2 } from "lucide-react";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
 import { bolehUbah } from "@/lib/flags";
 
@@ -36,6 +37,15 @@ export function ItemTable({ rows }: { rows: ItemRow[] }) {
       const res = await updateChannelItem(r.id, Number(d.stock) || 0, d.price).catch(() => ({ ok: false, message: "Gagal. Muat ulang halaman." }));
       setMsg((m) => ({ ...m, [r.id]: { ok: res.ok, text: res.message ?? (res.ok ? "Tersimpan." : "Gagal.") } }));
       if (res.ok) router.refresh();
+    });
+  }
+
+  function trash(r: ItemRow) {
+    if (!confirm(`Hapus varian "${r.name}" dari Tirtonichub? Di marketplace tidak ikut terhapus. Bisa dipulihkan dari Sampah.`)) return;
+    start(async () => {
+      const res = await trashVariant(r.id).catch(() => ({ ok: false, message: "Gagal. Muat ulang halaman." }));
+      if (!res.ok) return setMsg((m) => ({ ...m, [r.id]: { ok: false, text: res.message ?? "Gagal." } }));
+      router.refresh();
     });
   }
 
@@ -74,6 +84,16 @@ export function ItemTable({ rows }: { rows: ItemRow[] }) {
                       {r.name}
                       {r.inactive && <span className="ml-1 text-12 text-muted-foreground">(nonaktif)</span>}
                     </span>
+                    <button
+                      type="button"
+                      onClick={() => trash(r)}
+                      disabled={pending}
+                      title="Hapus varian (dobel)"
+                      aria-label={`Hapus varian ${r.name}`}
+                      className="shrink-0 rounded-md p-1.5 text-muted-foreground hover:bg-destructive/10 hover:text-destructive disabled:opacity-40"
+                    >
+                      <Trash2 className="size-4" />
+                    </button>
                   </span>
                 </td>
                 <td className="p-3">
