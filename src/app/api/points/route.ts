@@ -68,6 +68,26 @@ export async function GET(req: NextRequest) {
   if (!secret || req.headers.get("x-points-secret") !== secret) {
     return new Response("Unauthorized", { status: 401 });
   }
+  // Mode all: semua nota final per nomor (dashboard Member tirtonic.com: daftar, tier, belanja, cabang).
+  // ponytail: kirim semua nota sejak SINCE sekaligus; paginate kalau sudah puluhan ribu nota.
+  if (req.nextUrl.searchParams.get("all") === "1") {
+    const all = await prisma.salesReport.findMany({
+      where: { approvedAt: { not: null }, soldAt: { gte: SINCE } },
+      select: { soldAt: true, grandTotal: true, phone: true, customer: true, branchName: true },
+      orderBy: { soldAt: "asc" },
+    });
+    const members: Record<string, { name: string | null; rows: { soldAt: Date; grandTotal: number; branchName: string | null }[] }> = {};
+    for (const r of all) {
+      // nomor bisa ada di kolom phone atau (nota lama) di kolom customer
+      const p = normPhone(r.phone) ?? normPhone(r.customer);
+      if (!p) continue;
+      const m = (members[p] ??= { name: null, rows: [] });
+      if (r.customer && !normPhone(r.customer)) m.name = r.customer.trim();
+      m.rows.push({ soldAt: r.soldAt, grandTotal: r.grandTotal, branchName: r.branchName });
+    }
+    return Response.json({ since: SINCE.toISOString(), members });
+  }
+
   const phone = normPhone(req.nextUrl.searchParams.get("phone"));
   if (!phone) return Response.json(emptyPayload());
 
