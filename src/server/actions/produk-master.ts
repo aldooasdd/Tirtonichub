@@ -12,6 +12,7 @@ import { DEMO, PLATFORM_LABEL, activeShop, fresh } from "@/server/marketplace/sy
 import { updateItem as updateShopeeItem } from "@/server/marketplace/shopee-product";
 import { partialEditProduct } from "@/server/marketplace/tiktok-product";
 import { bolehUbah } from "@/lib/flags";
+import { pushSkus } from "@/server/marketplace/push-sku";
 import { pushTokopediaToWebCore } from "@/server/marketplace/website-import";
 
 type Res = { ok: boolean; message?: string };
@@ -67,8 +68,11 @@ export async function setItemSku(id: string, sku: string): Promise<Res> {
   // Kosong / sama dengan SKU marketplace → kembali pakai SKU asli.
   const localSku = !s || s === it.sku ? null : s;
   await prisma.marketplaceItem.update({ where: { id }, data: { localSku } });
-  await log("produk_sku", id, { sku: localSku ?? it.sku });
-  return { ok: true, message: "SKU tersimpan." };
+  // Live: SKU ikut dikirim ke Shopee / Tokopedia (kosong = tidak dikirim).
+  const push = s && s !== it.sku && it.platform !== "WEBSITE" ? await pushSkus([{ id, sku: s }]) : null;
+  await log("produk_sku", id, { sku: localSku ?? it.sku, push });
+  if (push?.fail.length) return { ok: false, message: `SKU tersimpan di Tirtonichub, gagal ke marketplace: ${push.fail[0]}` };
+  return { ok: true, message: push?.sent ? `SKU tersimpan & terkirim ke ${PLATFORM_LABEL[it.platform as keyof typeof PLATFORM_LABEL]}.` : "SKU tersimpan." };
 }
 
 export async function trashProduct(platform: string, itemId: string): Promise<Res> {

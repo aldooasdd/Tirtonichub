@@ -8,6 +8,7 @@ import { prisma } from "@/server/db";
 import { requireProduk } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
+import { pushSkus } from "@/server/marketplace/push-sku";
 
 import { SKU_COLS } from "@/lib/sku-cols";
 export type SkuChange = { id: string; nama: string; acc: string; from: string; to: string };
@@ -60,8 +61,12 @@ export async function applySkuImport(list: { id: string; to: string }[]): Promis
       return prisma.marketplaceItem.update({ where: { id: it.id }, data: { localSku: !s || s === it.sku ? null : s } });
     }),
   );
+  // Live: kirim ke Shopee / Tokopedia (yang SKU-nya tidak kosong).
+  const push = await pushSkus(items.map((it) => ({ id: it.id, sku: to.get(it.id)! })).filter((x) => x.sku));
   const { ip } = await clientMeta();
-  await logActivity({ ...ctx, ip }, { action: "produk_sku_import", entity: "MarketplaceItem", entityId: "bulk", after: { count: items.length } });
+  await logActivity({ ...ctx, ip }, { action: "produk_sku_import", entity: "MarketplaceItem", entityId: "bulk", after: { count: items.length, sent: push.sent, fail: push.fail } });
   revalidatePath("/channel/produk");
-  return { ok: true, message: `${items.length} SKU tersimpan.` };
+  const base = `${items.length} SKU tersimpan, ${push.sent} terkirim ke Shopee/Tokopedia.`;
+  if (push.fail.length) return { ok: false, message: `${base} Gagal ${push.fail.length} produk: ${push.fail.slice(0, 5).join(" · ")}${push.fail.length > 5 ? " …" : ""}` };
+  return { ok: true, message: base };
 }
