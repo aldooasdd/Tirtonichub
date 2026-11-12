@@ -29,14 +29,26 @@ async function read(platform: MP, productId: string): Promise<GudangRow[]> {
   if (platform === "SHOPEE") {
     const [rows, names] = await Promise.all([shopee.shopeeLocationStock(s.accessToken, s.shopId, productId), shopee.shopeeWarehouseNames(s.accessToken, s.shopId)]);
     return rows.flatMap((r) =>
-      (r.locations.length ? r.locations : [{ id: "", stock: 0 }]).map((l) => ({ skuId: r.modelId, warehouseId: l.id, warehouse: names.get(l.id) ?? (l.id || "Gudang utama"), stock: l.stock, reserved: r.reserved })),
+      // Multi-gudang: tampilkan juga gudang toko yang belum dipakai varian ini (stok 0) → bisa langsung diisi.
+      (r.locations.length ? [...r.locations, ...[...names.keys()].filter((id) => !r.locations.some((l) => l.id === id)).map((id) => ({ id, stock: 0 }))] : [{ id: "", stock: 0 }]).map((l) => ({
+        skuId: r.modelId,
+        warehouseId: l.id,
+        warehouse: names.get(l.id) ?? (l.id || "Gudang utama"),
+        stock: l.stock,
+        reserved: r.locations.some((x) => x.id === l.id) ? r.reserved : 0,
+      })),
     );
   }
   const c = { token: s.accessToken, cipher: s.cipher ?? "" };
   const [inv, whs] = await Promise.all([tt.inventory(c, [productId]), tt.warehouses(c).catch(() => [])]);
   const name = new Map(whs.map((w) => [w.id, w.name]));
+  // Gudang jual aktif yang belum dipakai SKU ini → tampil stok 0, bisa diisi.
+  const sales = whs.filter((w) => w.type !== "RETURN_WAREHOUSE" && w.status !== "DISABLED");
   return inv.flatMap((k) =>
-    (k.warehouses.length ? k.warehouses : [{ id: "", available: k.available, committed: k.committed }]).map((w) => ({
+    (k.warehouses.length
+      ? [...k.warehouses, ...sales.filter((w) => !k.warehouses.some((x) => x.id === w.id)).map((w) => ({ id: w.id, available: 0, committed: 0 }))]
+      : [{ id: "", available: k.available, committed: k.committed }]
+    ).map((w) => ({
       skuId: k.skuId,
       warehouseId: w.id,
       warehouse: name.get(w.id) ?? (w.id || "Gudang utama"),
