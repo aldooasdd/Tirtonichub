@@ -68,11 +68,24 @@ export async function setItemSku(id: string, sku: string): Promise<Res> {
   // Kosong / sama dengan SKU marketplace → kembali pakai SKU asli.
   const localSku = !s || s === it.sku ? null : s;
   await prisma.marketplaceItem.update({ where: { id }, data: { localSku } });
-  // Live: SKU ikut dikirim ke Shopee / Tokopedia (kosong = tidak dikirim).
-  const push = s && s !== it.sku && it.platform !== "WEBSITE" ? await pushSkus([{ id, sku: s }]) : null;
-  await log("produk_sku", id, { sku: localSku ?? it.sku, push });
-  if (push?.fail.length) return { ok: false, message: `SKU tersimpan di Tirtonichub, gagal ke marketplace: ${push.fail[0]}` };
-  return { ok: true, message: push?.sent ? `SKU tersimpan & terkirim ke ${PLATFORM_LABEL[it.platform as keyof typeof PLATFORM_LABEL]}.` : "SKU tersimpan." };
+  await log("produk_sku", id, { sku: localSku ?? it.sku });
+  return { ok: true, message: "SKU tersimpan. Klik Live ke marketplace untuk mengirim." };
+}
+
+/** Tombol "Live ke marketplace" per produk: kirim SKU Tirtonichub yang belum sama ke Shopee & Tokopedia. */
+export async function pushProductSku(platform: string, itemId: string): Promise<Res> {
+  await requireProduk();
+  const where = await groupWhere(platform, itemId, false);
+  const items = await prisma.marketplaceItem.findMany({
+    where: { AND: [where, { deletedAt: null, localSku: { not: null }, platform: { in: ["SHOPEE", "TOKOPEDIA"] } }] },
+    select: { id: true, localSku: true },
+  });
+  if (!items.length) return { ok: true, message: "Semua SKU sudah sama dengan marketplace." };
+  const r = await pushSkus(items.map((i) => ({ id: i.id, sku: i.localSku! })));
+  await log("produk_sku_live", `${platform}:${itemId}`, r);
+  revalidatePath(`/channel/produk/${platform}/${itemId}`);
+  if (r.fail.length) return { ok: false, message: `${r.sent} SKU terkirim. Gagal: ${r.fail.join(" · ")}` };
+  return { ok: true, message: `${r.sent} SKU terkirim ke marketplace.` };
 }
 
 export async function trashProduct(platform: string, itemId: string): Promise<Res> {
