@@ -989,3 +989,15 @@ model SkuCheck {
   @@index([groupKey])
   @@index([status])
 }
+
+// Foto kegiatan demo komunitas (dari tirtonic.com). File di storage PC (putObject), web cuma simpan claimId di sini.
+model DemoPhoto {
+  id        String   @id @default(cuid())
+  claimId   String // DemoClaim.id di DB tirtonic.com
+  key       String // kunci objek storage → /api/file?key=
+  community String   @default("")
+  title     String   @default("")
+  createdAt DateTime @default(now())
+
+  @@index([claimId])
+}

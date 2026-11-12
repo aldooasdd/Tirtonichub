@@ -784,6 +784,15 @@ exports.Prisma.SkuCheckScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.DemoPhotoScalarFieldEnum = {
+  id: 'id',
+  claimId: 'claimId',
+  key: 'key',
+  community: 'community',
+  title: 'title',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -925,7 +934,8 @@ exports.Prisma.ModelName = {
   PushItemQueue: 'PushItemQueue',
   ChatTemplate: 'ChatTemplate',
   PosCampaign: 'PosCampaign',
-  SkuCheck: 'SkuCheck'
+  SkuCheck: 'SkuCheck',
+  DemoPhoto: 'DemoPhoto'
 };
 
 /**

@@ -267,6 +267,11 @@ export type PosCampaign = $Result.DefaultSelection<Prisma.$PosCampaignPayload>
  * 
  */
 export type SkuCheck = $Result.DefaultSelection<Prisma.$SkuCheckPayload>
+/**
+ * Model DemoPhoto
+ * 
+ */
+export type DemoPhoto = $Result.DefaultSelection<Prisma.$DemoPhotoPayload>
 
 /**
  * Enums
@@ -1008,6 +1013,16 @@ export class PrismaClient<
     * ```
     */
   get skuCheck(): Prisma.SkuCheckDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.demoPhoto`: Exposes CRUD operations for the **DemoPhoto** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DemoPhotos
+    * const demoPhotos = await prisma.demoPhoto.findMany()
+    * ```
+    */
+  get demoPhoto(): Prisma.DemoPhotoDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1498,7 +1513,8 @@ export namespace Prisma {
     PushItemQueue: 'PushItemQueue',
     ChatTemplate: 'ChatTemplate',
     PosCampaign: 'PosCampaign',
-    SkuCheck: 'SkuCheck'
+    SkuCheck: 'SkuCheck',
+    DemoPhoto: 'DemoPhoto'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1517,7 +1533,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -5221,6 +5237,80 @@ export namespace Prisma {
           }
         }
       }
+      DemoPhoto: {
+        payload: Prisma.$DemoPhotoPayload<ExtArgs>
+        fields: Prisma.DemoPhotoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DemoPhotoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoPhotoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DemoPhotoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoPhotoPayload>
+          }
+          findFirst: {
+            args: Prisma.DemoPhotoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoPhotoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DemoPhotoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoPhotoPayload>
+          }
+          findMany: {
+            args: Prisma.DemoPhotoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoPhotoPayload>[]
+          }
+          create: {
+            args: Prisma.DemoPhotoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoPhotoPayload>
+          }
+          createMany: {
+            args: Prisma.DemoPhotoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DemoPhotoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoPhotoPayload>[]
+          }
+          delete: {
+            args: Prisma.DemoPhotoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoPhotoPayload>
+          }
+          update: {
+            args: Prisma.DemoPhotoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoPhotoPayload>
+          }
+          deleteMany: {
+            args: Prisma.DemoPhotoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DemoPhotoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DemoPhotoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoPhotoPayload>[]
+          }
+          upsert: {
+            args: Prisma.DemoPhotoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DemoPhotoPayload>
+          }
+          aggregate: {
+            args: Prisma.DemoPhotoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDemoPhoto>
+          }
+          groupBy: {
+            args: Prisma.DemoPhotoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DemoPhotoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DemoPhotoCountArgs<ExtArgs>
+            result: $Utils.Optional<DemoPhotoCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -5367,6 +5457,7 @@ export namespace Prisma {
     chatTemplate?: ChatTemplateOmit
     posCampaign?: PosCampaignOmit
     skuCheck?: SkuCheckOmit
+    demoPhoto?: DemoPhotoOmit
   }
 
   /* Types for Logging */
@@ -62573,6 +62664,1014 @@ export namespace Prisma {
 
 
   /**
+   * Model DemoPhoto
+   */
+
+  export type AggregateDemoPhoto = {
+    _count: DemoPhotoCountAggregateOutputType | null
+    _min: DemoPhotoMinAggregateOutputType | null
+    _max: DemoPhotoMaxAggregateOutputType | null
+  }
+
+  export type DemoPhotoMinAggregateOutputType = {
+    id: string | null
+    claimId: string | null
+    key: string | null
+    community: string | null
+    title: string | null
+    createdAt: Date | null
+  }
+
+  export type DemoPhotoMaxAggregateOutputType = {
+    id: string | null
+    claimId: string | null
+    key: string | null
+    community: string | null
+    title: string | null
+    createdAt: Date | null
+  }
+
+  export type DemoPhotoCountAggregateOutputType = {
+    id: number
+    claimId: number
+    key: number
+    community: number
+    title: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type DemoPhotoMinAggregateInputType = {
+    id?: true
+    claimId?: true
+    key?: true
+    community?: true
+    title?: true
+    createdAt?: true
+  }
+
+  export type DemoPhotoMaxAggregateInputType = {
+    id?: true
+    claimId?: true
+    key?: true
+    community?: true
+    title?: true
+    createdAt?: true
+  }
+
+  export type DemoPhotoCountAggregateInputType = {
+    id?: true
+    claimId?: true
+    key?: true
+    community?: true
+    title?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type DemoPhotoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DemoPhoto to aggregate.
+     */
+    where?: DemoPhotoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemoPhotos to fetch.
+     */
+    orderBy?: DemoPhotoOrderByWithRelationInput | DemoPhotoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DemoPhotoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemoPhotos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemoPhotos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DemoPhotos
+    **/
+    _count?: true | DemoPhotoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DemoPhotoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DemoPhotoMaxAggregateInputType
+  }
+
+  export type GetDemoPhotoAggregateType<T extends DemoPhotoAggregateArgs> = {
+        [P in keyof T & keyof AggregateDemoPhoto]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDemoPhoto[P]>
+      : GetScalarType<T[P], AggregateDemoPhoto[P]>
+  }
+
+
+
+
+  export type DemoPhotoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DemoPhotoWhereInput
+    orderBy?: DemoPhotoOrderByWithAggregationInput | DemoPhotoOrderByWithAggregationInput[]
+    by: DemoPhotoScalarFieldEnum[] | DemoPhotoScalarFieldEnum
+    having?: DemoPhotoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DemoPhotoCountAggregateInputType | true
+    _min?: DemoPhotoMinAggregateInputType
+    _max?: DemoPhotoMaxAggregateInputType
+  }
+
+  export type DemoPhotoGroupByOutputType = {
+    id: string
+    claimId: string
+    key: string
+    community: string
+    title: string
+    createdAt: Date
+    _count: DemoPhotoCountAggregateOutputType | null
+    _min: DemoPhotoMinAggregateOutputType | null
+    _max: DemoPhotoMaxAggregateOutputType | null
+  }
+
+  type GetDemoPhotoGroupByPayload<T extends DemoPhotoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DemoPhotoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DemoPhotoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DemoPhotoGroupByOutputType[P]>
+            : GetScalarType<T[P], DemoPhotoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DemoPhotoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    claimId?: boolean
+    key?: boolean
+    community?: boolean
+    title?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["demoPhoto"]>
+
+  export type DemoPhotoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    claimId?: boolean
+    key?: boolean
+    community?: boolean
+    title?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["demoPhoto"]>
+
+  export type DemoPhotoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    claimId?: boolean
+    key?: boolean
+    community?: boolean
+    title?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["demoPhoto"]>
+
+  export type DemoPhotoSelectScalar = {
+    id?: boolean
+    claimId?: boolean
+    key?: boolean
+    community?: boolean
+    title?: boolean
+    createdAt?: boolean
+  }
+
+  export type DemoPhotoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "claimId" | "key" | "community" | "title" | "createdAt", ExtArgs["result"]["demoPhoto"]>
+
+  export type $DemoPhotoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DemoPhoto"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      claimId: string
+      key: string
+      community: string
+      title: string
+      createdAt: Date
+    }, ExtArgs["result"]["demoPhoto"]>
+    composites: {}
+  }
+
+  type DemoPhotoGetPayload<S extends boolean | null | undefined | DemoPhotoDefaultArgs> = $Result.GetResult<Prisma.$DemoPhotoPayload, S>
+
+  type DemoPhotoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DemoPhotoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DemoPhotoCountAggregateInputType | true
+    }
+
+  export interface DemoPhotoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DemoPhoto'], meta: { name: 'DemoPhoto' } }
+    /**
+     * Find zero or one DemoPhoto that matches the filter.
+     * @param {DemoPhotoFindUniqueArgs} args - Arguments to find a DemoPhoto
+     * @example
+     * // Get one DemoPhoto
+     * const demoPhoto = await prisma.demoPhoto.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DemoPhotoFindUniqueArgs>(args: SelectSubset<T, DemoPhotoFindUniqueArgs<ExtArgs>>): Prisma__DemoPhotoClient<$Result.GetResult<Prisma.$DemoPhotoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DemoPhoto that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DemoPhotoFindUniqueOrThrowArgs} args - Arguments to find a DemoPhoto
+     * @example
+     * // Get one DemoPhoto
+     * const demoPhoto = await prisma.demoPhoto.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DemoPhotoFindUniqueOrThrowArgs>(args: SelectSubset<T, DemoPhotoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DemoPhotoClient<$Result.GetResult<Prisma.$DemoPhotoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DemoPhoto that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemoPhotoFindFirstArgs} args - Arguments to find a DemoPhoto
+     * @example
+     * // Get one DemoPhoto
+     * const demoPhoto = await prisma.demoPhoto.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DemoPhotoFindFirstArgs>(args?: SelectSubset<T, DemoPhotoFindFirstArgs<ExtArgs>>): Prisma__DemoPhotoClient<$Result.GetResult<Prisma.$DemoPhotoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DemoPhoto that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemoPhotoFindFirstOrThrowArgs} args - Arguments to find a DemoPhoto
+     * @example
+     * // Get one DemoPhoto
+     * const demoPhoto = await prisma.demoPhoto.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DemoPhotoFindFirstOrThrowArgs>(args?: SelectSubset<T, DemoPhotoFindFirstOrThrowArgs<ExtArgs>>): Prisma__DemoPhotoClient<$Result.GetResult<Prisma.$DemoPhotoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DemoPhotos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemoPhotoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DemoPhotos
+     * const demoPhotos = await prisma.demoPhoto.findMany()
+     * 
+     * // Get first 10 DemoPhotos
+     * const demoPhotos = await prisma.demoPhoto.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const demoPhotoWithIdOnly = await prisma.demoPhoto.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DemoPhotoFindManyArgs>(args?: SelectSubset<T, DemoPhotoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemoPhotoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DemoPhoto.
+     * @param {DemoPhotoCreateArgs} args - Arguments to create a DemoPhoto.
+     * @example
+     * // Create one DemoPhoto
+     * const DemoPhoto = await prisma.demoPhoto.create({
+     *   data: {
+     *     // ... data to create a DemoPhoto
+     *   }
+     * })
+     * 
+     */
+    create<T extends DemoPhotoCreateArgs>(args: SelectSubset<T, DemoPhotoCreateArgs<ExtArgs>>): Prisma__DemoPhotoClient<$Result.GetResult<Prisma.$DemoPhotoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DemoPhotos.
+     * @param {DemoPhotoCreateManyArgs} args - Arguments to create many DemoPhotos.
+     * @example
+     * // Create many DemoPhotos
+     * const demoPhoto = await prisma.demoPhoto.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DemoPhotoCreateManyArgs>(args?: SelectSubset<T, DemoPhotoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DemoPhotos and returns the data saved in the database.
+     * @param {DemoPhotoCreateManyAndReturnArgs} args - Arguments to create many DemoPhotos.
+     * @example
+     * // Create many DemoPhotos
+     * const demoPhoto = await prisma.demoPhoto.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DemoPhotos and only return the `id`
+     * const demoPhotoWithIdOnly = await prisma.demoPhoto.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DemoPhotoCreateManyAndReturnArgs>(args?: SelectSubset<T, DemoPhotoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemoPhotoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DemoPhoto.
+     * @param {DemoPhotoDeleteArgs} args - Arguments to delete one DemoPhoto.
+     * @example
+     * // Delete one DemoPhoto
+     * const DemoPhoto = await prisma.demoPhoto.delete({
+     *   where: {
+     *     // ... filter to delete one DemoPhoto
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DemoPhotoDeleteArgs>(args: SelectSubset<T, DemoPhotoDeleteArgs<ExtArgs>>): Prisma__DemoPhotoClient<$Result.GetResult<Prisma.$DemoPhotoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DemoPhoto.
+     * @param {DemoPhotoUpdateArgs} args - Arguments to update one DemoPhoto.
+     * @example
+     * // Update one DemoPhoto
+     * const demoPhoto = await prisma.demoPhoto.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DemoPhotoUpdateArgs>(args: SelectSubset<T, DemoPhotoUpdateArgs<ExtArgs>>): Prisma__DemoPhotoClient<$Result.GetResult<Prisma.$DemoPhotoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DemoPhotos.
+     * @param {DemoPhotoDeleteManyArgs} args - Arguments to filter DemoPhotos to delete.
+     * @example
+     * // Delete a few DemoPhotos
+     * const { count } = await prisma.demoPhoto.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DemoPhotoDeleteManyArgs>(args?: SelectSubset<T, DemoPhotoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DemoPhotos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemoPhotoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DemoPhotos
+     * const demoPhoto = await prisma.demoPhoto.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DemoPhotoUpdateManyArgs>(args: SelectSubset<T, DemoPhotoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DemoPhotos and returns the data updated in the database.
+     * @param {DemoPhotoUpdateManyAndReturnArgs} args - Arguments to update many DemoPhotos.
+     * @example
+     * // Update many DemoPhotos
+     * const demoPhoto = await prisma.demoPhoto.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DemoPhotos and only return the `id`
+     * const demoPhotoWithIdOnly = await prisma.demoPhoto.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DemoPhotoUpdateManyAndReturnArgs>(args: SelectSubset<T, DemoPhotoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DemoPhotoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DemoPhoto.
+     * @param {DemoPhotoUpsertArgs} args - Arguments to update or create a DemoPhoto.
+     * @example
+     * // Update or create a DemoPhoto
+     * const demoPhoto = await prisma.demoPhoto.upsert({
+     *   create: {
+     *     // ... data to create a DemoPhoto
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DemoPhoto we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DemoPhotoUpsertArgs>(args: SelectSubset<T, DemoPhotoUpsertArgs<ExtArgs>>): Prisma__DemoPhotoClient<$Result.GetResult<Prisma.$DemoPhotoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DemoPhotos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemoPhotoCountArgs} args - Arguments to filter DemoPhotos to count.
+     * @example
+     * // Count the number of DemoPhotos
+     * const count = await prisma.demoPhoto.count({
+     *   where: {
+     *     // ... the filter for the DemoPhotos we want to count
+     *   }
+     * })
+    **/
+    count<T extends DemoPhotoCountArgs>(
+      args?: Subset<T, DemoPhotoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DemoPhotoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DemoPhoto.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemoPhotoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DemoPhotoAggregateArgs>(args: Subset<T, DemoPhotoAggregateArgs>): Prisma.PrismaPromise<GetDemoPhotoAggregateType<T>>
+
+    /**
+     * Group by DemoPhoto.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DemoPhotoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DemoPhotoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DemoPhotoGroupByArgs['orderBy'] }
+        : { orderBy?: DemoPhotoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DemoPhotoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDemoPhotoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DemoPhoto model
+   */
+  readonly fields: DemoPhotoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DemoPhoto.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DemoPhotoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DemoPhoto model
+   */
+  interface DemoPhotoFieldRefs {
+    readonly id: FieldRef<"DemoPhoto", 'String'>
+    readonly claimId: FieldRef<"DemoPhoto", 'String'>
+    readonly key: FieldRef<"DemoPhoto", 'String'>
+    readonly community: FieldRef<"DemoPhoto", 'String'>
+    readonly title: FieldRef<"DemoPhoto", 'String'>
+    readonly createdAt: FieldRef<"DemoPhoto", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DemoPhoto findUnique
+   */
+  export type DemoPhotoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoPhoto
+     */
+    select?: DemoPhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemoPhoto
+     */
+    omit?: DemoPhotoOmit<ExtArgs> | null
+    /**
+     * Filter, which DemoPhoto to fetch.
+     */
+    where: DemoPhotoWhereUniqueInput
+  }
+
+  /**
+   * DemoPhoto findUniqueOrThrow
+   */
+  export type DemoPhotoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoPhoto
+     */
+    select?: DemoPhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemoPhoto
+     */
+    omit?: DemoPhotoOmit<ExtArgs> | null
+    /**
+     * Filter, which DemoPhoto to fetch.
+     */
+    where: DemoPhotoWhereUniqueInput
+  }
+
+  /**
+   * DemoPhoto findFirst
+   */
+  export type DemoPhotoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoPhoto
+     */
+    select?: DemoPhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemoPhoto
+     */
+    omit?: DemoPhotoOmit<ExtArgs> | null
+    /**
+     * Filter, which DemoPhoto to fetch.
+     */
+    where?: DemoPhotoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemoPhotos to fetch.
+     */
+    orderBy?: DemoPhotoOrderByWithRelationInput | DemoPhotoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DemoPhotos.
+     */
+    cursor?: DemoPhotoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemoPhotos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemoPhotos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DemoPhotos.
+     */
+    distinct?: DemoPhotoScalarFieldEnum | DemoPhotoScalarFieldEnum[]
+  }
+
+  /**
+   * DemoPhoto findFirstOrThrow
+   */
+  export type DemoPhotoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoPhoto
+     */
+    select?: DemoPhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemoPhoto
+     */
+    omit?: DemoPhotoOmit<ExtArgs> | null
+    /**
+     * Filter, which DemoPhoto to fetch.
+     */
+    where?: DemoPhotoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemoPhotos to fetch.
+     */
+    orderBy?: DemoPhotoOrderByWithRelationInput | DemoPhotoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DemoPhotos.
+     */
+    cursor?: DemoPhotoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemoPhotos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemoPhotos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DemoPhotos.
+     */
+    distinct?: DemoPhotoScalarFieldEnum | DemoPhotoScalarFieldEnum[]
+  }
+
+  /**
+   * DemoPhoto findMany
+   */
+  export type DemoPhotoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoPhoto
+     */
+    select?: DemoPhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemoPhoto
+     */
+    omit?: DemoPhotoOmit<ExtArgs> | null
+    /**
+     * Filter, which DemoPhotos to fetch.
+     */
+    where?: DemoPhotoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DemoPhotos to fetch.
+     */
+    orderBy?: DemoPhotoOrderByWithRelationInput | DemoPhotoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DemoPhotos.
+     */
+    cursor?: DemoPhotoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DemoPhotos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DemoPhotos.
+     */
+    skip?: number
+    distinct?: DemoPhotoScalarFieldEnum | DemoPhotoScalarFieldEnum[]
+  }
+
+  /**
+   * DemoPhoto create
+   */
+  export type DemoPhotoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoPhoto
+     */
+    select?: DemoPhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemoPhoto
+     */
+    omit?: DemoPhotoOmit<ExtArgs> | null
+    /**
+     * The data needed to create a DemoPhoto.
+     */
+    data: XOR<DemoPhotoCreateInput, DemoPhotoUncheckedCreateInput>
+  }
+
+  /**
+   * DemoPhoto createMany
+   */
+  export type DemoPhotoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DemoPhotos.
+     */
+    data: DemoPhotoCreateManyInput | DemoPhotoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DemoPhoto createManyAndReturn
+   */
+  export type DemoPhotoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoPhoto
+     */
+    select?: DemoPhotoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemoPhoto
+     */
+    omit?: DemoPhotoOmit<ExtArgs> | null
+    /**
+     * The data used to create many DemoPhotos.
+     */
+    data: DemoPhotoCreateManyInput | DemoPhotoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DemoPhoto update
+   */
+  export type DemoPhotoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoPhoto
+     */
+    select?: DemoPhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemoPhoto
+     */
+    omit?: DemoPhotoOmit<ExtArgs> | null
+    /**
+     * The data needed to update a DemoPhoto.
+     */
+    data: XOR<DemoPhotoUpdateInput, DemoPhotoUncheckedUpdateInput>
+    /**
+     * Choose, which DemoPhoto to update.
+     */
+    where: DemoPhotoWhereUniqueInput
+  }
+
+  /**
+   * DemoPhoto updateMany
+   */
+  export type DemoPhotoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DemoPhotos.
+     */
+    data: XOR<DemoPhotoUpdateManyMutationInput, DemoPhotoUncheckedUpdateManyInput>
+    /**
+     * Filter which DemoPhotos to update
+     */
+    where?: DemoPhotoWhereInput
+    /**
+     * Limit how many DemoPhotos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DemoPhoto updateManyAndReturn
+   */
+  export type DemoPhotoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoPhoto
+     */
+    select?: DemoPhotoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemoPhoto
+     */
+    omit?: DemoPhotoOmit<ExtArgs> | null
+    /**
+     * The data used to update DemoPhotos.
+     */
+    data: XOR<DemoPhotoUpdateManyMutationInput, DemoPhotoUncheckedUpdateManyInput>
+    /**
+     * Filter which DemoPhotos to update
+     */
+    where?: DemoPhotoWhereInput
+    /**
+     * Limit how many DemoPhotos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DemoPhoto upsert
+   */
+  export type DemoPhotoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoPhoto
+     */
+    select?: DemoPhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemoPhoto
+     */
+    omit?: DemoPhotoOmit<ExtArgs> | null
+    /**
+     * The filter to search for the DemoPhoto to update in case it exists.
+     */
+    where: DemoPhotoWhereUniqueInput
+    /**
+     * In case the DemoPhoto found by the `where` argument doesn't exist, create a new DemoPhoto with this data.
+     */
+    create: XOR<DemoPhotoCreateInput, DemoPhotoUncheckedCreateInput>
+    /**
+     * In case the DemoPhoto was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DemoPhotoUpdateInput, DemoPhotoUncheckedUpdateInput>
+  }
+
+  /**
+   * DemoPhoto delete
+   */
+  export type DemoPhotoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoPhoto
+     */
+    select?: DemoPhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemoPhoto
+     */
+    omit?: DemoPhotoOmit<ExtArgs> | null
+    /**
+     * Filter which DemoPhoto to delete.
+     */
+    where: DemoPhotoWhereUniqueInput
+  }
+
+  /**
+   * DemoPhoto deleteMany
+   */
+  export type DemoPhotoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DemoPhotos to delete
+     */
+    where?: DemoPhotoWhereInput
+    /**
+     * Limit how many DemoPhotos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DemoPhoto without action
+   */
+  export type DemoPhotoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DemoPhoto
+     */
+    select?: DemoPhotoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DemoPhoto
+     */
+    omit?: DemoPhotoOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -63397,6 +64496,18 @@ export namespace Prisma {
   };
 
   export type SkuCheckScalarFieldEnum = (typeof SkuCheckScalarFieldEnum)[keyof typeof SkuCheckScalarFieldEnum]
+
+
+  export const DemoPhotoScalarFieldEnum: {
+    id: 'id',
+    claimId: 'claimId',
+    key: 'key',
+    community: 'community',
+    title: 'title',
+    createdAt: 'createdAt'
+  };
+
+  export type DemoPhotoScalarFieldEnum = (typeof DemoPhotoScalarFieldEnum)[keyof typeof DemoPhotoScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -67805,6 +68916,63 @@ export namespace Prisma {
     checkedAt?: DateTimeNullableWithAggregatesFilter<"SkuCheck"> | Date | string | null
     pushedAt?: DateTimeNullableWithAggregatesFilter<"SkuCheck"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"SkuCheck"> | Date | string
+  }
+
+  export type DemoPhotoWhereInput = {
+    AND?: DemoPhotoWhereInput | DemoPhotoWhereInput[]
+    OR?: DemoPhotoWhereInput[]
+    NOT?: DemoPhotoWhereInput | DemoPhotoWhereInput[]
+    id?: StringFilter<"DemoPhoto"> | string
+    claimId?: StringFilter<"DemoPhoto"> | string
+    key?: StringFilter<"DemoPhoto"> | string
+    community?: StringFilter<"DemoPhoto"> | string
+    title?: StringFilter<"DemoPhoto"> | string
+    createdAt?: DateTimeFilter<"DemoPhoto"> | Date | string
+  }
+
+  export type DemoPhotoOrderByWithRelationInput = {
+    id?: SortOrder
+    claimId?: SortOrder
+    key?: SortOrder
+    community?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DemoPhotoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DemoPhotoWhereInput | DemoPhotoWhereInput[]
+    OR?: DemoPhotoWhereInput[]
+    NOT?: DemoPhotoWhereInput | DemoPhotoWhereInput[]
+    claimId?: StringFilter<"DemoPhoto"> | string
+    key?: StringFilter<"DemoPhoto"> | string
+    community?: StringFilter<"DemoPhoto"> | string
+    title?: StringFilter<"DemoPhoto"> | string
+    createdAt?: DateTimeFilter<"DemoPhoto"> | Date | string
+  }, "id">
+
+  export type DemoPhotoOrderByWithAggregationInput = {
+    id?: SortOrder
+    claimId?: SortOrder
+    key?: SortOrder
+    community?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+    _count?: DemoPhotoCountOrderByAggregateInput
+    _max?: DemoPhotoMaxOrderByAggregateInput
+    _min?: DemoPhotoMinOrderByAggregateInput
+  }
+
+  export type DemoPhotoScalarWhereWithAggregatesInput = {
+    AND?: DemoPhotoScalarWhereWithAggregatesInput | DemoPhotoScalarWhereWithAggregatesInput[]
+    OR?: DemoPhotoScalarWhereWithAggregatesInput[]
+    NOT?: DemoPhotoScalarWhereWithAggregatesInput | DemoPhotoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DemoPhoto"> | string
+    claimId?: StringWithAggregatesFilter<"DemoPhoto"> | string
+    key?: StringWithAggregatesFilter<"DemoPhoto"> | string
+    community?: StringWithAggregatesFilter<"DemoPhoto"> | string
+    title?: StringWithAggregatesFilter<"DemoPhoto"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"DemoPhoto"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -72544,6 +73712,69 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type DemoPhotoCreateInput = {
+    id?: string
+    claimId: string
+    key: string
+    community?: string
+    title?: string
+    createdAt?: Date | string
+  }
+
+  export type DemoPhotoUncheckedCreateInput = {
+    id?: string
+    claimId: string
+    key: string
+    community?: string
+    title?: string
+    createdAt?: Date | string
+  }
+
+  export type DemoPhotoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    claimId?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    community?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DemoPhotoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    claimId?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    community?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DemoPhotoCreateManyInput = {
+    id?: string
+    claimId: string
+    key: string
+    community?: string
+    title?: string
+    createdAt?: Date | string
+  }
+
+  export type DemoPhotoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    claimId?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    community?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DemoPhotoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    claimId?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    community?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -75570,6 +76801,33 @@ export namespace Prisma {
 
   export type SkuCheckSumOrderByAggregateInput = {
     saranStok?: SortOrder
+  }
+
+  export type DemoPhotoCountOrderByAggregateInput = {
+    id?: SortOrder
+    claimId?: SortOrder
+    key?: SortOrder
+    community?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DemoPhotoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    claimId?: SortOrder
+    key?: SortOrder
+    community?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type DemoPhotoMinOrderByAggregateInput = {
+    id?: SortOrder
+    claimId?: SortOrder
+    key?: SortOrder
+    community?: SortOrder
+    title?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type BranchCreateNestedOneWithoutUsersInput = {
