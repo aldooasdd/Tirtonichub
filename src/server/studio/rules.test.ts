@@ -130,3 +130,12 @@ test("sakelar WA Foto katalog hanya admin penuh", () => {
   assert.notEqual(canWrite(aulia, "update", "settings/main", { katalogTo: ["a@x.com"] }, { katalogTo: ["b@x.com"] }), null);
   assert.equal(canWrite(zaki, "update", "settings/main", { katalogTo: ["a@x.com"] }, { katalogTo: ["b@x.com"] }), null);
 });
+
+test("tanggal produksi/edit & Deadline Ready kartu lama: hanya admin penuh", () => {
+  const t = { status: "Terdata", producer: "A", shootPlan: "2026-11-12", editPlan: "2026-11-13", readyBy: "2026-11-14", due: "2026-11-14" };
+  assert.equal(canWrite(zaki, "update", "tasks/t1", t, { ...t, shootPlan: "2026-11-15" }), null);
+  assert.notEqual(canWrite(aulia, "update", "tasks/t1", t, { ...t, shootPlan: "2026-11-15" }), null);
+  assert.notEqual(canWrite(aulia, "update", "tasks/t1", t, { ...t, readyBy: "2026-11-20", due: "2026-11-20" }), null);
+  assert.equal(canWrite(aulia, "update", "tasks/t1", t, { ...t, postAt: "2026-11-20" }), null);
+  assert.equal(canWrite(aulia, "set", "tasks/t2", null, { ...t }), null);
+});
