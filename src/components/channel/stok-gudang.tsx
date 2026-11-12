@@ -23,19 +23,24 @@ export function StokGudang({ platform, productId, variants, editable }: { platfo
       if (r.ok) setRows(r.data ?? []);
       else setMsg({ ok: false, text: r.message ?? "Gagal." });
     });
-  const change = (r: GudangRow, sign: 1 | -1) => {
-    const n = Number(qty[key(r)] || 0);
-    if (!n) return;
-    if (!confirm(`${sign < 0 ? "Kurangi" : "Tambah"} stok ${variants[r.skuId] ?? r.skuId} di ${r.warehouse} sebanyak ${n}? Langsung berubah di ${platform === "SHOPEE" ? "Shopee" : "Tokopedia"}.`)) return;
-    start(async () => {
-      const res = await ubahStokGudang(platform, productId, r.skuId, r.warehouseId, sign * n).catch(() => ({ ok: false, message: "Gagal. Muat ulang halaman.", data: undefined }));
-      setMsg({ ok: res.ok, text: res.message ?? "" });
-      if (res.ok) {
-        if (res.data) setRows(res.data);
-        setQty((q) => ({ ...q, [key(r)]: "" }));
-        router.refresh();
-      }
+  // Langsung kirim per klik: jumlah = angka yang diketik, kosong = 1. Satu baris diproses satu-satu (anti balapan stok).
+  const [busy, setBusy] = useState<Set<string>>(new Set());
+  const change = async (r: GudangRow, sign: 1 | -1) => {
+    const k = key(r);
+    const d = sign * (Number(qty[k]) || 1);
+    if (busy.has(k) || r.stock + d < 0) return;
+    setBusy((b) => new Set(b).add(k));
+    setRows((rs) => rs && rs.map((x) => (key(x) === k ? { ...x, stock: x.stock + d } : x)));
+    const res = await ubahStokGudang(platform, productId, r.skuId, r.warehouseId, d).catch(() => ({ ok: false, message: "Gagal. Muat ulang halaman.", data: undefined }));
+    setMsg({ ok: res.ok, text: res.message ?? "" });
+    if (res.data) setRows(res.data);
+    else if (!res.ok) setRows((rs) => rs && rs.map((x) => (key(x) === k ? { ...x, stock: x.stock - d } : x)));
+    setBusy((b) => {
+      const n = new Set(b);
+      n.delete(k);
+      return n;
     });
+    if (res.ok) router.refresh();
   };
 
   return (
@@ -53,7 +58,7 @@ export function StokGudang({ platform, productId, variants, editable }: { platfo
                 <th className="p-2">Gudang</th>
                 <th className="p-2 text-right">Stok</th>
                 <th className="p-2 text-right">Dipesan</th>
-                {editable && <th className="p-2">Tambah / kurangi</th>}
+                {editable && <th className="p-2" title="Klik − / + langsung mengubah stok di marketplace. Kosong = 1.">Tambah / kurangi</th>}
               </tr>
             </thead>
             <tbody>
@@ -71,18 +76,18 @@ export function StokGudang({ platform, productId, variants, editable }: { platfo
                   {editable && (
                     <td className="p-2">
                       <span className="flex items-center gap-1.5">
-                        <button type="button" className={sm} disabled={pending || !Number(qty[key(r)])} onClick={() => change(r, -1)} aria-label="Kurangi">
+                        <button type="button" className={sm} disabled={busy.has(key(r)) || r.stock - (Number(qty[key(r)]) || 1) < 0} onClick={() => change(r, -1)} aria-label="Kurangi">
                           <Minus className="size-4" />
                         </button>
                         <input
                           inputMode="numeric"
                           value={qty[key(r)] ?? ""}
                           onChange={(e) => setQty({ ...qty, [key(r)]: e.target.value.replace(/\D/g, "") })}
-                          placeholder="0"
+                          placeholder="1"
                           aria-label={`Jumlah ${variants[r.skuId] ?? r.skuId} ${r.warehouse}`}
                           className="h-8 w-16 rounded-md border bg-background px-2 text-right text-14"
                         />
-                        <button type="button" className={sm} disabled={pending || !Number(qty[key(r)])} onClick={() => change(r, 1)} aria-label="Tambah">
+                        <button type="button" className={sm} disabled={busy.has(key(r))} onClick={() => change(r, 1)} aria-label="Tambah">
                           <Plus className="size-4" />
                         </button>
                       </span>
