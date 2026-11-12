@@ -3,8 +3,8 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { updateChannelItem } from "@/server/actions/channel";
-import { setItemSku, trashListing, trashVariant } from "@/server/actions/produk-master";
-import { Trash2 } from "lucide-react";
+import { pushProductSku, setItemSku, trashListing, trashVariant } from "@/server/actions/produk-master";
+import { Radio, Trash2 } from "lucide-react";
 import { fmtInt, parseInt0 } from "@/lib/money-input";
 import { bolehUbah } from "@/lib/flags";
 
@@ -187,5 +187,33 @@ export function TrashListingButton({ platform, itemId, count }: { platform: stri
     >
       <Trash2 className="size-4" /> {pending ? "Menghapus…" : "Hapus semua"}
     </button>
+  );
+}
+
+/** Kirim SKU Tirtonichub semua varian produk ini (Shopee & Tokopedia) yang belum sama. */
+export function LiveSkuButton({ platform, itemId, count }: { platform: string; itemId: string; count: number }) {
+  const router = useRouter();
+  const [pending, start] = useTransition();
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  return (
+    <span className="inline-flex flex-col gap-1">
+      <button
+        type="button"
+        disabled={pending || count === 0}
+        title={count ? `${count} SKU belum terkirim ke Shopee / Tokopedia` : "SKU sudah sama dengan marketplace"}
+        onClick={() =>
+          confirm(`Kirim ${count} SKU produk ini ke Shopee & Tokopedia?`) &&
+          start(async () => {
+            const r = await pushProductSku(platform, itemId).catch(() => ({ ok: false, message: "Gagal. Muat ulang halaman." }));
+            setMsg({ ok: r.ok, text: r.message ?? "" });
+            router.refresh();
+          })
+        }
+        className="inline-flex h-9 w-fit items-center gap-1.5 rounded-md bg-primary px-3 text-14 font-medium text-primary-foreground disabled:opacity-40"
+      >
+        <Radio className="size-4" /> {pending ? "Mengirim…" : `Live ke marketplace${count ? ` (${count} SKU)` : ""}`}
+      </button>
+      {msg && <span className={`text-12 ${msg.ok ? "text-emerald-600" : "text-destructive"}`}>{msg.text}</span>}
+    </span>
   );
 }

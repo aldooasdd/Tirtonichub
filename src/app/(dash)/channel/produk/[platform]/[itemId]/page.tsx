@@ -6,7 +6,7 @@ import { prisma } from "@/server/db";
 import { fmtWIB } from "@/lib/datetime";
 import { productStatus } from "@/lib/channel-status";
 import { DEMO, PLATFORM_LABEL } from "@/server/marketplace/sync";
-import { ItemTable, TrashListingButton } from "@/components/channel/item-table";
+import { ItemTable, LiveSkuButton, TrashListingButton } from "@/components/channel/item-table";
 import { loadProductGroupOf } from "@/server/marketplace/product-groups";
 import { PRODUK_KE_MARKETPLACE } from "@/lib/flags";
 import { ProductOps } from "@/components/channel/product-ops";
@@ -129,6 +129,13 @@ export default async function ProdukDetailPage({ params }: { params: Promise<{ p
               </div>
             )}
             <ProdukAdmin platform={platform} itemId={itemId} title={title} deleted={deleted} />
+            {PRODUK_KE_MARKETPLACE && !deleted && items[0]?.shopId !== DEMO && (
+              <LiveSkuButton
+                platform={platform}
+                itemId={itemId}
+                count={[...items, ...otherItems].filter((i) => !i.deletedAt && i.localSku && (i.platform === "SHOPEE" || i.platform === "TOKOPEDIA")).length}
+              />
+            )}
             {PRODUK_KE_MARKETPLACE && platform === "TOKOPEDIA" && items[0]?.shopId !== DEMO && (
               <Link href={`/channel/produk/${platform}/${itemId}/edit`} className="mr-4 inline-flex items-center gap-1 text-14 font-medium text-primary hover:underline">
                 <Pencil className="size-3.5" /> Edit produk
