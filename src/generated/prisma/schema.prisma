@@ -967,3 +967,25 @@ model PosCampaign {
 
   @@index([active])
 }
+
+// Cek SKU (Tirtonic Channel): baris Produk Master yang SKU-nya belum yakin dari Accurate
+// (RAGU = ada saran, TIDAK = tak ketemu). Orang toko konfirmasi saran / scan barcode.
+// groupKey = nama+varian dinormalisasi → 1 kartu berlaku untuk varian sama di semua toko.
+model SkuCheck {
+  id          String    @id @default(cuid())
+  itemId      String    @unique // MarketplaceItem.id
+  groupKey    String
+  kind        String // RAGU | TIDAK
+  saranNama   String?
+  saranUpc    String?
+  saranStok   Float?
+  status      String    @default("pending") // pending | done | missing
+  sku         String?
+  checkedById String?
+  checkedAt   DateTime?
+  pushedAt    DateTime? // sudah dikirim ke Shopee/Tokopedia
+  createdAt   DateTime  @default(now())
+
+  @@index([groupKey])
+  @@index([status])
+}

@@ -768,6 +768,22 @@ exports.Prisma.PosCampaignScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.SkuCheckScalarFieldEnum = {
+  id: 'id',
+  itemId: 'itemId',
+  groupKey: 'groupKey',
+  kind: 'kind',
+  saranNama: 'saranNama',
+  saranUpc: 'saranUpc',
+  saranStok: 'saranStok',
+  status: 'status',
+  sku: 'sku',
+  checkedById: 'checkedById',
+  checkedAt: 'checkedAt',
+  pushedAt: 'pushedAt',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -908,7 +924,8 @@ exports.Prisma.ModelName = {
   KatalogNotif: 'KatalogNotif',
   PushItemQueue: 'PushItemQueue',
   ChatTemplate: 'ChatTemplate',
-  PosCampaign: 'PosCampaign'
+  PosCampaign: 'PosCampaign',
+  SkuCheck: 'SkuCheck'
 };
 
 /**

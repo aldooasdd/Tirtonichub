@@ -144,6 +144,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Kelola Pesanan", href: "/channel", icon: Store },
         { label: "Tirtonic POS", href: "/channel/pos", icon: ShoppingCart },
         { label: "Produk Master", href: "/channel/produk", icon: Boxes },
+        { label: "Cek SKU", href: "/channel/produk/cek-sku", icon: ClipboardCheck },
         { label: "Produk Quantity", href: "/channel/produk-quantity", icon: Warehouse },
         { label: "Settlement Marketplace", href: "/channel/dana", icon: Wallet },
         { label: "Saldo Shopee", href: "/channel/saldo-shopee", icon: Wallet },

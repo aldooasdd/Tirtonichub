@@ -262,6 +262,11 @@ export type ChatTemplate = $Result.DefaultSelection<Prisma.$ChatTemplatePayload>
  * 
  */
 export type PosCampaign = $Result.DefaultSelection<Prisma.$PosCampaignPayload>
+/**
+ * Model SkuCheck
+ * 
+ */
+export type SkuCheck = $Result.DefaultSelection<Prisma.$SkuCheckPayload>
 
 /**
  * Enums
@@ -993,6 +998,16 @@ export class PrismaClient<
     * ```
     */
   get posCampaign(): Prisma.PosCampaignDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.skuCheck`: Exposes CRUD operations for the **SkuCheck** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more SkuChecks
+    * const skuChecks = await prisma.skuCheck.findMany()
+    * ```
+    */
+  get skuCheck(): Prisma.SkuCheckDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1482,7 +1497,8 @@ export namespace Prisma {
     KatalogNotif: 'KatalogNotif',
     PushItemQueue: 'PushItemQueue',
     ChatTemplate: 'ChatTemplate',
-    PosCampaign: 'PosCampaign'
+    PosCampaign: 'PosCampaign',
+    SkuCheck: 'SkuCheck'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1501,7 +1517,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -5131,6 +5147,80 @@ export namespace Prisma {
           }
         }
       }
+      SkuCheck: {
+        payload: Prisma.$SkuCheckPayload<ExtArgs>
+        fields: Prisma.SkuCheckFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.SkuCheckFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkuCheckPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.SkuCheckFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkuCheckPayload>
+          }
+          findFirst: {
+            args: Prisma.SkuCheckFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkuCheckPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.SkuCheckFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkuCheckPayload>
+          }
+          findMany: {
+            args: Prisma.SkuCheckFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkuCheckPayload>[]
+          }
+          create: {
+            args: Prisma.SkuCheckCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkuCheckPayload>
+          }
+          createMany: {
+            args: Prisma.SkuCheckCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.SkuCheckCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkuCheckPayload>[]
+          }
+          delete: {
+            args: Prisma.SkuCheckDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkuCheckPayload>
+          }
+          update: {
+            args: Prisma.SkuCheckUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkuCheckPayload>
+          }
+          deleteMany: {
+            args: Prisma.SkuCheckDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.SkuCheckUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.SkuCheckUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkuCheckPayload>[]
+          }
+          upsert: {
+            args: Prisma.SkuCheckUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$SkuCheckPayload>
+          }
+          aggregate: {
+            args: Prisma.SkuCheckAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateSkuCheck>
+          }
+          groupBy: {
+            args: Prisma.SkuCheckGroupByArgs<ExtArgs>
+            result: $Utils.Optional<SkuCheckGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.SkuCheckCountArgs<ExtArgs>
+            result: $Utils.Optional<SkuCheckCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -5276,6 +5366,7 @@ export namespace Prisma {
     pushItemQueue?: PushItemQueueOmit
     chatTemplate?: ChatTemplateOmit
     posCampaign?: PosCampaignOmit
+    skuCheck?: SkuCheckOmit
   }
 
   /* Types for Logging */
@@ -61349,6 +61440,1139 @@ export namespace Prisma {
 
 
   /**
+   * Model SkuCheck
+   */
+
+  export type AggregateSkuCheck = {
+    _count: SkuCheckCountAggregateOutputType | null
+    _avg: SkuCheckAvgAggregateOutputType | null
+    _sum: SkuCheckSumAggregateOutputType | null
+    _min: SkuCheckMinAggregateOutputType | null
+    _max: SkuCheckMaxAggregateOutputType | null
+  }
+
+  export type SkuCheckAvgAggregateOutputType = {
+    saranStok: number | null
+  }
+
+  export type SkuCheckSumAggregateOutputType = {
+    saranStok: number | null
+  }
+
+  export type SkuCheckMinAggregateOutputType = {
+    id: string | null
+    itemId: string | null
+    groupKey: string | null
+    kind: string | null
+    saranNama: string | null
+    saranUpc: string | null
+    saranStok: number | null
+    status: string | null
+    sku: string | null
+    checkedById: string | null
+    checkedAt: Date | null
+    pushedAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type SkuCheckMaxAggregateOutputType = {
+    id: string | null
+    itemId: string | null
+    groupKey: string | null
+    kind: string | null
+    saranNama: string | null
+    saranUpc: string | null
+    saranStok: number | null
+    status: string | null
+    sku: string | null
+    checkedById: string | null
+    checkedAt: Date | null
+    pushedAt: Date | null
+    createdAt: Date | null
+  }
+
+  export type SkuCheckCountAggregateOutputType = {
+    id: number
+    itemId: number
+    groupKey: number
+    kind: number
+    saranNama: number
+    saranUpc: number
+    saranStok: number
+    status: number
+    sku: number
+    checkedById: number
+    checkedAt: number
+    pushedAt: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type SkuCheckAvgAggregateInputType = {
+    saranStok?: true
+  }
+
+  export type SkuCheckSumAggregateInputType = {
+    saranStok?: true
+  }
+
+  export type SkuCheckMinAggregateInputType = {
+    id?: true
+    itemId?: true
+    groupKey?: true
+    kind?: true
+    saranNama?: true
+    saranUpc?: true
+    saranStok?: true
+    status?: true
+    sku?: true
+    checkedById?: true
+    checkedAt?: true
+    pushedAt?: true
+    createdAt?: true
+  }
+
+  export type SkuCheckMaxAggregateInputType = {
+    id?: true
+    itemId?: true
+    groupKey?: true
+    kind?: true
+    saranNama?: true
+    saranUpc?: true
+    saranStok?: true
+    status?: true
+    sku?: true
+    checkedById?: true
+    checkedAt?: true
+    pushedAt?: true
+    createdAt?: true
+  }
+
+  export type SkuCheckCountAggregateInputType = {
+    id?: true
+    itemId?: true
+    groupKey?: true
+    kind?: true
+    saranNama?: true
+    saranUpc?: true
+    saranStok?: true
+    status?: true
+    sku?: true
+    checkedById?: true
+    checkedAt?: true
+    pushedAt?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type SkuCheckAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SkuCheck to aggregate.
+     */
+    where?: SkuCheckWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkuChecks to fetch.
+     */
+    orderBy?: SkuCheckOrderByWithRelationInput | SkuCheckOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: SkuCheckWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkuChecks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkuChecks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned SkuChecks
+    **/
+    _count?: true | SkuCheckCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: SkuCheckAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: SkuCheckSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: SkuCheckMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: SkuCheckMaxAggregateInputType
+  }
+
+  export type GetSkuCheckAggregateType<T extends SkuCheckAggregateArgs> = {
+        [P in keyof T & keyof AggregateSkuCheck]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateSkuCheck[P]>
+      : GetScalarType<T[P], AggregateSkuCheck[P]>
+  }
+
+
+
+
+  export type SkuCheckGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: SkuCheckWhereInput
+    orderBy?: SkuCheckOrderByWithAggregationInput | SkuCheckOrderByWithAggregationInput[]
+    by: SkuCheckScalarFieldEnum[] | SkuCheckScalarFieldEnum
+    having?: SkuCheckScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: SkuCheckCountAggregateInputType | true
+    _avg?: SkuCheckAvgAggregateInputType
+    _sum?: SkuCheckSumAggregateInputType
+    _min?: SkuCheckMinAggregateInputType
+    _max?: SkuCheckMaxAggregateInputType
+  }
+
+  export type SkuCheckGroupByOutputType = {
+    id: string
+    itemId: string
+    groupKey: string
+    kind: string
+    saranNama: string | null
+    saranUpc: string | null
+    saranStok: number | null
+    status: string
+    sku: string | null
+    checkedById: string | null
+    checkedAt: Date | null
+    pushedAt: Date | null
+    createdAt: Date
+    _count: SkuCheckCountAggregateOutputType | null
+    _avg: SkuCheckAvgAggregateOutputType | null
+    _sum: SkuCheckSumAggregateOutputType | null
+    _min: SkuCheckMinAggregateOutputType | null
+    _max: SkuCheckMaxAggregateOutputType | null
+  }
+
+  type GetSkuCheckGroupByPayload<T extends SkuCheckGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<SkuCheckGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof SkuCheckGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], SkuCheckGroupByOutputType[P]>
+            : GetScalarType<T[P], SkuCheckGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type SkuCheckSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    itemId?: boolean
+    groupKey?: boolean
+    kind?: boolean
+    saranNama?: boolean
+    saranUpc?: boolean
+    saranStok?: boolean
+    status?: boolean
+    sku?: boolean
+    checkedById?: boolean
+    checkedAt?: boolean
+    pushedAt?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["skuCheck"]>
+
+  export type SkuCheckSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    itemId?: boolean
+    groupKey?: boolean
+    kind?: boolean
+    saranNama?: boolean
+    saranUpc?: boolean
+    saranStok?: boolean
+    status?: boolean
+    sku?: boolean
+    checkedById?: boolean
+    checkedAt?: boolean
+    pushedAt?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["skuCheck"]>
+
+  export type SkuCheckSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    itemId?: boolean
+    groupKey?: boolean
+    kind?: boolean
+    saranNama?: boolean
+    saranUpc?: boolean
+    saranStok?: boolean
+    status?: boolean
+    sku?: boolean
+    checkedById?: boolean
+    checkedAt?: boolean
+    pushedAt?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["skuCheck"]>
+
+  export type SkuCheckSelectScalar = {
+    id?: boolean
+    itemId?: boolean
+    groupKey?: boolean
+    kind?: boolean
+    saranNama?: boolean
+    saranUpc?: boolean
+    saranStok?: boolean
+    status?: boolean
+    sku?: boolean
+    checkedById?: boolean
+    checkedAt?: boolean
+    pushedAt?: boolean
+    createdAt?: boolean
+  }
+
+  export type SkuCheckOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "groupKey" | "kind" | "saranNama" | "saranUpc" | "saranStok" | "status" | "sku" | "checkedById" | "checkedAt" | "pushedAt" | "createdAt", ExtArgs["result"]["skuCheck"]>
+
+  export type $SkuCheckPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "SkuCheck"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      itemId: string
+      groupKey: string
+      kind: string
+      saranNama: string | null
+      saranUpc: string | null
+      saranStok: number | null
+      status: string
+      sku: string | null
+      checkedById: string | null
+      checkedAt: Date | null
+      pushedAt: Date | null
+      createdAt: Date
+    }, ExtArgs["result"]["skuCheck"]>
+    composites: {}
+  }
+
+  type SkuCheckGetPayload<S extends boolean | null | undefined | SkuCheckDefaultArgs> = $Result.GetResult<Prisma.$SkuCheckPayload, S>
+
+  type SkuCheckCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<SkuCheckFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: SkuCheckCountAggregateInputType | true
+    }
+
+  export interface SkuCheckDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['SkuCheck'], meta: { name: 'SkuCheck' } }
+    /**
+     * Find zero or one SkuCheck that matches the filter.
+     * @param {SkuCheckFindUniqueArgs} args - Arguments to find a SkuCheck
+     * @example
+     * // Get one SkuCheck
+     * const skuCheck = await prisma.skuCheck.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends SkuCheckFindUniqueArgs>(args: SelectSubset<T, SkuCheckFindUniqueArgs<ExtArgs>>): Prisma__SkuCheckClient<$Result.GetResult<Prisma.$SkuCheckPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one SkuCheck that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {SkuCheckFindUniqueOrThrowArgs} args - Arguments to find a SkuCheck
+     * @example
+     * // Get one SkuCheck
+     * const skuCheck = await prisma.skuCheck.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends SkuCheckFindUniqueOrThrowArgs>(args: SelectSubset<T, SkuCheckFindUniqueOrThrowArgs<ExtArgs>>): Prisma__SkuCheckClient<$Result.GetResult<Prisma.$SkuCheckPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SkuCheck that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkuCheckFindFirstArgs} args - Arguments to find a SkuCheck
+     * @example
+     * // Get one SkuCheck
+     * const skuCheck = await prisma.skuCheck.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends SkuCheckFindFirstArgs>(args?: SelectSubset<T, SkuCheckFindFirstArgs<ExtArgs>>): Prisma__SkuCheckClient<$Result.GetResult<Prisma.$SkuCheckPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first SkuCheck that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkuCheckFindFirstOrThrowArgs} args - Arguments to find a SkuCheck
+     * @example
+     * // Get one SkuCheck
+     * const skuCheck = await prisma.skuCheck.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends SkuCheckFindFirstOrThrowArgs>(args?: SelectSubset<T, SkuCheckFindFirstOrThrowArgs<ExtArgs>>): Prisma__SkuCheckClient<$Result.GetResult<Prisma.$SkuCheckPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more SkuChecks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkuCheckFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all SkuChecks
+     * const skuChecks = await prisma.skuCheck.findMany()
+     * 
+     * // Get first 10 SkuChecks
+     * const skuChecks = await prisma.skuCheck.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const skuCheckWithIdOnly = await prisma.skuCheck.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends SkuCheckFindManyArgs>(args?: SelectSubset<T, SkuCheckFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkuCheckPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a SkuCheck.
+     * @param {SkuCheckCreateArgs} args - Arguments to create a SkuCheck.
+     * @example
+     * // Create one SkuCheck
+     * const SkuCheck = await prisma.skuCheck.create({
+     *   data: {
+     *     // ... data to create a SkuCheck
+     *   }
+     * })
+     * 
+     */
+    create<T extends SkuCheckCreateArgs>(args: SelectSubset<T, SkuCheckCreateArgs<ExtArgs>>): Prisma__SkuCheckClient<$Result.GetResult<Prisma.$SkuCheckPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many SkuChecks.
+     * @param {SkuCheckCreateManyArgs} args - Arguments to create many SkuChecks.
+     * @example
+     * // Create many SkuChecks
+     * const skuCheck = await prisma.skuCheck.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends SkuCheckCreateManyArgs>(args?: SelectSubset<T, SkuCheckCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many SkuChecks and returns the data saved in the database.
+     * @param {SkuCheckCreateManyAndReturnArgs} args - Arguments to create many SkuChecks.
+     * @example
+     * // Create many SkuChecks
+     * const skuCheck = await prisma.skuCheck.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many SkuChecks and only return the `id`
+     * const skuCheckWithIdOnly = await prisma.skuCheck.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends SkuCheckCreateManyAndReturnArgs>(args?: SelectSubset<T, SkuCheckCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkuCheckPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a SkuCheck.
+     * @param {SkuCheckDeleteArgs} args - Arguments to delete one SkuCheck.
+     * @example
+     * // Delete one SkuCheck
+     * const SkuCheck = await prisma.skuCheck.delete({
+     *   where: {
+     *     // ... filter to delete one SkuCheck
+     *   }
+     * })
+     * 
+     */
+    delete<T extends SkuCheckDeleteArgs>(args: SelectSubset<T, SkuCheckDeleteArgs<ExtArgs>>): Prisma__SkuCheckClient<$Result.GetResult<Prisma.$SkuCheckPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one SkuCheck.
+     * @param {SkuCheckUpdateArgs} args - Arguments to update one SkuCheck.
+     * @example
+     * // Update one SkuCheck
+     * const skuCheck = await prisma.skuCheck.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends SkuCheckUpdateArgs>(args: SelectSubset<T, SkuCheckUpdateArgs<ExtArgs>>): Prisma__SkuCheckClient<$Result.GetResult<Prisma.$SkuCheckPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more SkuChecks.
+     * @param {SkuCheckDeleteManyArgs} args - Arguments to filter SkuChecks to delete.
+     * @example
+     * // Delete a few SkuChecks
+     * const { count } = await prisma.skuCheck.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends SkuCheckDeleteManyArgs>(args?: SelectSubset<T, SkuCheckDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SkuChecks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkuCheckUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many SkuChecks
+     * const skuCheck = await prisma.skuCheck.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends SkuCheckUpdateManyArgs>(args: SelectSubset<T, SkuCheckUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more SkuChecks and returns the data updated in the database.
+     * @param {SkuCheckUpdateManyAndReturnArgs} args - Arguments to update many SkuChecks.
+     * @example
+     * // Update many SkuChecks
+     * const skuCheck = await prisma.skuCheck.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more SkuChecks and only return the `id`
+     * const skuCheckWithIdOnly = await prisma.skuCheck.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends SkuCheckUpdateManyAndReturnArgs>(args: SelectSubset<T, SkuCheckUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$SkuCheckPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one SkuCheck.
+     * @param {SkuCheckUpsertArgs} args - Arguments to update or create a SkuCheck.
+     * @example
+     * // Update or create a SkuCheck
+     * const skuCheck = await prisma.skuCheck.upsert({
+     *   create: {
+     *     // ... data to create a SkuCheck
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the SkuCheck we want to update
+     *   }
+     * })
+     */
+    upsert<T extends SkuCheckUpsertArgs>(args: SelectSubset<T, SkuCheckUpsertArgs<ExtArgs>>): Prisma__SkuCheckClient<$Result.GetResult<Prisma.$SkuCheckPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of SkuChecks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkuCheckCountArgs} args - Arguments to filter SkuChecks to count.
+     * @example
+     * // Count the number of SkuChecks
+     * const count = await prisma.skuCheck.count({
+     *   where: {
+     *     // ... the filter for the SkuChecks we want to count
+     *   }
+     * })
+    **/
+    count<T extends SkuCheckCountArgs>(
+      args?: Subset<T, SkuCheckCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], SkuCheckCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a SkuCheck.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkuCheckAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends SkuCheckAggregateArgs>(args: Subset<T, SkuCheckAggregateArgs>): Prisma.PrismaPromise<GetSkuCheckAggregateType<T>>
+
+    /**
+     * Group by SkuCheck.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {SkuCheckGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends SkuCheckGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: SkuCheckGroupByArgs['orderBy'] }
+        : { orderBy?: SkuCheckGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, SkuCheckGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetSkuCheckGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the SkuCheck model
+   */
+  readonly fields: SkuCheckFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for SkuCheck.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__SkuCheckClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the SkuCheck model
+   */
+  interface SkuCheckFieldRefs {
+    readonly id: FieldRef<"SkuCheck", 'String'>
+    readonly itemId: FieldRef<"SkuCheck", 'String'>
+    readonly groupKey: FieldRef<"SkuCheck", 'String'>
+    readonly kind: FieldRef<"SkuCheck", 'String'>
+    readonly saranNama: FieldRef<"SkuCheck", 'String'>
+    readonly saranUpc: FieldRef<"SkuCheck", 'String'>
+    readonly saranStok: FieldRef<"SkuCheck", 'Float'>
+    readonly status: FieldRef<"SkuCheck", 'String'>
+    readonly sku: FieldRef<"SkuCheck", 'String'>
+    readonly checkedById: FieldRef<"SkuCheck", 'String'>
+    readonly checkedAt: FieldRef<"SkuCheck", 'DateTime'>
+    readonly pushedAt: FieldRef<"SkuCheck", 'DateTime'>
+    readonly createdAt: FieldRef<"SkuCheck", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * SkuCheck findUnique
+   */
+  export type SkuCheckFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkuCheck
+     */
+    select?: SkuCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkuCheck
+     */
+    omit?: SkuCheckOmit<ExtArgs> | null
+    /**
+     * Filter, which SkuCheck to fetch.
+     */
+    where: SkuCheckWhereUniqueInput
+  }
+
+  /**
+   * SkuCheck findUniqueOrThrow
+   */
+  export type SkuCheckFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkuCheck
+     */
+    select?: SkuCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkuCheck
+     */
+    omit?: SkuCheckOmit<ExtArgs> | null
+    /**
+     * Filter, which SkuCheck to fetch.
+     */
+    where: SkuCheckWhereUniqueInput
+  }
+
+  /**
+   * SkuCheck findFirst
+   */
+  export type SkuCheckFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkuCheck
+     */
+    select?: SkuCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkuCheck
+     */
+    omit?: SkuCheckOmit<ExtArgs> | null
+    /**
+     * Filter, which SkuCheck to fetch.
+     */
+    where?: SkuCheckWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkuChecks to fetch.
+     */
+    orderBy?: SkuCheckOrderByWithRelationInput | SkuCheckOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SkuChecks.
+     */
+    cursor?: SkuCheckWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkuChecks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkuChecks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkuChecks.
+     */
+    distinct?: SkuCheckScalarFieldEnum | SkuCheckScalarFieldEnum[]
+  }
+
+  /**
+   * SkuCheck findFirstOrThrow
+   */
+  export type SkuCheckFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkuCheck
+     */
+    select?: SkuCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkuCheck
+     */
+    omit?: SkuCheckOmit<ExtArgs> | null
+    /**
+     * Filter, which SkuCheck to fetch.
+     */
+    where?: SkuCheckWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkuChecks to fetch.
+     */
+    orderBy?: SkuCheckOrderByWithRelationInput | SkuCheckOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for SkuChecks.
+     */
+    cursor?: SkuCheckWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkuChecks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkuChecks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of SkuChecks.
+     */
+    distinct?: SkuCheckScalarFieldEnum | SkuCheckScalarFieldEnum[]
+  }
+
+  /**
+   * SkuCheck findMany
+   */
+  export type SkuCheckFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkuCheck
+     */
+    select?: SkuCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkuCheck
+     */
+    omit?: SkuCheckOmit<ExtArgs> | null
+    /**
+     * Filter, which SkuChecks to fetch.
+     */
+    where?: SkuCheckWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of SkuChecks to fetch.
+     */
+    orderBy?: SkuCheckOrderByWithRelationInput | SkuCheckOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing SkuChecks.
+     */
+    cursor?: SkuCheckWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` SkuChecks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` SkuChecks.
+     */
+    skip?: number
+    distinct?: SkuCheckScalarFieldEnum | SkuCheckScalarFieldEnum[]
+  }
+
+  /**
+   * SkuCheck create
+   */
+  export type SkuCheckCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkuCheck
+     */
+    select?: SkuCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkuCheck
+     */
+    omit?: SkuCheckOmit<ExtArgs> | null
+    /**
+     * The data needed to create a SkuCheck.
+     */
+    data: XOR<SkuCheckCreateInput, SkuCheckUncheckedCreateInput>
+  }
+
+  /**
+   * SkuCheck createMany
+   */
+  export type SkuCheckCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many SkuChecks.
+     */
+    data: SkuCheckCreateManyInput | SkuCheckCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SkuCheck createManyAndReturn
+   */
+  export type SkuCheckCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkuCheck
+     */
+    select?: SkuCheckSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkuCheck
+     */
+    omit?: SkuCheckOmit<ExtArgs> | null
+    /**
+     * The data used to create many SkuChecks.
+     */
+    data: SkuCheckCreateManyInput | SkuCheckCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * SkuCheck update
+   */
+  export type SkuCheckUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkuCheck
+     */
+    select?: SkuCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkuCheck
+     */
+    omit?: SkuCheckOmit<ExtArgs> | null
+    /**
+     * The data needed to update a SkuCheck.
+     */
+    data: XOR<SkuCheckUpdateInput, SkuCheckUncheckedUpdateInput>
+    /**
+     * Choose, which SkuCheck to update.
+     */
+    where: SkuCheckWhereUniqueInput
+  }
+
+  /**
+   * SkuCheck updateMany
+   */
+  export type SkuCheckUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update SkuChecks.
+     */
+    data: XOR<SkuCheckUpdateManyMutationInput, SkuCheckUncheckedUpdateManyInput>
+    /**
+     * Filter which SkuChecks to update
+     */
+    where?: SkuCheckWhereInput
+    /**
+     * Limit how many SkuChecks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkuCheck updateManyAndReturn
+   */
+  export type SkuCheckUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkuCheck
+     */
+    select?: SkuCheckSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkuCheck
+     */
+    omit?: SkuCheckOmit<ExtArgs> | null
+    /**
+     * The data used to update SkuChecks.
+     */
+    data: XOR<SkuCheckUpdateManyMutationInput, SkuCheckUncheckedUpdateManyInput>
+    /**
+     * Filter which SkuChecks to update
+     */
+    where?: SkuCheckWhereInput
+    /**
+     * Limit how many SkuChecks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkuCheck upsert
+   */
+  export type SkuCheckUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkuCheck
+     */
+    select?: SkuCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkuCheck
+     */
+    omit?: SkuCheckOmit<ExtArgs> | null
+    /**
+     * The filter to search for the SkuCheck to update in case it exists.
+     */
+    where: SkuCheckWhereUniqueInput
+    /**
+     * In case the SkuCheck found by the `where` argument doesn't exist, create a new SkuCheck with this data.
+     */
+    create: XOR<SkuCheckCreateInput, SkuCheckUncheckedCreateInput>
+    /**
+     * In case the SkuCheck was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<SkuCheckUpdateInput, SkuCheckUncheckedUpdateInput>
+  }
+
+  /**
+   * SkuCheck delete
+   */
+  export type SkuCheckDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkuCheck
+     */
+    select?: SkuCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkuCheck
+     */
+    omit?: SkuCheckOmit<ExtArgs> | null
+    /**
+     * Filter which SkuCheck to delete.
+     */
+    where: SkuCheckWhereUniqueInput
+  }
+
+  /**
+   * SkuCheck deleteMany
+   */
+  export type SkuCheckDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which SkuChecks to delete
+     */
+    where?: SkuCheckWhereInput
+    /**
+     * Limit how many SkuChecks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * SkuCheck without action
+   */
+  export type SkuCheckDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the SkuCheck
+     */
+    select?: SkuCheckSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the SkuCheck
+     */
+    omit?: SkuCheckOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -62154,6 +63378,25 @@ export namespace Prisma {
   };
 
   export type PosCampaignScalarFieldEnum = (typeof PosCampaignScalarFieldEnum)[keyof typeof PosCampaignScalarFieldEnum]
+
+
+  export const SkuCheckScalarFieldEnum: {
+    id: 'id',
+    itemId: 'itemId',
+    groupKey: 'groupKey',
+    kind: 'kind',
+    saranNama: 'saranNama',
+    saranUpc: 'saranUpc',
+    saranStok: 'saranStok',
+    status: 'status',
+    sku: 'sku',
+    checkedById: 'checkedById',
+    checkedAt: 'checkedAt',
+    pushedAt: 'pushedAt',
+    createdAt: 'createdAt'
+  };
+
+  export type SkuCheckScalarFieldEnum = (typeof SkuCheckScalarFieldEnum)[keyof typeof SkuCheckScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -66468,6 +67711,100 @@ export namespace Prisma {
     branchId?: StringNullableWithAggregatesFilter<"PosCampaign"> | string | null
     active?: BoolWithAggregatesFilter<"PosCampaign"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"PosCampaign"> | Date | string
+  }
+
+  export type SkuCheckWhereInput = {
+    AND?: SkuCheckWhereInput | SkuCheckWhereInput[]
+    OR?: SkuCheckWhereInput[]
+    NOT?: SkuCheckWhereInput | SkuCheckWhereInput[]
+    id?: StringFilter<"SkuCheck"> | string
+    itemId?: StringFilter<"SkuCheck"> | string
+    groupKey?: StringFilter<"SkuCheck"> | string
+    kind?: StringFilter<"SkuCheck"> | string
+    saranNama?: StringNullableFilter<"SkuCheck"> | string | null
+    saranUpc?: StringNullableFilter<"SkuCheck"> | string | null
+    saranStok?: FloatNullableFilter<"SkuCheck"> | number | null
+    status?: StringFilter<"SkuCheck"> | string
+    sku?: StringNullableFilter<"SkuCheck"> | string | null
+    checkedById?: StringNullableFilter<"SkuCheck"> | string | null
+    checkedAt?: DateTimeNullableFilter<"SkuCheck"> | Date | string | null
+    pushedAt?: DateTimeNullableFilter<"SkuCheck"> | Date | string | null
+    createdAt?: DateTimeFilter<"SkuCheck"> | Date | string
+  }
+
+  export type SkuCheckOrderByWithRelationInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    groupKey?: SortOrder
+    kind?: SortOrder
+    saranNama?: SortOrderInput | SortOrder
+    saranUpc?: SortOrderInput | SortOrder
+    saranStok?: SortOrderInput | SortOrder
+    status?: SortOrder
+    sku?: SortOrderInput | SortOrder
+    checkedById?: SortOrderInput | SortOrder
+    checkedAt?: SortOrderInput | SortOrder
+    pushedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SkuCheckWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    itemId?: string
+    AND?: SkuCheckWhereInput | SkuCheckWhereInput[]
+    OR?: SkuCheckWhereInput[]
+    NOT?: SkuCheckWhereInput | SkuCheckWhereInput[]
+    groupKey?: StringFilter<"SkuCheck"> | string
+    kind?: StringFilter<"SkuCheck"> | string
+    saranNama?: StringNullableFilter<"SkuCheck"> | string | null
+    saranUpc?: StringNullableFilter<"SkuCheck"> | string | null
+    saranStok?: FloatNullableFilter<"SkuCheck"> | number | null
+    status?: StringFilter<"SkuCheck"> | string
+    sku?: StringNullableFilter<"SkuCheck"> | string | null
+    checkedById?: StringNullableFilter<"SkuCheck"> | string | null
+    checkedAt?: DateTimeNullableFilter<"SkuCheck"> | Date | string | null
+    pushedAt?: DateTimeNullableFilter<"SkuCheck"> | Date | string | null
+    createdAt?: DateTimeFilter<"SkuCheck"> | Date | string
+  }, "id" | "itemId">
+
+  export type SkuCheckOrderByWithAggregationInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    groupKey?: SortOrder
+    kind?: SortOrder
+    saranNama?: SortOrderInput | SortOrder
+    saranUpc?: SortOrderInput | SortOrder
+    saranStok?: SortOrderInput | SortOrder
+    status?: SortOrder
+    sku?: SortOrderInput | SortOrder
+    checkedById?: SortOrderInput | SortOrder
+    checkedAt?: SortOrderInput | SortOrder
+    pushedAt?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: SkuCheckCountOrderByAggregateInput
+    _avg?: SkuCheckAvgOrderByAggregateInput
+    _max?: SkuCheckMaxOrderByAggregateInput
+    _min?: SkuCheckMinOrderByAggregateInput
+    _sum?: SkuCheckSumOrderByAggregateInput
+  }
+
+  export type SkuCheckScalarWhereWithAggregatesInput = {
+    AND?: SkuCheckScalarWhereWithAggregatesInput | SkuCheckScalarWhereWithAggregatesInput[]
+    OR?: SkuCheckScalarWhereWithAggregatesInput[]
+    NOT?: SkuCheckScalarWhereWithAggregatesInput | SkuCheckScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"SkuCheck"> | string
+    itemId?: StringWithAggregatesFilter<"SkuCheck"> | string
+    groupKey?: StringWithAggregatesFilter<"SkuCheck"> | string
+    kind?: StringWithAggregatesFilter<"SkuCheck"> | string
+    saranNama?: StringNullableWithAggregatesFilter<"SkuCheck"> | string | null
+    saranUpc?: StringNullableWithAggregatesFilter<"SkuCheck"> | string | null
+    saranStok?: FloatNullableWithAggregatesFilter<"SkuCheck"> | number | null
+    status?: StringWithAggregatesFilter<"SkuCheck"> | string
+    sku?: StringNullableWithAggregatesFilter<"SkuCheck"> | string | null
+    checkedById?: StringNullableWithAggregatesFilter<"SkuCheck"> | string | null
+    checkedAt?: DateTimeNullableWithAggregatesFilter<"SkuCheck"> | Date | string | null
+    pushedAt?: DateTimeNullableWithAggregatesFilter<"SkuCheck"> | Date | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"SkuCheck"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -71095,6 +72432,118 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type SkuCheckCreateInput = {
+    id?: string
+    itemId: string
+    groupKey: string
+    kind: string
+    saranNama?: string | null
+    saranUpc?: string | null
+    saranStok?: number | null
+    status?: string
+    sku?: string | null
+    checkedById?: string | null
+    checkedAt?: Date | string | null
+    pushedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type SkuCheckUncheckedCreateInput = {
+    id?: string
+    itemId: string
+    groupKey: string
+    kind: string
+    saranNama?: string | null
+    saranUpc?: string | null
+    saranStok?: number | null
+    status?: string
+    sku?: string | null
+    checkedById?: string | null
+    checkedAt?: Date | string | null
+    pushedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type SkuCheckUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemId?: StringFieldUpdateOperationsInput | string
+    groupKey?: StringFieldUpdateOperationsInput | string
+    kind?: StringFieldUpdateOperationsInput | string
+    saranNama?: NullableStringFieldUpdateOperationsInput | string | null
+    saranUpc?: NullableStringFieldUpdateOperationsInput | string | null
+    saranStok?: NullableFloatFieldUpdateOperationsInput | number | null
+    status?: StringFieldUpdateOperationsInput | string
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedById?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    pushedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SkuCheckUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemId?: StringFieldUpdateOperationsInput | string
+    groupKey?: StringFieldUpdateOperationsInput | string
+    kind?: StringFieldUpdateOperationsInput | string
+    saranNama?: NullableStringFieldUpdateOperationsInput | string | null
+    saranUpc?: NullableStringFieldUpdateOperationsInput | string | null
+    saranStok?: NullableFloatFieldUpdateOperationsInput | number | null
+    status?: StringFieldUpdateOperationsInput | string
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedById?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    pushedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SkuCheckCreateManyInput = {
+    id?: string
+    itemId: string
+    groupKey: string
+    kind: string
+    saranNama?: string | null
+    saranUpc?: string | null
+    saranStok?: number | null
+    status?: string
+    sku?: string | null
+    checkedById?: string | null
+    checkedAt?: Date | string | null
+    pushedAt?: Date | string | null
+    createdAt?: Date | string
+  }
+
+  export type SkuCheckUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemId?: StringFieldUpdateOperationsInput | string
+    groupKey?: StringFieldUpdateOperationsInput | string
+    kind?: StringFieldUpdateOperationsInput | string
+    saranNama?: NullableStringFieldUpdateOperationsInput | string | null
+    saranUpc?: NullableStringFieldUpdateOperationsInput | string | null
+    saranStok?: NullableFloatFieldUpdateOperationsInput | number | null
+    status?: StringFieldUpdateOperationsInput | string
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedById?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    pushedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type SkuCheckUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    itemId?: StringFieldUpdateOperationsInput | string
+    groupKey?: StringFieldUpdateOperationsInput | string
+    kind?: StringFieldUpdateOperationsInput | string
+    saranNama?: NullableStringFieldUpdateOperationsInput | string | null
+    saranUpc?: NullableStringFieldUpdateOperationsInput | string | null
+    saranStok?: NullableFloatFieldUpdateOperationsInput | number | null
+    status?: StringFieldUpdateOperationsInput | string
+    sku?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedById?: NullableStringFieldUpdateOperationsInput | string | null
+    checkedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    pushedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -74065,6 +75514,62 @@ export namespace Prisma {
     branchId?: SortOrder
     active?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type SkuCheckCountOrderByAggregateInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    groupKey?: SortOrder
+    kind?: SortOrder
+    saranNama?: SortOrder
+    saranUpc?: SortOrder
+    saranStok?: SortOrder
+    status?: SortOrder
+    sku?: SortOrder
+    checkedById?: SortOrder
+    checkedAt?: SortOrder
+    pushedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SkuCheckAvgOrderByAggregateInput = {
+    saranStok?: SortOrder
+  }
+
+  export type SkuCheckMaxOrderByAggregateInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    groupKey?: SortOrder
+    kind?: SortOrder
+    saranNama?: SortOrder
+    saranUpc?: SortOrder
+    saranStok?: SortOrder
+    status?: SortOrder
+    sku?: SortOrder
+    checkedById?: SortOrder
+    checkedAt?: SortOrder
+    pushedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SkuCheckMinOrderByAggregateInput = {
+    id?: SortOrder
+    itemId?: SortOrder
+    groupKey?: SortOrder
+    kind?: SortOrder
+    saranNama?: SortOrder
+    saranUpc?: SortOrder
+    saranStok?: SortOrder
+    status?: SortOrder
+    sku?: SortOrder
+    checkedById?: SortOrder
+    checkedAt?: SortOrder
+    pushedAt?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type SkuCheckSumOrderByAggregateInput = {
+    saranStok?: SortOrder
   }
 
   export type BranchCreateNestedOneWithoutUsersInput = {
