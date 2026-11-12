@@ -16,6 +16,8 @@ export function SkuImport() {
   const [pending, start] = useTransition();
   const [prev, setPrev] = useState<{ changes: SkuChange[]; same: number; unknown: number } | null>(null);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+  const [off, setOff] = useState<Set<string>>(new Set()); // baris yang TIDAK dicentang
+  const toggle = (id: string) => setOff((o) => { const n = new Set(o); if (n.has(id)) n.delete(id); else n.add(id); return n; });
 
   const pick = (f: File | undefined) =>
     f &&
@@ -24,13 +26,14 @@ export function SkuImport() {
       setPrev(null);
       const r = await previewSkuImport(await toBase64(f));
       if (!r.ok) return setMsg({ ok: false, text: r.message ?? "Gagal membaca file." });
+      setOff(new Set());
       setPrev(r.data!);
     });
 
   const save = () =>
     prev &&
     start(async () => {
-      const r = await applySkuImport(prev.changes.map((c) => ({ id: c.id, to: c.to })));
+      const r = await applySkuImport(prev.changes.filter((c) => !off.has(c.id)).map((c) => ({ id: c.id, to: c.to })));
       setMsg({ ok: r.ok, text: r.message ?? "" });
       if (r.ok) setPrev(null);
     });
@@ -54,6 +57,15 @@ export function SkuImport() {
                 <table className="w-full text-14">
                   <thead className="sticky top-0 bg-card">
                     <tr className="border-b text-left text-muted-foreground">
+                      <th className="w-8 p-2">
+                        <input
+                          type="checkbox"
+                          aria-label="Centang semua"
+                          checked={off.size === 0}
+                          onChange={() => setOff(off.size ? new Set() : new Set(prev.changes.map((c) => c.id)))}
+                          className="size-4"
+                        />
+                      </th>
                       <th className="p-2">Nama di Tirtonichub</th>
                       <th className="p-2">Nama di Accurate</th>
                       <th className="p-2">SKU lama</th>
@@ -62,7 +74,10 @@ export function SkuImport() {
                   </thead>
                   <tbody>
                     {prev.changes.map((c) => (
-                      <tr key={c.id} className="border-b last:border-b-0">
+                      <tr key={c.id} onClick={() => toggle(c.id)} className={`cursor-pointer border-b last:border-b-0 ${off.has(c.id) ? "opacity-40" : ""}`}>
+                        <td className="p-2">
+                          <input type="checkbox" checked={!off.has(c.id)} onChange={() => toggle(c.id)} onClick={(e) => e.stopPropagation()} aria-label={`Simpan SKU ${c.nama}`} className="size-4" />
+                        </td>
                         <td className="p-2">{c.nama}</td>
                         <td className="p-2">{c.acc || <span className="text-muted-foreground">—</span>}</td>
                         <td className="p-2 font-mono text-12 text-muted-foreground">{c.from || "—"}</td>
@@ -72,8 +87,8 @@ export function SkuImport() {
                   </tbody>
                 </table>
               </div>
-              <button type="button" onClick={save} disabled={pending} className="h-10 rounded-md bg-primary px-4 text-14 font-semibold text-primary-foreground disabled:opacity-50">
-                {pending ? "Menyimpan…" : `Simpan ${prev.changes.length} SKU`}
+              <button type="button" onClick={save} disabled={pending || off.size === prev.changes.length} className="h-10 rounded-md bg-primary px-4 text-14 font-semibold text-primary-foreground disabled:opacity-50">
+                {pending ? "Menyimpan…" : `Simpan ${prev.changes.length - off.size} SKU yang dicentang`}
               </button>
             </>
           )}
