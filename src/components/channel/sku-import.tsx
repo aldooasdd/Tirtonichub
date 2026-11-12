@@ -4,7 +4,6 @@ import { useState, useTransition } from "react";
 import { FileUp } from "lucide-react";
 import { applySkuImport, previewSkuImport, type SkuChange } from "@/server/actions/sku-import";
 
-const TOKO: Record<string, string> = { SHOPEE: "Shopee", TOKOPEDIA: "Tokopedia", WEBSITE: "Tirtonic.com" };
 const toBase64 = (f: File) =>
   new Promise<string>((res, rej) => {
     const r = new FileReader();
@@ -55,8 +54,8 @@ export function SkuImport() {
                 <table className="w-full text-14">
                   <thead className="sticky top-0 bg-card">
                     <tr className="border-b text-left text-muted-foreground">
-                      <th className="p-2">Toko</th>
-                      <th className="p-2">Produk</th>
+                      <th className="p-2">Nama di Tirtonichub</th>
+                      <th className="p-2">Nama di Accurate</th>
                       <th className="p-2">SKU lama</th>
                       <th className="p-2">SKU baru</th>
                     </tr>
@@ -64,8 +63,8 @@ export function SkuImport() {
                   <tbody>
                     {prev.changes.map((c) => (
                       <tr key={c.id} className="border-b last:border-b-0">
-                        <td className="p-2 whitespace-nowrap">{TOKO[c.toko] ?? c.toko}</td>
                         <td className="p-2">{c.nama}</td>
+                        <td className="p-2">{c.acc || <span className="text-muted-foreground">—</span>}</td>
                         <td className="p-2 font-mono text-12 text-muted-foreground">{c.from || "—"}</td>
                         <td className="p-2 font-mono text-12">{c.to || "(kosong → SKU marketplace)"}</td>
                       </tr>
