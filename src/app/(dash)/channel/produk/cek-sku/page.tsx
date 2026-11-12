@@ -52,7 +52,10 @@ export default async function CekSkuPage({ searchParams }: { searchParams: Promi
           <h1 className="text-24 font-semibold">Cek SKU</h1>
           <p className="text-14 text-muted-foreground">Cocokkan barang dengan Accurate: tekan <b>Benar</b> kalau saran cocok, atau scan barcode barangnya (Zebra) lalu Enter.</p>
         </div>
-        <SkuCheckPush unpushed={unpushed} />
+        <div className="flex flex-wrap items-start gap-2">
+          {total > 0 && <SkuCheckLoad replace />}
+          <SkuCheckPush unpushed={unpushed} />
+        </div>
       </div>
 
       {total === 0 ? (
@@ -122,7 +125,7 @@ export default async function CekSkuPage({ searchParams }: { searchParams: Promi
           </div>
 
           <details className="rounded-lg border bg-card p-4 text-14">
-            <summary className="cursor-pointer font-medium">Muat ulang / tambah dari file Accurate</summary>
+            <summary className="cursor-pointer font-medium">Tambah dari file lain (antrian lama tetap)</summary>
             <div className="mt-2"><SkuCheckLoad /></div>
           </details>
         </>

@@ -95,13 +95,26 @@ export function SkuCheckCard(p: {
   );
 }
 
-export function SkuCheckLoad() {
+/** replace = Ganti file: antrian "belum dicek" lama dibuang, diganti isi file baru. */
+export function SkuCheckLoad({ replace = false }: { replace?: boolean }) {
   const { pending, msg, run } = useRun();
   return (
     <div className="space-y-1">
       <label className="inline-flex h-9 cursor-pointer items-center gap-1.5 rounded-md border px-3 text-14 font-medium">
-        <FileUp className="size-4" /> {pending ? "Memuat…" : "Upload file hasil cocok Accurate (.xlsx)"}
-        <input type="file" accept=".xlsx" className="hidden" disabled={pending} onChange={(e) => { const f = e.target.files?.[0]; e.target.value = ""; if (f) run(async () => loadSkuCheckFile(await toBase64(f))); }} />
+        <FileUp className="size-4" /> {pending ? "Memuat…" : replace ? "Ganti file" : "Upload file hasil cocok Accurate (.xlsx)"}
+        <input
+          type="file"
+          accept=".xlsx"
+          className="hidden"
+          disabled={pending}
+          onChange={(e) => {
+            const f = e.target.files?.[0];
+            e.target.value = "";
+            if (!f) return;
+            if (replace && !confirm(`Ganti antrian dengan "${f.name}"? Barang yang belum dicek diganti isi file ini. Yang sudah dicek tetap.`)) return;
+            run(async () => loadSkuCheckFile(await toBase64(f), replace));
+          }}
+        />
       </label>
       {msg && <p className={`text-12 ${msg.ok ? "text-emerald-600" : "text-destructive"}`}>{msg.text}</p>}
     </div>

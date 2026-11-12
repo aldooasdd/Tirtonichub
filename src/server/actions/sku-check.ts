@@ -17,8 +17,9 @@ const PATH = "/channel/produk/cek-sku";
 const cell = (v: ExcelJS.CellValue) =>
   (v == null ? "" : typeof v === "object" && "text" in v ? String(v.text) : typeof v === "object" && "result" in v ? String(v.result ?? "") : String(v)).trim();
 
-/** Muat antrian dari file hasil cocok Accurate (kolom "Cocok" = RAGU… / TIDAK KETEMU). Baris yang sudah dicek tidak ditimpa. */
-export async function loadSkuCheckFile(base64: string): Promise<Res> {
+/** Muat antrian dari file hasil cocok Accurate (kolom "Cocok" = RAGU… / TIDAK KETEMU). Baris yang sudah dicek tidak ditimpa.
+ *  replace = true → antrian "belum dicek" lama dihapus dulu (ganti file, mis. per merek). */
+export async function loadSkuCheckFile(base64: string, replace = false): Promise<Res> {
   const ctx = await requireChannel();
   const wb = new ExcelJS.Workbook();
   try {
@@ -57,11 +58,11 @@ export async function loadSkuCheckFile(base64: string): Promise<Res> {
   const done = new Set((await prisma.skuCheck.findMany({ where: { status: { not: "pending" } }, select: { itemId: true } })).map((x) => x.itemId));
   const fresh = rows.filter((r) => known.has(r.itemId) && !done.has(r.itemId));
   await prisma.$transaction([
-    prisma.skuCheck.deleteMany({ where: { status: "pending", itemId: { in: fresh.map((r) => r.itemId) } } }),
+    prisma.skuCheck.deleteMany({ where: replace ? { status: "pending" } : { status: "pending", itemId: { in: fresh.map((r) => r.itemId) } } }),
     prisma.skuCheck.createMany({ data: fresh, skipDuplicates: true }),
   ]);
   const { ip } = await clientMeta();
-  await logActivity({ ...ctx, ip }, { action: "sku_check_load", entity: "SkuCheck", entityId: "bulk", after: { rows: rows.length, loaded: fresh.length } });
+  await logActivity({ ...ctx, ip }, { action: "sku_check_load", entity: "SkuCheck", entityId: "bulk", after: { rows: rows.length, loaded: fresh.length, replace } });
   revalidatePath(PATH);
   return { ok: true, message: `${fresh.length} baris masuk antrian Cek SKU (${rows.length - fresh.length} dilewati: sudah dicek / produk tidak ada).` };
 }
