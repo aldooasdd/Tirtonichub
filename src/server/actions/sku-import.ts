@@ -10,7 +10,7 @@ import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 
 import { SKU_COLS } from "@/lib/sku-cols";
-export type SkuChange = { id: string; toko: string; nama: string; from: string; to: string };
+export type SkuChange = { id: string; nama: string; acc: string; from: string; to: string };
 type Res<T = undefined> = { ok: boolean; message?: string; data?: T };
 
 const cell = (v: ExcelJS.CellValue) => (v == null ? "" : typeof v === "object" && "text" in v ? String(v.text) : typeof v === "object" && "result" in v ? String(v.result ?? "") : String(v)).trim();
@@ -26,21 +26,25 @@ export async function previewSkuImport(base64: string): Promise<Res<{ changes: S
   }
   const ws = wb.worksheets[0];
   const head = (ws?.getRow(1).values as ExcelJS.CellValue[] | undefined)?.map(cell) ?? [];
-  const ci = head.indexOf(SKU_COLS.id), cs = head.indexOf(SKU_COLS.sku);
+  const ci = head.indexOf(SKU_COLS.id), cs = head.indexOf(SKU_COLS.sku), ca = head.indexOf(SKU_COLS.acc); // ca opsional
   if (ci < 0 || cs < 0) return { ok: false, message: `Kolom "${SKU_COLS.id}" dan "${SKU_COLS.sku}" tidak ada. Pakai file dari tombol Export.` };
 
   const want = new Map<string, string>();
+  const accName = new Map<string, string>();
   ws.eachRow((r, i) => {
     const id = cell(r.getCell(ci).value);
-    if (i > 1 && id) want.set(id, cell(r.getCell(cs).value).slice(0, 100));
+    if (i > 1 && id) {
+      want.set(id, cell(r.getCell(cs).value).slice(0, 100));
+      if (ca >= 0) accName.set(id, cell(r.getCell(ca).value));
+    }
   });
-  const items = await prisma.marketplaceItem.findMany({ where: { id: { in: [...want.keys()] } }, select: { id: true, platform: true, name: true, localName: true, variant: true, sku: true, localSku: true } });
+  const items = await prisma.marketplaceItem.findMany({ where: { id: { in: [...want.keys()] } }, select: { id: true, name: true, localName: true, variant: true, sku: true, localSku: true } });
   const changes: SkuChange[] = [];
   for (const it of items) {
     const now = it.localSku ?? it.sku ?? "";
     const to = want.get(it.id)!;
     if (to !== now)
-      changes.push({ id: it.id, toko: it.platform, nama: `${it.localName ?? it.name}${it.variant ? ` · ${it.variant}` : ""}`, from: now, to });
+      changes.push({ id: it.id, nama: `${it.localName ?? it.name}${it.variant ? ` · ${it.variant}` : ""}`, acc: accName.get(it.id) ?? "", from: now, to });
   }
   return { ok: true, data: { changes, same: items.length - changes.length, unknown: want.size - items.length } };
 }
