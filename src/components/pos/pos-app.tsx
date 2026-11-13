@@ -263,7 +263,6 @@ function PickUser({ branch, users, onPick, onLogout }: { branch: { name: string 
 }
 
 const CACHE = "pos-katalog-v3";
-const PAGE = 48;
 
 function useCatalog() {
   // Tampil instan dari cache perangkat (panel ini hanya tampil setelah pilih pengguna → sisi klien),
@@ -295,7 +294,6 @@ function CatalogPanel({ onAdd }: { onAdd: (p: Addable) => void }) {
   const ref = useRef<HTMLInputElement>(null);
   const { items, bySku, branchStock } = useCatalog();
   const [q, setQ] = useState("");
-  const [limit, setLimit] = useState(PAGE);
   const [flash, setFlash] = useState<Flash>(null);
   const dq = useDeferredValue(q);
 
@@ -333,7 +331,6 @@ function CatalogPanel({ onAdd }: { onAdd: (p: Addable) => void }) {
     const hit = bySku.get(c.toLowerCase()) ?? (items ? null : await posLookup(c));
     if (hit) {
       setQ("");
-      setLimit(PAGE);
       return pick(hit);
     }
     if (shown.length === 1) {
@@ -354,7 +351,7 @@ function CatalogPanel({ onAdd }: { onAdd: (p: Addable) => void }) {
           ref={ref}
           autoFocus
           value={q}
-          onChange={(e) => { setQ(e.target.value); setLimit(PAGE); }}
+          onChange={(e) => setQ(e.target.value)}
           placeholder="Scan barcode, atau cari nama / SKU"
           className="h-full flex-1 bg-transparent text-16 outline-none"
         />
@@ -375,7 +372,7 @@ function CatalogPanel({ onAdd }: { onAdd: (p: Addable) => void }) {
         {!items && <p className="py-16 text-center text-14 text-muted-foreground">Memuat barang dari Produk Master…</p>}
         {items && shown.length === 0 && <p className="py-16 text-center text-14 text-muted-foreground">Tidak ada barang cocok.</p>}
         <div className="grid grid-cols-2 gap-3 lg:grid-cols-3 xl:grid-cols-4">
-          {shown.slice(0, limit).map((p) => (
+          {shown.map((p) => (
             <button
               key={p.sku}
               onClick={() => pick(p)}
@@ -406,11 +403,6 @@ function CatalogPanel({ onAdd }: { onAdd: (p: Addable) => void }) {
             </button>
           ))}
         </div>
-        {shown.length > limit && (
-          <button onClick={() => setLimit(limit + PAGE * 2)} className="mx-auto mt-4 block rounded-md border bg-background px-5 py-2 text-14">
-            Tampilkan lagi ({shown.length - limit} barang)
-          </button>
-        )}
       </div>
     </div>
   );
