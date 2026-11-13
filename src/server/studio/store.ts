@@ -129,6 +129,19 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
   if (after && col === "tasks" && !opts.trusted) {
     if (before?.planLog !== undefined) after.planLog = before.planLog;
     else delete after.planLog;
+    // Kunci tanggal (14 Nov 2026, permintaan Zaki): Rencana syuting/edit & Deadline Ready kartu yang sudah ada hanya berubah
+    // lewat isian manual di Detail kartu (klien mengirim planManual:true). Perubahan lain (mis. tab lama dengan penggeser
+    // otomatis versi dulu) dikembalikan ke nilai tersimpan, tanpa menggagalkan isian lain.
+    const manual = after.planManual === true;
+    delete after.planManual;
+    if (before && !manual) {
+      for (const k of ["shootPlan", "editPlan", "readyBy", "due"]) {
+        if (JSON.stringify(after[k] ?? null) === JSON.stringify(before[k] ?? null)) continue;
+        console.warn("[studio] perubahan tanggal otomatis ditolak", id, k, u.name);
+        if (before[k] === undefined) delete after[k];
+        else after[k] = before[k];
+      }
+    }
     // antrean WA editor (editNotif) juga milik server
     if (before?.editNotif !== undefined) after.editNotif = before.editNotif;
     else delete after.editNotif;

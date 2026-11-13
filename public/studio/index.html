@@ -4081,7 +4081,7 @@ async function kmSaveNow(){const t=(S.allTasks||S.tasks).find(x=>x.id===S.kmId);
   const patch={updatedAt:Date.now(),updatedBy:S.me?S.me.name:''};const du=S.kmDraft.driveUrl;if(du&&!/^https?:\/\//i.test(String(du).trim())){toast('Link harus diawali https://');return false}const su=String(S.kmDraft.scriptUrl||'').trim();if(su&&!SCRIPT_URL_OK(su)){toast('Link skrip harus dari Google Docs (docs.google.com).');return false}
   let n=0;for(const[k,v]of Object.entries(S.kmDraft))if(fieldPatch(t,k,v,patch))n++;
   const b=$('kmSave');b.disabled=true;b.textContent='Menyimpan…';
-  try{if(n){await S.db.collection('tasks').doc(t.id).update(patch);Object.assign(t,patch)}S.kmDraft={};toast(n?'Perubahan disimpan.':'Tersimpan.');if(n)queueBalance();renderCardModal();return true}
+  try{if(n){await S.db.collection('tasks').doc(t.id).update(patch);Object.assign(t,patch);delete t.planManual}S.kmDraft={};toast(n?'Perubahan disimpan.':'Tersimpan.');if(n)queueBalance();renderCardModal();return true}
   catch(err){toast(errMsg(err));return false}finally{b.textContent='Simpan';b.disabled=false;kmDirtySync()}}
 async function tryCloseCard(){if(kmDirty()&&!await confirmDlg('Perubahan belum disimpan. Tutup tanpa menyimpan?'))return;closeCard()}
 $('kmDone').addEventListener('click',tryCloseCard);
@@ -4117,8 +4117,8 @@ function fieldPatch(t,act,v,patch){
   else if(act==='producer'||act==='editor'||act==='talent'||act==='script')patch[act]=v;
   else if(act==='postAt'){patch.postAt=v;if(v)patch.locked=true;else patch.postTime=''}   /* tanggal tayang dipilih admin = jadwal sungguhan */
   else if((act==='shootPlan'||act==='editPlan'||act==='readyBy')&&!S.full)return false;
-  else if(act==='shootPlan'||act==='editPlan')patch[act]=v;
-  else if(act==='readyBy'){if(v===dueOf(t))return false;patch.readyBy=v;patch.due=v}   /* Deadline Ready manual */
+  else if(act==='shootPlan'||act==='editPlan'){patch[act]=v;patch.planManual=true}   /* planManual: tanda isian manual; server menolak perubahan tanggal tanpa tanda ini */
+  else if(act==='readyBy'){if(v===dueOf(t))return false;patch.readyBy=v;patch.due=v;patch.planManual=true}   /* Deadline Ready manual */
   else if(act==='locked')patch.locked=v;
   else if(act==='postTime')patch.postTime=v;
   else if(act==='scriptUrl'){const u=String(v).trim();if(u===(t.scriptUrl||'')||(u&&!SCRIPT_URL_OK(u)))return false;patch.scriptUrl=u.slice(0,500)}
