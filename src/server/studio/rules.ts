@@ -28,6 +28,8 @@ const KTL_SERVER_KEYS = ["ktlNotifAt", "ktlNotifUrl", "ktlNotifErr", "ktlNotifWh
 const SUSPEND_KEYS = ["suspendedAt", "suspendedBy", "pausedMs"];
 // tanggal produksi/edit & Deadline Ready kartu yang sudah ada: hanya admin penuh (permintaan Zaki, 12 Nov 2026)
 const PLAN_KEYS = ["shootPlan", "editPlan", "readyBy", "due"];
+// gabungkan kartu Video review: hanya admin penuh (13 Nov 2026)
+const MERGE_KEYS = ["mergedInto", "mergedAt", "mergedBy"];
 function shareWhy(s: unknown): string | null {
   if (s === undefined || s === null) return null;
   if (typeof s !== "object" || Array.isArray(s)) return "pengaturan bagikan tidak valid";
@@ -193,6 +195,7 @@ export function canWrite(
         if (!before && KTL_SERVER_KEYS.some((k) => after[k] != null)) return deny("tanda notifikasi diatur server");
         // menangguhkan konten hanya untuk admin penuh
         if (!u.full && (before ? changedKeys(before, after).some((k) => SUSPEND_KEYS.includes(k)) : SUSPEND_KEYS.some((k) => after[k] != null))) return deny("tangguhkan hanya untuk admin");
+        if (!u.full && (before ? changedKeys(before, after).some((k) => MERGE_KEYS.includes(k)) : MERGE_KEYS.some((k) => after[k]))) return deny("gabungkan kartu hanya untuk admin");
         if (!u.full && before && changedKeys(before, after).some((k) => PLAN_KEYS.includes(k))) return deny("tanggal produksi & deadline Ready hanya untuk admin");
         // link skrip: hanya Google Docs (dibuka sebagai tautan di kartu semua anggota)
         const su = str(after.scriptUrl);
