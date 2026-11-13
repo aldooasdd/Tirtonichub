@@ -88,6 +88,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Jadwal Kerja", href: "/hr/jadwal", icon: CalendarClock },
         ...(ABSEN_ON ? [{ label: "Rekap Absen", href: "/hr/rekap", icon: ClipboardList }] : []),
         { label: "Pengajuan Masuk", href: "/hr/approval", icon: CheckSquare },
+        { label: "Report Penjualan", href: "/hr/report-penjualan", icon: AlertCircle },
         { label: "Log Aktivitas", href: "/hr/log", icon: ScrollText },
         { label: "Sesi Aktif", href: "/hr/sesi", icon: MonitorSmartphone },
       ],
