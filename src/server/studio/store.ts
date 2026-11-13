@@ -4,6 +4,7 @@
 import { randomBytes } from "node:crypto";
 import { queueNewItem } from "@/server/push/jobs";
 import { queueKatalog } from "@/server/push/katalog";
+import { notifyEditor } from "@/server/push/edit";
 import { katalogEntersReady } from "@/server/push/katalog-logic";
 import type { Prisma } from "@/generated/prisma";
 import { prisma } from "@/server/db";
@@ -190,6 +191,8 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
       const data = { ...row, itemId: okItem ? itemId : null, extra: json(row.extra), history: row.history === undefined ? undefined : json(row.history) } as Prisma.MediaTaskUncheckedCreateInput;
       await prisma.mediaTask.upsert({ where: { id }, create: { ...data, id }, update: data });
       if (ktlDone && !opts.trusted) await queueKatalog({ taskId: id, by: u.name, extra: after });
+      // WA + lonceng ke PIC Editing: masuk produksi / Deadline Ready ditetapkan (edit-logic.ts)
+      if (!opts.trusted) void notifyEditor(before, after, u.name, u.code);
       break;
     }
     case "settings": {

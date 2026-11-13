@@ -9,6 +9,7 @@ import { loadCtx, runBalance, todayWIB } from "@/server/media/schedule-runner";
 import type { Task } from "@/lib/media/schedule";
 import type { Prisma } from "@/generated/prisma";
 import { nextPlanLog } from "@/server/studio/plan-log";
+import { notifyEditor } from "@/server/push/edit";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -57,6 +58,7 @@ export async function setTaskStatus(id: string, status: string): Promise<ActionR
   if (IDX[status] >= IDX["Diproduksi"] && !task.shotAt) data.shotAt = today;
   if (IDX[status] >= IDX["Ready"] && !task.readyAt) data.readyAt = today;
   await prisma.mediaTask.update({ where: { id }, data });
+  void notifyEditor(task as unknown as Record<string, unknown>, { ...task, ...data }, meName, acc.code ?? "");
   await runBalance();
   return { ok: true };
 }
@@ -96,6 +98,7 @@ export async function updateTask(
     if (log) data.extra = { ...ex, planLog: log } as Prisma.InputJsonValue;
   }
   await prisma.mediaTask.update({ where: { id }, data });
+  void notifyEditor(task as unknown as Record<string, unknown>, { ...task, ...data }, meName, acc.code ?? "");
   // perubahan jadwal → penyeimbang
   if (["shootPlan", "editPlan", "postAt", "postTime", "locked", "producer", "editor", "talent"].some((k) => k in data)) await runBalance();
   return { ok: true };
