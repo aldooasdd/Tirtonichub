@@ -19,21 +19,21 @@ export type ReportRow = {
 };
 
 /** Daftar report salah-input (read-only) untuk role Stok / Finance. Perbaikan dilakukan Kepala Cabang. */
-export function ReportList({ rows, title, desc, href, done, open }: { rows: ReportRow[]; title: string; desc: string; href: string; done: boolean; open: number }) {
+export function ReportList({ rows, title, desc, href, done, open }: { rows: ReportRow[]; title: string; desc: string; href: string; done: boolean | null; open: number }) {
   return (
     <div className="space-y-5">
       <div>
         <h1 className="text-24 font-semibold">{title}</h1>
         <p className="text-14 text-muted-foreground">{desc}</p>
       </div>
-      <nav className="flex gap-2">
+      {done !== null && <nav className="flex gap-2">
         <Link href={href} className={`rounded-md px-3 py-1.5 text-14 font-medium ${!done ? "bg-red-500/15 text-red-600" : "border text-muted-foreground"}`}>
           Terbuka ({open})
         </Link>
         <Link href={`${href}?s=selesai`} className={`rounded-md px-3 py-1.5 text-14 font-medium ${done ? "bg-emerald-500/15 text-emerald-600" : "border text-muted-foreground"}`}>
           Sudah selesai
         </Link>
-      </nav>
+      </nav>}
 
       {rows.length === 0 ? (
         <p className="rounded-lg border bg-card py-10 text-center text-muted-foreground">Tidak ada report.</p>

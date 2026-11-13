@@ -5,12 +5,12 @@ import { fmtWIB } from "@/lib/datetime";
 import { REPORT_LABEL, type ReportCategory } from "@/lib/sales-report";
 import type { ReportRow } from "@/components/sales/report-list";
 
-/** done=false → report terbuka; done=true → riwayat yang sudah selesai (200 terbaru). */
-export async function loadSalesReports(categories: ReportCategory[], done: boolean): Promise<{ rows: ReportRow[]; open: number }> {
+/** done=false → report terbuka; done=true → riwayat yang sudah selesai; null → semua (HR). 200 terbaru. */
+export async function loadSalesReports(categories: ReportCategory[], done: boolean | null): Promise<{ rows: ReportRow[]; open: number }> {
   const base = { reportAt: { not: null }, reportCategory: { in: categories } };
   const [rows, open] = await Promise.all([
     prisma.salesReport.findMany({
-      where: { ...base, reportResolvedAt: done ? { not: null } : null },
+      where: done === null ? base : { ...base, reportResolvedAt: done ? { not: null } : null },
       orderBy: done ? { reportResolvedAt: "desc" } : { reportAt: "desc" },
       take: 200,
       include: { createdBy: { select: { fullName: true } } },

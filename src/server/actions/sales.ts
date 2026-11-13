@@ -370,6 +370,7 @@ export async function reportSalesError(id: string, category: string, note: strin
   const secLink = cat === "PEMBAYARAN" ? "/finance/report-penjualan" : "/stok/report-penjualan";
   await notifyBranchHeads(rep.branchId, { type: "sales_report_error", title, body, link: "/cabang/approval-penjualan" });
   await notifyRole(secondary, { type: "sales_report_error", title, body, link: secLink });
+  await notifyRole("HR", { type: "sales_report_error", title, body, link: "/hr/report-penjualan" });
 
   // WA via GOWA ke Kepala Cabang cabang itu + role sekunder (Finance/Stok).
   const recipients = await prisma.userRole.findMany({
