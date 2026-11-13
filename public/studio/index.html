@@ -1707,7 +1707,6 @@ html[data-skin] .pccell{background:var(--glass);border-color:var(--glass-line)}
 <div class="login" id="login">
   <div class="login-card">
     <h1><img class="logo" src="logo.png" alt=""><span class="sweep">Tirtonic Studio</span></h1>
-    <p class="status" style="margin:0">Masuk dengan akun Google yang sudah didaftarkan admin.</p>
     <button class="btn" type="button" id="signIn" hidden>Masuk dengan Google</button>
     <span class="cspin lspin" id="loginSpin" role="status" aria-label="Memuat…"></span>
     <p class="status" id="loginMsg" style="margin:0" aria-live="polite" hidden>Memuat…</p>
@@ -5358,7 +5357,7 @@ async function boot(){renderBoard();renderCal();renderMeeting();
       else if(e&&e.code!=='auth/popup-closed-by-user'&&e.code!=='auth/cancelled-popup-request')showLogin('Gagal masuk: '+(e.message||e.code),true)}};
   $('signIn').onclick=e=>{const r=e.currentTarget.getBoundingClientRect();S.loginFrom={x:r.left+r.width/2,y:r.top+r.height/2};signIn()};
   const out=()=>auth.signOut().then(()=>location.reload());$('signOut').onclick=out;$('signOutGate').onclick=out;
-  auth.onAuthStateChanged(async u=>{if(!u){showLogin('Masuk dengan akun Google yang sudah didaftarkan admin.',true);return}
+  auth.onAuthStateChanged(async u=>{if(!u){showLogin('',true);return}
     showLogin('Memeriksa akun…',false);
     const email=(u.email||'').toLowerCase();const owners=(cfg.adminEmails||[]).map(x=>String(x).toLowerCase().trim());
     let me=null;try{const sn=await fs.collection('members').doc(email).get();if(sn.exists)me=sn.data()}catch(e){}
