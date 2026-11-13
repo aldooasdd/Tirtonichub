@@ -2179,7 +2179,7 @@ html[data-skin] .pccell{background:var(--glass);border-color:var(--glass-line)}
         <form class="mform" id="memberForm" autocomplete="off" style="margin-top:12px">
           <label class="l">Email Google<input id="mEmail" type="email" required placeholder="nama@gmail.com"></label>
           <label class="l">Nama<input id="mName" required placeholder="mis. Rayhan"></label>
-          <label class="l">Kode jobdesk<select id="mCode"><option value="">—</option><option value="Z">Zaki</option><option value="R">Rayhan</option><option value="A">Aulia</option><option value="S">Salma</option></select></label>
+          <label class="l">Kode jobdesk<select id="mCode"><option value="">—</option><option value="Z">A1</option><option value="A">A2</option><option value="R">B1</option><option value="S">B2</option></select></label>
           <label class="l">Peran<select id="mRole"><option value="member">Anggota</option><option value="admin2">Admin 2</option><option value="admin">Admin</option></select></label>
           <label class="l">No. WhatsApp<input id="mPhone" type="tel" inputmode="tel" placeholder="08xxxxxxxxxx"></label>
           <label class="check" style="grid-column:1/-1"><input type="checkbox" id="mIdcc"> Boleh memakai IDCC (unggah PDF finance dan membuat konten IDCC)</label>
@@ -2329,6 +2329,8 @@ html[data-skin] .pccell{background:var(--glass);border-color:var(--glass-line)}
 <script>
 (function(){
 const PEOPLE=['Z','R','A','S'];
+const ACTIVE=['Z','R','A'];   /* tim aktif untuk pilihan PIC & jobdesk; Salma (S) keluar tim 13 Nov 2026, kartu & laporan lama tetap */
+const JOB_CODE={Z:'A1',A:'A2',R:'B1',S:'B2'};   /* kode jobdesk yang tampil di Tim & Aktivitas */
 const NAMES={Z:'Zaki',R:'Rayhan',A:'Aulia',S:'Salma'};
 const nm=c=>NAMES[c]||'-';
 /* [talent, penulis skrip] default per jenis konten; '' = tidak ada */
@@ -2557,7 +2559,7 @@ const TYPE_CAP={idf:2,ktl:12,igf:4,vpr:3,vrv:2,idc:1,evt:1,khs:1,cmp:2};   /* ko
 const DEFAULT_JOB={ktl:{prod:['R','Z','A'],tal:[],edit:['Z','R']},idf:{prod:['R','Z'],tal:['S','Z'],edit:['R','Z']},igf:{prod:['R','Z'],tal:['S','Z'],edit:['R','Z']},vpr:{prod:['R'],tal:['S','Z'],edit:['Z','R']},
   vrv:{prod:['A'],tal:['S'],edit:['R','A']},idc:{prod:['A'],tal:['S'],edit:['A']},evt:{prod:['A'],tal:['S'],edit:['A']},khs:{prod:['A','R'],tal:['S'],edit:['A','R']},cmp:{prod:['Z','R'],tal:['S','Z'],edit:['Z','R']}};
 function job(type){const j=((S.settings&&S.settings.jobdesk)||{})[type]||{};const d=DEFAULT_JOB[type]||DEFAULT_JOB.cmp;
-  const ok=a=>Array.isArray(a)&&a.filter(Boolean).length;return{prod:ok(j.prod)?j.prod.filter(Boolean):d.prod,tal:Array.isArray(j.tal)?j.tal.filter(Boolean):d.tal,edit:ok(j.edit)?j.edit.filter(Boolean):d.edit}}
+  const act=a=>(a||[]).filter(c=>c&&ACTIVE.includes(c));const ok=a=>Array.isArray(a)&&act(a).length;return{prod:ok(j.prod)?act(j.prod):act(d.prod),tal:Array.isArray(j.tal)?act(j.tal):act(d.tal),edit:ok(j.edit)?act(j.edit):act(d.edit)}}
 const addH=(m,d,p,h)=>{const x=m[d]=m[d]||{};x[p]=(x[p]||0)+h};
 const getH=(m,d,p)=>(m[d]&&m[d][p])||0;
 const overloaded=(st,d)=>PEOPLE.filter(p=>getH(st.sh,d,p)>SHOOT_CAP[p]+1e-9||getH(st.ed,d,p)>EDIT_CAP[p]+1e-9);
@@ -3401,7 +3403,7 @@ function openFolderDlg(k,par){S.foId=k||'';S.foNewPar=par||'';const nw=!k;
   $('foH').textContent=nw?'Folder baru':'Ganti nama folder';$('foName').value=nw?'':fName(k);$('foColW').hidden=$('foShare').hidden=$('foPinL').hidden=!nw;
   if(nw){$('foCol').innerHTML=colorBtns('','data-focol');$('foPinL').hidden=!S.hub;$('foPin').checked=false;
     $('foShare').querySelectorAll('[name="foAcc"]').forEach(r=>{r.checked=r.value==='me'});
-    $('foPeople').innerHTML=PEOPLE.filter(c=>c!==(S.me&&S.me.code)).map(c=>'<label class="check"><input type="checkbox" value="'+c+'"> '+esc(nm(c))+'</label>').join('');foPeopleSync()}
+    $('foPeople').innerHTML=ACTIVE.filter(c=>c!==(S.me&&S.me.code)).map(c=>'<label class="check"><input type="checkbox" value="'+c+'"> '+esc(nm(c))+'</label>').join('');foPeopleSync()}
   $('foDlg').hidden=false;$('foName').focus();if(!nw)$('foName').select()}
 function foPeopleSync(){const some=($('foShare').querySelector('[name="foAcc"]:checked')||{}).value==='some';$('foPeople').hidden=!some}
 $('foShare').addEventListener('change',e=>{if(e.target.name==='foAcc')foPeopleSync()});
@@ -3470,7 +3472,7 @@ function shRender(){const k=S.shK,cu=isCust(k),own=cu?S.folders[k].owner:'',ownM
   let h=cu?'<div class="shp"><span class="shav" data-noi18n>'+esc(((ownM&&ownM.name)||own||'?').charAt(0).toUpperCase())+'</span><span class="shn"><span data-noi18n>'+esc((ownM&&ownM.name)||String(own).split('@')[0])+(own===myEmail()?' (saya)':'')+'</span><small data-noi18n>'+esc(own)+'</small></span><span class="shr">Pemilik</span></div>':
     '<div class="shp"><span class="shav">A</span><span class="shn"><span>Admin</span><small>Termasuk tim yang mengerjakan barang ini</small></span><span class="shr">Selalu bisa</span></div>';
   h+=S.shCodes.map(c=>'<div class="shp"><span class="shav" data-noi18n>'+esc(nm(c).charAt(0))+'</span><span class="shn"><span data-noi18n>'+esc(nm(c))+'</span></span><button type="button" class="ghost sm" data-shdel="'+c+'">Hapus</button></div>').join('');
-  $('shList').innerHTML=h;const ownC=ownM&&ownM.code;const rest=PEOPLE.filter(c=>c!==ownC&&!S.shCodes.includes(c));
+  $('shList').innerHTML=h;const ownC=ownM&&ownM.code;const rest=ACTIVE.filter(c=>c!==ownC&&!S.shCodes.includes(c));
   $('shAdd').innerHTML='<option value="">'+(rest.length?'Pilih anggota tim…':'Semua anggota sudah ditambahkan')+'</option>'+rest.map(c=>'<option value="'+c+'">'+esc(nm(c))+'</option>').join('');$('shAdd').disabled=!rest.length;
   const all=$('shGen').value==='all';$('shGi').innerHTML=cmSvg(all?'globe':'lock');$('shGd').textContent=all?'Semua anggota tim yang login bisa membuka folder ini.':'Hanya orang di atas yang bisa membuka folder ini.'}
 function openShare(k){S.shK=k;const sh=(S.folders[k]||{}).share||{};S.shCodes=[...(sh.codes||[])];$('shGen').value=sh.all?'all':'me';$('shT').textContent='"'+fLabel(k)+'"';shRender();$('shDlg').hidden=false;$('shGen').focus()}
@@ -4036,14 +4038,13 @@ function cardInner(t){const me=S.me&&S.me.code;const adm=S.isAdmin;const canNote
   const it=itemOf(t.itemId)||{};const showPost=POSTED.includes(t.type);
   let more='';
   if(adm){const LBL={producer:'Produksi',editor:'Editing',talent:'Talent',script:'Skrip'};const dOnly=S.full?'':' disabled title="Hanya admin (Zaki) yang bisa mengubah"';   /* tanggal produksi/edit & Deadline Ready: hanya admin penuh */
-    const sel=(name,val,none)=>'<label class="l">'+LBL[name]+'<select data-act="'+name+'">'+(none?'<option value=""'+(!val?' selected':'')+'>-</option>':'')+PEOPLE.map(p=>'<option value="'+p+'"'+(p===val?' selected':'')+'>'+NAMES[p]+'</option>').join('')+'</select></label>';
+    const sel=(name,val,none)=>'<label class="l">'+LBL[name]+'<select data-act="'+name+'">'+(none?'<option value=""'+(!val?' selected':'')+'>-</option>':'')+[...ACTIVE,...(val&&!ACTIVE.includes(val)?[val]:[])].map(p=>'<option value="'+p+'"'+(p===val?' selected':'')+'>'+NAMES[p]+'</option>').join('')+'</select></label>';
     more+='<div class="kgrid">'+sel('producer',t.producer)+sel('editor',t.editor)+((HAS_TALENT(t.type)||t.talent)?sel('talent',t.talent||'',true):'')+((HAS_SCRIPT(t.type)||t.script)?sel('script',t.script||'',true):'')+'</div>'+
       '<div class="kgrid">'+(IDX[t.status]<IDX['Ready']?'<label class="l">Deadline Ready<input type="date" data-act="readyBy" value="'+esc(dueOf(t))+'"'+dOnly+'></label>':'')+(IDX[t.status]<=0?'<label class="l">Rencana syuting<input type="date" data-act="shootPlan" value="'+esc(t.shootPlan||'')+'"'+dOnly+'></label>':'')+
-      (IDX[t.status]<IDX['Ready']?'<label class="l">Rencana edit<input type="date" data-act="editPlan" value="'+esc(t.editPlan||'')+'"'+dOnly+'></label>':'')+
       (showPost?'<label class="l">'+(t.sugg?'Tanggal tayang (saran '+esc(fmt(t.suggAt))+')':'Tanggal tayang')+'<input type="date" data-act="postAt" value="'+esc(t.postAt||'')+'"></label><label class="l">Jam tayang<select data-act="postTime"><option value="">Otomatis'+(t.postTime?'':(timeOf(t)?' ('+fmtTime(timeOf(t))+')':''))+'</option>'+SLOT_TIMES[kindOf(t.type)].map(x=>'<option value="'+x+'"'+(x===t.postTime?' selected':'')+'>'+fmtTime(x)+'</option>').join('')+'</select></label>':'')+'</div>'+
       '';
   }else{const dl=(l,v)=>v?'<span>'+l+' <b>'+esc(fmt(v))+'</b></span>':'';
-    more+='<div class="rolestxt">'+(IDX[t.status]<=0?dl('Syuting',t.shootPlan):'')+(IDX[t.status]<IDX['Ready']?dl('Edit selesai',t.due||t.editPlan):'')+dl(t.sugg?'Saran tayang':'Tayang',t.sugg?t.suggAt:t.postAt)+(timeOf(t)?'<span>pukul <b>'+fmtTime(timeOf(t))+'</b></span>':'')+'</div>'}
+    more+='<div class="rolestxt">'+(IDX[t.status]<=0?dl('Syuting',t.shootPlan):'')+(fileDue(t)?dl('Deadline Ready',fileDue(t)):'')+dl(t.sugg?'Saran tayang':'Tayang',t.sugg?t.suggAt:t.postAt)+(timeOf(t)?'<span>pukul <b>'+fmtTime(timeOf(t))+'</b></span>':'')+'</div>'}
   more+=noteHtml(t,canNote)+scriptHtml(t,canNote)+(S.hub?fileFinalHtml(t,canNote):driveHtml(t,canNote))+(adm?capHtml(t)+metaHtml(t):'')+
     '<div class="fname"><code>'+esc(fileName(t))+'</code><button class="ghost" data-act="copy">Salin</button></div>'+histHtml(t)+planLogHtml(t)+
     (adm?'<div class="krow">'+lifeChip(t)+'<span class="kacts">'+(S.full&&t.status!=='Tayang'?'<button class="ghost danger" data-act="suspend">Tangguhkan</button>':'')+'<button class="ghost danger" data-act="delTask">'+'Hapus'+'</button></span></div>':'');
@@ -4090,7 +4091,7 @@ $('board').addEventListener('click',e=>{const sm=e.target.closest('details.kmore
 const finalFiles=t=>S.hub?S.assets.filter(a=>a.taskId===t.id||(t.itemId&&a.itemId===t.itemId&&a.section===t.type)||(t.driveUrl&&a.url===t.driveUrl)).sort((a,b)=>(b.createdAt||0)-(a.createdAt||0)):[];
 /* pindah ke Edit (admin): pilih dulu siapa yang mengedit */
 function pickEditor(t){S.edT=t.id;$('edInfo').textContent=TYPES[t.type].label+' · '+t.title;
-  $('edList').innerHTML=PEOPLE.map(c=>'<button type="button" class="edp'+(t.editor===c?' cur':'')+'" data-edp="'+c+'"><i>'+esc(nm(c).slice(0,1))+'</i><span>'+esc(nm(c))+'</span>'+(t.editor===c?'<small>editor sekarang</small>':'')+'</button>').join('');
+  $('edList').innerHTML=ACTIVE.map(c=>'<button type="button" class="edp'+(t.editor===c?' cur':'')+'" data-edp="'+c+'"><i>'+esc(nm(c).slice(0,1))+'</i><span>'+esc(nm(c))+'</span>'+(t.editor===c?'<small>editor sekarang</small>':'')+'</button>').join('');
   $('edDlg').hidden=false;($('edList').querySelector('.cur')||$('edList').querySelector('button')).focus()}
 $('edList').addEventListener('click',e=>{const b=e.target.closest('[data-edp]');if(!b)return;const t=(S.allTasks||S.tasks).find(x=>x.id===S.edT);$('edDlg').hidden=true;if(t)setStatus(t,'Editing',null,{editor:b.dataset.edp})});
 $('edCancel').addEventListener('click',()=>{$('edDlg').hidden=true});$('edDlg').addEventListener('click',e=>{if(e.target===$('edDlg'))$('edDlg').hidden=true});
@@ -4279,7 +4280,7 @@ function renderJob(){const el=$('jobEditor');if(!el||el.contains(document.active
     el.innerHTML='<table class="t jobt"><thead><tr><th>Konten</th>'+JOB_COLS.map(c=>'<th>'+c[1]+'</th>').join('')+'</tr></thead><tbody>'+
       JOB_TYPES.map(t=>{const j=job(t);return'<tr><td><span class="chip ty ty-'+t+'">'+esc(TYPES[t].label)+'</span></td>'+JOB_COLS.map(([k,,n])=>{if(k==='tal'&&t==='ktl')return'<td class="status">—</td>';
         const L=(j[k]||[]).slice(0,n).filter(Boolean);return'<td>'+(L.length?'<b>'+esc(NAMES[L[0]]||L[0])+'</b>'+(L.length>1?'<div class="status">Pengganti: '+L.slice(1).map(x=>esc(NAMES[x]||x)).join(', ')+'</div>':''):'<span class="status">—</span>')+'</td>'}).join('')+'</tr>'}).join('')+'</tbody></table>';return}
-  const opt=(v,none)=>'<option value="">'+(none?'—':'—')+'</option>'+PEOPLE.map(p=>'<option value="'+p+'"'+(p===v?' selected':'')+'>'+NAMES[p]+'</option>').join('');
+  const opt=(v,none)=>'<option value="">'+(none?'—':'—')+'</option>'+ACTIVE.map(p=>'<option value="'+p+'"'+(p===v?' selected':'')+'>'+NAMES[p]+'</option>').join('');
   const dis=(!S.db||!S.canWrite)?' disabled':'';
   el.innerHTML='<table class="t jobt"><thead><tr><th rowspan="2">Konten</th>'+JOB_COLS.map(c=>'<th colspan="'+c[2]+'">'+c[1]+'</th>').join('')+'</tr><tr>'+
     JOB_COLS.map(c=>['Utama','Pengganti 1','Pengganti 2'].slice(0,c[2]).map(x=>'<th class="sub">'+x+'</th>').join('')).join('')+'</tr></thead><tbody>'+
@@ -4413,13 +4414,13 @@ function renderPlan(){const el=$('planBox');if(!S.rep.sat)S.rep.sat=upcomingSat(
   const W=latestWeek(),wr=S.reports['w-'+W],recs=(wr&&wr.data&&wr.data.recs)||computeWeekly(W).recs,fri=addDays(sat,-1);
   const perm='Notification' in window?Notification.permission:'unsupported';
   el.innerHTML='<div class="rep">'+
-   '<div class="reph"><div><h3>Planning mingguan · '+esc(fmtRange(sat,addDays(sat,4)))+'</h3><div class="status">Kirim ke tim '+esc(fmtLong2(fri))+' pukul 16.00 · terkirim '+PEOPLE.filter(p=>sent[p]).length+' dari '+PEOPLE.length+' orang</div></div>'+
+   '<div class="reph"><div><h3>Planning mingguan · '+esc(fmtRange(sat,addDays(sat,4)))+'</h3><div class="status">Kirim ke tim '+esc(fmtLong2(fri))+' pukul 16.00 · terkirim '+ACTIVE.filter(p=>sent[p]).length+' dari '+ACTIVE.length+' orang</div></div>'+
    '<div class="acts noprint"><button class="ghost" type="button" data-sat="-7">‹ Minggu sebelumnya</button><button class="ghost" type="button" data-sat="0">Minggu aktif</button><button class="ghost" type="button" data-sat="7">Minggu berikutnya ›</button>'+
    (perm==='default'?'<button class="ghost" type="button" id="notifOn">Aktifkan notifikasi Jumat 16.00</button>':perm==='granted'?'<span class="chip good">Notifikasi aktif</span>':'')+'</div></div>'+
    '<div class="box"><h3>Dasar dari laporan mingguan '+esc(fmtRange(addDays(W,-6),W))+'</h3><ul class="recs">'+recs.map(r=>'<li>'+lv(r.lv)+'<span>'+esc(r.t)+'</span></li>').join('')+'</ul>'+
      (wr&&wr.note?'<p style="margin:12px 0 0"><b>Keputusan admin:</b> <span class="pre">'+esc(wr.note)+'</span></p>':'')+'</div>'+
    '<div class="box"><h3>Catatan untuk seluruh tim</h3><textarea class="note-area" id="planGeneral" data-rep="'+id+'" placeholder="mis. Minggu ini fokus konten payday. Sabtu jam 10.00 briefing 15 menit.">'+esc(doc.general||'')+'</textarea></div>'+
-   '<div class="pcards">'+PEOPLE.map(p=>{const m=memberByCode(p),ph=waNumber(m&&m.phone),pl=planFor(p,sat),n=pl.reduce((a,x)=>a+x.rows.length,0);
+   '<div class="pcards">'+ACTIVE.map(p=>{const m=memberByCode(p),ph=waNumber(m&&m.phone),pl=planFor(p,sat),n=pl.reduce((a,x)=>a+x.rows.length,0);
      const sentAt=sent[p]?new Date(sent[p]):null;
      return'<div class="pcard" data-p="'+p+'"><h4>'+esc((m&&m.name)||nm(p))+(sentAt?'<span class="chip good">Terkirim '+esc(fmt(dayOfMs(sent[p])))+' '+pad(sentAt.getHours())+'.'+pad(sentAt.getMinutes())+'</span>':'<span class="chip warn">Belum dikirim</span>')+'</h4>'+
        '<div class="status">'+n+' tugas · '+(m?(ph?'WhatsApp +'+esc(ph):'<span style="color:var(--warn)">Nomor WhatsApp belum diisi</span>'):'<span style="color:var(--warn)">Belum punya akun</span>')+'</div>'+
@@ -4485,7 +4486,7 @@ function renderMySchedule(){const el=$('mySchedule');if(!el)return;if(S.isAdmin|
 /* ---------- pengingat ---------- */
 function checkReminders(){const b=$('banner');if(!S.full||!S.tasksLoaded){b.hidden=true;return}const now=new Date(),td=today(),msgs=[];
   const W=latestWeek(),wr=S.reports['w-'+W];if(td>=addDays(W,1)&&td<=addDays(W,2)&&!(wr&&wr.seenAt))msgs.push({t:'Laporan mingguan '+fmtRange(addDays(W,-6),W)+' sudah terbit.',a:'weekly',btn:'Baca laporan'});
-  const sat=upcomingSat(),pd=S.reports['p-'+sat]||{},sent=pd.sent||{},need=PEOPLE.filter(p=>!sent[p]),fri=addDays(sat,-1);
+  const sat=upcomingSat(),pd=S.reports['p-'+sat]||{},sent=pd.sent||{},need=ACTIVE.filter(p=>!sent[p]),fri=addDays(sat,-1);
   const due=(td===fri&&now.getHours()>=16)||(td===sat&&now.getHours()<12);
   if(need.length&&due)msgs.push({t:'Saatnya kirim planning Sabtu–Rabu ke tim. Belum terkirim: '+need.map(nm).join(', ')+'.',a:'plan',btn:'Buka planning'});
   b.hidden=!msgs.length;b.innerHTML=msgs.map(m=>'<div class="bn"><span>'+esc(m.t)+'</span><button class="btn" type="button" data-rep="'+m.a+'">'+m.btn+'</button></div>').join('');
@@ -5154,7 +5155,7 @@ $('ktlWaTo').addEventListener('change',async()=>{const emails=[...$('ktlWaTo').q
 $('ktlWaTgl').addEventListener('click',async()=>{const on=$('ktlWaTgl').getAttribute('aria-checked')!=='true';$('ktlWaTgl').disabled=true;try{S.ktlWa=await hubApi('/api/studio/katalog',{method:'POST',body:JSON.stringify({action:'toggle',on})});toast(on?'WA Foto katalog siap dinyalakan.':'WA Foto katalog siap dimatikan.')}catch(e){toast(errMsg(e))}ktlWaPaint()});
 $('ktlWaTest').addEventListener('click',async()=>{const b=$('ktlWaTest');b.disabled=true;try{const r=(await hubApi('/api/studio/katalog',{method:'POST',body:JSON.stringify({action:'test'})})).result;toast(r.ok?'Pesan tes diterima n8n. Cek WA penerima.':'Tes gagal: '+(r.error||'coba lagi'))}catch(e){toast(errMsg(e))}b.disabled=false;ktlWaLoad()});
 function renderTeam(){if(!S.isAdmin||!$('teamProgress'))return;ktlWaPaint();if(S.hub&&S.full&&!S.ktlWa)ktlWaLoad();renderWeeks();renderCapTpl();const all=S.tasks;const td=today();
-  $('teamProgress').innerHTML=PEOPLE.map(p=>{const L=all.filter(t=>[t.producer,t.editor,t.talent,t.script].includes(p));const o=L.filter(open);
+  $('teamProgress').innerHTML=ACTIVE.map(p=>{const L=all.filter(t=>[t.producer,t.editor,t.talent,t.script].includes(p));const o=L.filter(open);
     const cnt=s=>o.filter(t=>t.status===s).length;const lt=o.filter(late).length;const wk=addDays(td,-7);
     const done=all.filter(t=>(t.history||[]).some(h=>h.by===p&&h.at>=toT(wk)-7*36e5)).length;
     const acc=S.members.find(m=>m.code===p);
@@ -5169,7 +5170,7 @@ function renderTeam(){if(!S.isAdmin||!$('teamProgress'))return;ktlWaPaint();if(S
   $('activity').innerHTML=F.length?'<ul class="list">'+F.map(({h,t})=>'<li><span><b>'+esc(h.name||h.by)+'</b> mengubah <span class="chip ty ty-'+esc(t.type)+'">'+esc((TYPES[t.type]||{}).label||t.type)+'</span> '+esc(t.title)+'<br><span class="status">'+esc(h.from||'-')+' → <b style="color:var(--ink)">'+esc(h.to)+'</b></span></span><span class="status">'+esc(when(h.at))+'</span></li>').join('')+'</ul>'
     :'<div class="empty">Belum ada perubahan status. Setiap kali seseorang menggeser status, aktivitasnya tercatat di sini.</div>';
   $('members').innerHTML=S.members.length?'<div class="tw"><table class="t"><thead><tr><th>Nama</th><th>Email</th><th>Kode</th><th>Peran</th><th>WhatsApp</th><th></th></tr></thead><tbody>'+
-    S.members.map(m=>'<tr data-email="'+esc(m.id)+'"><td>'+esc(m.name)+'<span class="onl" data-onl></span></td><td class="mono">'+esc(m.id)+'</td><td>'+esc(m.code?nm(m.code):'—')+'</td><td>'+(m.role==='admin'?'<span class="chip hot">Admin</span>':m.role==='admin2'?'<span class="chip hot">Admin 2</span>':'<span class="chip">Anggota</span>')+'</td><td class="mono">'+(m.phone?'+'+esc(m.phone):'<span class="status">—</span>')+(m.idcc&&m.role!=='admin'?' <span class="chip ty ty-idf">IDCC</span>':'')+'</td><td>'+
+    S.members.map(m=>'<tr data-email="'+esc(m.id)+'"><td>'+esc(m.name)+'<span class="onl" data-onl></span></td><td class="mono">'+esc(m.id)+'</td><td>'+esc(m.code?(JOB_CODE[m.code]||m.code):'—')+'</td><td>'+(m.role==='admin'?'<span class="chip hot">Admin</span>':m.role==='admin2'?'<span class="chip hot">Admin 2</span>':'<span class="chip">Anggota</span>')+'</td><td class="mono">'+(m.phone?'+'+esc(m.phone):'<span class="status">—</span>')+(m.idcc&&m.role!=='admin'?' <span class="chip ty ty-idf">IDCC</span>':'')+'</td><td>'+
       '<span style="display:flex;gap:6px;flex-wrap:wrap"><button class="ghost" type="button" data-act="mEdit">Edit</button>'+(m.id===S.me.email?'<span class="status">Anda</span>':'<button class="ghost danger" type="button" data-act="mDel">'+'Hapus'+'</button>')+'</span></td></tr>').join('')+'</tbody></table></div>'
     :'<div class="empty">Belum ada akun.</div>';paintOnline()}
 /* status online akun (mode hub): server mengirim umur "terakhir terlihat" tiap akun; online = halaman terbuka dalam 20 detik terakhir */
@@ -5190,7 +5191,7 @@ $('memberForm').addEventListener('submit',async e=>{e.preventDefault();const ema
   if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){toast('Format email belum benar.');return}if(!name)return;
   const code=$('mCode').value,role=$('mRole').value,phone=waNumber($('mPhone').value);
   if($('mPhone').value.trim()&&!phone){toast('Nomor WhatsApp belum benar. Contoh: 081234567890.');return}
-  const dup=S.members.find(m=>code&&m.code===code&&m.id!==email&&m.id!==S.mEdit);if(dup){toast('Kode '+nm(code)+' sudah dipakai '+dup.name+'. Hapus atau ubah dulu akun itu.');return}
+  const dup=S.members.find(m=>code&&m.code===code&&m.id!==email&&m.id!==S.mEdit);if(dup){toast('Kode '+(JOB_CODE[code]||code)+' sudah dipakai '+dup.name+'. Hapus atau ubah dulu akun itu.');return}
   const old=S.mEdit,moving=!!old&&old!==email;if(moving&&S.members.some(m=>m.id===email)){toast('Email '+email+' sudah dipakai akun lain.');return}
   if(moving&&!await confirmDlg('Ganti email '+old+' menjadi '+email+'? Orang itu harus masuk dengan email baru. Kalender pribadi dan catatan pribadi di email lama tidak ikut pindah.'))return;
   try{const prev=S.members.find(m=>m.id===(old||email))||{};await S.db.doc('members/'+email).set(Object.assign({name,code,role,email,phone:old?phone:(phone||prev.phone||''),idcc:$('mIdcc').checked,createdAt:prev.createdAt||Date.now()},prev.avColor?{avColor:prev.avColor}:{},prev.avAnimal?{avAnimal:prev.avAnimal}:{},prev.avPhoto?{avPhoto:prev.avPhoto}:{}));
