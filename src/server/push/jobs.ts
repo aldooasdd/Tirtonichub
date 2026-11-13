@@ -2,6 +2,7 @@
 import { prisma } from "@/server/db";
 import { inMorningWindow, itemGroups, itemsMessage, itemsReady, morningKey, morningPushes, wibKey } from "./logic";
 import { sendPush } from "./send";
+import { runEditNotif } from "./edit";
 import { runKatalog } from "./katalog";
 import { markTick } from "./tick";
 
@@ -36,7 +37,7 @@ export async function runMorning(now = new Date()) {
       where: { status: "Terdata", shootPlan: { not: null, lte: day } },
       select: { type: true, title: true, status: true, shootPlan: true, producer: true, talent: true, script: true, createdAt: true, extra: true },
     })
-  ).filter((t) => !(t.extra as { suspendedAt?: unknown } | null)?.suspendedAt);
+  ).filter((t) => !(t.extra as { suspendedAt?: unknown; mergedInto?: unknown } | null)?.suspendedAt && !(t.extra as { mergedInto?: unknown } | null)?.mergedInto);
   const pushes = morningPushes(
     tasks,
     members.map((m) => ({ userId: m.userId, code: m.code, name: m.user.fullName, offDays: m.offDays })),
@@ -73,7 +74,7 @@ export async function runItems(now = new Date()) {
 
 export async function pushTick(now = new Date()) {
   markTick();
-  for (const job of [runMorning, runItems, runKatalog]) {
+  for (const job of [runMorning, runItems, runKatalog, runEditNotif]) {
     try {
       await job(now);
     } catch (e) {

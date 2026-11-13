@@ -139,3 +139,9 @@ test("tanggal produksi/edit & Deadline Ready kartu lama: hanya admin penuh", () 
   assert.equal(canWrite(aulia, "update", "tasks/t1", t, { ...t, postAt: "2026-11-20" }), null);
   assert.equal(canWrite(aulia, "set", "tasks/t2", null, { ...t }), null);
 });
+
+test("gabungkan Video review: hanya admin penuh", () => {
+  const t = { type: "vrv", status: "Terdata", producer: "A" };
+  assert.equal(canWrite(zaki, "update", "tasks/t1", t, { ...t, mergedInto: "t9" }), null);
+  assert.notEqual(canWrite(aulia, "update", "tasks/t1", t, { ...t, mergedInto: "t9" }), null);
+});

@@ -4,7 +4,7 @@
 import { randomBytes } from "node:crypto";
 import { queueNewItem } from "@/server/push/jobs";
 import { queueKatalog } from "@/server/push/katalog";
-import { notifyEditor } from "@/server/push/edit";
+import { nextEditPending } from "@/server/push/edit-logic";
 import { katalogEntersReady } from "@/server/push/katalog-logic";
 import type { Prisma } from "@/generated/prisma";
 import { prisma } from "@/server/db";
@@ -129,6 +129,9 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
   if (after && col === "tasks" && !opts.trusted) {
     if (before?.planLog !== undefined) after.planLog = before.planLog;
     else delete after.planLog;
+    // antrean WA editor (editNotif) juga milik server
+    if (before?.editNotif !== undefined) after.editNotif = before.editNotif;
+    else delete after.editNotif;
   }
   const why = opts.trusted ? null : canWrite(u, op, path, before, after); // trusted: hanya skrip impor di server
   if (why) throw new StudioError("permission-denied", "Tidak diizinkan: " + why + ".");
@@ -185,14 +188,16 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
         const log = nextPlanLog(before?.planLog, before, after, u.name, "studio");
         if (log) after.planLog = log;
         else delete after.planLog;
+        // WA + lonceng ke PIC Editing: ditahan 15 menit sejak edit terakhir, dikirim runEditNotif (edit.ts)
+        const pend = nextEditPending(before?.editNotif, before, after, u.name, u.code);
+        if (pend) after.editNotif = pend;
+        else delete after.editNotif;
       }
       const { row, itemId } = M.taskFromDoc(after);
       const okItem = itemId ? !!(await prisma.mediaItem.findUnique({ where: { id: itemId }, select: { id: true } })) : false;
       const data = { ...row, itemId: okItem ? itemId : null, extra: json(row.extra), history: row.history === undefined ? undefined : json(row.history) } as Prisma.MediaTaskUncheckedCreateInput;
       await prisma.mediaTask.upsert({ where: { id }, create: { ...data, id }, update: data });
       if (ktlDone && !opts.trusted) await queueKatalog({ taskId: id, by: u.name, extra: after });
-      // WA + lonceng ke PIC Editing: masuk produksi / Deadline Ready ditetapkan (edit-logic.ts)
-      if (!opts.trusted) void notifyEditor(before, after, u.name, u.code);
       break;
     }
     case "settings": {
