@@ -73,7 +73,10 @@ export function SkuCheckCard(p: {
             }}
           >
             <ScanLine className="size-4 shrink-0 text-muted-foreground" />
-            <input value={scan} onChange={(e) => setScan(e.target.value)} placeholder="Scan barcode / ketik SKU, Enter" aria-label="SKU" className="h-9 min-w-0 flex-1 rounded-md border bg-background px-2 font-mono text-14" />
+            <input value={scan} onChange={(e) => setScan(e.target.value)} placeholder="Scan barcode / ketik SKU" aria-label="SKU" className="h-9 min-w-0 flex-1 rounded-md border bg-background px-2 font-mono text-14" />
+            <button type="submit" disabled={pending || !scan.trim()} className={`${btn} border-primary bg-primary text-primary-foreground`}>
+              {pending ? "Menyimpan…" : "Simpan"}
+            </button>
           </form>
           <button type="button" disabled={pending} onClick={() => run(() => markMissing(p.groupKey))} className={`${btn} text-destructive`}>
             <X className="size-4" /> Tidak ada di toko
@@ -90,7 +93,7 @@ export function SkuCheckCard(p: {
           </button>
         </div>
       )}
-      {msg && !msg.ok && <p className="mt-1 text-12 text-destructive">{msg.text}</p>}
+      {msg && <p className={`mt-1 text-12 ${msg.ok ? "text-emerald-600" : "text-destructive"}`}>{msg.text}</p>}
     </div>
   );
 }

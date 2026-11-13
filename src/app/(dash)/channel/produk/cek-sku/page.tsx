@@ -50,7 +50,7 @@ export default async function CekSkuPage({ searchParams }: { searchParams: Promi
         <div>
           <Link href="/channel/produk" className="text-14 text-muted-foreground">← Produk Master</Link>
           <h1 className="text-24 font-semibold">Cek SKU</h1>
-          <p className="text-14 text-muted-foreground">Cocokkan barang dengan Accurate: tekan <b>Benar</b> kalau saran cocok, atau scan barcode barangnya (Zebra) lalu Enter.</p>
+          <p className="text-14 text-muted-foreground">Cocokkan barang dengan Accurate: tekan <b>Benar</b> kalau saran cocok, atau scan barcode barangnya (Zebra) lalu Enter / <b>Simpan</b>.</p>
         </div>
         <div className="flex flex-wrap items-start gap-2">
           {total > 0 && <SkuCheckLoad replace />}
