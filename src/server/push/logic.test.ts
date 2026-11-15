@@ -42,8 +42,8 @@ test("isi notifikasi pagi: hari ini + talent + terlambat", () => {
   const p = morningPushes(tasks, members, FRI_7);
   assert.equal(p.length, 1);
   assert.equal(p[0].userId, "ur");
-  assert.equal(p[0].title, "Syuting hari ini · 3 konten");
-  assert.equal(p[0].body, "Foto Instagram – Asics Gel Resolution 9 (talent Salma) · Video produk – Yonex Ezone 100 · 1 terlambat");
+  assert.equal(p[0].title, "Syuting hari ini · 2 konten");
+  assert.equal(p[0].body, "Video produk – Yonex Ezone 100 · Foto Instagram – Asics Gel Resolution 9 (talent Salma) · 1 terlambat produksi");
   assert.equal(p[0].url, "/studio/?p=pipeline");
 });
 
@@ -60,8 +60,8 @@ test("Kamis seluruh tim libur", () => {
 
 test("hanya terlambat tetap dikirim; konten hangus tidak", () => {
   const p = morningPushes([task({ producer: "Z", shootPlan: "2026-10-28" })], members, FRI_7);
-  assert.equal(p[0].title, "Syuting hari ini · 1 konten");
-  assert.equal(p[0].body, "1 terlambat");
+  assert.equal(p[0].title, "Konten terlambat · 1");
+  assert.equal(p[0].body, "1 terlambat produksi");
   assert.equal(expired(new Date("2026-09-30T03:00:00Z"), "2026-10-30"), true);
   assert.deepEqual(morningPushes([task({ producer: "Z", shootPlan: "2026-10-01", createdAt: new Date("2026-09-29T03:00:00Z") })], members, FRI_7), []);
 });
@@ -88,4 +88,66 @@ test("barang dari + Konten tidak ikut WhatsApp", () => {
   assert.deepEqual(itemGroups(q, new Set(["k"])), [{ wa: true, names: ["Asics", "Yonex"] }, { wa: false, names: ["Konten"] }]);
   assert.deepEqual(itemGroups(q.slice(1, 2), new Set(["k"])), [{ wa: false, names: ["Konten"] }]);
   assert.deepEqual(itemGroups(q.slice(0, 1), new Set()), [{ wa: true, names: ["Asics"] }]);
+});
+
+test("WA pagi: urutan jenis, deadline Ready hari ini, terlambat produksi & upload", () => {
+  // Senin 16 Nov 2026 07.00 WIB
+  const MON = new Date("2026-11-16T00:00:00Z");
+  const d = "2026-11-16";
+  const c = new Date("2026-11-10T03:00:00Z");
+  const tasks = [
+    task({ type: "ktl", title: "HEAD SPEED MP", producer: "R", shootPlan: d, createdAt: c }),
+    task({ type: "igf", title: "ADIDAS UBERSONIC 5 Putih", producer: "R", talent: "S", shootPlan: d, createdAt: c }),
+    task({ type: "vrv", title: "WILSON RF 01 hitam", producer: "R", shootPlan: d, createdAt: c }),
+    task({ type: "vpr", title: "WILSON CLASH V3 pink", producer: "R", shootPlan: d, createdAt: c }),
+    task({ type: "vrv", title: "ASICS GEL-RESOLUTION X", producer: "R", shootPlan: d, createdAt: c }),
+    task({ type: "vrv", title: "LI-NING HALBERTEC", status: "Editing", producer: "A", editor: "R", shootPlan: "2026-11-12", readyBy: d, createdAt: c }),
+    task({ type: "igf", title: "NIKE VAPOR PRO 2", producer: "R", shootPlan: "2026-11-14", createdAt: c }),
+    task({ type: "vpr", title: "YONEX PERCEPT 97", status: "Editing", producer: "R", shootPlan: "2026-11-10", readyBy: "2026-11-12", createdAt: c }),
+    task({ type: "vrv", title: "Lama tanpa readyBy", producer: "R", shootPlan: "2026-11-11", due: "2026-11-13", createdAt: c }),
+    task({ type: "vrv", title: "Sudah Ready", status: "Ready", producer: "R", readyBy: "2026-11-12", createdAt: c }),
+    task({ type: "vrv", title: "Hangus", producer: "R", shootPlan: "2026-10-01", createdAt: new Date("2026-10-01T03:00:00Z") }),
+  ];
+  const p = morningPushes(tasks, members, MON).find((x) => x.userId === "ur")!;
+  assert.equal(p.title, "Syuting hari ini · 5 konten");
+  assert.equal(
+    p.wa,
+    [
+      "📋 *Senin, 16 November 2026*",
+      "*Syuting hari ini · 5 konten*",
+      "",
+      "🎥 *Video review (2)*",
+      "1. ASICS GEL-RESOLUTION X",
+      "2. WILSON RF 01 hitam",
+      "",
+      "🎬 *Video produk (1)*",
+      "1. WILSON CLASH V3 pink",
+      "",
+      "📷 *Foto Instagram (1)*",
+      "1. ADIDAS UBERSONIC 5 Putih (talent Salma)",
+      "",
+      "🛍️ *Foto katalog (1)*",
+      "1. HEAD SPEED MP",
+      "",
+      "⏰ *Deadline Ready hari ini · 1 konten*",
+      "_Harus sudah Ready (file final terunggah) hari ini:_",
+      "🎥 *Video review*",
+      "1. LI-NING HALBERTEC (Editing)",
+      "",
+      "⚠️ *Terlambat produksi · 1 konten*",
+      "_Rencana syuting sudah lewat, masih Terdata:_",
+      "1. *Foto Instagram* – NIKE VAPOR PRO 2 (rencana 14 Nov)",
+      "",
+      "🚨 *Terlambat upload · 2 konten*",
+      "_Deadline Ready sudah lewat, file final belum diunggah ke Studio:_",
+      "1. *Video review* – Lama tanpa readyBy (deadline 13 Nov, Terdata)",
+      "2. *Video produk* – YONEX PERCEPT 97 (deadline 12 Nov, Editing)",
+      "",
+      "Buka Tirtonic Studio: https://tirtonichub.com/studio/?p=pipeline",
+    ].join("\n"),
+  );
+  // Aulia libur? Senin tidak; Aulia produser kartu LI-NING → ikut deadline hari ini tanpa syuting
+  const a = morningPushes(tasks, members, MON).find((x) => x.userId === "ua")!;
+  assert.equal(a.title, "Deadline Ready hari ini · 1 konten");
+  assert.match(a.wa!, /_Tidak ada syuting hari ini._/);
 });

@@ -37,13 +37,13 @@ export const studioWaSend = (phone: string, text: string) => (waVia() === "n8n" 
 export type WaResult = { via: WaVia; off: boolean; sent: number; failed: number; noNumber: number };
 
 /** Kirim WA ke userIds. Tidak pernah melempar error. */
-export async function sendStudioWa(userIds: string[], msg: { type: string; title: string; body?: string; url: string }): Promise<WaResult> {
+export async function sendStudioWa(userIds: string[], msg: { type: string; title: string; body?: string; url: string; wa?: string }): Promise<WaResult> {
   const r: WaResult = { via: waVia(), off: process.env.STUDIO_WA === "0", sent: 0, failed: 0, noNumber: 0 };
   if (r.off || !r.via || !userIds.length) return r;
   try {
     const users = await prisma.user.findMany({ where: { id: { in: userIds }, isActive: true }, select: { waNumber: true, email: true, mediaMember: { select: { phone: true } } } });
     const only = msg.type === "studio_katalog" ? [] : katalogOnly(); // Ridho dkk. hanya menerima WA Foto katalog
-    const text = waText(msg);
+    const text = msg.wa || waText(msg);
     for (const u of users) {
       if (only.includes(u.email.toLowerCase())) continue;
       const phone = u.mediaMember?.phone?.trim() || u.waNumber; // No. WhatsApp di Tim & Aktivitas dulu, lalu nomor akun Tirtonichub

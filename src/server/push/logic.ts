@@ -42,10 +42,13 @@ export type MTask = {
   producer: string | null;
   talent: string | null;
   script: string | null;
+  editor?: string | null;
+  readyBy?: string | null;
+  due?: string | null;
   createdAt: Date;
 };
 export type MMember = { userId: string; code: string; name: string; offDays: number[] };
-export type Push = { userId: string; title: string; body: string; url: string };
+export type Push = { userId: string; title: string; body: string; url: string; wa?: string };
 
 /** Konten hangus 1 bulan setelah dibuat (sama dengan expiryOf di UI): tidak diingatkan lagi. */
 export function expired(createdAt: Date, dayKey: string): boolean {
@@ -64,32 +67,123 @@ export function expired(createdAt: Date, dayKey: string): boolean {
 
 const MAX_LIST = 6;
 
+/** Urutan jenis di WA pagi (permintaan Zaki): Video review, Video produk, Foto IG, Foto katalog, lalu sisanya. */
+export const TYPE_ORDER = ["vrv", "vpr", "igf", "ktl", "evt", "idc", "idf", "khs", "cmp"];
+const TYPE_EMOJI: Record<string, string> = { vrv: "🎥", vpr: "🎬", igf: "📷", ktl: "🛍️", evt: "🎉", idc: "🎞️", idf: "🖼️", khs: "⭐", cmp: "📣" };
+const HARI = ["Minggu", "Senin", "Selasa", "Rabu", "Kamis", "Jumat", "Sabtu"];
+const BULAN = ["Januari", "Februari", "Maret", "April", "Mei", "Juni", "Juli", "Agustus", "September", "Oktober", "November", "Desember"];
+const ACTIVE = new Set(["Terdata", "Diproduksi", "Editing"]);
+
+/** Batas Ready (sama dengan dueOf di UI): readyBy, konten lama = due. */
+export const dueOf = (t: MTask) => t.readyBy || t.due || null;
+
+/** "Senin, 16 November 2026" */
+export function longDay(dayKey: string): string {
+  const d = new Date(dayKey + "T00:00:00Z");
+  return `${HARI[d.getUTCDay()]}, ${d.getUTCDate()} ${BULAN[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+}
+/** "13 Nov" */
+export const shortDay = (dayKey: string) => `${+dayKey.slice(8)} ${BULAN[+dayKey.slice(5, 7) - 1].slice(0, 3)}`;
+
+const typeRank = (t: string) => (TYPE_ORDER.includes(t) ? TYPE_ORDER.indexOf(t) : TYPE_ORDER.length);
+const label = (t: string) => TYPE_LABEL[t] ?? t;
+const sortTasks = (a: MTask, b: MTask) => typeRank(a.type) - typeRank(b.type) || a.title.localeCompare(b.title);
+
+/** Daftar per jenis: judul jenis tebal + nomor. */
+function grouped(list: MTask[], line: (t: MTask) => string, withCount: boolean): string[] {
+  const out: string[] = [];
+  const types = [...new Set([...list].sort(sortTasks).map((t) => t.type))];
+  for (const ty of types) {
+    const rows = list.filter((t) => t.type === ty).sort(sortTasks);
+    out.push(`${TYPE_EMOJI[ty] ?? "•"} *${label(ty)}${withCount ? ` (${rows.length})` : ""}*`);
+    rows.forEach((t, i) => out.push(`${i + 1}. ${line(t)}`));
+  }
+  return out;
+}
+
+export type MorningParts = { day: string; shoot: MTask[]; dueToday: MTask[]; lateShoot: MTask[]; lateUpload: MTask[] };
+
+/** Bagian pesan pagi satu orang. Syuting: produksi/talent/skrip. Deadline & upload: produksi/editor. */
+export function morningParts(tasks: MTask[], code: string, day: string): MorningParts {
+  const open = tasks.filter((t) => ACTIVE.has(t.status) && !expired(t.createdAt, day));
+  const crew = (t: MTask) => t.producer === code || t.talent === code || t.script === code;
+  const owner = (t: MTask) => t.producer === code || t.editor === code;
+  const lateUpload = open.filter((t) => owner(t) && dueOf(t) && dueOf(t)! < day);
+  const up = new Set(lateUpload);
+  return {
+    day,
+    shoot: open.filter((t) => t.status === "Terdata" && crew(t) && t.shootPlan === day),
+    dueToday: open.filter((t) => owner(t) && dueOf(t) === day),
+    lateShoot: open.filter((t) => t.status === "Terdata" && crew(t) && t.shootPlan && t.shootPlan < day && !up.has(t)),
+    lateUpload,
+  };
+}
+
+/** Teks WhatsApp pagi (format rapi, per jenis). */
+export function morningWaText(p: MorningParts, m: MMember, members: MMember[], link: string): string {
+  const nameOf = new Map(members.map((x) => [x.code, x.name.split(" ")[0]]));
+  const L: string[] = [`📋 *${longDay(p.day)}*`];
+  if (p.shoot.length) {
+    L.push(`*Syuting hari ini · ${p.shoot.length} konten*`, "");
+    const tal = (t: MTask) => (t.talent && t.talent !== m.code && nameOf.get(t.talent) ? ` (talent ${nameOf.get(t.talent)})` : "");
+    const g = grouped(p.shoot, (t) => t.title + tal(t), true);
+    // baris kosong di antara jenis
+    g.forEach((l, i) => {
+      if (i && !/^\d+\. /.test(l)) L.push("");
+      L.push(l);
+    });
+  } else L.push("_Tidak ada syuting hari ini._");
+  if (p.dueToday.length) {
+    L.push("", `⏰ *Deadline Ready hari ini · ${p.dueToday.length} konten*`, "_Harus sudah Ready (file final terunggah) hari ini:_");
+    L.push(...grouped(p.dueToday, (t) => `${t.title} (${t.status})`, false));
+  }
+  const sorted = (l: MTask[]) => [...l].sort(sortTasks);
+  if (p.lateShoot.length) {
+    L.push("", `⚠️ *Terlambat produksi · ${p.lateShoot.length} konten*`, "_Rencana syuting sudah lewat, masih Terdata:_");
+    sorted(p.lateShoot).forEach((t, i) => L.push(`${i + 1}. *${label(t.type)}* – ${t.title} (rencana ${shortDay(t.shootPlan!)})`));
+  }
+  if (p.lateUpload.length) {
+    L.push("", `🚨 *Terlambat upload · ${p.lateUpload.length} konten*`, "_Deadline Ready sudah lewat, file final belum diunggah ke Studio:_");
+    sorted(p.lateUpload).forEach((t, i) => L.push(`${i + 1}. *${label(t.type)}* – ${t.title} (deadline ${shortDay(dueOf(t)!)}, ${t.status})`));
+  }
+  L.push("", `Buka Tirtonic Studio: ${link}`);
+  return L.join("\n");
+}
+
 /**
- * Notifikasi "Syuting hari ini" per anggota. Kamis tim libur; libur pribadi (offDays 0=Min…6=Sab) dilewati;
- * tanpa tugas = tidak dikirim. Tanggal merah tetap dikirim bila ada jadwal (keputusan Zaki).
+ * Notifikasi pagi per anggota: syuting hari ini, deadline Ready hari ini, terlambat produksi, terlambat upload.
+ * Kamis tim libur; libur pribadi (offDays 0=Min…6=Sab) dilewati; tanpa isi = tidak dikirim.
+ * Tanggal merah tetap dikirim bila ada jadwal (keputusan Zaki).
  */
 export function morningPushes(tasks: MTask[], members: MMember[], now: Date): Push[] {
   const day = wibKey(now);
   const dow = wib(now).getUTCDay();
   if (dow === 4) return [];
   const nameOf = new Map(members.map((m) => [m.code, m.name.split(" ")[0]]));
-  const open = tasks.filter((t) => t.status === "Terdata" && t.shootPlan && t.shootPlan <= day && !expired(t.createdAt, day));
+  const base = (process.env.APP_URL || "https://tirtonichub.com").replace(/\/$/, "");
+  const url = "/studio/?p=pipeline";
   const out: Push[] = [];
   for (const m of members) {
     if (!m.code || m.code.startsWith("~")) continue;
     if ((m.offDays ?? []).includes(dow)) continue;
-    const mine = open.filter((t) => t.producer === m.code || t.talent === m.code || t.script === m.code);
-    if (!mine.length) continue;
-    const today = mine.filter((t) => t.shootPlan === day);
-    const late = mine.length - today.length;
+    const p = morningParts(tasks, m.code, day);
+    if (!p.shoot.length && !p.dueToday.length && !p.lateShoot.length && !p.lateUpload.length) continue;
     const line = (t: MTask) => {
       const tal = t.talent && t.talent !== m.code ? nameOf.get(t.talent) : null;
-      return `${TYPE_LABEL[t.type] ?? t.type} – ${t.title}${tal ? ` (talent ${tal})` : ""}`;
+      return `${label(t.type)} – ${t.title}${tal ? ` (talent ${tal})` : ""}`;
     };
-    const parts = today.slice(0, MAX_LIST).map(line);
-    if (today.length > MAX_LIST) parts.push(`+${today.length - MAX_LIST} lagi`);
-    if (late) parts.push(`${late} terlambat`);
-    out.push({ userId: m.userId, title: `Syuting hari ini · ${mine.length} konten`, body: parts.join(" · "), url: "/studio/?p=pipeline" });
+    const shoot = [...p.shoot].sort(sortTasks);
+    const parts = shoot.slice(0, MAX_LIST).map(line);
+    if (shoot.length > MAX_LIST) parts.push(`+${shoot.length - MAX_LIST} lagi`);
+    if (p.dueToday.length) parts.push(`${p.dueToday.length} deadline Ready hari ini`);
+    if (p.lateShoot.length) parts.push(`${p.lateShoot.length} terlambat produksi`);
+    if (p.lateUpload.length) parts.push(`${p.lateUpload.length} terlambat upload`);
+    const title = p.shoot.length
+      ? `Syuting hari ini · ${p.shoot.length} konten`
+      : p.dueToday.length
+        ? `Deadline Ready hari ini · ${p.dueToday.length} konten`
+        : `Konten terlambat · ${p.lateShoot.length + p.lateUpload.length}`;
+    out.push({ userId: m.userId, title, body: parts.join(" · "), url, wa: morningWaText(p, m, members, base + url) });
   }
   return out;
 }
