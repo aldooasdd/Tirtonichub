@@ -46,6 +46,18 @@ export async function runBerita(now = new Date()) {
   } catch {
     return;
   }
-  const text = await beritaTenis(day);
-  if (text) for (const n of to) await sendGowa(n, text.slice(0, 4000));
+  await kirimBerita(day);
+}
+
+/** Kirim sekarang (juga dipakai tombol manual /api/berita-tenis). Return jumlah nomor yang terkirim. */
+export async function kirimBerita(day = wibKey(new Date())): Promise<number> {
+  const to = (process.env.BERITA_TENIS_WA ?? "").split(",").map((s) => s.trim()).filter(Boolean);
+  if (!to.length) throw new Error("BERITA_TENIS_WA kosong di .env server");
+  if (!process.env.ANTHROPIC_API_KEY) throw new Error("ANTHROPIC_API_KEY kosong di .env server");
+  const text = (await beritaTenis(day)).slice(0, 4000);
+  if (!text) throw new Error("Claude tidak menulis berita");
+  let sent = 0;
+  for (const n of to) if (await sendGowa(n, text)) sent++;
+  if (!sent) throw new Error("GOWA gagal mengirim WA");
+  return sent;
 }
