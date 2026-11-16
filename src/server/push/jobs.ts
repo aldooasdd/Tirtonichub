@@ -5,6 +5,7 @@ import { sendPush } from "./send";
 import { runEditNotif } from "./edit";
 import { runKatalog } from "./katalog";
 import { markTick } from "./tick";
+import { runBerita } from "./berita";
 
 /** Catat barang Studio BARU (bukan stok lama) ke antrean "Barang masuk". Jangan pernah menggagalkan penyimpanan barang. */
 export async function queueNewItem(item: { id: string; name: string; color?: string | null; old?: boolean }) {
@@ -80,7 +81,7 @@ export async function runItems(now = new Date()) {
 
 export async function pushTick(now = new Date()) {
   markTick();
-  for (const job of [runMorning, runItems, runKatalog, runEditNotif]) {
+  for (const job of [runMorning, runItems, runKatalog, runEditNotif, runBerita]) {
     try {
       await job(now);
     } catch (e) {
