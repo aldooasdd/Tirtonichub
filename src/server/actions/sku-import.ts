@@ -8,6 +8,7 @@ import { prisma } from "@/server/db";
 import { requireProduk } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
+import { skuConflicts } from "@/server/sku-unique";
 
 import { SKU_COLS } from "@/lib/sku-cols";
 export type SkuChange = { id: string; nama: string; acc: string; from: string; to: string };
@@ -54,14 +55,17 @@ export async function applySkuImport(list: { id: string; to: string }[]): Promis
   const ctx = await requireProduk();
   const items = await prisma.marketplaceItem.findMany({ where: { id: { in: list.slice(0, 20000).map((x) => x.id) } }, select: { id: true, sku: true } });
   const to = new Map(list.map((x) => [x.id, x.to.trim().slice(0, 100)]));
+  const dup = await skuConflicts(items.map((it) => ({ id: it.id, sku: to.get(it.id)! })));
+  const ok = items.filter((it) => !dup.has(it.id));
   await prisma.$transaction(
-    items.map((it) => {
+    ok.map((it) => {
       const s = to.get(it.id)!;
       return prisma.marketplaceItem.update({ where: { id: it.id }, data: { localSku: !s || s === it.sku ? null : s } });
     }),
   );
   const { ip } = await clientMeta();
-  await logActivity({ ...ctx, ip }, { action: "produk_sku_import", entity: "MarketplaceItem", entityId: "bulk", after: { count: items.length } });
+  await logActivity({ ...ctx, ip }, { action: "produk_sku_import", entity: "MarketplaceItem", entityId: "bulk", after: { count: ok.length, dup: dup.size } });
   revalidatePath("/channel/produk");
-  return { ok: true, message: `${items.length} SKU tersimpan di Tirtonichub. Kirim ke marketplace lewat tombol Live ke marketplace di tiap produk.` };
+  const skip = dup.size ? ` ${dup.size} dilewati karena SKU kembar: ${[...dup.values()].slice(0, 5).join(" · ")}` : "";
+  return { ok: !dup.size, message: `${ok.length} SKU tersimpan di Tirtonichub. Kirim ke marketplace lewat tombol Live ke marketplace di tiap produk.${skip}` };
 }
