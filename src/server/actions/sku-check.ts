@@ -10,6 +10,7 @@ import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { pushSkus } from "@/server/marketplace/push-sku";
 import { productKey } from "@/server/marketplace/product-groups";
+import { skuConflicts } from "@/server/sku-unique";
 
 type Res = { ok: boolean; message?: string };
 const PATH = "/channel/produk/cek-sku";
@@ -71,6 +72,10 @@ async function finish(groupKey: string, status: "done" | "missing", sku: string 
   const ctx = await requireChannel();
   const rows = await prisma.skuCheck.findMany({ where: { groupKey }, select: { id: true, itemId: true } });
   if (!rows.length) return { ok: false, message: "Barang tidak ditemukan di antrian." };
+  if (sku) {
+    const dup = [...(await skuConflicts(rows.map((r) => ({ id: r.itemId, sku })))).values()][0];
+    if (dup) return { ok: false, message: `${dup} SKU tidak boleh kembar.` };
+  }
   await prisma.$transaction([
     prisma.skuCheck.updateMany({ where: { groupKey }, data: { status, sku, checkedById: ctx.userId, checkedAt: new Date(), pushedAt: null } }),
     ...(sku ? [prisma.marketplaceItem.updateMany({ where: { id: { in: rows.map((r) => r.itemId) } }, data: { localSku: sku } })] : []),

@@ -3,6 +3,7 @@
 // Produk Master: edit nama & SKU + Sampah. Semua LOKAL di Tirtonichub — tidak dikirim ke marketplace.
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/server/db";
+import { skuConflicts } from "@/server/sku-unique";
 import { requireProduk } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
@@ -67,6 +68,8 @@ export async function setItemSku(id: string, sku: string): Promise<Res> {
   const s = sku.trim().slice(0, 100);
   // Kosong / sama dengan SKU marketplace → kembali pakai SKU asli.
   const localSku = !s || s === it.sku ? null : s;
+  const dup = (await skuConflicts([{ id, sku: s }])).get(id);
+  if (dup) return { ok: false, message: `${dup} SKU tidak boleh kembar.` };
   await prisma.marketplaceItem.update({ where: { id }, data: { localSku } });
   await log("produk_sku", id, { sku: localSku ?? it.sku });
   return { ok: true, message: "SKU tersimpan. Klik Live ke marketplace untuk mengirim." };
