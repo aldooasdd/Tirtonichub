@@ -8,5 +8,7 @@ export const PRODUK_OFF_MSG = "Perubahan produk ke Shopee & Tokopedia sedang dim
 // Tirtonic.com ikut Produk Master: ubah nama/stok/harga di Produk Master langsung dikirim ke web.
 // Terpisah dari PRODUK_KE_MARKETPLACE (Shopee/Tokopedia tetap mati). Dinyalakan 2026-11-09 atas permintaan user.
 export const WEB_IKUT_PRODUK_MASTER = true;
+// Harga tirtonic.com belum ikut sinkron (2026-11-17 user: "harga jangan dulu singkron"). Stok & nama tetap terkirim.
+export const WEB_HARGA = false;
 /** Boleh kirim perubahan produk ke platform ini? */
 export const bolehUbah = (platform: string) => PRODUK_KE_MARKETPLACE || (platform === "WEBSITE" && WEB_IKUT_PRODUK_MASTER);
