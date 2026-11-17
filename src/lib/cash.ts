@@ -1,5 +1,6 @@
 import { prisma } from "@/server/db";
 import { SETOR_AKUN } from "@/lib/rekening";
+import { effectiveShiftCode } from "@/server/attendance/shift-schedule";
 
 export type Buckets = { cash: number; mandiri: number; bca: number; bri: number };
 export const zeroBuckets = (): Buckets => ({ cash: 0, mandiri: 0, bca: 0, bri: 0 });
@@ -281,4 +282,12 @@ export async function computeBranchCash(branchId: string, dateKey: Date, open: B
     bri: open.bri + masuk.bri,
   };
   return { masuk, cashout, setor, expected };
+}
+
+/** Wakil shift terakhir (Siang) wajib tutup saldo kasir sebelum absen pulang: shift Siang hari itu & kasir cabang masih terbuka.
+ *  Satu sumber untuk penjaga absen pulang DAN tampilnya form tutup kasir (beranda & /absen), apa pun role aktifnya. */
+export async function mustCloseCash(user: { id: string; fullName: string; branchId: string | null }, dateKey: Date): Promise<boolean> {
+  if (!user.branchId) return false;
+  if (kasirShift(await effectiveShiftCode(user, dateKey)) !== "SIANG") return false;
+  return !!(await prisma.cashSession.findFirst({ where: { branchId: user.branchId, date: dateKey, closedAt: null }, select: { id: true } }));
 }

@@ -7,6 +7,8 @@ import { dateKeyWIB, wibMinutesOfDay, parseHHMM } from "@/server/attendance/logi
 import { shiftScheduleFor } from "@/server/attendance/shift-schedule";
 import { fmtWIB } from "@/lib/datetime";
 import { AbsenCapture } from "@/components/absen/absen-capture";
+import { CashCloseForm } from "@/components/cash/cash-forms";
+import { mustCloseCash } from "@/lib/cash";
 
 export default async function AbsenPage() {
   if (!ABSEN_ON) redirect("/beranda");
@@ -33,7 +35,8 @@ export default async function AbsenPage() {
 
   // Media: pulang setelah 5 jam kerja. Lainnya: setelah shift berakhir.
   const isMedia = ctx.activeRole === "MEDIA";
-  const user = await prisma.user.findUniqueOrThrow({ where: { id: ctx.userId }, select: { fullName: true } });
+  const user = await prisma.user.findUniqueOrThrow({ where: { id: ctx.userId }, select: { fullName: true, branchId: true } });
+  const needCloseCash = phase === "out" && (await mustCloseCash({ id: ctx.userId, fullName: user.fullName, branchId: user.branchId }, today));
   const shiftSched = phase === "out" && !isMedia ? await shiftScheduleFor({ id: ctx.userId, fullName: user.fullName }, today) : null;
   const tooEarly =
     phase === "out" &&
@@ -54,6 +57,8 @@ export default async function AbsenPage() {
         </p>
         {att?.checkOutAt && <p className="font-medium">Pulang {fmtWIB(att.checkOutAt)}</p>}
       </div>
+
+      {needCloseCash && <CashCloseForm />}
 
       {phase === "done" ? (
         <div className="rounded-lg bg-card p-6 text-center text-muted-foreground">

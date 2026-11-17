@@ -7,8 +7,8 @@ import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { makeKey, putObject } from "@/server/storage";
 import { dateKeyWIB, computeCheckInStatus, withinRadius, wibMinutesOfDay, parseHHMM } from "@/server/attendance/logic";
-import { shiftScheduleFor, effectiveShiftCode } from "@/server/attendance/shift-schedule";
-import { kasirShift } from "@/lib/cash";
+import { shiftScheduleFor } from "@/server/attendance/shift-schedule";
+import { mustCloseCash } from "@/lib/cash";
 
 export type ActionResult = { ok: boolean; message?: string };
 
@@ -140,16 +140,8 @@ export async function checkOut(form: FormData): Promise<ActionResult> {
   }
 
   // Wakil shift terakhir (Siang) wajib tutup saldo kasir dulu sebelum pulang.
-  if (user.branchId) {
-    const myKasir = kasirShift(await effectiveShiftCode({ id: ctx.userId, fullName: user.fullName }, dateKey));
-    if (myKasir === "SIANG") {
-      const sess = await prisma.cashSession.findFirst({
-        where: { branchId: user.branchId, date: dateKey, closedAt: null },
-      });
-      if (sess)
-        return { ok: false, message: "Kamu shift terakhir — tutup saldo kasir (saldo akhir) dulu sebelum pulang." };
-    }
-  }
+  if (await mustCloseCash({ id: ctx.userId, fullName: user.fullName, branchId: user.branchId }, dateKey))
+    return { ok: false, message: "Kamu shift terakhir — tutup saldo kasir (saldo akhir) dulu sebelum pulang. Isi form Tutup Saldo Kasir di atas." };
 
   const radiusErr = await checkRadiusOrFail(user.branchId, geo);
   if (radiusErr) return { ok: false, message: radiusErr };
