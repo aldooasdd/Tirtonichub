@@ -10,7 +10,7 @@ import { dateKeyWIB, wibMinutesOfDay, parseHHMM } from "@/server/attendance/logi
 import { shiftScheduleFor, effectiveShiftCode } from "@/server/attendance/shift-schedule";
 import { loadCalendarEvents } from "@/server/calendar-events";
 import { KalenderClient } from "@/components/kalender/kalender-client";
-import { computeBranchCash, zeroBuckets, loadBranchCashBoards, loadBranchSalesTrends, loadCashMovements, loadCashSessions, kasirShift, type Buckets } from "@/lib/cash";
+import { computeBranchCash, zeroBuckets, loadBranchCashBoards, loadBranchSalesTrends, loadCashMovements, loadCashSessions, kasirShift, mustCloseCash, type Buckets } from "@/lib/cash";
 import { CashOpenForm, CashCloseForm } from "@/components/cash/cash-forms";
 import { BranchCashBoard } from "@/components/cash/branch-cash-board";
 import { CashDashboard } from "@/components/cash/cash-dashboard";
@@ -124,8 +124,9 @@ export default async function BerandaPage() {
   // Buka saldo: wakil shift pertama (Pagi) yang sudah absen masuk & kasir belum dibuka.
   const needOpenCash = isSales && !!att?.checkInAt && myKasirShift === "PAGI" && !cashSession;
   // Tutup saldo: wakil shift terakhir (Siang), kasir sudah dibuka & belum ditutup, saat mau pulang.
+  // Sama persis dengan penjaga absen pulang (apa pun role aktifnya), supaya tak ada yang terkunci tanpa form.
   const needCloseCash =
-    isSales && myKasirShift === "SIANG" && !!cashSession && !cashSession.closedAt && !!att?.checkInAt && !att?.checkOutAt;
+    !!att?.checkInAt && !att?.checkOutAt && (await mustCloseCash({ id: ctx.userId, fullName: user.fullName, branchId: user.branchId }, today));
 
   const absenPhase = !att?.checkInAt ? "in" : !att.checkOutAt ? "out" : "done";
   // Media: jadwal fleksibel → pulang setelah 5 jam. Lainnya: setelah shift berakhir.
