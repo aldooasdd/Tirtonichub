@@ -481,7 +481,44 @@ export async function autoSyncTick() {
       await syncOrders(p, 3).catch((e) => console.error(`[auto-sync] ${p} order:`, e instanceof Error ? e.message : e));
       if (withItems) await syncItems(p).catch((e) => console.error(`[auto-sync] ${p} produk:`, e instanceof Error ? e.message : e));
     }
+    if (withItems) await stokWebIkutTokopedia().catch((e) => console.error("[auto-sync] stok web:", e instanceof Error ? e.message : e));
   } finally {
     running = false;
   }
+}
+
+/** Stok tirtonic.com = stok Tokopedia, dicocokkan lewat SKU (localSku ?? sku, huruf besar-kecil sama).
+ *  Jalan tiap sinkron produk (±1 jam), setelah Tokopedia & web ditarik. Hanya yang beda yang dikirim.
+ *  SKU kembar di Tokopedia (listing dobel) → ambil stok terbesar. Web stok "tak terbatas" (999) dilewati. */
+export async function stokWebIkutTokopedia(): Promise<{ sent: number; fail: number }> {
+  if (!website.websiteReady() || !bolehUbah("WEBSITE")) return { sent: 0, fail: 0 };
+  const tok = await activeShop("TOKOPEDIA");
+  if (!tok || tok.shopId === DEMO) return { sent: 0, fail: 0 };
+  const rows = await prisma.marketplaceItem.findMany({
+    where: { platform: { in: ["TOKOPEDIA", "WEBSITE"] }, deletedAt: null, shopId: { not: DEMO } },
+    select: { id: true, platform: true, itemId: true, modelId: true, sku: true, localSku: true, stock: true },
+  });
+  const key = (r: (typeof rows)[number]) => (r.localSku ?? r.sku ?? "").trim().toLowerCase();
+  const tokStock = new Map<string, number>();
+  for (const r of rows) if (r.platform === "TOKOPEDIA" && key(r)) tokStock.set(key(r), Math.max(tokStock.get(key(r)) ?? 0, r.stock));
+  const todo = rows.filter((r) => r.platform === "WEBSITE" && r.stock !== website.UNLIMITED && tokStock.has(key(r)) && tokStock.get(key(r)) !== r.stock);
+  let sent = 0;
+  let lastErr = "";
+  // ponytail: 3 paralel; naikkan kalau ribuan varian beda sekaligus.
+  const worker = async () => {
+    for (let r = todo.shift(); r; r = todo.shift()) {
+      const stock = tokStock.get(key(r))!;
+      try {
+        await website.websiteUpdate(r.itemId, r.modelId, { stock });
+        await prisma.marketplaceItem.update({ where: { id: r.id }, data: { stock } });
+        sent++;
+      } catch (e) {
+        lastErr = `${r.itemId}:${r.modelId} ${e instanceof Error ? e.message.slice(-200) : String(e)}`;
+      }
+    }
+  };
+  const total = todo.length;
+  await Promise.all(Array.from({ length: 3 }, worker));
+  if (total) console.log(`[stok web] ${sent}/${total} varian disamakan dengan Tokopedia${lastErr ? `, error terakhir ${lastErr}` : ""}`);
+  return { sent, fail: total - sent };
 }
