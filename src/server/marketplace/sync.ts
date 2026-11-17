@@ -5,7 +5,7 @@ import { notifyRole } from "@/server/notify";
 import * as shopee from "./shopee";
 import * as tiktok from "./tiktok";
 import * as website from "./website";
-import { PRODUK_OFF_MSG, bolehUbah } from "@/lib/flags";
+import { PRODUK_OFF_MSG, WEB_HARGA, bolehUbah } from "@/lib/flags";
 import type { MpItem, MpOrder } from "./shopee";
 
 export type Marketplace = "SHOPEE" | "TOKOPEDIA";
@@ -448,6 +448,10 @@ export async function pushItem(id: string, change: { stock?: number; price?: num
   const it = await prisma.marketplaceItem.findUnique({ where: { id } });
   if (!it || !isChannel(it.platform)) throw new Error("Produk tidak ditemukan.");
   if (!bolehUbah(it.platform)) throw new Error(PRODUK_OFF_MSG);
+  if (it.platform === "WEBSITE" && !WEB_HARGA && change.price != null) {
+    if (change.stock == null) throw new Error("Harga Tirtonic.com belum ikut sinkron — ubah harga di admin tirtonic.com.");
+    change = { stock: change.stock };
+  }
   if (it.platform === "WEBSITE") await website.websiteUpdate(it.itemId, it.modelId, change);
   else if (it.shopId !== DEMO) {
     const shop = await mustShop(it.platform);
