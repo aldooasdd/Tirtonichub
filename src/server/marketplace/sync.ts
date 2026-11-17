@@ -482,6 +482,11 @@ export async function autoSyncTick() {
       if (withItems) await syncItems(p).catch((e) => console.error(`[auto-sync] ${p} produk:`, e instanceof Error ? e.message : e));
     }
     if (withItems) await stokWebIkutTokopedia().catch((e) => console.error("[auto-sync] stok web:", e instanceof Error ? e.message : e));
+    // Tiap jam (bareng sinkron produk): berat produk → tirtonic.com untuk hitung ongkir.
+    if (withItems) {
+      const { pushWeightsToWebCore } = await import("./website-import"); // dinamis: hindari import melingkar
+      await pushWeightsToWebCore().catch((e) => console.error("[auto-sync] berat → web:", e instanceof Error ? e.message : e));
+    }
   } finally {
     running = false;
   }

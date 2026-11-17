@@ -126,3 +126,8 @@ export type WebImportProduct = {
 export async function websiteImport(product: WebImportProduct): Promise<{ created: boolean; skipped?: boolean }> {
   return hub<{ created: boolean; skipped?: boolean }>({ body: { action: "import", product } });
 }
+
+/** Kirim berat produk (gram) ke tirtonic.com — hanya kolom berat yang diubah di web. */
+export async function websiteWeights(weights: { ref: string; names: string[]; gram: number }[]): Promise<{ updated: number }> {
+  return hub<{ updated: number }>({ body: { action: "weights", weights } });
+}

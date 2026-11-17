@@ -1,7 +1,8 @@
 // Pindahkan produk Tokopedia di Produk Master ke tirtonic.com (lewat /api/hub action "import").
 import { prisma } from "@/server/db";
+import { bolehUbah } from "@/lib/flags";
 import { DEMO } from "./sync";
-import { websiteImport, websiteReady, type WebImportProduct } from "./website";
+import { websiteImport, websiteReady, websiteWeights, type WebImportProduct } from "./website";
 
 // "1.2 KILOGRAM" / "500 GRAM" → gram.
 function toGram(w: string | null | undefined): number | null {
@@ -68,4 +69,33 @@ export async function pushTokopediaToWebCore(itemIds?: string[]): Promise<PushRe
   }
   const msg = `${payloads.length} produk Tokopedia → tirtonic.com: ${created} baru, ${updated} diperbarui${failed.length ? `, ${failed.length} gagal (${failed.slice(0, 3).join("; ")})` : ""}.`;
   return { ok: failed.length === 0, message: msg, total: payloads.length, created, updated, skipped, failed };
+}
+
+/** Sinkron BERAT semua produk marketplace (Tokopedia & Shopee) ke tirtonic.com untuk hitung ongkir.
+ *  Web mencocokkan per ref (produk hasil impor) lalu per nama (produk dibuat manual); hanya berat yang diubah. */
+export async function pushWeightsToWebCore(): Promise<{ ok: boolean; message: string; updated: number }> {
+  if (!websiteReady()) return { ok: false, message: "POINTS_API_SECRET belum diset.", updated: 0 };
+  if (!bolehUbah("WEBSITE")) return { ok: false, message: "Sinkron ke web sedang dimatikan.", updated: 0 };
+  const [products, items] = await Promise.all([
+    prisma.marketplaceProduct.findMany({ where: { weight: { not: null } }, select: { platform: true, productId: true, title: true, weight: true } }),
+    prisma.marketplaceItem.findMany({ where: { deletedAt: null, shopId: { not: DEMO } }, select: { platform: true, itemId: true, name: true, localName: true } }),
+  ]);
+  const names = new Map<string, Set<string>>();
+  for (const it of items) {
+    const k = `${it.platform}:${it.itemId}`;
+    const set = names.get(k) ?? new Set<string>();
+    if (it.localName) set.add(it.localName);
+    set.add(it.name);
+    names.set(k, set);
+  }
+  const rows = products.flatMap((p) => {
+    const gram = toGram(p.weight);
+    if (!gram) return [];
+    const ref = `${p.platform}:${p.productId}`;
+    return [{ ref, gram, names: [p.title, ...(names.get(ref) ?? [])] }];
+  });
+  let updated = 0;
+  // ponytail: 300 per request — payload kecil, cukup untuk ribuan produk.
+  for (let i = 0; i < rows.length; i += 300) updated += (await websiteWeights(rows.slice(i, i + 300))).updated;
+  return { ok: true, message: `${rows.length} berat produk dicek → ${updated} diperbarui di tirtonic.com.`, updated };
 }
