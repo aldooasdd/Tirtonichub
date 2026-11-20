@@ -25,6 +25,7 @@ import {
   AlertCircle,
   Inbox,
   Store,
+  Tag,
   type LucideIcon,
 } from "lucide-react";
 import { HR_ROLES, FINANCE_ROLES, STOCK_ROLES, MEDIA_ROLES, SALES_ROLES, ORDER_SPECIALIST_ROLES, HEAD_BRANCH_ROLES, CHANNEL_ROLES, ADMIN_ROLES, roleAttends, type RoleCode } from "./roles";
@@ -146,6 +147,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Tirtonic POS", href: "/channel/pos", icon: ShoppingCart },
         { label: "Produk Master", href: "/channel/produk", icon: Boxes },
         { label: "Cek SKU", href: "/channel/produk/cek-sku", icon: ClipboardCheck },
+        { label: "Pasangkan Tag", href: "/channel/produk/tag", icon: Tag },
         { label: "Produk Quantity", href: "/channel/produk-quantity", icon: Warehouse },
         { label: "Settlement Marketplace", href: "/channel/dana", icon: Wallet },
         { label: "Saldo Shopee", href: "/channel/saldo-shopee", icon: Wallet },
