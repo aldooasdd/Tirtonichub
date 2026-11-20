@@ -1,53 +1,66 @@
 "use server";
 
-// Pasangkan Tag (Tirtonic Channel): scan barcode SKU → scan stiker RFID satu per satu → tersimpan.
-// Reader HC-YK947 mode keyboard: tiap scan = kode + Enter. EPC UCODE 9 = 24 huruf hex.
+// Pasangkan Tag (Tirtonic Channel): scan barcode SKU → sapu semua stiker barang itu sekaligus → tersimpan,
+// langsung dibandingkan dengan stok sistem. Reader HC-YK947 mode keyboard: tiap tag = kode + Enter.
 import { prisma } from "@/server/db";
 import { requireChannel } from "@/server/auth/rbac";
+import { buildCatalog } from "@/server/pos-catalog";
 
-type SkuInfo = { sku: string; name: string | null; variant: string | null; image: string | null; tags: number };
-type TagRes = { ok: boolean; status: "baru" | "sudah" | "pindah" | "milik-lain" | "error"; message: string; tags?: number; from?: string };
+export type SkuInfo = {
+  sku: string; name: string | null; variant: string | null; image: string | null;
+  tags: number; stock: number | null; stocks: { label: string; stock: number }[];
+};
+export type BatchRes = { added: string[]; already: number; other: { epc: string; sku: string }[]; tags: number };
 
-/** Info barang untuk SKU yang di-scan (nama dari Produk Master, kalau ada). */
+const clean = (list: string[]) => [...new Set(list.map((e) => e.trim().toUpperCase()).filter(Boolean))];
+
+/** Barang + stok sistem (per cabang, sama seperti Produk Quantity) + jumlah tag terpasang. */
 export async function lookupSku(raw: string): Promise<SkuInfo> {
   await requireChannel();
   const sku = raw.trim();
-  const eq = { equals: sku, mode: "insensitive" as const };
-  const [it, tags] = await Promise.all([
-    prisma.marketplaceItem.findFirst({
-      where: { deletedAt: null, shopId: { not: "demo" }, OR: [{ localSku: eq }, { localSku: null, sku: eq }] },
-      select: { name: true, localName: true, variant: true, image: true },
-    }),
-    prisma.rfidTag.count({ where: { sku } }),
-  ]);
-  return { sku, name: it ? (it.localName ?? it.name) : null, variant: it?.variant ?? null, image: it?.image ?? null, tags };
+  // ponytail: muat katalog penuh per scan barcode (sekali per barang); cache kalau terasa lambat.
+  const [cat, tags] = await Promise.all([buildCatalog(null), prisma.rfidTag.count({ where: { sku } })]);
+  const it = cat.items.find((x) => x.key === sku.toLowerCase());
+  return {
+    sku: it?.sku ?? sku,
+    name: it?.name ?? null,
+    variant: it?.variant ?? null,
+    image: it?.img ?? null,
+    tags,
+    stock: it ? it.stock : null,
+    stocks: it?.stocks.map((s) => ({ label: s.label, stock: s.stock })) ?? [],
+  };
 }
 
-/** Pasang 1 tag ke SKU. Tag milik SKU lain → tolak kecuali move=true. */
-export async function pairTag(rawEpc: string, rawSku: string, move = false): Promise<TagRes> {
+/** Pasang banyak tag sekaligus ke 1 SKU. Tag milik SKU lain tidak dipindah kecuali move=true. */
+export async function pairTags(epcs: string[], rawSku: string, move = false): Promise<BatchRes> {
   const ctx = await requireChannel();
-  const epc = rawEpc.trim().toUpperCase(), sku = rawSku.trim();
-  if (!sku) return { ok: false, status: "error", message: "Scan barcode SKU dulu." };
-  const cur = await prisma.rfidTag.findUnique({ where: { epc } });
-  if (cur?.sku === sku) return { ok: true, status: "sudah", message: "Tag ini sudah terpasang di SKU ini.", tags: await prisma.rfidTag.count({ where: { sku } }) };
-  if (cur && !move) return { ok: false, status: "milik-lain", message: `Tag ini sudah terpasang di SKU ${cur.sku}.`, from: cur.sku };
-  await prisma.rfidTag.upsert({ where: { epc }, create: { epc, sku, userId: ctx.userId }, update: { sku, userId: ctx.userId } });
-  const tags = await prisma.rfidTag.count({ where: { sku } });
-  return cur
-    ? { ok: true, status: "pindah", message: `Dipindah dari SKU ${cur.sku}.`, tags }
-    : { ok: true, status: "baru", message: "Tag terpasang.", tags };
+  const sku = rawSku.trim();
+  const list = clean(epcs);
+  const cur = await prisma.rfidTag.findMany({ where: { epc: { in: list } } });
+  const owner = new Map(cur.map((t) => [t.epc, t.sku]));
+  const added = list.filter((e) => !owner.has(e) || (move && owner.get(e) !== sku));
+  const other = move ? [] : cur.filter((t) => t.sku !== sku).map((t) => ({ epc: t.epc, sku: t.sku }));
+  await prisma.$transaction([
+    prisma.rfidTag.deleteMany({ where: { epc: { in: added } } }),
+    prisma.rfidTag.createMany({ data: added.map((epc) => ({ epc, sku, userId: ctx.userId })) }),
+  ]);
+  return { added, already: cur.filter((t) => t.sku === sku).length, other, tags: await prisma.rfidTag.count({ where: { sku } }) };
 }
 
-/** Tag ini milik SKU apa (scan tag tanpa pilih SKU). */
-export async function whoseTag(rawEpc: string): Promise<{ sku: string | null }> {
+/** Batalkan tag yang baru dipasang (salah sapu / ikut terbaca dari barang lain). */
+export async function unpairTags(epcs: string[], rawSku: string): Promise<{ tags: number }> {
   await requireChannel();
-  const t = await prisma.rfidTag.findUnique({ where: { epc: rawEpc.trim().toUpperCase() }, select: { sku: true } });
-  return { sku: t?.sku ?? null };
+  const sku = rawSku.trim();
+  await prisma.rfidTag.deleteMany({ where: { epc: { in: clean(epcs) }, sku } });
+  return { tags: await prisma.rfidTag.count({ where: { sku } }) };
 }
 
-/** Lepas tag (stiker rusak / salah tempel). */
-export async function unpairTag(rawEpc: string): Promise<{ ok: boolean }> {
+/** Tag-tag ini milik SKU apa (sapu tanpa pilih SKU). */
+export async function whoseTags(epcs: string[]): Promise<{ sku: string; n: number }[]> {
   await requireChannel();
-  await prisma.rfidTag.deleteMany({ where: { epc: rawEpc.trim().toUpperCase() } });
-  return { ok: true };
+  const list = clean(epcs);
+  const rows = await prisma.rfidTag.groupBy({ by: ["sku"], where: { epc: { in: list } }, _count: true });
+  const known = rows.reduce((n, r) => n + r._count, 0);
+  return [...rows.map((r) => ({ sku: r.sku, n: r._count })), ...(list.length > known ? [{ sku: "", n: list.length - known }] : [])];
 }
