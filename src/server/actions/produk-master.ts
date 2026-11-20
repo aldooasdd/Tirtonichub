@@ -3,7 +3,7 @@
 // Produk Master: edit nama & SKU + Sampah. Semua LOKAL di Tirtonichub — tidak dikirim ke marketplace.
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/server/db";
-import { skuConflicts } from "@/server/sku-unique";
+import { freeSku } from "@/server/sku-unique";
 import { requireProduk } from "@/server/auth/rbac";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
@@ -61,17 +61,18 @@ export async function renameProduct(platform: string, itemId: string, name: stri
   return { ok: true, message: sent.length ? `Nama tersimpan & ikut diubah di ${sent.join(", ")}.` : "Nama tersimpan." };
 }
 
-export async function setItemSku(id: string, sku: string): Promise<Res> {
+export async function setItemSku(id: string, sku: string): Promise<Res & { sku?: string }> {
   await requireProduk();
   const it = await prisma.marketplaceItem.findUnique({ where: { id } });
   if (!it) return { ok: false, message: "Varian tidak ditemukan." };
-  const s = sku.trim().slice(0, 100);
+  const want = sku.trim().slice(0, 99);
+  // SKU sudah dipakai → otomatis ditambah angka acak supaya tetap tersimpan.
+  const { sku: s, clash } = want ? await freeSku([id], want) : { sku: "", clash: null };
   // Kosong / sama dengan SKU marketplace → kembali pakai SKU asli.
   const localSku = !s || s === it.sku ? null : s;
-  const dup = (await skuConflicts([{ id, sku: s }])).get(id);
-  if (dup) return { ok: false, message: `${dup} SKU tidak boleh kembar.` };
   await prisma.marketplaceItem.update({ where: { id }, data: { localSku } });
-  await log("produk_sku", id, { sku: localSku ?? it.sku });
+  await log("produk_sku", id, { sku: localSku ?? it.sku, ...(clash ? { asked: want } : {}) });
+  if (clash) return { ok: true, sku: s, message: `${clash} Disimpan sebagai ${s}. Klik Live ke marketplace untuk mengirim.` };
   return { ok: true, message: "SKU tersimpan. Klik Live ke marketplace untuk mengirim." };
 }
 

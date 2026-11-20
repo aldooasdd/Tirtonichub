@@ -10,7 +10,7 @@ import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 import { pushSkus } from "@/server/marketplace/push-sku";
 import { productKey } from "@/server/marketplace/product-groups";
-import { skuConflicts } from "@/server/sku-unique";
+import { freeSku } from "@/server/sku-unique";
 
 type Res = { ok: boolean; message?: string };
 const PATH = "/channel/produk/cek-sku";
@@ -68,14 +68,12 @@ export async function loadSkuCheckFile(base64: string, replace = false): Promise
   return { ok: true, message: `${fresh.length} baris masuk antrian Cek SKU (${rows.length - fresh.length} dilewati: sudah dicek / produk tidak ada).` };
 }
 
-async function finish(groupKey: string, status: "done" | "missing", sku: string | null): Promise<Res> {
+async function finish(groupKey: string, status: "done" | "missing", want: string | null): Promise<Res> {
   const ctx = await requireChannel();
   const rows = await prisma.skuCheck.findMany({ where: { groupKey }, select: { id: true, itemId: true } });
   if (!rows.length) return { ok: false, message: "Barang tidak ditemukan di antrian." };
-  if (sku) {
-    const dup = [...(await skuConflicts(rows.map((r) => ({ id: r.itemId, sku })))).values()][0];
-    if (dup) return { ok: false, message: `${dup} SKU tidak boleh kembar.` };
-  }
+  // SKU sudah dipakai → otomatis ditambah angka acak supaya tetap tersimpan.
+  const { sku, clash } = want ? await freeSku(rows.map((r) => r.itemId), want) : { sku: null, clash: null };
   await prisma.$transaction([
     prisma.skuCheck.updateMany({ where: { groupKey }, data: { status, sku, checkedById: ctx.userId, checkedAt: new Date(), pushedAt: null } }),
     ...(sku ? [prisma.marketplaceItem.updateMany({ where: { id: { in: rows.map((r) => r.itemId) } }, data: { localSku: sku } })] : []),
@@ -83,7 +81,7 @@ async function finish(groupKey: string, status: "done" | "missing", sku: string 
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "sku_check", entity: "SkuCheck", entityId: groupKey, after: { status, sku } });
   revalidatePath(PATH);
-  return { ok: true, message: status === "missing" ? "Ditandai tidak ada di toko." : `SKU ${sku} tersimpan.` };
+  return { ok: true, message: status === "missing" ? "Ditandai tidak ada di toko." : clash ? `${clash} Disimpan sebagai ${sku}.` : `SKU ${sku} tersimpan.` };
 }
 
 /** Saran Accurate benar → pakai UPC saran. */
