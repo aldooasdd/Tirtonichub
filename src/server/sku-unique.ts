@@ -30,3 +30,18 @@ export async function skuConflicts(lines: { id: string; sku: string }[]): Promis
   }
   return out;
 }
+
+/** SKU bentrok → tambah 1 angka acak di belakang sampai bebas (user 2026-11-20: "biar bisa di save dulu").
+ *  clash = alasan bentrok SKU asli (null = SKU asli dipakai apa adanya). */
+export async function freeSku(ids: string[], sku: string): Promise<{ sku: string; clash: string | null }> {
+  const base = sku.trim();
+  const first = [...(await skuConflicts(ids.map((id) => ({ id, sku: base })))).values()][0] ?? null;
+  if (!first) return { sku: base, clash: null };
+  let s = base;
+  // ponytail: tiap putaran +1 angka acak; 1–2 putaran hampir selalu cukup.
+  for (let i = 0; i < 20; i++) {
+    s += Math.floor(Math.random() * 10);
+    if (!(await skuConflicts(ids.map((id) => ({ id, sku: s })))).size) return { sku: s, clash: first };
+  }
+  throw new Error("SKU pengganti tidak ketemu.");
+}

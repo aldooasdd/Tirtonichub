@@ -27,6 +27,7 @@ export function ItemTable({ rows }: { rows: ItemRow[] }) {
     start(async () => {
       const res = await setItemSku(r.id, sku[r.id]).catch(() => ({ ok: false, message: "Gagal. Muat ulang halaman." }));
       setMsg((m) => ({ ...m, [r.id]: { ok: res.ok, text: res.message ?? "" } }));
+      if ("sku" in res && res.sku) setSku((x) => ({ ...x, [r.id]: res.sku! }));
       if (res.ok) router.refresh();
     });
   }
