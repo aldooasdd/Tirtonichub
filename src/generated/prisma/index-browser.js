@@ -793,6 +793,14 @@ exports.Prisma.DemoPhotoScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.RfidTagScalarFieldEnum = {
+  epc: 'epc',
+  sku: 'sku',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -935,7 +943,8 @@ exports.Prisma.ModelName = {
   ChatTemplate: 'ChatTemplate',
   PosCampaign: 'PosCampaign',
   SkuCheck: 'SkuCheck',
-  DemoPhoto: 'DemoPhoto'
+  DemoPhoto: 'DemoPhoto',
+  RfidTag: 'RfidTag'
 };
 
 /**

@@ -272,6 +272,11 @@ export type SkuCheck = $Result.DefaultSelection<Prisma.$SkuCheckPayload>
  * 
  */
 export type DemoPhoto = $Result.DefaultSelection<Prisma.$DemoPhotoPayload>
+/**
+ * Model RfidTag
+ * Stiker RFID UHF ↔ SKU barang (Pasangkan Tag). epc = kode unik bawaan stiker (UCODE 9).
+ */
+export type RfidTag = $Result.DefaultSelection<Prisma.$RfidTagPayload>
 
 /**
  * Enums
@@ -1023,6 +1028,16 @@ export class PrismaClient<
     * ```
     */
   get demoPhoto(): Prisma.DemoPhotoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.rfidTag`: Exposes CRUD operations for the **RfidTag** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more RfidTags
+    * const rfidTags = await prisma.rfidTag.findMany()
+    * ```
+    */
+  get rfidTag(): Prisma.RfidTagDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1514,7 +1529,8 @@ export namespace Prisma {
     ChatTemplate: 'ChatTemplate',
     PosCampaign: 'PosCampaign',
     SkuCheck: 'SkuCheck',
-    DemoPhoto: 'DemoPhoto'
+    DemoPhoto: 'DemoPhoto',
+    RfidTag: 'RfidTag'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1533,7 +1549,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -5311,6 +5327,80 @@ export namespace Prisma {
           }
         }
       }
+      RfidTag: {
+        payload: Prisma.$RfidTagPayload<ExtArgs>
+        fields: Prisma.RfidTagFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.RfidTagFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RfidTagPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.RfidTagFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RfidTagPayload>
+          }
+          findFirst: {
+            args: Prisma.RfidTagFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RfidTagPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.RfidTagFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RfidTagPayload>
+          }
+          findMany: {
+            args: Prisma.RfidTagFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RfidTagPayload>[]
+          }
+          create: {
+            args: Prisma.RfidTagCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RfidTagPayload>
+          }
+          createMany: {
+            args: Prisma.RfidTagCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.RfidTagCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RfidTagPayload>[]
+          }
+          delete: {
+            args: Prisma.RfidTagDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RfidTagPayload>
+          }
+          update: {
+            args: Prisma.RfidTagUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RfidTagPayload>
+          }
+          deleteMany: {
+            args: Prisma.RfidTagDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.RfidTagUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.RfidTagUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RfidTagPayload>[]
+          }
+          upsert: {
+            args: Prisma.RfidTagUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$RfidTagPayload>
+          }
+          aggregate: {
+            args: Prisma.RfidTagAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateRfidTag>
+          }
+          groupBy: {
+            args: Prisma.RfidTagGroupByArgs<ExtArgs>
+            result: $Utils.Optional<RfidTagGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.RfidTagCountArgs<ExtArgs>
+            result: $Utils.Optional<RfidTagCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -5458,6 +5548,7 @@ export namespace Prisma {
     posCampaign?: PosCampaignOmit
     skuCheck?: SkuCheckOmit
     demoPhoto?: DemoPhotoOmit
+    rfidTag?: RfidTagOmit
   }
 
   /* Types for Logging */
@@ -63672,6 +63763,1001 @@ export namespace Prisma {
 
 
   /**
+   * Model RfidTag
+   */
+
+  export type AggregateRfidTag = {
+    _count: RfidTagCountAggregateOutputType | null
+    _min: RfidTagMinAggregateOutputType | null
+    _max: RfidTagMaxAggregateOutputType | null
+  }
+
+  export type RfidTagMinAggregateOutputType = {
+    epc: string | null
+    sku: string | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RfidTagMaxAggregateOutputType = {
+    epc: string | null
+    sku: string | null
+    userId: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type RfidTagCountAggregateOutputType = {
+    epc: number
+    sku: number
+    userId: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type RfidTagMinAggregateInputType = {
+    epc?: true
+    sku?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RfidTagMaxAggregateInputType = {
+    epc?: true
+    sku?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type RfidTagCountAggregateInputType = {
+    epc?: true
+    sku?: true
+    userId?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type RfidTagAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RfidTag to aggregate.
+     */
+    where?: RfidTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RfidTags to fetch.
+     */
+    orderBy?: RfidTagOrderByWithRelationInput | RfidTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: RfidTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RfidTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RfidTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned RfidTags
+    **/
+    _count?: true | RfidTagCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: RfidTagMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: RfidTagMaxAggregateInputType
+  }
+
+  export type GetRfidTagAggregateType<T extends RfidTagAggregateArgs> = {
+        [P in keyof T & keyof AggregateRfidTag]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateRfidTag[P]>
+      : GetScalarType<T[P], AggregateRfidTag[P]>
+  }
+
+
+
+
+  export type RfidTagGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: RfidTagWhereInput
+    orderBy?: RfidTagOrderByWithAggregationInput | RfidTagOrderByWithAggregationInput[]
+    by: RfidTagScalarFieldEnum[] | RfidTagScalarFieldEnum
+    having?: RfidTagScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: RfidTagCountAggregateInputType | true
+    _min?: RfidTagMinAggregateInputType
+    _max?: RfidTagMaxAggregateInputType
+  }
+
+  export type RfidTagGroupByOutputType = {
+    epc: string
+    sku: string
+    userId: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: RfidTagCountAggregateOutputType | null
+    _min: RfidTagMinAggregateOutputType | null
+    _max: RfidTagMaxAggregateOutputType | null
+  }
+
+  type GetRfidTagGroupByPayload<T extends RfidTagGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<RfidTagGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof RfidTagGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], RfidTagGroupByOutputType[P]>
+            : GetScalarType<T[P], RfidTagGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type RfidTagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    epc?: boolean
+    sku?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["rfidTag"]>
+
+  export type RfidTagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    epc?: boolean
+    sku?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["rfidTag"]>
+
+  export type RfidTagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    epc?: boolean
+    sku?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["rfidTag"]>
+
+  export type RfidTagSelectScalar = {
+    epc?: boolean
+    sku?: boolean
+    userId?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type RfidTagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"epc" | "sku" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["rfidTag"]>
+
+  export type $RfidTagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "RfidTag"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      epc: string
+      sku: string
+      userId: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["rfidTag"]>
+    composites: {}
+  }
+
+  type RfidTagGetPayload<S extends boolean | null | undefined | RfidTagDefaultArgs> = $Result.GetResult<Prisma.$RfidTagPayload, S>
+
+  type RfidTagCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<RfidTagFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: RfidTagCountAggregateInputType | true
+    }
+
+  export interface RfidTagDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['RfidTag'], meta: { name: 'RfidTag' } }
+    /**
+     * Find zero or one RfidTag that matches the filter.
+     * @param {RfidTagFindUniqueArgs} args - Arguments to find a RfidTag
+     * @example
+     * // Get one RfidTag
+     * const rfidTag = await prisma.rfidTag.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends RfidTagFindUniqueArgs>(args: SelectSubset<T, RfidTagFindUniqueArgs<ExtArgs>>): Prisma__RfidTagClient<$Result.GetResult<Prisma.$RfidTagPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one RfidTag that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {RfidTagFindUniqueOrThrowArgs} args - Arguments to find a RfidTag
+     * @example
+     * // Get one RfidTag
+     * const rfidTag = await prisma.rfidTag.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends RfidTagFindUniqueOrThrowArgs>(args: SelectSubset<T, RfidTagFindUniqueOrThrowArgs<ExtArgs>>): Prisma__RfidTagClient<$Result.GetResult<Prisma.$RfidTagPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RfidTag that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RfidTagFindFirstArgs} args - Arguments to find a RfidTag
+     * @example
+     * // Get one RfidTag
+     * const rfidTag = await prisma.rfidTag.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends RfidTagFindFirstArgs>(args?: SelectSubset<T, RfidTagFindFirstArgs<ExtArgs>>): Prisma__RfidTagClient<$Result.GetResult<Prisma.$RfidTagPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first RfidTag that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RfidTagFindFirstOrThrowArgs} args - Arguments to find a RfidTag
+     * @example
+     * // Get one RfidTag
+     * const rfidTag = await prisma.rfidTag.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends RfidTagFindFirstOrThrowArgs>(args?: SelectSubset<T, RfidTagFindFirstOrThrowArgs<ExtArgs>>): Prisma__RfidTagClient<$Result.GetResult<Prisma.$RfidTagPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more RfidTags that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RfidTagFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all RfidTags
+     * const rfidTags = await prisma.rfidTag.findMany()
+     * 
+     * // Get first 10 RfidTags
+     * const rfidTags = await prisma.rfidTag.findMany({ take: 10 })
+     * 
+     * // Only select the `epc`
+     * const rfidTagWithEpcOnly = await prisma.rfidTag.findMany({ select: { epc: true } })
+     * 
+     */
+    findMany<T extends RfidTagFindManyArgs>(args?: SelectSubset<T, RfidTagFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RfidTagPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a RfidTag.
+     * @param {RfidTagCreateArgs} args - Arguments to create a RfidTag.
+     * @example
+     * // Create one RfidTag
+     * const RfidTag = await prisma.rfidTag.create({
+     *   data: {
+     *     // ... data to create a RfidTag
+     *   }
+     * })
+     * 
+     */
+    create<T extends RfidTagCreateArgs>(args: SelectSubset<T, RfidTagCreateArgs<ExtArgs>>): Prisma__RfidTagClient<$Result.GetResult<Prisma.$RfidTagPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many RfidTags.
+     * @param {RfidTagCreateManyArgs} args - Arguments to create many RfidTags.
+     * @example
+     * // Create many RfidTags
+     * const rfidTag = await prisma.rfidTag.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends RfidTagCreateManyArgs>(args?: SelectSubset<T, RfidTagCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many RfidTags and returns the data saved in the database.
+     * @param {RfidTagCreateManyAndReturnArgs} args - Arguments to create many RfidTags.
+     * @example
+     * // Create many RfidTags
+     * const rfidTag = await prisma.rfidTag.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many RfidTags and only return the `epc`
+     * const rfidTagWithEpcOnly = await prisma.rfidTag.createManyAndReturn({
+     *   select: { epc: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends RfidTagCreateManyAndReturnArgs>(args?: SelectSubset<T, RfidTagCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RfidTagPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a RfidTag.
+     * @param {RfidTagDeleteArgs} args - Arguments to delete one RfidTag.
+     * @example
+     * // Delete one RfidTag
+     * const RfidTag = await prisma.rfidTag.delete({
+     *   where: {
+     *     // ... filter to delete one RfidTag
+     *   }
+     * })
+     * 
+     */
+    delete<T extends RfidTagDeleteArgs>(args: SelectSubset<T, RfidTagDeleteArgs<ExtArgs>>): Prisma__RfidTagClient<$Result.GetResult<Prisma.$RfidTagPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one RfidTag.
+     * @param {RfidTagUpdateArgs} args - Arguments to update one RfidTag.
+     * @example
+     * // Update one RfidTag
+     * const rfidTag = await prisma.rfidTag.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends RfidTagUpdateArgs>(args: SelectSubset<T, RfidTagUpdateArgs<ExtArgs>>): Prisma__RfidTagClient<$Result.GetResult<Prisma.$RfidTagPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more RfidTags.
+     * @param {RfidTagDeleteManyArgs} args - Arguments to filter RfidTags to delete.
+     * @example
+     * // Delete a few RfidTags
+     * const { count } = await prisma.rfidTag.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends RfidTagDeleteManyArgs>(args?: SelectSubset<T, RfidTagDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RfidTags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RfidTagUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many RfidTags
+     * const rfidTag = await prisma.rfidTag.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends RfidTagUpdateManyArgs>(args: SelectSubset<T, RfidTagUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more RfidTags and returns the data updated in the database.
+     * @param {RfidTagUpdateManyAndReturnArgs} args - Arguments to update many RfidTags.
+     * @example
+     * // Update many RfidTags
+     * const rfidTag = await prisma.rfidTag.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more RfidTags and only return the `epc`
+     * const rfidTagWithEpcOnly = await prisma.rfidTag.updateManyAndReturn({
+     *   select: { epc: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends RfidTagUpdateManyAndReturnArgs>(args: SelectSubset<T, RfidTagUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$RfidTagPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one RfidTag.
+     * @param {RfidTagUpsertArgs} args - Arguments to update or create a RfidTag.
+     * @example
+     * // Update or create a RfidTag
+     * const rfidTag = await prisma.rfidTag.upsert({
+     *   create: {
+     *     // ... data to create a RfidTag
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the RfidTag we want to update
+     *   }
+     * })
+     */
+    upsert<T extends RfidTagUpsertArgs>(args: SelectSubset<T, RfidTagUpsertArgs<ExtArgs>>): Prisma__RfidTagClient<$Result.GetResult<Prisma.$RfidTagPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of RfidTags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RfidTagCountArgs} args - Arguments to filter RfidTags to count.
+     * @example
+     * // Count the number of RfidTags
+     * const count = await prisma.rfidTag.count({
+     *   where: {
+     *     // ... the filter for the RfidTags we want to count
+     *   }
+     * })
+    **/
+    count<T extends RfidTagCountArgs>(
+      args?: Subset<T, RfidTagCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], RfidTagCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a RfidTag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RfidTagAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends RfidTagAggregateArgs>(args: Subset<T, RfidTagAggregateArgs>): Prisma.PrismaPromise<GetRfidTagAggregateType<T>>
+
+    /**
+     * Group by RfidTag.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {RfidTagGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends RfidTagGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: RfidTagGroupByArgs['orderBy'] }
+        : { orderBy?: RfidTagGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, RfidTagGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetRfidTagGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the RfidTag model
+   */
+  readonly fields: RfidTagFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for RfidTag.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__RfidTagClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the RfidTag model
+   */
+  interface RfidTagFieldRefs {
+    readonly epc: FieldRef<"RfidTag", 'String'>
+    readonly sku: FieldRef<"RfidTag", 'String'>
+    readonly userId: FieldRef<"RfidTag", 'String'>
+    readonly createdAt: FieldRef<"RfidTag", 'DateTime'>
+    readonly updatedAt: FieldRef<"RfidTag", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * RfidTag findUnique
+   */
+  export type RfidTagFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RfidTag
+     */
+    select?: RfidTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RfidTag
+     */
+    omit?: RfidTagOmit<ExtArgs> | null
+    /**
+     * Filter, which RfidTag to fetch.
+     */
+    where: RfidTagWhereUniqueInput
+  }
+
+  /**
+   * RfidTag findUniqueOrThrow
+   */
+  export type RfidTagFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RfidTag
+     */
+    select?: RfidTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RfidTag
+     */
+    omit?: RfidTagOmit<ExtArgs> | null
+    /**
+     * Filter, which RfidTag to fetch.
+     */
+    where: RfidTagWhereUniqueInput
+  }
+
+  /**
+   * RfidTag findFirst
+   */
+  export type RfidTagFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RfidTag
+     */
+    select?: RfidTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RfidTag
+     */
+    omit?: RfidTagOmit<ExtArgs> | null
+    /**
+     * Filter, which RfidTag to fetch.
+     */
+    where?: RfidTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RfidTags to fetch.
+     */
+    orderBy?: RfidTagOrderByWithRelationInput | RfidTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RfidTags.
+     */
+    cursor?: RfidTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RfidTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RfidTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RfidTags.
+     */
+    distinct?: RfidTagScalarFieldEnum | RfidTagScalarFieldEnum[]
+  }
+
+  /**
+   * RfidTag findFirstOrThrow
+   */
+  export type RfidTagFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RfidTag
+     */
+    select?: RfidTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RfidTag
+     */
+    omit?: RfidTagOmit<ExtArgs> | null
+    /**
+     * Filter, which RfidTag to fetch.
+     */
+    where?: RfidTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RfidTags to fetch.
+     */
+    orderBy?: RfidTagOrderByWithRelationInput | RfidTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for RfidTags.
+     */
+    cursor?: RfidTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RfidTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RfidTags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of RfidTags.
+     */
+    distinct?: RfidTagScalarFieldEnum | RfidTagScalarFieldEnum[]
+  }
+
+  /**
+   * RfidTag findMany
+   */
+  export type RfidTagFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RfidTag
+     */
+    select?: RfidTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RfidTag
+     */
+    omit?: RfidTagOmit<ExtArgs> | null
+    /**
+     * Filter, which RfidTags to fetch.
+     */
+    where?: RfidTagWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of RfidTags to fetch.
+     */
+    orderBy?: RfidTagOrderByWithRelationInput | RfidTagOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing RfidTags.
+     */
+    cursor?: RfidTagWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` RfidTags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` RfidTags.
+     */
+    skip?: number
+    distinct?: RfidTagScalarFieldEnum | RfidTagScalarFieldEnum[]
+  }
+
+  /**
+   * RfidTag create
+   */
+  export type RfidTagCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RfidTag
+     */
+    select?: RfidTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RfidTag
+     */
+    omit?: RfidTagOmit<ExtArgs> | null
+    /**
+     * The data needed to create a RfidTag.
+     */
+    data: XOR<RfidTagCreateInput, RfidTagUncheckedCreateInput>
+  }
+
+  /**
+   * RfidTag createMany
+   */
+  export type RfidTagCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many RfidTags.
+     */
+    data: RfidTagCreateManyInput | RfidTagCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * RfidTag createManyAndReturn
+   */
+  export type RfidTagCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RfidTag
+     */
+    select?: RfidTagSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RfidTag
+     */
+    omit?: RfidTagOmit<ExtArgs> | null
+    /**
+     * The data used to create many RfidTags.
+     */
+    data: RfidTagCreateManyInput | RfidTagCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * RfidTag update
+   */
+  export type RfidTagUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RfidTag
+     */
+    select?: RfidTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RfidTag
+     */
+    omit?: RfidTagOmit<ExtArgs> | null
+    /**
+     * The data needed to update a RfidTag.
+     */
+    data: XOR<RfidTagUpdateInput, RfidTagUncheckedUpdateInput>
+    /**
+     * Choose, which RfidTag to update.
+     */
+    where: RfidTagWhereUniqueInput
+  }
+
+  /**
+   * RfidTag updateMany
+   */
+  export type RfidTagUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update RfidTags.
+     */
+    data: XOR<RfidTagUpdateManyMutationInput, RfidTagUncheckedUpdateManyInput>
+    /**
+     * Filter which RfidTags to update
+     */
+    where?: RfidTagWhereInput
+    /**
+     * Limit how many RfidTags to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * RfidTag updateManyAndReturn
+   */
+  export type RfidTagUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RfidTag
+     */
+    select?: RfidTagSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the RfidTag
+     */
+    omit?: RfidTagOmit<ExtArgs> | null
+    /**
+     * The data used to update RfidTags.
+     */
+    data: XOR<RfidTagUpdateManyMutationInput, RfidTagUncheckedUpdateManyInput>
+    /**
+     * Filter which RfidTags to update
+     */
+    where?: RfidTagWhereInput
+    /**
+     * Limit how many RfidTags to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * RfidTag upsert
+   */
+  export type RfidTagUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RfidTag
+     */
+    select?: RfidTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RfidTag
+     */
+    omit?: RfidTagOmit<ExtArgs> | null
+    /**
+     * The filter to search for the RfidTag to update in case it exists.
+     */
+    where: RfidTagWhereUniqueInput
+    /**
+     * In case the RfidTag found by the `where` argument doesn't exist, create a new RfidTag with this data.
+     */
+    create: XOR<RfidTagCreateInput, RfidTagUncheckedCreateInput>
+    /**
+     * In case the RfidTag was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<RfidTagUpdateInput, RfidTagUncheckedUpdateInput>
+  }
+
+  /**
+   * RfidTag delete
+   */
+  export type RfidTagDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RfidTag
+     */
+    select?: RfidTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RfidTag
+     */
+    omit?: RfidTagOmit<ExtArgs> | null
+    /**
+     * Filter which RfidTag to delete.
+     */
+    where: RfidTagWhereUniqueInput
+  }
+
+  /**
+   * RfidTag deleteMany
+   */
+  export type RfidTagDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which RfidTags to delete
+     */
+    where?: RfidTagWhereInput
+    /**
+     * Limit how many RfidTags to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * RfidTag without action
+   */
+  export type RfidTagDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the RfidTag
+     */
+    select?: RfidTagSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the RfidTag
+     */
+    omit?: RfidTagOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -64508,6 +65594,17 @@ export namespace Prisma {
   };
 
   export type DemoPhotoScalarFieldEnum = (typeof DemoPhotoScalarFieldEnum)[keyof typeof DemoPhotoScalarFieldEnum]
+
+
+  export const RfidTagScalarFieldEnum: {
+    epc: 'epc',
+    sku: 'sku',
+    userId: 'userId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type RfidTagScalarFieldEnum = (typeof RfidTagScalarFieldEnum)[keyof typeof RfidTagScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -68973,6 +70070,58 @@ export namespace Prisma {
     community?: StringWithAggregatesFilter<"DemoPhoto"> | string
     title?: StringWithAggregatesFilter<"DemoPhoto"> | string
     createdAt?: DateTimeWithAggregatesFilter<"DemoPhoto"> | Date | string
+  }
+
+  export type RfidTagWhereInput = {
+    AND?: RfidTagWhereInput | RfidTagWhereInput[]
+    OR?: RfidTagWhereInput[]
+    NOT?: RfidTagWhereInput | RfidTagWhereInput[]
+    epc?: StringFilter<"RfidTag"> | string
+    sku?: StringFilter<"RfidTag"> | string
+    userId?: StringNullableFilter<"RfidTag"> | string | null
+    createdAt?: DateTimeFilter<"RfidTag"> | Date | string
+    updatedAt?: DateTimeFilter<"RfidTag"> | Date | string
+  }
+
+  export type RfidTagOrderByWithRelationInput = {
+    epc?: SortOrder
+    sku?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RfidTagWhereUniqueInput = Prisma.AtLeast<{
+    epc?: string
+    AND?: RfidTagWhereInput | RfidTagWhereInput[]
+    OR?: RfidTagWhereInput[]
+    NOT?: RfidTagWhereInput | RfidTagWhereInput[]
+    sku?: StringFilter<"RfidTag"> | string
+    userId?: StringNullableFilter<"RfidTag"> | string | null
+    createdAt?: DateTimeFilter<"RfidTag"> | Date | string
+    updatedAt?: DateTimeFilter<"RfidTag"> | Date | string
+  }, "epc">
+
+  export type RfidTagOrderByWithAggregationInput = {
+    epc?: SortOrder
+    sku?: SortOrder
+    userId?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: RfidTagCountOrderByAggregateInput
+    _max?: RfidTagMaxOrderByAggregateInput
+    _min?: RfidTagMinOrderByAggregateInput
+  }
+
+  export type RfidTagScalarWhereWithAggregatesInput = {
+    AND?: RfidTagScalarWhereWithAggregatesInput | RfidTagScalarWhereWithAggregatesInput[]
+    OR?: RfidTagScalarWhereWithAggregatesInput[]
+    NOT?: RfidTagScalarWhereWithAggregatesInput | RfidTagScalarWhereWithAggregatesInput[]
+    epc?: StringWithAggregatesFilter<"RfidTag"> | string
+    sku?: StringWithAggregatesFilter<"RfidTag"> | string
+    userId?: StringNullableWithAggregatesFilter<"RfidTag"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"RfidTag"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"RfidTag"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -73775,6 +74924,62 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type RfidTagCreateInput = {
+    epc: string
+    sku: string
+    userId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RfidTagUncheckedCreateInput = {
+    epc: string
+    sku: string
+    userId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RfidTagUpdateInput = {
+    epc?: StringFieldUpdateOperationsInput | string
+    sku?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RfidTagUncheckedUpdateInput = {
+    epc?: StringFieldUpdateOperationsInput | string
+    sku?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RfidTagCreateManyInput = {
+    epc: string
+    sku: string
+    userId?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type RfidTagUpdateManyMutationInput = {
+    epc?: StringFieldUpdateOperationsInput | string
+    sku?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type RfidTagUncheckedUpdateManyInput = {
+    epc?: StringFieldUpdateOperationsInput | string
+    sku?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -76828,6 +78033,30 @@ export namespace Prisma {
     community?: SortOrder
     title?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type RfidTagCountOrderByAggregateInput = {
+    epc?: SortOrder
+    sku?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RfidTagMaxOrderByAggregateInput = {
+    epc?: SortOrder
+    sku?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type RfidTagMinOrderByAggregateInput = {
+    epc?: SortOrder
+    sku?: SortOrder
+    userId?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type BranchCreateNestedOneWithoutUsersInput = {

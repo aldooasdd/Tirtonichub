@@ -1001,3 +1001,14 @@ model DemoPhoto {
 
   @@index([claimId])
 }
+
+/// Stiker RFID UHF ↔ SKU barang (Pasangkan Tag). epc = kode unik bawaan stiker (UCODE 9).
+model RfidTag {
+  epc       String   @id
+  sku       String
+  userId    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([sku])
+}
