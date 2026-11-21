@@ -120,7 +120,7 @@ type Who = { name: string; code: string; full: boolean; staff: boolean };
 
 /**
  * Perintah brief:
- * - `{act:'save', data}` simpan draf (anggota kartu / admin). Mengubah brief yang sudah disetujui (termasuk objective) membuka versi baru (v+1)
+ * - `{act:'save', data}` simpan draf (admin / Admin 2 saja). Mengubah brief yang sudah disetujui (termasuk objective) membuka versi baru (v+1)
  *   yang perlu disetujui ulang; persetujuan versi sebelumnya tetap tercatat (ok) sehingga produksi yang sudah berjalan tidak terhenti.
  * - `{act:'submit', data?}` ajukan ke Creative Lead (lengkap & semua pilihan cocok).
  * - `{act:'approve'}` Creative Lead (admin / Admin 2) menyetujui versi ini.
@@ -139,6 +139,8 @@ export function nextBrief(prev: unknown, act: unknown, task: Doc, who: Who, cfg:
     const c = briefCompat(d, type, cfg);
     return c.length ? "perbaiki dulu: " + c.join("; ") : null;
   };
+  // Brief disusun admin (Zaki) & Admin 2 (Aulia); anggota hanya melihat versi yang disetujui (permintaan Zaki 21 Nov 2026)
+  if (!who.staff) return "Content Brief hanya disusun admin / Admin 2; anggota melihat brief yang sudah disetujui";
   if (a.act === "save" || a.act === "submit") {
     let data = p.data;
     if (a.data !== undefined) {
