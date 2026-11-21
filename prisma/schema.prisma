@@ -809,6 +809,7 @@ model MediaTask {
   history   Json?
   eventKey  String?
   readyBy   String? // Louis2: tanggal wajib Ready 'YYYY-MM-DD'
+  cprId     String?   @unique // CPR Content ID permanen TRT-CPR-VRV-2611-0003 (diisi server, studio/cpr.ts)
   extra     Json? // isian UI Tirtonic Studio tanpa kolom (prio, updatedBy, checkedBy, dst.)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -1011,4 +1012,10 @@ model RfidTag {
   updatedAt DateTime @updatedAt
 
   @@index([sku])
+}
+
+/// CPR: nomor urut Content ID per bulan (YYMM), global lintas jenis. Ditambah atomik oleh store.ts allocCprId.
+model CprCounter {
+  month String @id // '2611'
+  last  Int    @default(0)
 }

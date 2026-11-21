@@ -9,6 +9,7 @@ import { loadCtx, runBalance, todayWIB } from "@/server/media/schedule-runner";
 import type { Task } from "@/lib/media/schedule";
 import type { Prisma } from "@/generated/prisma";
 import { nextPlanLog } from "@/server/studio/plan-log";
+import { qaBlocks } from "@/server/studio/cpr";
 import { queueEditNotif } from "@/server/push/edit";
 
 export type ActionResult = { ok: boolean; message?: string };
@@ -37,6 +38,13 @@ function toTask(t: NonNullable<Awaited<ReturnType<typeof prisma.mediaTask.findUn
   };
 }
 
+/** CPR: kartu ber-QA tidak boleh Tayang / dijadwalkan di Meta sebelum QA lolos (sama dengan Studio, cpr.ts). */
+function qaWhy(task: { status: string; metaAt: Date | null; extra: unknown }, next: { status?: string; metaAt?: boolean }) {
+  const ex = (task.extra && typeof task.extra === "object" ? task.extra : {}) as Record<string, unknown>;
+  const before = { status: task.status, metaAt: task.metaAt ? 1 : 0 };
+  return qaBlocks(before, { qaReq: ex.qaReq, qa: ex.qa, status: next.status ?? task.status, metaAt: next.metaAt || before.metaAt });
+}
+
 /** Pindah tahap. Member: hanya tugasnya, Terdata→Ready, sebelum metaAt. */
 export async function setTaskStatus(id: string, status: string): Promise<ActionResult> {
   const { acc, task, meName, today } = await ctxFor(id);
@@ -50,6 +58,8 @@ export async function setTaskStatus(id: string, status: string): Promise<ActionR
       return { ok: false, message: "Tidak diizinkan memindah tahap ini." };
   }
   if (status === "Tayang" && !acc.canManage) return { ok: false, message: "Hanya admin yang menandai Tayang." };
+  const qa = qaWhy(task, { status });
+  if (qa) return { ok: false, message: qa + "." };
   if (status === "Ready" && POSTED.includes(task.type) && !task.driveUrl)
     return { ok: false, message: "Tempel dulu link Google Drive file final sebelum ke Ready." };
 
@@ -126,6 +136,8 @@ export async function markMeta(id: string): Promise<ActionResult> {
     tm = sch.timeOf(toTask(task)) || null;
   }
   if (!tm) return { ok: false, message: "Jam tayang belum ada." };
+  const qa = qaWhy(task, { metaAt: true });
+  if (qa) return { ok: false, message: qa + "." };
   await prisma.mediaTask.update({ where: { id }, data: { metaAt: new Date(), postTime: tm } });
   return { ok: true };
 }

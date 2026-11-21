@@ -652,6 +652,7 @@ exports.Prisma.MediaTaskScalarFieldEnum = {
   history: 'history',
   eventKey: 'eventKey',
   readyBy: 'readyBy',
+  cprId: 'cprId',
   extra: 'extra',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -801,6 +802,11 @@ exports.Prisma.RfidTagScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.CprCounterScalarFieldEnum = {
+  month: 'month',
+  last: 'last'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -944,7 +950,8 @@ exports.Prisma.ModelName = {
   PosCampaign: 'PosCampaign',
   SkuCheck: 'SkuCheck',
   DemoPhoto: 'DemoPhoto',
-  RfidTag: 'RfidTag'
+  RfidTag: 'RfidTag',
+  CprCounter: 'CprCounter'
 };
 
 /**
