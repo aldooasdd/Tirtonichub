@@ -2,6 +2,7 @@
 // Fungsi murni, diuji di rules.test.ts. Server WAJIB memanggil ini sebelum baca/tulis.
 
 import { qaCfgWhy } from "./cpr";
+import { briefCfgWhy } from "./brief-master";
 
 export type Doc = Record<string, unknown>;
 
@@ -198,6 +199,12 @@ export function canWrite(
       if (JSON.stringify(before?.qaCfg ?? null) !== JSON.stringify(after?.qaCfg ?? null)) {
         if (!u.full) return deny("standar QA hanya diatur admin penuh");
         const w = after?.qaCfg === undefined ? null : qaCfgWhy(after.qaCfg);
+        if (w) return deny(w);
+      }
+      // Master Content Brief (objective, audience, key message/hook/CTA, preset): hanya admin penuh; ID lama tidak boleh hilang
+      if (JSON.stringify(before?.briefCfg ?? null) !== JSON.stringify(after?.briefCfg ?? null)) {
+        if (!u.full) return deny("master brief hanya diatur admin penuh");
+        const w = after?.briefCfg === undefined ? "master brief tidak boleh dihapus" : briefCfgWhy(after.briefCfg, before?.briefCfg);
         if (w) return deny(w);
       }
       return null;

@@ -15,6 +15,7 @@ import * as M from "./map";
 import { nextPlanLog } from "./plan-log";
 import { cprIdOf, cprYymm, needsCpr, nextQa, qaBlocks, qaCfgOf, qaReopen } from "./cpr";
 import { briefBlocks, nextBrief } from "./brief";
+import { briefCfgOf } from "./brief-master";
 
 export class StudioError extends Error {
   constructor(public code: "permission-denied" | "not-found" | "invalid-argument" | "failed-precondition", msg: string) {
@@ -158,7 +159,7 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
     delete after.briefAct;
     if (briefAct !== undefined) {
       if (!before) throw new StudioError("invalid-argument", "Brief hanya untuk kartu yang sudah ada.");
-      const b = nextBrief(before.brief, briefAct, after, u);
+      const b = nextBrief(before.brief, briefAct, after, u, briefCfgOf((await getRaw("settings/main"))?.briefCfg));
       if (typeof b === "string") throw new StudioError("permission-denied", "Tidak diizinkan: " + b + ".");
       after.brief = b;
     }

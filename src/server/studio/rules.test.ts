@@ -2,6 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { canRead, canWrite, type StudioUser } from "./rules";
 import { QA_DEFAULT } from "./cpr";
+import { BRIEF_DEFAULT } from "./brief-master";
 
 const base = { userId: "u", name: "x", idcc: false };
 const zaki: StudioUser = { ...base, email: "zaki@tirtonichub.com", code: "Z", full: true, staff: true, idcc: true };
@@ -206,4 +207,12 @@ test("standar QA (settings qaCfg): hanya admin penuh dan harus sah", () => {
   const bad = { ...QA_DEFAULT, types: { ...QA_DEFAULT.types, vpr: QA_DEFAULT.types.vpr.slice(1) } };
   assert.notEqual(canWrite(zaki, "update", "settings/main", set, { ...set, qaCfg: bad }), null);
   assert.equal(canWrite(aulia, "update", "settings/main", { ...set, qaCfg: QA_DEFAULT }, { ...set, qaCfg: QA_DEFAULT, idccDay: 4 }), null); // tidak mengubah qaCfg
+});
+
+test("master brief (settings briefCfg): hanya admin penuh, ID lama tidak boleh hilang", () => {
+  const set = { idccDay: 3, briefCfg: BRIEF_DEFAULT };
+  const off = { ...BRIEF_DEFAULT, hk: BRIEF_DEFAULT.hk.map((h, i) => (i ? h : { ...h, a: false })) };
+  assert.equal(canWrite(zaki, "update", "settings/main", set, { ...set, briefCfg: off }), null);
+  assert.notEqual(canWrite(aulia, "update", "settings/main", set, { ...set, briefCfg: off }), null);
+  assert.notEqual(canWrite(zaki, "update", "settings/main", set, { ...set, briefCfg: { ...BRIEF_DEFAULT, hk: BRIEF_DEFAULT.hk.slice(1) } }), null);
 });
