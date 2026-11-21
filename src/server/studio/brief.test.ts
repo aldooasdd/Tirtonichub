@@ -50,9 +50,8 @@ test("isi brief: hanya master ID; secondary ≤2 dan ≠ primary; referensi http
 
 test("ganti Primary Objective: pilihan lama tidak dihapus, tetapi ditandai tidak cocok dan menahan pengajuan", () => {
   const d = ok(nextBrief(undefined, { act: "save", data: { ...FULL, primary: "CNV", sec: [] } }, card, zaki));
-  assert.equal(d.data.cobj, "ENT-PE"); // tetap tersimpan
+  assert.equal(d.data.km, "KM-PED"); // tetap tersimpan
   const w = briefCompat(d.data, "vrv");
-  assert.ok(w.some((x) => /Content Objective/.test(x)));
   assert.ok(w.some((x) => /Key Message/.test(x)));
   assert.match(String(nextBrief(d, { act: "submit" }, card, zaki)), /perbaiki dulu/);
   assert.deepEqual(briefCompat(FULL as never, "vrv"), []);
@@ -94,6 +93,12 @@ test("objective diubah setelah disetujui → versi baru, perlu disetujui ulang, 
 test("anggota (B1) tidak bisa menyusun atau mengajukan brief", () => {
   assert.match(String(nextBrief(undefined, { act: "save", data: FULL }, card, rayhan)), /admin/);
   assert.match(String(nextBrief(undefined, { act: "submit", data: FULL }, card, rayhan)), /admin/);
+});
+
+test("Foto IG / Video produk: tanpa Content Objective dan Key Message/Hook/CTA tetap bisa diajukan", () => {
+  const igf = { ...card, type: "igf" };
+  ok(nextBrief(undefined, { act: "submit", data: { pillar: "Convert", primary: "QIN", aud: { geo: ["GE-NAS"] }, direction: "Flatlay" } }, igf, zaki));
+  assert.match(String(nextBrief(undefined, { act: "submit", data: { pillar: "Educate", primary: "ENT", aud: { geo: ["GE-NAS"] }, direction: "x" } }, card, zaki)), /Key Message/);
 });
 
 test("brief hanya untuk 4 jenis CPR", () => {

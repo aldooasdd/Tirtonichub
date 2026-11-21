@@ -96,19 +96,18 @@ export function briefDataWhy(v: unknown, cfg: BriefCfg = BRIEF_DEFAULT): string 
 export function briefMissing(d: BriefData, type: string): string[] {
   const m: string[] = [];
   if (type === "evt" && !d.evtSub) m.push("evtSub");
-  for (const k of ["pillar", "primary", "cobj"] as const) if (!d[k]) m.push(k);
+  for (const k of ["pillar", "primary"] as const) if (!d[k]) m.push(k); // Content Objective tidak ditampilkan lagi (permintaan Zaki 21 Nov 2026)
   if (!AUD_CATS.some((k) => d.aud[k]?.length)) m.push("aud");
-  for (const k of ["km", "hk", "ct", "direction"] as const) if (!d[k]) m.push(k);
+  // Key Message / Hook / CTA hanya untuk Video review (permintaan Zaki 21 Nov 2026)
+  for (const k of (type === "vrv" ? ["km", "hk", "ct", "direction"] : ["direction"]) as (keyof BriefData)[]) if (!d[k]) m.push(k);
   return m.map((k) => BRIEF_LBL[k]);
 }
 /** Pilihan yang tidak lagi cocok (mis. setelah Primary Objective diganti). Tidak dihapus diam-diam: harus diganti sebelum diajukan/disetujui. */
 export function briefCompat(d: BriefData, type: string, cfg: BriefCfg = BRIEF_DEFAULT): string[] {
   const w: string[] = [];
-  const co = cfg.cobj.find((x) => x.id === d.cobj);
-  if (co && (co.p !== d.primary || !optActive(co))) w.push("Content Objective \"" + co.l + "\" tidak sesuai Primary Objective" + (optActive(co) ? "" : " / nonaktif"));
   if (d.sec.includes(d.primary)) w.push("Secondary Objective sama dengan Primary Objective");
   for (const g of cfg.aud) for (const id of d.aud[g.k] ?? []) { const q = g.o.find((x) => x.id === id); if (q && !optActive(q)) w.push(g.l + " \"" + q.l + "\" nonaktif"); }
-  for (const f of ["km", "hk", "ct"] as const) {
+  if (type === "vrv") for (const f of ["km", "hk", "ct"] as const) {
     const x = cfg[f].find((i) => i.id === d[f]);
     if (x && (!libOk(x, type, d.primary) || (x.o?.length && !x.o.includes(d.cobj)))) w.push(BRIEF_LBL[f] + " \"" + x.l + "\" tidak cocok dengan jenis konten / objective");
   }
