@@ -1,6 +1,8 @@
 // Aturan akses UI Tirtonic Studio (/studio): port dari firestore.rules repo tirtonic-studio.
 // Fungsi murni, diuji di rules.test.ts. Server WAJIB memanggil ini sebelum baca/tulis.
 
+import { qaCfgWhy } from "./cpr";
+
 export type Doc = Record<string, unknown>;
 
 export type StudioUser = {
@@ -192,6 +194,12 @@ export function canWrite(
       if (!u.staff) return deny("hanya admin");
       // sakelar WA Foto katalog hanya admin penuh (lewat Tim & Aktivitas)
       if (!u.full && ["katalogWa", "katalogTo"].some((k) => JSON.stringify(before?.[k] ?? null) !== JSON.stringify(after?.[k] ?? null))) return deny("pengaturan notifikasi hanya untuk admin");
+      // Standar QA CPR (indikator & bobot per jenis konten): hanya admin penuh, harus sah (cpr.ts qaCfgWhy)
+      if (JSON.stringify(before?.qaCfg ?? null) !== JSON.stringify(after?.qaCfg ?? null)) {
+        if (!u.full) return deny("standar QA hanya diatur admin penuh");
+        const w = after?.qaCfg === undefined ? null : qaCfgWhy(after.qaCfg);
+        if (w) return deny(w);
+      }
       return null;
     case "logs":
     case "locks":
@@ -230,7 +238,8 @@ export function canWrite(
 
 const EARLY = ["Rencana", "Siap Produksi", "Diproduksi", "Editing", "QC", "Terdata", "Ready"];
 const MEMBER_TO = ["Terdata", "Diproduksi", "Editing", "Ready"];
-const MEMBER_KEYS = ["status", "shotAt", "readyAt", "note", "driveUrl", "scriptUrl", "objective", "campaignId", "productSku", "platform", "postUrl", "hook", "cta", "history", "updatedAt", "updatedBy"];
+// qa & brief: hanya berubah lewat perintah qaAct/briefAct yang sudah diperiksa cpr.ts/brief.ts (store.ts mengganti kiriman langsung dengan nilai tersimpan)
+const MEMBER_KEYS = ["status", "shotAt", "readyAt", "note", "driveUrl", "scriptUrl", "objective", "campaignId", "productSku", "platform", "postUrl", "hook", "cta", "history", "updatedAt", "updatedBy", "qa", "brief"];
 
 // Isian CPR di Detail kartu: anggota boleh mengisi di kartunya (MEMBER_KEYS), Reviewer hanya admin.
 const CPR_PLATFORMS = ["", "Instagram", "TikTok", "Website", "YouTube", "Multi-platform"];
