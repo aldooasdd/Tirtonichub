@@ -16,10 +16,11 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
 <script>/* tema tampilan pilihan pengguna (disimpan di perangkat ini) */
-(function(){var T={light:['light',''],dark:['dark',''],glass:['light','glass'],gradient:['light','gradient'],midnight:['dark','midnight'],ocean:['light','ocean'],sunset:['light','sunset'],forest:['dark','forest'],aurora:['dark','aurora'],candy:['light','candy'],weather:['dark','weather']};var k;try{k=localStorage.getItem('ts-theme')}catch(e){}
-if(!{gradient:1,midnight:1,weather:1}[k])k='gradient';
+(function(){var T={workspace:['light','workspace'],light:['light',''],dark:['dark',''],glass:['light','glass'],gradient:['light','gradient'],midnight:['dark','midnight'],ocean:['light','ocean'],sunset:['light','sunset'],forest:['dark','forest'],aurora:['dark','aurora'],candy:['light','candy'],weather:['dark','weather']};var k;try{k=localStorage.getItem('ts-theme')}catch(e){}
+try{if(k==='gradient'&&!localStorage.getItem('ts-theme-v2')){k='workspace';localStorage.setItem('ts-theme','workspace')}localStorage.setItem('ts-theme-v2','1')}catch(e){}
+if(!{workspace:1,gradient:1,midnight:1,weather:1}[k])k='workspace';
 if(k&&T[k]){document.documentElement.setAttribute('data-theme',T[k][0]);if(T[k][1])document.documentElement.setAttribute('data-skin',T[k][1])}
 if(k==='weather'){try{var w=(localStorage.getItem('ts-wxk')||'').split('|');if(w[1]){document.documentElement.setAttribute('data-wk',w[0]);document.documentElement.setAttribute('data-ph',w[1])}}catch(e){}}})();</script>
 <style>
@@ -1928,6 +1929,40 @@ html[data-skin]{--card-solid:var(--surface)}
 html[data-skin="midnight"]{--card-solid:#111a2b}
 html[data-skin="weather"]{--card-solid:#16223a}
 html[data-skin] :is(.card,.kcol .card.k,.box .card,.kmodalbox .card.k),html[data-skin] .kmfoot{background:var(--card-solid);-webkit-backdrop-filter:none;backdrop-filter:none}
+/* ---------- Tema Workspace (bawaan sejak 21 Nov 2026, ala Attio): terang, ringkas, garis tipis, tanpa gradasi & animasi hiasan ---------- */
+html[data-skin="workspace"]{background:#F8F9FA;--bg:#F8F9FA;--surface:#FFFFFF;--chip:#F3F4F6;--ink:#202124;--muted:#73777F;--line:#E7E9EC;
+  --glass:#FFFFFF;--glass-line:#E7E9EC;--card-solid:#FFFFFF;--accent:#2F6FEB;--accent-ink:#FFFFFF;--navy:#202124;--navy-soft:#F3F4F6;--on-navy:#FFFFFF;
+  --good:#16834A;--warn:#A1650C;--crit:#C4372A;--hero-a:#202124;--hero-b:#202124;
+  --rail-bg:#FFFFFF;--rail-bg2:#FFFFFF;--rail-ink:#202124;
+  --display:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;--body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif}
+html[data-skin="workspace"] body{background:#F8F9FA;font-feature-settings:"cv11","ss01";letter-spacing:-.005em}
+html[data-skin="workspace"] body::after{background:none}
+html[data-skin="workspace"] :is(header.top,nav.tabs,.box,.card,.item,.kpi,.tcard,.pcard,.day,.seg,.empty,.cprbox,.cprform,.cprk,.kcol,details.kgrp,.slot,.wxcard){background:#FFFFFF;border:1px solid var(--line);box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+html[data-skin="workspace"] :is(.box,.cprbox,.cprform,.cprk){border-radius:10px}
+html[data-skin="workspace"] .card{border-radius:8px}
+html[data-skin="workspace"] .kmodalbox{box-shadow:0 24px 60px -24px rgba(32,33,36,.28);border:1px solid var(--line)}
+html[data-skin="workspace"] .cdlg{background:rgba(32,33,36,.28);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+html[data-skin="workspace"] .hero{background:#FFFFFF;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+html[data-skin="workspace"] .hero *{color:inherit}
+html[data-skin="workspace"] .hero :is(small,p,.muted){color:var(--muted)}
+html[data-skin="workspace"] .lrail{background:#FFFFFF;border-right:1px solid var(--line);box-shadow:none}
+html[data-skin="workspace"] .lritem{color:var(--muted);border-radius:8px}
+html[data-skin="workspace"] .lritem[aria-current]{background:var(--chip);color:var(--ink);box-shadow:none}
+html[data-skin="workspace"] .lritem:hover{background:var(--chip);color:var(--ink);transform:none;box-shadow:none}
+html[data-skin="workspace"] .cprnav{background:#FFFFFF;color:var(--ink);border:1px solid var(--line)}
+html[data-skin="workspace"] .cprnav :is(.cprbrand,.cprfoot){border-color:var(--line)}
+html[data-skin="workspace"] .cprlinks button[aria-current="page"],html[data-skin="workspace"] .cprlinks button:hover{background:var(--chip)}
+html[data-skin="workspace"] :is(.btn,.ibtn.pri){background:#202124;border-color:#202124;color:#fff;box-shadow:none}
+html[data-skin="workspace"] :is(.ghost,.ibtn){background:#FFFFFF;border:1px solid var(--line);color:var(--ink);box-shadow:none}
+html[data-skin="workspace"] .ibtn.good{background:var(--good);border-color:var(--good);color:#fff}
+html[data-skin="workspace"] .ibtn.bad{color:var(--crit)}
+html[data-skin="workspace"] :is(input,select,textarea){background:#FFFFFF;border:1px solid var(--line);box-shadow:none}
+html[data-skin="workspace"] :is(input,select,textarea):focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px rgba(47,111,235,.14)}
+html[data-skin="workspace"] .chip{border-radius:6px}
+html[data-skin="workspace"] table.t th{background:#F8F9FA;font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted)}
+html[data-skin="workspace"] :is(.rv,.rv-in){opacity:1!important;transform:none!important;filter:none!important;transition:none!important}
+html[data-skin="workspace"] :is(.card.k,.slot,.pnb,.item,details.kgrp,.hmtile,.btn,.ghost,.ibtn):hover{transform:none}
+html[data-skin="workspace"] .bvis{background:var(--chip);color:var(--ink)}
 </style>
 </head>
 <body class="gate">
@@ -5399,10 +5434,11 @@ new MutationObserver(ms=>{if(ms.some(m=>m.type==='childList'?m.target.closest&&(
 addEventListener('resize',segAll);segAll();
 /* ---------- pilihan tampilan (tema) per pengguna, disimpan di perangkat ---------- */
 const THEMES=[
+  {k:'workspace',n:'Workspace',d:'Bersih & ringkas ala Attio: latar terang, garis tipis, font Inter',t:'light',sk:'workspace',sw:'linear-gradient(135deg,#ffffff,#f3f4f6)',b:'#202124'},
   {k:'gradient',n:'Gradasi',d:'Biru muda ke lime dan peach, segar',t:'light',sk:'gradient',sw:'linear-gradient(135deg,#dfe9ff,#eef8e0,#ffe8dc)',b:'#ffffff'},
   {k:'midnight',n:'Midnight',d:'Gelap navy-ungu dengan panel kaca',t:'dark',sk:'midnight',sw:'radial-gradient(circle at 10% 10%,#2a4a9a,transparent 60%),radial-gradient(circle at 100% 40%,#6a3fd1,transparent 60%),#0b1220',b:'#9fb6ef'},
   {k:'weather',n:'Cuaca',d:'Langit mengikuti cuaca Yogyakarta saat ini (hujan, cerah, malam), gaya Apple Weather',t:'dark',sk:'weather',sw:'radial-gradient(circle at 75% 20%,#ffffff55,transparent 45%),linear-gradient(180deg,#44546a,#768599)',b:'#ffffffcc'}];
-function curTheme(){let k='';try{k=localStorage.getItem('ts-theme')||''}catch(e){}return THEMES.some(x=>x.k===k)?k:'gradient'}
+function curTheme(){let k='';try{k=localStorage.getItem('ts-theme')||''}catch(e){}return THEMES.some(x=>x.k===k)?k:'workspace'}
 function applyTheme(k){const T=THEMES.find(x=>x.k===k);const r=document.documentElement;
   if(T){r.setAttribute('data-theme',T.t);if(T.sk)r.setAttribute('data-skin',T.sk);else r.removeAttribute('data-skin')}else{r.removeAttribute('data-theme');r.removeAttribute('data-skin')}
   try{if(T)localStorage.setItem('ts-theme',k);else localStorage.removeItem('ts-theme')}catch(e){}renderThemePop();segAll();wxSync()}
