@@ -16,6 +16,9 @@ import { nextPlanLog } from "./plan-log";
 import { cprIdOf, cprYymm, needsCpr, nextQa, qaBlocks, qaCfgOf, qaReopen } from "./cpr";
 import { briefBlocks, nextBrief } from "./brief";
 import { briefCfgOf } from "./brief-master";
+import { withKey } from "./lock";
+import { taskEvents } from "@/server/automation/events";
+import { kickAutomation, outboxCreate } from "@/server/automation/worker";
 
 export class StudioError extends Error {
   constructor(public code: "permission-denied" | "not-found" | "invalid-argument" | "failed-precondition", msg: string) {
@@ -120,8 +123,14 @@ async function checkFileAccess(u: StudioUser, col: string, id: string, before: D
   if (p && p !== String(before?.parent ?? "") && !acc.folder(p)) deny();
 }
 
-/** set = timpa, update = gabung, delete = hapus. Aturan akses dicek di sini. */
+/** set = timpa, update = gabung, delete = hapus. Aturan akses dicek di sini.
+ *  Keputusan Creative Review / brief (qaAct, briefAct) untuk kartu yang sama dijalankan bergiliran (lock.ts):
+ *  keputusan kedua yang datang bersamaan membaca status terbaru lalu ditolak. */
 export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", path: string, data: Doc | null, opts: { trusted?: boolean } = {}): Promise<Doc | null> {
+  if (data && (data.qaAct !== undefined || data.briefAct !== undefined)) return withKey(path, () => writeDocInner(u, op, path, data, opts));
+  return writeDocInner(u, op, path, data, opts);
+}
+async function writeDocInner(u: StudioUser, op: "set" | "update" | "delete", path: string, data: Doc | null, opts: { trusted?: boolean } = {}): Promise<Doc | null> {
   const parts = parse(path);
   const [col, id, sub, subId] = parts;
   const before = await getRaw(path);
@@ -243,7 +252,12 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
       const { row, itemId } = M.taskFromDoc(after);
       const okItem = itemId ? !!(await prisma.mediaItem.findUnique({ where: { id: itemId }, select: { id: true } })) : false;
       const data = { ...row, itemId: okItem ? itemId : null, extra: json(row.extra), history: row.history === undefined ? undefined : json(row.history) } as Prisma.MediaTaskUncheckedCreateInput;
-      await prisma.mediaTask.upsert({ where: { id }, create: { ...data, id }, update: data });
+      // Workflow Automation: event bisnis (brief disetujui, review diajukan/diputuskan, deadline/PIC/tahap berubah, tayang)
+      // ditulis ke outbox DALAM transaksi yang sama dengan perubahan kartu.
+      const evs = opts.trusted ? [] : taskEvents(id, before, after);
+      if (evs.length) await prisma.$transaction([prisma.mediaTask.upsert({ where: { id }, create: { ...data, id }, update: data }), outboxCreate(evs)]);
+      else await prisma.mediaTask.upsert({ where: { id }, create: { ...data, id }, update: data });
+      if (evs.length) kickAutomation();
       if (ktlDone && !opts.trusted) await queueKatalog({ taskId: id, by: u.name, extra: after });
       break;
     }
