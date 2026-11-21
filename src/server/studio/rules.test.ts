@@ -145,3 +145,45 @@ test("gabungkan Video review: hanya admin penuh", () => {
   assert.equal(canWrite(zaki, "update", "tasks/t1", t, { ...t, mergedInto: "t9" }), null);
   assert.notEqual(canWrite(aulia, "update", "tasks/t1", t, { ...t, mergedInto: "t9" }), null);
 });
+
+test("isian CPR Detail kartu: format dijaga, anggota hanya hook & CTA", () => {
+  const card = { producer: "R", editor: "Z", status: "Editing", title: "x" };
+  assert.equal(canWrite(zaki, "update", "tasks/t", card, { ...card, objective: "AWR", campaignId: "CMP-PYD-2611", productSku: "SKU-1", reviewer: "A", platform: "TikTok", postUrl: "https://instagram.com/p/x" }), null);
+  assert.notEqual(canWrite(zaki, "update", "tasks/t", card, { ...card, campaignId: "TRT-CMP-PYD-2611" }), null);
+  assert.notEqual(canWrite(zaki, "update", "tasks/t", card, { ...card, objective: "XYZ" }), null);
+  assert.notEqual(canWrite(zaki, "update", "tasks/t", card, { ...card, postUrl: "http://x" }), null);
+  assert.notEqual(canWrite(zaki, "update", "tasks/t", card, { ...card, reviewer: "Q" }), null);
+  assert.equal(canWrite(rayhan, "update", "tasks/t", card, { ...card, hook: "ide", cta: "DM kami", updatedAt: 2 }), null);
+  assert.notEqual(canWrite(rayhan, "update", "tasks/t", card, { ...card, campaignId: "TRT-CMP-1" }), null);
+});
+
+test("tab CPR: hanya admin penuh, inquiry/order unik, bukti wajib", () => {
+  assert.equal(canRead(zaki, "cpr/o_x"), true);
+  assert.equal(canRead(aulia, "cpr/o_x"), false);
+  const ord = { orderId: "INV-1", date: "2026-11-21", kind: "Direct", amount: 350000, taskId: "t1", campaignId: "", evidence: "kode promo REV11", note: "", by: "Zaki", at: 1 };
+  assert.equal(canWrite(zaki, "set", "cpr/o_inv-1", null, ord), null);
+  assert.notEqual(canWrite(aulia, "set", "cpr/o_inv-1", null, ord), null);
+  assert.notEqual(canWrite(zaki, "set", "cpr/o_inv-1", ord, ord), null); // Order ID sama
+  assert.notEqual(canWrite(zaki, "set", "cpr/o_inv-2", null, { ...ord, evidence: "" }), null);
+  assert.equal(canWrite(zaki, "set", "cpr/o_inv-3", null, { ...ord, kind: "Unknown", evidence: "", taskId: "" }), null);
+  assert.notEqual(canWrite(zaki, "set", "cpr/o_inv-4", null, { ...ord, amount: -5 }), null);
+  const inq = { ref: "WA-1", date: "2026-11-21", kind: "Direct", intent: "ukuran", taskId: "t1", campaignId: "", evidence: "chat CS", by: "Zaki", at: 1 };
+  assert.equal(canWrite(zaki, "set", "cpr/q_wa-1", null, inq), null);
+  assert.notEqual(canWrite(zaki, "set", "cpr/q_wa-1", inq, inq), null);
+  assert.notEqual(canWrite(zaki, "set", "cpr/q_wa-2", null, { ...inq, intent: "like" }), null);
+  const snap = { taskId: "t1", cp: "D+7", reach: 5000, views: null, likes: 200, comments: 10, saves: 40, shares: 5, profileVisits: null, source: "IG Insights", observedAt: 1, by: "Zaki", at: 1 };
+  assert.equal(canWrite(zaki, "set", "cpr/s_t1_7", null, snap), null);
+  assert.equal(canWrite(zaki, "set", "cpr/s_t1_7", snap, { ...snap, reach: 6000 }), null);
+  assert.notEqual(canWrite(zaki, "set", "cpr/s_t1_1", null, snap), null); // alamat tidak cocok
+  assert.notEqual(canWrite(zaki, "set", "cpr/s_t1_7", null, { ...snap, source: "" }), null);
+  const act = { insight: "save rate tinggi", action: "buat 2 review lagi", owner: "A", due: "2026-11-28", status: "Open", taskId: "", by: "Zaki", at: 1 };
+  assert.equal(canWrite(zaki, "set", "cpr/a_1", null, act), null);
+  assert.notEqual(canWrite(zaki, "set", "cpr/a_1", null, { ...act, status: "Selesai" }), null);
+  assert.equal(canWrite(zaki, "delete", "cpr/o_inv-1", ord, null), null);
+});
+
+test("anggota boleh mengisi isian CPR di kartunya, bukan Reviewer", () => {
+  const card = { producer: "R", editor: "Z", status: "Editing", title: "x" };
+  assert.equal(canWrite(rayhan, "update", "tasks/t", card, { ...card, objective: "ENG", campaignId: "CMP-PYD-2611", productSku: "S1", platform: "TikTok", postUrl: "https://x.com/p" }), null);
+  assert.notEqual(canWrite(rayhan, "update", "tasks/t", card, { ...card, reviewer: "A" }), null);
+});

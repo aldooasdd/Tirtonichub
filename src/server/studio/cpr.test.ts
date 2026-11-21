@@ -17,8 +17,8 @@ test("Content ID: format, nomor 4 digit, bulan WIB", () => {
 });
 
 test("Content ID hanya untuk jenis yang tayang sebagai konten CPR", () => {
-  for (const t of ["vpr", "igf", "vrv", "evt", "idf", "idc"]) assert.equal(needsCpr(t), true, t);
-  for (const t of ["ktl", "khs", "cmp", "", undefined]) assert.equal(needsCpr(t), false, String(t));
+  for (const t of ["vpr", "igf", "vrv", "evt"]) assert.equal(needsCpr(t), true, t);
+  for (const t of ["idf", "idc", "ktl", "khs", "cmp", "", undefined]) assert.equal(needsCpr(t), false, String(t));
 });
 
 test("QA lolos hanya bila keenam pemeriksaan dicentang", () => {
@@ -58,7 +58,7 @@ test("QA hanya saat Editing/Ready dan hanya untuk kartu ber-Content ID", () => {
 });
 
 test("Tayang & jadwal Meta ditolak sebelum QA lolos (hanya kartu baru ber-QA)", () => {
-  const b = { status: "Ready", qaReq: true };
+  const b = { status: "Ready", qaReq: true, type: "vrv" };
   assert.notEqual(qaBlocks(b, { ...b, status: "Tayang" }), null);
   assert.notEqual(qaBlocks(b, { ...b, metaAt: 123 }), null);
   assert.equal(qaBlocks(b, { ...b, note: "x" }), null);
@@ -68,6 +68,8 @@ test("Tayang & jadwal Meta ditolak sebelum QA lolos (hanya kartu baru ber-QA)", 
   assert.equal(qaBlocks({ status: "Ready" }, { status: "Tayang" }), null);
   // sudah Tayang sebelumnya: perubahan lain tetap boleh
   assert.equal(qaBlocks({ status: "Tayang", qaReq: true }, { status: "Tayang", qaReq: true, note: "x" }), null);
+  // IDCC yang sempat mendapat qaReq tidak lagi terkunci
+  assert.equal(qaBlocks({ status: "Ready", qaReq: true, type: "idc" }, { status: "Tayang", qaReq: true, type: "idc" }), null);
 });
 
 test("isi QA sampah dibersihkan, riwayat dibatasi", () => {

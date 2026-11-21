@@ -4,8 +4,8 @@
 
 type Doc = Record<string, unknown>;
 
-/** Jenis konten Studio → kode CPR. Foto katalog, khusus, campaign tidak mendapat Content ID. */
-export const CPR_TYPE: Record<string, string> = { vpr: "VPD", igf: "FIP", vrv: "VRV", evt: "VEV", idf: "STY", idc: "VCO" };
+/** Jenis konten Studio → kode CPR. CPR hanya untuk Foto IG, Video produk, Video review, Video event (permintaan Zaki 21 Nov 2026). */
+export const CPR_TYPE: Record<string, string> = { vpr: "VPD", igf: "FIP", vrv: "VRV", evt: "VEV" };
 /** Enam pemeriksaan QA: fakta produk, identitas brand, kreatif/CTA, teknis, hak/klaim, kelengkapan file. */
 export const QA_GATES = ["pf", "bi", "cr", "te", "rc", "da"] as const;
 export type QaGate = (typeof QA_GATES)[number];
@@ -73,7 +73,7 @@ export function nextQa(prev: unknown, act: unknown, task: Doc, who: Who, at = Da
 
 /** Kartu ber-QA tidak boleh Tayang atau dijadwalkan di Meta sebelum QA lolos. null = boleh. */
 export function qaBlocks(before: Doc | null, after: Doc): string | null {
-  if (after.qaReq !== true) return null;
+  if (after.qaReq !== true || !needsCpr(after.type)) return null;
   if (qaOf(after.qa).st === "ok") return null;
   const toTayang = after.status === "Tayang" && before?.status !== "Tayang";
   const toMeta = !!after.metaAt && !before?.metaAt;
