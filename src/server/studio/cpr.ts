@@ -286,5 +286,5 @@ export function qaBlocks(before: Doc | null, after: Doc): string | null {
   if (qaApproved(after.qa)) return null;
   const toTayang = after.status === "Tayang" && before?.status !== "Tayang";
   const toMeta = !!after.metaAt && !before?.metaAt;
-  return toTayang || toMeta ? "QA kartu belum Approved (tab Quality Assurance di Detail kartu)" : null;
+  return toTayang || toMeta ? "Creative Review belum Approved (tab Creative Review di Detail kartu)" : null;
 }
