@@ -96,19 +96,18 @@ export function briefDataWhy(v: unknown, cfg: BriefCfg = BRIEF_DEFAULT): string 
 export function briefMissing(d: BriefData, type: string): string[] {
   const m: string[] = [];
   if (type === "evt" && !d.evtSub) m.push("evtSub");
-  for (const k of ["pillar", "primary", "cobj"] as const) if (!d[k]) m.push(k);
+  for (const k of ["pillar", "primary"] as const) if (!d[k]) m.push(k); // Content Objective tidak ditampilkan lagi (permintaan Zaki 21 Nov 2026)
   if (!AUD_CATS.some((k) => d.aud[k]?.length)) m.push("aud");
-  for (const k of ["km", "hk", "ct", "direction"] as const) if (!d[k]) m.push(k);
+  // Key Message / Hook / CTA hanya untuk Video review (permintaan Zaki 21 Nov 2026)
+  for (const k of (type === "vrv" ? ["km", "hk", "ct", "direction"] : ["direction"]) as (keyof BriefData)[]) if (!d[k]) m.push(k);
   return m.map((k) => BRIEF_LBL[k]);
 }
 /** Pilihan yang tidak lagi cocok (mis. setelah Primary Objective diganti). Tidak dihapus diam-diam: harus diganti sebelum diajukan/disetujui. */
 export function briefCompat(d: BriefData, type: string, cfg: BriefCfg = BRIEF_DEFAULT): string[] {
   const w: string[] = [];
-  const co = cfg.cobj.find((x) => x.id === d.cobj);
-  if (co && (co.p !== d.primary || !optActive(co))) w.push("Content Objective \"" + co.l + "\" tidak sesuai Primary Objective" + (optActive(co) ? "" : " / nonaktif"));
   if (d.sec.includes(d.primary)) w.push("Secondary Objective sama dengan Primary Objective");
   for (const g of cfg.aud) for (const id of d.aud[g.k] ?? []) { const q = g.o.find((x) => x.id === id); if (q && !optActive(q)) w.push(g.l + " \"" + q.l + "\" nonaktif"); }
-  for (const f of ["km", "hk", "ct"] as const) {
+  if (type === "vrv") for (const f of ["km", "hk", "ct"] as const) {
     const x = cfg[f].find((i) => i.id === d[f]);
     if (x && (!libOk(x, type, d.primary) || (x.o?.length && !x.o.includes(d.cobj)))) w.push(BRIEF_LBL[f] + " \"" + x.l + "\" tidak cocok dengan jenis konten / objective");
   }
@@ -120,7 +119,7 @@ type Who = { name: string; code: string; full: boolean; staff: boolean };
 
 /**
  * Perintah brief:
- * - `{act:'save', data}` simpan draf (anggota kartu / admin). Mengubah brief yang sudah disetujui (termasuk objective) membuka versi baru (v+1)
+ * - `{act:'save', data}` simpan draf (admin / Admin 2 saja). Mengubah brief yang sudah disetujui (termasuk objective) membuka versi baru (v+1)
  *   yang perlu disetujui ulang; persetujuan versi sebelumnya tetap tercatat (ok) sehingga produksi yang sudah berjalan tidak terhenti.
  * - `{act:'submit', data?}` ajukan ke Creative Lead (lengkap & semua pilihan cocok).
  * - `{act:'approve'}` Creative Lead (admin / Admin 2) menyetujui versi ini.
@@ -139,6 +138,8 @@ export function nextBrief(prev: unknown, act: unknown, task: Doc, who: Who, cfg:
     const c = briefCompat(d, type, cfg);
     return c.length ? "perbaiki dulu: " + c.join("; ") : null;
   };
+  // Brief disusun admin (Zaki) & Admin 2 (Aulia); anggota hanya melihat versi yang disetujui (permintaan Zaki 21 Nov 2026)
+  if (!who.staff) return "Content Brief hanya disusun admin / Admin 2; anggota melihat brief yang sudah disetujui";
   if (a.act === "save" || a.act === "submit") {
     let data = p.data;
     if (a.data !== undefined) {

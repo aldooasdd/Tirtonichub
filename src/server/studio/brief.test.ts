@@ -6,6 +6,7 @@ import { BRIEF_DEFAULT, briefCfgWhy, PRIMARY } from "./brief-master";
 const AT = 1_763_700_000_000;
 const aulia = { name: "Aulia", code: "A", full: false, staff: true };
 const rayhan = { name: "Rayhan", code: "R", full: false, staff: false };
+const zaki = { name: "Zaki", code: "Z", full: true, staff: true };
 const card = { type: "vrv", status: "Terdata", producer: "R", briefReq: true };
 const FULL = { pillar: "Educate", primary: "ENT", cobj: "ENT-PE", sec: ["QIN"], aud: { level: ["LV-BEG"], interest: ["PI-RKT"], geo: ["GE-YOG"] }, km: "KM-PED", hk: "HK-PSU", ct: "CT-PCS", direction: "Close-up frame, lapangan sore", refs: ["https://instagram.com/p/x"] };
 const ok = (b: Brief | string) => {
@@ -48,12 +49,11 @@ test("isi brief: hanya master ID; secondary ≤2 dan ≠ primary; referensi http
 });
 
 test("ganti Primary Objective: pilihan lama tidak dihapus, tetapi ditandai tidak cocok dan menahan pengajuan", () => {
-  const d = ok(nextBrief(undefined, { act: "save", data: { ...FULL, primary: "CNV", sec: [] } }, card, rayhan));
-  assert.equal(d.data.cobj, "ENT-PE"); // tetap tersimpan
+  const d = ok(nextBrief(undefined, { act: "save", data: { ...FULL, primary: "CNV", sec: [] } }, card, zaki));
+  assert.equal(d.data.km, "KM-PED"); // tetap tersimpan
   const w = briefCompat(d.data, "vrv");
-  assert.ok(w.some((x) => /Content Objective/.test(x)));
   assert.ok(w.some((x) => /Key Message/.test(x)));
-  assert.match(String(nextBrief(d, { act: "submit" }, card, rayhan)), /perbaiki dulu/);
+  assert.match(String(nextBrief(d, { act: "submit" }, card, zaki)), /perbaiki dulu/);
   assert.deepEqual(briefCompat(FULL as never, "vrv"), []);
   assert.ok(briefCompat({ ...FULL, km: "KM-PRM" } as never, "vrv").length > 0); // Promotion bukan untuk Video review
 });
@@ -61,17 +61,17 @@ test("ganti Primary Objective: pilihan lama tidak dihapus, tetapi ditandai tidak
 test("Video event wajib subkategori Promo / Community", () => {
   const evt = { ...card, type: "evt" };
   const D = { ...FULL, primary: "CNV", cobj: "CNV-PM", sec: ["AWR"], km: "KM-PRM", hk: "HK-LTO", ct: "CT-CPU" };
-  assert.match(String(nextBrief(undefined, { act: "submit", data: D }, evt, rayhan)), /Subkategori/);
-  ok(nextBrief(undefined, { act: "submit", data: { ...D, evtSub: "promo" } }, evt, rayhan));
+  assert.match(String(nextBrief(undefined, { act: "submit", data: D }, evt, zaki)), /Subkategori/);
+  ok(nextBrief(undefined, { act: "submit", data: { ...D, evtSub: "promo" } }, evt, zaki));
 });
 
 test("draf → ajukan (lengkap) → disetujui Creative Lead; anggota tidak bisa menyetujui", () => {
-  const d = ok(nextBrief(undefined, { act: "save", data: { pillar: "Educate" } }, card, rayhan, BRIEF_DEFAULT, AT));
+  const d = ok(nextBrief(undefined, { act: "save", data: { pillar: "Educate" } }, card, zaki, BRIEF_DEFAULT, AT));
   assert.equal(d.st, "draft");
-  assert.match(String(nextBrief(d, { act: "submit" }, card, rayhan)), /lengkapi/);
-  const s = ok(nextBrief(d, { act: "submit", data: FULL }, card, rayhan, BRIEF_DEFAULT, AT));
+  assert.match(String(nextBrief(d, { act: "submit" }, card, zaki)), /lengkapi/);
+  const s = ok(nextBrief(d, { act: "submit", data: FULL }, card, zaki, BRIEF_DEFAULT, AT));
   assert.equal(s.st, "submitted");
-  assert.match(String(nextBrief(s, { act: "approve" }, card, rayhan)), /Creative Lead/);
+  assert.match(String(nextBrief(s, { act: "approve" }, card, rayhan)), /admin/);
   const a = ok(nextBrief(s, { act: "approve" }, card, aulia, BRIEF_DEFAULT, AT + 1));
   assert.equal(a.st, "approved");
   assert.equal(a.ok?.by, "Aulia");
@@ -79,15 +79,26 @@ test("draf → ajukan (lengkap) → disetujui Creative Lead; anggota tidak bisa 
 });
 
 test("objective diubah setelah disetujui → versi baru, perlu disetujui ulang, tercatat di riwayat", () => {
-  const a = ok(nextBrief(ok(nextBrief(undefined, { act: "submit", data: FULL }, card, rayhan)), { act: "approve" }, card, aulia));
-  const v2 = ok(nextBrief(a, { act: "save", data: { ...FULL, cobj: "ENT-PC" } }, card, rayhan));
+  const a = ok(nextBrief(ok(nextBrief(undefined, { act: "submit", data: FULL }, card, zaki)), { act: "approve" }, card, aulia));
+  const v2 = ok(nextBrief(a, { act: "save", data: { ...FULL, cobj: "ENT-PC" } }, card, zaki));
   assert.equal(v2.v, 2);
   assert.equal(v2.st, "draft");
   assert.equal(v2.ok?.v, 1);
   assert.deepEqual(v2.log.at(-1)?.ch, ["Content Objective"]);
-  const r = ok(nextBrief(ok(nextBrief(v2, { act: "submit" }, card, rayhan)), { act: "revisi", note: "hook kurang tajam" }, card, aulia));
+  const r = ok(nextBrief(ok(nextBrief(v2, { act: "submit" }, card, zaki)), { act: "revisi", note: "hook kurang tajam" }, card, aulia));
   assert.equal(r.st, "revisi");
   assert.match(String(nextBrief(r, { act: "revisi", note: "" }, card, aulia)), /catatan/);
+});
+
+test("anggota (B1) tidak bisa menyusun atau mengajukan brief", () => {
+  assert.match(String(nextBrief(undefined, { act: "save", data: FULL }, card, rayhan)), /admin/);
+  assert.match(String(nextBrief(undefined, { act: "submit", data: FULL }, card, rayhan)), /admin/);
+});
+
+test("Foto IG / Video produk: tanpa Content Objective dan Key Message/Hook/CTA tetap bisa diajukan", () => {
+  const igf = { ...card, type: "igf" };
+  ok(nextBrief(undefined, { act: "submit", data: { pillar: "Convert", primary: "QIN", aud: { geo: ["GE-NAS"] }, direction: "Flatlay" } }, igf, zaki));
+  assert.match(String(nextBrief(undefined, { act: "submit", data: { pillar: "Educate", primary: "ENT", aud: { geo: ["GE-NAS"] }, direction: "x" } }, card, zaki)), /Key Message/);
 });
 
 test("brief hanya untuk 4 jenis CPR", () => {
