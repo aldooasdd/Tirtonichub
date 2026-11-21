@@ -53,7 +53,7 @@ export function nextQa(prev: unknown, act: unknown, task: Doc, who: Who, at = Da
   const a = act as Doc;
   if (a.st !== "ok" && a.st !== "revisi") return "perintah QA tidak valid";
   const st: QaSt = a.st;
-  if (!needsCpr(task.type) || !task.cprId) return "kartu ini tidak memakai QA CPR";
+  if (!needsCpr(task.type) || !task.cprId) return "kartu ini tidak memakai QA kartu";
   if (!QA_STAGES.includes(s(task.status))) return "QA hanya saat Editing atau Ready";
   const g0 = a.g && typeof a.g === "object" ? (a.g as Doc) : {};
   const g = Object.fromEntries(QA_GATES.map((k) => [k, g0[k] === true])) as Record<QaGate, boolean>;
@@ -77,5 +77,5 @@ export function qaBlocks(before: Doc | null, after: Doc): string | null {
   if (qaOf(after.qa).st === "ok") return null;
   const toTayang = after.status === "Tayang" && before?.status !== "Tayang";
   const toMeta = !!after.metaAt && !before?.metaAt;
-  return toTayang || toMeta ? "QA CPR belum lolos (6 pemeriksaan di Detail kartu)" : null;
+  return toTayang || toMeta ? "QA kartu belum lolos (6 pemeriksaan di Detail kartu)" : null;
 }

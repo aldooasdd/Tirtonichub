@@ -150,7 +150,9 @@ test("isian CPR Detail kartu: format dijaga, anggota hanya hook & CTA", () => {
   const card = { producer: "R", editor: "Z", status: "Editing", title: "x" };
   assert.equal(canWrite(zaki, "update", "tasks/t", card, { ...card, objective: "AWR", campaignId: "CMP-PYD-2611", productSku: "SKU-1", reviewer: "A", platform: "TikTok", postUrl: "https://instagram.com/p/x" }), null);
   assert.notEqual(canWrite(zaki, "update", "tasks/t", card, { ...card, campaignId: "TRT-CMP-PYD-2611" }), null);
-  assert.notEqual(canWrite(zaki, "update", "tasks/t", card, { ...card, objective: "XYZ" }), null);
+  assert.equal(canWrite(zaki, "update", "tasks/t", card, { ...card, objective: "Educate: kenalkan teknologi bantalan" }), null);
+  assert.notEqual(canWrite(zaki, "update", "tasks/t", card, { ...card, objective: "x".repeat(201) }), null);
+  assert.notEqual(canWrite(zaki, "update", "tasks/t", card, { ...card, objective: 5 }), null);
   assert.notEqual(canWrite(zaki, "update", "tasks/t", card, { ...card, postUrl: "http://x" }), null);
   assert.notEqual(canWrite(zaki, "update", "tasks/t", card, { ...card, reviewer: "Q" }), null);
   assert.equal(canWrite(rayhan, "update", "tasks/t", card, { ...card, hook: "ide", cta: "DM kami", updatedAt: 2 }), null);
@@ -186,4 +188,12 @@ test("anggota boleh mengisi isian CPR di kartunya, bukan Reviewer", () => {
   const card = { producer: "R", editor: "Z", status: "Editing", title: "x" };
   assert.equal(canWrite(rayhan, "update", "tasks/t", card, { ...card, objective: "ENG", campaignId: "CMP-PYD-2611", productSku: "S1", platform: "TikTok", postUrl: "https://x.com/p" }), null);
   assert.notEqual(canWrite(rayhan, "update", "tasks/t", card, { ...card, reviewer: "A" }), null);
+});
+
+test("kartu ber-Content ID hanya bisa dihapus admin penuh", () => {
+  const c = { type: "vrv", status: "Editing", producer: "R", cprId: "TRT-CPR-VRV-2611-0001" };
+  assert.equal(canWrite(zaki, "delete", "tasks/t", c, null), null);
+  assert.notEqual(canWrite(aulia, "delete", "tasks/t", c, null), null);
+  assert.notEqual(canWrite(rayhan, "delete", "tasks/t", c, null), null);
+  assert.equal(canWrite(aulia, "delete", "tasks/t", { ...c, cprId: "" }, null), null);
 });

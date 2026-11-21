@@ -212,6 +212,8 @@ export function canWrite(
         const su = str(after.scriptUrl);
         if (su && (su.length > 500 || !su.startsWith("https://docs.google.com/"))) return deny("link skrip harus dari Google Docs");
       }
+      // kartu ber-Content ID tidak hilang tanpa sengaja: hanya admin penuh yang boleh menghapusnya (permintaan Zaki 21 Nov 2026)
+      if (op === "delete" && before?.cprId && !u.full) return deny("kartu ber-Content ID hanya bisa dihapus admin penuh");
       if (u.staff) return null;
       if (op === "delete") return deny("hanya admin");
       if (!before) {
@@ -231,10 +233,10 @@ const MEMBER_TO = ["Terdata", "Diproduksi", "Editing", "Ready"];
 const MEMBER_KEYS = ["status", "shotAt", "readyAt", "note", "driveUrl", "scriptUrl", "objective", "campaignId", "productSku", "platform", "postUrl", "hook", "cta", "history", "updatedAt", "updatedBy"];
 
 // Isian CPR di Detail kartu: anggota boleh mengisi di kartunya (MEMBER_KEYS), Reviewer hanya admin.
-const CPR_OBJ = ["", "AWR", "ENG", "INQ", "CNV", "RET"];
 const CPR_PLATFORMS = ["", "Instagram", "TikTok", "Website", "YouTube", "Multi-platform"];
 function cprFieldsWhy(d: Doc): string | null {
-  if (!CPR_OBJ.includes(str(d.objective))) return "objective tidak dikenal";
+  if (d.objective != null && typeof d.objective !== "string") return "objective harus teks";
+  if (str(d.objective).length > 200) return "objective terlalu panjang (maks 200 huruf)"; // teks bebas (Educate/Inspire/Connect/Convert atau isian sendiri); kode lama AWR dst. tetap sah
   if (!CPR_PLATFORMS.includes(str(d.platform))) return "platform tidak dikenal";
   const camp = str(d.campaignId);
   if (camp && !/^CMP-[A-Z0-9]{2,12}-\d{4}$/.test(camp)) return "Campaign ID harus berformat CMP-KODE-YYMM";
