@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { canRead, canWrite, type StudioUser } from "./rules";
+import { QA_DEFAULT } from "./cpr";
 
 const base = { userId: "u", name: "x", idcc: false };
 const zaki: StudioUser = { ...base, email: "zaki@tirtonichub.com", code: "Z", full: true, staff: true, idcc: true };
@@ -196,4 +197,13 @@ test("kartu ber-Content ID hanya bisa dihapus admin penuh", () => {
   assert.notEqual(canWrite(aulia, "delete", "tasks/t", c, null), null);
   assert.notEqual(canWrite(rayhan, "delete", "tasks/t", c, null), null);
   assert.equal(canWrite(aulia, "delete", "tasks/t", { ...c, cprId: "" }, null), null);
+});
+
+test("standar QA (settings qaCfg): hanya admin penuh dan harus sah", () => {
+  const set = { idccDay: 3 };
+  assert.equal(canWrite(zaki, "update", "settings/main", set, { ...set, qaCfg: QA_DEFAULT }), null);
+  assert.notEqual(canWrite(aulia, "update", "settings/main", set, { ...set, qaCfg: QA_DEFAULT }), null);
+  const bad = { ...QA_DEFAULT, types: { ...QA_DEFAULT.types, vpr: QA_DEFAULT.types.vpr.slice(1) } };
+  assert.notEqual(canWrite(zaki, "update", "settings/main", set, { ...set, qaCfg: bad }), null);
+  assert.equal(canWrite(aulia, "update", "settings/main", { ...set, qaCfg: QA_DEFAULT }, { ...set, qaCfg: QA_DEFAULT, idccDay: 4 }), null); // tidak mengubah qaCfg
 });

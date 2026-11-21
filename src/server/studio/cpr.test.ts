@@ -1,13 +1,21 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { cprIdOf, cprYymm, needsCpr, nextQa, qaBlocks, qaOf, QA_GATES, QA_LOG_MAX } from "./cpr";
+import { cprIdOf, cprYymm, critChecks, needsCpr, nextQa, qaBlocks, qaCfgOf, qaCfgWhy, qaOf, qaReopen, qaResult, qaScore, QA_DEFAULT, type Qa } from "./cpr";
 
 const AT = 1_763_700_000_000;
 const zaki = { name: "Zaki", code: "Z", full: true, staff: true };
 const aulia = { name: "Aulia", code: "A", full: false, staff: true };
 const rayhan = { name: "Rayhan", code: "R", full: false, staff: false };
-const ALL = Object.fromEntries(QA_GATES.map((k) => [k, true]));
-const card = { type: "vrv", cprId: "TRT-CPR-VRV-2611-0001", status: "Ready", producer: "R", editor: "R" };
+const card = { type: "vrv", cprId: "TRT-CPR-VRV-2611-0001", status: "Ready", producer: "R", editor: "R", driveUrl: "/api/file?key=x", briefReq: true, brief: { ok: { v: 1, data: {} } } };
+const IND = QA_DEFAULT.types.vrv;
+const CHK = critChecks(IND, QA_DEFAULT.checks);
+const all = (v: number) => Object.fromEntries(IND.map((i) => [i.k, v]));
+const pass = Object.fromEntries(CHK.map((c) => [c.k, true]));
+const submitted = () => {
+  const q = nextQa(undefined, { act: "submit" }, card, rayhan, QA_DEFAULT, AT);
+  assert.ok(typeof q === "object", String(q));
+  return q;
+};
 
 test("Content ID: format, nomor 4 digit, bulan WIB", () => {
   assert.equal(cprIdOf("vrv", "2611", 3), "TRT-CPR-VRV-2611-0003");
@@ -21,68 +29,114 @@ test("Content ID hanya untuk jenis yang tayang sebagai konten CPR", () => {
   for (const t of ["idf", "idc", "ktl", "khs", "cmp", "", undefined]) assert.equal(needsCpr(t), false, String(t));
 });
 
-test("QA lolos hanya bila keenam pemeriksaan dicentang", () => {
-  const q = nextQa(undefined, { st: "ok", g: ALL }, card, zaki, AT);
-  assert.equal(typeof q, "object");
-  if (typeof q === "string") return;
-  assert.equal(q.st, "ok");
-  assert.equal(q.by, "Zaki");
-  assert.equal(q.at, AT);
-  assert.equal(q.round, 1);
-  assert.equal(typeof nextQa(undefined, { st: "ok", g: { ...ALL, rc: false } }, card, zaki, AT), "string");
+test("standar QA bawaan sah: bobot tiap jenis 100%, Product Accuracy critical", () => {
+  assert.equal(qaCfgWhy(QA_DEFAULT), null);
+  assert.equal(QA_DEFAULT.types.igf.find((i) => i.k === "acc")?.c, true);
+  assert.equal(QA_DEFAULT.types.vrv[0].w, 30);
+  const bad = { ...QA_DEFAULT, types: { ...QA_DEFAULT.types, igf: QA_DEFAULT.types.igf.map((i) => (i.k === "acc" ? { ...i, w: 30 } : i)) } };
+  assert.match(String(qaCfgWhy(bad)), /100%/);
+  assert.equal(qaCfgOf(bad), QA_DEFAULT); // standar rusak → bawaan
+  assert.equal(qaCfgOf({ ...QA_DEFAULT, v: 2 }).v, 2);
+  assert.notEqual(qaCfgWhy({ ...QA_DEFAULT, checks: [] }), null);
 });
 
-test("anggota tidak bisa QA; Admin 2 tidak meloloskan kontennya sendiri", () => {
-  assert.equal(typeof nextQa(undefined, { st: "ok", g: ALL }, card, rayhan, AT), "string");
-  assert.equal(typeof nextQa(undefined, { st: "ok", g: ALL }, { ...card, editor: "A" }, aulia, AT), "string");
-  assert.equal(typeof nextQa(undefined, { st: "ok", g: ALL }, card, aulia, AT), "object");
+test("skor: Σ nilai/5 × bobot; ≥80 eligible, 70–79 revisi, <70 major, critical gagal = blocked", () => {
+  assert.equal(qaScore(IND, all(5)), 100);
+  assert.equal(qaScore(IND, all(4)), 80);
+  assert.equal(qaResult(80, 0), "eligible");
+  assert.equal(qaResult(79.9, 0), "revision");
+  assert.equal(qaResult(69, 0), "major");
+  assert.equal(qaResult(100, 1), "blocked");
 });
 
-test("revisi wajib catatan dan pemeriksaan yang gagal; putaran & riwayat tersimpan", () => {
-  assert.equal(typeof nextQa(undefined, { st: "revisi", g: { ...ALL, te: false } }, card, zaki, AT), "string");
-  assert.equal(typeof nextQa(undefined, { st: "revisi", g: ALL, note: "audio pecah" }, card, zaki, AT), "string");
-  const r1 = nextQa(undefined, { st: "revisi", g: { ...ALL, te: false }, note: "audio pecah" }, card, zaki, AT);
-  assert.ok(typeof r1 === "object");
-  assert.deepEqual(r1.log[0].fail, ["te"]);
-  const r2 = nextQa(r1, { st: "ok", g: ALL }, card, zaki, AT + 1);
-  assert.ok(typeof r2 === "object");
-  assert.equal(r2.round, 2);
-  assert.equal(r2.log.length, 2);
+test("ajukan QA: hanya Editing/Ready, file final ada, brief wajib sudah disetujui", () => {
+  const q = submitted();
+  assert.equal(q.st, "submitted");
+  assert.equal(q.ver, 1);
+  assert.equal(q.inds.length, IND.length);
+  assert.equal(q.sub?.file, card.driveUrl);
+  assert.equal(typeof nextQa(undefined, { act: "submit" }, { ...card, status: "Terdata" }, rayhan, QA_DEFAULT, AT), "string");
+  assert.equal(typeof nextQa(undefined, { act: "submit" }, { ...card, driveUrl: "" }, rayhan, QA_DEFAULT, AT), "string");
+  assert.equal(typeof nextQa(undefined, { act: "submit" }, { ...card, brief: {} }, rayhan, QA_DEFAULT, AT), "string");
+  assert.equal(typeof nextQa(undefined, { act: "submit" }, { ...card, briefReq: undefined, brief: {} }, rayhan, QA_DEFAULT, AT), "object"); // kartu lama: brief opsional
+  assert.equal(typeof nextQa(undefined, { act: "submit" }, { ...card, cprId: "" }, rayhan, QA_DEFAULT, AT), "string");
+  assert.equal(typeof nextQa(q, { act: "submit" }, card, rayhan, QA_DEFAULT, AT), "string"); // sudah diajukan
 });
 
-test("QA hanya saat Editing/Ready dan hanya untuk kartu ber-Content ID", () => {
-  assert.equal(typeof nextQa(undefined, { st: "ok", g: ALL }, { ...card, status: "Terdata" }, zaki, AT), "string");
-  assert.equal(typeof nextQa(undefined, { st: "ok", g: ALL }, { ...card, cprId: "" }, zaki, AT), "string");
-  assert.equal(typeof nextQa(undefined, { st: "ok", g: ALL }, { ...card, type: "ktl" }, zaki, AT), "string");
-  assert.equal(typeof nextQa(undefined, { st: "lolos" }, card, zaki, AT), "string");
+test("approve: lengkap, skor ≥80, semua critical Pass; anggota tidak bisa review", () => {
+  const q = submitted();
+  assert.equal(typeof nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: pass }, card, rayhan, QA_DEFAULT, AT), "string");
+  const partial = { ...all(5) };
+  delete partial.cta;
+  assert.match(String(nextQa(q, { act: "review", decision: "approve", scores: partial, checks: pass }, card, aulia, QA_DEFAULT, AT)), /semua indikator/);
+  assert.match(String(nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: { ...pass, rights: undefined } }, card, aulia, QA_DEFAULT, AT)), /critical check/);
+  assert.match(String(nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: { ...pass, c_acc: false } }, card, aulia, QA_DEFAULT, AT)), /diblokir/);
+  assert.match(String(nextQa(q, { act: "review", decision: "approve", scores: all(3), checks: pass }, card, aulia, QA_DEFAULT, AT)), /di bawah 80/);
+  const ok = nextQa(q, { act: "review", decision: "approve", scores: all(4), checks: pass }, card, aulia, QA_DEFAULT, AT + 5) as Qa;
+  assert.equal(ok.st, "approved");
+  assert.equal(ok.appBy, "Aulia");
+  assert.equal(ok.appAt, AT + 5);
+  assert.equal(ok.rev?.score, 80);
+  assert.equal(ok.log.at(-1)?.act, "approve");
 });
 
-test("Tayang & jadwal Meta ditolak sebelum QA lolos (hanya kartu baru ber-QA)", () => {
+test("revisi wajib catatan; status mengikuti skor/critical; pengajuan ulang = versi & riwayat baru", () => {
+  const q = submitted();
+  assert.match(String(nextQa(q, { act: "review", decision: "revise", scores: all(3), checks: pass, note: "" }, card, aulia, QA_DEFAULT, AT)), /catatan/);
+  const r = nextQa(q, { act: "review", decision: "revise", scores: all(3), checks: pass, note: "audio pecah" }, card, aulia, QA_DEFAULT, AT) as Qa;
+  assert.equal(r.st, "major");
+  const b = nextQa(q, { act: "review", decision: "revise", scores: all(5), checks: { ...pass, info: false }, note: "harga salah" }, card, aulia, QA_DEFAULT, AT) as Qa;
+  assert.equal(b.st, "blocked");
+  assert.deepEqual(b.log.at(-1)?.fail, ["info"]);
+  const r2 = nextQa(r, { act: "submit" }, card, rayhan, QA_DEFAULT, AT + 1) as Qa;
+  assert.equal(r2.ver, 2);
+  assert.equal(r2.st, "submitted");
+  assert.equal(r2.rev, null);
+  assert.equal(r2.log.length, 3);
+});
+
+test("self-approval: Admin 2 ditolak; admin penuh hanya dengan alasan pengecualian tercatat", () => {
+  const q = submitted();
+  const own = { ...card, editor: "A" };
+  assert.match(String(nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: pass }, own, aulia, QA_DEFAULT, AT)), /admin lain/);
+  const zOwn = { ...card, producer: "Z" };
+  assert.match(String(nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: pass }, zOwn, zaki, QA_DEFAULT, AT)), /pengecualian/);
+  const ok = nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: pass, exc: "Aulia cuti, deadline payday" }, zOwn, zaki, QA_DEFAULT, AT) as Qa;
+  assert.equal(ok.st, "approved");
+  assert.equal(ok.log.at(-1)?.exc, "Aulia cuti, deadline payday");
+});
+
+test("perubahan file final / info produk setelah Approved membuka QA kembali", () => {
+  const q = submitted();
+  const ok = nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: pass }, card, aulia, QA_DEFAULT, AT) as Qa;
+  assert.equal(qaReopen(ok, card, { ...card, note: "x" }, "Rayhan"), null);
+  const r = qaReopen(ok, card, { ...card, driveUrl: "/api/file?key=y" }, "Rayhan");
+  assert.equal(r?.st, "reopened");
+  assert.match(String(r?.log.at(-1)?.note), /file final/);
+  assert.equal(qaReopen(undefined, card, { ...card, driveUrl: "z" }, "R"), null);
+  assert.equal(typeof nextQa(r, { act: "submit" }, card, rayhan, QA_DEFAULT, AT), "object");
+});
+
+test("Tayang & jadwal Meta ditolak sebelum QA Approved (hanya kartu ber-qaReq)", () => {
   const b = { status: "Ready", qaReq: true, type: "vrv" };
   assert.notEqual(qaBlocks(b, { ...b, status: "Tayang" }), null);
   assert.notEqual(qaBlocks(b, { ...b, metaAt: 123 }), null);
   assert.equal(qaBlocks(b, { ...b, note: "x" }), null);
-  const ok = { ...b, qa: { st: "ok" } };
-  assert.equal(qaBlocks(ok, { ...ok, status: "Tayang" }), null);
-  // kartu lama (tanpa qaReq) tidak terpengaruh
+  const q = submitted();
+  assert.notEqual(qaBlocks(b, { ...b, status: "Tayang", qa: q }), null); // baru diajukan belum cukup
+  const ok = nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: pass }, card, aulia, QA_DEFAULT, AT);
+  assert.equal(qaBlocks(b, { ...b, status: "Tayang", qa: ok }), null);
+  assert.equal(qaBlocks(b, { ...b, status: "Tayang", qa: { st: "ok" } }), null); // QA lama (6 centang) yang sudah lolos tetap sah
   assert.equal(qaBlocks({ status: "Ready" }, { status: "Tayang" }), null);
-  // sudah Tayang sebelumnya: perubahan lain tetap boleh
-  assert.equal(qaBlocks({ status: "Tayang", qaReq: true }, { status: "Tayang", qaReq: true, note: "x" }), null);
-  // IDCC yang sempat mendapat qaReq tidak lagi terkunci
   assert.equal(qaBlocks({ status: "Ready", qaReq: true, type: "idc" }, { status: "Tayang", qaReq: true, type: "idc" }), null);
 });
 
-test("isi QA sampah dibersihkan, riwayat dibatasi", () => {
-  const q = qaOf({ st: "hack", g: { pf: "yes", bi: true }, log: [null, "x", { st: "boom" }] });
-  assert.equal(q.st, "pending");
-  assert.equal(q.g.pf, false);
-  assert.equal(q.g.bi, true);
-  assert.equal(q.log.length, 0);
-  let prev: unknown;
-  for (let i = 0; i < QA_LOG_MAX + 5; i++) {
-    const r = nextQa(prev, { st: "revisi", g: { ...ALL, pf: false }, note: "cek harga" }, card, zaki, AT + i);
-    assert.ok(typeof r === "object");
-    prev = r;
-  }
-  assert.equal(qaOf(prev).log.length, QA_LOG_MAX);
+test("QA lama dibaca aman; isi sampah dibersihkan", () => {
+  const old = qaOf({ st: "ok", by: "Zaki", at: 5, g: { pf: true }, log: [{ st: "ok", at: 5, by: "Zaki" }, null, "x"] });
+  assert.equal(old.st, "approved");
+  assert.equal(old.appBy, "Zaki");
+  assert.equal(old.log.length, 1);
+  assert.equal(qaOf({ st: "hack" }).st, "none");
+  assert.equal(qaOf({ sys: 2, st: "hack" }).st, "none");
+  assert.equal(qaOf(undefined).st, "none");
 });

@@ -13,7 +13,8 @@ import { canRead, canWrite, type Doc, type StudioUser } from "./rules";
 import { loadAccess } from "./access";
 import * as M from "./map";
 import { nextPlanLog } from "./plan-log";
-import { cprIdOf, cprYymm, needsCpr, nextQa, qaBlocks } from "./cpr";
+import { cprIdOf, cprYymm, needsCpr, nextQa, qaBlocks, qaCfgOf, qaReopen } from "./cpr";
+import { briefBlocks, nextBrief } from "./brief";
 
 export class StudioError extends Error {
   constructor(public code: "permission-denied" | "not-found" | "invalid-argument" | "failed-precondition", msg: string) {
@@ -146,22 +147,37 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
     // antrean WA editor (editNotif) juga milik server
     if (before?.editNotif !== undefined) after.editNotif = before.editNotif;
     else delete after.editNotif;
-    // CPR (cpr.ts): Content ID, tanda wajib QA, dan hasil QA milik server. Klien hanya mengirim perintah qaAct.
-    for (const k of ["cprId", "qaReq", "qa"]) {
+    // CPR (cpr.ts, brief.ts): Content ID, tanda wajib QA/brief, hasil QA, dan Content Brief milik server.
+    // Klien hanya mengirim perintah qaAct / briefAct; kiriman qa/brief langsung diganti nilai tersimpan.
+    for (const k of ["cprId", "qaReq", "qa", "briefReq", "brief"]) {
       if (before?.[k] !== undefined && before[k] !== "") after[k] = before[k];
       else delete after[k];
     }
-    const qaAct = after.qaAct;
+    const qaAct = after.qaAct, briefAct = after.briefAct;
     delete after.qaAct;
+    delete after.briefAct;
+    if (briefAct !== undefined) {
+      if (!before) throw new StudioError("invalid-argument", "Brief hanya untuk kartu yang sudah ada.");
+      const b = nextBrief(before.brief, briefAct, after, u);
+      if (typeof b === "string") throw new StudioError("permission-denied", "Tidak diizinkan: " + b + ".");
+      after.brief = b;
+    }
     if (qaAct !== undefined) {
       if (!before) throw new StudioError("invalid-argument", "QA hanya untuk kartu yang sudah ada.");
-      const q = nextQa(before.qa, qaAct, after, u);
+      const q = nextQa(before.qa, qaAct, after, u, qaCfgOf((await getRaw("settings/main"))?.qaCfg));
       if (typeof q === "string") throw new StudioError("permission-denied", "Tidak diizinkan: " + q + ".");
       after.qa = q;
+    } else {
+      // file final / info produk berubah setelah QA diajukan atau Approved → QA dibuka kembali
+      const r = qaReopen(after.qa, before, after, u.name);
+      if (r) after.qa = r;
     }
-    if (!before && needsCpr(after.type)) after.qaReq = true; // kartu baru: wajib QA sebelum Tayang/Meta
+    if (!before && needsCpr(after.type)) {
+      after.qaReq = true; // kartu baru: wajib QA Approved sebelum Tayang/Meta
+      after.briefReq = true; // kartu baru: wajib brief disetujui sebelum Produksi
+    }
   }
-  const why = opts.trusted ? null : canWrite(u, op, path, before, after) ?? (col === "tasks" && after ? qaBlocks(before, after) : null); // trusted: hanya skrip impor di server
+  const why = opts.trusted ? null : canWrite(u, op, path, before, after) ?? (col === "tasks" && after ? qaBlocks(before, after) ?? briefBlocks(before, after) : null); // trusted: hanya skrip impor di server
   if (why) throw new StudioError("permission-denied", "Tidak diizinkan: " + why + ".");
   if (!opts.trusted && (col === "folders" || col === "docs" || col === "assets")) await checkFileAccess(u, col, id, before, after);
 

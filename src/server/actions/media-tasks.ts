@@ -9,7 +9,8 @@ import { loadCtx, runBalance, todayWIB } from "@/server/media/schedule-runner";
 import type { Task } from "@/lib/media/schedule";
 import type { Prisma } from "@/generated/prisma";
 import { nextPlanLog } from "@/server/studio/plan-log";
-import { qaBlocks } from "@/server/studio/cpr";
+import { qaBlocks, qaReopen } from "@/server/studio/cpr";
+import { briefBlocks } from "@/server/studio/brief";
 import { queueEditNotif } from "@/server/push/edit";
 
 export type ActionResult = { ok: boolean; message?: string };
@@ -60,6 +61,9 @@ export async function setTaskStatus(id: string, status: string): Promise<ActionR
   if (status === "Tayang" && !acc.canManage) return { ok: false, message: "Hanya admin yang menandai Tayang." };
   const qa = qaWhy(task, { status });
   if (qa) return { ok: false, message: qa + "." };
+  const exB = (task.extra && typeof task.extra === "object" ? task.extra : {}) as Record<string, unknown>;
+  const br = briefBlocks({ status: task.status }, { status, type: task.type, briefReq: exB.briefReq, brief: exB.brief });
+  if (br) return { ok: false, message: br + "." };
   if (status === "Ready" && POSTED.includes(task.type) && !task.driveUrl)
     return { ok: false, message: "Tempel dulu link Google Drive file final sebelum ke Ready." };
 
@@ -106,6 +110,12 @@ export async function updateTask(
     const ex = task.extra && typeof task.extra === "object" && !Array.isArray(task.extra) ? (task.extra as Record<string, unknown>) : {};
     const log = nextPlanLog(ex.planLog, task, { ...task, ...data }, meName, "dasbor");
     if (log) data.extra = { ...ex, planLog: log } as Prisma.InputJsonValue;
+  }
+  // file final berubah setelah QA diajukan/Approved → QA dibuka kembali (sama dengan Studio, cpr.ts)
+  if ("driveUrl" in data) {
+    const ex = (data.extra ?? (task.extra && typeof task.extra === "object" && !Array.isArray(task.extra) ? task.extra : {})) as Record<string, unknown>;
+    const r = qaReopen(ex.qa, { driveUrl: task.driveUrl }, { driveUrl: data.driveUrl }, meName);
+    if (r) data.extra = { ...ex, qa: r } as Prisma.InputJsonValue;
   }
   await prisma.mediaTask.update({ where: { id }, data });
   await queueEditNotif(id, task as unknown as Record<string, unknown>, { ...task, ...data }, meName, acc.code ?? "");
