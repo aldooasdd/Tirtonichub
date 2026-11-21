@@ -1379,7 +1379,7 @@ body.gate{overflow:hidden}
 .ba-level{--bac:var(--t-ktl)}.ba-status{--bac:var(--t-igf)}.ba-interest{--bac:#00838F}.ba-geo{--bac:#2E7D32}.ba-need{--bac:var(--t-idc)}
 .baudg .bch.on{border-color:var(--bac);box-shadow:inset 0 0 0 1px var(--bac);background:color-mix(in srgb,var(--bac) 16%,var(--card-solid,var(--surface)))}
 .baudg .bch.on b::before{color:var(--bac)}
-.kmfoot .ibtn{min-width:84px;padding:8px 12px 7px}.kmfoot .ibtn svg{width:22px;height:22px}
+.kmfoot .ibtn{min-width:0;max-width:none;padding:4px 10px;gap:2px;border-radius:10px}.kmfoot .ibtn svg{width:15px;height:15px}.kmfoot .ibtn span{font-size:11px}
 .kacts.ibtns{margin:0}
 .cdb>button.ghost.sm{justify-self:start}
 /* Standardized Content Brief: chip pilihan master, Vision/Mission, metrik otomatis, tombol ikon + keterangan */
@@ -4253,7 +4253,7 @@ const bEmpty=()=>({pillar:'',primary:'',cobj:'',sec:[],aud:{level:[],status:[],i
 const bNorm=x=>{const d=Object.assign(bEmpty(),JSON.parse(JSON.stringify(x||{})));d.aud=Object.assign(bEmpty().aud,d.aud||{});d.sec=Array.isArray(d.sec)?d.sec:[];d.refs=Array.isArray(d.refs)?d.refs:[];return d};
 function briefO(t){const b=t.brief||{};return{st:b.st||'draft',v:b.v||1,data:bNorm(b.data),ok:b.ok?Object.assign({},b.ok,{data:bNorm(b.ok.data)}):null,note:b.note||'',log:Array.isArray(b.log)?b.log:[],none:!t.brief}}
 const bPreset=(type,sub)=>briefCfg().presets[type==='evt'?(sub?'evt:'+sub:''):type];
-function bApply(d,type){const p=bPreset(type,d.evtSub);if(!p)return false;d.primary=p.p;d.sec=p.s.slice();d.km=p.km;d.hk=p.hk;d.ct=p.ct;if(!briefCfg().cobj.some(x=>x.id===d.cobj&&x.p===p.p))d.cobj='';return true}
+function bApply(d,type){const p=bPreset(type,d.evtSub);if(!p)return false;d.primary=p.p;d.sec=p.s.slice();if(type==='vrv'){d.km=p.km;d.hk=p.hk;d.ct=p.ct}if(!briefCfg().cobj.some(x=>x.id===d.cobj&&x.p===p.p))d.cobj='';return true}
 /* brief baru: rekomendasi awal dari preset jenis konten + isian lama kartu (Objective → Pillar, Hook, CTA) */
 function briefSeed(t){const b=briefO(t);if(!b.none)return bNorm(b.data);const d=bEmpty(),o=objOf(t);if(PILLARS.includes(o))d.pillar=o;else d.objective=o||'';d.hook=t.hook||'';d.cta=t.cta||'';bApply(d,t.type);return d}
 const briefNeed=t=>t.briefReq===true&&['igf','vpr','vrv','evt'].includes(t.type)&&!(t.brief&&t.brief.ok);
@@ -4264,12 +4264,12 @@ const bAct=x=>x&&x.a!==false;
 const bLib=(f,id)=>briefCfg()[f].find(x=>x.id===id);
 const bLibOk=(x,type,d)=>!!x&&bAct(x)&&x.t.includes(type)&&x.p.includes(d.primary)&&!(x.o&&x.o.length&&!x.o.includes(d.cobj));
 const bLbl=id=>{const c=briefCfg();const x=[...c.cobj,...c.km,...c.hk,...c.ct,...c.aud.flatMap(g=>g.o)].find(y=>y.id===id);return x?x.l:id};
-function briefMiss(d,type){const m=[];if(type==='evt'&&!d.evtSub)m.push('evtSub');['pillar','primary','cobj'].forEach(k=>{if(!d[k])m.push(k)});if(!AUD_K.some(k=>(d.aud[k]||[]).length))m.push('aud');['km','hk','ct','direction'].forEach(k=>{if(!String(d[k]||'').trim())m.push(k)});return m.map(k=>BF_LBL[k])}
+function briefMiss(d,type){const m=[];if(type==='evt'&&!d.evtSub)m.push('evtSub');['pillar','primary'].forEach(k=>{if(!d[k])m.push(k)});if(!AUD_K.some(k=>(d.aud[k]||[]).length))m.push('aud');(type==='vrv'?['km','hk','ct','direction']:['direction']).forEach(k=>{if(!String(d[k]||'').trim())m.push(k)});return m.map(k=>BF_LBL[k])}
 function briefCompat(d,type){const c=briefCfg(),w=[];const co=c.cobj.find(x=>x.id===d.cobj);
-  if(co&&(co.p!==d.primary||!bAct(co)))w.push('Content Objective "'+co.l+'" tidak sesuai Primary Objective'+(bAct(co)?'':' / nonaktif'));
+
   if(d.sec.includes(d.primary))w.push('Secondary Objective sama dengan Primary Objective');
   c.aud.forEach(g=>(d.aud[g.k]||[]).forEach(id=>{const q=g.o.find(x=>x.id===id);if(q&&!bAct(q))w.push(g.l+' "'+q.l+'" nonaktif')}));
-  ['km','hk','ct'].forEach(f=>{const x=bLib(f,d[f]);if(x&&!bLibOk(x,type,d))w.push(BF_LBL[f]+' "'+x.l+'" tidak cocok dengan jenis konten / objective')});return w}
+  if(type==='vrv')['km','hk','ct'].forEach(f=>{const x=bLib(f,d[f]);if(x&&!bLibOk(x,type,d))w.push(BF_LBL[f]+' "'+x.l+'" tidak cocok dengan jenis konten / objective')});return w}
 /* metrik otomatis: nilai dari snapshot CPR (tab CPR) bila ada; selain itu Not Available / menunggu checkpoint */
 function bMetVal(t,k,cp){const s=S.cpr&&cprSnap(t.id,cp),Q=S.cpr?cprList('q_').filter(x=>x.taskId===t.id):[],O=S.cpr?cprList('o_').filter(x=>x.taskId===t.id&&x.kind!=='Unknown'):[];
   const n=v=>v==null?null:Number(v);
@@ -4296,7 +4296,7 @@ Object.assign(BIC,{x:'<path d="M18 6 6 18M6 6l12 12"/>',pause:'<rect x="6" y="5"
   doc:'<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>',upload:'<path d="M12 16V4M7 9l5-5 5 5"/><path d="M4 16v3a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-3"/>',target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
   chart:'<path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/>',clock:'<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>',users:'<circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2a5 5 0 0 1 5.5 5.8"/>',
   msg:'<path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/>',compass:'<circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5z"/>',star:'<path d="m12 3 2.8 5.8 6.2.9-4.5 4.4 1 6.3L12 17.5 6.5 20.4l1-6.3L3 9.7l6.2-.9z"/>',shield:'<path d="M12 3l7 3v5c0 4.5-3 8.5-7 10-4-1.5-7-5.5-7-10V6z"/><path d="m9 12 2 2 4-4"/>',
-  tag:'<path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"/><circle cx="7.5" cy="7.5" r="1.5"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>'});
+  tag:'<path d="M3 12V4a1 1 0 0 1 1-1h8l9 9-9 9z"/><circle cx="7.5" cy="7.5" r="1.5"/>',user:'<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/>',brush:'<path d="M18.4 2.6a2 2 0 0 1 2.8 2.8L11 15.6 8.4 13z"/><path d="M8 14c-2 0-3.5 1.5-3.5 3.5 0 1.2-.8 2-2 2.5 4.5 1.5 8-1 8-4z"/>',image:'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="2"/><path d="m21 16-5-5-9 9"/>',okb:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>'});
 const bic=k=>'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+BIC[k]+'</svg>';
 /* judul bagian besar dengan ikon */
 const secH=(ic,l,extra)=>'<div class="cdsec"><span class="cdsi">'+bic(ic)+'</span><span>'+l+'</span>'+(extra||'')+'</div>';
@@ -4316,20 +4316,19 @@ function briefTab(t){if(!CPR_T.includes(t.type))return'<p class="status">Content
   if(ty==='evt')h+='<div class="bff"><span class="cdl">Subkategori Video event (VEV)</span><div class="bchs">'+EVT_SUB.map(([v,l])=>chip('evtSub',v,l,d.evtSub===v)).join('')+'</div></div>';
   h+='<div class="bff"><span class="cdl">Content Pillar <small class="muted">· pilih satu</small></span><div class="bfpil">'+PILLARS.map(p=>chip('pillar',p,p,d.pillar===p,PILLAR_D[p])).join('')+'</div></div>';
   h+='<div class="bff"><span class="cdl">Primary Objective <small class="muted">· tepat satu</small></span><div class="bchs">'+PRIMARY.map(([id,l])=>chip('primary',id,l,d.primary===id)).join('')+'</div></div>';
-  const CO=c.cobj.filter(x=>x.p===d.primary||x.id===d.cobj).map(x=>Object.assign({ok:x.p===d.primary&&bAct(x)},x));
-  h+='<div class="cdgrid"><label class="l full">Content Objective'+(d.primary?sel('cobj',CO,'Pilih Content Objective'):'<div class="cdro muted">Pilih Primary Objective dulu</div>')+(!d.cobj&&d.objective?'<small class="muted">Teks lama: '+esc(d.objective)+'</small>':'')+'</label></div>';
   h+='<div class="bff"><span class="cdl">Secondary Objectives <small class="muted">· opsional, maks. 2, tidak sama dengan Primary</small></span><div class="bchs">'+PRIMARY.map(([id,l])=>chip('sec',id,l,d.sec.includes(id),'',id===d.primary||(!d.sec.includes(id)&&d.sec.length>=2))).join('')+'</div></div>';
   /* 2. Target Audience */
   h+=secH('users','Target Audience')+'<div class="baud">'+c.aud.map(g=>{const on=d.aud[g.k]||[];return'<div class="bff baudg ba-'+g.k+'"><span class="baudh">'+esc(g.l)+'</span><div class="bchs">'+g.o.filter(x=>bAct(x)||on.includes(x.id)).map(x=>chip('aud:'+g.k,x.id,x.l+(bAct(x)?'':' (nonaktif)'),on.includes(x.id))).join('')+'</div></div>'}).join('')+'</div>';
   if(d.audience&&!AUD_K.some(k=>d.aud[k].length))h+='<p class="muted" style="margin:0">Teks lama: '+esc(d.audience)+'</p>';
   /* 3. Pesan */
-  h+=secH('msg','Key Message, Hook & CTA')+'<p class="cprnote" style="margin:0">Satu pesan utama, pendekatan pembuka, dan tindakan audiens. Jangan menulis klaim spesifikasi, harga, promo, atau hasil pemakaian tanpa data terverifikasi.</p><div class="cdgrid">';
+  if(ty==='vrv'){h+=secH('msg','Key Message, Hook & CTA')+'<p class="cprnote" style="margin:0">Satu pesan utama, pendekatan pembuka, dan tindakan audiens. Jangan menulis klaim spesifikasi, harga, promo, atau hasil pemakaian tanpa data terverifikasi.</p><div class="cdgrid">';
   [['km','Key Message','message'],['hk','Hook','hook'],['ct','CTA','cta']].forEach(([f,l,tx])=>{const L=c[f].map(x=>Object.assign({ok:bLibOk(x,ty,d)},x)),cx=bLib(f,d[f]);
     h+='<label class="l">'+l+(d.primary?sel(f,L,'Pilih '+l):'<div class="cdro muted">Pilih Primary Objective dulu</div>')+(cx&&cx.d?'<small class="muted">'+esc(cx.d)+'</small>':'')+(d.primary&&!L.some(x=>x.ok)?'<small class="muted">Belum ada pilihan '+l+' untuk objective ini. Admin bisa menambah di CPR › Master Brief.</small>':'')+'</label>'});
-  h+='</div><div class="cdgrid">'+BF_TXT.filter(x=>ty==='vrv'||x[0]==='direction').map(([k,l,max,ph,rows])=>can?'<label class="l'+(rows>1?' full':'')+'">'+l+(rows>1?'<textarea class="note" data-bf="'+k+'" maxlength="'+max+'" rows="'+rows+'" placeholder="'+esc(ph)+'">'+esc(d[k])+'</textarea>':'<input data-bf="'+k+'" maxlength="'+max+'" placeholder="'+esc(ph)+'" value="'+esc(d[k])+'">')+'</label>'
-    :'<div class="l'+(rows>1?' full':'')+'"><span class="cdl">'+l+'</span><div class="cdro">'+(esc(d[k])||'<span class="muted">—</span>')+'</div></div>').join('')+'</div>';
+  h+='</div><div class="cdgrid">'+BF_TXT.filter(x=>x[0]!=='direction').map(([k,l,max,ph,rows])=>can?'<label class="l'+(rows>1?' full':'')+'">'+l+(rows>1?'<textarea class="note" data-bf="'+k+'" maxlength="'+max+'" rows="'+rows+'" placeholder="'+esc(ph)+'">'+esc(d[k])+'</textarea>':'<input data-bf="'+k+'" maxlength="'+max+'" placeholder="'+esc(ph)+'" value="'+esc(d[k])+'">')+'</label>'
+    :'<div class="l'+(rows>1?' full':'')+'"><span class="cdl">'+l+'</span><div class="cdro">'+(esc(d[k])||'<span class="muted">—</span>')+'</div></div>').join('')+'</div>'}
+  h+=secH('brush','Creative Direction')+(can?'<textarea class="note" data-bf="direction" maxlength="1500" rows="3" placeholder="Gaya visual, lokasi, angle, durasi, musik, talent">'+esc(d.direction)+'</textarea>':'<div class="cdro">'+(esc(d.direction)||'<span class="muted">—</span>')+'</div>');
   const R=d.refs;
-  h+='<div class="bff"><span class="cdl">Referensi visual</span>'+(R.length?'<ul class="bfrefs">'+R.map((u,i)=>'<li><a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(u.replace(/^https:\/\//,''))+'</a>'+(can?'<button type="button" class="ghost sm" data-bfrm="'+i+'" aria-label="Hapus referensi">✕</button>':'')+'</li>').join('')+'</ul>':'<p class="muted" style="margin:0">Belum ada referensi.</p>')+
+  h+=secH('image','Referensi visual')+'<div class="bff">'+(R.length?'<ul class="bfrefs">'+R.map((u,i)=>'<li><a href="'+esc(u)+'" target="_blank" rel="noopener">'+esc(u.replace(/^https:\/\//,''))+'</a>'+(can?'<button type="button" class="ghost sm" data-bfrm="'+i+'" aria-label="Hapus referensi">✕</button>':'')+'</li>').join('')+'</ul>':'<p class="muted" style="margin:0">Belum ada referensi.</p>')+
     (can&&R.length<8?'<div class="bfadd"><input type="url" inputmode="url" id="bfRef" maxlength="500" placeholder="https://… (Instagram, Pinterest, Drive)"><button type="button" class="ghost sm" data-bfadd>Tambah</button></div>':'')+'</div>';
   /* 4. Metrik */
   h+=secH('chart','Performance Metrics (otomatis)')+briefMetrics(t,d);
@@ -4346,6 +4345,7 @@ function briefTab(t){if(!CPR_T.includes(t.type))return'<p class="status">Content
   return'<section class="bft">'+h+'</section>'}
 function qaChip(t){if(!CPR_T.includes(t.type)||t.status==='Tayang')return'';let h='';
   if(IDX[t.status]===0&&briefNeed(t)){const b=briefO(t);h+='<span class="chip ichip'+(b.st==='revisi'?' bad':' warn')+'" title="Content Brief">'+bic('doc')+(b.st==='submitted'?'Brief menunggu':b.st==='revisi'?'Brief revisi':'Brief belum disetujui')+'</span>'}
+  if(t.brief&&t.brief.ok)h+='<span class="chip ichip good" title="Content Brief disetujui '+esc(t.brief.ok.by||'')+'">'+bic('okb')+'Brief disetujui</span>';
   if(!t.cprId)return h;const s=qaStat(t);if(s==='none'&&!['Editing','Ready'].includes(t.status))return h;
   return h+'<span class="chip ichip '+QS[s][1]+'" title="Creative Review">'+bic('shield')+(s==='none'?'Perlu review':'Review: '+QS[s][0])+'</span>'}
 /* true = dihentikan (QA belum Approved / brief belum disetujui) */
@@ -4491,15 +4491,14 @@ function cardDetail(t){const adm=S.isAdmin,exp=isExpired(t);const canNote=adm||(
   const area=(act,l,ph,can)=>can?'<label class="l">'+l+'<textarea class="note" data-act="'+act+'" maxlength="1000" placeholder="'+ph+'">'+esc(t[act]||'')+'</textarea></label>':ro(l,esc(t[act]||''));
   const cd=createdDay(t);const tm=t.postTime||timeOf(t);
   let g=ro('Judul konten',esc(t.title),true)+ro('Jenis konten',tyIc(t.type)+esc(TYPES[t.type].label))+(!isC?'':
-    txt('campaignId','Campaign ID','CMP-PYD-2611',canCr)+txt('productSku','Product SKU / Product ID','SKU inventaris',canCr))+
+    txt('productSku','Product SKU / Product ID','SKU inventaris',canCr))+
     sel('producer',t.producer)+sel('editor',t.editor)+((HAS_TALENT(t.type)||t.talent)?sel('talent',t.talent||'',true):'')+((HAS_SCRIPT(t.type)||t.script)?sel('script',t.script||'',true):'')+
     (isC?sel('reviewer',t.reviewer||'',true):'')+ro('Tanggal brief',cd?esc(fmt(cd)):'');
   if(IDX[t.status]<IDX['Ready'])g+=adm?'<label class="l">Deadline Ready<input type="date" data-act="readyBy" value="'+esc(dueOf(t))+'"'+dOnly+'></label>':ro('Deadline Ready',fileDue(t)?esc(fmt(fileDue(t))):'');
   if(IDX[t.status]<=0)g+=adm?'<label class="l">Rencana syuting<input type="date" data-act="shootPlan" value="'+esc(t.shootPlan||'')+'"'+dOnly+'></label>':ro('Rencana syuting',t.shootPlan?esc(fmt(t.shootPlan)):'');
   if(showPost)g+=adm?'<label class="l">'+(t.sugg?'Jadwal tayang (saran '+esc(fmt(t.suggAt))+')':'Jadwal tayang')+'<input type="date" data-act="postAt" value="'+esc(t.postAt||'')+'"></label><label class="l">Jam tayang<select data-act="postTime"><option value="">Otomatis'+(t.postTime?'':(timeOf(t)?' ('+fmtTime(timeOf(t))+')':''))+'</option>'+SLOT_TIMES[kindOf(t.type)].map(x=>'<option value="'+x+'"'+(x===t.postTime?' selected':'')+'>'+fmtTime(x)+'</option>').join('')+'</select></label>'
     :ro(t.sugg?'Saran tayang':'Jadwal tayang',(t.sugg?t.suggAt:t.postAt)?esc(fmt(t.sugg?t.suggAt:t.postAt))+(tm?' · '+fmtTime(tm):''):'');
-  if(isC)g+=(canCr?'<label class="l">Platform<select data-act="platform">'+PLATFORMS.map(p=>'<option'+(p===(t.platform||'Instagram')?' selected':'')+'>'+p+'</option>').join('')+'</select></label>':ro('Platform',esc(t.platform||'Instagram')))+
-    txt('postUrl','URL posting','https://www.instagram.com/p/...',canCr,1);   /* Hook, CTA, dan Objective pindah ke tab Content Brief (21 Nov 2026) */
+  /* Campaign ID, Platform, URL posting dihapus dari Detail kartu (permintaan Zaki 21 Nov 2026; data lama tetap tersimpan) */
   const sec=(ic,h,b)=>b?secH(ic,h)+b:'';
   const bd=isC?(S.briefDraft[t.id]||briefSeed(t)):{};
   const objH=!isC?'':'<div class="cdgrid">'+ro('Content Pillar',esc(bd.pillar||''))+ro('Primary Objective',esc(PRI_L[bd.primary]||''))+'</div><button type="button" class="ghost sm" data-kmtab="brief">Ubah di Content Brief</button>';
