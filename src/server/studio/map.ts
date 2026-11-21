@@ -43,7 +43,7 @@ export function itemFromDoc(d: Doc) {
 }
 
 // ---------- tasks ----------
-const TASK_STR = ["type", "title", "cat", "status", "source", "reason", "producer", "editor", "talent", "script", "shootPlan", "editPlan", "postAt", "postTime", "due", "target", "shotAt", "readyAt", "driveUrl", "caption", "srcDesc", "note", "eventKey", "readyBy"] as const;
+const TASK_STR = ["type", "title", "cat", "status", "source", "reason", "producer", "editor", "talent", "script", "shootPlan", "editPlan", "postAt", "postTime", "due", "target", "shotAt", "readyAt", "driveUrl", "caption", "srcDesc", "note", "eventKey", "readyBy", "cprId"] as const;
 const TASK_KEYS = [...TASK_STR, "itemId", "locked", "checked", "metaAt", "history", "createdAt", "updatedAt"];
 type TaskRow = Record<(typeof TASK_STR)[number], string | null> & { itemId: string | null; locked: boolean; checked: boolean; metaAt: Date | null; history: unknown; extra: unknown; createdAt: Date; updatedAt: Date };
 export function taskToDoc(r: TaskRow): Doc {

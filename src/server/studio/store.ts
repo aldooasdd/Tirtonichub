@@ -13,6 +13,7 @@ import { canRead, canWrite, type Doc, type StudioUser } from "./rules";
 import { loadAccess } from "./access";
 import * as M from "./map";
 import { nextPlanLog } from "./plan-log";
+import { cprIdOf, cprYymm, needsCpr, nextQa, qaBlocks } from "./cpr";
 
 export class StudioError extends Error {
   constructor(public code: "permission-denied" | "not-found" | "invalid-argument" | "failed-precondition", msg: string) {
@@ -145,8 +146,22 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
     // antrean WA editor (editNotif) juga milik server
     if (before?.editNotif !== undefined) after.editNotif = before.editNotif;
     else delete after.editNotif;
+    // CPR (cpr.ts): Content ID, tanda wajib QA, dan hasil QA milik server. Klien hanya mengirim perintah qaAct.
+    for (const k of ["cprId", "qaReq", "qa"]) {
+      if (before?.[k] !== undefined && before[k] !== "") after[k] = before[k];
+      else delete after[k];
+    }
+    const qaAct = after.qaAct;
+    delete after.qaAct;
+    if (qaAct !== undefined) {
+      if (!before) throw new StudioError("invalid-argument", "QA hanya untuk kartu yang sudah ada.");
+      const q = nextQa(before.qa, qaAct, after, u);
+      if (typeof q === "string") throw new StudioError("permission-denied", "Tidak diizinkan: " + q + ".");
+      after.qa = q;
+    }
+    if (!before && needsCpr(after.type)) after.qaReq = true; // kartu baru: wajib QA sebelum Tayang/Meta
   }
-  const why = opts.trusted ? null : canWrite(u, op, path, before, after); // trusted: hanya skrip impor di server
+  const why = opts.trusted ? null : canWrite(u, op, path, before, after) ?? (col === "tasks" && after ? qaBlocks(before, after) : null); // trusted: hanya skrip impor di server
   if (why) throw new StudioError("permission-denied", "Tidak diizinkan: " + why + ".");
   if (!opts.trusted && (col === "folders" || col === "docs" || col === "assets")) await checkFileAccess(u, col, id, before, after);
 
@@ -206,6 +221,8 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
         if (pend) after.editNotif = pend;
         else delete after.editNotif;
       }
+      // Content ID permanen untuk kartu baru (nomor urut global per bulan, atomik di database)
+      if (!before && !opts.trusted && needsCpr(after.type) && !after.cprId) after.cprId = await allocCprId(String(after.type));
       const { row, itemId } = M.taskFromDoc(after);
       const okItem = itemId ? !!(await prisma.mediaItem.findUnique({ where: { id: itemId }, select: { id: true } })) : false;
       const data = { ...row, itemId: okItem ? itemId : null, extra: json(row.extra), history: row.history === undefined ? undefined : json(row.history) } as Prisma.MediaTaskUncheckedCreateInput;
@@ -252,6 +269,13 @@ export async function writeDoc(u: StudioUser, op: "set" | "update" | "delete", p
   }
   await prisma.studioTombstone.deleteMany({ where: { path } });
   return getRaw(path);
+}
+
+/** Nomor Content ID berikutnya: satu perintah SQL atomik, aman bila dua orang membuat kartu bersamaan. Nomor tidak pernah dipakai ulang. */
+async function allocCprId(type: string): Promise<string> {
+  const yymm = cprYymm();
+  const r = await prisma.$queryRaw<{ last: number }[]>`INSERT INTO "CprCounter" ("month", "last") VALUES (${yymm}, 1) ON CONFLICT ("month") DO UPDATE SET "last" = "CprCounter"."last" + 1 RETURNING "last"`;
+  return cprIdOf(type, yymm, Number(r[0].last));
 }
 
 async function removeDoc(col: string, id: string, sub: string | undefined, subId: string | undefined, path: string) {

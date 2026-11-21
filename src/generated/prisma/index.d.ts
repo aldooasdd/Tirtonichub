@@ -277,6 +277,11 @@ export type DemoPhoto = $Result.DefaultSelection<Prisma.$DemoPhotoPayload>
  * Stiker RFID UHF ↔ SKU barang (Pasangkan Tag). epc = kode unik bawaan stiker (UCODE 9).
  */
 export type RfidTag = $Result.DefaultSelection<Prisma.$RfidTagPayload>
+/**
+ * Model CprCounter
+ * CPR: nomor urut Content ID per bulan (YYMM), global lintas jenis. Ditambah atomik oleh store.ts allocCprId.
+ */
+export type CprCounter = $Result.DefaultSelection<Prisma.$CprCounterPayload>
 
 /**
  * Enums
@@ -1038,6 +1043,16 @@ export class PrismaClient<
     * ```
     */
   get rfidTag(): Prisma.RfidTagDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.cprCounter`: Exposes CRUD operations for the **CprCounter** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more CprCounters
+    * const cprCounters = await prisma.cprCounter.findMany()
+    * ```
+    */
+  get cprCounter(): Prisma.CprCounterDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1530,7 +1545,8 @@ export namespace Prisma {
     PosCampaign: 'PosCampaign',
     SkuCheck: 'SkuCheck',
     DemoPhoto: 'DemoPhoto',
-    RfidTag: 'RfidTag'
+    RfidTag: 'RfidTag',
+    CprCounter: 'CprCounter'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1549,7 +1565,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -5401,6 +5417,80 @@ export namespace Prisma {
           }
         }
       }
+      CprCounter: {
+        payload: Prisma.$CprCounterPayload<ExtArgs>
+        fields: Prisma.CprCounterFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.CprCounterFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CprCounterPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.CprCounterFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CprCounterPayload>
+          }
+          findFirst: {
+            args: Prisma.CprCounterFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CprCounterPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.CprCounterFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CprCounterPayload>
+          }
+          findMany: {
+            args: Prisma.CprCounterFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CprCounterPayload>[]
+          }
+          create: {
+            args: Prisma.CprCounterCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CprCounterPayload>
+          }
+          createMany: {
+            args: Prisma.CprCounterCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.CprCounterCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CprCounterPayload>[]
+          }
+          delete: {
+            args: Prisma.CprCounterDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CprCounterPayload>
+          }
+          update: {
+            args: Prisma.CprCounterUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CprCounterPayload>
+          }
+          deleteMany: {
+            args: Prisma.CprCounterDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.CprCounterUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.CprCounterUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CprCounterPayload>[]
+          }
+          upsert: {
+            args: Prisma.CprCounterUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$CprCounterPayload>
+          }
+          aggregate: {
+            args: Prisma.CprCounterAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateCprCounter>
+          }
+          groupBy: {
+            args: Prisma.CprCounterGroupByArgs<ExtArgs>
+            result: $Utils.Optional<CprCounterGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.CprCounterCountArgs<ExtArgs>
+            result: $Utils.Optional<CprCounterCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -5549,6 +5639,7 @@ export namespace Prisma {
     skuCheck?: SkuCheckOmit
     demoPhoto?: DemoPhotoOmit
     rfidTag?: RfidTagOmit
+    cprCounter?: CprCounterOmit
   }
 
   /* Types for Logging */
@@ -46953,6 +47044,7 @@ export namespace Prisma {
     note: string | null
     eventKey: string | null
     readyBy: string | null
+    cprId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -46987,6 +47079,7 @@ export namespace Prisma {
     note: string | null
     eventKey: string | null
     readyBy: string | null
+    cprId: string | null
     createdAt: Date | null
     updatedAt: Date | null
   }
@@ -47022,6 +47115,7 @@ export namespace Prisma {
     history: number
     eventKey: number
     readyBy: number
+    cprId: number
     extra: number
     createdAt: number
     updatedAt: number
@@ -47059,6 +47153,7 @@ export namespace Prisma {
     note?: true
     eventKey?: true
     readyBy?: true
+    cprId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -47093,6 +47188,7 @@ export namespace Prisma {
     note?: true
     eventKey?: true
     readyBy?: true
+    cprId?: true
     createdAt?: true
     updatedAt?: true
   }
@@ -47128,6 +47224,7 @@ export namespace Prisma {
     history?: true
     eventKey?: true
     readyBy?: true
+    cprId?: true
     extra?: true
     createdAt?: true
     updatedAt?: true
@@ -47237,6 +47334,7 @@ export namespace Prisma {
     history: JsonValue | null
     eventKey: string | null
     readyBy: string | null
+    cprId: string | null
     extra: JsonValue | null
     createdAt: Date
     updatedAt: Date
@@ -47290,6 +47388,7 @@ export namespace Prisma {
     history?: boolean
     eventKey?: boolean
     readyBy?: boolean
+    cprId?: boolean
     extra?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -47327,6 +47426,7 @@ export namespace Prisma {
     history?: boolean
     eventKey?: boolean
     readyBy?: boolean
+    cprId?: boolean
     extra?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -47364,6 +47464,7 @@ export namespace Prisma {
     history?: boolean
     eventKey?: boolean
     readyBy?: boolean
+    cprId?: boolean
     extra?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -47401,12 +47502,13 @@ export namespace Prisma {
     history?: boolean
     eventKey?: boolean
     readyBy?: boolean
+    cprId?: boolean
     extra?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type MediaTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "type" | "title" | "cat" | "status" | "source" | "reason" | "producer" | "editor" | "talent" | "script" | "shootPlan" | "editPlan" | "postAt" | "postTime" | "due" | "target" | "shotAt" | "readyAt" | "locked" | "checked" | "metaAt" | "driveUrl" | "caption" | "srcDesc" | "note" | "history" | "eventKey" | "readyBy" | "extra" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaTask"]>
+  export type MediaTaskOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "itemId" | "type" | "title" | "cat" | "status" | "source" | "reason" | "producer" | "editor" | "talent" | "script" | "shootPlan" | "editPlan" | "postAt" | "postTime" | "due" | "target" | "shotAt" | "readyAt" | "locked" | "checked" | "metaAt" | "driveUrl" | "caption" | "srcDesc" | "note" | "history" | "eventKey" | "readyBy" | "cprId" | "extra" | "createdAt" | "updatedAt", ExtArgs["result"]["mediaTask"]>
   export type MediaTaskInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     item?: boolean | MediaTask$itemArgs<ExtArgs>
   }
@@ -47453,6 +47555,7 @@ export namespace Prisma {
       history: Prisma.JsonValue | null
       eventKey: string | null
       readyBy: string | null
+      cprId: string | null
       extra: Prisma.JsonValue | null
       createdAt: Date
       updatedAt: Date
@@ -47910,6 +48013,7 @@ export namespace Prisma {
     readonly history: FieldRef<"MediaTask", 'Json'>
     readonly eventKey: FieldRef<"MediaTask", 'String'>
     readonly readyBy: FieldRef<"MediaTask", 'String'>
+    readonly cprId: FieldRef<"MediaTask", 'String'>
     readonly extra: FieldRef<"MediaTask", 'Json'>
     readonly createdAt: FieldRef<"MediaTask", 'DateTime'>
     readonly updatedAt: FieldRef<"MediaTask", 'DateTime'>
@@ -64758,6 +64862,996 @@ export namespace Prisma {
 
 
   /**
+   * Model CprCounter
+   */
+
+  export type AggregateCprCounter = {
+    _count: CprCounterCountAggregateOutputType | null
+    _avg: CprCounterAvgAggregateOutputType | null
+    _sum: CprCounterSumAggregateOutputType | null
+    _min: CprCounterMinAggregateOutputType | null
+    _max: CprCounterMaxAggregateOutputType | null
+  }
+
+  export type CprCounterAvgAggregateOutputType = {
+    last: number | null
+  }
+
+  export type CprCounterSumAggregateOutputType = {
+    last: number | null
+  }
+
+  export type CprCounterMinAggregateOutputType = {
+    month: string | null
+    last: number | null
+  }
+
+  export type CprCounterMaxAggregateOutputType = {
+    month: string | null
+    last: number | null
+  }
+
+  export type CprCounterCountAggregateOutputType = {
+    month: number
+    last: number
+    _all: number
+  }
+
+
+  export type CprCounterAvgAggregateInputType = {
+    last?: true
+  }
+
+  export type CprCounterSumAggregateInputType = {
+    last?: true
+  }
+
+  export type CprCounterMinAggregateInputType = {
+    month?: true
+    last?: true
+  }
+
+  export type CprCounterMaxAggregateInputType = {
+    month?: true
+    last?: true
+  }
+
+  export type CprCounterCountAggregateInputType = {
+    month?: true
+    last?: true
+    _all?: true
+  }
+
+  export type CprCounterAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CprCounter to aggregate.
+     */
+    where?: CprCounterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CprCounters to fetch.
+     */
+    orderBy?: CprCounterOrderByWithRelationInput | CprCounterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: CprCounterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CprCounters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CprCounters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned CprCounters
+    **/
+    _count?: true | CprCounterCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: CprCounterAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: CprCounterSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: CprCounterMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: CprCounterMaxAggregateInputType
+  }
+
+  export type GetCprCounterAggregateType<T extends CprCounterAggregateArgs> = {
+        [P in keyof T & keyof AggregateCprCounter]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateCprCounter[P]>
+      : GetScalarType<T[P], AggregateCprCounter[P]>
+  }
+
+
+
+
+  export type CprCounterGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: CprCounterWhereInput
+    orderBy?: CprCounterOrderByWithAggregationInput | CprCounterOrderByWithAggregationInput[]
+    by: CprCounterScalarFieldEnum[] | CprCounterScalarFieldEnum
+    having?: CprCounterScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: CprCounterCountAggregateInputType | true
+    _avg?: CprCounterAvgAggregateInputType
+    _sum?: CprCounterSumAggregateInputType
+    _min?: CprCounterMinAggregateInputType
+    _max?: CprCounterMaxAggregateInputType
+  }
+
+  export type CprCounterGroupByOutputType = {
+    month: string
+    last: number
+    _count: CprCounterCountAggregateOutputType | null
+    _avg: CprCounterAvgAggregateOutputType | null
+    _sum: CprCounterSumAggregateOutputType | null
+    _min: CprCounterMinAggregateOutputType | null
+    _max: CprCounterMaxAggregateOutputType | null
+  }
+
+  type GetCprCounterGroupByPayload<T extends CprCounterGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<CprCounterGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof CprCounterGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], CprCounterGroupByOutputType[P]>
+            : GetScalarType<T[P], CprCounterGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type CprCounterSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    month?: boolean
+    last?: boolean
+  }, ExtArgs["result"]["cprCounter"]>
+
+  export type CprCounterSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    month?: boolean
+    last?: boolean
+  }, ExtArgs["result"]["cprCounter"]>
+
+  export type CprCounterSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    month?: boolean
+    last?: boolean
+  }, ExtArgs["result"]["cprCounter"]>
+
+  export type CprCounterSelectScalar = {
+    month?: boolean
+    last?: boolean
+  }
+
+  export type CprCounterOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"month" | "last", ExtArgs["result"]["cprCounter"]>
+
+  export type $CprCounterPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "CprCounter"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      month: string
+      last: number
+    }, ExtArgs["result"]["cprCounter"]>
+    composites: {}
+  }
+
+  type CprCounterGetPayload<S extends boolean | null | undefined | CprCounterDefaultArgs> = $Result.GetResult<Prisma.$CprCounterPayload, S>
+
+  type CprCounterCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<CprCounterFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: CprCounterCountAggregateInputType | true
+    }
+
+  export interface CprCounterDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['CprCounter'], meta: { name: 'CprCounter' } }
+    /**
+     * Find zero or one CprCounter that matches the filter.
+     * @param {CprCounterFindUniqueArgs} args - Arguments to find a CprCounter
+     * @example
+     * // Get one CprCounter
+     * const cprCounter = await prisma.cprCounter.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends CprCounterFindUniqueArgs>(args: SelectSubset<T, CprCounterFindUniqueArgs<ExtArgs>>): Prisma__CprCounterClient<$Result.GetResult<Prisma.$CprCounterPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one CprCounter that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {CprCounterFindUniqueOrThrowArgs} args - Arguments to find a CprCounter
+     * @example
+     * // Get one CprCounter
+     * const cprCounter = await prisma.cprCounter.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends CprCounterFindUniqueOrThrowArgs>(args: SelectSubset<T, CprCounterFindUniqueOrThrowArgs<ExtArgs>>): Prisma__CprCounterClient<$Result.GetResult<Prisma.$CprCounterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CprCounter that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CprCounterFindFirstArgs} args - Arguments to find a CprCounter
+     * @example
+     * // Get one CprCounter
+     * const cprCounter = await prisma.cprCounter.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends CprCounterFindFirstArgs>(args?: SelectSubset<T, CprCounterFindFirstArgs<ExtArgs>>): Prisma__CprCounterClient<$Result.GetResult<Prisma.$CprCounterPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first CprCounter that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CprCounterFindFirstOrThrowArgs} args - Arguments to find a CprCounter
+     * @example
+     * // Get one CprCounter
+     * const cprCounter = await prisma.cprCounter.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends CprCounterFindFirstOrThrowArgs>(args?: SelectSubset<T, CprCounterFindFirstOrThrowArgs<ExtArgs>>): Prisma__CprCounterClient<$Result.GetResult<Prisma.$CprCounterPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more CprCounters that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CprCounterFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all CprCounters
+     * const cprCounters = await prisma.cprCounter.findMany()
+     * 
+     * // Get first 10 CprCounters
+     * const cprCounters = await prisma.cprCounter.findMany({ take: 10 })
+     * 
+     * // Only select the `month`
+     * const cprCounterWithMonthOnly = await prisma.cprCounter.findMany({ select: { month: true } })
+     * 
+     */
+    findMany<T extends CprCounterFindManyArgs>(args?: SelectSubset<T, CprCounterFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CprCounterPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a CprCounter.
+     * @param {CprCounterCreateArgs} args - Arguments to create a CprCounter.
+     * @example
+     * // Create one CprCounter
+     * const CprCounter = await prisma.cprCounter.create({
+     *   data: {
+     *     // ... data to create a CprCounter
+     *   }
+     * })
+     * 
+     */
+    create<T extends CprCounterCreateArgs>(args: SelectSubset<T, CprCounterCreateArgs<ExtArgs>>): Prisma__CprCounterClient<$Result.GetResult<Prisma.$CprCounterPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many CprCounters.
+     * @param {CprCounterCreateManyArgs} args - Arguments to create many CprCounters.
+     * @example
+     * // Create many CprCounters
+     * const cprCounter = await prisma.cprCounter.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends CprCounterCreateManyArgs>(args?: SelectSubset<T, CprCounterCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many CprCounters and returns the data saved in the database.
+     * @param {CprCounterCreateManyAndReturnArgs} args - Arguments to create many CprCounters.
+     * @example
+     * // Create many CprCounters
+     * const cprCounter = await prisma.cprCounter.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many CprCounters and only return the `month`
+     * const cprCounterWithMonthOnly = await prisma.cprCounter.createManyAndReturn({
+     *   select: { month: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends CprCounterCreateManyAndReturnArgs>(args?: SelectSubset<T, CprCounterCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CprCounterPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a CprCounter.
+     * @param {CprCounterDeleteArgs} args - Arguments to delete one CprCounter.
+     * @example
+     * // Delete one CprCounter
+     * const CprCounter = await prisma.cprCounter.delete({
+     *   where: {
+     *     // ... filter to delete one CprCounter
+     *   }
+     * })
+     * 
+     */
+    delete<T extends CprCounterDeleteArgs>(args: SelectSubset<T, CprCounterDeleteArgs<ExtArgs>>): Prisma__CprCounterClient<$Result.GetResult<Prisma.$CprCounterPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one CprCounter.
+     * @param {CprCounterUpdateArgs} args - Arguments to update one CprCounter.
+     * @example
+     * // Update one CprCounter
+     * const cprCounter = await prisma.cprCounter.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends CprCounterUpdateArgs>(args: SelectSubset<T, CprCounterUpdateArgs<ExtArgs>>): Prisma__CprCounterClient<$Result.GetResult<Prisma.$CprCounterPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more CprCounters.
+     * @param {CprCounterDeleteManyArgs} args - Arguments to filter CprCounters to delete.
+     * @example
+     * // Delete a few CprCounters
+     * const { count } = await prisma.cprCounter.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends CprCounterDeleteManyArgs>(args?: SelectSubset<T, CprCounterDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CprCounters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CprCounterUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many CprCounters
+     * const cprCounter = await prisma.cprCounter.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends CprCounterUpdateManyArgs>(args: SelectSubset<T, CprCounterUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more CprCounters and returns the data updated in the database.
+     * @param {CprCounterUpdateManyAndReturnArgs} args - Arguments to update many CprCounters.
+     * @example
+     * // Update many CprCounters
+     * const cprCounter = await prisma.cprCounter.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more CprCounters and only return the `month`
+     * const cprCounterWithMonthOnly = await prisma.cprCounter.updateManyAndReturn({
+     *   select: { month: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends CprCounterUpdateManyAndReturnArgs>(args: SelectSubset<T, CprCounterUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$CprCounterPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one CprCounter.
+     * @param {CprCounterUpsertArgs} args - Arguments to update or create a CprCounter.
+     * @example
+     * // Update or create a CprCounter
+     * const cprCounter = await prisma.cprCounter.upsert({
+     *   create: {
+     *     // ... data to create a CprCounter
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the CprCounter we want to update
+     *   }
+     * })
+     */
+    upsert<T extends CprCounterUpsertArgs>(args: SelectSubset<T, CprCounterUpsertArgs<ExtArgs>>): Prisma__CprCounterClient<$Result.GetResult<Prisma.$CprCounterPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of CprCounters.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CprCounterCountArgs} args - Arguments to filter CprCounters to count.
+     * @example
+     * // Count the number of CprCounters
+     * const count = await prisma.cprCounter.count({
+     *   where: {
+     *     // ... the filter for the CprCounters we want to count
+     *   }
+     * })
+    **/
+    count<T extends CprCounterCountArgs>(
+      args?: Subset<T, CprCounterCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], CprCounterCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a CprCounter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CprCounterAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends CprCounterAggregateArgs>(args: Subset<T, CprCounterAggregateArgs>): Prisma.PrismaPromise<GetCprCounterAggregateType<T>>
+
+    /**
+     * Group by CprCounter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {CprCounterGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends CprCounterGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: CprCounterGroupByArgs['orderBy'] }
+        : { orderBy?: CprCounterGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, CprCounterGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetCprCounterGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the CprCounter model
+   */
+  readonly fields: CprCounterFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for CprCounter.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__CprCounterClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the CprCounter model
+   */
+  interface CprCounterFieldRefs {
+    readonly month: FieldRef<"CprCounter", 'String'>
+    readonly last: FieldRef<"CprCounter", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * CprCounter findUnique
+   */
+  export type CprCounterFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CprCounter
+     */
+    select?: CprCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CprCounter
+     */
+    omit?: CprCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which CprCounter to fetch.
+     */
+    where: CprCounterWhereUniqueInput
+  }
+
+  /**
+   * CprCounter findUniqueOrThrow
+   */
+  export type CprCounterFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CprCounter
+     */
+    select?: CprCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CprCounter
+     */
+    omit?: CprCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which CprCounter to fetch.
+     */
+    where: CprCounterWhereUniqueInput
+  }
+
+  /**
+   * CprCounter findFirst
+   */
+  export type CprCounterFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CprCounter
+     */
+    select?: CprCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CprCounter
+     */
+    omit?: CprCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which CprCounter to fetch.
+     */
+    where?: CprCounterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CprCounters to fetch.
+     */
+    orderBy?: CprCounterOrderByWithRelationInput | CprCounterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CprCounters.
+     */
+    cursor?: CprCounterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CprCounters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CprCounters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CprCounters.
+     */
+    distinct?: CprCounterScalarFieldEnum | CprCounterScalarFieldEnum[]
+  }
+
+  /**
+   * CprCounter findFirstOrThrow
+   */
+  export type CprCounterFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CprCounter
+     */
+    select?: CprCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CprCounter
+     */
+    omit?: CprCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which CprCounter to fetch.
+     */
+    where?: CprCounterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CprCounters to fetch.
+     */
+    orderBy?: CprCounterOrderByWithRelationInput | CprCounterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for CprCounters.
+     */
+    cursor?: CprCounterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CprCounters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CprCounters.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of CprCounters.
+     */
+    distinct?: CprCounterScalarFieldEnum | CprCounterScalarFieldEnum[]
+  }
+
+  /**
+   * CprCounter findMany
+   */
+  export type CprCounterFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CprCounter
+     */
+    select?: CprCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CprCounter
+     */
+    omit?: CprCounterOmit<ExtArgs> | null
+    /**
+     * Filter, which CprCounters to fetch.
+     */
+    where?: CprCounterWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of CprCounters to fetch.
+     */
+    orderBy?: CprCounterOrderByWithRelationInput | CprCounterOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing CprCounters.
+     */
+    cursor?: CprCounterWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` CprCounters from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` CprCounters.
+     */
+    skip?: number
+    distinct?: CprCounterScalarFieldEnum | CprCounterScalarFieldEnum[]
+  }
+
+  /**
+   * CprCounter create
+   */
+  export type CprCounterCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CprCounter
+     */
+    select?: CprCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CprCounter
+     */
+    omit?: CprCounterOmit<ExtArgs> | null
+    /**
+     * The data needed to create a CprCounter.
+     */
+    data: XOR<CprCounterCreateInput, CprCounterUncheckedCreateInput>
+  }
+
+  /**
+   * CprCounter createMany
+   */
+  export type CprCounterCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many CprCounters.
+     */
+    data: CprCounterCreateManyInput | CprCounterCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CprCounter createManyAndReturn
+   */
+  export type CprCounterCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CprCounter
+     */
+    select?: CprCounterSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CprCounter
+     */
+    omit?: CprCounterOmit<ExtArgs> | null
+    /**
+     * The data used to create many CprCounters.
+     */
+    data: CprCounterCreateManyInput | CprCounterCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * CprCounter update
+   */
+  export type CprCounterUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CprCounter
+     */
+    select?: CprCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CprCounter
+     */
+    omit?: CprCounterOmit<ExtArgs> | null
+    /**
+     * The data needed to update a CprCounter.
+     */
+    data: XOR<CprCounterUpdateInput, CprCounterUncheckedUpdateInput>
+    /**
+     * Choose, which CprCounter to update.
+     */
+    where: CprCounterWhereUniqueInput
+  }
+
+  /**
+   * CprCounter updateMany
+   */
+  export type CprCounterUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update CprCounters.
+     */
+    data: XOR<CprCounterUpdateManyMutationInput, CprCounterUncheckedUpdateManyInput>
+    /**
+     * Filter which CprCounters to update
+     */
+    where?: CprCounterWhereInput
+    /**
+     * Limit how many CprCounters to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CprCounter updateManyAndReturn
+   */
+  export type CprCounterUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CprCounter
+     */
+    select?: CprCounterSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the CprCounter
+     */
+    omit?: CprCounterOmit<ExtArgs> | null
+    /**
+     * The data used to update CprCounters.
+     */
+    data: XOR<CprCounterUpdateManyMutationInput, CprCounterUncheckedUpdateManyInput>
+    /**
+     * Filter which CprCounters to update
+     */
+    where?: CprCounterWhereInput
+    /**
+     * Limit how many CprCounters to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * CprCounter upsert
+   */
+  export type CprCounterUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CprCounter
+     */
+    select?: CprCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CprCounter
+     */
+    omit?: CprCounterOmit<ExtArgs> | null
+    /**
+     * The filter to search for the CprCounter to update in case it exists.
+     */
+    where: CprCounterWhereUniqueInput
+    /**
+     * In case the CprCounter found by the `where` argument doesn't exist, create a new CprCounter with this data.
+     */
+    create: XOR<CprCounterCreateInput, CprCounterUncheckedCreateInput>
+    /**
+     * In case the CprCounter was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<CprCounterUpdateInput, CprCounterUncheckedUpdateInput>
+  }
+
+  /**
+   * CprCounter delete
+   */
+  export type CprCounterDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CprCounter
+     */
+    select?: CprCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CprCounter
+     */
+    omit?: CprCounterOmit<ExtArgs> | null
+    /**
+     * Filter which CprCounter to delete.
+     */
+    where: CprCounterWhereUniqueInput
+  }
+
+  /**
+   * CprCounter deleteMany
+   */
+  export type CprCounterDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which CprCounters to delete
+     */
+    where?: CprCounterWhereInput
+    /**
+     * Limit how many CprCounters to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * CprCounter without action
+   */
+  export type CprCounterDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the CprCounter
+     */
+    select?: CprCounterSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the CprCounter
+     */
+    omit?: CprCounterOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -65407,6 +66501,7 @@ export namespace Prisma {
     history: 'history',
     eventKey: 'eventKey',
     readyBy: 'readyBy',
+    cprId: 'cprId',
     extra: 'extra',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -65605,6 +66700,14 @@ export namespace Prisma {
   };
 
   export type RfidTagScalarFieldEnum = (typeof RfidTagScalarFieldEnum)[keyof typeof RfidTagScalarFieldEnum]
+
+
+  export const CprCounterScalarFieldEnum: {
+    month: 'month',
+    last: 'last'
+  };
+
+  export type CprCounterScalarFieldEnum = (typeof CprCounterScalarFieldEnum)[keyof typeof CprCounterScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -69036,6 +70139,7 @@ export namespace Prisma {
     history?: JsonNullableFilter<"MediaTask">
     eventKey?: StringNullableFilter<"MediaTask"> | string | null
     readyBy?: StringNullableFilter<"MediaTask"> | string | null
+    cprId?: StringNullableFilter<"MediaTask"> | string | null
     extra?: JsonNullableFilter<"MediaTask">
     createdAt?: DateTimeFilter<"MediaTask"> | Date | string
     updatedAt?: DateTimeFilter<"MediaTask"> | Date | string
@@ -69073,6 +70177,7 @@ export namespace Prisma {
     history?: SortOrderInput | SortOrder
     eventKey?: SortOrderInput | SortOrder
     readyBy?: SortOrderInput | SortOrder
+    cprId?: SortOrderInput | SortOrder
     extra?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -69081,6 +70186,7 @@ export namespace Prisma {
 
   export type MediaTaskWhereUniqueInput = Prisma.AtLeast<{
     id?: string
+    cprId?: string
     AND?: MediaTaskWhereInput | MediaTaskWhereInput[]
     OR?: MediaTaskWhereInput[]
     NOT?: MediaTaskWhereInput | MediaTaskWhereInput[]
@@ -69117,7 +70223,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"MediaTask"> | Date | string
     updatedAt?: DateTimeFilter<"MediaTask"> | Date | string
     item?: XOR<MediaItemNullableScalarRelationFilter, MediaItemWhereInput> | null
-  }, "id">
+  }, "id" | "cprId">
 
   export type MediaTaskOrderByWithAggregationInput = {
     id?: SortOrder
@@ -69150,6 +70256,7 @@ export namespace Prisma {
     history?: SortOrderInput | SortOrder
     eventKey?: SortOrderInput | SortOrder
     readyBy?: SortOrderInput | SortOrder
+    cprId?: SortOrderInput | SortOrder
     extra?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -69192,6 +70299,7 @@ export namespace Prisma {
     history?: JsonNullableWithAggregatesFilter<"MediaTask">
     eventKey?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
     readyBy?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
+    cprId?: StringNullableWithAggregatesFilter<"MediaTask"> | string | null
     extra?: JsonNullableWithAggregatesFilter<"MediaTask">
     createdAt?: DateTimeWithAggregatesFilter<"MediaTask"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"MediaTask"> | Date | string
@@ -70122,6 +71230,45 @@ export namespace Prisma {
     userId?: StringNullableWithAggregatesFilter<"RfidTag"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"RfidTag"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"RfidTag"> | Date | string
+  }
+
+  export type CprCounterWhereInput = {
+    AND?: CprCounterWhereInput | CprCounterWhereInput[]
+    OR?: CprCounterWhereInput[]
+    NOT?: CprCounterWhereInput | CprCounterWhereInput[]
+    month?: StringFilter<"CprCounter"> | string
+    last?: IntFilter<"CprCounter"> | number
+  }
+
+  export type CprCounterOrderByWithRelationInput = {
+    month?: SortOrder
+    last?: SortOrder
+  }
+
+  export type CprCounterWhereUniqueInput = Prisma.AtLeast<{
+    month?: string
+    AND?: CprCounterWhereInput | CprCounterWhereInput[]
+    OR?: CprCounterWhereInput[]
+    NOT?: CprCounterWhereInput | CprCounterWhereInput[]
+    last?: IntFilter<"CprCounter"> | number
+  }, "month">
+
+  export type CprCounterOrderByWithAggregationInput = {
+    month?: SortOrder
+    last?: SortOrder
+    _count?: CprCounterCountOrderByAggregateInput
+    _avg?: CprCounterAvgOrderByAggregateInput
+    _max?: CprCounterMaxOrderByAggregateInput
+    _min?: CprCounterMinOrderByAggregateInput
+    _sum?: CprCounterSumOrderByAggregateInput
+  }
+
+  export type CprCounterScalarWhereWithAggregatesInput = {
+    AND?: CprCounterScalarWhereWithAggregatesInput | CprCounterScalarWhereWithAggregatesInput[]
+    OR?: CprCounterScalarWhereWithAggregatesInput[]
+    NOT?: CprCounterScalarWhereWithAggregatesInput | CprCounterScalarWhereWithAggregatesInput[]
+    month?: StringWithAggregatesFilter<"CprCounter"> | string
+    last?: IntWithAggregatesFilter<"CprCounter"> | number
   }
 
   export type UserCreateInput = {
@@ -73754,6 +74901,7 @@ export namespace Prisma {
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
     readyBy?: string | null
+    cprId?: string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -73791,6 +74939,7 @@ export namespace Prisma {
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
     readyBy?: string | null
+    cprId?: string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -73826,6 +74975,7 @@ export namespace Prisma {
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
     readyBy?: NullableStringFieldUpdateOperationsInput | string | null
+    cprId?: NullableStringFieldUpdateOperationsInput | string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -73863,6 +75013,7 @@ export namespace Prisma {
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
     readyBy?: NullableStringFieldUpdateOperationsInput | string | null
+    cprId?: NullableStringFieldUpdateOperationsInput | string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -73899,6 +75050,7 @@ export namespace Prisma {
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
     readyBy?: string | null
+    cprId?: string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -73934,6 +75086,7 @@ export namespace Prisma {
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
     readyBy?: NullableStringFieldUpdateOperationsInput | string | null
+    cprId?: NullableStringFieldUpdateOperationsInput | string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -73970,6 +75123,7 @@ export namespace Prisma {
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
     readyBy?: NullableStringFieldUpdateOperationsInput | string | null
+    cprId?: NullableStringFieldUpdateOperationsInput | string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -74978,6 +76132,41 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type CprCounterCreateInput = {
+    month: string
+    last?: number
+  }
+
+  export type CprCounterUncheckedCreateInput = {
+    month: string
+    last?: number
+  }
+
+  export type CprCounterUpdateInput = {
+    month?: StringFieldUpdateOperationsInput | string
+    last?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CprCounterUncheckedUpdateInput = {
+    month?: StringFieldUpdateOperationsInput | string
+    last?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CprCounterCreateManyInput = {
+    month: string
+    last?: number
+  }
+
+  export type CprCounterUpdateManyMutationInput = {
+    month?: StringFieldUpdateOperationsInput | string
+    last?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type CprCounterUncheckedUpdateManyInput = {
+    month?: StringFieldUpdateOperationsInput | string
+    last?: IntFieldUpdateOperationsInput | number
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -77534,6 +78723,7 @@ export namespace Prisma {
     history?: SortOrder
     eventKey?: SortOrder
     readyBy?: SortOrder
+    cprId?: SortOrder
     extra?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -77569,6 +78759,7 @@ export namespace Prisma {
     note?: SortOrder
     eventKey?: SortOrder
     readyBy?: SortOrder
+    cprId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -77603,6 +78794,7 @@ export namespace Prisma {
     note?: SortOrder
     eventKey?: SortOrder
     readyBy?: SortOrder
+    cprId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -78057,6 +79249,29 @@ export namespace Prisma {
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type CprCounterCountOrderByAggregateInput = {
+    month?: SortOrder
+    last?: SortOrder
+  }
+
+  export type CprCounterAvgOrderByAggregateInput = {
+    last?: SortOrder
+  }
+
+  export type CprCounterMaxOrderByAggregateInput = {
+    month?: SortOrder
+    last?: SortOrder
+  }
+
+  export type CprCounterMinOrderByAggregateInput = {
+    month?: SortOrder
+    last?: SortOrder
+  }
+
+  export type CprCounterSumOrderByAggregateInput = {
+    last?: SortOrder
   }
 
   export type BranchCreateNestedOneWithoutUsersInput = {
@@ -86508,6 +87723,7 @@ export namespace Prisma {
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
     readyBy?: string | null
+    cprId?: string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -86543,6 +87759,7 @@ export namespace Prisma {
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
     readyBy?: string | null
+    cprId?: string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -86745,6 +87962,7 @@ export namespace Prisma {
     history?: JsonNullableFilter<"MediaTask">
     eventKey?: StringNullableFilter<"MediaTask"> | string | null
     readyBy?: StringNullableFilter<"MediaTask"> | string | null
+    cprId?: StringNullableFilter<"MediaTask"> | string | null
     extra?: JsonNullableFilter<"MediaTask">
     createdAt?: DateTimeFilter<"MediaTask"> | Date | string
     updatedAt?: DateTimeFilter<"MediaTask"> | Date | string
@@ -89125,6 +90343,7 @@ export namespace Prisma {
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: string | null
     readyBy?: string | null
+    cprId?: string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -89175,6 +90394,7 @@ export namespace Prisma {
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
     readyBy?: NullableStringFieldUpdateOperationsInput | string | null
+    cprId?: NullableStringFieldUpdateOperationsInput | string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -89210,6 +90430,7 @@ export namespace Prisma {
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
     readyBy?: NullableStringFieldUpdateOperationsInput | string | null
+    cprId?: NullableStringFieldUpdateOperationsInput | string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -89245,6 +90466,7 @@ export namespace Prisma {
     history?: NullableJsonNullValueInput | InputJsonValue
     eventKey?: NullableStringFieldUpdateOperationsInput | string | null
     readyBy?: NullableStringFieldUpdateOperationsInput | string | null
+    cprId?: NullableStringFieldUpdateOperationsInput | string | null
     extra?: NullableJsonNullValueInput | InputJsonValue
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
