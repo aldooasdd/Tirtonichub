@@ -282,6 +282,56 @@ export type RfidTag = $Result.DefaultSelection<Prisma.$RfidTagPayload>
  * CPR: nomor urut Content ID per bulan (YYMM), global lintas jenis. Ditambah atomik oleh store.ts allocCprId.
  */
 export type CprCounter = $Result.DefaultSelection<Prisma.$CprCounterPayload>
+/**
+ * Model AutomationWorkflow
+ * 
+ */
+export type AutomationWorkflow = $Result.DefaultSelection<Prisma.$AutomationWorkflowPayload>
+/**
+ * Model AutomationWorkflowVersion
+ * 
+ */
+export type AutomationWorkflowVersion = $Result.DefaultSelection<Prisma.$AutomationWorkflowVersionPayload>
+/**
+ * Model AutomationEvent
+ * 
+ */
+export type AutomationEvent = $Result.DefaultSelection<Prisma.$AutomationEventPayload>
+/**
+ * Model AutomationInbox
+ * 
+ */
+export type AutomationInbox = $Result.DefaultSelection<Prisma.$AutomationInboxPayload>
+/**
+ * Model AutomationRun
+ * 
+ */
+export type AutomationRun = $Result.DefaultSelection<Prisma.$AutomationRunPayload>
+/**
+ * Model AutomationRunStep
+ * 
+ */
+export type AutomationRunStep = $Result.DefaultSelection<Prisma.$AutomationRunStepPayload>
+/**
+ * Model AutomationTimer
+ * 
+ */
+export type AutomationTimer = $Result.DefaultSelection<Prisma.$AutomationTimerPayload>
+/**
+ * Model AutomationDelivery
+ * 
+ */
+export type AutomationDelivery = $Result.DefaultSelection<Prisma.$AutomationDeliveryPayload>
+/**
+ * Model AutomationPolicy
+ * 
+ */
+export type AutomationPolicy = $Result.DefaultSelection<Prisma.$AutomationPolicyPayload>
+/**
+ * Model AutomationAudit
+ * 
+ */
+export type AutomationAudit = $Result.DefaultSelection<Prisma.$AutomationAuditPayload>
 
 /**
  * Enums
@@ -1053,6 +1103,106 @@ export class PrismaClient<
     * ```
     */
   get cprCounter(): Prisma.CprCounterDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.automationWorkflow`: Exposes CRUD operations for the **AutomationWorkflow** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AutomationWorkflows
+    * const automationWorkflows = await prisma.automationWorkflow.findMany()
+    * ```
+    */
+  get automationWorkflow(): Prisma.AutomationWorkflowDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.automationWorkflowVersion`: Exposes CRUD operations for the **AutomationWorkflowVersion** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AutomationWorkflowVersions
+    * const automationWorkflowVersions = await prisma.automationWorkflowVersion.findMany()
+    * ```
+    */
+  get automationWorkflowVersion(): Prisma.AutomationWorkflowVersionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.automationEvent`: Exposes CRUD operations for the **AutomationEvent** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AutomationEvents
+    * const automationEvents = await prisma.automationEvent.findMany()
+    * ```
+    */
+  get automationEvent(): Prisma.AutomationEventDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.automationInbox`: Exposes CRUD operations for the **AutomationInbox** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AutomationInboxes
+    * const automationInboxes = await prisma.automationInbox.findMany()
+    * ```
+    */
+  get automationInbox(): Prisma.AutomationInboxDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.automationRun`: Exposes CRUD operations for the **AutomationRun** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AutomationRuns
+    * const automationRuns = await prisma.automationRun.findMany()
+    * ```
+    */
+  get automationRun(): Prisma.AutomationRunDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.automationRunStep`: Exposes CRUD operations for the **AutomationRunStep** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AutomationRunSteps
+    * const automationRunSteps = await prisma.automationRunStep.findMany()
+    * ```
+    */
+  get automationRunStep(): Prisma.AutomationRunStepDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.automationTimer`: Exposes CRUD operations for the **AutomationTimer** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AutomationTimers
+    * const automationTimers = await prisma.automationTimer.findMany()
+    * ```
+    */
+  get automationTimer(): Prisma.AutomationTimerDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.automationDelivery`: Exposes CRUD operations for the **AutomationDelivery** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AutomationDeliveries
+    * const automationDeliveries = await prisma.automationDelivery.findMany()
+    * ```
+    */
+  get automationDelivery(): Prisma.AutomationDeliveryDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.automationPolicy`: Exposes CRUD operations for the **AutomationPolicy** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AutomationPolicies
+    * const automationPolicies = await prisma.automationPolicy.findMany()
+    * ```
+    */
+  get automationPolicy(): Prisma.AutomationPolicyDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.automationAudit`: Exposes CRUD operations for the **AutomationAudit** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more AutomationAudits
+    * const automationAudits = await prisma.automationAudit.findMany()
+    * ```
+    */
+  get automationAudit(): Prisma.AutomationAuditDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1546,7 +1696,17 @@ export namespace Prisma {
     SkuCheck: 'SkuCheck',
     DemoPhoto: 'DemoPhoto',
     RfidTag: 'RfidTag',
-    CprCounter: 'CprCounter'
+    CprCounter: 'CprCounter',
+    AutomationWorkflow: 'AutomationWorkflow',
+    AutomationWorkflowVersion: 'AutomationWorkflowVersion',
+    AutomationEvent: 'AutomationEvent',
+    AutomationInbox: 'AutomationInbox',
+    AutomationRun: 'AutomationRun',
+    AutomationRunStep: 'AutomationRunStep',
+    AutomationTimer: 'AutomationTimer',
+    AutomationDelivery: 'AutomationDelivery',
+    AutomationPolicy: 'AutomationPolicy',
+    AutomationAudit: 'AutomationAudit'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1565,7 +1725,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -5491,6 +5651,746 @@ export namespace Prisma {
           }
         }
       }
+      AutomationWorkflow: {
+        payload: Prisma.$AutomationWorkflowPayload<ExtArgs>
+        fields: Prisma.AutomationWorkflowFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AutomationWorkflowFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AutomationWorkflowFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowPayload>
+          }
+          findFirst: {
+            args: Prisma.AutomationWorkflowFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AutomationWorkflowFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowPayload>
+          }
+          findMany: {
+            args: Prisma.AutomationWorkflowFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowPayload>[]
+          }
+          create: {
+            args: Prisma.AutomationWorkflowCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowPayload>
+          }
+          createMany: {
+            args: Prisma.AutomationWorkflowCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AutomationWorkflowCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowPayload>[]
+          }
+          delete: {
+            args: Prisma.AutomationWorkflowDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowPayload>
+          }
+          update: {
+            args: Prisma.AutomationWorkflowUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowPayload>
+          }
+          deleteMany: {
+            args: Prisma.AutomationWorkflowDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AutomationWorkflowUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AutomationWorkflowUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowPayload>[]
+          }
+          upsert: {
+            args: Prisma.AutomationWorkflowUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowPayload>
+          }
+          aggregate: {
+            args: Prisma.AutomationWorkflowAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAutomationWorkflow>
+          }
+          groupBy: {
+            args: Prisma.AutomationWorkflowGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AutomationWorkflowGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AutomationWorkflowCountArgs<ExtArgs>
+            result: $Utils.Optional<AutomationWorkflowCountAggregateOutputType> | number
+          }
+        }
+      }
+      AutomationWorkflowVersion: {
+        payload: Prisma.$AutomationWorkflowVersionPayload<ExtArgs>
+        fields: Prisma.AutomationWorkflowVersionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AutomationWorkflowVersionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowVersionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AutomationWorkflowVersionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowVersionPayload>
+          }
+          findFirst: {
+            args: Prisma.AutomationWorkflowVersionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowVersionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AutomationWorkflowVersionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowVersionPayload>
+          }
+          findMany: {
+            args: Prisma.AutomationWorkflowVersionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowVersionPayload>[]
+          }
+          create: {
+            args: Prisma.AutomationWorkflowVersionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowVersionPayload>
+          }
+          createMany: {
+            args: Prisma.AutomationWorkflowVersionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AutomationWorkflowVersionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowVersionPayload>[]
+          }
+          delete: {
+            args: Prisma.AutomationWorkflowVersionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowVersionPayload>
+          }
+          update: {
+            args: Prisma.AutomationWorkflowVersionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowVersionPayload>
+          }
+          deleteMany: {
+            args: Prisma.AutomationWorkflowVersionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AutomationWorkflowVersionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AutomationWorkflowVersionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowVersionPayload>[]
+          }
+          upsert: {
+            args: Prisma.AutomationWorkflowVersionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationWorkflowVersionPayload>
+          }
+          aggregate: {
+            args: Prisma.AutomationWorkflowVersionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAutomationWorkflowVersion>
+          }
+          groupBy: {
+            args: Prisma.AutomationWorkflowVersionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AutomationWorkflowVersionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AutomationWorkflowVersionCountArgs<ExtArgs>
+            result: $Utils.Optional<AutomationWorkflowVersionCountAggregateOutputType> | number
+          }
+        }
+      }
+      AutomationEvent: {
+        payload: Prisma.$AutomationEventPayload<ExtArgs>
+        fields: Prisma.AutomationEventFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AutomationEventFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationEventPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AutomationEventFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationEventPayload>
+          }
+          findFirst: {
+            args: Prisma.AutomationEventFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationEventPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AutomationEventFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationEventPayload>
+          }
+          findMany: {
+            args: Prisma.AutomationEventFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationEventPayload>[]
+          }
+          create: {
+            args: Prisma.AutomationEventCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationEventPayload>
+          }
+          createMany: {
+            args: Prisma.AutomationEventCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AutomationEventCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationEventPayload>[]
+          }
+          delete: {
+            args: Prisma.AutomationEventDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationEventPayload>
+          }
+          update: {
+            args: Prisma.AutomationEventUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationEventPayload>
+          }
+          deleteMany: {
+            args: Prisma.AutomationEventDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AutomationEventUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AutomationEventUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationEventPayload>[]
+          }
+          upsert: {
+            args: Prisma.AutomationEventUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationEventPayload>
+          }
+          aggregate: {
+            args: Prisma.AutomationEventAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAutomationEvent>
+          }
+          groupBy: {
+            args: Prisma.AutomationEventGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AutomationEventGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AutomationEventCountArgs<ExtArgs>
+            result: $Utils.Optional<AutomationEventCountAggregateOutputType> | number
+          }
+        }
+      }
+      AutomationInbox: {
+        payload: Prisma.$AutomationInboxPayload<ExtArgs>
+        fields: Prisma.AutomationInboxFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AutomationInboxFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationInboxPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AutomationInboxFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationInboxPayload>
+          }
+          findFirst: {
+            args: Prisma.AutomationInboxFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationInboxPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AutomationInboxFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationInboxPayload>
+          }
+          findMany: {
+            args: Prisma.AutomationInboxFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationInboxPayload>[]
+          }
+          create: {
+            args: Prisma.AutomationInboxCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationInboxPayload>
+          }
+          createMany: {
+            args: Prisma.AutomationInboxCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AutomationInboxCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationInboxPayload>[]
+          }
+          delete: {
+            args: Prisma.AutomationInboxDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationInboxPayload>
+          }
+          update: {
+            args: Prisma.AutomationInboxUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationInboxPayload>
+          }
+          deleteMany: {
+            args: Prisma.AutomationInboxDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AutomationInboxUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AutomationInboxUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationInboxPayload>[]
+          }
+          upsert: {
+            args: Prisma.AutomationInboxUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationInboxPayload>
+          }
+          aggregate: {
+            args: Prisma.AutomationInboxAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAutomationInbox>
+          }
+          groupBy: {
+            args: Prisma.AutomationInboxGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AutomationInboxGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AutomationInboxCountArgs<ExtArgs>
+            result: $Utils.Optional<AutomationInboxCountAggregateOutputType> | number
+          }
+        }
+      }
+      AutomationRun: {
+        payload: Prisma.$AutomationRunPayload<ExtArgs>
+        fields: Prisma.AutomationRunFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AutomationRunFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AutomationRunFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+          }
+          findFirst: {
+            args: Prisma.AutomationRunFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AutomationRunFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+          }
+          findMany: {
+            args: Prisma.AutomationRunFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunPayload>[]
+          }
+          create: {
+            args: Prisma.AutomationRunCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+          }
+          createMany: {
+            args: Prisma.AutomationRunCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AutomationRunCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunPayload>[]
+          }
+          delete: {
+            args: Prisma.AutomationRunDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+          }
+          update: {
+            args: Prisma.AutomationRunUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+          }
+          deleteMany: {
+            args: Prisma.AutomationRunDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AutomationRunUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AutomationRunUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunPayload>[]
+          }
+          upsert: {
+            args: Prisma.AutomationRunUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunPayload>
+          }
+          aggregate: {
+            args: Prisma.AutomationRunAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAutomationRun>
+          }
+          groupBy: {
+            args: Prisma.AutomationRunGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AutomationRunGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AutomationRunCountArgs<ExtArgs>
+            result: $Utils.Optional<AutomationRunCountAggregateOutputType> | number
+          }
+        }
+      }
+      AutomationRunStep: {
+        payload: Prisma.$AutomationRunStepPayload<ExtArgs>
+        fields: Prisma.AutomationRunStepFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AutomationRunStepFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunStepPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AutomationRunStepFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunStepPayload>
+          }
+          findFirst: {
+            args: Prisma.AutomationRunStepFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunStepPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AutomationRunStepFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunStepPayload>
+          }
+          findMany: {
+            args: Prisma.AutomationRunStepFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunStepPayload>[]
+          }
+          create: {
+            args: Prisma.AutomationRunStepCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunStepPayload>
+          }
+          createMany: {
+            args: Prisma.AutomationRunStepCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AutomationRunStepCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunStepPayload>[]
+          }
+          delete: {
+            args: Prisma.AutomationRunStepDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunStepPayload>
+          }
+          update: {
+            args: Prisma.AutomationRunStepUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunStepPayload>
+          }
+          deleteMany: {
+            args: Prisma.AutomationRunStepDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AutomationRunStepUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AutomationRunStepUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunStepPayload>[]
+          }
+          upsert: {
+            args: Prisma.AutomationRunStepUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationRunStepPayload>
+          }
+          aggregate: {
+            args: Prisma.AutomationRunStepAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAutomationRunStep>
+          }
+          groupBy: {
+            args: Prisma.AutomationRunStepGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AutomationRunStepGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AutomationRunStepCountArgs<ExtArgs>
+            result: $Utils.Optional<AutomationRunStepCountAggregateOutputType> | number
+          }
+        }
+      }
+      AutomationTimer: {
+        payload: Prisma.$AutomationTimerPayload<ExtArgs>
+        fields: Prisma.AutomationTimerFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AutomationTimerFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationTimerPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AutomationTimerFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationTimerPayload>
+          }
+          findFirst: {
+            args: Prisma.AutomationTimerFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationTimerPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AutomationTimerFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationTimerPayload>
+          }
+          findMany: {
+            args: Prisma.AutomationTimerFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationTimerPayload>[]
+          }
+          create: {
+            args: Prisma.AutomationTimerCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationTimerPayload>
+          }
+          createMany: {
+            args: Prisma.AutomationTimerCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AutomationTimerCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationTimerPayload>[]
+          }
+          delete: {
+            args: Prisma.AutomationTimerDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationTimerPayload>
+          }
+          update: {
+            args: Prisma.AutomationTimerUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationTimerPayload>
+          }
+          deleteMany: {
+            args: Prisma.AutomationTimerDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AutomationTimerUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AutomationTimerUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationTimerPayload>[]
+          }
+          upsert: {
+            args: Prisma.AutomationTimerUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationTimerPayload>
+          }
+          aggregate: {
+            args: Prisma.AutomationTimerAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAutomationTimer>
+          }
+          groupBy: {
+            args: Prisma.AutomationTimerGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AutomationTimerGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AutomationTimerCountArgs<ExtArgs>
+            result: $Utils.Optional<AutomationTimerCountAggregateOutputType> | number
+          }
+        }
+      }
+      AutomationDelivery: {
+        payload: Prisma.$AutomationDeliveryPayload<ExtArgs>
+        fields: Prisma.AutomationDeliveryFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AutomationDeliveryFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationDeliveryPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AutomationDeliveryFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationDeliveryPayload>
+          }
+          findFirst: {
+            args: Prisma.AutomationDeliveryFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationDeliveryPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AutomationDeliveryFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationDeliveryPayload>
+          }
+          findMany: {
+            args: Prisma.AutomationDeliveryFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationDeliveryPayload>[]
+          }
+          create: {
+            args: Prisma.AutomationDeliveryCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationDeliveryPayload>
+          }
+          createMany: {
+            args: Prisma.AutomationDeliveryCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AutomationDeliveryCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationDeliveryPayload>[]
+          }
+          delete: {
+            args: Prisma.AutomationDeliveryDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationDeliveryPayload>
+          }
+          update: {
+            args: Prisma.AutomationDeliveryUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationDeliveryPayload>
+          }
+          deleteMany: {
+            args: Prisma.AutomationDeliveryDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AutomationDeliveryUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AutomationDeliveryUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationDeliveryPayload>[]
+          }
+          upsert: {
+            args: Prisma.AutomationDeliveryUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationDeliveryPayload>
+          }
+          aggregate: {
+            args: Prisma.AutomationDeliveryAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAutomationDelivery>
+          }
+          groupBy: {
+            args: Prisma.AutomationDeliveryGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AutomationDeliveryGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AutomationDeliveryCountArgs<ExtArgs>
+            result: $Utils.Optional<AutomationDeliveryCountAggregateOutputType> | number
+          }
+        }
+      }
+      AutomationPolicy: {
+        payload: Prisma.$AutomationPolicyPayload<ExtArgs>
+        fields: Prisma.AutomationPolicyFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AutomationPolicyFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationPolicyPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AutomationPolicyFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationPolicyPayload>
+          }
+          findFirst: {
+            args: Prisma.AutomationPolicyFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationPolicyPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AutomationPolicyFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationPolicyPayload>
+          }
+          findMany: {
+            args: Prisma.AutomationPolicyFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationPolicyPayload>[]
+          }
+          create: {
+            args: Prisma.AutomationPolicyCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationPolicyPayload>
+          }
+          createMany: {
+            args: Prisma.AutomationPolicyCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AutomationPolicyCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationPolicyPayload>[]
+          }
+          delete: {
+            args: Prisma.AutomationPolicyDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationPolicyPayload>
+          }
+          update: {
+            args: Prisma.AutomationPolicyUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationPolicyPayload>
+          }
+          deleteMany: {
+            args: Prisma.AutomationPolicyDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AutomationPolicyUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AutomationPolicyUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationPolicyPayload>[]
+          }
+          upsert: {
+            args: Prisma.AutomationPolicyUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationPolicyPayload>
+          }
+          aggregate: {
+            args: Prisma.AutomationPolicyAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAutomationPolicy>
+          }
+          groupBy: {
+            args: Prisma.AutomationPolicyGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AutomationPolicyGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AutomationPolicyCountArgs<ExtArgs>
+            result: $Utils.Optional<AutomationPolicyCountAggregateOutputType> | number
+          }
+        }
+      }
+      AutomationAudit: {
+        payload: Prisma.$AutomationAuditPayload<ExtArgs>
+        fields: Prisma.AutomationAuditFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.AutomationAuditFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationAuditPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.AutomationAuditFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationAuditPayload>
+          }
+          findFirst: {
+            args: Prisma.AutomationAuditFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationAuditPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.AutomationAuditFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationAuditPayload>
+          }
+          findMany: {
+            args: Prisma.AutomationAuditFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationAuditPayload>[]
+          }
+          create: {
+            args: Prisma.AutomationAuditCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationAuditPayload>
+          }
+          createMany: {
+            args: Prisma.AutomationAuditCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.AutomationAuditCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationAuditPayload>[]
+          }
+          delete: {
+            args: Prisma.AutomationAuditDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationAuditPayload>
+          }
+          update: {
+            args: Prisma.AutomationAuditUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationAuditPayload>
+          }
+          deleteMany: {
+            args: Prisma.AutomationAuditDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.AutomationAuditUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.AutomationAuditUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationAuditPayload>[]
+          }
+          upsert: {
+            args: Prisma.AutomationAuditUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$AutomationAuditPayload>
+          }
+          aggregate: {
+            args: Prisma.AutomationAuditAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateAutomationAudit>
+          }
+          groupBy: {
+            args: Prisma.AutomationAuditGroupByArgs<ExtArgs>
+            result: $Utils.Optional<AutomationAuditGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.AutomationAuditCountArgs<ExtArgs>
+            result: $Utils.Optional<AutomationAuditCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -5640,6 +6540,16 @@ export namespace Prisma {
     demoPhoto?: DemoPhotoOmit
     rfidTag?: RfidTagOmit
     cprCounter?: CprCounterOmit
+    automationWorkflow?: AutomationWorkflowOmit
+    automationWorkflowVersion?: AutomationWorkflowVersionOmit
+    automationEvent?: AutomationEventOmit
+    automationInbox?: AutomationInboxOmit
+    automationRun?: AutomationRunOmit
+    automationRunStep?: AutomationRunStepOmit
+    automationTimer?: AutomationTimerOmit
+    automationDelivery?: AutomationDeliveryOmit
+    automationPolicy?: AutomationPolicyOmit
+    automationAudit?: AutomationAuditOmit
   }
 
   /* Types for Logging */
@@ -6114,6 +7024,68 @@ export namespace Prisma {
    */
   export type MediaItemCountOutputTypeCountAssetsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MediaAssetWhereInput
+  }
+
+
+  /**
+   * Count Type AutomationWorkflowCountOutputType
+   */
+
+  export type AutomationWorkflowCountOutputType = {
+    versions: number
+  }
+
+  export type AutomationWorkflowCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    versions?: boolean | AutomationWorkflowCountOutputTypeCountVersionsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AutomationWorkflowCountOutputType without action
+   */
+  export type AutomationWorkflowCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflowCountOutputType
+     */
+    select?: AutomationWorkflowCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AutomationWorkflowCountOutputType without action
+   */
+  export type AutomationWorkflowCountOutputTypeCountVersionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationWorkflowVersionWhereInput
+  }
+
+
+  /**
+   * Count Type AutomationRunCountOutputType
+   */
+
+  export type AutomationRunCountOutputType = {
+    steps: number
+  }
+
+  export type AutomationRunCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    steps?: boolean | AutomationRunCountOutputTypeCountStepsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * AutomationRunCountOutputType without action
+   */
+  export type AutomationRunCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRunCountOutputType
+     */
+    select?: AutomationRunCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * AutomationRunCountOutputType without action
+   */
+  export type AutomationRunCountOutputTypeCountStepsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationRunStepWhereInput
   }
 
 
@@ -65852,6 +66824,10777 @@ export namespace Prisma {
 
 
   /**
+   * Model AutomationWorkflow
+   */
+
+  export type AggregateAutomationWorkflow = {
+    _count: AutomationWorkflowCountAggregateOutputType | null
+    _avg: AutomationWorkflowAvgAggregateOutputType | null
+    _sum: AutomationWorkflowSumAggregateOutputType | null
+    _min: AutomationWorkflowMinAggregateOutputType | null
+    _max: AutomationWorkflowMaxAggregateOutputType | null
+  }
+
+  export type AutomationWorkflowAvgAggregateOutputType = {
+    activeVersion: number | null
+    draftRev: number | null
+  }
+
+  export type AutomationWorkflowSumAggregateOutputType = {
+    activeVersion: number | null
+    draftRev: number | null
+  }
+
+  export type AutomationWorkflowMinAggregateOutputType = {
+    key: string | null
+    name: string | null
+    module: string | null
+    status: string | null
+    activeVersion: number | null
+    draftRev: number | null
+    updatedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AutomationWorkflowMaxAggregateOutputType = {
+    key: string | null
+    name: string | null
+    module: string | null
+    status: string | null
+    activeVersion: number | null
+    draftRev: number | null
+    updatedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type AutomationWorkflowCountAggregateOutputType = {
+    key: number
+    name: number
+    module: number
+    status: number
+    activeVersion: number
+    draft: number
+    draftRev: number
+    updatedBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AutomationWorkflowAvgAggregateInputType = {
+    activeVersion?: true
+    draftRev?: true
+  }
+
+  export type AutomationWorkflowSumAggregateInputType = {
+    activeVersion?: true
+    draftRev?: true
+  }
+
+  export type AutomationWorkflowMinAggregateInputType = {
+    key?: true
+    name?: true
+    module?: true
+    status?: true
+    activeVersion?: true
+    draftRev?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AutomationWorkflowMaxAggregateInputType = {
+    key?: true
+    name?: true
+    module?: true
+    status?: true
+    activeVersion?: true
+    draftRev?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type AutomationWorkflowCountAggregateInputType = {
+    key?: true
+    name?: true
+    module?: true
+    status?: true
+    activeVersion?: true
+    draft?: true
+    draftRev?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AutomationWorkflowAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationWorkflow to aggregate.
+     */
+    where?: AutomationWorkflowWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationWorkflows to fetch.
+     */
+    orderBy?: AutomationWorkflowOrderByWithRelationInput | AutomationWorkflowOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AutomationWorkflowWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationWorkflows from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationWorkflows.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AutomationWorkflows
+    **/
+    _count?: true | AutomationWorkflowCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AutomationWorkflowAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AutomationWorkflowSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AutomationWorkflowMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AutomationWorkflowMaxAggregateInputType
+  }
+
+  export type GetAutomationWorkflowAggregateType<T extends AutomationWorkflowAggregateArgs> = {
+        [P in keyof T & keyof AggregateAutomationWorkflow]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAutomationWorkflow[P]>
+      : GetScalarType<T[P], AggregateAutomationWorkflow[P]>
+  }
+
+
+
+
+  export type AutomationWorkflowGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationWorkflowWhereInput
+    orderBy?: AutomationWorkflowOrderByWithAggregationInput | AutomationWorkflowOrderByWithAggregationInput[]
+    by: AutomationWorkflowScalarFieldEnum[] | AutomationWorkflowScalarFieldEnum
+    having?: AutomationWorkflowScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AutomationWorkflowCountAggregateInputType | true
+    _avg?: AutomationWorkflowAvgAggregateInputType
+    _sum?: AutomationWorkflowSumAggregateInputType
+    _min?: AutomationWorkflowMinAggregateInputType
+    _max?: AutomationWorkflowMaxAggregateInputType
+  }
+
+  export type AutomationWorkflowGroupByOutputType = {
+    key: string
+    name: string
+    module: string
+    status: string
+    activeVersion: number | null
+    draft: JsonValue
+    draftRev: number
+    updatedBy: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: AutomationWorkflowCountAggregateOutputType | null
+    _avg: AutomationWorkflowAvgAggregateOutputType | null
+    _sum: AutomationWorkflowSumAggregateOutputType | null
+    _min: AutomationWorkflowMinAggregateOutputType | null
+    _max: AutomationWorkflowMaxAggregateOutputType | null
+  }
+
+  type GetAutomationWorkflowGroupByPayload<T extends AutomationWorkflowGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AutomationWorkflowGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AutomationWorkflowGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AutomationWorkflowGroupByOutputType[P]>
+            : GetScalarType<T[P], AutomationWorkflowGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AutomationWorkflowSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    name?: boolean
+    module?: boolean
+    status?: boolean
+    activeVersion?: boolean
+    draft?: boolean
+    draftRev?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    versions?: boolean | AutomationWorkflow$versionsArgs<ExtArgs>
+    _count?: boolean | AutomationWorkflowCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationWorkflow"]>
+
+  export type AutomationWorkflowSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    name?: boolean
+    module?: boolean
+    status?: boolean
+    activeVersion?: boolean
+    draft?: boolean
+    draftRev?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["automationWorkflow"]>
+
+  export type AutomationWorkflowSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    name?: boolean
+    module?: boolean
+    status?: boolean
+    activeVersion?: boolean
+    draft?: boolean
+    draftRev?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["automationWorkflow"]>
+
+  export type AutomationWorkflowSelectScalar = {
+    key?: boolean
+    name?: boolean
+    module?: boolean
+    status?: boolean
+    activeVersion?: boolean
+    draft?: boolean
+    draftRev?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AutomationWorkflowOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"key" | "name" | "module" | "status" | "activeVersion" | "draft" | "draftRev" | "updatedBy" | "createdAt" | "updatedAt", ExtArgs["result"]["automationWorkflow"]>
+  export type AutomationWorkflowInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    versions?: boolean | AutomationWorkflow$versionsArgs<ExtArgs>
+    _count?: boolean | AutomationWorkflowCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AutomationWorkflowIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AutomationWorkflowIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $AutomationWorkflowPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AutomationWorkflow"
+    objects: {
+      versions: Prisma.$AutomationWorkflowVersionPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      key: string
+      name: string
+      module: string
+      status: string
+      activeVersion: number | null
+      draft: Prisma.JsonValue
+      draftRev: number
+      updatedBy: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["automationWorkflow"]>
+    composites: {}
+  }
+
+  type AutomationWorkflowGetPayload<S extends boolean | null | undefined | AutomationWorkflowDefaultArgs> = $Result.GetResult<Prisma.$AutomationWorkflowPayload, S>
+
+  type AutomationWorkflowCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AutomationWorkflowFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AutomationWorkflowCountAggregateInputType | true
+    }
+
+  export interface AutomationWorkflowDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AutomationWorkflow'], meta: { name: 'AutomationWorkflow' } }
+    /**
+     * Find zero or one AutomationWorkflow that matches the filter.
+     * @param {AutomationWorkflowFindUniqueArgs} args - Arguments to find a AutomationWorkflow
+     * @example
+     * // Get one AutomationWorkflow
+     * const automationWorkflow = await prisma.automationWorkflow.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AutomationWorkflowFindUniqueArgs>(args: SelectSubset<T, AutomationWorkflowFindUniqueArgs<ExtArgs>>): Prisma__AutomationWorkflowClient<$Result.GetResult<Prisma.$AutomationWorkflowPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AutomationWorkflow that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AutomationWorkflowFindUniqueOrThrowArgs} args - Arguments to find a AutomationWorkflow
+     * @example
+     * // Get one AutomationWorkflow
+     * const automationWorkflow = await prisma.automationWorkflow.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AutomationWorkflowFindUniqueOrThrowArgs>(args: SelectSubset<T, AutomationWorkflowFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AutomationWorkflowClient<$Result.GetResult<Prisma.$AutomationWorkflowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationWorkflow that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationWorkflowFindFirstArgs} args - Arguments to find a AutomationWorkflow
+     * @example
+     * // Get one AutomationWorkflow
+     * const automationWorkflow = await prisma.automationWorkflow.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AutomationWorkflowFindFirstArgs>(args?: SelectSubset<T, AutomationWorkflowFindFirstArgs<ExtArgs>>): Prisma__AutomationWorkflowClient<$Result.GetResult<Prisma.$AutomationWorkflowPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationWorkflow that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationWorkflowFindFirstOrThrowArgs} args - Arguments to find a AutomationWorkflow
+     * @example
+     * // Get one AutomationWorkflow
+     * const automationWorkflow = await prisma.automationWorkflow.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AutomationWorkflowFindFirstOrThrowArgs>(args?: SelectSubset<T, AutomationWorkflowFindFirstOrThrowArgs<ExtArgs>>): Prisma__AutomationWorkflowClient<$Result.GetResult<Prisma.$AutomationWorkflowPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AutomationWorkflows that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationWorkflowFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AutomationWorkflows
+     * const automationWorkflows = await prisma.automationWorkflow.findMany()
+     * 
+     * // Get first 10 AutomationWorkflows
+     * const automationWorkflows = await prisma.automationWorkflow.findMany({ take: 10 })
+     * 
+     * // Only select the `key`
+     * const automationWorkflowWithKeyOnly = await prisma.automationWorkflow.findMany({ select: { key: true } })
+     * 
+     */
+    findMany<T extends AutomationWorkflowFindManyArgs>(args?: SelectSubset<T, AutomationWorkflowFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationWorkflowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AutomationWorkflow.
+     * @param {AutomationWorkflowCreateArgs} args - Arguments to create a AutomationWorkflow.
+     * @example
+     * // Create one AutomationWorkflow
+     * const AutomationWorkflow = await prisma.automationWorkflow.create({
+     *   data: {
+     *     // ... data to create a AutomationWorkflow
+     *   }
+     * })
+     * 
+     */
+    create<T extends AutomationWorkflowCreateArgs>(args: SelectSubset<T, AutomationWorkflowCreateArgs<ExtArgs>>): Prisma__AutomationWorkflowClient<$Result.GetResult<Prisma.$AutomationWorkflowPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AutomationWorkflows.
+     * @param {AutomationWorkflowCreateManyArgs} args - Arguments to create many AutomationWorkflows.
+     * @example
+     * // Create many AutomationWorkflows
+     * const automationWorkflow = await prisma.automationWorkflow.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AutomationWorkflowCreateManyArgs>(args?: SelectSubset<T, AutomationWorkflowCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AutomationWorkflows and returns the data saved in the database.
+     * @param {AutomationWorkflowCreateManyAndReturnArgs} args - Arguments to create many AutomationWorkflows.
+     * @example
+     * // Create many AutomationWorkflows
+     * const automationWorkflow = await prisma.automationWorkflow.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AutomationWorkflows and only return the `key`
+     * const automationWorkflowWithKeyOnly = await prisma.automationWorkflow.createManyAndReturn({
+     *   select: { key: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AutomationWorkflowCreateManyAndReturnArgs>(args?: SelectSubset<T, AutomationWorkflowCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationWorkflowPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AutomationWorkflow.
+     * @param {AutomationWorkflowDeleteArgs} args - Arguments to delete one AutomationWorkflow.
+     * @example
+     * // Delete one AutomationWorkflow
+     * const AutomationWorkflow = await prisma.automationWorkflow.delete({
+     *   where: {
+     *     // ... filter to delete one AutomationWorkflow
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AutomationWorkflowDeleteArgs>(args: SelectSubset<T, AutomationWorkflowDeleteArgs<ExtArgs>>): Prisma__AutomationWorkflowClient<$Result.GetResult<Prisma.$AutomationWorkflowPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AutomationWorkflow.
+     * @param {AutomationWorkflowUpdateArgs} args - Arguments to update one AutomationWorkflow.
+     * @example
+     * // Update one AutomationWorkflow
+     * const automationWorkflow = await prisma.automationWorkflow.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AutomationWorkflowUpdateArgs>(args: SelectSubset<T, AutomationWorkflowUpdateArgs<ExtArgs>>): Prisma__AutomationWorkflowClient<$Result.GetResult<Prisma.$AutomationWorkflowPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AutomationWorkflows.
+     * @param {AutomationWorkflowDeleteManyArgs} args - Arguments to filter AutomationWorkflows to delete.
+     * @example
+     * // Delete a few AutomationWorkflows
+     * const { count } = await prisma.automationWorkflow.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AutomationWorkflowDeleteManyArgs>(args?: SelectSubset<T, AutomationWorkflowDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationWorkflows.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationWorkflowUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AutomationWorkflows
+     * const automationWorkflow = await prisma.automationWorkflow.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AutomationWorkflowUpdateManyArgs>(args: SelectSubset<T, AutomationWorkflowUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationWorkflows and returns the data updated in the database.
+     * @param {AutomationWorkflowUpdateManyAndReturnArgs} args - Arguments to update many AutomationWorkflows.
+     * @example
+     * // Update many AutomationWorkflows
+     * const automationWorkflow = await prisma.automationWorkflow.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AutomationWorkflows and only return the `key`
+     * const automationWorkflowWithKeyOnly = await prisma.automationWorkflow.updateManyAndReturn({
+     *   select: { key: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AutomationWorkflowUpdateManyAndReturnArgs>(args: SelectSubset<T, AutomationWorkflowUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationWorkflowPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AutomationWorkflow.
+     * @param {AutomationWorkflowUpsertArgs} args - Arguments to update or create a AutomationWorkflow.
+     * @example
+     * // Update or create a AutomationWorkflow
+     * const automationWorkflow = await prisma.automationWorkflow.upsert({
+     *   create: {
+     *     // ... data to create a AutomationWorkflow
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AutomationWorkflow we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AutomationWorkflowUpsertArgs>(args: SelectSubset<T, AutomationWorkflowUpsertArgs<ExtArgs>>): Prisma__AutomationWorkflowClient<$Result.GetResult<Prisma.$AutomationWorkflowPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AutomationWorkflows.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationWorkflowCountArgs} args - Arguments to filter AutomationWorkflows to count.
+     * @example
+     * // Count the number of AutomationWorkflows
+     * const count = await prisma.automationWorkflow.count({
+     *   where: {
+     *     // ... the filter for the AutomationWorkflows we want to count
+     *   }
+     * })
+    **/
+    count<T extends AutomationWorkflowCountArgs>(
+      args?: Subset<T, AutomationWorkflowCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AutomationWorkflowCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AutomationWorkflow.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationWorkflowAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AutomationWorkflowAggregateArgs>(args: Subset<T, AutomationWorkflowAggregateArgs>): Prisma.PrismaPromise<GetAutomationWorkflowAggregateType<T>>
+
+    /**
+     * Group by AutomationWorkflow.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationWorkflowGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AutomationWorkflowGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AutomationWorkflowGroupByArgs['orderBy'] }
+        : { orderBy?: AutomationWorkflowGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AutomationWorkflowGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAutomationWorkflowGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AutomationWorkflow model
+   */
+  readonly fields: AutomationWorkflowFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AutomationWorkflow.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AutomationWorkflowClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    versions<T extends AutomationWorkflow$versionsArgs<ExtArgs> = {}>(args?: Subset<T, AutomationWorkflow$versionsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationWorkflowVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AutomationWorkflow model
+   */
+  interface AutomationWorkflowFieldRefs {
+    readonly key: FieldRef<"AutomationWorkflow", 'String'>
+    readonly name: FieldRef<"AutomationWorkflow", 'String'>
+    readonly module: FieldRef<"AutomationWorkflow", 'String'>
+    readonly status: FieldRef<"AutomationWorkflow", 'String'>
+    readonly activeVersion: FieldRef<"AutomationWorkflow", 'Int'>
+    readonly draft: FieldRef<"AutomationWorkflow", 'Json'>
+    readonly draftRev: FieldRef<"AutomationWorkflow", 'Int'>
+    readonly updatedBy: FieldRef<"AutomationWorkflow", 'String'>
+    readonly createdAt: FieldRef<"AutomationWorkflow", 'DateTime'>
+    readonly updatedAt: FieldRef<"AutomationWorkflow", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AutomationWorkflow findUnique
+   */
+  export type AutomationWorkflowFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflow
+     */
+    select?: AutomationWorkflowSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflow
+     */
+    omit?: AutomationWorkflowOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationWorkflow to fetch.
+     */
+    where: AutomationWorkflowWhereUniqueInput
+  }
+
+  /**
+   * AutomationWorkflow findUniqueOrThrow
+   */
+  export type AutomationWorkflowFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflow
+     */
+    select?: AutomationWorkflowSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflow
+     */
+    omit?: AutomationWorkflowOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationWorkflow to fetch.
+     */
+    where: AutomationWorkflowWhereUniqueInput
+  }
+
+  /**
+   * AutomationWorkflow findFirst
+   */
+  export type AutomationWorkflowFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflow
+     */
+    select?: AutomationWorkflowSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflow
+     */
+    omit?: AutomationWorkflowOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationWorkflow to fetch.
+     */
+    where?: AutomationWorkflowWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationWorkflows to fetch.
+     */
+    orderBy?: AutomationWorkflowOrderByWithRelationInput | AutomationWorkflowOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationWorkflows.
+     */
+    cursor?: AutomationWorkflowWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationWorkflows from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationWorkflows.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationWorkflows.
+     */
+    distinct?: AutomationWorkflowScalarFieldEnum | AutomationWorkflowScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationWorkflow findFirstOrThrow
+   */
+  export type AutomationWorkflowFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflow
+     */
+    select?: AutomationWorkflowSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflow
+     */
+    omit?: AutomationWorkflowOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationWorkflow to fetch.
+     */
+    where?: AutomationWorkflowWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationWorkflows to fetch.
+     */
+    orderBy?: AutomationWorkflowOrderByWithRelationInput | AutomationWorkflowOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationWorkflows.
+     */
+    cursor?: AutomationWorkflowWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationWorkflows from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationWorkflows.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationWorkflows.
+     */
+    distinct?: AutomationWorkflowScalarFieldEnum | AutomationWorkflowScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationWorkflow findMany
+   */
+  export type AutomationWorkflowFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflow
+     */
+    select?: AutomationWorkflowSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflow
+     */
+    omit?: AutomationWorkflowOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationWorkflows to fetch.
+     */
+    where?: AutomationWorkflowWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationWorkflows to fetch.
+     */
+    orderBy?: AutomationWorkflowOrderByWithRelationInput | AutomationWorkflowOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AutomationWorkflows.
+     */
+    cursor?: AutomationWorkflowWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationWorkflows from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationWorkflows.
+     */
+    skip?: number
+    distinct?: AutomationWorkflowScalarFieldEnum | AutomationWorkflowScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationWorkflow create
+   */
+  export type AutomationWorkflowCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflow
+     */
+    select?: AutomationWorkflowSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflow
+     */
+    omit?: AutomationWorkflowOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AutomationWorkflow.
+     */
+    data: XOR<AutomationWorkflowCreateInput, AutomationWorkflowUncheckedCreateInput>
+  }
+
+  /**
+   * AutomationWorkflow createMany
+   */
+  export type AutomationWorkflowCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AutomationWorkflows.
+     */
+    data: AutomationWorkflowCreateManyInput | AutomationWorkflowCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationWorkflow createManyAndReturn
+   */
+  export type AutomationWorkflowCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflow
+     */
+    select?: AutomationWorkflowSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflow
+     */
+    omit?: AutomationWorkflowOmit<ExtArgs> | null
+    /**
+     * The data used to create many AutomationWorkflows.
+     */
+    data: AutomationWorkflowCreateManyInput | AutomationWorkflowCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationWorkflow update
+   */
+  export type AutomationWorkflowUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflow
+     */
+    select?: AutomationWorkflowSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflow
+     */
+    omit?: AutomationWorkflowOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AutomationWorkflow.
+     */
+    data: XOR<AutomationWorkflowUpdateInput, AutomationWorkflowUncheckedUpdateInput>
+    /**
+     * Choose, which AutomationWorkflow to update.
+     */
+    where: AutomationWorkflowWhereUniqueInput
+  }
+
+  /**
+   * AutomationWorkflow updateMany
+   */
+  export type AutomationWorkflowUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AutomationWorkflows.
+     */
+    data: XOR<AutomationWorkflowUpdateManyMutationInput, AutomationWorkflowUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationWorkflows to update
+     */
+    where?: AutomationWorkflowWhereInput
+    /**
+     * Limit how many AutomationWorkflows to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationWorkflow updateManyAndReturn
+   */
+  export type AutomationWorkflowUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflow
+     */
+    select?: AutomationWorkflowSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflow
+     */
+    omit?: AutomationWorkflowOmit<ExtArgs> | null
+    /**
+     * The data used to update AutomationWorkflows.
+     */
+    data: XOR<AutomationWorkflowUpdateManyMutationInput, AutomationWorkflowUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationWorkflows to update
+     */
+    where?: AutomationWorkflowWhereInput
+    /**
+     * Limit how many AutomationWorkflows to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationWorkflow upsert
+   */
+  export type AutomationWorkflowUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflow
+     */
+    select?: AutomationWorkflowSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflow
+     */
+    omit?: AutomationWorkflowOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AutomationWorkflow to update in case it exists.
+     */
+    where: AutomationWorkflowWhereUniqueInput
+    /**
+     * In case the AutomationWorkflow found by the `where` argument doesn't exist, create a new AutomationWorkflow with this data.
+     */
+    create: XOR<AutomationWorkflowCreateInput, AutomationWorkflowUncheckedCreateInput>
+    /**
+     * In case the AutomationWorkflow was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AutomationWorkflowUpdateInput, AutomationWorkflowUncheckedUpdateInput>
+  }
+
+  /**
+   * AutomationWorkflow delete
+   */
+  export type AutomationWorkflowDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflow
+     */
+    select?: AutomationWorkflowSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflow
+     */
+    omit?: AutomationWorkflowOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowInclude<ExtArgs> | null
+    /**
+     * Filter which AutomationWorkflow to delete.
+     */
+    where: AutomationWorkflowWhereUniqueInput
+  }
+
+  /**
+   * AutomationWorkflow deleteMany
+   */
+  export type AutomationWorkflowDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationWorkflows to delete
+     */
+    where?: AutomationWorkflowWhereInput
+    /**
+     * Limit how many AutomationWorkflows to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationWorkflow.versions
+   */
+  export type AutomationWorkflow$versionsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflowVersion
+     */
+    select?: AutomationWorkflowVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflowVersion
+     */
+    omit?: AutomationWorkflowVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowVersionInclude<ExtArgs> | null
+    where?: AutomationWorkflowVersionWhereInput
+    orderBy?: AutomationWorkflowVersionOrderByWithRelationInput | AutomationWorkflowVersionOrderByWithRelationInput[]
+    cursor?: AutomationWorkflowVersionWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AutomationWorkflowVersionScalarFieldEnum | AutomationWorkflowVersionScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationWorkflow without action
+   */
+  export type AutomationWorkflowDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflow
+     */
+    select?: AutomationWorkflowSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflow
+     */
+    omit?: AutomationWorkflowOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AutomationWorkflowVersion
+   */
+
+  export type AggregateAutomationWorkflowVersion = {
+    _count: AutomationWorkflowVersionCountAggregateOutputType | null
+    _avg: AutomationWorkflowVersionAvgAggregateOutputType | null
+    _sum: AutomationWorkflowVersionSumAggregateOutputType | null
+    _min: AutomationWorkflowVersionMinAggregateOutputType | null
+    _max: AutomationWorkflowVersionMaxAggregateOutputType | null
+  }
+
+  export type AutomationWorkflowVersionAvgAggregateOutputType = {
+    version: number | null
+  }
+
+  export type AutomationWorkflowVersionSumAggregateOutputType = {
+    version: number | null
+  }
+
+  export type AutomationWorkflowVersionMinAggregateOutputType = {
+    id: string | null
+    workflowKey: string | null
+    version: number | null
+    hash: string | null
+    publishedBy: string | null
+    publishedAt: Date | null
+  }
+
+  export type AutomationWorkflowVersionMaxAggregateOutputType = {
+    id: string | null
+    workflowKey: string | null
+    version: number | null
+    hash: string | null
+    publishedBy: string | null
+    publishedAt: Date | null
+  }
+
+  export type AutomationWorkflowVersionCountAggregateOutputType = {
+    id: number
+    workflowKey: number
+    version: number
+    graph: number
+    hash: number
+    publishedBy: number
+    publishedAt: number
+    _all: number
+  }
+
+
+  export type AutomationWorkflowVersionAvgAggregateInputType = {
+    version?: true
+  }
+
+  export type AutomationWorkflowVersionSumAggregateInputType = {
+    version?: true
+  }
+
+  export type AutomationWorkflowVersionMinAggregateInputType = {
+    id?: true
+    workflowKey?: true
+    version?: true
+    hash?: true
+    publishedBy?: true
+    publishedAt?: true
+  }
+
+  export type AutomationWorkflowVersionMaxAggregateInputType = {
+    id?: true
+    workflowKey?: true
+    version?: true
+    hash?: true
+    publishedBy?: true
+    publishedAt?: true
+  }
+
+  export type AutomationWorkflowVersionCountAggregateInputType = {
+    id?: true
+    workflowKey?: true
+    version?: true
+    graph?: true
+    hash?: true
+    publishedBy?: true
+    publishedAt?: true
+    _all?: true
+  }
+
+  export type AutomationWorkflowVersionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationWorkflowVersion to aggregate.
+     */
+    where?: AutomationWorkflowVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationWorkflowVersions to fetch.
+     */
+    orderBy?: AutomationWorkflowVersionOrderByWithRelationInput | AutomationWorkflowVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AutomationWorkflowVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationWorkflowVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationWorkflowVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AutomationWorkflowVersions
+    **/
+    _count?: true | AutomationWorkflowVersionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AutomationWorkflowVersionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AutomationWorkflowVersionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AutomationWorkflowVersionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AutomationWorkflowVersionMaxAggregateInputType
+  }
+
+  export type GetAutomationWorkflowVersionAggregateType<T extends AutomationWorkflowVersionAggregateArgs> = {
+        [P in keyof T & keyof AggregateAutomationWorkflowVersion]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAutomationWorkflowVersion[P]>
+      : GetScalarType<T[P], AggregateAutomationWorkflowVersion[P]>
+  }
+
+
+
+
+  export type AutomationWorkflowVersionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationWorkflowVersionWhereInput
+    orderBy?: AutomationWorkflowVersionOrderByWithAggregationInput | AutomationWorkflowVersionOrderByWithAggregationInput[]
+    by: AutomationWorkflowVersionScalarFieldEnum[] | AutomationWorkflowVersionScalarFieldEnum
+    having?: AutomationWorkflowVersionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AutomationWorkflowVersionCountAggregateInputType | true
+    _avg?: AutomationWorkflowVersionAvgAggregateInputType
+    _sum?: AutomationWorkflowVersionSumAggregateInputType
+    _min?: AutomationWorkflowVersionMinAggregateInputType
+    _max?: AutomationWorkflowVersionMaxAggregateInputType
+  }
+
+  export type AutomationWorkflowVersionGroupByOutputType = {
+    id: string
+    workflowKey: string
+    version: number
+    graph: JsonValue
+    hash: string
+    publishedBy: string
+    publishedAt: Date
+    _count: AutomationWorkflowVersionCountAggregateOutputType | null
+    _avg: AutomationWorkflowVersionAvgAggregateOutputType | null
+    _sum: AutomationWorkflowVersionSumAggregateOutputType | null
+    _min: AutomationWorkflowVersionMinAggregateOutputType | null
+    _max: AutomationWorkflowVersionMaxAggregateOutputType | null
+  }
+
+  type GetAutomationWorkflowVersionGroupByPayload<T extends AutomationWorkflowVersionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AutomationWorkflowVersionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AutomationWorkflowVersionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AutomationWorkflowVersionGroupByOutputType[P]>
+            : GetScalarType<T[P], AutomationWorkflowVersionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AutomationWorkflowVersionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowKey?: boolean
+    version?: boolean
+    graph?: boolean
+    hash?: boolean
+    publishedBy?: boolean
+    publishedAt?: boolean
+    workflow?: boolean | AutomationWorkflowDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationWorkflowVersion"]>
+
+  export type AutomationWorkflowVersionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowKey?: boolean
+    version?: boolean
+    graph?: boolean
+    hash?: boolean
+    publishedBy?: boolean
+    publishedAt?: boolean
+    workflow?: boolean | AutomationWorkflowDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationWorkflowVersion"]>
+
+  export type AutomationWorkflowVersionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowKey?: boolean
+    version?: boolean
+    graph?: boolean
+    hash?: boolean
+    publishedBy?: boolean
+    publishedAt?: boolean
+    workflow?: boolean | AutomationWorkflowDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationWorkflowVersion"]>
+
+  export type AutomationWorkflowVersionSelectScalar = {
+    id?: boolean
+    workflowKey?: boolean
+    version?: boolean
+    graph?: boolean
+    hash?: boolean
+    publishedBy?: boolean
+    publishedAt?: boolean
+  }
+
+  export type AutomationWorkflowVersionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workflowKey" | "version" | "graph" | "hash" | "publishedBy" | "publishedAt", ExtArgs["result"]["automationWorkflowVersion"]>
+  export type AutomationWorkflowVersionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflow?: boolean | AutomationWorkflowDefaultArgs<ExtArgs>
+  }
+  export type AutomationWorkflowVersionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflow?: boolean | AutomationWorkflowDefaultArgs<ExtArgs>
+  }
+  export type AutomationWorkflowVersionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    workflow?: boolean | AutomationWorkflowDefaultArgs<ExtArgs>
+  }
+
+  export type $AutomationWorkflowVersionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AutomationWorkflowVersion"
+    objects: {
+      workflow: Prisma.$AutomationWorkflowPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workflowKey: string
+      version: number
+      graph: Prisma.JsonValue
+      hash: string
+      publishedBy: string
+      publishedAt: Date
+    }, ExtArgs["result"]["automationWorkflowVersion"]>
+    composites: {}
+  }
+
+  type AutomationWorkflowVersionGetPayload<S extends boolean | null | undefined | AutomationWorkflowVersionDefaultArgs> = $Result.GetResult<Prisma.$AutomationWorkflowVersionPayload, S>
+
+  type AutomationWorkflowVersionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AutomationWorkflowVersionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AutomationWorkflowVersionCountAggregateInputType | true
+    }
+
+  export interface AutomationWorkflowVersionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AutomationWorkflowVersion'], meta: { name: 'AutomationWorkflowVersion' } }
+    /**
+     * Find zero or one AutomationWorkflowVersion that matches the filter.
+     * @param {AutomationWorkflowVersionFindUniqueArgs} args - Arguments to find a AutomationWorkflowVersion
+     * @example
+     * // Get one AutomationWorkflowVersion
+     * const automationWorkflowVersion = await prisma.automationWorkflowVersion.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AutomationWorkflowVersionFindUniqueArgs>(args: SelectSubset<T, AutomationWorkflowVersionFindUniqueArgs<ExtArgs>>): Prisma__AutomationWorkflowVersionClient<$Result.GetResult<Prisma.$AutomationWorkflowVersionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AutomationWorkflowVersion that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AutomationWorkflowVersionFindUniqueOrThrowArgs} args - Arguments to find a AutomationWorkflowVersion
+     * @example
+     * // Get one AutomationWorkflowVersion
+     * const automationWorkflowVersion = await prisma.automationWorkflowVersion.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AutomationWorkflowVersionFindUniqueOrThrowArgs>(args: SelectSubset<T, AutomationWorkflowVersionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AutomationWorkflowVersionClient<$Result.GetResult<Prisma.$AutomationWorkflowVersionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationWorkflowVersion that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationWorkflowVersionFindFirstArgs} args - Arguments to find a AutomationWorkflowVersion
+     * @example
+     * // Get one AutomationWorkflowVersion
+     * const automationWorkflowVersion = await prisma.automationWorkflowVersion.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AutomationWorkflowVersionFindFirstArgs>(args?: SelectSubset<T, AutomationWorkflowVersionFindFirstArgs<ExtArgs>>): Prisma__AutomationWorkflowVersionClient<$Result.GetResult<Prisma.$AutomationWorkflowVersionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationWorkflowVersion that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationWorkflowVersionFindFirstOrThrowArgs} args - Arguments to find a AutomationWorkflowVersion
+     * @example
+     * // Get one AutomationWorkflowVersion
+     * const automationWorkflowVersion = await prisma.automationWorkflowVersion.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AutomationWorkflowVersionFindFirstOrThrowArgs>(args?: SelectSubset<T, AutomationWorkflowVersionFindFirstOrThrowArgs<ExtArgs>>): Prisma__AutomationWorkflowVersionClient<$Result.GetResult<Prisma.$AutomationWorkflowVersionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AutomationWorkflowVersions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationWorkflowVersionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AutomationWorkflowVersions
+     * const automationWorkflowVersions = await prisma.automationWorkflowVersion.findMany()
+     * 
+     * // Get first 10 AutomationWorkflowVersions
+     * const automationWorkflowVersions = await prisma.automationWorkflowVersion.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const automationWorkflowVersionWithIdOnly = await prisma.automationWorkflowVersion.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AutomationWorkflowVersionFindManyArgs>(args?: SelectSubset<T, AutomationWorkflowVersionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationWorkflowVersionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AutomationWorkflowVersion.
+     * @param {AutomationWorkflowVersionCreateArgs} args - Arguments to create a AutomationWorkflowVersion.
+     * @example
+     * // Create one AutomationWorkflowVersion
+     * const AutomationWorkflowVersion = await prisma.automationWorkflowVersion.create({
+     *   data: {
+     *     // ... data to create a AutomationWorkflowVersion
+     *   }
+     * })
+     * 
+     */
+    create<T extends AutomationWorkflowVersionCreateArgs>(args: SelectSubset<T, AutomationWorkflowVersionCreateArgs<ExtArgs>>): Prisma__AutomationWorkflowVersionClient<$Result.GetResult<Prisma.$AutomationWorkflowVersionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AutomationWorkflowVersions.
+     * @param {AutomationWorkflowVersionCreateManyArgs} args - Arguments to create many AutomationWorkflowVersions.
+     * @example
+     * // Create many AutomationWorkflowVersions
+     * const automationWorkflowVersion = await prisma.automationWorkflowVersion.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AutomationWorkflowVersionCreateManyArgs>(args?: SelectSubset<T, AutomationWorkflowVersionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AutomationWorkflowVersions and returns the data saved in the database.
+     * @param {AutomationWorkflowVersionCreateManyAndReturnArgs} args - Arguments to create many AutomationWorkflowVersions.
+     * @example
+     * // Create many AutomationWorkflowVersions
+     * const automationWorkflowVersion = await prisma.automationWorkflowVersion.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AutomationWorkflowVersions and only return the `id`
+     * const automationWorkflowVersionWithIdOnly = await prisma.automationWorkflowVersion.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AutomationWorkflowVersionCreateManyAndReturnArgs>(args?: SelectSubset<T, AutomationWorkflowVersionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationWorkflowVersionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AutomationWorkflowVersion.
+     * @param {AutomationWorkflowVersionDeleteArgs} args - Arguments to delete one AutomationWorkflowVersion.
+     * @example
+     * // Delete one AutomationWorkflowVersion
+     * const AutomationWorkflowVersion = await prisma.automationWorkflowVersion.delete({
+     *   where: {
+     *     // ... filter to delete one AutomationWorkflowVersion
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AutomationWorkflowVersionDeleteArgs>(args: SelectSubset<T, AutomationWorkflowVersionDeleteArgs<ExtArgs>>): Prisma__AutomationWorkflowVersionClient<$Result.GetResult<Prisma.$AutomationWorkflowVersionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AutomationWorkflowVersion.
+     * @param {AutomationWorkflowVersionUpdateArgs} args - Arguments to update one AutomationWorkflowVersion.
+     * @example
+     * // Update one AutomationWorkflowVersion
+     * const automationWorkflowVersion = await prisma.automationWorkflowVersion.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AutomationWorkflowVersionUpdateArgs>(args: SelectSubset<T, AutomationWorkflowVersionUpdateArgs<ExtArgs>>): Prisma__AutomationWorkflowVersionClient<$Result.GetResult<Prisma.$AutomationWorkflowVersionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AutomationWorkflowVersions.
+     * @param {AutomationWorkflowVersionDeleteManyArgs} args - Arguments to filter AutomationWorkflowVersions to delete.
+     * @example
+     * // Delete a few AutomationWorkflowVersions
+     * const { count } = await prisma.automationWorkflowVersion.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AutomationWorkflowVersionDeleteManyArgs>(args?: SelectSubset<T, AutomationWorkflowVersionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationWorkflowVersions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationWorkflowVersionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AutomationWorkflowVersions
+     * const automationWorkflowVersion = await prisma.automationWorkflowVersion.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AutomationWorkflowVersionUpdateManyArgs>(args: SelectSubset<T, AutomationWorkflowVersionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationWorkflowVersions and returns the data updated in the database.
+     * @param {AutomationWorkflowVersionUpdateManyAndReturnArgs} args - Arguments to update many AutomationWorkflowVersions.
+     * @example
+     * // Update many AutomationWorkflowVersions
+     * const automationWorkflowVersion = await prisma.automationWorkflowVersion.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AutomationWorkflowVersions and only return the `id`
+     * const automationWorkflowVersionWithIdOnly = await prisma.automationWorkflowVersion.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AutomationWorkflowVersionUpdateManyAndReturnArgs>(args: SelectSubset<T, AutomationWorkflowVersionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationWorkflowVersionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AutomationWorkflowVersion.
+     * @param {AutomationWorkflowVersionUpsertArgs} args - Arguments to update or create a AutomationWorkflowVersion.
+     * @example
+     * // Update or create a AutomationWorkflowVersion
+     * const automationWorkflowVersion = await prisma.automationWorkflowVersion.upsert({
+     *   create: {
+     *     // ... data to create a AutomationWorkflowVersion
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AutomationWorkflowVersion we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AutomationWorkflowVersionUpsertArgs>(args: SelectSubset<T, AutomationWorkflowVersionUpsertArgs<ExtArgs>>): Prisma__AutomationWorkflowVersionClient<$Result.GetResult<Prisma.$AutomationWorkflowVersionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AutomationWorkflowVersions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationWorkflowVersionCountArgs} args - Arguments to filter AutomationWorkflowVersions to count.
+     * @example
+     * // Count the number of AutomationWorkflowVersions
+     * const count = await prisma.automationWorkflowVersion.count({
+     *   where: {
+     *     // ... the filter for the AutomationWorkflowVersions we want to count
+     *   }
+     * })
+    **/
+    count<T extends AutomationWorkflowVersionCountArgs>(
+      args?: Subset<T, AutomationWorkflowVersionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AutomationWorkflowVersionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AutomationWorkflowVersion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationWorkflowVersionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AutomationWorkflowVersionAggregateArgs>(args: Subset<T, AutomationWorkflowVersionAggregateArgs>): Prisma.PrismaPromise<GetAutomationWorkflowVersionAggregateType<T>>
+
+    /**
+     * Group by AutomationWorkflowVersion.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationWorkflowVersionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AutomationWorkflowVersionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AutomationWorkflowVersionGroupByArgs['orderBy'] }
+        : { orderBy?: AutomationWorkflowVersionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AutomationWorkflowVersionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAutomationWorkflowVersionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AutomationWorkflowVersion model
+   */
+  readonly fields: AutomationWorkflowVersionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AutomationWorkflowVersion.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AutomationWorkflowVersionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    workflow<T extends AutomationWorkflowDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AutomationWorkflowDefaultArgs<ExtArgs>>): Prisma__AutomationWorkflowClient<$Result.GetResult<Prisma.$AutomationWorkflowPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AutomationWorkflowVersion model
+   */
+  interface AutomationWorkflowVersionFieldRefs {
+    readonly id: FieldRef<"AutomationWorkflowVersion", 'String'>
+    readonly workflowKey: FieldRef<"AutomationWorkflowVersion", 'String'>
+    readonly version: FieldRef<"AutomationWorkflowVersion", 'Int'>
+    readonly graph: FieldRef<"AutomationWorkflowVersion", 'Json'>
+    readonly hash: FieldRef<"AutomationWorkflowVersion", 'String'>
+    readonly publishedBy: FieldRef<"AutomationWorkflowVersion", 'String'>
+    readonly publishedAt: FieldRef<"AutomationWorkflowVersion", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AutomationWorkflowVersion findUnique
+   */
+  export type AutomationWorkflowVersionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflowVersion
+     */
+    select?: AutomationWorkflowVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflowVersion
+     */
+    omit?: AutomationWorkflowVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationWorkflowVersion to fetch.
+     */
+    where: AutomationWorkflowVersionWhereUniqueInput
+  }
+
+  /**
+   * AutomationWorkflowVersion findUniqueOrThrow
+   */
+  export type AutomationWorkflowVersionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflowVersion
+     */
+    select?: AutomationWorkflowVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflowVersion
+     */
+    omit?: AutomationWorkflowVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationWorkflowVersion to fetch.
+     */
+    where: AutomationWorkflowVersionWhereUniqueInput
+  }
+
+  /**
+   * AutomationWorkflowVersion findFirst
+   */
+  export type AutomationWorkflowVersionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflowVersion
+     */
+    select?: AutomationWorkflowVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflowVersion
+     */
+    omit?: AutomationWorkflowVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationWorkflowVersion to fetch.
+     */
+    where?: AutomationWorkflowVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationWorkflowVersions to fetch.
+     */
+    orderBy?: AutomationWorkflowVersionOrderByWithRelationInput | AutomationWorkflowVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationWorkflowVersions.
+     */
+    cursor?: AutomationWorkflowVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationWorkflowVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationWorkflowVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationWorkflowVersions.
+     */
+    distinct?: AutomationWorkflowVersionScalarFieldEnum | AutomationWorkflowVersionScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationWorkflowVersion findFirstOrThrow
+   */
+  export type AutomationWorkflowVersionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflowVersion
+     */
+    select?: AutomationWorkflowVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflowVersion
+     */
+    omit?: AutomationWorkflowVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationWorkflowVersion to fetch.
+     */
+    where?: AutomationWorkflowVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationWorkflowVersions to fetch.
+     */
+    orderBy?: AutomationWorkflowVersionOrderByWithRelationInput | AutomationWorkflowVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationWorkflowVersions.
+     */
+    cursor?: AutomationWorkflowVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationWorkflowVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationWorkflowVersions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationWorkflowVersions.
+     */
+    distinct?: AutomationWorkflowVersionScalarFieldEnum | AutomationWorkflowVersionScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationWorkflowVersion findMany
+   */
+  export type AutomationWorkflowVersionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflowVersion
+     */
+    select?: AutomationWorkflowVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflowVersion
+     */
+    omit?: AutomationWorkflowVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowVersionInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationWorkflowVersions to fetch.
+     */
+    where?: AutomationWorkflowVersionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationWorkflowVersions to fetch.
+     */
+    orderBy?: AutomationWorkflowVersionOrderByWithRelationInput | AutomationWorkflowVersionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AutomationWorkflowVersions.
+     */
+    cursor?: AutomationWorkflowVersionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationWorkflowVersions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationWorkflowVersions.
+     */
+    skip?: number
+    distinct?: AutomationWorkflowVersionScalarFieldEnum | AutomationWorkflowVersionScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationWorkflowVersion create
+   */
+  export type AutomationWorkflowVersionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflowVersion
+     */
+    select?: AutomationWorkflowVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflowVersion
+     */
+    omit?: AutomationWorkflowVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowVersionInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AutomationWorkflowVersion.
+     */
+    data: XOR<AutomationWorkflowVersionCreateInput, AutomationWorkflowVersionUncheckedCreateInput>
+  }
+
+  /**
+   * AutomationWorkflowVersion createMany
+   */
+  export type AutomationWorkflowVersionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AutomationWorkflowVersions.
+     */
+    data: AutomationWorkflowVersionCreateManyInput | AutomationWorkflowVersionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationWorkflowVersion createManyAndReturn
+   */
+  export type AutomationWorkflowVersionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflowVersion
+     */
+    select?: AutomationWorkflowVersionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflowVersion
+     */
+    omit?: AutomationWorkflowVersionOmit<ExtArgs> | null
+    /**
+     * The data used to create many AutomationWorkflowVersions.
+     */
+    data: AutomationWorkflowVersionCreateManyInput | AutomationWorkflowVersionCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowVersionIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AutomationWorkflowVersion update
+   */
+  export type AutomationWorkflowVersionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflowVersion
+     */
+    select?: AutomationWorkflowVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflowVersion
+     */
+    omit?: AutomationWorkflowVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowVersionInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AutomationWorkflowVersion.
+     */
+    data: XOR<AutomationWorkflowVersionUpdateInput, AutomationWorkflowVersionUncheckedUpdateInput>
+    /**
+     * Choose, which AutomationWorkflowVersion to update.
+     */
+    where: AutomationWorkflowVersionWhereUniqueInput
+  }
+
+  /**
+   * AutomationWorkflowVersion updateMany
+   */
+  export type AutomationWorkflowVersionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AutomationWorkflowVersions.
+     */
+    data: XOR<AutomationWorkflowVersionUpdateManyMutationInput, AutomationWorkflowVersionUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationWorkflowVersions to update
+     */
+    where?: AutomationWorkflowVersionWhereInput
+    /**
+     * Limit how many AutomationWorkflowVersions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationWorkflowVersion updateManyAndReturn
+   */
+  export type AutomationWorkflowVersionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflowVersion
+     */
+    select?: AutomationWorkflowVersionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflowVersion
+     */
+    omit?: AutomationWorkflowVersionOmit<ExtArgs> | null
+    /**
+     * The data used to update AutomationWorkflowVersions.
+     */
+    data: XOR<AutomationWorkflowVersionUpdateManyMutationInput, AutomationWorkflowVersionUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationWorkflowVersions to update
+     */
+    where?: AutomationWorkflowVersionWhereInput
+    /**
+     * Limit how many AutomationWorkflowVersions to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowVersionIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AutomationWorkflowVersion upsert
+   */
+  export type AutomationWorkflowVersionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflowVersion
+     */
+    select?: AutomationWorkflowVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflowVersion
+     */
+    omit?: AutomationWorkflowVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowVersionInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AutomationWorkflowVersion to update in case it exists.
+     */
+    where: AutomationWorkflowVersionWhereUniqueInput
+    /**
+     * In case the AutomationWorkflowVersion found by the `where` argument doesn't exist, create a new AutomationWorkflowVersion with this data.
+     */
+    create: XOR<AutomationWorkflowVersionCreateInput, AutomationWorkflowVersionUncheckedCreateInput>
+    /**
+     * In case the AutomationWorkflowVersion was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AutomationWorkflowVersionUpdateInput, AutomationWorkflowVersionUncheckedUpdateInput>
+  }
+
+  /**
+   * AutomationWorkflowVersion delete
+   */
+  export type AutomationWorkflowVersionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflowVersion
+     */
+    select?: AutomationWorkflowVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflowVersion
+     */
+    omit?: AutomationWorkflowVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowVersionInclude<ExtArgs> | null
+    /**
+     * Filter which AutomationWorkflowVersion to delete.
+     */
+    where: AutomationWorkflowVersionWhereUniqueInput
+  }
+
+  /**
+   * AutomationWorkflowVersion deleteMany
+   */
+  export type AutomationWorkflowVersionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationWorkflowVersions to delete
+     */
+    where?: AutomationWorkflowVersionWhereInput
+    /**
+     * Limit how many AutomationWorkflowVersions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationWorkflowVersion without action
+   */
+  export type AutomationWorkflowVersionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationWorkflowVersion
+     */
+    select?: AutomationWorkflowVersionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationWorkflowVersion
+     */
+    omit?: AutomationWorkflowVersionOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationWorkflowVersionInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AutomationEvent
+   */
+
+  export type AggregateAutomationEvent = {
+    _count: AutomationEventCountAggregateOutputType | null
+    _avg: AutomationEventAvgAggregateOutputType | null
+    _sum: AutomationEventSumAggregateOutputType | null
+    _min: AutomationEventMinAggregateOutputType | null
+    _max: AutomationEventMaxAggregateOutputType | null
+  }
+
+  export type AutomationEventAvgAggregateOutputType = {
+    attempts: number | null
+  }
+
+  export type AutomationEventSumAggregateOutputType = {
+    attempts: number | null
+  }
+
+  export type AutomationEventMinAggregateOutputType = {
+    id: string | null
+    dedupeKey: string | null
+    type: string | null
+    entityType: string | null
+    entityId: string | null
+    correlationId: string | null
+    occurredAt: Date | null
+    dispatchedAt: Date | null
+    attempts: number | null
+    nextAttemptAt: Date | null
+    lastError: string | null
+  }
+
+  export type AutomationEventMaxAggregateOutputType = {
+    id: string | null
+    dedupeKey: string | null
+    type: string | null
+    entityType: string | null
+    entityId: string | null
+    correlationId: string | null
+    occurredAt: Date | null
+    dispatchedAt: Date | null
+    attempts: number | null
+    nextAttemptAt: Date | null
+    lastError: string | null
+  }
+
+  export type AutomationEventCountAggregateOutputType = {
+    id: number
+    dedupeKey: number
+    type: number
+    entityType: number
+    entityId: number
+    payload: number
+    correlationId: number
+    occurredAt: number
+    dispatchedAt: number
+    attempts: number
+    nextAttemptAt: number
+    lastError: number
+    _all: number
+  }
+
+
+  export type AutomationEventAvgAggregateInputType = {
+    attempts?: true
+  }
+
+  export type AutomationEventSumAggregateInputType = {
+    attempts?: true
+  }
+
+  export type AutomationEventMinAggregateInputType = {
+    id?: true
+    dedupeKey?: true
+    type?: true
+    entityType?: true
+    entityId?: true
+    correlationId?: true
+    occurredAt?: true
+    dispatchedAt?: true
+    attempts?: true
+    nextAttemptAt?: true
+    lastError?: true
+  }
+
+  export type AutomationEventMaxAggregateInputType = {
+    id?: true
+    dedupeKey?: true
+    type?: true
+    entityType?: true
+    entityId?: true
+    correlationId?: true
+    occurredAt?: true
+    dispatchedAt?: true
+    attempts?: true
+    nextAttemptAt?: true
+    lastError?: true
+  }
+
+  export type AutomationEventCountAggregateInputType = {
+    id?: true
+    dedupeKey?: true
+    type?: true
+    entityType?: true
+    entityId?: true
+    payload?: true
+    correlationId?: true
+    occurredAt?: true
+    dispatchedAt?: true
+    attempts?: true
+    nextAttemptAt?: true
+    lastError?: true
+    _all?: true
+  }
+
+  export type AutomationEventAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationEvent to aggregate.
+     */
+    where?: AutomationEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationEvents to fetch.
+     */
+    orderBy?: AutomationEventOrderByWithRelationInput | AutomationEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AutomationEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AutomationEvents
+    **/
+    _count?: true | AutomationEventCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AutomationEventAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AutomationEventSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AutomationEventMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AutomationEventMaxAggregateInputType
+  }
+
+  export type GetAutomationEventAggregateType<T extends AutomationEventAggregateArgs> = {
+        [P in keyof T & keyof AggregateAutomationEvent]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAutomationEvent[P]>
+      : GetScalarType<T[P], AggregateAutomationEvent[P]>
+  }
+
+
+
+
+  export type AutomationEventGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationEventWhereInput
+    orderBy?: AutomationEventOrderByWithAggregationInput | AutomationEventOrderByWithAggregationInput[]
+    by: AutomationEventScalarFieldEnum[] | AutomationEventScalarFieldEnum
+    having?: AutomationEventScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AutomationEventCountAggregateInputType | true
+    _avg?: AutomationEventAvgAggregateInputType
+    _sum?: AutomationEventSumAggregateInputType
+    _min?: AutomationEventMinAggregateInputType
+    _max?: AutomationEventMaxAggregateInputType
+  }
+
+  export type AutomationEventGroupByOutputType = {
+    id: string
+    dedupeKey: string
+    type: string
+    entityType: string
+    entityId: string
+    payload: JsonValue
+    correlationId: string
+    occurredAt: Date
+    dispatchedAt: Date | null
+    attempts: number
+    nextAttemptAt: Date
+    lastError: string | null
+    _count: AutomationEventCountAggregateOutputType | null
+    _avg: AutomationEventAvgAggregateOutputType | null
+    _sum: AutomationEventSumAggregateOutputType | null
+    _min: AutomationEventMinAggregateOutputType | null
+    _max: AutomationEventMaxAggregateOutputType | null
+  }
+
+  type GetAutomationEventGroupByPayload<T extends AutomationEventGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AutomationEventGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AutomationEventGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AutomationEventGroupByOutputType[P]>
+            : GetScalarType<T[P], AutomationEventGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AutomationEventSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dedupeKey?: boolean
+    type?: boolean
+    entityType?: boolean
+    entityId?: boolean
+    payload?: boolean
+    correlationId?: boolean
+    occurredAt?: boolean
+    dispatchedAt?: boolean
+    attempts?: boolean
+    nextAttemptAt?: boolean
+    lastError?: boolean
+  }, ExtArgs["result"]["automationEvent"]>
+
+  export type AutomationEventSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dedupeKey?: boolean
+    type?: boolean
+    entityType?: boolean
+    entityId?: boolean
+    payload?: boolean
+    correlationId?: boolean
+    occurredAt?: boolean
+    dispatchedAt?: boolean
+    attempts?: boolean
+    nextAttemptAt?: boolean
+    lastError?: boolean
+  }, ExtArgs["result"]["automationEvent"]>
+
+  export type AutomationEventSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    dedupeKey?: boolean
+    type?: boolean
+    entityType?: boolean
+    entityId?: boolean
+    payload?: boolean
+    correlationId?: boolean
+    occurredAt?: boolean
+    dispatchedAt?: boolean
+    attempts?: boolean
+    nextAttemptAt?: boolean
+    lastError?: boolean
+  }, ExtArgs["result"]["automationEvent"]>
+
+  export type AutomationEventSelectScalar = {
+    id?: boolean
+    dedupeKey?: boolean
+    type?: boolean
+    entityType?: boolean
+    entityId?: boolean
+    payload?: boolean
+    correlationId?: boolean
+    occurredAt?: boolean
+    dispatchedAt?: boolean
+    attempts?: boolean
+    nextAttemptAt?: boolean
+    lastError?: boolean
+  }
+
+  export type AutomationEventOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "dedupeKey" | "type" | "entityType" | "entityId" | "payload" | "correlationId" | "occurredAt" | "dispatchedAt" | "attempts" | "nextAttemptAt" | "lastError", ExtArgs["result"]["automationEvent"]>
+
+  export type $AutomationEventPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AutomationEvent"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      dedupeKey: string
+      type: string
+      entityType: string
+      entityId: string
+      payload: Prisma.JsonValue
+      correlationId: string
+      occurredAt: Date
+      dispatchedAt: Date | null
+      attempts: number
+      nextAttemptAt: Date
+      lastError: string | null
+    }, ExtArgs["result"]["automationEvent"]>
+    composites: {}
+  }
+
+  type AutomationEventGetPayload<S extends boolean | null | undefined | AutomationEventDefaultArgs> = $Result.GetResult<Prisma.$AutomationEventPayload, S>
+
+  type AutomationEventCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AutomationEventFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AutomationEventCountAggregateInputType | true
+    }
+
+  export interface AutomationEventDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AutomationEvent'], meta: { name: 'AutomationEvent' } }
+    /**
+     * Find zero or one AutomationEvent that matches the filter.
+     * @param {AutomationEventFindUniqueArgs} args - Arguments to find a AutomationEvent
+     * @example
+     * // Get one AutomationEvent
+     * const automationEvent = await prisma.automationEvent.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AutomationEventFindUniqueArgs>(args: SelectSubset<T, AutomationEventFindUniqueArgs<ExtArgs>>): Prisma__AutomationEventClient<$Result.GetResult<Prisma.$AutomationEventPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AutomationEvent that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AutomationEventFindUniqueOrThrowArgs} args - Arguments to find a AutomationEvent
+     * @example
+     * // Get one AutomationEvent
+     * const automationEvent = await prisma.automationEvent.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AutomationEventFindUniqueOrThrowArgs>(args: SelectSubset<T, AutomationEventFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AutomationEventClient<$Result.GetResult<Prisma.$AutomationEventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationEvent that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationEventFindFirstArgs} args - Arguments to find a AutomationEvent
+     * @example
+     * // Get one AutomationEvent
+     * const automationEvent = await prisma.automationEvent.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AutomationEventFindFirstArgs>(args?: SelectSubset<T, AutomationEventFindFirstArgs<ExtArgs>>): Prisma__AutomationEventClient<$Result.GetResult<Prisma.$AutomationEventPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationEvent that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationEventFindFirstOrThrowArgs} args - Arguments to find a AutomationEvent
+     * @example
+     * // Get one AutomationEvent
+     * const automationEvent = await prisma.automationEvent.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AutomationEventFindFirstOrThrowArgs>(args?: SelectSubset<T, AutomationEventFindFirstOrThrowArgs<ExtArgs>>): Prisma__AutomationEventClient<$Result.GetResult<Prisma.$AutomationEventPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AutomationEvents that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationEventFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AutomationEvents
+     * const automationEvents = await prisma.automationEvent.findMany()
+     * 
+     * // Get first 10 AutomationEvents
+     * const automationEvents = await prisma.automationEvent.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const automationEventWithIdOnly = await prisma.automationEvent.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AutomationEventFindManyArgs>(args?: SelectSubset<T, AutomationEventFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationEventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AutomationEvent.
+     * @param {AutomationEventCreateArgs} args - Arguments to create a AutomationEvent.
+     * @example
+     * // Create one AutomationEvent
+     * const AutomationEvent = await prisma.automationEvent.create({
+     *   data: {
+     *     // ... data to create a AutomationEvent
+     *   }
+     * })
+     * 
+     */
+    create<T extends AutomationEventCreateArgs>(args: SelectSubset<T, AutomationEventCreateArgs<ExtArgs>>): Prisma__AutomationEventClient<$Result.GetResult<Prisma.$AutomationEventPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AutomationEvents.
+     * @param {AutomationEventCreateManyArgs} args - Arguments to create many AutomationEvents.
+     * @example
+     * // Create many AutomationEvents
+     * const automationEvent = await prisma.automationEvent.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AutomationEventCreateManyArgs>(args?: SelectSubset<T, AutomationEventCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AutomationEvents and returns the data saved in the database.
+     * @param {AutomationEventCreateManyAndReturnArgs} args - Arguments to create many AutomationEvents.
+     * @example
+     * // Create many AutomationEvents
+     * const automationEvent = await prisma.automationEvent.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AutomationEvents and only return the `id`
+     * const automationEventWithIdOnly = await prisma.automationEvent.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AutomationEventCreateManyAndReturnArgs>(args?: SelectSubset<T, AutomationEventCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationEventPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AutomationEvent.
+     * @param {AutomationEventDeleteArgs} args - Arguments to delete one AutomationEvent.
+     * @example
+     * // Delete one AutomationEvent
+     * const AutomationEvent = await prisma.automationEvent.delete({
+     *   where: {
+     *     // ... filter to delete one AutomationEvent
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AutomationEventDeleteArgs>(args: SelectSubset<T, AutomationEventDeleteArgs<ExtArgs>>): Prisma__AutomationEventClient<$Result.GetResult<Prisma.$AutomationEventPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AutomationEvent.
+     * @param {AutomationEventUpdateArgs} args - Arguments to update one AutomationEvent.
+     * @example
+     * // Update one AutomationEvent
+     * const automationEvent = await prisma.automationEvent.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AutomationEventUpdateArgs>(args: SelectSubset<T, AutomationEventUpdateArgs<ExtArgs>>): Prisma__AutomationEventClient<$Result.GetResult<Prisma.$AutomationEventPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AutomationEvents.
+     * @param {AutomationEventDeleteManyArgs} args - Arguments to filter AutomationEvents to delete.
+     * @example
+     * // Delete a few AutomationEvents
+     * const { count } = await prisma.automationEvent.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AutomationEventDeleteManyArgs>(args?: SelectSubset<T, AutomationEventDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationEventUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AutomationEvents
+     * const automationEvent = await prisma.automationEvent.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AutomationEventUpdateManyArgs>(args: SelectSubset<T, AutomationEventUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationEvents and returns the data updated in the database.
+     * @param {AutomationEventUpdateManyAndReturnArgs} args - Arguments to update many AutomationEvents.
+     * @example
+     * // Update many AutomationEvents
+     * const automationEvent = await prisma.automationEvent.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AutomationEvents and only return the `id`
+     * const automationEventWithIdOnly = await prisma.automationEvent.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AutomationEventUpdateManyAndReturnArgs>(args: SelectSubset<T, AutomationEventUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationEventPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AutomationEvent.
+     * @param {AutomationEventUpsertArgs} args - Arguments to update or create a AutomationEvent.
+     * @example
+     * // Update or create a AutomationEvent
+     * const automationEvent = await prisma.automationEvent.upsert({
+     *   create: {
+     *     // ... data to create a AutomationEvent
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AutomationEvent we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AutomationEventUpsertArgs>(args: SelectSubset<T, AutomationEventUpsertArgs<ExtArgs>>): Prisma__AutomationEventClient<$Result.GetResult<Prisma.$AutomationEventPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AutomationEvents.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationEventCountArgs} args - Arguments to filter AutomationEvents to count.
+     * @example
+     * // Count the number of AutomationEvents
+     * const count = await prisma.automationEvent.count({
+     *   where: {
+     *     // ... the filter for the AutomationEvents we want to count
+     *   }
+     * })
+    **/
+    count<T extends AutomationEventCountArgs>(
+      args?: Subset<T, AutomationEventCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AutomationEventCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AutomationEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationEventAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AutomationEventAggregateArgs>(args: Subset<T, AutomationEventAggregateArgs>): Prisma.PrismaPromise<GetAutomationEventAggregateType<T>>
+
+    /**
+     * Group by AutomationEvent.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationEventGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AutomationEventGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AutomationEventGroupByArgs['orderBy'] }
+        : { orderBy?: AutomationEventGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AutomationEventGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAutomationEventGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AutomationEvent model
+   */
+  readonly fields: AutomationEventFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AutomationEvent.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AutomationEventClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AutomationEvent model
+   */
+  interface AutomationEventFieldRefs {
+    readonly id: FieldRef<"AutomationEvent", 'String'>
+    readonly dedupeKey: FieldRef<"AutomationEvent", 'String'>
+    readonly type: FieldRef<"AutomationEvent", 'String'>
+    readonly entityType: FieldRef<"AutomationEvent", 'String'>
+    readonly entityId: FieldRef<"AutomationEvent", 'String'>
+    readonly payload: FieldRef<"AutomationEvent", 'Json'>
+    readonly correlationId: FieldRef<"AutomationEvent", 'String'>
+    readonly occurredAt: FieldRef<"AutomationEvent", 'DateTime'>
+    readonly dispatchedAt: FieldRef<"AutomationEvent", 'DateTime'>
+    readonly attempts: FieldRef<"AutomationEvent", 'Int'>
+    readonly nextAttemptAt: FieldRef<"AutomationEvent", 'DateTime'>
+    readonly lastError: FieldRef<"AutomationEvent", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AutomationEvent findUnique
+   */
+  export type AutomationEventFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationEvent
+     */
+    select?: AutomationEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationEvent
+     */
+    omit?: AutomationEventOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationEvent to fetch.
+     */
+    where: AutomationEventWhereUniqueInput
+  }
+
+  /**
+   * AutomationEvent findUniqueOrThrow
+   */
+  export type AutomationEventFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationEvent
+     */
+    select?: AutomationEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationEvent
+     */
+    omit?: AutomationEventOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationEvent to fetch.
+     */
+    where: AutomationEventWhereUniqueInput
+  }
+
+  /**
+   * AutomationEvent findFirst
+   */
+  export type AutomationEventFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationEvent
+     */
+    select?: AutomationEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationEvent
+     */
+    omit?: AutomationEventOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationEvent to fetch.
+     */
+    where?: AutomationEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationEvents to fetch.
+     */
+    orderBy?: AutomationEventOrderByWithRelationInput | AutomationEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationEvents.
+     */
+    cursor?: AutomationEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationEvents.
+     */
+    distinct?: AutomationEventScalarFieldEnum | AutomationEventScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationEvent findFirstOrThrow
+   */
+  export type AutomationEventFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationEvent
+     */
+    select?: AutomationEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationEvent
+     */
+    omit?: AutomationEventOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationEvent to fetch.
+     */
+    where?: AutomationEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationEvents to fetch.
+     */
+    orderBy?: AutomationEventOrderByWithRelationInput | AutomationEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationEvents.
+     */
+    cursor?: AutomationEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationEvents.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationEvents.
+     */
+    distinct?: AutomationEventScalarFieldEnum | AutomationEventScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationEvent findMany
+   */
+  export type AutomationEventFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationEvent
+     */
+    select?: AutomationEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationEvent
+     */
+    omit?: AutomationEventOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationEvents to fetch.
+     */
+    where?: AutomationEventWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationEvents to fetch.
+     */
+    orderBy?: AutomationEventOrderByWithRelationInput | AutomationEventOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AutomationEvents.
+     */
+    cursor?: AutomationEventWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationEvents from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationEvents.
+     */
+    skip?: number
+    distinct?: AutomationEventScalarFieldEnum | AutomationEventScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationEvent create
+   */
+  export type AutomationEventCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationEvent
+     */
+    select?: AutomationEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationEvent
+     */
+    omit?: AutomationEventOmit<ExtArgs> | null
+    /**
+     * The data needed to create a AutomationEvent.
+     */
+    data: XOR<AutomationEventCreateInput, AutomationEventUncheckedCreateInput>
+  }
+
+  /**
+   * AutomationEvent createMany
+   */
+  export type AutomationEventCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AutomationEvents.
+     */
+    data: AutomationEventCreateManyInput | AutomationEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationEvent createManyAndReturn
+   */
+  export type AutomationEventCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationEvent
+     */
+    select?: AutomationEventSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationEvent
+     */
+    omit?: AutomationEventOmit<ExtArgs> | null
+    /**
+     * The data used to create many AutomationEvents.
+     */
+    data: AutomationEventCreateManyInput | AutomationEventCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationEvent update
+   */
+  export type AutomationEventUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationEvent
+     */
+    select?: AutomationEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationEvent
+     */
+    omit?: AutomationEventOmit<ExtArgs> | null
+    /**
+     * The data needed to update a AutomationEvent.
+     */
+    data: XOR<AutomationEventUpdateInput, AutomationEventUncheckedUpdateInput>
+    /**
+     * Choose, which AutomationEvent to update.
+     */
+    where: AutomationEventWhereUniqueInput
+  }
+
+  /**
+   * AutomationEvent updateMany
+   */
+  export type AutomationEventUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AutomationEvents.
+     */
+    data: XOR<AutomationEventUpdateManyMutationInput, AutomationEventUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationEvents to update
+     */
+    where?: AutomationEventWhereInput
+    /**
+     * Limit how many AutomationEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationEvent updateManyAndReturn
+   */
+  export type AutomationEventUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationEvent
+     */
+    select?: AutomationEventSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationEvent
+     */
+    omit?: AutomationEventOmit<ExtArgs> | null
+    /**
+     * The data used to update AutomationEvents.
+     */
+    data: XOR<AutomationEventUpdateManyMutationInput, AutomationEventUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationEvents to update
+     */
+    where?: AutomationEventWhereInput
+    /**
+     * Limit how many AutomationEvents to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationEvent upsert
+   */
+  export type AutomationEventUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationEvent
+     */
+    select?: AutomationEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationEvent
+     */
+    omit?: AutomationEventOmit<ExtArgs> | null
+    /**
+     * The filter to search for the AutomationEvent to update in case it exists.
+     */
+    where: AutomationEventWhereUniqueInput
+    /**
+     * In case the AutomationEvent found by the `where` argument doesn't exist, create a new AutomationEvent with this data.
+     */
+    create: XOR<AutomationEventCreateInput, AutomationEventUncheckedCreateInput>
+    /**
+     * In case the AutomationEvent was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AutomationEventUpdateInput, AutomationEventUncheckedUpdateInput>
+  }
+
+  /**
+   * AutomationEvent delete
+   */
+  export type AutomationEventDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationEvent
+     */
+    select?: AutomationEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationEvent
+     */
+    omit?: AutomationEventOmit<ExtArgs> | null
+    /**
+     * Filter which AutomationEvent to delete.
+     */
+    where: AutomationEventWhereUniqueInput
+  }
+
+  /**
+   * AutomationEvent deleteMany
+   */
+  export type AutomationEventDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationEvents to delete
+     */
+    where?: AutomationEventWhereInput
+    /**
+     * Limit how many AutomationEvents to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationEvent without action
+   */
+  export type AutomationEventDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationEvent
+     */
+    select?: AutomationEventSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationEvent
+     */
+    omit?: AutomationEventOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AutomationInbox
+   */
+
+  export type AggregateAutomationInbox = {
+    _count: AutomationInboxCountAggregateOutputType | null
+    _min: AutomationInboxMinAggregateOutputType | null
+    _max: AutomationInboxMaxAggregateOutputType | null
+  }
+
+  export type AutomationInboxMinAggregateOutputType = {
+    eventId: string | null
+    consumer: string | null
+    processedAt: Date | null
+  }
+
+  export type AutomationInboxMaxAggregateOutputType = {
+    eventId: string | null
+    consumer: string | null
+    processedAt: Date | null
+  }
+
+  export type AutomationInboxCountAggregateOutputType = {
+    eventId: number
+    consumer: number
+    processedAt: number
+    _all: number
+  }
+
+
+  export type AutomationInboxMinAggregateInputType = {
+    eventId?: true
+    consumer?: true
+    processedAt?: true
+  }
+
+  export type AutomationInboxMaxAggregateInputType = {
+    eventId?: true
+    consumer?: true
+    processedAt?: true
+  }
+
+  export type AutomationInboxCountAggregateInputType = {
+    eventId?: true
+    consumer?: true
+    processedAt?: true
+    _all?: true
+  }
+
+  export type AutomationInboxAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationInbox to aggregate.
+     */
+    where?: AutomationInboxWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationInboxes to fetch.
+     */
+    orderBy?: AutomationInboxOrderByWithRelationInput | AutomationInboxOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AutomationInboxWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationInboxes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationInboxes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AutomationInboxes
+    **/
+    _count?: true | AutomationInboxCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AutomationInboxMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AutomationInboxMaxAggregateInputType
+  }
+
+  export type GetAutomationInboxAggregateType<T extends AutomationInboxAggregateArgs> = {
+        [P in keyof T & keyof AggregateAutomationInbox]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAutomationInbox[P]>
+      : GetScalarType<T[P], AggregateAutomationInbox[P]>
+  }
+
+
+
+
+  export type AutomationInboxGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationInboxWhereInput
+    orderBy?: AutomationInboxOrderByWithAggregationInput | AutomationInboxOrderByWithAggregationInput[]
+    by: AutomationInboxScalarFieldEnum[] | AutomationInboxScalarFieldEnum
+    having?: AutomationInboxScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AutomationInboxCountAggregateInputType | true
+    _min?: AutomationInboxMinAggregateInputType
+    _max?: AutomationInboxMaxAggregateInputType
+  }
+
+  export type AutomationInboxGroupByOutputType = {
+    eventId: string
+    consumer: string
+    processedAt: Date
+    _count: AutomationInboxCountAggregateOutputType | null
+    _min: AutomationInboxMinAggregateOutputType | null
+    _max: AutomationInboxMaxAggregateOutputType | null
+  }
+
+  type GetAutomationInboxGroupByPayload<T extends AutomationInboxGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AutomationInboxGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AutomationInboxGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AutomationInboxGroupByOutputType[P]>
+            : GetScalarType<T[P], AutomationInboxGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AutomationInboxSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    eventId?: boolean
+    consumer?: boolean
+    processedAt?: boolean
+  }, ExtArgs["result"]["automationInbox"]>
+
+  export type AutomationInboxSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    eventId?: boolean
+    consumer?: boolean
+    processedAt?: boolean
+  }, ExtArgs["result"]["automationInbox"]>
+
+  export type AutomationInboxSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    eventId?: boolean
+    consumer?: boolean
+    processedAt?: boolean
+  }, ExtArgs["result"]["automationInbox"]>
+
+  export type AutomationInboxSelectScalar = {
+    eventId?: boolean
+    consumer?: boolean
+    processedAt?: boolean
+  }
+
+  export type AutomationInboxOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"eventId" | "consumer" | "processedAt", ExtArgs["result"]["automationInbox"]>
+
+  export type $AutomationInboxPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AutomationInbox"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      eventId: string
+      consumer: string
+      processedAt: Date
+    }, ExtArgs["result"]["automationInbox"]>
+    composites: {}
+  }
+
+  type AutomationInboxGetPayload<S extends boolean | null | undefined | AutomationInboxDefaultArgs> = $Result.GetResult<Prisma.$AutomationInboxPayload, S>
+
+  type AutomationInboxCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AutomationInboxFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AutomationInboxCountAggregateInputType | true
+    }
+
+  export interface AutomationInboxDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AutomationInbox'], meta: { name: 'AutomationInbox' } }
+    /**
+     * Find zero or one AutomationInbox that matches the filter.
+     * @param {AutomationInboxFindUniqueArgs} args - Arguments to find a AutomationInbox
+     * @example
+     * // Get one AutomationInbox
+     * const automationInbox = await prisma.automationInbox.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AutomationInboxFindUniqueArgs>(args: SelectSubset<T, AutomationInboxFindUniqueArgs<ExtArgs>>): Prisma__AutomationInboxClient<$Result.GetResult<Prisma.$AutomationInboxPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AutomationInbox that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AutomationInboxFindUniqueOrThrowArgs} args - Arguments to find a AutomationInbox
+     * @example
+     * // Get one AutomationInbox
+     * const automationInbox = await prisma.automationInbox.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AutomationInboxFindUniqueOrThrowArgs>(args: SelectSubset<T, AutomationInboxFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AutomationInboxClient<$Result.GetResult<Prisma.$AutomationInboxPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationInbox that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationInboxFindFirstArgs} args - Arguments to find a AutomationInbox
+     * @example
+     * // Get one AutomationInbox
+     * const automationInbox = await prisma.automationInbox.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AutomationInboxFindFirstArgs>(args?: SelectSubset<T, AutomationInboxFindFirstArgs<ExtArgs>>): Prisma__AutomationInboxClient<$Result.GetResult<Prisma.$AutomationInboxPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationInbox that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationInboxFindFirstOrThrowArgs} args - Arguments to find a AutomationInbox
+     * @example
+     * // Get one AutomationInbox
+     * const automationInbox = await prisma.automationInbox.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AutomationInboxFindFirstOrThrowArgs>(args?: SelectSubset<T, AutomationInboxFindFirstOrThrowArgs<ExtArgs>>): Prisma__AutomationInboxClient<$Result.GetResult<Prisma.$AutomationInboxPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AutomationInboxes that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationInboxFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AutomationInboxes
+     * const automationInboxes = await prisma.automationInbox.findMany()
+     * 
+     * // Get first 10 AutomationInboxes
+     * const automationInboxes = await prisma.automationInbox.findMany({ take: 10 })
+     * 
+     * // Only select the `eventId`
+     * const automationInboxWithEventIdOnly = await prisma.automationInbox.findMany({ select: { eventId: true } })
+     * 
+     */
+    findMany<T extends AutomationInboxFindManyArgs>(args?: SelectSubset<T, AutomationInboxFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationInboxPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AutomationInbox.
+     * @param {AutomationInboxCreateArgs} args - Arguments to create a AutomationInbox.
+     * @example
+     * // Create one AutomationInbox
+     * const AutomationInbox = await prisma.automationInbox.create({
+     *   data: {
+     *     // ... data to create a AutomationInbox
+     *   }
+     * })
+     * 
+     */
+    create<T extends AutomationInboxCreateArgs>(args: SelectSubset<T, AutomationInboxCreateArgs<ExtArgs>>): Prisma__AutomationInboxClient<$Result.GetResult<Prisma.$AutomationInboxPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AutomationInboxes.
+     * @param {AutomationInboxCreateManyArgs} args - Arguments to create many AutomationInboxes.
+     * @example
+     * // Create many AutomationInboxes
+     * const automationInbox = await prisma.automationInbox.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AutomationInboxCreateManyArgs>(args?: SelectSubset<T, AutomationInboxCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AutomationInboxes and returns the data saved in the database.
+     * @param {AutomationInboxCreateManyAndReturnArgs} args - Arguments to create many AutomationInboxes.
+     * @example
+     * // Create many AutomationInboxes
+     * const automationInbox = await prisma.automationInbox.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AutomationInboxes and only return the `eventId`
+     * const automationInboxWithEventIdOnly = await prisma.automationInbox.createManyAndReturn({
+     *   select: { eventId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AutomationInboxCreateManyAndReturnArgs>(args?: SelectSubset<T, AutomationInboxCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationInboxPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AutomationInbox.
+     * @param {AutomationInboxDeleteArgs} args - Arguments to delete one AutomationInbox.
+     * @example
+     * // Delete one AutomationInbox
+     * const AutomationInbox = await prisma.automationInbox.delete({
+     *   where: {
+     *     // ... filter to delete one AutomationInbox
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AutomationInboxDeleteArgs>(args: SelectSubset<T, AutomationInboxDeleteArgs<ExtArgs>>): Prisma__AutomationInboxClient<$Result.GetResult<Prisma.$AutomationInboxPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AutomationInbox.
+     * @param {AutomationInboxUpdateArgs} args - Arguments to update one AutomationInbox.
+     * @example
+     * // Update one AutomationInbox
+     * const automationInbox = await prisma.automationInbox.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AutomationInboxUpdateArgs>(args: SelectSubset<T, AutomationInboxUpdateArgs<ExtArgs>>): Prisma__AutomationInboxClient<$Result.GetResult<Prisma.$AutomationInboxPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AutomationInboxes.
+     * @param {AutomationInboxDeleteManyArgs} args - Arguments to filter AutomationInboxes to delete.
+     * @example
+     * // Delete a few AutomationInboxes
+     * const { count } = await prisma.automationInbox.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AutomationInboxDeleteManyArgs>(args?: SelectSubset<T, AutomationInboxDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationInboxes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationInboxUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AutomationInboxes
+     * const automationInbox = await prisma.automationInbox.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AutomationInboxUpdateManyArgs>(args: SelectSubset<T, AutomationInboxUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationInboxes and returns the data updated in the database.
+     * @param {AutomationInboxUpdateManyAndReturnArgs} args - Arguments to update many AutomationInboxes.
+     * @example
+     * // Update many AutomationInboxes
+     * const automationInbox = await prisma.automationInbox.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AutomationInboxes and only return the `eventId`
+     * const automationInboxWithEventIdOnly = await prisma.automationInbox.updateManyAndReturn({
+     *   select: { eventId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AutomationInboxUpdateManyAndReturnArgs>(args: SelectSubset<T, AutomationInboxUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationInboxPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AutomationInbox.
+     * @param {AutomationInboxUpsertArgs} args - Arguments to update or create a AutomationInbox.
+     * @example
+     * // Update or create a AutomationInbox
+     * const automationInbox = await prisma.automationInbox.upsert({
+     *   create: {
+     *     // ... data to create a AutomationInbox
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AutomationInbox we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AutomationInboxUpsertArgs>(args: SelectSubset<T, AutomationInboxUpsertArgs<ExtArgs>>): Prisma__AutomationInboxClient<$Result.GetResult<Prisma.$AutomationInboxPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AutomationInboxes.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationInboxCountArgs} args - Arguments to filter AutomationInboxes to count.
+     * @example
+     * // Count the number of AutomationInboxes
+     * const count = await prisma.automationInbox.count({
+     *   where: {
+     *     // ... the filter for the AutomationInboxes we want to count
+     *   }
+     * })
+    **/
+    count<T extends AutomationInboxCountArgs>(
+      args?: Subset<T, AutomationInboxCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AutomationInboxCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AutomationInbox.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationInboxAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AutomationInboxAggregateArgs>(args: Subset<T, AutomationInboxAggregateArgs>): Prisma.PrismaPromise<GetAutomationInboxAggregateType<T>>
+
+    /**
+     * Group by AutomationInbox.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationInboxGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AutomationInboxGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AutomationInboxGroupByArgs['orderBy'] }
+        : { orderBy?: AutomationInboxGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AutomationInboxGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAutomationInboxGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AutomationInbox model
+   */
+  readonly fields: AutomationInboxFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AutomationInbox.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AutomationInboxClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AutomationInbox model
+   */
+  interface AutomationInboxFieldRefs {
+    readonly eventId: FieldRef<"AutomationInbox", 'String'>
+    readonly consumer: FieldRef<"AutomationInbox", 'String'>
+    readonly processedAt: FieldRef<"AutomationInbox", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AutomationInbox findUnique
+   */
+  export type AutomationInboxFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationInbox
+     */
+    select?: AutomationInboxSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationInbox
+     */
+    omit?: AutomationInboxOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationInbox to fetch.
+     */
+    where: AutomationInboxWhereUniqueInput
+  }
+
+  /**
+   * AutomationInbox findUniqueOrThrow
+   */
+  export type AutomationInboxFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationInbox
+     */
+    select?: AutomationInboxSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationInbox
+     */
+    omit?: AutomationInboxOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationInbox to fetch.
+     */
+    where: AutomationInboxWhereUniqueInput
+  }
+
+  /**
+   * AutomationInbox findFirst
+   */
+  export type AutomationInboxFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationInbox
+     */
+    select?: AutomationInboxSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationInbox
+     */
+    omit?: AutomationInboxOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationInbox to fetch.
+     */
+    where?: AutomationInboxWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationInboxes to fetch.
+     */
+    orderBy?: AutomationInboxOrderByWithRelationInput | AutomationInboxOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationInboxes.
+     */
+    cursor?: AutomationInboxWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationInboxes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationInboxes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationInboxes.
+     */
+    distinct?: AutomationInboxScalarFieldEnum | AutomationInboxScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationInbox findFirstOrThrow
+   */
+  export type AutomationInboxFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationInbox
+     */
+    select?: AutomationInboxSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationInbox
+     */
+    omit?: AutomationInboxOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationInbox to fetch.
+     */
+    where?: AutomationInboxWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationInboxes to fetch.
+     */
+    orderBy?: AutomationInboxOrderByWithRelationInput | AutomationInboxOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationInboxes.
+     */
+    cursor?: AutomationInboxWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationInboxes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationInboxes.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationInboxes.
+     */
+    distinct?: AutomationInboxScalarFieldEnum | AutomationInboxScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationInbox findMany
+   */
+  export type AutomationInboxFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationInbox
+     */
+    select?: AutomationInboxSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationInbox
+     */
+    omit?: AutomationInboxOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationInboxes to fetch.
+     */
+    where?: AutomationInboxWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationInboxes to fetch.
+     */
+    orderBy?: AutomationInboxOrderByWithRelationInput | AutomationInboxOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AutomationInboxes.
+     */
+    cursor?: AutomationInboxWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationInboxes from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationInboxes.
+     */
+    skip?: number
+    distinct?: AutomationInboxScalarFieldEnum | AutomationInboxScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationInbox create
+   */
+  export type AutomationInboxCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationInbox
+     */
+    select?: AutomationInboxSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationInbox
+     */
+    omit?: AutomationInboxOmit<ExtArgs> | null
+    /**
+     * The data needed to create a AutomationInbox.
+     */
+    data: XOR<AutomationInboxCreateInput, AutomationInboxUncheckedCreateInput>
+  }
+
+  /**
+   * AutomationInbox createMany
+   */
+  export type AutomationInboxCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AutomationInboxes.
+     */
+    data: AutomationInboxCreateManyInput | AutomationInboxCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationInbox createManyAndReturn
+   */
+  export type AutomationInboxCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationInbox
+     */
+    select?: AutomationInboxSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationInbox
+     */
+    omit?: AutomationInboxOmit<ExtArgs> | null
+    /**
+     * The data used to create many AutomationInboxes.
+     */
+    data: AutomationInboxCreateManyInput | AutomationInboxCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationInbox update
+   */
+  export type AutomationInboxUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationInbox
+     */
+    select?: AutomationInboxSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationInbox
+     */
+    omit?: AutomationInboxOmit<ExtArgs> | null
+    /**
+     * The data needed to update a AutomationInbox.
+     */
+    data: XOR<AutomationInboxUpdateInput, AutomationInboxUncheckedUpdateInput>
+    /**
+     * Choose, which AutomationInbox to update.
+     */
+    where: AutomationInboxWhereUniqueInput
+  }
+
+  /**
+   * AutomationInbox updateMany
+   */
+  export type AutomationInboxUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AutomationInboxes.
+     */
+    data: XOR<AutomationInboxUpdateManyMutationInput, AutomationInboxUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationInboxes to update
+     */
+    where?: AutomationInboxWhereInput
+    /**
+     * Limit how many AutomationInboxes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationInbox updateManyAndReturn
+   */
+  export type AutomationInboxUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationInbox
+     */
+    select?: AutomationInboxSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationInbox
+     */
+    omit?: AutomationInboxOmit<ExtArgs> | null
+    /**
+     * The data used to update AutomationInboxes.
+     */
+    data: XOR<AutomationInboxUpdateManyMutationInput, AutomationInboxUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationInboxes to update
+     */
+    where?: AutomationInboxWhereInput
+    /**
+     * Limit how many AutomationInboxes to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationInbox upsert
+   */
+  export type AutomationInboxUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationInbox
+     */
+    select?: AutomationInboxSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationInbox
+     */
+    omit?: AutomationInboxOmit<ExtArgs> | null
+    /**
+     * The filter to search for the AutomationInbox to update in case it exists.
+     */
+    where: AutomationInboxWhereUniqueInput
+    /**
+     * In case the AutomationInbox found by the `where` argument doesn't exist, create a new AutomationInbox with this data.
+     */
+    create: XOR<AutomationInboxCreateInput, AutomationInboxUncheckedCreateInput>
+    /**
+     * In case the AutomationInbox was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AutomationInboxUpdateInput, AutomationInboxUncheckedUpdateInput>
+  }
+
+  /**
+   * AutomationInbox delete
+   */
+  export type AutomationInboxDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationInbox
+     */
+    select?: AutomationInboxSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationInbox
+     */
+    omit?: AutomationInboxOmit<ExtArgs> | null
+    /**
+     * Filter which AutomationInbox to delete.
+     */
+    where: AutomationInboxWhereUniqueInput
+  }
+
+  /**
+   * AutomationInbox deleteMany
+   */
+  export type AutomationInboxDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationInboxes to delete
+     */
+    where?: AutomationInboxWhereInput
+    /**
+     * Limit how many AutomationInboxes to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationInbox without action
+   */
+  export type AutomationInboxDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationInbox
+     */
+    select?: AutomationInboxSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationInbox
+     */
+    omit?: AutomationInboxOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AutomationRun
+   */
+
+  export type AggregateAutomationRun = {
+    _count: AutomationRunCountAggregateOutputType | null
+    _avg: AutomationRunAvgAggregateOutputType | null
+    _sum: AutomationRunSumAggregateOutputType | null
+    _min: AutomationRunMinAggregateOutputType | null
+    _max: AutomationRunMaxAggregateOutputType | null
+  }
+
+  export type AutomationRunAvgAggregateOutputType = {
+    version: number | null
+  }
+
+  export type AutomationRunSumAggregateOutputType = {
+    version: number | null
+  }
+
+  export type AutomationRunMinAggregateOutputType = {
+    id: string | null
+    workflowKey: string | null
+    version: number | null
+    eventId: string | null
+    entityType: string | null
+    entityId: string | null
+    status: string | null
+    cursor: string | null
+    waitKey: string | null
+    error: string | null
+    correlationId: string | null
+    startedAt: Date | null
+    updatedAt: Date | null
+    finishedAt: Date | null
+  }
+
+  export type AutomationRunMaxAggregateOutputType = {
+    id: string | null
+    workflowKey: string | null
+    version: number | null
+    eventId: string | null
+    entityType: string | null
+    entityId: string | null
+    status: string | null
+    cursor: string | null
+    waitKey: string | null
+    error: string | null
+    correlationId: string | null
+    startedAt: Date | null
+    updatedAt: Date | null
+    finishedAt: Date | null
+  }
+
+  export type AutomationRunCountAggregateOutputType = {
+    id: number
+    workflowKey: number
+    version: number
+    eventId: number
+    entityType: number
+    entityId: number
+    status: number
+    cursor: number
+    waitKey: number
+    ctx: number
+    error: number
+    correlationId: number
+    startedAt: number
+    updatedAt: number
+    finishedAt: number
+    _all: number
+  }
+
+
+  export type AutomationRunAvgAggregateInputType = {
+    version?: true
+  }
+
+  export type AutomationRunSumAggregateInputType = {
+    version?: true
+  }
+
+  export type AutomationRunMinAggregateInputType = {
+    id?: true
+    workflowKey?: true
+    version?: true
+    eventId?: true
+    entityType?: true
+    entityId?: true
+    status?: true
+    cursor?: true
+    waitKey?: true
+    error?: true
+    correlationId?: true
+    startedAt?: true
+    updatedAt?: true
+    finishedAt?: true
+  }
+
+  export type AutomationRunMaxAggregateInputType = {
+    id?: true
+    workflowKey?: true
+    version?: true
+    eventId?: true
+    entityType?: true
+    entityId?: true
+    status?: true
+    cursor?: true
+    waitKey?: true
+    error?: true
+    correlationId?: true
+    startedAt?: true
+    updatedAt?: true
+    finishedAt?: true
+  }
+
+  export type AutomationRunCountAggregateInputType = {
+    id?: true
+    workflowKey?: true
+    version?: true
+    eventId?: true
+    entityType?: true
+    entityId?: true
+    status?: true
+    cursor?: true
+    waitKey?: true
+    ctx?: true
+    error?: true
+    correlationId?: true
+    startedAt?: true
+    updatedAt?: true
+    finishedAt?: true
+    _all?: true
+  }
+
+  export type AutomationRunAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationRun to aggregate.
+     */
+    where?: AutomationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationRuns to fetch.
+     */
+    orderBy?: AutomationRunOrderByWithRelationInput | AutomationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AutomationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AutomationRuns
+    **/
+    _count?: true | AutomationRunCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AutomationRunAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AutomationRunSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AutomationRunMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AutomationRunMaxAggregateInputType
+  }
+
+  export type GetAutomationRunAggregateType<T extends AutomationRunAggregateArgs> = {
+        [P in keyof T & keyof AggregateAutomationRun]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAutomationRun[P]>
+      : GetScalarType<T[P], AggregateAutomationRun[P]>
+  }
+
+
+
+
+  export type AutomationRunGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationRunWhereInput
+    orderBy?: AutomationRunOrderByWithAggregationInput | AutomationRunOrderByWithAggregationInput[]
+    by: AutomationRunScalarFieldEnum[] | AutomationRunScalarFieldEnum
+    having?: AutomationRunScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AutomationRunCountAggregateInputType | true
+    _avg?: AutomationRunAvgAggregateInputType
+    _sum?: AutomationRunSumAggregateInputType
+    _min?: AutomationRunMinAggregateInputType
+    _max?: AutomationRunMaxAggregateInputType
+  }
+
+  export type AutomationRunGroupByOutputType = {
+    id: string
+    workflowKey: string
+    version: number
+    eventId: string
+    entityType: string
+    entityId: string
+    status: string
+    cursor: string
+    waitKey: string | null
+    ctx: JsonValue
+    error: string | null
+    correlationId: string
+    startedAt: Date
+    updatedAt: Date
+    finishedAt: Date | null
+    _count: AutomationRunCountAggregateOutputType | null
+    _avg: AutomationRunAvgAggregateOutputType | null
+    _sum: AutomationRunSumAggregateOutputType | null
+    _min: AutomationRunMinAggregateOutputType | null
+    _max: AutomationRunMaxAggregateOutputType | null
+  }
+
+  type GetAutomationRunGroupByPayload<T extends AutomationRunGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AutomationRunGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AutomationRunGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AutomationRunGroupByOutputType[P]>
+            : GetScalarType<T[P], AutomationRunGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AutomationRunSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowKey?: boolean
+    version?: boolean
+    eventId?: boolean
+    entityType?: boolean
+    entityId?: boolean
+    status?: boolean
+    cursor?: boolean
+    waitKey?: boolean
+    ctx?: boolean
+    error?: boolean
+    correlationId?: boolean
+    startedAt?: boolean
+    updatedAt?: boolean
+    finishedAt?: boolean
+    steps?: boolean | AutomationRun$stepsArgs<ExtArgs>
+    _count?: boolean | AutomationRunCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationRun"]>
+
+  export type AutomationRunSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowKey?: boolean
+    version?: boolean
+    eventId?: boolean
+    entityType?: boolean
+    entityId?: boolean
+    status?: boolean
+    cursor?: boolean
+    waitKey?: boolean
+    ctx?: boolean
+    error?: boolean
+    correlationId?: boolean
+    startedAt?: boolean
+    updatedAt?: boolean
+    finishedAt?: boolean
+  }, ExtArgs["result"]["automationRun"]>
+
+  export type AutomationRunSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    workflowKey?: boolean
+    version?: boolean
+    eventId?: boolean
+    entityType?: boolean
+    entityId?: boolean
+    status?: boolean
+    cursor?: boolean
+    waitKey?: boolean
+    ctx?: boolean
+    error?: boolean
+    correlationId?: boolean
+    startedAt?: boolean
+    updatedAt?: boolean
+    finishedAt?: boolean
+  }, ExtArgs["result"]["automationRun"]>
+
+  export type AutomationRunSelectScalar = {
+    id?: boolean
+    workflowKey?: boolean
+    version?: boolean
+    eventId?: boolean
+    entityType?: boolean
+    entityId?: boolean
+    status?: boolean
+    cursor?: boolean
+    waitKey?: boolean
+    ctx?: boolean
+    error?: boolean
+    correlationId?: boolean
+    startedAt?: boolean
+    updatedAt?: boolean
+    finishedAt?: boolean
+  }
+
+  export type AutomationRunOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "workflowKey" | "version" | "eventId" | "entityType" | "entityId" | "status" | "cursor" | "waitKey" | "ctx" | "error" | "correlationId" | "startedAt" | "updatedAt" | "finishedAt", ExtArgs["result"]["automationRun"]>
+  export type AutomationRunInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    steps?: boolean | AutomationRun$stepsArgs<ExtArgs>
+    _count?: boolean | AutomationRunCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type AutomationRunIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type AutomationRunIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $AutomationRunPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AutomationRun"
+    objects: {
+      steps: Prisma.$AutomationRunStepPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      workflowKey: string
+      version: number
+      eventId: string
+      entityType: string
+      entityId: string
+      status: string
+      cursor: string
+      waitKey: string | null
+      ctx: Prisma.JsonValue
+      error: string | null
+      correlationId: string
+      startedAt: Date
+      updatedAt: Date
+      finishedAt: Date | null
+    }, ExtArgs["result"]["automationRun"]>
+    composites: {}
+  }
+
+  type AutomationRunGetPayload<S extends boolean | null | undefined | AutomationRunDefaultArgs> = $Result.GetResult<Prisma.$AutomationRunPayload, S>
+
+  type AutomationRunCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AutomationRunFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AutomationRunCountAggregateInputType | true
+    }
+
+  export interface AutomationRunDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AutomationRun'], meta: { name: 'AutomationRun' } }
+    /**
+     * Find zero or one AutomationRun that matches the filter.
+     * @param {AutomationRunFindUniqueArgs} args - Arguments to find a AutomationRun
+     * @example
+     * // Get one AutomationRun
+     * const automationRun = await prisma.automationRun.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AutomationRunFindUniqueArgs>(args: SelectSubset<T, AutomationRunFindUniqueArgs<ExtArgs>>): Prisma__AutomationRunClient<$Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AutomationRun that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AutomationRunFindUniqueOrThrowArgs} args - Arguments to find a AutomationRun
+     * @example
+     * // Get one AutomationRun
+     * const automationRun = await prisma.automationRun.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AutomationRunFindUniqueOrThrowArgs>(args: SelectSubset<T, AutomationRunFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AutomationRunClient<$Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationRun that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRunFindFirstArgs} args - Arguments to find a AutomationRun
+     * @example
+     * // Get one AutomationRun
+     * const automationRun = await prisma.automationRun.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AutomationRunFindFirstArgs>(args?: SelectSubset<T, AutomationRunFindFirstArgs<ExtArgs>>): Prisma__AutomationRunClient<$Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationRun that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRunFindFirstOrThrowArgs} args - Arguments to find a AutomationRun
+     * @example
+     * // Get one AutomationRun
+     * const automationRun = await prisma.automationRun.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AutomationRunFindFirstOrThrowArgs>(args?: SelectSubset<T, AutomationRunFindFirstOrThrowArgs<ExtArgs>>): Prisma__AutomationRunClient<$Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AutomationRuns that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRunFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AutomationRuns
+     * const automationRuns = await prisma.automationRun.findMany()
+     * 
+     * // Get first 10 AutomationRuns
+     * const automationRuns = await prisma.automationRun.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const automationRunWithIdOnly = await prisma.automationRun.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AutomationRunFindManyArgs>(args?: SelectSubset<T, AutomationRunFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AutomationRun.
+     * @param {AutomationRunCreateArgs} args - Arguments to create a AutomationRun.
+     * @example
+     * // Create one AutomationRun
+     * const AutomationRun = await prisma.automationRun.create({
+     *   data: {
+     *     // ... data to create a AutomationRun
+     *   }
+     * })
+     * 
+     */
+    create<T extends AutomationRunCreateArgs>(args: SelectSubset<T, AutomationRunCreateArgs<ExtArgs>>): Prisma__AutomationRunClient<$Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AutomationRuns.
+     * @param {AutomationRunCreateManyArgs} args - Arguments to create many AutomationRuns.
+     * @example
+     * // Create many AutomationRuns
+     * const automationRun = await prisma.automationRun.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AutomationRunCreateManyArgs>(args?: SelectSubset<T, AutomationRunCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AutomationRuns and returns the data saved in the database.
+     * @param {AutomationRunCreateManyAndReturnArgs} args - Arguments to create many AutomationRuns.
+     * @example
+     * // Create many AutomationRuns
+     * const automationRun = await prisma.automationRun.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AutomationRuns and only return the `id`
+     * const automationRunWithIdOnly = await prisma.automationRun.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AutomationRunCreateManyAndReturnArgs>(args?: SelectSubset<T, AutomationRunCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AutomationRun.
+     * @param {AutomationRunDeleteArgs} args - Arguments to delete one AutomationRun.
+     * @example
+     * // Delete one AutomationRun
+     * const AutomationRun = await prisma.automationRun.delete({
+     *   where: {
+     *     // ... filter to delete one AutomationRun
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AutomationRunDeleteArgs>(args: SelectSubset<T, AutomationRunDeleteArgs<ExtArgs>>): Prisma__AutomationRunClient<$Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AutomationRun.
+     * @param {AutomationRunUpdateArgs} args - Arguments to update one AutomationRun.
+     * @example
+     * // Update one AutomationRun
+     * const automationRun = await prisma.automationRun.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AutomationRunUpdateArgs>(args: SelectSubset<T, AutomationRunUpdateArgs<ExtArgs>>): Prisma__AutomationRunClient<$Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AutomationRuns.
+     * @param {AutomationRunDeleteManyArgs} args - Arguments to filter AutomationRuns to delete.
+     * @example
+     * // Delete a few AutomationRuns
+     * const { count } = await prisma.automationRun.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AutomationRunDeleteManyArgs>(args?: SelectSubset<T, AutomationRunDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRunUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AutomationRuns
+     * const automationRun = await prisma.automationRun.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AutomationRunUpdateManyArgs>(args: SelectSubset<T, AutomationRunUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationRuns and returns the data updated in the database.
+     * @param {AutomationRunUpdateManyAndReturnArgs} args - Arguments to update many AutomationRuns.
+     * @example
+     * // Update many AutomationRuns
+     * const automationRun = await prisma.automationRun.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AutomationRuns and only return the `id`
+     * const automationRunWithIdOnly = await prisma.automationRun.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AutomationRunUpdateManyAndReturnArgs>(args: SelectSubset<T, AutomationRunUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AutomationRun.
+     * @param {AutomationRunUpsertArgs} args - Arguments to update or create a AutomationRun.
+     * @example
+     * // Update or create a AutomationRun
+     * const automationRun = await prisma.automationRun.upsert({
+     *   create: {
+     *     // ... data to create a AutomationRun
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AutomationRun we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AutomationRunUpsertArgs>(args: SelectSubset<T, AutomationRunUpsertArgs<ExtArgs>>): Prisma__AutomationRunClient<$Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AutomationRuns.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRunCountArgs} args - Arguments to filter AutomationRuns to count.
+     * @example
+     * // Count the number of AutomationRuns
+     * const count = await prisma.automationRun.count({
+     *   where: {
+     *     // ... the filter for the AutomationRuns we want to count
+     *   }
+     * })
+    **/
+    count<T extends AutomationRunCountArgs>(
+      args?: Subset<T, AutomationRunCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AutomationRunCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AutomationRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRunAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AutomationRunAggregateArgs>(args: Subset<T, AutomationRunAggregateArgs>): Prisma.PrismaPromise<GetAutomationRunAggregateType<T>>
+
+    /**
+     * Group by AutomationRun.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRunGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AutomationRunGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AutomationRunGroupByArgs['orderBy'] }
+        : { orderBy?: AutomationRunGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AutomationRunGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAutomationRunGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AutomationRun model
+   */
+  readonly fields: AutomationRunFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AutomationRun.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AutomationRunClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    steps<T extends AutomationRun$stepsArgs<ExtArgs> = {}>(args?: Subset<T, AutomationRun$stepsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationRunStepPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AutomationRun model
+   */
+  interface AutomationRunFieldRefs {
+    readonly id: FieldRef<"AutomationRun", 'String'>
+    readonly workflowKey: FieldRef<"AutomationRun", 'String'>
+    readonly version: FieldRef<"AutomationRun", 'Int'>
+    readonly eventId: FieldRef<"AutomationRun", 'String'>
+    readonly entityType: FieldRef<"AutomationRun", 'String'>
+    readonly entityId: FieldRef<"AutomationRun", 'String'>
+    readonly status: FieldRef<"AutomationRun", 'String'>
+    readonly cursor: FieldRef<"AutomationRun", 'String'>
+    readonly waitKey: FieldRef<"AutomationRun", 'String'>
+    readonly ctx: FieldRef<"AutomationRun", 'Json'>
+    readonly error: FieldRef<"AutomationRun", 'String'>
+    readonly correlationId: FieldRef<"AutomationRun", 'String'>
+    readonly startedAt: FieldRef<"AutomationRun", 'DateTime'>
+    readonly updatedAt: FieldRef<"AutomationRun", 'DateTime'>
+    readonly finishedAt: FieldRef<"AutomationRun", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AutomationRun findUnique
+   */
+  export type AutomationRunFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRun
+     */
+    select?: AutomationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRun
+     */
+    omit?: AutomationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRun to fetch.
+     */
+    where: AutomationRunWhereUniqueInput
+  }
+
+  /**
+   * AutomationRun findUniqueOrThrow
+   */
+  export type AutomationRunFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRun
+     */
+    select?: AutomationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRun
+     */
+    omit?: AutomationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRun to fetch.
+     */
+    where: AutomationRunWhereUniqueInput
+  }
+
+  /**
+   * AutomationRun findFirst
+   */
+  export type AutomationRunFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRun
+     */
+    select?: AutomationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRun
+     */
+    omit?: AutomationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRun to fetch.
+     */
+    where?: AutomationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationRuns to fetch.
+     */
+    orderBy?: AutomationRunOrderByWithRelationInput | AutomationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationRuns.
+     */
+    cursor?: AutomationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationRuns.
+     */
+    distinct?: AutomationRunScalarFieldEnum | AutomationRunScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationRun findFirstOrThrow
+   */
+  export type AutomationRunFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRun
+     */
+    select?: AutomationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRun
+     */
+    omit?: AutomationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRun to fetch.
+     */
+    where?: AutomationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationRuns to fetch.
+     */
+    orderBy?: AutomationRunOrderByWithRelationInput | AutomationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationRuns.
+     */
+    cursor?: AutomationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationRuns.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationRuns.
+     */
+    distinct?: AutomationRunScalarFieldEnum | AutomationRunScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationRun findMany
+   */
+  export type AutomationRunFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRun
+     */
+    select?: AutomationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRun
+     */
+    omit?: AutomationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRuns to fetch.
+     */
+    where?: AutomationRunWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationRuns to fetch.
+     */
+    orderBy?: AutomationRunOrderByWithRelationInput | AutomationRunOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AutomationRuns.
+     */
+    cursor?: AutomationRunWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationRuns from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationRuns.
+     */
+    skip?: number
+    distinct?: AutomationRunScalarFieldEnum | AutomationRunScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationRun create
+   */
+  export type AutomationRunCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRun
+     */
+    select?: AutomationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRun
+     */
+    omit?: AutomationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AutomationRun.
+     */
+    data: XOR<AutomationRunCreateInput, AutomationRunUncheckedCreateInput>
+  }
+
+  /**
+   * AutomationRun createMany
+   */
+  export type AutomationRunCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AutomationRuns.
+     */
+    data: AutomationRunCreateManyInput | AutomationRunCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationRun createManyAndReturn
+   */
+  export type AutomationRunCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRun
+     */
+    select?: AutomationRunSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRun
+     */
+    omit?: AutomationRunOmit<ExtArgs> | null
+    /**
+     * The data used to create many AutomationRuns.
+     */
+    data: AutomationRunCreateManyInput | AutomationRunCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationRun update
+   */
+  export type AutomationRunUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRun
+     */
+    select?: AutomationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRun
+     */
+    omit?: AutomationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AutomationRun.
+     */
+    data: XOR<AutomationRunUpdateInput, AutomationRunUncheckedUpdateInput>
+    /**
+     * Choose, which AutomationRun to update.
+     */
+    where: AutomationRunWhereUniqueInput
+  }
+
+  /**
+   * AutomationRun updateMany
+   */
+  export type AutomationRunUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AutomationRuns.
+     */
+    data: XOR<AutomationRunUpdateManyMutationInput, AutomationRunUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationRuns to update
+     */
+    where?: AutomationRunWhereInput
+    /**
+     * Limit how many AutomationRuns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationRun updateManyAndReturn
+   */
+  export type AutomationRunUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRun
+     */
+    select?: AutomationRunSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRun
+     */
+    omit?: AutomationRunOmit<ExtArgs> | null
+    /**
+     * The data used to update AutomationRuns.
+     */
+    data: XOR<AutomationRunUpdateManyMutationInput, AutomationRunUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationRuns to update
+     */
+    where?: AutomationRunWhereInput
+    /**
+     * Limit how many AutomationRuns to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationRun upsert
+   */
+  export type AutomationRunUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRun
+     */
+    select?: AutomationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRun
+     */
+    omit?: AutomationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AutomationRun to update in case it exists.
+     */
+    where: AutomationRunWhereUniqueInput
+    /**
+     * In case the AutomationRun found by the `where` argument doesn't exist, create a new AutomationRun with this data.
+     */
+    create: XOR<AutomationRunCreateInput, AutomationRunUncheckedCreateInput>
+    /**
+     * In case the AutomationRun was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AutomationRunUpdateInput, AutomationRunUncheckedUpdateInput>
+  }
+
+  /**
+   * AutomationRun delete
+   */
+  export type AutomationRunDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRun
+     */
+    select?: AutomationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRun
+     */
+    omit?: AutomationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunInclude<ExtArgs> | null
+    /**
+     * Filter which AutomationRun to delete.
+     */
+    where: AutomationRunWhereUniqueInput
+  }
+
+  /**
+   * AutomationRun deleteMany
+   */
+  export type AutomationRunDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationRuns to delete
+     */
+    where?: AutomationRunWhereInput
+    /**
+     * Limit how many AutomationRuns to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationRun.steps
+   */
+  export type AutomationRun$stepsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRunStep
+     */
+    select?: AutomationRunStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRunStep
+     */
+    omit?: AutomationRunStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunStepInclude<ExtArgs> | null
+    where?: AutomationRunStepWhereInput
+    orderBy?: AutomationRunStepOrderByWithRelationInput | AutomationRunStepOrderByWithRelationInput[]
+    cursor?: AutomationRunStepWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: AutomationRunStepScalarFieldEnum | AutomationRunStepScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationRun without action
+   */
+  export type AutomationRunDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRun
+     */
+    select?: AutomationRunSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRun
+     */
+    omit?: AutomationRunOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AutomationRunStep
+   */
+
+  export type AggregateAutomationRunStep = {
+    _count: AutomationRunStepCountAggregateOutputType | null
+    _min: AutomationRunStepMinAggregateOutputType | null
+    _max: AutomationRunStepMaxAggregateOutputType | null
+  }
+
+  export type AutomationRunStepMinAggregateOutputType = {
+    id: string | null
+    runId: string | null
+    nodeId: string | null
+    status: string | null
+    handle: string | null
+    at: Date | null
+  }
+
+  export type AutomationRunStepMaxAggregateOutputType = {
+    id: string | null
+    runId: string | null
+    nodeId: string | null
+    status: string | null
+    handle: string | null
+    at: Date | null
+  }
+
+  export type AutomationRunStepCountAggregateOutputType = {
+    id: number
+    runId: number
+    nodeId: number
+    status: number
+    handle: number
+    result: number
+    at: number
+    _all: number
+  }
+
+
+  export type AutomationRunStepMinAggregateInputType = {
+    id?: true
+    runId?: true
+    nodeId?: true
+    status?: true
+    handle?: true
+    at?: true
+  }
+
+  export type AutomationRunStepMaxAggregateInputType = {
+    id?: true
+    runId?: true
+    nodeId?: true
+    status?: true
+    handle?: true
+    at?: true
+  }
+
+  export type AutomationRunStepCountAggregateInputType = {
+    id?: true
+    runId?: true
+    nodeId?: true
+    status?: true
+    handle?: true
+    result?: true
+    at?: true
+    _all?: true
+  }
+
+  export type AutomationRunStepAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationRunStep to aggregate.
+     */
+    where?: AutomationRunStepWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationRunSteps to fetch.
+     */
+    orderBy?: AutomationRunStepOrderByWithRelationInput | AutomationRunStepOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AutomationRunStepWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationRunSteps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationRunSteps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AutomationRunSteps
+    **/
+    _count?: true | AutomationRunStepCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AutomationRunStepMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AutomationRunStepMaxAggregateInputType
+  }
+
+  export type GetAutomationRunStepAggregateType<T extends AutomationRunStepAggregateArgs> = {
+        [P in keyof T & keyof AggregateAutomationRunStep]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAutomationRunStep[P]>
+      : GetScalarType<T[P], AggregateAutomationRunStep[P]>
+  }
+
+
+
+
+  export type AutomationRunStepGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationRunStepWhereInput
+    orderBy?: AutomationRunStepOrderByWithAggregationInput | AutomationRunStepOrderByWithAggregationInput[]
+    by: AutomationRunStepScalarFieldEnum[] | AutomationRunStepScalarFieldEnum
+    having?: AutomationRunStepScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AutomationRunStepCountAggregateInputType | true
+    _min?: AutomationRunStepMinAggregateInputType
+    _max?: AutomationRunStepMaxAggregateInputType
+  }
+
+  export type AutomationRunStepGroupByOutputType = {
+    id: string
+    runId: string
+    nodeId: string
+    status: string
+    handle: string | null
+    result: JsonValue
+    at: Date
+    _count: AutomationRunStepCountAggregateOutputType | null
+    _min: AutomationRunStepMinAggregateOutputType | null
+    _max: AutomationRunStepMaxAggregateOutputType | null
+  }
+
+  type GetAutomationRunStepGroupByPayload<T extends AutomationRunStepGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AutomationRunStepGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AutomationRunStepGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AutomationRunStepGroupByOutputType[P]>
+            : GetScalarType<T[P], AutomationRunStepGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AutomationRunStepSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    runId?: boolean
+    nodeId?: boolean
+    status?: boolean
+    handle?: boolean
+    result?: boolean
+    at?: boolean
+    run?: boolean | AutomationRunDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationRunStep"]>
+
+  export type AutomationRunStepSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    runId?: boolean
+    nodeId?: boolean
+    status?: boolean
+    handle?: boolean
+    result?: boolean
+    at?: boolean
+    run?: boolean | AutomationRunDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationRunStep"]>
+
+  export type AutomationRunStepSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    runId?: boolean
+    nodeId?: boolean
+    status?: boolean
+    handle?: boolean
+    result?: boolean
+    at?: boolean
+    run?: boolean | AutomationRunDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["automationRunStep"]>
+
+  export type AutomationRunStepSelectScalar = {
+    id?: boolean
+    runId?: boolean
+    nodeId?: boolean
+    status?: boolean
+    handle?: boolean
+    result?: boolean
+    at?: boolean
+  }
+
+  export type AutomationRunStepOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "runId" | "nodeId" | "status" | "handle" | "result" | "at", ExtArgs["result"]["automationRunStep"]>
+  export type AutomationRunStepInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    run?: boolean | AutomationRunDefaultArgs<ExtArgs>
+  }
+  export type AutomationRunStepIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    run?: boolean | AutomationRunDefaultArgs<ExtArgs>
+  }
+  export type AutomationRunStepIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    run?: boolean | AutomationRunDefaultArgs<ExtArgs>
+  }
+
+  export type $AutomationRunStepPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AutomationRunStep"
+    objects: {
+      run: Prisma.$AutomationRunPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      runId: string
+      nodeId: string
+      status: string
+      handle: string | null
+      result: Prisma.JsonValue
+      at: Date
+    }, ExtArgs["result"]["automationRunStep"]>
+    composites: {}
+  }
+
+  type AutomationRunStepGetPayload<S extends boolean | null | undefined | AutomationRunStepDefaultArgs> = $Result.GetResult<Prisma.$AutomationRunStepPayload, S>
+
+  type AutomationRunStepCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AutomationRunStepFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AutomationRunStepCountAggregateInputType | true
+    }
+
+  export interface AutomationRunStepDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AutomationRunStep'], meta: { name: 'AutomationRunStep' } }
+    /**
+     * Find zero or one AutomationRunStep that matches the filter.
+     * @param {AutomationRunStepFindUniqueArgs} args - Arguments to find a AutomationRunStep
+     * @example
+     * // Get one AutomationRunStep
+     * const automationRunStep = await prisma.automationRunStep.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AutomationRunStepFindUniqueArgs>(args: SelectSubset<T, AutomationRunStepFindUniqueArgs<ExtArgs>>): Prisma__AutomationRunStepClient<$Result.GetResult<Prisma.$AutomationRunStepPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AutomationRunStep that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AutomationRunStepFindUniqueOrThrowArgs} args - Arguments to find a AutomationRunStep
+     * @example
+     * // Get one AutomationRunStep
+     * const automationRunStep = await prisma.automationRunStep.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AutomationRunStepFindUniqueOrThrowArgs>(args: SelectSubset<T, AutomationRunStepFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AutomationRunStepClient<$Result.GetResult<Prisma.$AutomationRunStepPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationRunStep that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRunStepFindFirstArgs} args - Arguments to find a AutomationRunStep
+     * @example
+     * // Get one AutomationRunStep
+     * const automationRunStep = await prisma.automationRunStep.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AutomationRunStepFindFirstArgs>(args?: SelectSubset<T, AutomationRunStepFindFirstArgs<ExtArgs>>): Prisma__AutomationRunStepClient<$Result.GetResult<Prisma.$AutomationRunStepPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationRunStep that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRunStepFindFirstOrThrowArgs} args - Arguments to find a AutomationRunStep
+     * @example
+     * // Get one AutomationRunStep
+     * const automationRunStep = await prisma.automationRunStep.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AutomationRunStepFindFirstOrThrowArgs>(args?: SelectSubset<T, AutomationRunStepFindFirstOrThrowArgs<ExtArgs>>): Prisma__AutomationRunStepClient<$Result.GetResult<Prisma.$AutomationRunStepPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AutomationRunSteps that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRunStepFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AutomationRunSteps
+     * const automationRunSteps = await prisma.automationRunStep.findMany()
+     * 
+     * // Get first 10 AutomationRunSteps
+     * const automationRunSteps = await prisma.automationRunStep.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const automationRunStepWithIdOnly = await prisma.automationRunStep.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AutomationRunStepFindManyArgs>(args?: SelectSubset<T, AutomationRunStepFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationRunStepPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AutomationRunStep.
+     * @param {AutomationRunStepCreateArgs} args - Arguments to create a AutomationRunStep.
+     * @example
+     * // Create one AutomationRunStep
+     * const AutomationRunStep = await prisma.automationRunStep.create({
+     *   data: {
+     *     // ... data to create a AutomationRunStep
+     *   }
+     * })
+     * 
+     */
+    create<T extends AutomationRunStepCreateArgs>(args: SelectSubset<T, AutomationRunStepCreateArgs<ExtArgs>>): Prisma__AutomationRunStepClient<$Result.GetResult<Prisma.$AutomationRunStepPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AutomationRunSteps.
+     * @param {AutomationRunStepCreateManyArgs} args - Arguments to create many AutomationRunSteps.
+     * @example
+     * // Create many AutomationRunSteps
+     * const automationRunStep = await prisma.automationRunStep.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AutomationRunStepCreateManyArgs>(args?: SelectSubset<T, AutomationRunStepCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AutomationRunSteps and returns the data saved in the database.
+     * @param {AutomationRunStepCreateManyAndReturnArgs} args - Arguments to create many AutomationRunSteps.
+     * @example
+     * // Create many AutomationRunSteps
+     * const automationRunStep = await prisma.automationRunStep.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AutomationRunSteps and only return the `id`
+     * const automationRunStepWithIdOnly = await prisma.automationRunStep.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AutomationRunStepCreateManyAndReturnArgs>(args?: SelectSubset<T, AutomationRunStepCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationRunStepPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AutomationRunStep.
+     * @param {AutomationRunStepDeleteArgs} args - Arguments to delete one AutomationRunStep.
+     * @example
+     * // Delete one AutomationRunStep
+     * const AutomationRunStep = await prisma.automationRunStep.delete({
+     *   where: {
+     *     // ... filter to delete one AutomationRunStep
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AutomationRunStepDeleteArgs>(args: SelectSubset<T, AutomationRunStepDeleteArgs<ExtArgs>>): Prisma__AutomationRunStepClient<$Result.GetResult<Prisma.$AutomationRunStepPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AutomationRunStep.
+     * @param {AutomationRunStepUpdateArgs} args - Arguments to update one AutomationRunStep.
+     * @example
+     * // Update one AutomationRunStep
+     * const automationRunStep = await prisma.automationRunStep.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AutomationRunStepUpdateArgs>(args: SelectSubset<T, AutomationRunStepUpdateArgs<ExtArgs>>): Prisma__AutomationRunStepClient<$Result.GetResult<Prisma.$AutomationRunStepPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AutomationRunSteps.
+     * @param {AutomationRunStepDeleteManyArgs} args - Arguments to filter AutomationRunSteps to delete.
+     * @example
+     * // Delete a few AutomationRunSteps
+     * const { count } = await prisma.automationRunStep.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AutomationRunStepDeleteManyArgs>(args?: SelectSubset<T, AutomationRunStepDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationRunSteps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRunStepUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AutomationRunSteps
+     * const automationRunStep = await prisma.automationRunStep.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AutomationRunStepUpdateManyArgs>(args: SelectSubset<T, AutomationRunStepUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationRunSteps and returns the data updated in the database.
+     * @param {AutomationRunStepUpdateManyAndReturnArgs} args - Arguments to update many AutomationRunSteps.
+     * @example
+     * // Update many AutomationRunSteps
+     * const automationRunStep = await prisma.automationRunStep.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AutomationRunSteps and only return the `id`
+     * const automationRunStepWithIdOnly = await prisma.automationRunStep.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AutomationRunStepUpdateManyAndReturnArgs>(args: SelectSubset<T, AutomationRunStepUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationRunStepPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AutomationRunStep.
+     * @param {AutomationRunStepUpsertArgs} args - Arguments to update or create a AutomationRunStep.
+     * @example
+     * // Update or create a AutomationRunStep
+     * const automationRunStep = await prisma.automationRunStep.upsert({
+     *   create: {
+     *     // ... data to create a AutomationRunStep
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AutomationRunStep we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AutomationRunStepUpsertArgs>(args: SelectSubset<T, AutomationRunStepUpsertArgs<ExtArgs>>): Prisma__AutomationRunStepClient<$Result.GetResult<Prisma.$AutomationRunStepPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AutomationRunSteps.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRunStepCountArgs} args - Arguments to filter AutomationRunSteps to count.
+     * @example
+     * // Count the number of AutomationRunSteps
+     * const count = await prisma.automationRunStep.count({
+     *   where: {
+     *     // ... the filter for the AutomationRunSteps we want to count
+     *   }
+     * })
+    **/
+    count<T extends AutomationRunStepCountArgs>(
+      args?: Subset<T, AutomationRunStepCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AutomationRunStepCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AutomationRunStep.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRunStepAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AutomationRunStepAggregateArgs>(args: Subset<T, AutomationRunStepAggregateArgs>): Prisma.PrismaPromise<GetAutomationRunStepAggregateType<T>>
+
+    /**
+     * Group by AutomationRunStep.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationRunStepGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AutomationRunStepGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AutomationRunStepGroupByArgs['orderBy'] }
+        : { orderBy?: AutomationRunStepGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AutomationRunStepGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAutomationRunStepGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AutomationRunStep model
+   */
+  readonly fields: AutomationRunStepFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AutomationRunStep.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AutomationRunStepClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    run<T extends AutomationRunDefaultArgs<ExtArgs> = {}>(args?: Subset<T, AutomationRunDefaultArgs<ExtArgs>>): Prisma__AutomationRunClient<$Result.GetResult<Prisma.$AutomationRunPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AutomationRunStep model
+   */
+  interface AutomationRunStepFieldRefs {
+    readonly id: FieldRef<"AutomationRunStep", 'String'>
+    readonly runId: FieldRef<"AutomationRunStep", 'String'>
+    readonly nodeId: FieldRef<"AutomationRunStep", 'String'>
+    readonly status: FieldRef<"AutomationRunStep", 'String'>
+    readonly handle: FieldRef<"AutomationRunStep", 'String'>
+    readonly result: FieldRef<"AutomationRunStep", 'Json'>
+    readonly at: FieldRef<"AutomationRunStep", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AutomationRunStep findUnique
+   */
+  export type AutomationRunStepFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRunStep
+     */
+    select?: AutomationRunStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRunStep
+     */
+    omit?: AutomationRunStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunStepInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRunStep to fetch.
+     */
+    where: AutomationRunStepWhereUniqueInput
+  }
+
+  /**
+   * AutomationRunStep findUniqueOrThrow
+   */
+  export type AutomationRunStepFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRunStep
+     */
+    select?: AutomationRunStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRunStep
+     */
+    omit?: AutomationRunStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunStepInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRunStep to fetch.
+     */
+    where: AutomationRunStepWhereUniqueInput
+  }
+
+  /**
+   * AutomationRunStep findFirst
+   */
+  export type AutomationRunStepFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRunStep
+     */
+    select?: AutomationRunStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRunStep
+     */
+    omit?: AutomationRunStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunStepInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRunStep to fetch.
+     */
+    where?: AutomationRunStepWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationRunSteps to fetch.
+     */
+    orderBy?: AutomationRunStepOrderByWithRelationInput | AutomationRunStepOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationRunSteps.
+     */
+    cursor?: AutomationRunStepWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationRunSteps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationRunSteps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationRunSteps.
+     */
+    distinct?: AutomationRunStepScalarFieldEnum | AutomationRunStepScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationRunStep findFirstOrThrow
+   */
+  export type AutomationRunStepFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRunStep
+     */
+    select?: AutomationRunStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRunStep
+     */
+    omit?: AutomationRunStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunStepInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRunStep to fetch.
+     */
+    where?: AutomationRunStepWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationRunSteps to fetch.
+     */
+    orderBy?: AutomationRunStepOrderByWithRelationInput | AutomationRunStepOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationRunSteps.
+     */
+    cursor?: AutomationRunStepWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationRunSteps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationRunSteps.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationRunSteps.
+     */
+    distinct?: AutomationRunStepScalarFieldEnum | AutomationRunStepScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationRunStep findMany
+   */
+  export type AutomationRunStepFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRunStep
+     */
+    select?: AutomationRunStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRunStep
+     */
+    omit?: AutomationRunStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunStepInclude<ExtArgs> | null
+    /**
+     * Filter, which AutomationRunSteps to fetch.
+     */
+    where?: AutomationRunStepWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationRunSteps to fetch.
+     */
+    orderBy?: AutomationRunStepOrderByWithRelationInput | AutomationRunStepOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AutomationRunSteps.
+     */
+    cursor?: AutomationRunStepWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationRunSteps from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationRunSteps.
+     */
+    skip?: number
+    distinct?: AutomationRunStepScalarFieldEnum | AutomationRunStepScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationRunStep create
+   */
+  export type AutomationRunStepCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRunStep
+     */
+    select?: AutomationRunStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRunStep
+     */
+    omit?: AutomationRunStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunStepInclude<ExtArgs> | null
+    /**
+     * The data needed to create a AutomationRunStep.
+     */
+    data: XOR<AutomationRunStepCreateInput, AutomationRunStepUncheckedCreateInput>
+  }
+
+  /**
+   * AutomationRunStep createMany
+   */
+  export type AutomationRunStepCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AutomationRunSteps.
+     */
+    data: AutomationRunStepCreateManyInput | AutomationRunStepCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationRunStep createManyAndReturn
+   */
+  export type AutomationRunStepCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRunStep
+     */
+    select?: AutomationRunStepSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRunStep
+     */
+    omit?: AutomationRunStepOmit<ExtArgs> | null
+    /**
+     * The data used to create many AutomationRunSteps.
+     */
+    data: AutomationRunStepCreateManyInput | AutomationRunStepCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunStepIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AutomationRunStep update
+   */
+  export type AutomationRunStepUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRunStep
+     */
+    select?: AutomationRunStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRunStep
+     */
+    omit?: AutomationRunStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunStepInclude<ExtArgs> | null
+    /**
+     * The data needed to update a AutomationRunStep.
+     */
+    data: XOR<AutomationRunStepUpdateInput, AutomationRunStepUncheckedUpdateInput>
+    /**
+     * Choose, which AutomationRunStep to update.
+     */
+    where: AutomationRunStepWhereUniqueInput
+  }
+
+  /**
+   * AutomationRunStep updateMany
+   */
+  export type AutomationRunStepUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AutomationRunSteps.
+     */
+    data: XOR<AutomationRunStepUpdateManyMutationInput, AutomationRunStepUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationRunSteps to update
+     */
+    where?: AutomationRunStepWhereInput
+    /**
+     * Limit how many AutomationRunSteps to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationRunStep updateManyAndReturn
+   */
+  export type AutomationRunStepUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRunStep
+     */
+    select?: AutomationRunStepSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRunStep
+     */
+    omit?: AutomationRunStepOmit<ExtArgs> | null
+    /**
+     * The data used to update AutomationRunSteps.
+     */
+    data: XOR<AutomationRunStepUpdateManyMutationInput, AutomationRunStepUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationRunSteps to update
+     */
+    where?: AutomationRunStepWhereInput
+    /**
+     * Limit how many AutomationRunSteps to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunStepIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * AutomationRunStep upsert
+   */
+  export type AutomationRunStepUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRunStep
+     */
+    select?: AutomationRunStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRunStep
+     */
+    omit?: AutomationRunStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunStepInclude<ExtArgs> | null
+    /**
+     * The filter to search for the AutomationRunStep to update in case it exists.
+     */
+    where: AutomationRunStepWhereUniqueInput
+    /**
+     * In case the AutomationRunStep found by the `where` argument doesn't exist, create a new AutomationRunStep with this data.
+     */
+    create: XOR<AutomationRunStepCreateInput, AutomationRunStepUncheckedCreateInput>
+    /**
+     * In case the AutomationRunStep was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AutomationRunStepUpdateInput, AutomationRunStepUncheckedUpdateInput>
+  }
+
+  /**
+   * AutomationRunStep delete
+   */
+  export type AutomationRunStepDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRunStep
+     */
+    select?: AutomationRunStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRunStep
+     */
+    omit?: AutomationRunStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunStepInclude<ExtArgs> | null
+    /**
+     * Filter which AutomationRunStep to delete.
+     */
+    where: AutomationRunStepWhereUniqueInput
+  }
+
+  /**
+   * AutomationRunStep deleteMany
+   */
+  export type AutomationRunStepDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationRunSteps to delete
+     */
+    where?: AutomationRunStepWhereInput
+    /**
+     * Limit how many AutomationRunSteps to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationRunStep without action
+   */
+  export type AutomationRunStepDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationRunStep
+     */
+    select?: AutomationRunStepSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationRunStep
+     */
+    omit?: AutomationRunStepOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: AutomationRunStepInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AutomationTimer
+   */
+
+  export type AggregateAutomationTimer = {
+    _count: AutomationTimerCountAggregateOutputType | null
+    _min: AutomationTimerMinAggregateOutputType | null
+    _max: AutomationTimerMaxAggregateOutputType | null
+  }
+
+  export type AutomationTimerMinAggregateOutputType = {
+    id: string | null
+    key: string | null
+    kind: string | null
+    entityId: string | null
+    dueAt: Date | null
+    runId: string | null
+    status: string | null
+    firedAt: Date | null
+  }
+
+  export type AutomationTimerMaxAggregateOutputType = {
+    id: string | null
+    key: string | null
+    kind: string | null
+    entityId: string | null
+    dueAt: Date | null
+    runId: string | null
+    status: string | null
+    firedAt: Date | null
+  }
+
+  export type AutomationTimerCountAggregateOutputType = {
+    id: number
+    key: number
+    kind: number
+    entityId: number
+    dueAt: number
+    payload: number
+    runId: number
+    status: number
+    firedAt: number
+    _all: number
+  }
+
+
+  export type AutomationTimerMinAggregateInputType = {
+    id?: true
+    key?: true
+    kind?: true
+    entityId?: true
+    dueAt?: true
+    runId?: true
+    status?: true
+    firedAt?: true
+  }
+
+  export type AutomationTimerMaxAggregateInputType = {
+    id?: true
+    key?: true
+    kind?: true
+    entityId?: true
+    dueAt?: true
+    runId?: true
+    status?: true
+    firedAt?: true
+  }
+
+  export type AutomationTimerCountAggregateInputType = {
+    id?: true
+    key?: true
+    kind?: true
+    entityId?: true
+    dueAt?: true
+    payload?: true
+    runId?: true
+    status?: true
+    firedAt?: true
+    _all?: true
+  }
+
+  export type AutomationTimerAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationTimer to aggregate.
+     */
+    where?: AutomationTimerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationTimers to fetch.
+     */
+    orderBy?: AutomationTimerOrderByWithRelationInput | AutomationTimerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AutomationTimerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationTimers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationTimers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AutomationTimers
+    **/
+    _count?: true | AutomationTimerCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AutomationTimerMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AutomationTimerMaxAggregateInputType
+  }
+
+  export type GetAutomationTimerAggregateType<T extends AutomationTimerAggregateArgs> = {
+        [P in keyof T & keyof AggregateAutomationTimer]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAutomationTimer[P]>
+      : GetScalarType<T[P], AggregateAutomationTimer[P]>
+  }
+
+
+
+
+  export type AutomationTimerGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationTimerWhereInput
+    orderBy?: AutomationTimerOrderByWithAggregationInput | AutomationTimerOrderByWithAggregationInput[]
+    by: AutomationTimerScalarFieldEnum[] | AutomationTimerScalarFieldEnum
+    having?: AutomationTimerScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AutomationTimerCountAggregateInputType | true
+    _min?: AutomationTimerMinAggregateInputType
+    _max?: AutomationTimerMaxAggregateInputType
+  }
+
+  export type AutomationTimerGroupByOutputType = {
+    id: string
+    key: string
+    kind: string
+    entityId: string
+    dueAt: Date
+    payload: JsonValue
+    runId: string | null
+    status: string
+    firedAt: Date | null
+    _count: AutomationTimerCountAggregateOutputType | null
+    _min: AutomationTimerMinAggregateOutputType | null
+    _max: AutomationTimerMaxAggregateOutputType | null
+  }
+
+  type GetAutomationTimerGroupByPayload<T extends AutomationTimerGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AutomationTimerGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AutomationTimerGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AutomationTimerGroupByOutputType[P]>
+            : GetScalarType<T[P], AutomationTimerGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AutomationTimerSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    kind?: boolean
+    entityId?: boolean
+    dueAt?: boolean
+    payload?: boolean
+    runId?: boolean
+    status?: boolean
+    firedAt?: boolean
+  }, ExtArgs["result"]["automationTimer"]>
+
+  export type AutomationTimerSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    kind?: boolean
+    entityId?: boolean
+    dueAt?: boolean
+    payload?: boolean
+    runId?: boolean
+    status?: boolean
+    firedAt?: boolean
+  }, ExtArgs["result"]["automationTimer"]>
+
+  export type AutomationTimerSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    key?: boolean
+    kind?: boolean
+    entityId?: boolean
+    dueAt?: boolean
+    payload?: boolean
+    runId?: boolean
+    status?: boolean
+    firedAt?: boolean
+  }, ExtArgs["result"]["automationTimer"]>
+
+  export type AutomationTimerSelectScalar = {
+    id?: boolean
+    key?: boolean
+    kind?: boolean
+    entityId?: boolean
+    dueAt?: boolean
+    payload?: boolean
+    runId?: boolean
+    status?: boolean
+    firedAt?: boolean
+  }
+
+  export type AutomationTimerOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "key" | "kind" | "entityId" | "dueAt" | "payload" | "runId" | "status" | "firedAt", ExtArgs["result"]["automationTimer"]>
+
+  export type $AutomationTimerPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AutomationTimer"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      key: string
+      kind: string
+      entityId: string
+      dueAt: Date
+      payload: Prisma.JsonValue
+      runId: string | null
+      status: string
+      firedAt: Date | null
+    }, ExtArgs["result"]["automationTimer"]>
+    composites: {}
+  }
+
+  type AutomationTimerGetPayload<S extends boolean | null | undefined | AutomationTimerDefaultArgs> = $Result.GetResult<Prisma.$AutomationTimerPayload, S>
+
+  type AutomationTimerCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AutomationTimerFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AutomationTimerCountAggregateInputType | true
+    }
+
+  export interface AutomationTimerDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AutomationTimer'], meta: { name: 'AutomationTimer' } }
+    /**
+     * Find zero or one AutomationTimer that matches the filter.
+     * @param {AutomationTimerFindUniqueArgs} args - Arguments to find a AutomationTimer
+     * @example
+     * // Get one AutomationTimer
+     * const automationTimer = await prisma.automationTimer.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AutomationTimerFindUniqueArgs>(args: SelectSubset<T, AutomationTimerFindUniqueArgs<ExtArgs>>): Prisma__AutomationTimerClient<$Result.GetResult<Prisma.$AutomationTimerPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AutomationTimer that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AutomationTimerFindUniqueOrThrowArgs} args - Arguments to find a AutomationTimer
+     * @example
+     * // Get one AutomationTimer
+     * const automationTimer = await prisma.automationTimer.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AutomationTimerFindUniqueOrThrowArgs>(args: SelectSubset<T, AutomationTimerFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AutomationTimerClient<$Result.GetResult<Prisma.$AutomationTimerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationTimer that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationTimerFindFirstArgs} args - Arguments to find a AutomationTimer
+     * @example
+     * // Get one AutomationTimer
+     * const automationTimer = await prisma.automationTimer.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AutomationTimerFindFirstArgs>(args?: SelectSubset<T, AutomationTimerFindFirstArgs<ExtArgs>>): Prisma__AutomationTimerClient<$Result.GetResult<Prisma.$AutomationTimerPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationTimer that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationTimerFindFirstOrThrowArgs} args - Arguments to find a AutomationTimer
+     * @example
+     * // Get one AutomationTimer
+     * const automationTimer = await prisma.automationTimer.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AutomationTimerFindFirstOrThrowArgs>(args?: SelectSubset<T, AutomationTimerFindFirstOrThrowArgs<ExtArgs>>): Prisma__AutomationTimerClient<$Result.GetResult<Prisma.$AutomationTimerPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AutomationTimers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationTimerFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AutomationTimers
+     * const automationTimers = await prisma.automationTimer.findMany()
+     * 
+     * // Get first 10 AutomationTimers
+     * const automationTimers = await prisma.automationTimer.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const automationTimerWithIdOnly = await prisma.automationTimer.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AutomationTimerFindManyArgs>(args?: SelectSubset<T, AutomationTimerFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationTimerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AutomationTimer.
+     * @param {AutomationTimerCreateArgs} args - Arguments to create a AutomationTimer.
+     * @example
+     * // Create one AutomationTimer
+     * const AutomationTimer = await prisma.automationTimer.create({
+     *   data: {
+     *     // ... data to create a AutomationTimer
+     *   }
+     * })
+     * 
+     */
+    create<T extends AutomationTimerCreateArgs>(args: SelectSubset<T, AutomationTimerCreateArgs<ExtArgs>>): Prisma__AutomationTimerClient<$Result.GetResult<Prisma.$AutomationTimerPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AutomationTimers.
+     * @param {AutomationTimerCreateManyArgs} args - Arguments to create many AutomationTimers.
+     * @example
+     * // Create many AutomationTimers
+     * const automationTimer = await prisma.automationTimer.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AutomationTimerCreateManyArgs>(args?: SelectSubset<T, AutomationTimerCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AutomationTimers and returns the data saved in the database.
+     * @param {AutomationTimerCreateManyAndReturnArgs} args - Arguments to create many AutomationTimers.
+     * @example
+     * // Create many AutomationTimers
+     * const automationTimer = await prisma.automationTimer.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AutomationTimers and only return the `id`
+     * const automationTimerWithIdOnly = await prisma.automationTimer.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AutomationTimerCreateManyAndReturnArgs>(args?: SelectSubset<T, AutomationTimerCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationTimerPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AutomationTimer.
+     * @param {AutomationTimerDeleteArgs} args - Arguments to delete one AutomationTimer.
+     * @example
+     * // Delete one AutomationTimer
+     * const AutomationTimer = await prisma.automationTimer.delete({
+     *   where: {
+     *     // ... filter to delete one AutomationTimer
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AutomationTimerDeleteArgs>(args: SelectSubset<T, AutomationTimerDeleteArgs<ExtArgs>>): Prisma__AutomationTimerClient<$Result.GetResult<Prisma.$AutomationTimerPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AutomationTimer.
+     * @param {AutomationTimerUpdateArgs} args - Arguments to update one AutomationTimer.
+     * @example
+     * // Update one AutomationTimer
+     * const automationTimer = await prisma.automationTimer.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AutomationTimerUpdateArgs>(args: SelectSubset<T, AutomationTimerUpdateArgs<ExtArgs>>): Prisma__AutomationTimerClient<$Result.GetResult<Prisma.$AutomationTimerPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AutomationTimers.
+     * @param {AutomationTimerDeleteManyArgs} args - Arguments to filter AutomationTimers to delete.
+     * @example
+     * // Delete a few AutomationTimers
+     * const { count } = await prisma.automationTimer.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AutomationTimerDeleteManyArgs>(args?: SelectSubset<T, AutomationTimerDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationTimers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationTimerUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AutomationTimers
+     * const automationTimer = await prisma.automationTimer.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AutomationTimerUpdateManyArgs>(args: SelectSubset<T, AutomationTimerUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationTimers and returns the data updated in the database.
+     * @param {AutomationTimerUpdateManyAndReturnArgs} args - Arguments to update many AutomationTimers.
+     * @example
+     * // Update many AutomationTimers
+     * const automationTimer = await prisma.automationTimer.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AutomationTimers and only return the `id`
+     * const automationTimerWithIdOnly = await prisma.automationTimer.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AutomationTimerUpdateManyAndReturnArgs>(args: SelectSubset<T, AutomationTimerUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationTimerPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AutomationTimer.
+     * @param {AutomationTimerUpsertArgs} args - Arguments to update or create a AutomationTimer.
+     * @example
+     * // Update or create a AutomationTimer
+     * const automationTimer = await prisma.automationTimer.upsert({
+     *   create: {
+     *     // ... data to create a AutomationTimer
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AutomationTimer we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AutomationTimerUpsertArgs>(args: SelectSubset<T, AutomationTimerUpsertArgs<ExtArgs>>): Prisma__AutomationTimerClient<$Result.GetResult<Prisma.$AutomationTimerPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AutomationTimers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationTimerCountArgs} args - Arguments to filter AutomationTimers to count.
+     * @example
+     * // Count the number of AutomationTimers
+     * const count = await prisma.automationTimer.count({
+     *   where: {
+     *     // ... the filter for the AutomationTimers we want to count
+     *   }
+     * })
+    **/
+    count<T extends AutomationTimerCountArgs>(
+      args?: Subset<T, AutomationTimerCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AutomationTimerCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AutomationTimer.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationTimerAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AutomationTimerAggregateArgs>(args: Subset<T, AutomationTimerAggregateArgs>): Prisma.PrismaPromise<GetAutomationTimerAggregateType<T>>
+
+    /**
+     * Group by AutomationTimer.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationTimerGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AutomationTimerGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AutomationTimerGroupByArgs['orderBy'] }
+        : { orderBy?: AutomationTimerGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AutomationTimerGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAutomationTimerGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AutomationTimer model
+   */
+  readonly fields: AutomationTimerFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AutomationTimer.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AutomationTimerClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AutomationTimer model
+   */
+  interface AutomationTimerFieldRefs {
+    readonly id: FieldRef<"AutomationTimer", 'String'>
+    readonly key: FieldRef<"AutomationTimer", 'String'>
+    readonly kind: FieldRef<"AutomationTimer", 'String'>
+    readonly entityId: FieldRef<"AutomationTimer", 'String'>
+    readonly dueAt: FieldRef<"AutomationTimer", 'DateTime'>
+    readonly payload: FieldRef<"AutomationTimer", 'Json'>
+    readonly runId: FieldRef<"AutomationTimer", 'String'>
+    readonly status: FieldRef<"AutomationTimer", 'String'>
+    readonly firedAt: FieldRef<"AutomationTimer", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AutomationTimer findUnique
+   */
+  export type AutomationTimerFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationTimer
+     */
+    select?: AutomationTimerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationTimer
+     */
+    omit?: AutomationTimerOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationTimer to fetch.
+     */
+    where: AutomationTimerWhereUniqueInput
+  }
+
+  /**
+   * AutomationTimer findUniqueOrThrow
+   */
+  export type AutomationTimerFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationTimer
+     */
+    select?: AutomationTimerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationTimer
+     */
+    omit?: AutomationTimerOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationTimer to fetch.
+     */
+    where: AutomationTimerWhereUniqueInput
+  }
+
+  /**
+   * AutomationTimer findFirst
+   */
+  export type AutomationTimerFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationTimer
+     */
+    select?: AutomationTimerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationTimer
+     */
+    omit?: AutomationTimerOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationTimer to fetch.
+     */
+    where?: AutomationTimerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationTimers to fetch.
+     */
+    orderBy?: AutomationTimerOrderByWithRelationInput | AutomationTimerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationTimers.
+     */
+    cursor?: AutomationTimerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationTimers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationTimers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationTimers.
+     */
+    distinct?: AutomationTimerScalarFieldEnum | AutomationTimerScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationTimer findFirstOrThrow
+   */
+  export type AutomationTimerFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationTimer
+     */
+    select?: AutomationTimerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationTimer
+     */
+    omit?: AutomationTimerOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationTimer to fetch.
+     */
+    where?: AutomationTimerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationTimers to fetch.
+     */
+    orderBy?: AutomationTimerOrderByWithRelationInput | AutomationTimerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationTimers.
+     */
+    cursor?: AutomationTimerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationTimers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationTimers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationTimers.
+     */
+    distinct?: AutomationTimerScalarFieldEnum | AutomationTimerScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationTimer findMany
+   */
+  export type AutomationTimerFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationTimer
+     */
+    select?: AutomationTimerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationTimer
+     */
+    omit?: AutomationTimerOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationTimers to fetch.
+     */
+    where?: AutomationTimerWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationTimers to fetch.
+     */
+    orderBy?: AutomationTimerOrderByWithRelationInput | AutomationTimerOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AutomationTimers.
+     */
+    cursor?: AutomationTimerWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationTimers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationTimers.
+     */
+    skip?: number
+    distinct?: AutomationTimerScalarFieldEnum | AutomationTimerScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationTimer create
+   */
+  export type AutomationTimerCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationTimer
+     */
+    select?: AutomationTimerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationTimer
+     */
+    omit?: AutomationTimerOmit<ExtArgs> | null
+    /**
+     * The data needed to create a AutomationTimer.
+     */
+    data: XOR<AutomationTimerCreateInput, AutomationTimerUncheckedCreateInput>
+  }
+
+  /**
+   * AutomationTimer createMany
+   */
+  export type AutomationTimerCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AutomationTimers.
+     */
+    data: AutomationTimerCreateManyInput | AutomationTimerCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationTimer createManyAndReturn
+   */
+  export type AutomationTimerCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationTimer
+     */
+    select?: AutomationTimerSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationTimer
+     */
+    omit?: AutomationTimerOmit<ExtArgs> | null
+    /**
+     * The data used to create many AutomationTimers.
+     */
+    data: AutomationTimerCreateManyInput | AutomationTimerCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationTimer update
+   */
+  export type AutomationTimerUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationTimer
+     */
+    select?: AutomationTimerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationTimer
+     */
+    omit?: AutomationTimerOmit<ExtArgs> | null
+    /**
+     * The data needed to update a AutomationTimer.
+     */
+    data: XOR<AutomationTimerUpdateInput, AutomationTimerUncheckedUpdateInput>
+    /**
+     * Choose, which AutomationTimer to update.
+     */
+    where: AutomationTimerWhereUniqueInput
+  }
+
+  /**
+   * AutomationTimer updateMany
+   */
+  export type AutomationTimerUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AutomationTimers.
+     */
+    data: XOR<AutomationTimerUpdateManyMutationInput, AutomationTimerUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationTimers to update
+     */
+    where?: AutomationTimerWhereInput
+    /**
+     * Limit how many AutomationTimers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationTimer updateManyAndReturn
+   */
+  export type AutomationTimerUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationTimer
+     */
+    select?: AutomationTimerSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationTimer
+     */
+    omit?: AutomationTimerOmit<ExtArgs> | null
+    /**
+     * The data used to update AutomationTimers.
+     */
+    data: XOR<AutomationTimerUpdateManyMutationInput, AutomationTimerUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationTimers to update
+     */
+    where?: AutomationTimerWhereInput
+    /**
+     * Limit how many AutomationTimers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationTimer upsert
+   */
+  export type AutomationTimerUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationTimer
+     */
+    select?: AutomationTimerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationTimer
+     */
+    omit?: AutomationTimerOmit<ExtArgs> | null
+    /**
+     * The filter to search for the AutomationTimer to update in case it exists.
+     */
+    where: AutomationTimerWhereUniqueInput
+    /**
+     * In case the AutomationTimer found by the `where` argument doesn't exist, create a new AutomationTimer with this data.
+     */
+    create: XOR<AutomationTimerCreateInput, AutomationTimerUncheckedCreateInput>
+    /**
+     * In case the AutomationTimer was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AutomationTimerUpdateInput, AutomationTimerUncheckedUpdateInput>
+  }
+
+  /**
+   * AutomationTimer delete
+   */
+  export type AutomationTimerDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationTimer
+     */
+    select?: AutomationTimerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationTimer
+     */
+    omit?: AutomationTimerOmit<ExtArgs> | null
+    /**
+     * Filter which AutomationTimer to delete.
+     */
+    where: AutomationTimerWhereUniqueInput
+  }
+
+  /**
+   * AutomationTimer deleteMany
+   */
+  export type AutomationTimerDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationTimers to delete
+     */
+    where?: AutomationTimerWhereInput
+    /**
+     * Limit how many AutomationTimers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationTimer without action
+   */
+  export type AutomationTimerDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationTimer
+     */
+    select?: AutomationTimerSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationTimer
+     */
+    omit?: AutomationTimerOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AutomationDelivery
+   */
+
+  export type AggregateAutomationDelivery = {
+    _count: AutomationDeliveryCountAggregateOutputType | null
+    _min: AutomationDeliveryMinAggregateOutputType | null
+    _max: AutomationDeliveryMaxAggregateOutputType | null
+  }
+
+  export type AutomationDeliveryMinAggregateOutputType = {
+    key: string | null
+    sentAt: Date | null
+  }
+
+  export type AutomationDeliveryMaxAggregateOutputType = {
+    key: string | null
+    sentAt: Date | null
+  }
+
+  export type AutomationDeliveryCountAggregateOutputType = {
+    key: number
+    sentAt: number
+    _all: number
+  }
+
+
+  export type AutomationDeliveryMinAggregateInputType = {
+    key?: true
+    sentAt?: true
+  }
+
+  export type AutomationDeliveryMaxAggregateInputType = {
+    key?: true
+    sentAt?: true
+  }
+
+  export type AutomationDeliveryCountAggregateInputType = {
+    key?: true
+    sentAt?: true
+    _all?: true
+  }
+
+  export type AutomationDeliveryAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationDelivery to aggregate.
+     */
+    where?: AutomationDeliveryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationDeliveries to fetch.
+     */
+    orderBy?: AutomationDeliveryOrderByWithRelationInput | AutomationDeliveryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AutomationDeliveryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationDeliveries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationDeliveries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AutomationDeliveries
+    **/
+    _count?: true | AutomationDeliveryCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AutomationDeliveryMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AutomationDeliveryMaxAggregateInputType
+  }
+
+  export type GetAutomationDeliveryAggregateType<T extends AutomationDeliveryAggregateArgs> = {
+        [P in keyof T & keyof AggregateAutomationDelivery]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAutomationDelivery[P]>
+      : GetScalarType<T[P], AggregateAutomationDelivery[P]>
+  }
+
+
+
+
+  export type AutomationDeliveryGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationDeliveryWhereInput
+    orderBy?: AutomationDeliveryOrderByWithAggregationInput | AutomationDeliveryOrderByWithAggregationInput[]
+    by: AutomationDeliveryScalarFieldEnum[] | AutomationDeliveryScalarFieldEnum
+    having?: AutomationDeliveryScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AutomationDeliveryCountAggregateInputType | true
+    _min?: AutomationDeliveryMinAggregateInputType
+    _max?: AutomationDeliveryMaxAggregateInputType
+  }
+
+  export type AutomationDeliveryGroupByOutputType = {
+    key: string
+    sentAt: Date
+    _count: AutomationDeliveryCountAggregateOutputType | null
+    _min: AutomationDeliveryMinAggregateOutputType | null
+    _max: AutomationDeliveryMaxAggregateOutputType | null
+  }
+
+  type GetAutomationDeliveryGroupByPayload<T extends AutomationDeliveryGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AutomationDeliveryGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AutomationDeliveryGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AutomationDeliveryGroupByOutputType[P]>
+            : GetScalarType<T[P], AutomationDeliveryGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AutomationDeliverySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    sentAt?: boolean
+  }, ExtArgs["result"]["automationDelivery"]>
+
+  export type AutomationDeliverySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    sentAt?: boolean
+  }, ExtArgs["result"]["automationDelivery"]>
+
+  export type AutomationDeliverySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    sentAt?: boolean
+  }, ExtArgs["result"]["automationDelivery"]>
+
+  export type AutomationDeliverySelectScalar = {
+    key?: boolean
+    sentAt?: boolean
+  }
+
+  export type AutomationDeliveryOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"key" | "sentAt", ExtArgs["result"]["automationDelivery"]>
+
+  export type $AutomationDeliveryPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AutomationDelivery"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      key: string
+      sentAt: Date
+    }, ExtArgs["result"]["automationDelivery"]>
+    composites: {}
+  }
+
+  type AutomationDeliveryGetPayload<S extends boolean | null | undefined | AutomationDeliveryDefaultArgs> = $Result.GetResult<Prisma.$AutomationDeliveryPayload, S>
+
+  type AutomationDeliveryCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AutomationDeliveryFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AutomationDeliveryCountAggregateInputType | true
+    }
+
+  export interface AutomationDeliveryDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AutomationDelivery'], meta: { name: 'AutomationDelivery' } }
+    /**
+     * Find zero or one AutomationDelivery that matches the filter.
+     * @param {AutomationDeliveryFindUniqueArgs} args - Arguments to find a AutomationDelivery
+     * @example
+     * // Get one AutomationDelivery
+     * const automationDelivery = await prisma.automationDelivery.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AutomationDeliveryFindUniqueArgs>(args: SelectSubset<T, AutomationDeliveryFindUniqueArgs<ExtArgs>>): Prisma__AutomationDeliveryClient<$Result.GetResult<Prisma.$AutomationDeliveryPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AutomationDelivery that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AutomationDeliveryFindUniqueOrThrowArgs} args - Arguments to find a AutomationDelivery
+     * @example
+     * // Get one AutomationDelivery
+     * const automationDelivery = await prisma.automationDelivery.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AutomationDeliveryFindUniqueOrThrowArgs>(args: SelectSubset<T, AutomationDeliveryFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AutomationDeliveryClient<$Result.GetResult<Prisma.$AutomationDeliveryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationDelivery that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationDeliveryFindFirstArgs} args - Arguments to find a AutomationDelivery
+     * @example
+     * // Get one AutomationDelivery
+     * const automationDelivery = await prisma.automationDelivery.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AutomationDeliveryFindFirstArgs>(args?: SelectSubset<T, AutomationDeliveryFindFirstArgs<ExtArgs>>): Prisma__AutomationDeliveryClient<$Result.GetResult<Prisma.$AutomationDeliveryPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationDelivery that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationDeliveryFindFirstOrThrowArgs} args - Arguments to find a AutomationDelivery
+     * @example
+     * // Get one AutomationDelivery
+     * const automationDelivery = await prisma.automationDelivery.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AutomationDeliveryFindFirstOrThrowArgs>(args?: SelectSubset<T, AutomationDeliveryFindFirstOrThrowArgs<ExtArgs>>): Prisma__AutomationDeliveryClient<$Result.GetResult<Prisma.$AutomationDeliveryPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AutomationDeliveries that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationDeliveryFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AutomationDeliveries
+     * const automationDeliveries = await prisma.automationDelivery.findMany()
+     * 
+     * // Get first 10 AutomationDeliveries
+     * const automationDeliveries = await prisma.automationDelivery.findMany({ take: 10 })
+     * 
+     * // Only select the `key`
+     * const automationDeliveryWithKeyOnly = await prisma.automationDelivery.findMany({ select: { key: true } })
+     * 
+     */
+    findMany<T extends AutomationDeliveryFindManyArgs>(args?: SelectSubset<T, AutomationDeliveryFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationDeliveryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AutomationDelivery.
+     * @param {AutomationDeliveryCreateArgs} args - Arguments to create a AutomationDelivery.
+     * @example
+     * // Create one AutomationDelivery
+     * const AutomationDelivery = await prisma.automationDelivery.create({
+     *   data: {
+     *     // ... data to create a AutomationDelivery
+     *   }
+     * })
+     * 
+     */
+    create<T extends AutomationDeliveryCreateArgs>(args: SelectSubset<T, AutomationDeliveryCreateArgs<ExtArgs>>): Prisma__AutomationDeliveryClient<$Result.GetResult<Prisma.$AutomationDeliveryPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AutomationDeliveries.
+     * @param {AutomationDeliveryCreateManyArgs} args - Arguments to create many AutomationDeliveries.
+     * @example
+     * // Create many AutomationDeliveries
+     * const automationDelivery = await prisma.automationDelivery.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AutomationDeliveryCreateManyArgs>(args?: SelectSubset<T, AutomationDeliveryCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AutomationDeliveries and returns the data saved in the database.
+     * @param {AutomationDeliveryCreateManyAndReturnArgs} args - Arguments to create many AutomationDeliveries.
+     * @example
+     * // Create many AutomationDeliveries
+     * const automationDelivery = await prisma.automationDelivery.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AutomationDeliveries and only return the `key`
+     * const automationDeliveryWithKeyOnly = await prisma.automationDelivery.createManyAndReturn({
+     *   select: { key: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AutomationDeliveryCreateManyAndReturnArgs>(args?: SelectSubset<T, AutomationDeliveryCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationDeliveryPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AutomationDelivery.
+     * @param {AutomationDeliveryDeleteArgs} args - Arguments to delete one AutomationDelivery.
+     * @example
+     * // Delete one AutomationDelivery
+     * const AutomationDelivery = await prisma.automationDelivery.delete({
+     *   where: {
+     *     // ... filter to delete one AutomationDelivery
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AutomationDeliveryDeleteArgs>(args: SelectSubset<T, AutomationDeliveryDeleteArgs<ExtArgs>>): Prisma__AutomationDeliveryClient<$Result.GetResult<Prisma.$AutomationDeliveryPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AutomationDelivery.
+     * @param {AutomationDeliveryUpdateArgs} args - Arguments to update one AutomationDelivery.
+     * @example
+     * // Update one AutomationDelivery
+     * const automationDelivery = await prisma.automationDelivery.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AutomationDeliveryUpdateArgs>(args: SelectSubset<T, AutomationDeliveryUpdateArgs<ExtArgs>>): Prisma__AutomationDeliveryClient<$Result.GetResult<Prisma.$AutomationDeliveryPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AutomationDeliveries.
+     * @param {AutomationDeliveryDeleteManyArgs} args - Arguments to filter AutomationDeliveries to delete.
+     * @example
+     * // Delete a few AutomationDeliveries
+     * const { count } = await prisma.automationDelivery.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AutomationDeliveryDeleteManyArgs>(args?: SelectSubset<T, AutomationDeliveryDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationDeliveries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationDeliveryUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AutomationDeliveries
+     * const automationDelivery = await prisma.automationDelivery.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AutomationDeliveryUpdateManyArgs>(args: SelectSubset<T, AutomationDeliveryUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationDeliveries and returns the data updated in the database.
+     * @param {AutomationDeliveryUpdateManyAndReturnArgs} args - Arguments to update many AutomationDeliveries.
+     * @example
+     * // Update many AutomationDeliveries
+     * const automationDelivery = await prisma.automationDelivery.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AutomationDeliveries and only return the `key`
+     * const automationDeliveryWithKeyOnly = await prisma.automationDelivery.updateManyAndReturn({
+     *   select: { key: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AutomationDeliveryUpdateManyAndReturnArgs>(args: SelectSubset<T, AutomationDeliveryUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationDeliveryPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AutomationDelivery.
+     * @param {AutomationDeliveryUpsertArgs} args - Arguments to update or create a AutomationDelivery.
+     * @example
+     * // Update or create a AutomationDelivery
+     * const automationDelivery = await prisma.automationDelivery.upsert({
+     *   create: {
+     *     // ... data to create a AutomationDelivery
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AutomationDelivery we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AutomationDeliveryUpsertArgs>(args: SelectSubset<T, AutomationDeliveryUpsertArgs<ExtArgs>>): Prisma__AutomationDeliveryClient<$Result.GetResult<Prisma.$AutomationDeliveryPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AutomationDeliveries.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationDeliveryCountArgs} args - Arguments to filter AutomationDeliveries to count.
+     * @example
+     * // Count the number of AutomationDeliveries
+     * const count = await prisma.automationDelivery.count({
+     *   where: {
+     *     // ... the filter for the AutomationDeliveries we want to count
+     *   }
+     * })
+    **/
+    count<T extends AutomationDeliveryCountArgs>(
+      args?: Subset<T, AutomationDeliveryCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AutomationDeliveryCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AutomationDelivery.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationDeliveryAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AutomationDeliveryAggregateArgs>(args: Subset<T, AutomationDeliveryAggregateArgs>): Prisma.PrismaPromise<GetAutomationDeliveryAggregateType<T>>
+
+    /**
+     * Group by AutomationDelivery.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationDeliveryGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AutomationDeliveryGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AutomationDeliveryGroupByArgs['orderBy'] }
+        : { orderBy?: AutomationDeliveryGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AutomationDeliveryGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAutomationDeliveryGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AutomationDelivery model
+   */
+  readonly fields: AutomationDeliveryFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AutomationDelivery.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AutomationDeliveryClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AutomationDelivery model
+   */
+  interface AutomationDeliveryFieldRefs {
+    readonly key: FieldRef<"AutomationDelivery", 'String'>
+    readonly sentAt: FieldRef<"AutomationDelivery", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AutomationDelivery findUnique
+   */
+  export type AutomationDeliveryFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationDelivery
+     */
+    select?: AutomationDeliverySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationDelivery
+     */
+    omit?: AutomationDeliveryOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationDelivery to fetch.
+     */
+    where: AutomationDeliveryWhereUniqueInput
+  }
+
+  /**
+   * AutomationDelivery findUniqueOrThrow
+   */
+  export type AutomationDeliveryFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationDelivery
+     */
+    select?: AutomationDeliverySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationDelivery
+     */
+    omit?: AutomationDeliveryOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationDelivery to fetch.
+     */
+    where: AutomationDeliveryWhereUniqueInput
+  }
+
+  /**
+   * AutomationDelivery findFirst
+   */
+  export type AutomationDeliveryFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationDelivery
+     */
+    select?: AutomationDeliverySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationDelivery
+     */
+    omit?: AutomationDeliveryOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationDelivery to fetch.
+     */
+    where?: AutomationDeliveryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationDeliveries to fetch.
+     */
+    orderBy?: AutomationDeliveryOrderByWithRelationInput | AutomationDeliveryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationDeliveries.
+     */
+    cursor?: AutomationDeliveryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationDeliveries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationDeliveries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationDeliveries.
+     */
+    distinct?: AutomationDeliveryScalarFieldEnum | AutomationDeliveryScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationDelivery findFirstOrThrow
+   */
+  export type AutomationDeliveryFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationDelivery
+     */
+    select?: AutomationDeliverySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationDelivery
+     */
+    omit?: AutomationDeliveryOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationDelivery to fetch.
+     */
+    where?: AutomationDeliveryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationDeliveries to fetch.
+     */
+    orderBy?: AutomationDeliveryOrderByWithRelationInput | AutomationDeliveryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationDeliveries.
+     */
+    cursor?: AutomationDeliveryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationDeliveries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationDeliveries.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationDeliveries.
+     */
+    distinct?: AutomationDeliveryScalarFieldEnum | AutomationDeliveryScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationDelivery findMany
+   */
+  export type AutomationDeliveryFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationDelivery
+     */
+    select?: AutomationDeliverySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationDelivery
+     */
+    omit?: AutomationDeliveryOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationDeliveries to fetch.
+     */
+    where?: AutomationDeliveryWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationDeliveries to fetch.
+     */
+    orderBy?: AutomationDeliveryOrderByWithRelationInput | AutomationDeliveryOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AutomationDeliveries.
+     */
+    cursor?: AutomationDeliveryWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationDeliveries from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationDeliveries.
+     */
+    skip?: number
+    distinct?: AutomationDeliveryScalarFieldEnum | AutomationDeliveryScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationDelivery create
+   */
+  export type AutomationDeliveryCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationDelivery
+     */
+    select?: AutomationDeliverySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationDelivery
+     */
+    omit?: AutomationDeliveryOmit<ExtArgs> | null
+    /**
+     * The data needed to create a AutomationDelivery.
+     */
+    data: XOR<AutomationDeliveryCreateInput, AutomationDeliveryUncheckedCreateInput>
+  }
+
+  /**
+   * AutomationDelivery createMany
+   */
+  export type AutomationDeliveryCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AutomationDeliveries.
+     */
+    data: AutomationDeliveryCreateManyInput | AutomationDeliveryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationDelivery createManyAndReturn
+   */
+  export type AutomationDeliveryCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationDelivery
+     */
+    select?: AutomationDeliverySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationDelivery
+     */
+    omit?: AutomationDeliveryOmit<ExtArgs> | null
+    /**
+     * The data used to create many AutomationDeliveries.
+     */
+    data: AutomationDeliveryCreateManyInput | AutomationDeliveryCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationDelivery update
+   */
+  export type AutomationDeliveryUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationDelivery
+     */
+    select?: AutomationDeliverySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationDelivery
+     */
+    omit?: AutomationDeliveryOmit<ExtArgs> | null
+    /**
+     * The data needed to update a AutomationDelivery.
+     */
+    data: XOR<AutomationDeliveryUpdateInput, AutomationDeliveryUncheckedUpdateInput>
+    /**
+     * Choose, which AutomationDelivery to update.
+     */
+    where: AutomationDeliveryWhereUniqueInput
+  }
+
+  /**
+   * AutomationDelivery updateMany
+   */
+  export type AutomationDeliveryUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AutomationDeliveries.
+     */
+    data: XOR<AutomationDeliveryUpdateManyMutationInput, AutomationDeliveryUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationDeliveries to update
+     */
+    where?: AutomationDeliveryWhereInput
+    /**
+     * Limit how many AutomationDeliveries to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationDelivery updateManyAndReturn
+   */
+  export type AutomationDeliveryUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationDelivery
+     */
+    select?: AutomationDeliverySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationDelivery
+     */
+    omit?: AutomationDeliveryOmit<ExtArgs> | null
+    /**
+     * The data used to update AutomationDeliveries.
+     */
+    data: XOR<AutomationDeliveryUpdateManyMutationInput, AutomationDeliveryUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationDeliveries to update
+     */
+    where?: AutomationDeliveryWhereInput
+    /**
+     * Limit how many AutomationDeliveries to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationDelivery upsert
+   */
+  export type AutomationDeliveryUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationDelivery
+     */
+    select?: AutomationDeliverySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationDelivery
+     */
+    omit?: AutomationDeliveryOmit<ExtArgs> | null
+    /**
+     * The filter to search for the AutomationDelivery to update in case it exists.
+     */
+    where: AutomationDeliveryWhereUniqueInput
+    /**
+     * In case the AutomationDelivery found by the `where` argument doesn't exist, create a new AutomationDelivery with this data.
+     */
+    create: XOR<AutomationDeliveryCreateInput, AutomationDeliveryUncheckedCreateInput>
+    /**
+     * In case the AutomationDelivery was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AutomationDeliveryUpdateInput, AutomationDeliveryUncheckedUpdateInput>
+  }
+
+  /**
+   * AutomationDelivery delete
+   */
+  export type AutomationDeliveryDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationDelivery
+     */
+    select?: AutomationDeliverySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationDelivery
+     */
+    omit?: AutomationDeliveryOmit<ExtArgs> | null
+    /**
+     * Filter which AutomationDelivery to delete.
+     */
+    where: AutomationDeliveryWhereUniqueInput
+  }
+
+  /**
+   * AutomationDelivery deleteMany
+   */
+  export type AutomationDeliveryDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationDeliveries to delete
+     */
+    where?: AutomationDeliveryWhereInput
+    /**
+     * Limit how many AutomationDeliveries to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationDelivery without action
+   */
+  export type AutomationDeliveryDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationDelivery
+     */
+    select?: AutomationDeliverySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationDelivery
+     */
+    omit?: AutomationDeliveryOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AutomationPolicy
+   */
+
+  export type AggregateAutomationPolicy = {
+    _count: AutomationPolicyCountAggregateOutputType | null
+    _avg: AutomationPolicyAvgAggregateOutputType | null
+    _sum: AutomationPolicySumAggregateOutputType | null
+    _min: AutomationPolicyMinAggregateOutputType | null
+    _max: AutomationPolicyMaxAggregateOutputType | null
+  }
+
+  export type AutomationPolicyAvgAggregateOutputType = {
+    version: number | null
+  }
+
+  export type AutomationPolicySumAggregateOutputType = {
+    version: number | null
+  }
+
+  export type AutomationPolicyMinAggregateOutputType = {
+    key: string | null
+    status: string | null
+    version: number | null
+    updatedBy: string | null
+    updatedAt: Date | null
+  }
+
+  export type AutomationPolicyMaxAggregateOutputType = {
+    key: string | null
+    status: string | null
+    version: number | null
+    updatedBy: string | null
+    updatedAt: Date | null
+  }
+
+  export type AutomationPolicyCountAggregateOutputType = {
+    key: number
+    status: number
+    config: number
+    version: number
+    updatedBy: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type AutomationPolicyAvgAggregateInputType = {
+    version?: true
+  }
+
+  export type AutomationPolicySumAggregateInputType = {
+    version?: true
+  }
+
+  export type AutomationPolicyMinAggregateInputType = {
+    key?: true
+    status?: true
+    version?: true
+    updatedBy?: true
+    updatedAt?: true
+  }
+
+  export type AutomationPolicyMaxAggregateInputType = {
+    key?: true
+    status?: true
+    version?: true
+    updatedBy?: true
+    updatedAt?: true
+  }
+
+  export type AutomationPolicyCountAggregateInputType = {
+    key?: true
+    status?: true
+    config?: true
+    version?: true
+    updatedBy?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type AutomationPolicyAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationPolicy to aggregate.
+     */
+    where?: AutomationPolicyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationPolicies to fetch.
+     */
+    orderBy?: AutomationPolicyOrderByWithRelationInput | AutomationPolicyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AutomationPolicyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationPolicies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationPolicies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AutomationPolicies
+    **/
+    _count?: true | AutomationPolicyCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: AutomationPolicyAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: AutomationPolicySumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AutomationPolicyMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AutomationPolicyMaxAggregateInputType
+  }
+
+  export type GetAutomationPolicyAggregateType<T extends AutomationPolicyAggregateArgs> = {
+        [P in keyof T & keyof AggregateAutomationPolicy]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAutomationPolicy[P]>
+      : GetScalarType<T[P], AggregateAutomationPolicy[P]>
+  }
+
+
+
+
+  export type AutomationPolicyGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationPolicyWhereInput
+    orderBy?: AutomationPolicyOrderByWithAggregationInput | AutomationPolicyOrderByWithAggregationInput[]
+    by: AutomationPolicyScalarFieldEnum[] | AutomationPolicyScalarFieldEnum
+    having?: AutomationPolicyScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AutomationPolicyCountAggregateInputType | true
+    _avg?: AutomationPolicyAvgAggregateInputType
+    _sum?: AutomationPolicySumAggregateInputType
+    _min?: AutomationPolicyMinAggregateInputType
+    _max?: AutomationPolicyMaxAggregateInputType
+  }
+
+  export type AutomationPolicyGroupByOutputType = {
+    key: string
+    status: string
+    config: JsonValue
+    version: number
+    updatedBy: string | null
+    updatedAt: Date
+    _count: AutomationPolicyCountAggregateOutputType | null
+    _avg: AutomationPolicyAvgAggregateOutputType | null
+    _sum: AutomationPolicySumAggregateOutputType | null
+    _min: AutomationPolicyMinAggregateOutputType | null
+    _max: AutomationPolicyMaxAggregateOutputType | null
+  }
+
+  type GetAutomationPolicyGroupByPayload<T extends AutomationPolicyGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AutomationPolicyGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AutomationPolicyGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AutomationPolicyGroupByOutputType[P]>
+            : GetScalarType<T[P], AutomationPolicyGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AutomationPolicySelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    status?: boolean
+    config?: boolean
+    version?: boolean
+    updatedBy?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["automationPolicy"]>
+
+  export type AutomationPolicySelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    status?: boolean
+    config?: boolean
+    version?: boolean
+    updatedBy?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["automationPolicy"]>
+
+  export type AutomationPolicySelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    key?: boolean
+    status?: boolean
+    config?: boolean
+    version?: boolean
+    updatedBy?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["automationPolicy"]>
+
+  export type AutomationPolicySelectScalar = {
+    key?: boolean
+    status?: boolean
+    config?: boolean
+    version?: boolean
+    updatedBy?: boolean
+    updatedAt?: boolean
+  }
+
+  export type AutomationPolicyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"key" | "status" | "config" | "version" | "updatedBy" | "updatedAt", ExtArgs["result"]["automationPolicy"]>
+
+  export type $AutomationPolicyPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AutomationPolicy"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      key: string
+      status: string
+      config: Prisma.JsonValue
+      version: number
+      updatedBy: string | null
+      updatedAt: Date
+    }, ExtArgs["result"]["automationPolicy"]>
+    composites: {}
+  }
+
+  type AutomationPolicyGetPayload<S extends boolean | null | undefined | AutomationPolicyDefaultArgs> = $Result.GetResult<Prisma.$AutomationPolicyPayload, S>
+
+  type AutomationPolicyCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AutomationPolicyFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AutomationPolicyCountAggregateInputType | true
+    }
+
+  export interface AutomationPolicyDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AutomationPolicy'], meta: { name: 'AutomationPolicy' } }
+    /**
+     * Find zero or one AutomationPolicy that matches the filter.
+     * @param {AutomationPolicyFindUniqueArgs} args - Arguments to find a AutomationPolicy
+     * @example
+     * // Get one AutomationPolicy
+     * const automationPolicy = await prisma.automationPolicy.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AutomationPolicyFindUniqueArgs>(args: SelectSubset<T, AutomationPolicyFindUniqueArgs<ExtArgs>>): Prisma__AutomationPolicyClient<$Result.GetResult<Prisma.$AutomationPolicyPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AutomationPolicy that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AutomationPolicyFindUniqueOrThrowArgs} args - Arguments to find a AutomationPolicy
+     * @example
+     * // Get one AutomationPolicy
+     * const automationPolicy = await prisma.automationPolicy.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AutomationPolicyFindUniqueOrThrowArgs>(args: SelectSubset<T, AutomationPolicyFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AutomationPolicyClient<$Result.GetResult<Prisma.$AutomationPolicyPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationPolicy that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationPolicyFindFirstArgs} args - Arguments to find a AutomationPolicy
+     * @example
+     * // Get one AutomationPolicy
+     * const automationPolicy = await prisma.automationPolicy.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AutomationPolicyFindFirstArgs>(args?: SelectSubset<T, AutomationPolicyFindFirstArgs<ExtArgs>>): Prisma__AutomationPolicyClient<$Result.GetResult<Prisma.$AutomationPolicyPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationPolicy that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationPolicyFindFirstOrThrowArgs} args - Arguments to find a AutomationPolicy
+     * @example
+     * // Get one AutomationPolicy
+     * const automationPolicy = await prisma.automationPolicy.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AutomationPolicyFindFirstOrThrowArgs>(args?: SelectSubset<T, AutomationPolicyFindFirstOrThrowArgs<ExtArgs>>): Prisma__AutomationPolicyClient<$Result.GetResult<Prisma.$AutomationPolicyPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AutomationPolicies that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationPolicyFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AutomationPolicies
+     * const automationPolicies = await prisma.automationPolicy.findMany()
+     * 
+     * // Get first 10 AutomationPolicies
+     * const automationPolicies = await prisma.automationPolicy.findMany({ take: 10 })
+     * 
+     * // Only select the `key`
+     * const automationPolicyWithKeyOnly = await prisma.automationPolicy.findMany({ select: { key: true } })
+     * 
+     */
+    findMany<T extends AutomationPolicyFindManyArgs>(args?: SelectSubset<T, AutomationPolicyFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationPolicyPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AutomationPolicy.
+     * @param {AutomationPolicyCreateArgs} args - Arguments to create a AutomationPolicy.
+     * @example
+     * // Create one AutomationPolicy
+     * const AutomationPolicy = await prisma.automationPolicy.create({
+     *   data: {
+     *     // ... data to create a AutomationPolicy
+     *   }
+     * })
+     * 
+     */
+    create<T extends AutomationPolicyCreateArgs>(args: SelectSubset<T, AutomationPolicyCreateArgs<ExtArgs>>): Prisma__AutomationPolicyClient<$Result.GetResult<Prisma.$AutomationPolicyPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AutomationPolicies.
+     * @param {AutomationPolicyCreateManyArgs} args - Arguments to create many AutomationPolicies.
+     * @example
+     * // Create many AutomationPolicies
+     * const automationPolicy = await prisma.automationPolicy.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AutomationPolicyCreateManyArgs>(args?: SelectSubset<T, AutomationPolicyCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AutomationPolicies and returns the data saved in the database.
+     * @param {AutomationPolicyCreateManyAndReturnArgs} args - Arguments to create many AutomationPolicies.
+     * @example
+     * // Create many AutomationPolicies
+     * const automationPolicy = await prisma.automationPolicy.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AutomationPolicies and only return the `key`
+     * const automationPolicyWithKeyOnly = await prisma.automationPolicy.createManyAndReturn({
+     *   select: { key: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AutomationPolicyCreateManyAndReturnArgs>(args?: SelectSubset<T, AutomationPolicyCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationPolicyPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AutomationPolicy.
+     * @param {AutomationPolicyDeleteArgs} args - Arguments to delete one AutomationPolicy.
+     * @example
+     * // Delete one AutomationPolicy
+     * const AutomationPolicy = await prisma.automationPolicy.delete({
+     *   where: {
+     *     // ... filter to delete one AutomationPolicy
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AutomationPolicyDeleteArgs>(args: SelectSubset<T, AutomationPolicyDeleteArgs<ExtArgs>>): Prisma__AutomationPolicyClient<$Result.GetResult<Prisma.$AutomationPolicyPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AutomationPolicy.
+     * @param {AutomationPolicyUpdateArgs} args - Arguments to update one AutomationPolicy.
+     * @example
+     * // Update one AutomationPolicy
+     * const automationPolicy = await prisma.automationPolicy.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AutomationPolicyUpdateArgs>(args: SelectSubset<T, AutomationPolicyUpdateArgs<ExtArgs>>): Prisma__AutomationPolicyClient<$Result.GetResult<Prisma.$AutomationPolicyPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AutomationPolicies.
+     * @param {AutomationPolicyDeleteManyArgs} args - Arguments to filter AutomationPolicies to delete.
+     * @example
+     * // Delete a few AutomationPolicies
+     * const { count } = await prisma.automationPolicy.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AutomationPolicyDeleteManyArgs>(args?: SelectSubset<T, AutomationPolicyDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationPolicies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationPolicyUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AutomationPolicies
+     * const automationPolicy = await prisma.automationPolicy.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AutomationPolicyUpdateManyArgs>(args: SelectSubset<T, AutomationPolicyUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationPolicies and returns the data updated in the database.
+     * @param {AutomationPolicyUpdateManyAndReturnArgs} args - Arguments to update many AutomationPolicies.
+     * @example
+     * // Update many AutomationPolicies
+     * const automationPolicy = await prisma.automationPolicy.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AutomationPolicies and only return the `key`
+     * const automationPolicyWithKeyOnly = await prisma.automationPolicy.updateManyAndReturn({
+     *   select: { key: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AutomationPolicyUpdateManyAndReturnArgs>(args: SelectSubset<T, AutomationPolicyUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationPolicyPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AutomationPolicy.
+     * @param {AutomationPolicyUpsertArgs} args - Arguments to update or create a AutomationPolicy.
+     * @example
+     * // Update or create a AutomationPolicy
+     * const automationPolicy = await prisma.automationPolicy.upsert({
+     *   create: {
+     *     // ... data to create a AutomationPolicy
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AutomationPolicy we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AutomationPolicyUpsertArgs>(args: SelectSubset<T, AutomationPolicyUpsertArgs<ExtArgs>>): Prisma__AutomationPolicyClient<$Result.GetResult<Prisma.$AutomationPolicyPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AutomationPolicies.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationPolicyCountArgs} args - Arguments to filter AutomationPolicies to count.
+     * @example
+     * // Count the number of AutomationPolicies
+     * const count = await prisma.automationPolicy.count({
+     *   where: {
+     *     // ... the filter for the AutomationPolicies we want to count
+     *   }
+     * })
+    **/
+    count<T extends AutomationPolicyCountArgs>(
+      args?: Subset<T, AutomationPolicyCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AutomationPolicyCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AutomationPolicy.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationPolicyAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AutomationPolicyAggregateArgs>(args: Subset<T, AutomationPolicyAggregateArgs>): Prisma.PrismaPromise<GetAutomationPolicyAggregateType<T>>
+
+    /**
+     * Group by AutomationPolicy.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationPolicyGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AutomationPolicyGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AutomationPolicyGroupByArgs['orderBy'] }
+        : { orderBy?: AutomationPolicyGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AutomationPolicyGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAutomationPolicyGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AutomationPolicy model
+   */
+  readonly fields: AutomationPolicyFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AutomationPolicy.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AutomationPolicyClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AutomationPolicy model
+   */
+  interface AutomationPolicyFieldRefs {
+    readonly key: FieldRef<"AutomationPolicy", 'String'>
+    readonly status: FieldRef<"AutomationPolicy", 'String'>
+    readonly config: FieldRef<"AutomationPolicy", 'Json'>
+    readonly version: FieldRef<"AutomationPolicy", 'Int'>
+    readonly updatedBy: FieldRef<"AutomationPolicy", 'String'>
+    readonly updatedAt: FieldRef<"AutomationPolicy", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AutomationPolicy findUnique
+   */
+  export type AutomationPolicyFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationPolicy
+     */
+    select?: AutomationPolicySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationPolicy
+     */
+    omit?: AutomationPolicyOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationPolicy to fetch.
+     */
+    where: AutomationPolicyWhereUniqueInput
+  }
+
+  /**
+   * AutomationPolicy findUniqueOrThrow
+   */
+  export type AutomationPolicyFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationPolicy
+     */
+    select?: AutomationPolicySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationPolicy
+     */
+    omit?: AutomationPolicyOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationPolicy to fetch.
+     */
+    where: AutomationPolicyWhereUniqueInput
+  }
+
+  /**
+   * AutomationPolicy findFirst
+   */
+  export type AutomationPolicyFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationPolicy
+     */
+    select?: AutomationPolicySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationPolicy
+     */
+    omit?: AutomationPolicyOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationPolicy to fetch.
+     */
+    where?: AutomationPolicyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationPolicies to fetch.
+     */
+    orderBy?: AutomationPolicyOrderByWithRelationInput | AutomationPolicyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationPolicies.
+     */
+    cursor?: AutomationPolicyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationPolicies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationPolicies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationPolicies.
+     */
+    distinct?: AutomationPolicyScalarFieldEnum | AutomationPolicyScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationPolicy findFirstOrThrow
+   */
+  export type AutomationPolicyFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationPolicy
+     */
+    select?: AutomationPolicySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationPolicy
+     */
+    omit?: AutomationPolicyOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationPolicy to fetch.
+     */
+    where?: AutomationPolicyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationPolicies to fetch.
+     */
+    orderBy?: AutomationPolicyOrderByWithRelationInput | AutomationPolicyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationPolicies.
+     */
+    cursor?: AutomationPolicyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationPolicies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationPolicies.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationPolicies.
+     */
+    distinct?: AutomationPolicyScalarFieldEnum | AutomationPolicyScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationPolicy findMany
+   */
+  export type AutomationPolicyFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationPolicy
+     */
+    select?: AutomationPolicySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationPolicy
+     */
+    omit?: AutomationPolicyOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationPolicies to fetch.
+     */
+    where?: AutomationPolicyWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationPolicies to fetch.
+     */
+    orderBy?: AutomationPolicyOrderByWithRelationInput | AutomationPolicyOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AutomationPolicies.
+     */
+    cursor?: AutomationPolicyWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationPolicies from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationPolicies.
+     */
+    skip?: number
+    distinct?: AutomationPolicyScalarFieldEnum | AutomationPolicyScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationPolicy create
+   */
+  export type AutomationPolicyCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationPolicy
+     */
+    select?: AutomationPolicySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationPolicy
+     */
+    omit?: AutomationPolicyOmit<ExtArgs> | null
+    /**
+     * The data needed to create a AutomationPolicy.
+     */
+    data: XOR<AutomationPolicyCreateInput, AutomationPolicyUncheckedCreateInput>
+  }
+
+  /**
+   * AutomationPolicy createMany
+   */
+  export type AutomationPolicyCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AutomationPolicies.
+     */
+    data: AutomationPolicyCreateManyInput | AutomationPolicyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationPolicy createManyAndReturn
+   */
+  export type AutomationPolicyCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationPolicy
+     */
+    select?: AutomationPolicySelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationPolicy
+     */
+    omit?: AutomationPolicyOmit<ExtArgs> | null
+    /**
+     * The data used to create many AutomationPolicies.
+     */
+    data: AutomationPolicyCreateManyInput | AutomationPolicyCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationPolicy update
+   */
+  export type AutomationPolicyUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationPolicy
+     */
+    select?: AutomationPolicySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationPolicy
+     */
+    omit?: AutomationPolicyOmit<ExtArgs> | null
+    /**
+     * The data needed to update a AutomationPolicy.
+     */
+    data: XOR<AutomationPolicyUpdateInput, AutomationPolicyUncheckedUpdateInput>
+    /**
+     * Choose, which AutomationPolicy to update.
+     */
+    where: AutomationPolicyWhereUniqueInput
+  }
+
+  /**
+   * AutomationPolicy updateMany
+   */
+  export type AutomationPolicyUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AutomationPolicies.
+     */
+    data: XOR<AutomationPolicyUpdateManyMutationInput, AutomationPolicyUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationPolicies to update
+     */
+    where?: AutomationPolicyWhereInput
+    /**
+     * Limit how many AutomationPolicies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationPolicy updateManyAndReturn
+   */
+  export type AutomationPolicyUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationPolicy
+     */
+    select?: AutomationPolicySelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationPolicy
+     */
+    omit?: AutomationPolicyOmit<ExtArgs> | null
+    /**
+     * The data used to update AutomationPolicies.
+     */
+    data: XOR<AutomationPolicyUpdateManyMutationInput, AutomationPolicyUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationPolicies to update
+     */
+    where?: AutomationPolicyWhereInput
+    /**
+     * Limit how many AutomationPolicies to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationPolicy upsert
+   */
+  export type AutomationPolicyUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationPolicy
+     */
+    select?: AutomationPolicySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationPolicy
+     */
+    omit?: AutomationPolicyOmit<ExtArgs> | null
+    /**
+     * The filter to search for the AutomationPolicy to update in case it exists.
+     */
+    where: AutomationPolicyWhereUniqueInput
+    /**
+     * In case the AutomationPolicy found by the `where` argument doesn't exist, create a new AutomationPolicy with this data.
+     */
+    create: XOR<AutomationPolicyCreateInput, AutomationPolicyUncheckedCreateInput>
+    /**
+     * In case the AutomationPolicy was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AutomationPolicyUpdateInput, AutomationPolicyUncheckedUpdateInput>
+  }
+
+  /**
+   * AutomationPolicy delete
+   */
+  export type AutomationPolicyDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationPolicy
+     */
+    select?: AutomationPolicySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationPolicy
+     */
+    omit?: AutomationPolicyOmit<ExtArgs> | null
+    /**
+     * Filter which AutomationPolicy to delete.
+     */
+    where: AutomationPolicyWhereUniqueInput
+  }
+
+  /**
+   * AutomationPolicy deleteMany
+   */
+  export type AutomationPolicyDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationPolicies to delete
+     */
+    where?: AutomationPolicyWhereInput
+    /**
+     * Limit how many AutomationPolicies to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationPolicy without action
+   */
+  export type AutomationPolicyDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationPolicy
+     */
+    select?: AutomationPolicySelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationPolicy
+     */
+    omit?: AutomationPolicyOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model AutomationAudit
+   */
+
+  export type AggregateAutomationAudit = {
+    _count: AutomationAuditCountAggregateOutputType | null
+    _min: AutomationAuditMinAggregateOutputType | null
+    _max: AutomationAuditMaxAggregateOutputType | null
+  }
+
+  export type AutomationAuditMinAggregateOutputType = {
+    id: string | null
+    at: Date | null
+    actorType: string | null
+    actorId: string | null
+    action: string | null
+    resourceType: string | null
+    resourceId: string | null
+    outcome: string | null
+    correlationId: string | null
+  }
+
+  export type AutomationAuditMaxAggregateOutputType = {
+    id: string | null
+    at: Date | null
+    actorType: string | null
+    actorId: string | null
+    action: string | null
+    resourceType: string | null
+    resourceId: string | null
+    outcome: string | null
+    correlationId: string | null
+  }
+
+  export type AutomationAuditCountAggregateOutputType = {
+    id: number
+    at: number
+    actorType: number
+    actorId: number
+    action: number
+    resourceType: number
+    resourceId: number
+    outcome: number
+    correlationId: number
+    detail: number
+    _all: number
+  }
+
+
+  export type AutomationAuditMinAggregateInputType = {
+    id?: true
+    at?: true
+    actorType?: true
+    actorId?: true
+    action?: true
+    resourceType?: true
+    resourceId?: true
+    outcome?: true
+    correlationId?: true
+  }
+
+  export type AutomationAuditMaxAggregateInputType = {
+    id?: true
+    at?: true
+    actorType?: true
+    actorId?: true
+    action?: true
+    resourceType?: true
+    resourceId?: true
+    outcome?: true
+    correlationId?: true
+  }
+
+  export type AutomationAuditCountAggregateInputType = {
+    id?: true
+    at?: true
+    actorType?: true
+    actorId?: true
+    action?: true
+    resourceType?: true
+    resourceId?: true
+    outcome?: true
+    correlationId?: true
+    detail?: true
+    _all?: true
+  }
+
+  export type AutomationAuditAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationAudit to aggregate.
+     */
+    where?: AutomationAuditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationAudits to fetch.
+     */
+    orderBy?: AutomationAuditOrderByWithRelationInput | AutomationAuditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: AutomationAuditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationAudits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationAudits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned AutomationAudits
+    **/
+    _count?: true | AutomationAuditCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: AutomationAuditMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: AutomationAuditMaxAggregateInputType
+  }
+
+  export type GetAutomationAuditAggregateType<T extends AutomationAuditAggregateArgs> = {
+        [P in keyof T & keyof AggregateAutomationAudit]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateAutomationAudit[P]>
+      : GetScalarType<T[P], AggregateAutomationAudit[P]>
+  }
+
+
+
+
+  export type AutomationAuditGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: AutomationAuditWhereInput
+    orderBy?: AutomationAuditOrderByWithAggregationInput | AutomationAuditOrderByWithAggregationInput[]
+    by: AutomationAuditScalarFieldEnum[] | AutomationAuditScalarFieldEnum
+    having?: AutomationAuditScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: AutomationAuditCountAggregateInputType | true
+    _min?: AutomationAuditMinAggregateInputType
+    _max?: AutomationAuditMaxAggregateInputType
+  }
+
+  export type AutomationAuditGroupByOutputType = {
+    id: string
+    at: Date
+    actorType: string
+    actorId: string
+    action: string
+    resourceType: string
+    resourceId: string
+    outcome: string
+    correlationId: string
+    detail: JsonValue | null
+    _count: AutomationAuditCountAggregateOutputType | null
+    _min: AutomationAuditMinAggregateOutputType | null
+    _max: AutomationAuditMaxAggregateOutputType | null
+  }
+
+  type GetAutomationAuditGroupByPayload<T extends AutomationAuditGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<AutomationAuditGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof AutomationAuditGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], AutomationAuditGroupByOutputType[P]>
+            : GetScalarType<T[P], AutomationAuditGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type AutomationAuditSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    at?: boolean
+    actorType?: boolean
+    actorId?: boolean
+    action?: boolean
+    resourceType?: boolean
+    resourceId?: boolean
+    outcome?: boolean
+    correlationId?: boolean
+    detail?: boolean
+  }, ExtArgs["result"]["automationAudit"]>
+
+  export type AutomationAuditSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    at?: boolean
+    actorType?: boolean
+    actorId?: boolean
+    action?: boolean
+    resourceType?: boolean
+    resourceId?: boolean
+    outcome?: boolean
+    correlationId?: boolean
+    detail?: boolean
+  }, ExtArgs["result"]["automationAudit"]>
+
+  export type AutomationAuditSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    at?: boolean
+    actorType?: boolean
+    actorId?: boolean
+    action?: boolean
+    resourceType?: boolean
+    resourceId?: boolean
+    outcome?: boolean
+    correlationId?: boolean
+    detail?: boolean
+  }, ExtArgs["result"]["automationAudit"]>
+
+  export type AutomationAuditSelectScalar = {
+    id?: boolean
+    at?: boolean
+    actorType?: boolean
+    actorId?: boolean
+    action?: boolean
+    resourceType?: boolean
+    resourceId?: boolean
+    outcome?: boolean
+    correlationId?: boolean
+    detail?: boolean
+  }
+
+  export type AutomationAuditOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "at" | "actorType" | "actorId" | "action" | "resourceType" | "resourceId" | "outcome" | "correlationId" | "detail", ExtArgs["result"]["automationAudit"]>
+
+  export type $AutomationAuditPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "AutomationAudit"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      at: Date
+      actorType: string
+      actorId: string
+      action: string
+      resourceType: string
+      resourceId: string
+      outcome: string
+      correlationId: string
+      detail: Prisma.JsonValue | null
+    }, ExtArgs["result"]["automationAudit"]>
+    composites: {}
+  }
+
+  type AutomationAuditGetPayload<S extends boolean | null | undefined | AutomationAuditDefaultArgs> = $Result.GetResult<Prisma.$AutomationAuditPayload, S>
+
+  type AutomationAuditCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<AutomationAuditFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: AutomationAuditCountAggregateInputType | true
+    }
+
+  export interface AutomationAuditDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['AutomationAudit'], meta: { name: 'AutomationAudit' } }
+    /**
+     * Find zero or one AutomationAudit that matches the filter.
+     * @param {AutomationAuditFindUniqueArgs} args - Arguments to find a AutomationAudit
+     * @example
+     * // Get one AutomationAudit
+     * const automationAudit = await prisma.automationAudit.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends AutomationAuditFindUniqueArgs>(args: SelectSubset<T, AutomationAuditFindUniqueArgs<ExtArgs>>): Prisma__AutomationAuditClient<$Result.GetResult<Prisma.$AutomationAuditPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one AutomationAudit that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {AutomationAuditFindUniqueOrThrowArgs} args - Arguments to find a AutomationAudit
+     * @example
+     * // Get one AutomationAudit
+     * const automationAudit = await prisma.automationAudit.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends AutomationAuditFindUniqueOrThrowArgs>(args: SelectSubset<T, AutomationAuditFindUniqueOrThrowArgs<ExtArgs>>): Prisma__AutomationAuditClient<$Result.GetResult<Prisma.$AutomationAuditPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationAudit that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationAuditFindFirstArgs} args - Arguments to find a AutomationAudit
+     * @example
+     * // Get one AutomationAudit
+     * const automationAudit = await prisma.automationAudit.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends AutomationAuditFindFirstArgs>(args?: SelectSubset<T, AutomationAuditFindFirstArgs<ExtArgs>>): Prisma__AutomationAuditClient<$Result.GetResult<Prisma.$AutomationAuditPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first AutomationAudit that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationAuditFindFirstOrThrowArgs} args - Arguments to find a AutomationAudit
+     * @example
+     * // Get one AutomationAudit
+     * const automationAudit = await prisma.automationAudit.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends AutomationAuditFindFirstOrThrowArgs>(args?: SelectSubset<T, AutomationAuditFindFirstOrThrowArgs<ExtArgs>>): Prisma__AutomationAuditClient<$Result.GetResult<Prisma.$AutomationAuditPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more AutomationAudits that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationAuditFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all AutomationAudits
+     * const automationAudits = await prisma.automationAudit.findMany()
+     * 
+     * // Get first 10 AutomationAudits
+     * const automationAudits = await prisma.automationAudit.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const automationAuditWithIdOnly = await prisma.automationAudit.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends AutomationAuditFindManyArgs>(args?: SelectSubset<T, AutomationAuditFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationAuditPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a AutomationAudit.
+     * @param {AutomationAuditCreateArgs} args - Arguments to create a AutomationAudit.
+     * @example
+     * // Create one AutomationAudit
+     * const AutomationAudit = await prisma.automationAudit.create({
+     *   data: {
+     *     // ... data to create a AutomationAudit
+     *   }
+     * })
+     * 
+     */
+    create<T extends AutomationAuditCreateArgs>(args: SelectSubset<T, AutomationAuditCreateArgs<ExtArgs>>): Prisma__AutomationAuditClient<$Result.GetResult<Prisma.$AutomationAuditPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many AutomationAudits.
+     * @param {AutomationAuditCreateManyArgs} args - Arguments to create many AutomationAudits.
+     * @example
+     * // Create many AutomationAudits
+     * const automationAudit = await prisma.automationAudit.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends AutomationAuditCreateManyArgs>(args?: SelectSubset<T, AutomationAuditCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many AutomationAudits and returns the data saved in the database.
+     * @param {AutomationAuditCreateManyAndReturnArgs} args - Arguments to create many AutomationAudits.
+     * @example
+     * // Create many AutomationAudits
+     * const automationAudit = await prisma.automationAudit.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many AutomationAudits and only return the `id`
+     * const automationAuditWithIdOnly = await prisma.automationAudit.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends AutomationAuditCreateManyAndReturnArgs>(args?: SelectSubset<T, AutomationAuditCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationAuditPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a AutomationAudit.
+     * @param {AutomationAuditDeleteArgs} args - Arguments to delete one AutomationAudit.
+     * @example
+     * // Delete one AutomationAudit
+     * const AutomationAudit = await prisma.automationAudit.delete({
+     *   where: {
+     *     // ... filter to delete one AutomationAudit
+     *   }
+     * })
+     * 
+     */
+    delete<T extends AutomationAuditDeleteArgs>(args: SelectSubset<T, AutomationAuditDeleteArgs<ExtArgs>>): Prisma__AutomationAuditClient<$Result.GetResult<Prisma.$AutomationAuditPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one AutomationAudit.
+     * @param {AutomationAuditUpdateArgs} args - Arguments to update one AutomationAudit.
+     * @example
+     * // Update one AutomationAudit
+     * const automationAudit = await prisma.automationAudit.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends AutomationAuditUpdateArgs>(args: SelectSubset<T, AutomationAuditUpdateArgs<ExtArgs>>): Prisma__AutomationAuditClient<$Result.GetResult<Prisma.$AutomationAuditPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more AutomationAudits.
+     * @param {AutomationAuditDeleteManyArgs} args - Arguments to filter AutomationAudits to delete.
+     * @example
+     * // Delete a few AutomationAudits
+     * const { count } = await prisma.automationAudit.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends AutomationAuditDeleteManyArgs>(args?: SelectSubset<T, AutomationAuditDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationAudits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationAuditUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many AutomationAudits
+     * const automationAudit = await prisma.automationAudit.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends AutomationAuditUpdateManyArgs>(args: SelectSubset<T, AutomationAuditUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more AutomationAudits and returns the data updated in the database.
+     * @param {AutomationAuditUpdateManyAndReturnArgs} args - Arguments to update many AutomationAudits.
+     * @example
+     * // Update many AutomationAudits
+     * const automationAudit = await prisma.automationAudit.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more AutomationAudits and only return the `id`
+     * const automationAuditWithIdOnly = await prisma.automationAudit.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends AutomationAuditUpdateManyAndReturnArgs>(args: SelectSubset<T, AutomationAuditUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$AutomationAuditPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one AutomationAudit.
+     * @param {AutomationAuditUpsertArgs} args - Arguments to update or create a AutomationAudit.
+     * @example
+     * // Update or create a AutomationAudit
+     * const automationAudit = await prisma.automationAudit.upsert({
+     *   create: {
+     *     // ... data to create a AutomationAudit
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the AutomationAudit we want to update
+     *   }
+     * })
+     */
+    upsert<T extends AutomationAuditUpsertArgs>(args: SelectSubset<T, AutomationAuditUpsertArgs<ExtArgs>>): Prisma__AutomationAuditClient<$Result.GetResult<Prisma.$AutomationAuditPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of AutomationAudits.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationAuditCountArgs} args - Arguments to filter AutomationAudits to count.
+     * @example
+     * // Count the number of AutomationAudits
+     * const count = await prisma.automationAudit.count({
+     *   where: {
+     *     // ... the filter for the AutomationAudits we want to count
+     *   }
+     * })
+    **/
+    count<T extends AutomationAuditCountArgs>(
+      args?: Subset<T, AutomationAuditCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], AutomationAuditCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a AutomationAudit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationAuditAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends AutomationAuditAggregateArgs>(args: Subset<T, AutomationAuditAggregateArgs>): Prisma.PrismaPromise<GetAutomationAuditAggregateType<T>>
+
+    /**
+     * Group by AutomationAudit.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {AutomationAuditGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends AutomationAuditGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: AutomationAuditGroupByArgs['orderBy'] }
+        : { orderBy?: AutomationAuditGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, AutomationAuditGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetAutomationAuditGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the AutomationAudit model
+   */
+  readonly fields: AutomationAuditFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for AutomationAudit.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__AutomationAuditClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the AutomationAudit model
+   */
+  interface AutomationAuditFieldRefs {
+    readonly id: FieldRef<"AutomationAudit", 'String'>
+    readonly at: FieldRef<"AutomationAudit", 'DateTime'>
+    readonly actorType: FieldRef<"AutomationAudit", 'String'>
+    readonly actorId: FieldRef<"AutomationAudit", 'String'>
+    readonly action: FieldRef<"AutomationAudit", 'String'>
+    readonly resourceType: FieldRef<"AutomationAudit", 'String'>
+    readonly resourceId: FieldRef<"AutomationAudit", 'String'>
+    readonly outcome: FieldRef<"AutomationAudit", 'String'>
+    readonly correlationId: FieldRef<"AutomationAudit", 'String'>
+    readonly detail: FieldRef<"AutomationAudit", 'Json'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * AutomationAudit findUnique
+   */
+  export type AutomationAuditFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationAudit
+     */
+    select?: AutomationAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationAudit
+     */
+    omit?: AutomationAuditOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationAudit to fetch.
+     */
+    where: AutomationAuditWhereUniqueInput
+  }
+
+  /**
+   * AutomationAudit findUniqueOrThrow
+   */
+  export type AutomationAuditFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationAudit
+     */
+    select?: AutomationAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationAudit
+     */
+    omit?: AutomationAuditOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationAudit to fetch.
+     */
+    where: AutomationAuditWhereUniqueInput
+  }
+
+  /**
+   * AutomationAudit findFirst
+   */
+  export type AutomationAuditFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationAudit
+     */
+    select?: AutomationAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationAudit
+     */
+    omit?: AutomationAuditOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationAudit to fetch.
+     */
+    where?: AutomationAuditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationAudits to fetch.
+     */
+    orderBy?: AutomationAuditOrderByWithRelationInput | AutomationAuditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationAudits.
+     */
+    cursor?: AutomationAuditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationAudits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationAudits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationAudits.
+     */
+    distinct?: AutomationAuditScalarFieldEnum | AutomationAuditScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationAudit findFirstOrThrow
+   */
+  export type AutomationAuditFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationAudit
+     */
+    select?: AutomationAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationAudit
+     */
+    omit?: AutomationAuditOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationAudit to fetch.
+     */
+    where?: AutomationAuditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationAudits to fetch.
+     */
+    orderBy?: AutomationAuditOrderByWithRelationInput | AutomationAuditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for AutomationAudits.
+     */
+    cursor?: AutomationAuditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationAudits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationAudits.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of AutomationAudits.
+     */
+    distinct?: AutomationAuditScalarFieldEnum | AutomationAuditScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationAudit findMany
+   */
+  export type AutomationAuditFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationAudit
+     */
+    select?: AutomationAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationAudit
+     */
+    omit?: AutomationAuditOmit<ExtArgs> | null
+    /**
+     * Filter, which AutomationAudits to fetch.
+     */
+    where?: AutomationAuditWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of AutomationAudits to fetch.
+     */
+    orderBy?: AutomationAuditOrderByWithRelationInput | AutomationAuditOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing AutomationAudits.
+     */
+    cursor?: AutomationAuditWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` AutomationAudits from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` AutomationAudits.
+     */
+    skip?: number
+    distinct?: AutomationAuditScalarFieldEnum | AutomationAuditScalarFieldEnum[]
+  }
+
+  /**
+   * AutomationAudit create
+   */
+  export type AutomationAuditCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationAudit
+     */
+    select?: AutomationAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationAudit
+     */
+    omit?: AutomationAuditOmit<ExtArgs> | null
+    /**
+     * The data needed to create a AutomationAudit.
+     */
+    data: XOR<AutomationAuditCreateInput, AutomationAuditUncheckedCreateInput>
+  }
+
+  /**
+   * AutomationAudit createMany
+   */
+  export type AutomationAuditCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many AutomationAudits.
+     */
+    data: AutomationAuditCreateManyInput | AutomationAuditCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationAudit createManyAndReturn
+   */
+  export type AutomationAuditCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationAudit
+     */
+    select?: AutomationAuditSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationAudit
+     */
+    omit?: AutomationAuditOmit<ExtArgs> | null
+    /**
+     * The data used to create many AutomationAudits.
+     */
+    data: AutomationAuditCreateManyInput | AutomationAuditCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * AutomationAudit update
+   */
+  export type AutomationAuditUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationAudit
+     */
+    select?: AutomationAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationAudit
+     */
+    omit?: AutomationAuditOmit<ExtArgs> | null
+    /**
+     * The data needed to update a AutomationAudit.
+     */
+    data: XOR<AutomationAuditUpdateInput, AutomationAuditUncheckedUpdateInput>
+    /**
+     * Choose, which AutomationAudit to update.
+     */
+    where: AutomationAuditWhereUniqueInput
+  }
+
+  /**
+   * AutomationAudit updateMany
+   */
+  export type AutomationAuditUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update AutomationAudits.
+     */
+    data: XOR<AutomationAuditUpdateManyMutationInput, AutomationAuditUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationAudits to update
+     */
+    where?: AutomationAuditWhereInput
+    /**
+     * Limit how many AutomationAudits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationAudit updateManyAndReturn
+   */
+  export type AutomationAuditUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationAudit
+     */
+    select?: AutomationAuditSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationAudit
+     */
+    omit?: AutomationAuditOmit<ExtArgs> | null
+    /**
+     * The data used to update AutomationAudits.
+     */
+    data: XOR<AutomationAuditUpdateManyMutationInput, AutomationAuditUncheckedUpdateManyInput>
+    /**
+     * Filter which AutomationAudits to update
+     */
+    where?: AutomationAuditWhereInput
+    /**
+     * Limit how many AutomationAudits to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationAudit upsert
+   */
+  export type AutomationAuditUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationAudit
+     */
+    select?: AutomationAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationAudit
+     */
+    omit?: AutomationAuditOmit<ExtArgs> | null
+    /**
+     * The filter to search for the AutomationAudit to update in case it exists.
+     */
+    where: AutomationAuditWhereUniqueInput
+    /**
+     * In case the AutomationAudit found by the `where` argument doesn't exist, create a new AutomationAudit with this data.
+     */
+    create: XOR<AutomationAuditCreateInput, AutomationAuditUncheckedCreateInput>
+    /**
+     * In case the AutomationAudit was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<AutomationAuditUpdateInput, AutomationAuditUncheckedUpdateInput>
+  }
+
+  /**
+   * AutomationAudit delete
+   */
+  export type AutomationAuditDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationAudit
+     */
+    select?: AutomationAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationAudit
+     */
+    omit?: AutomationAuditOmit<ExtArgs> | null
+    /**
+     * Filter which AutomationAudit to delete.
+     */
+    where: AutomationAuditWhereUniqueInput
+  }
+
+  /**
+   * AutomationAudit deleteMany
+   */
+  export type AutomationAuditDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which AutomationAudits to delete
+     */
+    where?: AutomationAuditWhereInput
+    /**
+     * Limit how many AutomationAudits to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * AutomationAudit without action
+   */
+  export type AutomationAuditDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the AutomationAudit
+     */
+    select?: AutomationAuditSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the AutomationAudit
+     */
+    omit?: AutomationAuditOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -66708,6 +78451,147 @@ export namespace Prisma {
   };
 
   export type CprCounterScalarFieldEnum = (typeof CprCounterScalarFieldEnum)[keyof typeof CprCounterScalarFieldEnum]
+
+
+  export const AutomationWorkflowScalarFieldEnum: {
+    key: 'key',
+    name: 'name',
+    module: 'module',
+    status: 'status',
+    activeVersion: 'activeVersion',
+    draft: 'draft',
+    draftRev: 'draftRev',
+    updatedBy: 'updatedBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AutomationWorkflowScalarFieldEnum = (typeof AutomationWorkflowScalarFieldEnum)[keyof typeof AutomationWorkflowScalarFieldEnum]
+
+
+  export const AutomationWorkflowVersionScalarFieldEnum: {
+    id: 'id',
+    workflowKey: 'workflowKey',
+    version: 'version',
+    graph: 'graph',
+    hash: 'hash',
+    publishedBy: 'publishedBy',
+    publishedAt: 'publishedAt'
+  };
+
+  export type AutomationWorkflowVersionScalarFieldEnum = (typeof AutomationWorkflowVersionScalarFieldEnum)[keyof typeof AutomationWorkflowVersionScalarFieldEnum]
+
+
+  export const AutomationEventScalarFieldEnum: {
+    id: 'id',
+    dedupeKey: 'dedupeKey',
+    type: 'type',
+    entityType: 'entityType',
+    entityId: 'entityId',
+    payload: 'payload',
+    correlationId: 'correlationId',
+    occurredAt: 'occurredAt',
+    dispatchedAt: 'dispatchedAt',
+    attempts: 'attempts',
+    nextAttemptAt: 'nextAttemptAt',
+    lastError: 'lastError'
+  };
+
+  export type AutomationEventScalarFieldEnum = (typeof AutomationEventScalarFieldEnum)[keyof typeof AutomationEventScalarFieldEnum]
+
+
+  export const AutomationInboxScalarFieldEnum: {
+    eventId: 'eventId',
+    consumer: 'consumer',
+    processedAt: 'processedAt'
+  };
+
+  export type AutomationInboxScalarFieldEnum = (typeof AutomationInboxScalarFieldEnum)[keyof typeof AutomationInboxScalarFieldEnum]
+
+
+  export const AutomationRunScalarFieldEnum: {
+    id: 'id',
+    workflowKey: 'workflowKey',
+    version: 'version',
+    eventId: 'eventId',
+    entityType: 'entityType',
+    entityId: 'entityId',
+    status: 'status',
+    cursor: 'cursor',
+    waitKey: 'waitKey',
+    ctx: 'ctx',
+    error: 'error',
+    correlationId: 'correlationId',
+    startedAt: 'startedAt',
+    updatedAt: 'updatedAt',
+    finishedAt: 'finishedAt'
+  };
+
+  export type AutomationRunScalarFieldEnum = (typeof AutomationRunScalarFieldEnum)[keyof typeof AutomationRunScalarFieldEnum]
+
+
+  export const AutomationRunStepScalarFieldEnum: {
+    id: 'id',
+    runId: 'runId',
+    nodeId: 'nodeId',
+    status: 'status',
+    handle: 'handle',
+    result: 'result',
+    at: 'at'
+  };
+
+  export type AutomationRunStepScalarFieldEnum = (typeof AutomationRunStepScalarFieldEnum)[keyof typeof AutomationRunStepScalarFieldEnum]
+
+
+  export const AutomationTimerScalarFieldEnum: {
+    id: 'id',
+    key: 'key',
+    kind: 'kind',
+    entityId: 'entityId',
+    dueAt: 'dueAt',
+    payload: 'payload',
+    runId: 'runId',
+    status: 'status',
+    firedAt: 'firedAt'
+  };
+
+  export type AutomationTimerScalarFieldEnum = (typeof AutomationTimerScalarFieldEnum)[keyof typeof AutomationTimerScalarFieldEnum]
+
+
+  export const AutomationDeliveryScalarFieldEnum: {
+    key: 'key',
+    sentAt: 'sentAt'
+  };
+
+  export type AutomationDeliveryScalarFieldEnum = (typeof AutomationDeliveryScalarFieldEnum)[keyof typeof AutomationDeliveryScalarFieldEnum]
+
+
+  export const AutomationPolicyScalarFieldEnum: {
+    key: 'key',
+    status: 'status',
+    config: 'config',
+    version: 'version',
+    updatedBy: 'updatedBy',
+    updatedAt: 'updatedAt'
+  };
+
+  export type AutomationPolicyScalarFieldEnum = (typeof AutomationPolicyScalarFieldEnum)[keyof typeof AutomationPolicyScalarFieldEnum]
+
+
+  export const AutomationAuditScalarFieldEnum: {
+    id: 'id',
+    at: 'at',
+    actorType: 'actorType',
+    actorId: 'actorId',
+    action: 'action',
+    resourceType: 'resourceType',
+    resourceId: 'resourceId',
+    outcome: 'outcome',
+    correlationId: 'correlationId',
+    detail: 'detail'
+  };
+
+  export type AutomationAuditScalarFieldEnum = (typeof AutomationAuditScalarFieldEnum)[keyof typeof AutomationAuditScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -71269,6 +83153,706 @@ export namespace Prisma {
     NOT?: CprCounterScalarWhereWithAggregatesInput | CprCounterScalarWhereWithAggregatesInput[]
     month?: StringWithAggregatesFilter<"CprCounter"> | string
     last?: IntWithAggregatesFilter<"CprCounter"> | number
+  }
+
+  export type AutomationWorkflowWhereInput = {
+    AND?: AutomationWorkflowWhereInput | AutomationWorkflowWhereInput[]
+    OR?: AutomationWorkflowWhereInput[]
+    NOT?: AutomationWorkflowWhereInput | AutomationWorkflowWhereInput[]
+    key?: StringFilter<"AutomationWorkflow"> | string
+    name?: StringFilter<"AutomationWorkflow"> | string
+    module?: StringFilter<"AutomationWorkflow"> | string
+    status?: StringFilter<"AutomationWorkflow"> | string
+    activeVersion?: IntNullableFilter<"AutomationWorkflow"> | number | null
+    draft?: JsonFilter<"AutomationWorkflow">
+    draftRev?: IntFilter<"AutomationWorkflow"> | number
+    updatedBy?: StringNullableFilter<"AutomationWorkflow"> | string | null
+    createdAt?: DateTimeFilter<"AutomationWorkflow"> | Date | string
+    updatedAt?: DateTimeFilter<"AutomationWorkflow"> | Date | string
+    versions?: AutomationWorkflowVersionListRelationFilter
+  }
+
+  export type AutomationWorkflowOrderByWithRelationInput = {
+    key?: SortOrder
+    name?: SortOrder
+    module?: SortOrder
+    status?: SortOrder
+    activeVersion?: SortOrderInput | SortOrder
+    draft?: SortOrder
+    draftRev?: SortOrder
+    updatedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    versions?: AutomationWorkflowVersionOrderByRelationAggregateInput
+  }
+
+  export type AutomationWorkflowWhereUniqueInput = Prisma.AtLeast<{
+    key?: string
+    AND?: AutomationWorkflowWhereInput | AutomationWorkflowWhereInput[]
+    OR?: AutomationWorkflowWhereInput[]
+    NOT?: AutomationWorkflowWhereInput | AutomationWorkflowWhereInput[]
+    name?: StringFilter<"AutomationWorkflow"> | string
+    module?: StringFilter<"AutomationWorkflow"> | string
+    status?: StringFilter<"AutomationWorkflow"> | string
+    activeVersion?: IntNullableFilter<"AutomationWorkflow"> | number | null
+    draft?: JsonFilter<"AutomationWorkflow">
+    draftRev?: IntFilter<"AutomationWorkflow"> | number
+    updatedBy?: StringNullableFilter<"AutomationWorkflow"> | string | null
+    createdAt?: DateTimeFilter<"AutomationWorkflow"> | Date | string
+    updatedAt?: DateTimeFilter<"AutomationWorkflow"> | Date | string
+    versions?: AutomationWorkflowVersionListRelationFilter
+  }, "key">
+
+  export type AutomationWorkflowOrderByWithAggregationInput = {
+    key?: SortOrder
+    name?: SortOrder
+    module?: SortOrder
+    status?: SortOrder
+    activeVersion?: SortOrderInput | SortOrder
+    draft?: SortOrder
+    draftRev?: SortOrder
+    updatedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: AutomationWorkflowCountOrderByAggregateInput
+    _avg?: AutomationWorkflowAvgOrderByAggregateInput
+    _max?: AutomationWorkflowMaxOrderByAggregateInput
+    _min?: AutomationWorkflowMinOrderByAggregateInput
+    _sum?: AutomationWorkflowSumOrderByAggregateInput
+  }
+
+  export type AutomationWorkflowScalarWhereWithAggregatesInput = {
+    AND?: AutomationWorkflowScalarWhereWithAggregatesInput | AutomationWorkflowScalarWhereWithAggregatesInput[]
+    OR?: AutomationWorkflowScalarWhereWithAggregatesInput[]
+    NOT?: AutomationWorkflowScalarWhereWithAggregatesInput | AutomationWorkflowScalarWhereWithAggregatesInput[]
+    key?: StringWithAggregatesFilter<"AutomationWorkflow"> | string
+    name?: StringWithAggregatesFilter<"AutomationWorkflow"> | string
+    module?: StringWithAggregatesFilter<"AutomationWorkflow"> | string
+    status?: StringWithAggregatesFilter<"AutomationWorkflow"> | string
+    activeVersion?: IntNullableWithAggregatesFilter<"AutomationWorkflow"> | number | null
+    draft?: JsonWithAggregatesFilter<"AutomationWorkflow">
+    draftRev?: IntWithAggregatesFilter<"AutomationWorkflow"> | number
+    updatedBy?: StringNullableWithAggregatesFilter<"AutomationWorkflow"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"AutomationWorkflow"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AutomationWorkflow"> | Date | string
+  }
+
+  export type AutomationWorkflowVersionWhereInput = {
+    AND?: AutomationWorkflowVersionWhereInput | AutomationWorkflowVersionWhereInput[]
+    OR?: AutomationWorkflowVersionWhereInput[]
+    NOT?: AutomationWorkflowVersionWhereInput | AutomationWorkflowVersionWhereInput[]
+    id?: StringFilter<"AutomationWorkflowVersion"> | string
+    workflowKey?: StringFilter<"AutomationWorkflowVersion"> | string
+    version?: IntFilter<"AutomationWorkflowVersion"> | number
+    graph?: JsonFilter<"AutomationWorkflowVersion">
+    hash?: StringFilter<"AutomationWorkflowVersion"> | string
+    publishedBy?: StringFilter<"AutomationWorkflowVersion"> | string
+    publishedAt?: DateTimeFilter<"AutomationWorkflowVersion"> | Date | string
+    workflow?: XOR<AutomationWorkflowScalarRelationFilter, AutomationWorkflowWhereInput>
+  }
+
+  export type AutomationWorkflowVersionOrderByWithRelationInput = {
+    id?: SortOrder
+    workflowKey?: SortOrder
+    version?: SortOrder
+    graph?: SortOrder
+    hash?: SortOrder
+    publishedBy?: SortOrder
+    publishedAt?: SortOrder
+    workflow?: AutomationWorkflowOrderByWithRelationInput
+  }
+
+  export type AutomationWorkflowVersionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    workflowKey_version?: AutomationWorkflowVersionWorkflowKeyVersionCompoundUniqueInput
+    AND?: AutomationWorkflowVersionWhereInput | AutomationWorkflowVersionWhereInput[]
+    OR?: AutomationWorkflowVersionWhereInput[]
+    NOT?: AutomationWorkflowVersionWhereInput | AutomationWorkflowVersionWhereInput[]
+    workflowKey?: StringFilter<"AutomationWorkflowVersion"> | string
+    version?: IntFilter<"AutomationWorkflowVersion"> | number
+    graph?: JsonFilter<"AutomationWorkflowVersion">
+    hash?: StringFilter<"AutomationWorkflowVersion"> | string
+    publishedBy?: StringFilter<"AutomationWorkflowVersion"> | string
+    publishedAt?: DateTimeFilter<"AutomationWorkflowVersion"> | Date | string
+    workflow?: XOR<AutomationWorkflowScalarRelationFilter, AutomationWorkflowWhereInput>
+  }, "id" | "workflowKey_version">
+
+  export type AutomationWorkflowVersionOrderByWithAggregationInput = {
+    id?: SortOrder
+    workflowKey?: SortOrder
+    version?: SortOrder
+    graph?: SortOrder
+    hash?: SortOrder
+    publishedBy?: SortOrder
+    publishedAt?: SortOrder
+    _count?: AutomationWorkflowVersionCountOrderByAggregateInput
+    _avg?: AutomationWorkflowVersionAvgOrderByAggregateInput
+    _max?: AutomationWorkflowVersionMaxOrderByAggregateInput
+    _min?: AutomationWorkflowVersionMinOrderByAggregateInput
+    _sum?: AutomationWorkflowVersionSumOrderByAggregateInput
+  }
+
+  export type AutomationWorkflowVersionScalarWhereWithAggregatesInput = {
+    AND?: AutomationWorkflowVersionScalarWhereWithAggregatesInput | AutomationWorkflowVersionScalarWhereWithAggregatesInput[]
+    OR?: AutomationWorkflowVersionScalarWhereWithAggregatesInput[]
+    NOT?: AutomationWorkflowVersionScalarWhereWithAggregatesInput | AutomationWorkflowVersionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AutomationWorkflowVersion"> | string
+    workflowKey?: StringWithAggregatesFilter<"AutomationWorkflowVersion"> | string
+    version?: IntWithAggregatesFilter<"AutomationWorkflowVersion"> | number
+    graph?: JsonWithAggregatesFilter<"AutomationWorkflowVersion">
+    hash?: StringWithAggregatesFilter<"AutomationWorkflowVersion"> | string
+    publishedBy?: StringWithAggregatesFilter<"AutomationWorkflowVersion"> | string
+    publishedAt?: DateTimeWithAggregatesFilter<"AutomationWorkflowVersion"> | Date | string
+  }
+
+  export type AutomationEventWhereInput = {
+    AND?: AutomationEventWhereInput | AutomationEventWhereInput[]
+    OR?: AutomationEventWhereInput[]
+    NOT?: AutomationEventWhereInput | AutomationEventWhereInput[]
+    id?: StringFilter<"AutomationEvent"> | string
+    dedupeKey?: StringFilter<"AutomationEvent"> | string
+    type?: StringFilter<"AutomationEvent"> | string
+    entityType?: StringFilter<"AutomationEvent"> | string
+    entityId?: StringFilter<"AutomationEvent"> | string
+    payload?: JsonFilter<"AutomationEvent">
+    correlationId?: StringFilter<"AutomationEvent"> | string
+    occurredAt?: DateTimeFilter<"AutomationEvent"> | Date | string
+    dispatchedAt?: DateTimeNullableFilter<"AutomationEvent"> | Date | string | null
+    attempts?: IntFilter<"AutomationEvent"> | number
+    nextAttemptAt?: DateTimeFilter<"AutomationEvent"> | Date | string
+    lastError?: StringNullableFilter<"AutomationEvent"> | string | null
+  }
+
+  export type AutomationEventOrderByWithRelationInput = {
+    id?: SortOrder
+    dedupeKey?: SortOrder
+    type?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    payload?: SortOrder
+    correlationId?: SortOrder
+    occurredAt?: SortOrder
+    dispatchedAt?: SortOrderInput | SortOrder
+    attempts?: SortOrder
+    nextAttemptAt?: SortOrder
+    lastError?: SortOrderInput | SortOrder
+  }
+
+  export type AutomationEventWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    dedupeKey?: string
+    AND?: AutomationEventWhereInput | AutomationEventWhereInput[]
+    OR?: AutomationEventWhereInput[]
+    NOT?: AutomationEventWhereInput | AutomationEventWhereInput[]
+    type?: StringFilter<"AutomationEvent"> | string
+    entityType?: StringFilter<"AutomationEvent"> | string
+    entityId?: StringFilter<"AutomationEvent"> | string
+    payload?: JsonFilter<"AutomationEvent">
+    correlationId?: StringFilter<"AutomationEvent"> | string
+    occurredAt?: DateTimeFilter<"AutomationEvent"> | Date | string
+    dispatchedAt?: DateTimeNullableFilter<"AutomationEvent"> | Date | string | null
+    attempts?: IntFilter<"AutomationEvent"> | number
+    nextAttemptAt?: DateTimeFilter<"AutomationEvent"> | Date | string
+    lastError?: StringNullableFilter<"AutomationEvent"> | string | null
+  }, "id" | "dedupeKey">
+
+  export type AutomationEventOrderByWithAggregationInput = {
+    id?: SortOrder
+    dedupeKey?: SortOrder
+    type?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    payload?: SortOrder
+    correlationId?: SortOrder
+    occurredAt?: SortOrder
+    dispatchedAt?: SortOrderInput | SortOrder
+    attempts?: SortOrder
+    nextAttemptAt?: SortOrder
+    lastError?: SortOrderInput | SortOrder
+    _count?: AutomationEventCountOrderByAggregateInput
+    _avg?: AutomationEventAvgOrderByAggregateInput
+    _max?: AutomationEventMaxOrderByAggregateInput
+    _min?: AutomationEventMinOrderByAggregateInput
+    _sum?: AutomationEventSumOrderByAggregateInput
+  }
+
+  export type AutomationEventScalarWhereWithAggregatesInput = {
+    AND?: AutomationEventScalarWhereWithAggregatesInput | AutomationEventScalarWhereWithAggregatesInput[]
+    OR?: AutomationEventScalarWhereWithAggregatesInput[]
+    NOT?: AutomationEventScalarWhereWithAggregatesInput | AutomationEventScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AutomationEvent"> | string
+    dedupeKey?: StringWithAggregatesFilter<"AutomationEvent"> | string
+    type?: StringWithAggregatesFilter<"AutomationEvent"> | string
+    entityType?: StringWithAggregatesFilter<"AutomationEvent"> | string
+    entityId?: StringWithAggregatesFilter<"AutomationEvent"> | string
+    payload?: JsonWithAggregatesFilter<"AutomationEvent">
+    correlationId?: StringWithAggregatesFilter<"AutomationEvent"> | string
+    occurredAt?: DateTimeWithAggregatesFilter<"AutomationEvent"> | Date | string
+    dispatchedAt?: DateTimeNullableWithAggregatesFilter<"AutomationEvent"> | Date | string | null
+    attempts?: IntWithAggregatesFilter<"AutomationEvent"> | number
+    nextAttemptAt?: DateTimeWithAggregatesFilter<"AutomationEvent"> | Date | string
+    lastError?: StringNullableWithAggregatesFilter<"AutomationEvent"> | string | null
+  }
+
+  export type AutomationInboxWhereInput = {
+    AND?: AutomationInboxWhereInput | AutomationInboxWhereInput[]
+    OR?: AutomationInboxWhereInput[]
+    NOT?: AutomationInboxWhereInput | AutomationInboxWhereInput[]
+    eventId?: StringFilter<"AutomationInbox"> | string
+    consumer?: StringFilter<"AutomationInbox"> | string
+    processedAt?: DateTimeFilter<"AutomationInbox"> | Date | string
+  }
+
+  export type AutomationInboxOrderByWithRelationInput = {
+    eventId?: SortOrder
+    consumer?: SortOrder
+    processedAt?: SortOrder
+  }
+
+  export type AutomationInboxWhereUniqueInput = Prisma.AtLeast<{
+    eventId_consumer?: AutomationInboxEventIdConsumerCompoundUniqueInput
+    AND?: AutomationInboxWhereInput | AutomationInboxWhereInput[]
+    OR?: AutomationInboxWhereInput[]
+    NOT?: AutomationInboxWhereInput | AutomationInboxWhereInput[]
+    eventId?: StringFilter<"AutomationInbox"> | string
+    consumer?: StringFilter<"AutomationInbox"> | string
+    processedAt?: DateTimeFilter<"AutomationInbox"> | Date | string
+  }, "eventId_consumer">
+
+  export type AutomationInboxOrderByWithAggregationInput = {
+    eventId?: SortOrder
+    consumer?: SortOrder
+    processedAt?: SortOrder
+    _count?: AutomationInboxCountOrderByAggregateInput
+    _max?: AutomationInboxMaxOrderByAggregateInput
+    _min?: AutomationInboxMinOrderByAggregateInput
+  }
+
+  export type AutomationInboxScalarWhereWithAggregatesInput = {
+    AND?: AutomationInboxScalarWhereWithAggregatesInput | AutomationInboxScalarWhereWithAggregatesInput[]
+    OR?: AutomationInboxScalarWhereWithAggregatesInput[]
+    NOT?: AutomationInboxScalarWhereWithAggregatesInput | AutomationInboxScalarWhereWithAggregatesInput[]
+    eventId?: StringWithAggregatesFilter<"AutomationInbox"> | string
+    consumer?: StringWithAggregatesFilter<"AutomationInbox"> | string
+    processedAt?: DateTimeWithAggregatesFilter<"AutomationInbox"> | Date | string
+  }
+
+  export type AutomationRunWhereInput = {
+    AND?: AutomationRunWhereInput | AutomationRunWhereInput[]
+    OR?: AutomationRunWhereInput[]
+    NOT?: AutomationRunWhereInput | AutomationRunWhereInput[]
+    id?: StringFilter<"AutomationRun"> | string
+    workflowKey?: StringFilter<"AutomationRun"> | string
+    version?: IntFilter<"AutomationRun"> | number
+    eventId?: StringFilter<"AutomationRun"> | string
+    entityType?: StringFilter<"AutomationRun"> | string
+    entityId?: StringFilter<"AutomationRun"> | string
+    status?: StringFilter<"AutomationRun"> | string
+    cursor?: StringFilter<"AutomationRun"> | string
+    waitKey?: StringNullableFilter<"AutomationRun"> | string | null
+    ctx?: JsonFilter<"AutomationRun">
+    error?: StringNullableFilter<"AutomationRun"> | string | null
+    correlationId?: StringFilter<"AutomationRun"> | string
+    startedAt?: DateTimeFilter<"AutomationRun"> | Date | string
+    updatedAt?: DateTimeFilter<"AutomationRun"> | Date | string
+    finishedAt?: DateTimeNullableFilter<"AutomationRun"> | Date | string | null
+    steps?: AutomationRunStepListRelationFilter
+  }
+
+  export type AutomationRunOrderByWithRelationInput = {
+    id?: SortOrder
+    workflowKey?: SortOrder
+    version?: SortOrder
+    eventId?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    status?: SortOrder
+    cursor?: SortOrder
+    waitKey?: SortOrderInput | SortOrder
+    ctx?: SortOrder
+    error?: SortOrderInput | SortOrder
+    correlationId?: SortOrder
+    startedAt?: SortOrder
+    updatedAt?: SortOrder
+    finishedAt?: SortOrderInput | SortOrder
+    steps?: AutomationRunStepOrderByRelationAggregateInput
+  }
+
+  export type AutomationRunWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    workflowKey_version_eventId?: AutomationRunWorkflowKeyVersionEventIdCompoundUniqueInput
+    AND?: AutomationRunWhereInput | AutomationRunWhereInput[]
+    OR?: AutomationRunWhereInput[]
+    NOT?: AutomationRunWhereInput | AutomationRunWhereInput[]
+    workflowKey?: StringFilter<"AutomationRun"> | string
+    version?: IntFilter<"AutomationRun"> | number
+    eventId?: StringFilter<"AutomationRun"> | string
+    entityType?: StringFilter<"AutomationRun"> | string
+    entityId?: StringFilter<"AutomationRun"> | string
+    status?: StringFilter<"AutomationRun"> | string
+    cursor?: StringFilter<"AutomationRun"> | string
+    waitKey?: StringNullableFilter<"AutomationRun"> | string | null
+    ctx?: JsonFilter<"AutomationRun">
+    error?: StringNullableFilter<"AutomationRun"> | string | null
+    correlationId?: StringFilter<"AutomationRun"> | string
+    startedAt?: DateTimeFilter<"AutomationRun"> | Date | string
+    updatedAt?: DateTimeFilter<"AutomationRun"> | Date | string
+    finishedAt?: DateTimeNullableFilter<"AutomationRun"> | Date | string | null
+    steps?: AutomationRunStepListRelationFilter
+  }, "id" | "workflowKey_version_eventId">
+
+  export type AutomationRunOrderByWithAggregationInput = {
+    id?: SortOrder
+    workflowKey?: SortOrder
+    version?: SortOrder
+    eventId?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    status?: SortOrder
+    cursor?: SortOrder
+    waitKey?: SortOrderInput | SortOrder
+    ctx?: SortOrder
+    error?: SortOrderInput | SortOrder
+    correlationId?: SortOrder
+    startedAt?: SortOrder
+    updatedAt?: SortOrder
+    finishedAt?: SortOrderInput | SortOrder
+    _count?: AutomationRunCountOrderByAggregateInput
+    _avg?: AutomationRunAvgOrderByAggregateInput
+    _max?: AutomationRunMaxOrderByAggregateInput
+    _min?: AutomationRunMinOrderByAggregateInput
+    _sum?: AutomationRunSumOrderByAggregateInput
+  }
+
+  export type AutomationRunScalarWhereWithAggregatesInput = {
+    AND?: AutomationRunScalarWhereWithAggregatesInput | AutomationRunScalarWhereWithAggregatesInput[]
+    OR?: AutomationRunScalarWhereWithAggregatesInput[]
+    NOT?: AutomationRunScalarWhereWithAggregatesInput | AutomationRunScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AutomationRun"> | string
+    workflowKey?: StringWithAggregatesFilter<"AutomationRun"> | string
+    version?: IntWithAggregatesFilter<"AutomationRun"> | number
+    eventId?: StringWithAggregatesFilter<"AutomationRun"> | string
+    entityType?: StringWithAggregatesFilter<"AutomationRun"> | string
+    entityId?: StringWithAggregatesFilter<"AutomationRun"> | string
+    status?: StringWithAggregatesFilter<"AutomationRun"> | string
+    cursor?: StringWithAggregatesFilter<"AutomationRun"> | string
+    waitKey?: StringNullableWithAggregatesFilter<"AutomationRun"> | string | null
+    ctx?: JsonWithAggregatesFilter<"AutomationRun">
+    error?: StringNullableWithAggregatesFilter<"AutomationRun"> | string | null
+    correlationId?: StringWithAggregatesFilter<"AutomationRun"> | string
+    startedAt?: DateTimeWithAggregatesFilter<"AutomationRun"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"AutomationRun"> | Date | string
+    finishedAt?: DateTimeNullableWithAggregatesFilter<"AutomationRun"> | Date | string | null
+  }
+
+  export type AutomationRunStepWhereInput = {
+    AND?: AutomationRunStepWhereInput | AutomationRunStepWhereInput[]
+    OR?: AutomationRunStepWhereInput[]
+    NOT?: AutomationRunStepWhereInput | AutomationRunStepWhereInput[]
+    id?: StringFilter<"AutomationRunStep"> | string
+    runId?: StringFilter<"AutomationRunStep"> | string
+    nodeId?: StringFilter<"AutomationRunStep"> | string
+    status?: StringFilter<"AutomationRunStep"> | string
+    handle?: StringNullableFilter<"AutomationRunStep"> | string | null
+    result?: JsonFilter<"AutomationRunStep">
+    at?: DateTimeFilter<"AutomationRunStep"> | Date | string
+    run?: XOR<AutomationRunScalarRelationFilter, AutomationRunWhereInput>
+  }
+
+  export type AutomationRunStepOrderByWithRelationInput = {
+    id?: SortOrder
+    runId?: SortOrder
+    nodeId?: SortOrder
+    status?: SortOrder
+    handle?: SortOrderInput | SortOrder
+    result?: SortOrder
+    at?: SortOrder
+    run?: AutomationRunOrderByWithRelationInput
+  }
+
+  export type AutomationRunStepWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AutomationRunStepWhereInput | AutomationRunStepWhereInput[]
+    OR?: AutomationRunStepWhereInput[]
+    NOT?: AutomationRunStepWhereInput | AutomationRunStepWhereInput[]
+    runId?: StringFilter<"AutomationRunStep"> | string
+    nodeId?: StringFilter<"AutomationRunStep"> | string
+    status?: StringFilter<"AutomationRunStep"> | string
+    handle?: StringNullableFilter<"AutomationRunStep"> | string | null
+    result?: JsonFilter<"AutomationRunStep">
+    at?: DateTimeFilter<"AutomationRunStep"> | Date | string
+    run?: XOR<AutomationRunScalarRelationFilter, AutomationRunWhereInput>
+  }, "id">
+
+  export type AutomationRunStepOrderByWithAggregationInput = {
+    id?: SortOrder
+    runId?: SortOrder
+    nodeId?: SortOrder
+    status?: SortOrder
+    handle?: SortOrderInput | SortOrder
+    result?: SortOrder
+    at?: SortOrder
+    _count?: AutomationRunStepCountOrderByAggregateInput
+    _max?: AutomationRunStepMaxOrderByAggregateInput
+    _min?: AutomationRunStepMinOrderByAggregateInput
+  }
+
+  export type AutomationRunStepScalarWhereWithAggregatesInput = {
+    AND?: AutomationRunStepScalarWhereWithAggregatesInput | AutomationRunStepScalarWhereWithAggregatesInput[]
+    OR?: AutomationRunStepScalarWhereWithAggregatesInput[]
+    NOT?: AutomationRunStepScalarWhereWithAggregatesInput | AutomationRunStepScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AutomationRunStep"> | string
+    runId?: StringWithAggregatesFilter<"AutomationRunStep"> | string
+    nodeId?: StringWithAggregatesFilter<"AutomationRunStep"> | string
+    status?: StringWithAggregatesFilter<"AutomationRunStep"> | string
+    handle?: StringNullableWithAggregatesFilter<"AutomationRunStep"> | string | null
+    result?: JsonWithAggregatesFilter<"AutomationRunStep">
+    at?: DateTimeWithAggregatesFilter<"AutomationRunStep"> | Date | string
+  }
+
+  export type AutomationTimerWhereInput = {
+    AND?: AutomationTimerWhereInput | AutomationTimerWhereInput[]
+    OR?: AutomationTimerWhereInput[]
+    NOT?: AutomationTimerWhereInput | AutomationTimerWhereInput[]
+    id?: StringFilter<"AutomationTimer"> | string
+    key?: StringFilter<"AutomationTimer"> | string
+    kind?: StringFilter<"AutomationTimer"> | string
+    entityId?: StringFilter<"AutomationTimer"> | string
+    dueAt?: DateTimeFilter<"AutomationTimer"> | Date | string
+    payload?: JsonFilter<"AutomationTimer">
+    runId?: StringNullableFilter<"AutomationTimer"> | string | null
+    status?: StringFilter<"AutomationTimer"> | string
+    firedAt?: DateTimeNullableFilter<"AutomationTimer"> | Date | string | null
+  }
+
+  export type AutomationTimerOrderByWithRelationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    kind?: SortOrder
+    entityId?: SortOrder
+    dueAt?: SortOrder
+    payload?: SortOrder
+    runId?: SortOrderInput | SortOrder
+    status?: SortOrder
+    firedAt?: SortOrderInput | SortOrder
+  }
+
+  export type AutomationTimerWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    key?: string
+    AND?: AutomationTimerWhereInput | AutomationTimerWhereInput[]
+    OR?: AutomationTimerWhereInput[]
+    NOT?: AutomationTimerWhereInput | AutomationTimerWhereInput[]
+    kind?: StringFilter<"AutomationTimer"> | string
+    entityId?: StringFilter<"AutomationTimer"> | string
+    dueAt?: DateTimeFilter<"AutomationTimer"> | Date | string
+    payload?: JsonFilter<"AutomationTimer">
+    runId?: StringNullableFilter<"AutomationTimer"> | string | null
+    status?: StringFilter<"AutomationTimer"> | string
+    firedAt?: DateTimeNullableFilter<"AutomationTimer"> | Date | string | null
+  }, "id" | "key">
+
+  export type AutomationTimerOrderByWithAggregationInput = {
+    id?: SortOrder
+    key?: SortOrder
+    kind?: SortOrder
+    entityId?: SortOrder
+    dueAt?: SortOrder
+    payload?: SortOrder
+    runId?: SortOrderInput | SortOrder
+    status?: SortOrder
+    firedAt?: SortOrderInput | SortOrder
+    _count?: AutomationTimerCountOrderByAggregateInput
+    _max?: AutomationTimerMaxOrderByAggregateInput
+    _min?: AutomationTimerMinOrderByAggregateInput
+  }
+
+  export type AutomationTimerScalarWhereWithAggregatesInput = {
+    AND?: AutomationTimerScalarWhereWithAggregatesInput | AutomationTimerScalarWhereWithAggregatesInput[]
+    OR?: AutomationTimerScalarWhereWithAggregatesInput[]
+    NOT?: AutomationTimerScalarWhereWithAggregatesInput | AutomationTimerScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AutomationTimer"> | string
+    key?: StringWithAggregatesFilter<"AutomationTimer"> | string
+    kind?: StringWithAggregatesFilter<"AutomationTimer"> | string
+    entityId?: StringWithAggregatesFilter<"AutomationTimer"> | string
+    dueAt?: DateTimeWithAggregatesFilter<"AutomationTimer"> | Date | string
+    payload?: JsonWithAggregatesFilter<"AutomationTimer">
+    runId?: StringNullableWithAggregatesFilter<"AutomationTimer"> | string | null
+    status?: StringWithAggregatesFilter<"AutomationTimer"> | string
+    firedAt?: DateTimeNullableWithAggregatesFilter<"AutomationTimer"> | Date | string | null
+  }
+
+  export type AutomationDeliveryWhereInput = {
+    AND?: AutomationDeliveryWhereInput | AutomationDeliveryWhereInput[]
+    OR?: AutomationDeliveryWhereInput[]
+    NOT?: AutomationDeliveryWhereInput | AutomationDeliveryWhereInput[]
+    key?: StringFilter<"AutomationDelivery"> | string
+    sentAt?: DateTimeFilter<"AutomationDelivery"> | Date | string
+  }
+
+  export type AutomationDeliveryOrderByWithRelationInput = {
+    key?: SortOrder
+    sentAt?: SortOrder
+  }
+
+  export type AutomationDeliveryWhereUniqueInput = Prisma.AtLeast<{
+    key?: string
+    AND?: AutomationDeliveryWhereInput | AutomationDeliveryWhereInput[]
+    OR?: AutomationDeliveryWhereInput[]
+    NOT?: AutomationDeliveryWhereInput | AutomationDeliveryWhereInput[]
+    sentAt?: DateTimeFilter<"AutomationDelivery"> | Date | string
+  }, "key">
+
+  export type AutomationDeliveryOrderByWithAggregationInput = {
+    key?: SortOrder
+    sentAt?: SortOrder
+    _count?: AutomationDeliveryCountOrderByAggregateInput
+    _max?: AutomationDeliveryMaxOrderByAggregateInput
+    _min?: AutomationDeliveryMinOrderByAggregateInput
+  }
+
+  export type AutomationDeliveryScalarWhereWithAggregatesInput = {
+    AND?: AutomationDeliveryScalarWhereWithAggregatesInput | AutomationDeliveryScalarWhereWithAggregatesInput[]
+    OR?: AutomationDeliveryScalarWhereWithAggregatesInput[]
+    NOT?: AutomationDeliveryScalarWhereWithAggregatesInput | AutomationDeliveryScalarWhereWithAggregatesInput[]
+    key?: StringWithAggregatesFilter<"AutomationDelivery"> | string
+    sentAt?: DateTimeWithAggregatesFilter<"AutomationDelivery"> | Date | string
+  }
+
+  export type AutomationPolicyWhereInput = {
+    AND?: AutomationPolicyWhereInput | AutomationPolicyWhereInput[]
+    OR?: AutomationPolicyWhereInput[]
+    NOT?: AutomationPolicyWhereInput | AutomationPolicyWhereInput[]
+    key?: StringFilter<"AutomationPolicy"> | string
+    status?: StringFilter<"AutomationPolicy"> | string
+    config?: JsonFilter<"AutomationPolicy">
+    version?: IntFilter<"AutomationPolicy"> | number
+    updatedBy?: StringNullableFilter<"AutomationPolicy"> | string | null
+    updatedAt?: DateTimeFilter<"AutomationPolicy"> | Date | string
+  }
+
+  export type AutomationPolicyOrderByWithRelationInput = {
+    key?: SortOrder
+    status?: SortOrder
+    config?: SortOrder
+    version?: SortOrder
+    updatedBy?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AutomationPolicyWhereUniqueInput = Prisma.AtLeast<{
+    key?: string
+    AND?: AutomationPolicyWhereInput | AutomationPolicyWhereInput[]
+    OR?: AutomationPolicyWhereInput[]
+    NOT?: AutomationPolicyWhereInput | AutomationPolicyWhereInput[]
+    status?: StringFilter<"AutomationPolicy"> | string
+    config?: JsonFilter<"AutomationPolicy">
+    version?: IntFilter<"AutomationPolicy"> | number
+    updatedBy?: StringNullableFilter<"AutomationPolicy"> | string | null
+    updatedAt?: DateTimeFilter<"AutomationPolicy"> | Date | string
+  }, "key">
+
+  export type AutomationPolicyOrderByWithAggregationInput = {
+    key?: SortOrder
+    status?: SortOrder
+    config?: SortOrder
+    version?: SortOrder
+    updatedBy?: SortOrderInput | SortOrder
+    updatedAt?: SortOrder
+    _count?: AutomationPolicyCountOrderByAggregateInput
+    _avg?: AutomationPolicyAvgOrderByAggregateInput
+    _max?: AutomationPolicyMaxOrderByAggregateInput
+    _min?: AutomationPolicyMinOrderByAggregateInput
+    _sum?: AutomationPolicySumOrderByAggregateInput
+  }
+
+  export type AutomationPolicyScalarWhereWithAggregatesInput = {
+    AND?: AutomationPolicyScalarWhereWithAggregatesInput | AutomationPolicyScalarWhereWithAggregatesInput[]
+    OR?: AutomationPolicyScalarWhereWithAggregatesInput[]
+    NOT?: AutomationPolicyScalarWhereWithAggregatesInput | AutomationPolicyScalarWhereWithAggregatesInput[]
+    key?: StringWithAggregatesFilter<"AutomationPolicy"> | string
+    status?: StringWithAggregatesFilter<"AutomationPolicy"> | string
+    config?: JsonWithAggregatesFilter<"AutomationPolicy">
+    version?: IntWithAggregatesFilter<"AutomationPolicy"> | number
+    updatedBy?: StringNullableWithAggregatesFilter<"AutomationPolicy"> | string | null
+    updatedAt?: DateTimeWithAggregatesFilter<"AutomationPolicy"> | Date | string
+  }
+
+  export type AutomationAuditWhereInput = {
+    AND?: AutomationAuditWhereInput | AutomationAuditWhereInput[]
+    OR?: AutomationAuditWhereInput[]
+    NOT?: AutomationAuditWhereInput | AutomationAuditWhereInput[]
+    id?: StringFilter<"AutomationAudit"> | string
+    at?: DateTimeFilter<"AutomationAudit"> | Date | string
+    actorType?: StringFilter<"AutomationAudit"> | string
+    actorId?: StringFilter<"AutomationAudit"> | string
+    action?: StringFilter<"AutomationAudit"> | string
+    resourceType?: StringFilter<"AutomationAudit"> | string
+    resourceId?: StringFilter<"AutomationAudit"> | string
+    outcome?: StringFilter<"AutomationAudit"> | string
+    correlationId?: StringFilter<"AutomationAudit"> | string
+    detail?: JsonNullableFilter<"AutomationAudit">
+  }
+
+  export type AutomationAuditOrderByWithRelationInput = {
+    id?: SortOrder
+    at?: SortOrder
+    actorType?: SortOrder
+    actorId?: SortOrder
+    action?: SortOrder
+    resourceType?: SortOrder
+    resourceId?: SortOrder
+    outcome?: SortOrder
+    correlationId?: SortOrder
+    detail?: SortOrderInput | SortOrder
+  }
+
+  export type AutomationAuditWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: AutomationAuditWhereInput | AutomationAuditWhereInput[]
+    OR?: AutomationAuditWhereInput[]
+    NOT?: AutomationAuditWhereInput | AutomationAuditWhereInput[]
+    at?: DateTimeFilter<"AutomationAudit"> | Date | string
+    actorType?: StringFilter<"AutomationAudit"> | string
+    actorId?: StringFilter<"AutomationAudit"> | string
+    action?: StringFilter<"AutomationAudit"> | string
+    resourceType?: StringFilter<"AutomationAudit"> | string
+    resourceId?: StringFilter<"AutomationAudit"> | string
+    outcome?: StringFilter<"AutomationAudit"> | string
+    correlationId?: StringFilter<"AutomationAudit"> | string
+    detail?: JsonNullableFilter<"AutomationAudit">
+  }, "id">
+
+  export type AutomationAuditOrderByWithAggregationInput = {
+    id?: SortOrder
+    at?: SortOrder
+    actorType?: SortOrder
+    actorId?: SortOrder
+    action?: SortOrder
+    resourceType?: SortOrder
+    resourceId?: SortOrder
+    outcome?: SortOrder
+    correlationId?: SortOrder
+    detail?: SortOrderInput | SortOrder
+    _count?: AutomationAuditCountOrderByAggregateInput
+    _max?: AutomationAuditMaxOrderByAggregateInput
+    _min?: AutomationAuditMinOrderByAggregateInput
+  }
+
+  export type AutomationAuditScalarWhereWithAggregatesInput = {
+    AND?: AutomationAuditScalarWhereWithAggregatesInput | AutomationAuditScalarWhereWithAggregatesInput[]
+    OR?: AutomationAuditScalarWhereWithAggregatesInput[]
+    NOT?: AutomationAuditScalarWhereWithAggregatesInput | AutomationAuditScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"AutomationAudit"> | string
+    at?: DateTimeWithAggregatesFilter<"AutomationAudit"> | Date | string
+    actorType?: StringWithAggregatesFilter<"AutomationAudit"> | string
+    actorId?: StringWithAggregatesFilter<"AutomationAudit"> | string
+    action?: StringWithAggregatesFilter<"AutomationAudit"> | string
+    resourceType?: StringWithAggregatesFilter<"AutomationAudit"> | string
+    resourceId?: StringWithAggregatesFilter<"AutomationAudit"> | string
+    outcome?: StringWithAggregatesFilter<"AutomationAudit"> | string
+    correlationId?: StringWithAggregatesFilter<"AutomationAudit"> | string
+    detail?: JsonNullableWithAggregatesFilter<"AutomationAudit">
   }
 
   export type UserCreateInput = {
@@ -76169,6 +88753,789 @@ export namespace Prisma {
     last?: IntFieldUpdateOperationsInput | number
   }
 
+  export type AutomationWorkflowCreateInput = {
+    key: string
+    name: string
+    module: string
+    status?: string
+    activeVersion?: number | null
+    draft: JsonNullValueInput | InputJsonValue
+    draftRev?: number
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    versions?: AutomationWorkflowVersionCreateNestedManyWithoutWorkflowInput
+  }
+
+  export type AutomationWorkflowUncheckedCreateInput = {
+    key: string
+    name: string
+    module: string
+    status?: string
+    activeVersion?: number | null
+    draft: JsonNullValueInput | InputJsonValue
+    draftRev?: number
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    versions?: AutomationWorkflowVersionUncheckedCreateNestedManyWithoutWorkflowInput
+  }
+
+  export type AutomationWorkflowUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    module?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    activeVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    draft?: JsonNullValueInput | InputJsonValue
+    draftRev?: IntFieldUpdateOperationsInput | number
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    versions?: AutomationWorkflowVersionUpdateManyWithoutWorkflowNestedInput
+  }
+
+  export type AutomationWorkflowUncheckedUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    module?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    activeVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    draft?: JsonNullValueInput | InputJsonValue
+    draftRev?: IntFieldUpdateOperationsInput | number
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    versions?: AutomationWorkflowVersionUncheckedUpdateManyWithoutWorkflowNestedInput
+  }
+
+  export type AutomationWorkflowCreateManyInput = {
+    key: string
+    name: string
+    module: string
+    status?: string
+    activeVersion?: number | null
+    draft: JsonNullValueInput | InputJsonValue
+    draftRev?: number
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AutomationWorkflowUpdateManyMutationInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    module?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    activeVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    draft?: JsonNullValueInput | InputJsonValue
+    draftRev?: IntFieldUpdateOperationsInput | number
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationWorkflowUncheckedUpdateManyInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    module?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    activeVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    draft?: JsonNullValueInput | InputJsonValue
+    draftRev?: IntFieldUpdateOperationsInput | number
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationWorkflowVersionCreateInput = {
+    id?: string
+    version: number
+    graph: JsonNullValueInput | InputJsonValue
+    hash: string
+    publishedBy: string
+    publishedAt?: Date | string
+    workflow: AutomationWorkflowCreateNestedOneWithoutVersionsInput
+  }
+
+  export type AutomationWorkflowVersionUncheckedCreateInput = {
+    id?: string
+    workflowKey: string
+    version: number
+    graph: JsonNullValueInput | InputJsonValue
+    hash: string
+    publishedBy: string
+    publishedAt?: Date | string
+  }
+
+  export type AutomationWorkflowVersionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    graph?: JsonNullValueInput | InputJsonValue
+    hash?: StringFieldUpdateOperationsInput | string
+    publishedBy?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    workflow?: AutomationWorkflowUpdateOneRequiredWithoutVersionsNestedInput
+  }
+
+  export type AutomationWorkflowVersionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowKey?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    graph?: JsonNullValueInput | InputJsonValue
+    hash?: StringFieldUpdateOperationsInput | string
+    publishedBy?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationWorkflowVersionCreateManyInput = {
+    id?: string
+    workflowKey: string
+    version: number
+    graph: JsonNullValueInput | InputJsonValue
+    hash: string
+    publishedBy: string
+    publishedAt?: Date | string
+  }
+
+  export type AutomationWorkflowVersionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    graph?: JsonNullValueInput | InputJsonValue
+    hash?: StringFieldUpdateOperationsInput | string
+    publishedBy?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationWorkflowVersionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowKey?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    graph?: JsonNullValueInput | InputJsonValue
+    hash?: StringFieldUpdateOperationsInput | string
+    publishedBy?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationEventCreateInput = {
+    id?: string
+    dedupeKey: string
+    type: string
+    entityType: string
+    entityId: string
+    payload: JsonNullValueInput | InputJsonValue
+    correlationId: string
+    occurredAt?: Date | string
+    dispatchedAt?: Date | string | null
+    attempts?: number
+    nextAttemptAt?: Date | string
+    lastError?: string | null
+  }
+
+  export type AutomationEventUncheckedCreateInput = {
+    id?: string
+    dedupeKey: string
+    type: string
+    entityType: string
+    entityId: string
+    payload: JsonNullValueInput | InputJsonValue
+    correlationId: string
+    occurredAt?: Date | string
+    dispatchedAt?: Date | string | null
+    attempts?: number
+    nextAttemptAt?: Date | string
+    lastError?: string | null
+  }
+
+  export type AutomationEventUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dedupeKey?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    correlationId?: StringFieldUpdateOperationsInput | string
+    occurredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dispatchedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextAttemptAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AutomationEventUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dedupeKey?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    correlationId?: StringFieldUpdateOperationsInput | string
+    occurredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dispatchedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextAttemptAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AutomationEventCreateManyInput = {
+    id?: string
+    dedupeKey: string
+    type: string
+    entityType: string
+    entityId: string
+    payload: JsonNullValueInput | InputJsonValue
+    correlationId: string
+    occurredAt?: Date | string
+    dispatchedAt?: Date | string | null
+    attempts?: number
+    nextAttemptAt?: Date | string
+    lastError?: string | null
+  }
+
+  export type AutomationEventUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dedupeKey?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    correlationId?: StringFieldUpdateOperationsInput | string
+    occurredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dispatchedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextAttemptAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AutomationEventUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dedupeKey?: StringFieldUpdateOperationsInput | string
+    type?: StringFieldUpdateOperationsInput | string
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    payload?: JsonNullValueInput | InputJsonValue
+    correlationId?: StringFieldUpdateOperationsInput | string
+    occurredAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    dispatchedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    attempts?: IntFieldUpdateOperationsInput | number
+    nextAttemptAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    lastError?: NullableStringFieldUpdateOperationsInput | string | null
+  }
+
+  export type AutomationInboxCreateInput = {
+    eventId: string
+    consumer: string
+    processedAt?: Date | string
+  }
+
+  export type AutomationInboxUncheckedCreateInput = {
+    eventId: string
+    consumer: string
+    processedAt?: Date | string
+  }
+
+  export type AutomationInboxUpdateInput = {
+    eventId?: StringFieldUpdateOperationsInput | string
+    consumer?: StringFieldUpdateOperationsInput | string
+    processedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationInboxUncheckedUpdateInput = {
+    eventId?: StringFieldUpdateOperationsInput | string
+    consumer?: StringFieldUpdateOperationsInput | string
+    processedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationInboxCreateManyInput = {
+    eventId: string
+    consumer: string
+    processedAt?: Date | string
+  }
+
+  export type AutomationInboxUpdateManyMutationInput = {
+    eventId?: StringFieldUpdateOperationsInput | string
+    consumer?: StringFieldUpdateOperationsInput | string
+    processedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationInboxUncheckedUpdateManyInput = {
+    eventId?: StringFieldUpdateOperationsInput | string
+    consumer?: StringFieldUpdateOperationsInput | string
+    processedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationRunCreateInput = {
+    id?: string
+    workflowKey: string
+    version: number
+    eventId: string
+    entityType?: string
+    entityId: string
+    status: string
+    cursor: string
+    waitKey?: string | null
+    ctx: JsonNullValueInput | InputJsonValue
+    error?: string | null
+    correlationId: string
+    startedAt?: Date | string
+    updatedAt?: Date | string
+    finishedAt?: Date | string | null
+    steps?: AutomationRunStepCreateNestedManyWithoutRunInput
+  }
+
+  export type AutomationRunUncheckedCreateInput = {
+    id?: string
+    workflowKey: string
+    version: number
+    eventId: string
+    entityType?: string
+    entityId: string
+    status: string
+    cursor: string
+    waitKey?: string | null
+    ctx: JsonNullValueInput | InputJsonValue
+    error?: string | null
+    correlationId: string
+    startedAt?: Date | string
+    updatedAt?: Date | string
+    finishedAt?: Date | string | null
+    steps?: AutomationRunStepUncheckedCreateNestedManyWithoutRunInput
+  }
+
+  export type AutomationRunUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowKey?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    eventId?: StringFieldUpdateOperationsInput | string
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    cursor?: StringFieldUpdateOperationsInput | string
+    waitKey?: NullableStringFieldUpdateOperationsInput | string | null
+    ctx?: JsonNullValueInput | InputJsonValue
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    correlationId?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    steps?: AutomationRunStepUpdateManyWithoutRunNestedInput
+  }
+
+  export type AutomationRunUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowKey?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    eventId?: StringFieldUpdateOperationsInput | string
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    cursor?: StringFieldUpdateOperationsInput | string
+    waitKey?: NullableStringFieldUpdateOperationsInput | string | null
+    ctx?: JsonNullValueInput | InputJsonValue
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    correlationId?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    steps?: AutomationRunStepUncheckedUpdateManyWithoutRunNestedInput
+  }
+
+  export type AutomationRunCreateManyInput = {
+    id?: string
+    workflowKey: string
+    version: number
+    eventId: string
+    entityType?: string
+    entityId: string
+    status: string
+    cursor: string
+    waitKey?: string | null
+    ctx: JsonNullValueInput | InputJsonValue
+    error?: string | null
+    correlationId: string
+    startedAt?: Date | string
+    updatedAt?: Date | string
+    finishedAt?: Date | string | null
+  }
+
+  export type AutomationRunUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowKey?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    eventId?: StringFieldUpdateOperationsInput | string
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    cursor?: StringFieldUpdateOperationsInput | string
+    waitKey?: NullableStringFieldUpdateOperationsInput | string | null
+    ctx?: JsonNullValueInput | InputJsonValue
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    correlationId?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AutomationRunUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowKey?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    eventId?: StringFieldUpdateOperationsInput | string
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    cursor?: StringFieldUpdateOperationsInput | string
+    waitKey?: NullableStringFieldUpdateOperationsInput | string | null
+    ctx?: JsonNullValueInput | InputJsonValue
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    correlationId?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AutomationRunStepCreateInput = {
+    id?: string
+    nodeId: string
+    status: string
+    handle?: string | null
+    result: JsonNullValueInput | InputJsonValue
+    at?: Date | string
+    run: AutomationRunCreateNestedOneWithoutStepsInput
+  }
+
+  export type AutomationRunStepUncheckedCreateInput = {
+    id?: string
+    runId: string
+    nodeId: string
+    status: string
+    handle?: string | null
+    result: JsonNullValueInput | InputJsonValue
+    at?: Date | string
+  }
+
+  export type AutomationRunStepUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nodeId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    handle?: NullableStringFieldUpdateOperationsInput | string | null
+    result?: JsonNullValueInput | InputJsonValue
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+    run?: AutomationRunUpdateOneRequiredWithoutStepsNestedInput
+  }
+
+  export type AutomationRunStepUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    runId?: StringFieldUpdateOperationsInput | string
+    nodeId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    handle?: NullableStringFieldUpdateOperationsInput | string | null
+    result?: JsonNullValueInput | InputJsonValue
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationRunStepCreateManyInput = {
+    id?: string
+    runId: string
+    nodeId: string
+    status: string
+    handle?: string | null
+    result: JsonNullValueInput | InputJsonValue
+    at?: Date | string
+  }
+
+  export type AutomationRunStepUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nodeId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    handle?: NullableStringFieldUpdateOperationsInput | string | null
+    result?: JsonNullValueInput | InputJsonValue
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationRunStepUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    runId?: StringFieldUpdateOperationsInput | string
+    nodeId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    handle?: NullableStringFieldUpdateOperationsInput | string | null
+    result?: JsonNullValueInput | InputJsonValue
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationTimerCreateInput = {
+    id?: string
+    key: string
+    kind: string
+    entityId: string
+    dueAt: Date | string
+    payload: JsonNullValueInput | InputJsonValue
+    runId?: string | null
+    status?: string
+    firedAt?: Date | string | null
+  }
+
+  export type AutomationTimerUncheckedCreateInput = {
+    id?: string
+    key: string
+    kind: string
+    entityId: string
+    dueAt: Date | string
+    payload: JsonNullValueInput | InputJsonValue
+    runId?: string | null
+    status?: string
+    firedAt?: Date | string | null
+  }
+
+  export type AutomationTimerUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    kind?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    dueAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    payload?: JsonNullValueInput | InputJsonValue
+    runId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    firedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AutomationTimerUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    kind?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    dueAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    payload?: JsonNullValueInput | InputJsonValue
+    runId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    firedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AutomationTimerCreateManyInput = {
+    id?: string
+    key: string
+    kind: string
+    entityId: string
+    dueAt: Date | string
+    payload: JsonNullValueInput | InputJsonValue
+    runId?: string | null
+    status?: string
+    firedAt?: Date | string | null
+  }
+
+  export type AutomationTimerUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    kind?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    dueAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    payload?: JsonNullValueInput | InputJsonValue
+    runId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    firedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AutomationTimerUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    key?: StringFieldUpdateOperationsInput | string
+    kind?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    dueAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    payload?: JsonNullValueInput | InputJsonValue
+    runId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    firedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AutomationDeliveryCreateInput = {
+    key: string
+    sentAt?: Date | string
+  }
+
+  export type AutomationDeliveryUncheckedCreateInput = {
+    key: string
+    sentAt?: Date | string
+  }
+
+  export type AutomationDeliveryUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationDeliveryUncheckedUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationDeliveryCreateManyInput = {
+    key: string
+    sentAt?: Date | string
+  }
+
+  export type AutomationDeliveryUpdateManyMutationInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationDeliveryUncheckedUpdateManyInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    sentAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationPolicyCreateInput = {
+    key: string
+    status?: string
+    config: JsonNullValueInput | InputJsonValue
+    version?: number
+    updatedBy?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type AutomationPolicyUncheckedCreateInput = {
+    key: string
+    status?: string
+    config: JsonNullValueInput | InputJsonValue
+    version?: number
+    updatedBy?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type AutomationPolicyUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    config?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationPolicyUncheckedUpdateInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    config?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationPolicyCreateManyInput = {
+    key: string
+    status?: string
+    config: JsonNullValueInput | InputJsonValue
+    version?: number
+    updatedBy?: string | null
+    updatedAt?: Date | string
+  }
+
+  export type AutomationPolicyUpdateManyMutationInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    config?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationPolicyUncheckedUpdateManyInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    config?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationAuditCreateInput = {
+    id?: string
+    at?: Date | string
+    actorType: string
+    actorId: string
+    action: string
+    resourceType: string
+    resourceId: string
+    outcome: string
+    correlationId: string
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AutomationAuditUncheckedCreateInput = {
+    id?: string
+    at?: Date | string
+    actorType: string
+    actorId: string
+    action: string
+    resourceType: string
+    resourceId: string
+    outcome: string
+    correlationId: string
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AutomationAuditUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+    actorType?: StringFieldUpdateOperationsInput | string
+    actorId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    outcome?: StringFieldUpdateOperationsInput | string
+    correlationId?: StringFieldUpdateOperationsInput | string
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AutomationAuditUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+    actorType?: StringFieldUpdateOperationsInput | string
+    actorId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    outcome?: StringFieldUpdateOperationsInput | string
+    correlationId?: StringFieldUpdateOperationsInput | string
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AutomationAuditCreateManyInput = {
+    id?: string
+    at?: Date | string
+    actorType: string
+    actorId: string
+    action: string
+    resourceType: string
+    resourceId: string
+    outcome: string
+    correlationId: string
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AutomationAuditUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+    actorType?: StringFieldUpdateOperationsInput | string
+    actorId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    outcome?: StringFieldUpdateOperationsInput | string
+    correlationId?: StringFieldUpdateOperationsInput | string
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
+  export type AutomationAuditUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+    actorType?: StringFieldUpdateOperationsInput | string
+    actorId?: StringFieldUpdateOperationsInput | string
+    action?: StringFieldUpdateOperationsInput | string
+    resourceType?: StringFieldUpdateOperationsInput | string
+    resourceId?: StringFieldUpdateOperationsInput | string
+    outcome?: StringFieldUpdateOperationsInput | string
+    correlationId?: StringFieldUpdateOperationsInput | string
+    detail?: NullableJsonNullValueInput | InputJsonValue
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -79274,6 +92641,411 @@ export namespace Prisma {
     last?: SortOrder
   }
 
+  export type AutomationWorkflowVersionListRelationFilter = {
+    every?: AutomationWorkflowVersionWhereInput
+    some?: AutomationWorkflowVersionWhereInput
+    none?: AutomationWorkflowVersionWhereInput
+  }
+
+  export type AutomationWorkflowVersionOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AutomationWorkflowCountOrderByAggregateInput = {
+    key?: SortOrder
+    name?: SortOrder
+    module?: SortOrder
+    status?: SortOrder
+    activeVersion?: SortOrder
+    draft?: SortOrder
+    draftRev?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AutomationWorkflowAvgOrderByAggregateInput = {
+    activeVersion?: SortOrder
+    draftRev?: SortOrder
+  }
+
+  export type AutomationWorkflowMaxOrderByAggregateInput = {
+    key?: SortOrder
+    name?: SortOrder
+    module?: SortOrder
+    status?: SortOrder
+    activeVersion?: SortOrder
+    draftRev?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AutomationWorkflowMinOrderByAggregateInput = {
+    key?: SortOrder
+    name?: SortOrder
+    module?: SortOrder
+    status?: SortOrder
+    activeVersion?: SortOrder
+    draftRev?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AutomationWorkflowSumOrderByAggregateInput = {
+    activeVersion?: SortOrder
+    draftRev?: SortOrder
+  }
+
+  export type AutomationWorkflowScalarRelationFilter = {
+    is?: AutomationWorkflowWhereInput
+    isNot?: AutomationWorkflowWhereInput
+  }
+
+  export type AutomationWorkflowVersionWorkflowKeyVersionCompoundUniqueInput = {
+    workflowKey: string
+    version: number
+  }
+
+  export type AutomationWorkflowVersionCountOrderByAggregateInput = {
+    id?: SortOrder
+    workflowKey?: SortOrder
+    version?: SortOrder
+    graph?: SortOrder
+    hash?: SortOrder
+    publishedBy?: SortOrder
+    publishedAt?: SortOrder
+  }
+
+  export type AutomationWorkflowVersionAvgOrderByAggregateInput = {
+    version?: SortOrder
+  }
+
+  export type AutomationWorkflowVersionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workflowKey?: SortOrder
+    version?: SortOrder
+    hash?: SortOrder
+    publishedBy?: SortOrder
+    publishedAt?: SortOrder
+  }
+
+  export type AutomationWorkflowVersionMinOrderByAggregateInput = {
+    id?: SortOrder
+    workflowKey?: SortOrder
+    version?: SortOrder
+    hash?: SortOrder
+    publishedBy?: SortOrder
+    publishedAt?: SortOrder
+  }
+
+  export type AutomationWorkflowVersionSumOrderByAggregateInput = {
+    version?: SortOrder
+  }
+
+  export type AutomationEventCountOrderByAggregateInput = {
+    id?: SortOrder
+    dedupeKey?: SortOrder
+    type?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    payload?: SortOrder
+    correlationId?: SortOrder
+    occurredAt?: SortOrder
+    dispatchedAt?: SortOrder
+    attempts?: SortOrder
+    nextAttemptAt?: SortOrder
+    lastError?: SortOrder
+  }
+
+  export type AutomationEventAvgOrderByAggregateInput = {
+    attempts?: SortOrder
+  }
+
+  export type AutomationEventMaxOrderByAggregateInput = {
+    id?: SortOrder
+    dedupeKey?: SortOrder
+    type?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    correlationId?: SortOrder
+    occurredAt?: SortOrder
+    dispatchedAt?: SortOrder
+    attempts?: SortOrder
+    nextAttemptAt?: SortOrder
+    lastError?: SortOrder
+  }
+
+  export type AutomationEventMinOrderByAggregateInput = {
+    id?: SortOrder
+    dedupeKey?: SortOrder
+    type?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    correlationId?: SortOrder
+    occurredAt?: SortOrder
+    dispatchedAt?: SortOrder
+    attempts?: SortOrder
+    nextAttemptAt?: SortOrder
+    lastError?: SortOrder
+  }
+
+  export type AutomationEventSumOrderByAggregateInput = {
+    attempts?: SortOrder
+  }
+
+  export type AutomationInboxEventIdConsumerCompoundUniqueInput = {
+    eventId: string
+    consumer: string
+  }
+
+  export type AutomationInboxCountOrderByAggregateInput = {
+    eventId?: SortOrder
+    consumer?: SortOrder
+    processedAt?: SortOrder
+  }
+
+  export type AutomationInboxMaxOrderByAggregateInput = {
+    eventId?: SortOrder
+    consumer?: SortOrder
+    processedAt?: SortOrder
+  }
+
+  export type AutomationInboxMinOrderByAggregateInput = {
+    eventId?: SortOrder
+    consumer?: SortOrder
+    processedAt?: SortOrder
+  }
+
+  export type AutomationRunStepListRelationFilter = {
+    every?: AutomationRunStepWhereInput
+    some?: AutomationRunStepWhereInput
+    none?: AutomationRunStepWhereInput
+  }
+
+  export type AutomationRunStepOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type AutomationRunWorkflowKeyVersionEventIdCompoundUniqueInput = {
+    workflowKey: string
+    version: number
+    eventId: string
+  }
+
+  export type AutomationRunCountOrderByAggregateInput = {
+    id?: SortOrder
+    workflowKey?: SortOrder
+    version?: SortOrder
+    eventId?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    status?: SortOrder
+    cursor?: SortOrder
+    waitKey?: SortOrder
+    ctx?: SortOrder
+    error?: SortOrder
+    correlationId?: SortOrder
+    startedAt?: SortOrder
+    updatedAt?: SortOrder
+    finishedAt?: SortOrder
+  }
+
+  export type AutomationRunAvgOrderByAggregateInput = {
+    version?: SortOrder
+  }
+
+  export type AutomationRunMaxOrderByAggregateInput = {
+    id?: SortOrder
+    workflowKey?: SortOrder
+    version?: SortOrder
+    eventId?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    status?: SortOrder
+    cursor?: SortOrder
+    waitKey?: SortOrder
+    error?: SortOrder
+    correlationId?: SortOrder
+    startedAt?: SortOrder
+    updatedAt?: SortOrder
+    finishedAt?: SortOrder
+  }
+
+  export type AutomationRunMinOrderByAggregateInput = {
+    id?: SortOrder
+    workflowKey?: SortOrder
+    version?: SortOrder
+    eventId?: SortOrder
+    entityType?: SortOrder
+    entityId?: SortOrder
+    status?: SortOrder
+    cursor?: SortOrder
+    waitKey?: SortOrder
+    error?: SortOrder
+    correlationId?: SortOrder
+    startedAt?: SortOrder
+    updatedAt?: SortOrder
+    finishedAt?: SortOrder
+  }
+
+  export type AutomationRunSumOrderByAggregateInput = {
+    version?: SortOrder
+  }
+
+  export type AutomationRunScalarRelationFilter = {
+    is?: AutomationRunWhereInput
+    isNot?: AutomationRunWhereInput
+  }
+
+  export type AutomationRunStepCountOrderByAggregateInput = {
+    id?: SortOrder
+    runId?: SortOrder
+    nodeId?: SortOrder
+    status?: SortOrder
+    handle?: SortOrder
+    result?: SortOrder
+    at?: SortOrder
+  }
+
+  export type AutomationRunStepMaxOrderByAggregateInput = {
+    id?: SortOrder
+    runId?: SortOrder
+    nodeId?: SortOrder
+    status?: SortOrder
+    handle?: SortOrder
+    at?: SortOrder
+  }
+
+  export type AutomationRunStepMinOrderByAggregateInput = {
+    id?: SortOrder
+    runId?: SortOrder
+    nodeId?: SortOrder
+    status?: SortOrder
+    handle?: SortOrder
+    at?: SortOrder
+  }
+
+  export type AutomationTimerCountOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    kind?: SortOrder
+    entityId?: SortOrder
+    dueAt?: SortOrder
+    payload?: SortOrder
+    runId?: SortOrder
+    status?: SortOrder
+    firedAt?: SortOrder
+  }
+
+  export type AutomationTimerMaxOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    kind?: SortOrder
+    entityId?: SortOrder
+    dueAt?: SortOrder
+    runId?: SortOrder
+    status?: SortOrder
+    firedAt?: SortOrder
+  }
+
+  export type AutomationTimerMinOrderByAggregateInput = {
+    id?: SortOrder
+    key?: SortOrder
+    kind?: SortOrder
+    entityId?: SortOrder
+    dueAt?: SortOrder
+    runId?: SortOrder
+    status?: SortOrder
+    firedAt?: SortOrder
+  }
+
+  export type AutomationDeliveryCountOrderByAggregateInput = {
+    key?: SortOrder
+    sentAt?: SortOrder
+  }
+
+  export type AutomationDeliveryMaxOrderByAggregateInput = {
+    key?: SortOrder
+    sentAt?: SortOrder
+  }
+
+  export type AutomationDeliveryMinOrderByAggregateInput = {
+    key?: SortOrder
+    sentAt?: SortOrder
+  }
+
+  export type AutomationPolicyCountOrderByAggregateInput = {
+    key?: SortOrder
+    status?: SortOrder
+    config?: SortOrder
+    version?: SortOrder
+    updatedBy?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AutomationPolicyAvgOrderByAggregateInput = {
+    version?: SortOrder
+  }
+
+  export type AutomationPolicyMaxOrderByAggregateInput = {
+    key?: SortOrder
+    status?: SortOrder
+    version?: SortOrder
+    updatedBy?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AutomationPolicyMinOrderByAggregateInput = {
+    key?: SortOrder
+    status?: SortOrder
+    version?: SortOrder
+    updatedBy?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type AutomationPolicySumOrderByAggregateInput = {
+    version?: SortOrder
+  }
+
+  export type AutomationAuditCountOrderByAggregateInput = {
+    id?: SortOrder
+    at?: SortOrder
+    actorType?: SortOrder
+    actorId?: SortOrder
+    action?: SortOrder
+    resourceType?: SortOrder
+    resourceId?: SortOrder
+    outcome?: SortOrder
+    correlationId?: SortOrder
+    detail?: SortOrder
+  }
+
+  export type AutomationAuditMaxOrderByAggregateInput = {
+    id?: SortOrder
+    at?: SortOrder
+    actorType?: SortOrder
+    actorId?: SortOrder
+    action?: SortOrder
+    resourceType?: SortOrder
+    resourceId?: SortOrder
+    outcome?: SortOrder
+    correlationId?: SortOrder
+  }
+
+  export type AutomationAuditMinOrderByAggregateInput = {
+    id?: SortOrder
+    at?: SortOrder
+    actorType?: SortOrder
+    actorId?: SortOrder
+    action?: SortOrder
+    resourceType?: SortOrder
+    resourceId?: SortOrder
+    outcome?: SortOrder
+    correlationId?: SortOrder
+  }
+
   export type BranchCreateNestedOneWithoutUsersInput = {
     create?: XOR<BranchCreateWithoutUsersInput, BranchUncheckedCreateWithoutUsersInput>
     connectOrCreate?: BranchCreateOrConnectWithoutUsersInput
@@ -81195,6 +94967,118 @@ export namespace Prisma {
     upsert?: UserUpsertWithoutPushSubsInput
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutPushSubsInput, UserUpdateWithoutPushSubsInput>, UserUncheckedUpdateWithoutPushSubsInput>
+  }
+
+  export type AutomationWorkflowVersionCreateNestedManyWithoutWorkflowInput = {
+    create?: XOR<AutomationWorkflowVersionCreateWithoutWorkflowInput, AutomationWorkflowVersionUncheckedCreateWithoutWorkflowInput> | AutomationWorkflowVersionCreateWithoutWorkflowInput[] | AutomationWorkflowVersionUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: AutomationWorkflowVersionCreateOrConnectWithoutWorkflowInput | AutomationWorkflowVersionCreateOrConnectWithoutWorkflowInput[]
+    createMany?: AutomationWorkflowVersionCreateManyWorkflowInputEnvelope
+    connect?: AutomationWorkflowVersionWhereUniqueInput | AutomationWorkflowVersionWhereUniqueInput[]
+  }
+
+  export type AutomationWorkflowVersionUncheckedCreateNestedManyWithoutWorkflowInput = {
+    create?: XOR<AutomationWorkflowVersionCreateWithoutWorkflowInput, AutomationWorkflowVersionUncheckedCreateWithoutWorkflowInput> | AutomationWorkflowVersionCreateWithoutWorkflowInput[] | AutomationWorkflowVersionUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: AutomationWorkflowVersionCreateOrConnectWithoutWorkflowInput | AutomationWorkflowVersionCreateOrConnectWithoutWorkflowInput[]
+    createMany?: AutomationWorkflowVersionCreateManyWorkflowInputEnvelope
+    connect?: AutomationWorkflowVersionWhereUniqueInput | AutomationWorkflowVersionWhereUniqueInput[]
+  }
+
+  export type AutomationWorkflowVersionUpdateManyWithoutWorkflowNestedInput = {
+    create?: XOR<AutomationWorkflowVersionCreateWithoutWorkflowInput, AutomationWorkflowVersionUncheckedCreateWithoutWorkflowInput> | AutomationWorkflowVersionCreateWithoutWorkflowInput[] | AutomationWorkflowVersionUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: AutomationWorkflowVersionCreateOrConnectWithoutWorkflowInput | AutomationWorkflowVersionCreateOrConnectWithoutWorkflowInput[]
+    upsert?: AutomationWorkflowVersionUpsertWithWhereUniqueWithoutWorkflowInput | AutomationWorkflowVersionUpsertWithWhereUniqueWithoutWorkflowInput[]
+    createMany?: AutomationWorkflowVersionCreateManyWorkflowInputEnvelope
+    set?: AutomationWorkflowVersionWhereUniqueInput | AutomationWorkflowVersionWhereUniqueInput[]
+    disconnect?: AutomationWorkflowVersionWhereUniqueInput | AutomationWorkflowVersionWhereUniqueInput[]
+    delete?: AutomationWorkflowVersionWhereUniqueInput | AutomationWorkflowVersionWhereUniqueInput[]
+    connect?: AutomationWorkflowVersionWhereUniqueInput | AutomationWorkflowVersionWhereUniqueInput[]
+    update?: AutomationWorkflowVersionUpdateWithWhereUniqueWithoutWorkflowInput | AutomationWorkflowVersionUpdateWithWhereUniqueWithoutWorkflowInput[]
+    updateMany?: AutomationWorkflowVersionUpdateManyWithWhereWithoutWorkflowInput | AutomationWorkflowVersionUpdateManyWithWhereWithoutWorkflowInput[]
+    deleteMany?: AutomationWorkflowVersionScalarWhereInput | AutomationWorkflowVersionScalarWhereInput[]
+  }
+
+  export type AutomationWorkflowVersionUncheckedUpdateManyWithoutWorkflowNestedInput = {
+    create?: XOR<AutomationWorkflowVersionCreateWithoutWorkflowInput, AutomationWorkflowVersionUncheckedCreateWithoutWorkflowInput> | AutomationWorkflowVersionCreateWithoutWorkflowInput[] | AutomationWorkflowVersionUncheckedCreateWithoutWorkflowInput[]
+    connectOrCreate?: AutomationWorkflowVersionCreateOrConnectWithoutWorkflowInput | AutomationWorkflowVersionCreateOrConnectWithoutWorkflowInput[]
+    upsert?: AutomationWorkflowVersionUpsertWithWhereUniqueWithoutWorkflowInput | AutomationWorkflowVersionUpsertWithWhereUniqueWithoutWorkflowInput[]
+    createMany?: AutomationWorkflowVersionCreateManyWorkflowInputEnvelope
+    set?: AutomationWorkflowVersionWhereUniqueInput | AutomationWorkflowVersionWhereUniqueInput[]
+    disconnect?: AutomationWorkflowVersionWhereUniqueInput | AutomationWorkflowVersionWhereUniqueInput[]
+    delete?: AutomationWorkflowVersionWhereUniqueInput | AutomationWorkflowVersionWhereUniqueInput[]
+    connect?: AutomationWorkflowVersionWhereUniqueInput | AutomationWorkflowVersionWhereUniqueInput[]
+    update?: AutomationWorkflowVersionUpdateWithWhereUniqueWithoutWorkflowInput | AutomationWorkflowVersionUpdateWithWhereUniqueWithoutWorkflowInput[]
+    updateMany?: AutomationWorkflowVersionUpdateManyWithWhereWithoutWorkflowInput | AutomationWorkflowVersionUpdateManyWithWhereWithoutWorkflowInput[]
+    deleteMany?: AutomationWorkflowVersionScalarWhereInput | AutomationWorkflowVersionScalarWhereInput[]
+  }
+
+  export type AutomationWorkflowCreateNestedOneWithoutVersionsInput = {
+    create?: XOR<AutomationWorkflowCreateWithoutVersionsInput, AutomationWorkflowUncheckedCreateWithoutVersionsInput>
+    connectOrCreate?: AutomationWorkflowCreateOrConnectWithoutVersionsInput
+    connect?: AutomationWorkflowWhereUniqueInput
+  }
+
+  export type AutomationWorkflowUpdateOneRequiredWithoutVersionsNestedInput = {
+    create?: XOR<AutomationWorkflowCreateWithoutVersionsInput, AutomationWorkflowUncheckedCreateWithoutVersionsInput>
+    connectOrCreate?: AutomationWorkflowCreateOrConnectWithoutVersionsInput
+    upsert?: AutomationWorkflowUpsertWithoutVersionsInput
+    connect?: AutomationWorkflowWhereUniqueInput
+    update?: XOR<XOR<AutomationWorkflowUpdateToOneWithWhereWithoutVersionsInput, AutomationWorkflowUpdateWithoutVersionsInput>, AutomationWorkflowUncheckedUpdateWithoutVersionsInput>
+  }
+
+  export type AutomationRunStepCreateNestedManyWithoutRunInput = {
+    create?: XOR<AutomationRunStepCreateWithoutRunInput, AutomationRunStepUncheckedCreateWithoutRunInput> | AutomationRunStepCreateWithoutRunInput[] | AutomationRunStepUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: AutomationRunStepCreateOrConnectWithoutRunInput | AutomationRunStepCreateOrConnectWithoutRunInput[]
+    createMany?: AutomationRunStepCreateManyRunInputEnvelope
+    connect?: AutomationRunStepWhereUniqueInput | AutomationRunStepWhereUniqueInput[]
+  }
+
+  export type AutomationRunStepUncheckedCreateNestedManyWithoutRunInput = {
+    create?: XOR<AutomationRunStepCreateWithoutRunInput, AutomationRunStepUncheckedCreateWithoutRunInput> | AutomationRunStepCreateWithoutRunInput[] | AutomationRunStepUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: AutomationRunStepCreateOrConnectWithoutRunInput | AutomationRunStepCreateOrConnectWithoutRunInput[]
+    createMany?: AutomationRunStepCreateManyRunInputEnvelope
+    connect?: AutomationRunStepWhereUniqueInput | AutomationRunStepWhereUniqueInput[]
+  }
+
+  export type AutomationRunStepUpdateManyWithoutRunNestedInput = {
+    create?: XOR<AutomationRunStepCreateWithoutRunInput, AutomationRunStepUncheckedCreateWithoutRunInput> | AutomationRunStepCreateWithoutRunInput[] | AutomationRunStepUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: AutomationRunStepCreateOrConnectWithoutRunInput | AutomationRunStepCreateOrConnectWithoutRunInput[]
+    upsert?: AutomationRunStepUpsertWithWhereUniqueWithoutRunInput | AutomationRunStepUpsertWithWhereUniqueWithoutRunInput[]
+    createMany?: AutomationRunStepCreateManyRunInputEnvelope
+    set?: AutomationRunStepWhereUniqueInput | AutomationRunStepWhereUniqueInput[]
+    disconnect?: AutomationRunStepWhereUniqueInput | AutomationRunStepWhereUniqueInput[]
+    delete?: AutomationRunStepWhereUniqueInput | AutomationRunStepWhereUniqueInput[]
+    connect?: AutomationRunStepWhereUniqueInput | AutomationRunStepWhereUniqueInput[]
+    update?: AutomationRunStepUpdateWithWhereUniqueWithoutRunInput | AutomationRunStepUpdateWithWhereUniqueWithoutRunInput[]
+    updateMany?: AutomationRunStepUpdateManyWithWhereWithoutRunInput | AutomationRunStepUpdateManyWithWhereWithoutRunInput[]
+    deleteMany?: AutomationRunStepScalarWhereInput | AutomationRunStepScalarWhereInput[]
+  }
+
+  export type AutomationRunStepUncheckedUpdateManyWithoutRunNestedInput = {
+    create?: XOR<AutomationRunStepCreateWithoutRunInput, AutomationRunStepUncheckedCreateWithoutRunInput> | AutomationRunStepCreateWithoutRunInput[] | AutomationRunStepUncheckedCreateWithoutRunInput[]
+    connectOrCreate?: AutomationRunStepCreateOrConnectWithoutRunInput | AutomationRunStepCreateOrConnectWithoutRunInput[]
+    upsert?: AutomationRunStepUpsertWithWhereUniqueWithoutRunInput | AutomationRunStepUpsertWithWhereUniqueWithoutRunInput[]
+    createMany?: AutomationRunStepCreateManyRunInputEnvelope
+    set?: AutomationRunStepWhereUniqueInput | AutomationRunStepWhereUniqueInput[]
+    disconnect?: AutomationRunStepWhereUniqueInput | AutomationRunStepWhereUniqueInput[]
+    delete?: AutomationRunStepWhereUniqueInput | AutomationRunStepWhereUniqueInput[]
+    connect?: AutomationRunStepWhereUniqueInput | AutomationRunStepWhereUniqueInput[]
+    update?: AutomationRunStepUpdateWithWhereUniqueWithoutRunInput | AutomationRunStepUpdateWithWhereUniqueWithoutRunInput[]
+    updateMany?: AutomationRunStepUpdateManyWithWhereWithoutRunInput | AutomationRunStepUpdateManyWithWhereWithoutRunInput[]
+    deleteMany?: AutomationRunStepScalarWhereInput | AutomationRunStepScalarWhereInput[]
+  }
+
+  export type AutomationRunCreateNestedOneWithoutStepsInput = {
+    create?: XOR<AutomationRunCreateWithoutStepsInput, AutomationRunUncheckedCreateWithoutStepsInput>
+    connectOrCreate?: AutomationRunCreateOrConnectWithoutStepsInput
+    connect?: AutomationRunWhereUniqueInput
+  }
+
+  export type AutomationRunUpdateOneRequiredWithoutStepsNestedInput = {
+    create?: XOR<AutomationRunCreateWithoutStepsInput, AutomationRunUncheckedCreateWithoutStepsInput>
+    connectOrCreate?: AutomationRunCreateOrConnectWithoutStepsInput
+    upsert?: AutomationRunUpsertWithoutStepsInput
+    connect?: AutomationRunWhereUniqueInput
+    update?: XOR<XOR<AutomationRunUpdateToOneWithWhereWithoutStepsInput, AutomationRunUpdateWithoutStepsInput>, AutomationRunUncheckedUpdateWithoutStepsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -88775,6 +102659,276 @@ export namespace Prisma {
     reports?: ReportUncheckedUpdateManyWithoutCreatedByNestedInput
   }
 
+  export type AutomationWorkflowVersionCreateWithoutWorkflowInput = {
+    id?: string
+    version: number
+    graph: JsonNullValueInput | InputJsonValue
+    hash: string
+    publishedBy: string
+    publishedAt?: Date | string
+  }
+
+  export type AutomationWorkflowVersionUncheckedCreateWithoutWorkflowInput = {
+    id?: string
+    version: number
+    graph: JsonNullValueInput | InputJsonValue
+    hash: string
+    publishedBy: string
+    publishedAt?: Date | string
+  }
+
+  export type AutomationWorkflowVersionCreateOrConnectWithoutWorkflowInput = {
+    where: AutomationWorkflowVersionWhereUniqueInput
+    create: XOR<AutomationWorkflowVersionCreateWithoutWorkflowInput, AutomationWorkflowVersionUncheckedCreateWithoutWorkflowInput>
+  }
+
+  export type AutomationWorkflowVersionCreateManyWorkflowInputEnvelope = {
+    data: AutomationWorkflowVersionCreateManyWorkflowInput | AutomationWorkflowVersionCreateManyWorkflowInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AutomationWorkflowVersionUpsertWithWhereUniqueWithoutWorkflowInput = {
+    where: AutomationWorkflowVersionWhereUniqueInput
+    update: XOR<AutomationWorkflowVersionUpdateWithoutWorkflowInput, AutomationWorkflowVersionUncheckedUpdateWithoutWorkflowInput>
+    create: XOR<AutomationWorkflowVersionCreateWithoutWorkflowInput, AutomationWorkflowVersionUncheckedCreateWithoutWorkflowInput>
+  }
+
+  export type AutomationWorkflowVersionUpdateWithWhereUniqueWithoutWorkflowInput = {
+    where: AutomationWorkflowVersionWhereUniqueInput
+    data: XOR<AutomationWorkflowVersionUpdateWithoutWorkflowInput, AutomationWorkflowVersionUncheckedUpdateWithoutWorkflowInput>
+  }
+
+  export type AutomationWorkflowVersionUpdateManyWithWhereWithoutWorkflowInput = {
+    where: AutomationWorkflowVersionScalarWhereInput
+    data: XOR<AutomationWorkflowVersionUpdateManyMutationInput, AutomationWorkflowVersionUncheckedUpdateManyWithoutWorkflowInput>
+  }
+
+  export type AutomationWorkflowVersionScalarWhereInput = {
+    AND?: AutomationWorkflowVersionScalarWhereInput | AutomationWorkflowVersionScalarWhereInput[]
+    OR?: AutomationWorkflowVersionScalarWhereInput[]
+    NOT?: AutomationWorkflowVersionScalarWhereInput | AutomationWorkflowVersionScalarWhereInput[]
+    id?: StringFilter<"AutomationWorkflowVersion"> | string
+    workflowKey?: StringFilter<"AutomationWorkflowVersion"> | string
+    version?: IntFilter<"AutomationWorkflowVersion"> | number
+    graph?: JsonFilter<"AutomationWorkflowVersion">
+    hash?: StringFilter<"AutomationWorkflowVersion"> | string
+    publishedBy?: StringFilter<"AutomationWorkflowVersion"> | string
+    publishedAt?: DateTimeFilter<"AutomationWorkflowVersion"> | Date | string
+  }
+
+  export type AutomationWorkflowCreateWithoutVersionsInput = {
+    key: string
+    name: string
+    module: string
+    status?: string
+    activeVersion?: number | null
+    draft: JsonNullValueInput | InputJsonValue
+    draftRev?: number
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AutomationWorkflowUncheckedCreateWithoutVersionsInput = {
+    key: string
+    name: string
+    module: string
+    status?: string
+    activeVersion?: number | null
+    draft: JsonNullValueInput | InputJsonValue
+    draftRev?: number
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type AutomationWorkflowCreateOrConnectWithoutVersionsInput = {
+    where: AutomationWorkflowWhereUniqueInput
+    create: XOR<AutomationWorkflowCreateWithoutVersionsInput, AutomationWorkflowUncheckedCreateWithoutVersionsInput>
+  }
+
+  export type AutomationWorkflowUpsertWithoutVersionsInput = {
+    update: XOR<AutomationWorkflowUpdateWithoutVersionsInput, AutomationWorkflowUncheckedUpdateWithoutVersionsInput>
+    create: XOR<AutomationWorkflowCreateWithoutVersionsInput, AutomationWorkflowUncheckedCreateWithoutVersionsInput>
+    where?: AutomationWorkflowWhereInput
+  }
+
+  export type AutomationWorkflowUpdateToOneWithWhereWithoutVersionsInput = {
+    where?: AutomationWorkflowWhereInput
+    data: XOR<AutomationWorkflowUpdateWithoutVersionsInput, AutomationWorkflowUncheckedUpdateWithoutVersionsInput>
+  }
+
+  export type AutomationWorkflowUpdateWithoutVersionsInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    module?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    activeVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    draft?: JsonNullValueInput | InputJsonValue
+    draftRev?: IntFieldUpdateOperationsInput | number
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationWorkflowUncheckedUpdateWithoutVersionsInput = {
+    key?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    module?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    activeVersion?: NullableIntFieldUpdateOperationsInput | number | null
+    draft?: JsonNullValueInput | InputJsonValue
+    draftRev?: IntFieldUpdateOperationsInput | number
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationRunStepCreateWithoutRunInput = {
+    id?: string
+    nodeId: string
+    status: string
+    handle?: string | null
+    result: JsonNullValueInput | InputJsonValue
+    at?: Date | string
+  }
+
+  export type AutomationRunStepUncheckedCreateWithoutRunInput = {
+    id?: string
+    nodeId: string
+    status: string
+    handle?: string | null
+    result: JsonNullValueInput | InputJsonValue
+    at?: Date | string
+  }
+
+  export type AutomationRunStepCreateOrConnectWithoutRunInput = {
+    where: AutomationRunStepWhereUniqueInput
+    create: XOR<AutomationRunStepCreateWithoutRunInput, AutomationRunStepUncheckedCreateWithoutRunInput>
+  }
+
+  export type AutomationRunStepCreateManyRunInputEnvelope = {
+    data: AutomationRunStepCreateManyRunInput | AutomationRunStepCreateManyRunInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type AutomationRunStepUpsertWithWhereUniqueWithoutRunInput = {
+    where: AutomationRunStepWhereUniqueInput
+    update: XOR<AutomationRunStepUpdateWithoutRunInput, AutomationRunStepUncheckedUpdateWithoutRunInput>
+    create: XOR<AutomationRunStepCreateWithoutRunInput, AutomationRunStepUncheckedCreateWithoutRunInput>
+  }
+
+  export type AutomationRunStepUpdateWithWhereUniqueWithoutRunInput = {
+    where: AutomationRunStepWhereUniqueInput
+    data: XOR<AutomationRunStepUpdateWithoutRunInput, AutomationRunStepUncheckedUpdateWithoutRunInput>
+  }
+
+  export type AutomationRunStepUpdateManyWithWhereWithoutRunInput = {
+    where: AutomationRunStepScalarWhereInput
+    data: XOR<AutomationRunStepUpdateManyMutationInput, AutomationRunStepUncheckedUpdateManyWithoutRunInput>
+  }
+
+  export type AutomationRunStepScalarWhereInput = {
+    AND?: AutomationRunStepScalarWhereInput | AutomationRunStepScalarWhereInput[]
+    OR?: AutomationRunStepScalarWhereInput[]
+    NOT?: AutomationRunStepScalarWhereInput | AutomationRunStepScalarWhereInput[]
+    id?: StringFilter<"AutomationRunStep"> | string
+    runId?: StringFilter<"AutomationRunStep"> | string
+    nodeId?: StringFilter<"AutomationRunStep"> | string
+    status?: StringFilter<"AutomationRunStep"> | string
+    handle?: StringNullableFilter<"AutomationRunStep"> | string | null
+    result?: JsonFilter<"AutomationRunStep">
+    at?: DateTimeFilter<"AutomationRunStep"> | Date | string
+  }
+
+  export type AutomationRunCreateWithoutStepsInput = {
+    id?: string
+    workflowKey: string
+    version: number
+    eventId: string
+    entityType?: string
+    entityId: string
+    status: string
+    cursor: string
+    waitKey?: string | null
+    ctx: JsonNullValueInput | InputJsonValue
+    error?: string | null
+    correlationId: string
+    startedAt?: Date | string
+    updatedAt?: Date | string
+    finishedAt?: Date | string | null
+  }
+
+  export type AutomationRunUncheckedCreateWithoutStepsInput = {
+    id?: string
+    workflowKey: string
+    version: number
+    eventId: string
+    entityType?: string
+    entityId: string
+    status: string
+    cursor: string
+    waitKey?: string | null
+    ctx: JsonNullValueInput | InputJsonValue
+    error?: string | null
+    correlationId: string
+    startedAt?: Date | string
+    updatedAt?: Date | string
+    finishedAt?: Date | string | null
+  }
+
+  export type AutomationRunCreateOrConnectWithoutStepsInput = {
+    where: AutomationRunWhereUniqueInput
+    create: XOR<AutomationRunCreateWithoutStepsInput, AutomationRunUncheckedCreateWithoutStepsInput>
+  }
+
+  export type AutomationRunUpsertWithoutStepsInput = {
+    update: XOR<AutomationRunUpdateWithoutStepsInput, AutomationRunUncheckedUpdateWithoutStepsInput>
+    create: XOR<AutomationRunCreateWithoutStepsInput, AutomationRunUncheckedCreateWithoutStepsInput>
+    where?: AutomationRunWhereInput
+  }
+
+  export type AutomationRunUpdateToOneWithWhereWithoutStepsInput = {
+    where?: AutomationRunWhereInput
+    data: XOR<AutomationRunUpdateWithoutStepsInput, AutomationRunUncheckedUpdateWithoutStepsInput>
+  }
+
+  export type AutomationRunUpdateWithoutStepsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowKey?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    eventId?: StringFieldUpdateOperationsInput | string
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    cursor?: StringFieldUpdateOperationsInput | string
+    waitKey?: NullableStringFieldUpdateOperationsInput | string | null
+    ctx?: JsonNullValueInput | InputJsonValue
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    correlationId?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type AutomationRunUncheckedUpdateWithoutStepsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    workflowKey?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    eventId?: StringFieldUpdateOperationsInput | string
+    entityType?: StringFieldUpdateOperationsInput | string
+    entityId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    cursor?: StringFieldUpdateOperationsInput | string
+    waitKey?: NullableStringFieldUpdateOperationsInput | string | null
+    ctx?: JsonNullValueInput | InputJsonValue
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    correlationId?: StringFieldUpdateOperationsInput | string
+    startedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type UserRoleCreateManyUserInput = {
     roleId: string
     assignedById?: string | null
@@ -90515,6 +104669,78 @@ export namespace Prisma {
     createdById?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationWorkflowVersionCreateManyWorkflowInput = {
+    id?: string
+    version: number
+    graph: JsonNullValueInput | InputJsonValue
+    hash: string
+    publishedBy: string
+    publishedAt?: Date | string
+  }
+
+  export type AutomationWorkflowVersionUpdateWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    graph?: JsonNullValueInput | InputJsonValue
+    hash?: StringFieldUpdateOperationsInput | string
+    publishedBy?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationWorkflowVersionUncheckedUpdateWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    graph?: JsonNullValueInput | InputJsonValue
+    hash?: StringFieldUpdateOperationsInput | string
+    publishedBy?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationWorkflowVersionUncheckedUpdateManyWithoutWorkflowInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    version?: IntFieldUpdateOperationsInput | number
+    graph?: JsonNullValueInput | InputJsonValue
+    hash?: StringFieldUpdateOperationsInput | string
+    publishedBy?: StringFieldUpdateOperationsInput | string
+    publishedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationRunStepCreateManyRunInput = {
+    id?: string
+    nodeId: string
+    status: string
+    handle?: string | null
+    result: JsonNullValueInput | InputJsonValue
+    at?: Date | string
+  }
+
+  export type AutomationRunStepUpdateWithoutRunInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nodeId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    handle?: NullableStringFieldUpdateOperationsInput | string | null
+    result?: JsonNullValueInput | InputJsonValue
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationRunStepUncheckedUpdateWithoutRunInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nodeId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    handle?: NullableStringFieldUpdateOperationsInput | string | null
+    result?: JsonNullValueInput | InputJsonValue
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type AutomationRunStepUncheckedUpdateManyWithoutRunInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    nodeId?: StringFieldUpdateOperationsInput | string
+    status?: StringFieldUpdateOperationsInput | string
+    handle?: NullableStringFieldUpdateOperationsInput | string | null
+    result?: JsonNullValueInput | InputJsonValue
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

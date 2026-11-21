@@ -11,6 +11,8 @@ import type { Prisma } from "@/generated/prisma";
 import { nextPlanLog } from "@/server/studio/plan-log";
 import { qaBlocks, qaReopen } from "@/server/studio/cpr";
 import { briefBlocks } from "@/server/studio/brief";
+import { taskEvents } from "@/server/automation/events";
+import { kickAutomation, outboxCreate } from "@/server/automation/worker";
 import { queueEditNotif } from "@/server/push/edit";
 
 export type ActionResult = { ok: boolean; message?: string };
@@ -46,6 +48,19 @@ function qaWhy(task: { status: string; metaAt: Date | null; extra: unknown }, ne
   return qaBlocks(before, { qaReq: ex.qaReq, qa: ex.qa, status: next.status ?? task.status, metaAt: next.metaAt || before.metaAt });
 }
 
+/** Bentuk ringkas kartu untuk menurunkan event otomasi (events.ts). */
+function evDoc(t: Record<string, unknown>): Record<string, unknown> {
+  const ex = (t.extra && typeof t.extra === "object" ? t.extra : {}) as Record<string, unknown>;
+  return { type: t.type, status: t.status, producer: t.producer, editor: t.editor, readyBy: ex.readyBy, due: t.due, postAt: t.postAt, campaignId: ex.campaignId, brief: ex.brief, qa: ex.qa };
+}
+/** Simpan perubahan kartu dari dasbor + event otomasi dalam satu transaksi. */
+async function saveTask(id: string, task: Record<string, unknown>, data: Record<string, unknown>) {
+  const evs = taskEvents(id, evDoc(task), evDoc({ ...task, ...data }));
+  if (evs.length) await prisma.$transaction([prisma.mediaTask.update({ where: { id }, data }), outboxCreate(evs)]);
+  else await prisma.mediaTask.update({ where: { id }, data });
+  if (evs.length) kickAutomation();
+}
+
 /** Pindah tahap. Member: hanya tugasnya, Terdata→Ready, sebelum metaAt. */
 export async function setTaskStatus(id: string, status: string): Promise<ActionResult> {
   const { acc, task, meName, today } = await ctxFor(id);
@@ -71,7 +86,7 @@ export async function setTaskStatus(id: string, status: string): Promise<ActionR
   const data: Record<string, unknown> = { status, history };
   if (IDX[status] >= IDX["Diproduksi"] && !task.shotAt) data.shotAt = today;
   if (IDX[status] >= IDX["Ready"] && !task.readyAt) data.readyAt = today;
-  await prisma.mediaTask.update({ where: { id }, data });
+  await saveTask(id, task as unknown as Record<string, unknown>, data);
   await queueEditNotif(id, task as unknown as Record<string, unknown>, { ...task, ...data }, meName, acc.code ?? "");
   await runBalance();
   return { ok: true };
@@ -117,7 +132,7 @@ export async function updateTask(
     const r = qaReopen(ex.qa, { driveUrl: task.driveUrl }, { driveUrl: data.driveUrl }, meName);
     if (r) data.extra = { ...ex, qa: r } as Prisma.InputJsonValue;
   }
-  await prisma.mediaTask.update({ where: { id }, data });
+  await saveTask(id, task as unknown as Record<string, unknown>, data);
   await queueEditNotif(id, task as unknown as Record<string, unknown>, { ...task, ...data }, meName, acc.code ?? "");
   // perubahan jadwal → penyeimbang
   if (["shootPlan", "editPlan", "postAt", "postTime", "locked", "producer", "editor", "talent"].some((k) => k in data)) await runBalance();

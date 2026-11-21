@@ -807,6 +807,117 @@ exports.Prisma.CprCounterScalarFieldEnum = {
   last: 'last'
 };
 
+exports.Prisma.AutomationWorkflowScalarFieldEnum = {
+  key: 'key',
+  name: 'name',
+  module: 'module',
+  status: 'status',
+  activeVersion: 'activeVersion',
+  draft: 'draft',
+  draftRev: 'draftRev',
+  updatedBy: 'updatedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AutomationWorkflowVersionScalarFieldEnum = {
+  id: 'id',
+  workflowKey: 'workflowKey',
+  version: 'version',
+  graph: 'graph',
+  hash: 'hash',
+  publishedBy: 'publishedBy',
+  publishedAt: 'publishedAt'
+};
+
+exports.Prisma.AutomationEventScalarFieldEnum = {
+  id: 'id',
+  dedupeKey: 'dedupeKey',
+  type: 'type',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  payload: 'payload',
+  correlationId: 'correlationId',
+  occurredAt: 'occurredAt',
+  dispatchedAt: 'dispatchedAt',
+  attempts: 'attempts',
+  nextAttemptAt: 'nextAttemptAt',
+  lastError: 'lastError'
+};
+
+exports.Prisma.AutomationInboxScalarFieldEnum = {
+  eventId: 'eventId',
+  consumer: 'consumer',
+  processedAt: 'processedAt'
+};
+
+exports.Prisma.AutomationRunScalarFieldEnum = {
+  id: 'id',
+  workflowKey: 'workflowKey',
+  version: 'version',
+  eventId: 'eventId',
+  entityType: 'entityType',
+  entityId: 'entityId',
+  status: 'status',
+  cursor: 'cursor',
+  waitKey: 'waitKey',
+  ctx: 'ctx',
+  error: 'error',
+  correlationId: 'correlationId',
+  startedAt: 'startedAt',
+  updatedAt: 'updatedAt',
+  finishedAt: 'finishedAt'
+};
+
+exports.Prisma.AutomationRunStepScalarFieldEnum = {
+  id: 'id',
+  runId: 'runId',
+  nodeId: 'nodeId',
+  status: 'status',
+  handle: 'handle',
+  result: 'result',
+  at: 'at'
+};
+
+exports.Prisma.AutomationTimerScalarFieldEnum = {
+  id: 'id',
+  key: 'key',
+  kind: 'kind',
+  entityId: 'entityId',
+  dueAt: 'dueAt',
+  payload: 'payload',
+  runId: 'runId',
+  status: 'status',
+  firedAt: 'firedAt'
+};
+
+exports.Prisma.AutomationDeliveryScalarFieldEnum = {
+  key: 'key',
+  sentAt: 'sentAt'
+};
+
+exports.Prisma.AutomationPolicyScalarFieldEnum = {
+  key: 'key',
+  status: 'status',
+  config: 'config',
+  version: 'version',
+  updatedBy: 'updatedBy',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.AutomationAuditScalarFieldEnum = {
+  id: 'id',
+  at: 'at',
+  actorType: 'actorType',
+  actorId: 'actorId',
+  action: 'action',
+  resourceType: 'resourceType',
+  resourceId: 'resourceId',
+  outcome: 'outcome',
+  correlationId: 'correlationId',
+  detail: 'detail'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -951,7 +1062,17 @@ exports.Prisma.ModelName = {
   SkuCheck: 'SkuCheck',
   DemoPhoto: 'DemoPhoto',
   RfidTag: 'RfidTag',
-  CprCounter: 'CprCounter'
+  CprCounter: 'CprCounter',
+  AutomationWorkflow: 'AutomationWorkflow',
+  AutomationWorkflowVersion: 'AutomationWorkflowVersion',
+  AutomationEvent: 'AutomationEvent',
+  AutomationInbox: 'AutomationInbox',
+  AutomationRun: 'AutomationRun',
+  AutomationRunStep: 'AutomationRunStep',
+  AutomationTimer: 'AutomationTimer',
+  AutomationDelivery: 'AutomationDelivery',
+  AutomationPolicy: 'AutomationPolicy',
+  AutomationAudit: 'AutomationAudit'
 };
 
 /**

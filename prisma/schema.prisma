@@ -1019,3 +1019,151 @@ model CprCounter {
   month String @id // '2611'
   last  Int    @default(0)
 }
+
+// ---------- Workflow Automation (21 Nov 2026) — tabel baru saja, tidak mengubah tabel lama ----------
+// Definisi workflow + draf yang sedang diedit. status: draft | published | disabled.
+model AutomationWorkflow {
+  key           String   @id
+  name          String
+  module        String
+  status        String   @default("draft")
+  activeVersion Int?
+  draft         Json
+  draftRev      Int      @default(1)
+  updatedBy     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  versions AutomationWorkflowVersion[]
+}
+
+// Versi terbit: TIDAK pernah diubah. Run yang berjalan memakai versi saat dimulai.
+model AutomationWorkflowVersion {
+  id          String   @id @default(cuid())
+  workflowKey String
+  version     Int
+  graph       Json
+  hash        String
+  publishedBy String
+  publishedAt DateTime @default(now())
+
+  workflow AutomationWorkflow @relation(fields: [workflowKey], references: [key])
+
+  @@unique([workflowKey, version])
+}
+
+// Outbox: event bisnis ditulis dalam transaksi yang sama dengan perubahan kartu.
+model AutomationEvent {
+  id            String    @id @default(cuid())
+  dedupeKey     String    @unique
+  type          String
+  entityType    String
+  entityId      String
+  payload       Json
+  correlationId String
+  occurredAt    DateTime  @default(now())
+  dispatchedAt  DateTime?
+  attempts      Int       @default(0)
+  nextAttemptAt DateTime  @default(now())
+  lastError     String?
+
+  @@index([dispatchedAt, nextAttemptAt])
+  @@index([entityType, entityId])
+}
+
+// Inbox: satu event diproses satu kali per konsumen (workflow versi / run yang dilanjutkan).
+model AutomationInbox {
+  eventId     String
+  consumer    String
+  processedAt DateTime @default(now())
+
+  @@id([eventId, consumer])
+}
+
+model AutomationRun {
+  id            String    @id @default(cuid())
+  workflowKey   String
+  version       Int
+  eventId       String
+  entityType    String    @default("task")
+  entityId      String
+  status        String
+  cursor        String
+  waitKey       String?
+  ctx           Json
+  error         String?
+  correlationId String
+  startedAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  finishedAt    DateTime?
+
+  steps AutomationRunStep[]
+
+  @@unique([workflowKey, version, eventId])
+  @@index([status, waitKey])
+  @@index([entityType, entityId])
+  @@index([startedAt])
+}
+
+model AutomationRunStep {
+  id     String   @id @default(cuid())
+  runId  String
+  nodeId String
+  status String
+  handle String?
+  result Json
+  at     DateTime @default(now())
+
+  run AutomationRun @relation(fields: [runId], references: [id], onDelete: Cascade)
+
+  @@index([runId, nodeId])
+}
+
+// Timer tahan restart (pengingat deadline, pengingat metrik). key unik = tidak terjadwal ganda.
+model AutomationTimer {
+  id       String    @id @default(cuid())
+  key      String    @unique
+  kind     String
+  entityId String
+  dueAt    DateTime
+  payload  Json
+  runId    String?
+  status   String    @default("pending")
+  firedAt  DateTime?
+
+  @@index([status, dueAt])
+  @@index([entityId])
+}
+
+// Pengiriman notifikasi: kunci unik mencegah kirim ganda saat diulang.
+model AutomationDelivery {
+  key    String   @id
+  sentAt DateTime @default(now())
+}
+
+// Aturan bisnis otomasi (bawaan needs_configuration). Diubah hanya oleh admin penuh, teraudit.
+model AutomationPolicy {
+  key       String   @id
+  status    String   @default("needs_configuration")
+  config    Json
+  version   Int      @default(0)
+  updatedBy String?
+  updatedAt DateTime @updatedAt
+}
+
+// Log audit: hanya ditambah, tidak pernah diubah/dihapus aplikasi.
+model AutomationAudit {
+  id            String   @id @default(cuid())
+  at            DateTime @default(now())
+  actorType     String
+  actorId       String
+  action        String
+  resourceType  String
+  resourceId    String
+  outcome       String
+  correlationId String
+  detail        Json?
+
+  @@index([at])
+  @@index([resourceType, resourceId])
+}
