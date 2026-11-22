@@ -2074,10 +2074,26 @@ html[data-skin="workspace"] .lrwho small{font:500 12px/1.25 var(--body);color:va
   html[data-skin="workspace"] .lrcol{display:none}
 }
 @media (prefers-reduced-motion:reduce){html[data-skin="workspace"] .lrail{transition:none}}
+/* header lebih besar; Tirtonichub & profil pindah ke sidebar (22 Nov 2026) */
+html[data-skin="workspace"] header.top,html[data-skin="workspace"] header.top .wrap{min-height:72px}
+html[data-skin="workspace"] .crumb{font-size:15px;gap:10px}
+html[data-skin="workspace"] .crumb span::after{margin-left:10px}
+html[data-skin="workspace"] .crumb b{font-size:19px}
+html[data-skin="workspace"] .ck-time{font-size:18px}
+html[data-skin="workspace"] .ck-date{font-size:13px}
+html[data-skin="workspace"] header.top :is(#hubBtn,#prof){display:none!important}
+@media (min-width:821px){html[data-skin="workspace"] .lrail{padding-top:16px}html[data-skin="workspace"] .lrhead{min-height:56px;box-sizing:border-box;margin-bottom:10px}
+  html[data-skin="workspace"] .lrlogo{width:36px;height:36px}html[data-skin="workspace"] .lrbrand b{font-size:16px}}
+html[data-skin="workspace"] .lrhub{color:var(--ink)}
+/* halaman tertanam (Otomasi, FlowSpace baru) */
+.embp{padding:0}
+.embf{display:block;width:100%;height:calc(100vh - var(--hh,72px) - 24px);border:0;border-radius:12px;background:var(--surface)}
+html[data-skin="workspace"] main.wrap>section.embp{max-width:none}
+html[data-skin="workspace"] body.inpage:has(.embp:not([hidden])) .backbtn{display:none}
 /* --- Dashboard --- */
 html[data-skin="workspace"] #p-home .hero{background:transparent;border:0;box-shadow:none;border-radius:0;padding:4px 0 0;margin:0 0 8px;overflow:visible}
 html[data-skin="workspace"] #p-home .hero .hin{max-width:none;gap:6px}
-html[data-skin="workspace"] #p-home .htitle{font:800 clamp(26px,3vw,32px)/1.15 var(--display);color:var(--ink);letter-spacing:-.02em}
+html[data-skin="workspace"] #p-home .htitle{margin-bottom:12px;font:800 clamp(26px,3vw,32px)/1.15 var(--display);color:var(--ink);letter-spacing:-.02em}
 .hsubt{display:none}
 html[data-skin="workspace"] .hsubt{display:block;margin:0 0 14px;font:400 14px/1.5 var(--body);color:var(--muted)}
 html[data-skin="workspace"] #p-home .hero{min-height:0}html[data-skin="workspace"] #p-home .hero .hin,html[data-skin="workspace"] #hMe{max-width:none;width:100%}html[data-skin="workspace"] #wxCards:empty{display:none}
@@ -2232,7 +2248,6 @@ html[data-skin="workspace"] :is(.box,.cprbox,.cprform,.cprk,.card.k:not(.cprd)){
     <div class="hero" id="hero"><div class="hwx" id="hWx" aria-live="polite"></div><svg class="court" viewBox="0 0 900 520" fill="none" stroke-width="3" aria-hidden="true"><rect x="40" y="40" width="820" height="440" rx="4"/><path d="M40 100h820M40 420h820M450 40v440M230 100v320M670 100v320M230 260h440"/><circle cx="640" cy="180" r="16" class="cb"/></svg>
       <div class="hin">
         <h2 class="htitle" id="hTitle">Selamat datang</h2>
-        <p class="hsubt">Berikut ringkasan aktivitas dan pekerjaan studio hari ini.</p>
         <div class="hme" id="hMe"></div>
       </div>
     </div>
@@ -2375,7 +2390,7 @@ html[data-skin="workspace"] :is(.box,.cprbox,.cprform,.cprk,.card.k:not(.cprd)){
   <!-- PIPELINE -->
   <section class="panel" id="p-pipeline" hidden>
     <div>
-      <div class="pghd"><h2>FlowSpace</h2><a class="ghost sm fsnew" id="fsNew" href="/media/flowspace" hidden title="Tampilan Board & Table baru (beta)">FlowSpace baru (beta)</a><button type="button" class="help" aria-expanded="false" aria-label="Cara kerja: FlowSpace"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><circle cx="12" cy="16.8" r=".6" fill="currentColor"/></svg>How to work?</button><div class="pop" role="tooltip">Lima tahap: <b>Terdata</b> (masuk pantauan), <b>Diproduksi</b> (sedang syuting), <b>Editing</b>, <b>Ready</b> (file final sudah di Google Drive), <b>Tayang</b>. Klik nama tahap di kartu untuk memindahkannya. Tulisan merah di kartu adalah deadline untuk orang yang sedang ditunggu (pilih nama orang untuk melihat deadline orang itu). Kartu Ready yang sudah dijadwalkan di Meta otomatis pindah ke Tayang setelah jam tayangnya lewat. Setiap konten aktif di FlowSpace selama 1 bulan sejak dibuat, lalu hangus: hilang dari FlowSpace, kalender, dan penjadwalan, tetapi tetap bisa dilihat sebagai arsip lewat pilihan bulan.</div><a class="guidebtn" id="goGuide" href="?p=guide" data-go="guide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M9 7h7M9 11h5"/></svg>Cara pakai FlowSpace</a><button type="button" class="guidebtn addbtn" id="addCnt" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Konten</button></div>
+      <div class="pghd"><h2>FlowSpace</h2><a class="ghost sm fsnew" id="fsNew" href="?p=fsnew" data-go="fsnew" hidden title="Tampilan Board & Table baru (beta)">FlowSpace baru (beta)</a><button type="button" class="help" aria-expanded="false" aria-label="Cara kerja: FlowSpace"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M9.6 9.3a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4"/><circle cx="12" cy="16.8" r=".6" fill="currentColor"/></svg>How to work?</button><div class="pop" role="tooltip">Lima tahap: <b>Terdata</b> (masuk pantauan), <b>Diproduksi</b> (sedang syuting), <b>Editing</b>, <b>Ready</b> (file final sudah di Google Drive), <b>Tayang</b>. Klik nama tahap di kartu untuk memindahkannya. Tulisan merah di kartu adalah deadline untuk orang yang sedang ditunggu (pilih nama orang untuk melihat deadline orang itu). Kartu Ready yang sudah dijadwalkan di Meta otomatis pindah ke Tayang setelah jam tayangnya lewat. Setiap konten aktif di FlowSpace selama 1 bulan sejak dibuat, lalu hangus: hilang dari FlowSpace, kalender, dan penjadwalan, tetapi tetap bisa dilihat sebagai arsip lewat pilihan bulan.</div><a class="guidebtn" id="goGuide" href="?p=guide" data-go="guide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 20.5A2.5 2.5 0 0 0 6.5 23H20v-5"/><path d="M9 7h7M9 11h5"/></svg>Cara pakai FlowSpace</a><button type="button" class="guidebtn addbtn" id="addCnt" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>Konten</button></div>
     </div>
     <div class="toolbar">
       <span class="status">Orang:</span>
@@ -2588,6 +2603,9 @@ html[data-skin="workspace"] :is(.box,.cprbox,.cprform,.cprk,.card.k:not(.cprd)){
   </section>
 
   <!-- CPR (admin penuh) -->
+  <!-- halaman Tirtonichub yang ditanam di Studio (menu Studio tetap tampil): Otomasi & FlowSpace baru -->
+  <section class="panel embp" id="p-otomasi" hidden><iframe class="embf" id="embOtomasi" title="Otomasi" data-src="/e/otomasi"></iframe></section>
+  <section class="panel embp" id="p-fsnew" hidden><iframe class="embf" id="embFsnew" title="FlowSpace baru" data-src="/e/flowspace"></iframe></section>
   <section class="panel" id="p-cpr" hidden><div class="cprwrap"><nav class="cprnav" id="cprNav" aria-label="Bagian CPR"></nav><div class="cprmain" id="cprMain"></div></div></section>
 
   <!-- TIM & AKTIVITAS (admin) -->
@@ -2974,9 +2992,9 @@ window.addEventListener('resize',setHH);applyNav();
 /* How to work?: muncul saat kursor menyentuh; di HP diketuk */
 document.addEventListener('click',e=>{const h=e.target.closest('.help');document.querySelectorAll('.help[aria-expanded="true"]').forEach(x=>{if(x!==h)x.setAttribute('aria-expanded','false')});if(h)h.setAttribute('aria-expanded',String(h.getAttribute('aria-expanded')!=='true'))});
 const tabUrl=t=>(t==='home'?location.pathname:'?p='+t)+location.hash;
-function setTab(t,noHist){if(t==='panduan')t='home';if(t==='otomasi'){location.href='/media/otomasi';return}if(typeof railDrawer==='function')railDrawer(false);{const cb=$('crumbPage'),tb=$('tab-'+(typeof railOf==='function'?railOf(t):t));if(cb)cb.textContent=tb&&tb.querySelector('.lbl')?tb.querySelector('.lbl').textContent:(t==='guide'?'Panduan FlowSpace':'Dashboard')}   /* tab Panduan dihapus untuk semua akun (21 Nov 2026) */
+function setTab(t,noHist){if(t==='panduan')t='home';if((t==='otomasi'||t==='fsnew')&&!S.hub)t='home';{const f=t==='otomasi'?$('embOtomasi'):t==='fsnew'?$('embFsnew'):null;if(f&&!f.getAttribute('src'))f.src=f.dataset.src}if(typeof railDrawer==='function')railDrawer(false);{const cb=$('crumbPage'),tb=$('tab-'+(typeof railOf==='function'?railOf(t):t));if(cb)cb.textContent=tb&&tb.querySelector('.lbl')?tb.querySelector('.lbl').textContent:(t==='guide'?'Panduan FlowSpace':t==='fsnew'?'FlowSpace baru':'Dashboard')}   /* tab Panduan dihapus untuk semua akun (21 Nov 2026) */
   if(!noHist&&S.tab&&S.tab!==t){S.hist.push(S.tab);if(S.hist.length>30)S.hist.shift();try{history.pushState({ts:1},'',tabUrl(t))}catch(e){}}else{try{history.replaceState(history.state,'',tabUrl(t))}catch(e){}}S.tab=t;document.body.classList.toggle('inpage',t!=='home');if(t!=='home')S.railHome=false;if(typeof railSync==='function')railSync();document.querySelectorAll('nav.tabs button[role="tab"]').forEach(b=>b.setAttribute('aria-selected',String(b.dataset.tab===t)));
-  ['home','masuk','pipeline','guide','hasil','queue','kalender','idcc','jumat','cpr','panduan','tim'].forEach(k=>{$('p-'+k).hidden=k!==t});if(t==='guide')renderGuide();if(t==='cpr')renderCpr();if(t==='hasil')renderHasil();
+  ['home','masuk','pipeline','guide','hasil','queue','kalender','idcc','jumat','cpr','panduan','tim','otomasi','fsnew'].forEach(k=>{$('p-'+k).hidden=k!==t});if(t==='guide')renderGuide();if(t==='cpr')renderCpr();if(t==='hasil')renderHasil();
   const cs=t==='home'?$('calSlotHome'):t==='kalender'?$('calSlotKal'):null;if(cs&&$('homeCal').parentNode!==cs)cs.appendChild($('homeCal'));try{localStorage.setItem('md-tab',t)}catch(e){}window.scrollTo(0,0)}
 /* tombol Kembali: halaman sebelumnya (juga tombol kembali browser/HP) */
 S.hist=[];
@@ -5744,7 +5762,10 @@ async function wxSync(){const r=document.documentElement;clearInterval(WX.timer)
 wxSync();
 function renderThemePop(){const c=curTheme();$('themePop').innerHTML='<h4>Tampilan</h4><div class="opts" role="radiogroup" aria-label="Tema tampilan">'+THEMES.map(T=>'<button type="button" class="opt" role="radio" aria-checked="'+(T.k===c)+'" data-theme-k="'+T.k+'"><span class="sw" style="background:'+T.sw+';--b:'+T.b+'"></span><span>'+T.n+'<small>'+T.d+'</small></span><svg class="ck" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></button>').join('')+'</div>'+
   '<span class="status" style="font-size:12px">Hanya berlaku di perangkat ini. '+(c?'':'Saat ini mengikuti tema perangkat (terang/gelap).')+'</span>'+(c?'<button type="button" class="reset" data-theme-k="">Ikuti tema perangkat</button>':'')}
-function placePop(P,B){const r=B.getBoundingClientRect(),w=P.offsetWidth;P.style.left=Math.max(12,Math.min(r.right-w,innerWidth-w-12))+'px';P.style.top=(r.bottom+8)+'px'}
+function placePop(P,B){if(!B.offsetParent&&$('lrMe')&&$('lrMe').offsetParent)B=$('lrMe');   /* profil pindah ke sidebar: panel muncul di samping kartu profil */
+  const r=B.getBoundingClientRect(),w=P.offsetWidth,h=P.offsetHeight;
+  if(B.id==='lrMe'){P.style.left=Math.min(r.right+8,innerWidth-w-12)+'px';P.style.top=Math.max(12,Math.min(r.bottom-h,innerHeight-h-12))+'px';return}
+  P.style.left=Math.max(12,Math.min(r.right-w,innerWidth-w-12))+'px';P.style.top=(r.bottom+8)+'px'}
 function themePop(open){const P=$('themePop'),B=$('themeBtn');if(open===undefined)open=P.hidden;P.hidden=!open;B.setAttribute('aria-expanded',String(open));
   if(open){renderThemePop();placePop(P,$('prof'));(P.querySelector('[aria-checked="true"]')||P.querySelector('.opt')).focus()}}
 $('themeBtn').addEventListener('click',e=>{e.stopPropagation();navTip.classList.remove('show');profPop(false);themePop()});
@@ -5886,7 +5907,7 @@ const HM_SUB={hasil:()=>'Foto & video konten per barang',queue:()=>'Watchlist se
   jumat:()=>'Laporan mingguan & bulanan',panduan:()=>S.isAdmin?'Aturan kerja & jobdesk':'Aturan kerja & jobdesk Anda',tim:()=>'Beban kerja & akun tim',cpr:()=>'Content Production Report'};
 const tabGo=k=>k==='masuk'&&!S.isAdmin?'idcc':k;
 /* menu yang aktif: sub-halaman (IDCC) menyala di menu induknya (Barang) */
-const railOf=t=>{const b=$('tab-'+t);return b&&b.dataset.sub?tabGo(b.dataset.sub):t};
+const railOf=t=>{if(t==='fsnew')return'pipeline';const b=$('tab-'+t);return b&&b.dataset.sub?tabGo(b.dataset.sub):t};
 function renderHomeMenu(){const el=$('hMenu');if(!el||!S.me)return;
   el.innerHTML=[...document.querySelectorAll('nav.tabs button[role="tab"]')].filter(b=>!b.hidden&&!b.dataset.sub&&b.dataset.tab!=='home').map(b=>{const k=tabGo(b.dataset.tab),bd=b.querySelector('.badge');
     return'<a class="hmtile" href="?p='+k+'" data-go="'+k+'"><span class="ic">'+b.querySelector('svg').outerHTML+'</span><b>'+esc(b.querySelector('.lbl').textContent)+(bd?' <span class="badge">'+esc(bd.textContent)+'</span>':'')+'</b><small>'+esc(HM_SUB[k]?HM_SUB[k]():'')+'</small></a>'}).join('');hmNext();renderRail();railSync()}
@@ -5897,7 +5918,7 @@ const RAIL_COL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strok
 function renderRail(){const el=$('lrList');if(!el||!S.me)return;
   const btns=[...document.querySelectorAll('nav.tabs button[role="tab"]')].filter(b=>!b.hidden&&!b.dataset.sub);el.dataset.n=btns.length;
   let n=0;const item=b=>{const k=tabGo(b.dataset.tab),l=b.querySelector('.lbl').textContent;
-    return'<a class="lritem" href="'+(k==='home'?'./':k==='otomasi'?'/media/otomasi':'?p='+k)+'" style="--i:'+(n++)+'"'+(k==='otomasi'?'':' data-go="'+k+'"')+(k===railOf(S.tab)?' aria-current="page"':'')+' title="'+esc(l)+'">'+b.querySelector('svg').outerHTML+'<span>'+esc(l)+'</span></a>'};
+    return'<a class="lritem" href="'+(k==='home'?'./':'?p='+k)+'" style="--i:'+(n++)+'" data-go="'+k+'"'+(k===railOf(S.tab)?' aria-current="page"':'')+' title="'+esc(l)+'">'+b.querySelector('svg').outerHTML+'<span>'+esc(l)+'</span></a>'};
   const known=RAIL_G.flatMap(g=>g[1]);
   const grp=RAIL_G.map(([g,keys])=>{const bs=keys.map(k=>btns.find(b=>b.dataset.tab===k)).filter(Boolean);if(g==='Workspace')bs.push(...btns.filter(b=>!known.includes(b.dataset.tab)));
     const ex=g==='System'?(S.hub?'<button type="button" class="lritem lrntf" id="lrNtf" style="--i:'+el.dataset.n+'" aria-haspopup="dialog" aria-expanded="'+!$('ntfPop').hidden+'" title="Notifikasi">'+NTF_IC+'<b class="lrbadge num" id="lrNtfBadge"'+(S.ntf.unread?'':' hidden')+'>'+ntfCnt()+'</b><span>Notifikasi</span></button>':''):'';
@@ -5905,8 +5926,9 @@ function renderRail(){const el=$('lrList');if(!el||!S.me)return;
   const role=S.full?'Admin':S.isAdmin2?'Admin 2':'Anggota';let av;try{av=avInner(S.me)}catch(e){av=esc((S.me.name||'?').slice(0,1))}
   el.innerHTML='<div class="lrhead"><img class="lrlogo" src="logo.png" alt=""><span class="lrbrand"><b>Tirtonic Studio</b><small>Creative Workspace</small></span><button type="button" class="lrcol" id="lrCol" aria-label="Ciutkan / lebarkan menu" title="Ciutkan / lebarkan menu">'+RAIL_COL+'</button></div>'+
     '<div class="lrgrps">'+grp+'</div>'+
-    '<div class="lrfoot"><button type="button" class="lrme" id="lrMe" title="Profil & tampilan"><span class="lrav av-'+esc(S.me.avColor||'lime')+'">'+av+'</span><span class="lrwho"><b>'+esc(S.me.name||'')+'</b><small>'+role+'</small></span></button>'+'<button type="button" class="lritem lrout" id="lrOut" style="--i:'+(+el.dataset.n+1)+'" title="Keluar">'+OUT_IC+'<span>Keluar</span></button>'+'</div>'}
+    '<div class="lrfoot">'+(S.hub?'<a class="lritem lrhub" href="/beranda" title="Kembali ke dashboard Tirtonichub">'+$('hubBtn').querySelector('svg').outerHTML+'<span>Tirtonichub</span></a>':'')+'<button type="button" class="lrme" id="lrMe" title="Profil & tampilan"><span class="lrav av-'+esc(S.me.avColor||'lime')+'">'+av+'</span><span class="lrwho"><b>'+esc(S.me.name||'')+'</b><small>'+role+'</small></span></button>'+'<button type="button" class="lritem lrout" id="lrOut" style="--i:'+(+el.dataset.n+1)+'" title="Keluar">'+OUT_IC+'<span>Keluar</span></button>'+'</div>'}
 /* ciutkan sidebar (ikon saja, 64px) — per perangkat; tablet bawaan ciut */
+window.addEventListener('message',e=>{if(e.origin!==location.origin||!e.data||e.data.type!=='ts-open-card')return;const t=(S.allTasks||S.tasks||[]).find(x=>x.id===e.data.id);if(t)openCard(t.id,['det','brief','qa'].includes(e.data.tab)?e.data.tab:'det')});
 function railCollapse(on){document.documentElement.classList.toggle('railc',on);try{localStorage.setItem('ts-railc',on?'1':'0')}catch(e){}}
 (()=>{let v=null;try{v=localStorage.getItem('ts-railc')}catch(e){}document.documentElement.classList.toggle('railc',v==null?innerWidth<1180&&innerWidth>820:v==='1')})();
 document.addEventListener('click',e=>{if(e.target.closest('#lrCol')){railCollapse(!document.documentElement.classList.contains('railc'));return}
@@ -6083,7 +6105,7 @@ function applyRole(){const a=S.isAdmin;$('tab-panduan').hidden=true;$('fsNew').h
   $('jobHintAdmin').hidden=!a;$('jobHintMember').hidden=a;$('calEvents').hidden=!a;
   if(!a){const l=document.querySelector('#p-pipeline .pop');l.textContent='Tugas konten milik Anda: tempat Anda menjadi produser, editor, talent, atau penulis skrip. Klik nama tahap di kartu setiap kali pekerjaan berpindah (Terdata → Diproduksi → Editing → Ready). Untuk pindah ke Ready, tempel dulu link Google Drive file final di Detail. Tulisan merah adalah deadline Anda. Tanggal dan penanggung jawab diatur admin.'}
   if(!a&&S.tab==='masuk'&&S.me.idcc)setTab('idcc');else if((!a&&S.tab==='masuk')||(!S.full&&['jumat','tim','cpr'].includes(S.tab)))setTab('pipeline');
-  $('tab-idcc').hidden=!(a||S.me.idcc);if(S.tab==='idcc'&&$('tab-idcc').hidden)setTab('pipeline');if(!S.homeInit){S.homeInit=true;const qs=new URLSearchParams(location.search),w=qs.get('p');if(w==='hasil'&&qs.get('f'))S.deepF={id:qs.get('f'),sec:qs.get('s')||''};const ok=w&&w!=='home'&&$('p-'+w)&&(w==='guide'||($('tab-'+w)&&!$('tab-'+w).hidden));setTab(ok?w:'home',true);const dc=qs.get('card');if(dc){let n=0;const tab=['det','brief','qa'].includes(qs.get('tab'))?qs.get('tab'):'det';const tryCard=()=>{const t=(S.allTasks||[]).find(x=>x.id===dc);if(t)openCard(t.id,tab);else if(n++<40)setTimeout(tryCard,500)};tryCard()}}renderHomeMenu();setHH();}
+  $('tab-idcc').hidden=!(a||S.me.idcc);if(S.tab==='idcc'&&$('tab-idcc').hidden)setTab('pipeline');if(!S.homeInit){S.homeInit=true;const qs=new URLSearchParams(location.search),w=qs.get('p');if(w==='hasil'&&qs.get('f'))S.deepF={id:qs.get('f'),sec:qs.get('s')||''};const ok=w&&w!=='home'&&$('p-'+w)&&(w==='guide'||(w==='fsnew'&&S.hub)||($('tab-'+w)&&!$('tab-'+w).hidden));setTab(ok?w:'home',true);const dc=qs.get('card');if(dc){let n=0;const tab=['det','brief','qa'].includes(qs.get('tab'))?qs.get('tab'):'det';const tryCard=()=>{const t=(S.allTasks||[]).find(x=>x.id===dc);if(t)openCard(t.id,tab);else if(n++<40)setTimeout(tryCard,500)};tryCard()}}renderHomeMenu();setHH();}
 
 /* ---------- template caption Instagram (diatur admin di Tim & Aktivitas) ---------- */
 const DEFAULT_CAP_TPL='{caption}\n\n📍 Tirtonic Tennis Store Jogja\n💬 Info & order: DM atau WhatsApp (link di bio)\n\n{hashtag} #tirtonic #tirtonictennisstore #tenisjogja';

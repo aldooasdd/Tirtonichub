@@ -275,6 +275,14 @@ function PolicyCard({ p, edit, onSaved }: { p: Policy; edit: boolean; onSaved: (
   );
 }
 
+/** Bila halaman ini tertanam di Studio (iframe), buka Detail kartu di Studio induk tanpa memuat ulang. */
+function openInStudio(e: React.MouseEvent, id: string, tab: string) {
+  if (typeof window !== "undefined" && window.parent !== window) {
+    e.preventDefault();
+    window.parent.postMessage({ type: "ts-open-card", id, tab }, window.location.origin);
+  }
+}
+
 const TABS = [["list", "Workflows", WfIcon], ["builder", "Builder", GitBranch], ["runs", "Runs", Play], ["inbox", "Approval Inbox", Inbox], ["audit", "Audit Log", History], ["config", "Konfigurasi", Settings2]] as const;
 type TabK = (typeof TABS)[number][0];
 
@@ -367,7 +375,7 @@ export function AutomationClient({ initial }: { initial: Init }) {
                   <td className={td}><b>{a.title}</b><br /><span className="font-mono text-[11px] text-[#73777F]">{a.cprId}</span></td>
                   <td className={td}>{a.kind === "review" ? "Creative Review v" + a.ver : "Content Brief v" + a.ver}{a.waitingRun && <span className="ml-1"><Tag s="waiting_for_human" /></span>}</td>
                   <td className={td}>{when(a.since)}</td>
-                  <td className={td}><a className="text-[13px] font-medium text-[#2F6FEB] hover:underline" href={"/studio/?p=pipeline&card=" + encodeURIComponent(a.id) + "&tab=" + (a.kind === "review" ? "qa" : "brief")}>Putuskan di Studio →</a></td>
+                  <td className={td}><a className="text-[13px] font-medium text-[#2F6FEB] hover:underline" href={"/studio/?p=pipeline&card=" + encodeURIComponent(a.id) + "&tab=" + (a.kind === "review" ? "qa" : "brief")} target="_top" onClick={(e) => openInStudio(e, a.id, a.kind === "review" ? "qa" : "brief")}>Putuskan di Studio →</a></td>
                 </tr>))}</tbody></table>
           )}
           <p className="border-t border-[#E7E9EC] px-3 py-2 text-[12px] text-[#73777F]">Keputusan dibuat di Detail kartu (Creative Review / Content Brief) dengan izin & aturan yang sama. Lolos QA tidak pernah otomatis berarti disetujui.</p>

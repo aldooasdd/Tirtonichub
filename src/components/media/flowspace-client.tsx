@@ -20,6 +20,13 @@ const BRIEF: Record<string, [string, string]> = { none: ["—", "text-[#73777F]"
 const REVIEW: Record<string, [string, string]> = { none: ["—", "text-[#73777F]"], submitted: ["Menunggu review", "text-amber-700"], revision: ["Revision", "text-amber-700"], major: ["Major revision", "text-red-600"], blocked: ["Blocked", "text-red-600"], approved: ["Approved", "text-emerald-700"], reopened: ["Dibuka ulang", "text-amber-700"] };
 const BULAN = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
 const fmt = (d: string) => (d ? Number(d.slice(8)) + " " + BULAN[Number(d.slice(5, 7)) - 1] : "");
+/** Bila halaman ini tertanam di Studio (iframe), buka Detail kartu di Studio induk tanpa memuat ulang. */
+function openInStudio(e: React.MouseEvent, id: string, tab: string) {
+  if (typeof window !== "undefined" && window.parent !== window) {
+    e.preventDefault();
+    window.parent.postMessage({ type: "ts-open-card", id, tab }, window.location.origin);
+  }
+}
 const studioLink = (id: string, tab = "det") => "/studio/?p=pipeline&card=" + encodeURIComponent(id) + "&tab=" + tab;
 
 type Props = { tasks: FsTask[]; names: Record<string, string>; people: string[]; types: Record<string, string>; today: string; canManage: boolean; full: boolean; code: string | null; initialViews: FsView[] };
@@ -243,8 +250,8 @@ function Panel({ t, names, people, types, canManage, code, pending, onClose, onM
         <Row l="Deadline Ready"><span className={t.late ? "font-medium text-red-600" : ""}>{t.deadline ? fmt(t.deadline) + " " + t.deadline.slice(0, 4) + (t.late ? " · terlambat" : "") : "—"}</span></Row>
         <Row l="Rencana syuting">{fmt(t.shootPlan) || "—"}</Row>
         <Row l="Jadwal tayang">{t.postAt ? fmt(t.postAt) + (t.postTime ? " · " + t.postTime.replace(":", ".") : "") + (t.meta ? " · dijadwalkan di Meta" : "") : "—"}</Row>
-        <Row l="Content Brief"><span className={BRIEF[t.brief][1]}>{BRIEF[t.brief][0]}</span> <a className="ml-1 text-[12px] text-[#2F6FEB] hover:underline" href={studioLink(t.id, "brief")}>Buka</a></Row>
-        <Row l="Creative Review"><span className={REVIEW[t.review]?.[1]}>{REVIEW[t.review]?.[0]}</span> <a className="ml-1 text-[12px] text-[#2F6FEB] hover:underline" href={studioLink(t.id, "qa")}>Buka</a></Row>
+        <Row l="Content Brief"><span className={BRIEF[t.brief][1]}>{BRIEF[t.brief][0]}</span> <a className="ml-1 text-[12px] text-[#2F6FEB] hover:underline" href={studioLink(t.id, "brief")} target="_top" onClick={(e) => openInStudio(e, t.id, "brief")}>Buka</a></Row>
+        <Row l="Creative Review"><span className={REVIEW[t.review]?.[1]}>{REVIEW[t.review]?.[0]}</span> <a className="ml-1 text-[12px] text-[#2F6FEB] hover:underline" href={studioLink(t.id, "qa")} target="_top" onClick={(e) => openInStudio(e, t.id, "qa")}>Buka</a></Row>
         <Row l="File final">{t.driveUrl ? <a className="inline-flex items-center gap-1 text-[#2F6FEB] hover:underline" href={t.driveUrl} target="_blank" rel="noopener"><CheckCircle2 className="size-3.5" />Sudah upload</a> : <span className="text-[#73777F]">Belum upload</span>}</Row>
         <div className="mt-3 grid gap-1.5">
           <label htmlFor="fs-note" className="text-[12px] font-medium text-[#73777F]">Catatan</label>
@@ -257,7 +264,7 @@ function Panel({ t, names, people, types, canManage, code, pending, onClose, onM
           </div>
         )}
       </div>
-      <div className="border-t border-[#E7E9EC] p-3"><a href={studioLink(t.id)} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#2F6FEB] hover:underline"><ExternalLink className="size-3.5" />Buka Detail lengkap di Studio</a></div>
+      <div className="border-t border-[#E7E9EC] p-3"><a href={studioLink(t.id)} target="_top" onClick={(e) => openInStudio(e, t.id, "det")} className="inline-flex items-center gap-1.5 text-[13px] font-medium text-[#2F6FEB] hover:underline"><ExternalLink className="size-3.5" />Buka Detail lengkap di Studio</a></div>
     </aside>
   );
 }
