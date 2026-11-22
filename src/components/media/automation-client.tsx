@@ -19,6 +19,7 @@ import {
 import { COND_FIELDS, COND_OPS, EVENT_TYPES, HANDLES, NODE_TYPES, RECIPIENTS, TEMPLATES, type GNode, type Graph, type NodeType } from "@/server/automation/types";
 import { POLICIES, type Policy, type PolicyKey } from "@/server/automation/policies";
 import { validateGraph, type Issue } from "@/server/automation/validate";
+import { stableJson } from "@/lib/stable-json";
 
 type Init = Extract<Awaited<ReturnType<typeof loadAutomation>>, { ok: true }>["data"];
 type Wf = Init["workflows"][number];
@@ -143,7 +144,11 @@ function Builder({ wf, perms, policies, onSaved }: { wf: Wf; perms: Perms; polic
   const edit = perms.edit;
   const graph = fromFlow(nodes, edges);
   const issues = validateGraph(graph);
-  const dirty = JSON.stringify(graph) !== JSON.stringify(wf.draft);
+  // Dibandingkan dengan urutan kunci tetap: draf dari database (JSONB) menyusun ulang kunci, dulu membuat draf selalu
+  // "belum disimpan" sehingga Test Run & Publish tidak pernah aktif. base = draf terakhir yang tersimpan.
+  const [base, setBase] = useState(() => stableJson(wf.draft));
+  const dirty = stableJson(graph) !== base;
+  const testWhy = !perms.test ? "Anda tidak punya izin Test Run." : pending ? "Sedang memproses…" : dirty ? "Simpan draf dulu (Save draft): Test Run memakai draf yang tersimpan." : issues.length ? "Perbaiki dulu: " + issues[0].msg : !cards.length ? "Belum ada kartu Foto IG / Video produk / Video review / Video event untuk diuji." : !card ? "Pilih kartu untuk Test Run." : "";
   const needs = wf.needs.filter((n) => !policies.find((p) => p.key === n.key && p.status === "active"));
 
   useEffect(() => { setNodes((ns) => ns.map((n) => ({ ...n, data: { ...n.data, issue: issues.find((i) => i.nodeId === n.id)?.msg } }))); }, [JSON.stringify(issues)]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -176,17 +181,23 @@ function Builder({ wf, perms, policies, onSaved }: { wf: Wf; perms: Perms; polic
         <span className="text-[12px] text-[#73777F]">{wf.activeVersion ? "versi terbit v" + wf.activeVersion : "belum terbit"} · draf r{rev}{wf.updatedBy ? " · " + wf.updatedBy : ""}{dirty ? " · belum disimpan" : ""}</span>
         <div className="ml-auto flex flex-wrap items-center gap-1.5">
           {edit && <><Button variant="ghost" size="icon-sm" onClick={undo} disabled={!hist.past.length} aria-label="Undo"><Undo2 /></Button><Button variant="ghost" size="icon-sm" onClick={redo} disabled={!hist.future.length} aria-label="Redo"><Redo2 /></Button></>}
-          {edit && <Button variant="outline" size="sm" disabled={pending || !dirty} onClick={() => run(async () => { const r = await saveDraft(wf.key, graph, rev); if (r.ok) setRev(r.data.rev); return r; }, "Draf disimpan.")}><Save />Save draft</Button>}
+          {edit && <Button variant="outline" size="sm" disabled={pending || !dirty} onClick={() => run(async () => { const r = await saveDraft(wf.key, graph, rev); if (r.ok) { setRev(r.data.rev); setBase(stableJson(graph)); } return r; }, "Draf disimpan.")}><Save />Save draft</Button>}
           {perms.test && (
             <>
               <select className={sel + " !h-8 !w-56"} value={card} onChange={(e) => setCard(e.target.value)} aria-label="Kartu untuk uji coba"><option value="">Kartu untuk Test Run…</option>{cards.map((c) => <option key={c.id} value={c.id}>{c.type.toUpperCase()} · {c.title} · {c.status}</option>)}</select>
-              <Button variant="outline" size="sm" disabled={pending || !card || dirty} title={dirty ? "Simpan draf dulu" : "Uji coba tanpa mengubah data"} onClick={() => start(async () => { const r = await testWorkflow(wf.key, card); if (r.ok) { setTest(r.data); setMsg("Test Run selesai: " + (ST[r.data.status]?.[0] ?? r.data.status) + " (tanpa efek samping)."); } else setMsg(r.message); })}><Play />Test Run</Button>
+              <Button variant="outline" size="sm" disabled={!!testWhy} title={testWhy || "Uji coba: tidak mengubah kartu dan tidak mengirim notifikasi"} onClick={() => start(async () => { const r = await testWorkflow(wf.key, card); if (r.ok) { setTest(r.data); setMsg("Test Run selesai: " + (ST[r.data.status]?.[0] ?? r.data.status) + " (tanpa efek samping)."); } else setMsg(r.message); })}><Play />Test Run</Button>
             </>
           )}
-          {perms.publish && <Button size="sm" disabled={pending || dirty || issues.length > 0 || needs.length > 0} title={needs.length ? "Aturan belum dikonfigurasi" : issues.length ? "Graf belum valid" : ""} onClick={() => run(() => publishWorkflow(wf.key, rev), "Versi baru diterbitkan.")}>Publish</Button>}
+          {perms.publish && <Button size="sm" disabled={pending || dirty || issues.length > 0 || needs.length > 0} title={dirty ? "Simpan draf dulu" : needs.length ? "Aturan belum dikonfigurasi" : issues.length ? "Graf belum valid" : ""} onClick={() => run(() => publishWorkflow(wf.key, rev), "Versi baru diterbitkan.")}>Publish</Button>}
           {perms.publish && wf.status === "published" && <Button variant="outline" size="sm" disabled={pending} onClick={() => run(() => disableWorkflow(wf.key), "Workflow dinonaktifkan.")}>Disable</Button>}
         </div>
       </div>
+      {perms.test && (
+        <p className="-mt-1 px-1 text-[12px] text-[#73777F]">
+          {testWhy && !pending ? <><b className="text-[#B7791F]">Test Run belum bisa:</b> {testWhy} </> : null}
+          Test Run hanya simulasi pada draf tersimpan: tidak mengubah kartu, tidak mengisi PIC, dan tidak mengirim notifikasi/WhatsApp (hanya tercatat di Audit Log).
+        </p>
+      )}
       {(msg || issues.length > 0 || needs.length > 0) && (
         <div className="grid gap-1 rounded-xl border border-[#E7E9EC] bg-white px-3 py-2 text-[12.5px]">
           {msg && <p className="text-[#202124]">{msg}</p>}
