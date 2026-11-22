@@ -10,6 +10,7 @@ import {
 } from "@xyflow/react";
 import {
   AlertTriangle, Bell, CheckCircle2, CircleDot, Clock, Flag, GitBranch, Inbox, ListChecks, Megaphone, Play, Redo2, Save, ShieldCheck, Undo2, UserPlus, Zap, BarChart3, Settings2, History, Workflow as WfIcon,
+  RotateCcw,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -147,6 +148,7 @@ function Builder({ wf, perms, policies, onSaved }: { wf: Wf; perms: Perms; polic
   // Dibandingkan dengan urutan kunci tetap: draf dari database (JSONB) menyusun ulang kunci, dulu membuat draf selalu
   // "belum disimpan" sehingga Test Run & Publish tidak pernah aktif. base = draf terakhir yang tersimpan.
   const [base, setBase] = useState(() => stableJson(wf.draft));
+  const [savedG, setSavedG] = useState<Graph>(() => wf.draft);
   const dirty = stableJson(graph) !== base;
   const testWhy = !perms.test ? "Anda tidak punya izin Test Run." : pending ? "Sedang memproses…" : dirty ? "Simpan draf dulu (Save draft): Test Run memakai draf yang tersimpan." : issues.length ? "Perbaiki dulu: " + issues[0].msg : !cards.length ? "Belum ada kartu Foto IG / Video produk / Video review / Video event untuk diuji." : !card ? "Pilih kartu untuk Test Run." : "";
   const needs = wf.needs.filter((n) => !policies.find((p) => p.key === n.key && p.status === "active"));
@@ -181,7 +183,8 @@ function Builder({ wf, perms, policies, onSaved }: { wf: Wf; perms: Perms; polic
         <span className="text-[12px] text-[#73777F]">{wf.activeVersion ? "versi terbit v" + wf.activeVersion : "belum terbit"} · draf r{rev}{wf.updatedBy ? " · " + wf.updatedBy : ""}{dirty ? " · belum disimpan" : ""}</span>
         <div className="ml-auto flex flex-wrap items-center gap-1.5">
           {edit && <><Button variant="ghost" size="icon-sm" onClick={undo} disabled={!hist.past.length} aria-label="Undo"><Undo2 /></Button><Button variant="ghost" size="icon-sm" onClick={redo} disabled={!hist.future.length} aria-label="Redo"><Redo2 /></Button></>}
-          {edit && <Button variant="outline" size="sm" disabled={pending || !dirty} onClick={() => run(async () => { const r = await saveDraft(wf.key, graph, rev); if (r.ok) { setRev(r.data.rev); setBase(stableJson(graph)); } return r; }, "Draf disimpan.")}><Save />Save draft</Button>}
+          {edit && <Button variant="outline" size="sm" disabled={pending || !dirty} onClick={() => run(async () => { const r = await saveDraft(wf.key, graph, rev); if (r.ok) { setRev(r.data.rev); setBase(stableJson(graph)); setSavedG(graph); } return r; }, "Draf disimpan.")}><Save />Save draft</Button>}
+          {edit && dirty && <Button variant="ghost" size="sm" disabled={pending} title="Kembalikan diagram ke draf terakhir yang tersimpan" onClick={() => { if (!window.confirm("Batalkan semua perubahan yang belum disimpan?")) return; snapshot(); restore(savedG); setSel(null); setMsg("Perubahan dibatalkan: kembali ke draf tersimpan."); }}><RotateCcw />Batalkan perubahan</Button>}
           {perms.test && (
             <>
               <select className={sel + " !h-8 !w-56"} value={card} onChange={(e) => setCard(e.target.value)} aria-label="Kartu untuk uji coba"><option value="">Kartu untuk Test Run…</option>{cards.map((c) => <option key={c.id} value={c.id}>{c.type.toUpperCase()} · {c.title} · {c.status}</option>)}</select>
