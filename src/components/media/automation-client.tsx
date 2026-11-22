@@ -44,7 +44,7 @@ function summary(t: NodeType, c: Record<string, unknown>): string {
     case "assign_owner": return c.role === "editor" ? "Isi PIC Editing bila kosong (jobdesk)" : "Isi PIC Produksi bila kosong (jobdesk)";
     case "notify": return (RECIPIENTS[c.to as keyof typeof RECIPIENTS] ?? "Penerima?") + " · " + (TEMPLATES[c.template as keyof typeof TEMPLATES] ?? "pesan?");
     case "human_approval": return "Tunggu keputusan Creative Review (orang)";
-    case "request_qa": return "Muat checklist QA sesuai jenis konten";
+    case "request_qa": return "Muat checklist Creative Review sesuai jenis konten";
     case "wait": return "Jadwalkan pengingat dari aturan";
     case "performance_eval": return "Pengingat catat metrik D+n dari aturan";
     case "attach_campaign": return "Butuh campaign master";
@@ -120,7 +120,7 @@ function Inspector({ node, edit, onChange, onDelete }: { node: Node<ND> | null; 
           <F l="Template pesan"><select disabled={!edit} className={sel} value={String(cfg.template ?? "")} onChange={(e) => set("template", e.target.value)}><option value="">Pilih…</option>{Object.entries(TEMPLATES).map(([k, l]) => <option key={k} value={k}>{l}</option>)}</select></F>
         </>
       )}
-      {type === "human_approval" && <p className="text-[12px] text-[#73777F]">Menunggu keputusan Creative Review oleh admin / Admin 2 di Detail kartu. Lolos QA tidak pernah berarti otomatis disetujui. Cabang: approved / revision.</p>}
+      {type === "human_approval" && <p className="text-[12px] text-[#73777F]">Menunggu keputusan Creative Review oleh admin / Admin 2 di Detail kartu. Lolos Creative Review tidak pernah berarti otomatis disetujui. Cabang: approved / revision.</p>}
       {["wait", "performance_eval", "request_qa", "attach_campaign", "end"].includes(type) && <p className="text-[12px] text-[#73777F]">Node ini tidak punya isian. Nilai bisnisnya diambil dari tab Konfigurasi.</p>}
       {node.data.issue && <p className="flex items-center gap-1 text-[12px] text-red-600"><AlertTriangle className="size-3.5" />{node.data.issue}</p>}
       {edit && type !== "trigger" && <Button variant="outline" size="sm" onClick={onDelete}>Hapus node</Button>}
@@ -378,7 +378,7 @@ export function AutomationClient({ initial }: { initial: Init }) {
                   <td className={td}><a className="text-[13px] font-medium text-[#2F6FEB] hover:underline" href={"/studio/?p=pipeline&card=" + encodeURIComponent(a.id) + "&tab=" + (a.kind === "review" ? "qa" : "brief")} target="_top" onClick={(e) => openInStudio(e, a.id, a.kind === "review" ? "qa" : "brief")}>Putuskan di Studio →</a></td>
                 </tr>))}</tbody></table>
           )}
-          <p className="border-t border-[#E7E9EC] px-3 py-2 text-[12px] text-[#73777F]">Keputusan dibuat di Detail kartu (Creative Review / Content Brief) dengan izin & aturan yang sama. Lolos QA tidak pernah otomatis berarti disetujui.</p>
+          <p className="border-t border-[#E7E9EC] px-3 py-2 text-[12px] text-[#73777F]">Keputusan dibuat di Detail kartu (Creative Review / Content Brief) dengan izin & aturan yang sama. Lolos Creative Review tidak pernah otomatis berarti disetujui.</p>
         </div>
       )}
 

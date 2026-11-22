@@ -70,7 +70,7 @@ const KEY_RE = /^[a-z0-9]{1,12}$/;
 /** null = standar QA sah. */
 export function qaCfgWhy(v: unknown): string | null {
   const o = obj(v);
-  if (!Object.keys(o).length) return "standar QA kosong";
+  if (!Object.keys(o).length) return "standar Creative Review kosong";
   const types = obj(o.types);
   for (const t of Object.keys(CPR_TYPE)) {
     const L = types[t];
@@ -205,15 +205,15 @@ const briefOkV = (b: unknown) => {
  */
 export function nextQa(prev: unknown, act: unknown, task: Doc, who: Who, cfg: QaCfg = QA_DEFAULT, at = Date.now()): Qa | string {
   const a = obj(act);
-  if (!needsCpr(task.type) || !task.cprId) return "kartu ini tidak memakai QA kartu";
-  if (!QA_STAGES.includes(s(task.status))) return "QA hanya saat Editing atau Ready";
+  if (!needsCpr(task.type) || !task.cprId) return "kartu ini tidak memakai Creative Review";
+  if (!QA_STAGES.includes(s(task.status))) return "Creative Review hanya saat Editing atau Ready";
   const p = qaOf(prev);
   const by = who.name || "?";
   if (a.act === "submit") {
-    if (!s(task.driveUrl)) return "unggah dulu file final (hasil produksi) sebelum mengajukan QA";
+    if (!s(task.driveUrl)) return "unggah dulu file final (hasil produksi) sebelum mengajukan Creative Review";
     if (task.briefReq === true && !briefOkV(task.brief)) return "Content Brief belum disetujui Creative Lead";
-    if (p.st === "submitted") return "QA sudah diajukan, tunggu review";
-    if (p.st === "approved") return "QA sudah Approved";
+    if (p.st === "submitted") return "Creative Review sudah diajukan, tunggu review";
+    if (p.st === "approved") return "Creative Review sudah Approved";
     const inds = cfg.types[s(task.type)] ?? QA_DEFAULT.types[s(task.type)];
     const ver = p.ver + 1;
     return {
@@ -229,9 +229,9 @@ export function nextQa(prev: unknown, act: unknown, task: Doc, who: Who, cfg: Qa
       log: [...p.log, { at, by, act: "submit" as const, ver, st: "submitted" as const }].slice(-QA_LOG_MAX),
     };
   }
-  if (a.act !== "review") return "perintah QA tidak valid";
-  if (!who.staff) return "review QA hanya untuk admin / Admin 2";
-  if (p.st !== "submitted") return "QA belum diajukan atau sudah direview";
+  if (a.act !== "review") return "perintah Creative Review tidak valid";
+  if (!who.staff) return "keputusan Creative Review hanya untuk admin / Admin 2";
+  if (p.st !== "submitted") return "Creative Review belum diajukan atau sudah direview";
   const S0 = obj(a.scores), C0 = obj(a.checks);
   const scores: Record<string, number> = {};
   for (const i of p.inds) {
@@ -251,7 +251,7 @@ export function nextQa(prev: unknown, act: unknown, task: Doc, who: Who, cfg: Qa
   let st: QaSt;
   let exc = "";
   if (a.decision === "approve") {
-    if (result === "blocked") return "critical check gagal: QA diblokir, tidak bisa Approved";
+    if (result === "blocked") return "critical check gagal: Creative Review diblokir, tidak bisa Approved";
     if (result !== "eligible") return "skor " + score + " di bawah 80: belum bisa Approved";
     if (isCreator(task, who)) {
       if (!who.full) return "konten sendiri harus disetujui admin lain";
@@ -262,7 +262,7 @@ export function nextQa(prev: unknown, act: unknown, task: Doc, who: Who, cfg: Qa
   } else if (a.decision === "revise") {
     if (note.length < 3) return "tulis catatan perbaikan untuk revisi";
     st = result === "eligible" ? "revision" : result;
-  } else return "perintah QA tidak valid";
+  } else return "perintah Creative Review tidak valid";
   const rev: QaRev = { by, at, scores, checks, score, result, note, ...(exc ? { exc } : {}) };
   const entry: QaLog = { at, by, act: st === "approved" ? "approve" : "review", ver: p.ver, st, score, note, fail, ...(exc ? { exc } : {}) };
   return { ...p, st, round: p.round + 1, rev, appBy: st === "approved" ? by : "", appAt: st === "approved" ? at : 0, log: [...p.log, entry].slice(-QA_LOG_MAX) };

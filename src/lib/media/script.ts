@@ -5,7 +5,7 @@
 
 export const SCRIPT_TYPES = ["vrv", "evt"] as const;
 export type ScriptStatus = "draft" | "review" | "revision" | "approved";
-export const SCRIPT_ST: Record<ScriptStatus, string> = { draft: "Draft", review: "Creative Review", revision: "Perlu revisi", approved: "Disetujui" };
+export const SCRIPT_ST: Record<ScriptStatus, string> = { draft: "Draft", review: "Creative Review Script", revision: "Perlu revisi", approved: "Disetujui" };
 
 export type TaskLite = { id: string; type: string; cprId: string | null; extra?: unknown };
 const obj = (v: unknown): Record<string, unknown> => (v && typeof v === "object" && !Array.isArray(v) ? (v as Record<string, unknown>) : {});
@@ -174,8 +174,8 @@ export function submitWhy(status: string): string | null {
 
 /** Keputusan Creative Review script. */
 export function reviewWhy(a: Actor, doc: { status: string; writers: string[] }, decision: string, note: string, exc: string): string | null {
-  if (!a.canManage) return "Hanya admin dan Admin 2 yang bisa memutuskan Creative Review script.";
-  if (doc.status !== "review") return "Script belum diajukan ke Creative Review.";
+  if (!a.canManage) return "Hanya admin dan Admin 2 yang bisa memutuskan Creative Review Script.";
+  if (doc.status !== "review") return "Script belum diajukan ke Creative Review Script.";
   if (decision !== "approve" && decision !== "revise") return "Keputusan tidak valid.";
   if (decision === "revise" && !note.trim()) return "Tulis catatan revisi dulu.";
   if (decision === "approve" && doc.writers.includes(a.userId)) {
