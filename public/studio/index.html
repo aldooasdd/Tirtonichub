@@ -2086,7 +2086,10 @@ html[data-skin="workspace"] header.top :is(#hubBtn,#prof){display:none!important
   html[data-skin="workspace"] .lrlogo{width:36px;height:36px}html[data-skin="workspace"] .lrbrand b{font-size:16px}}
 html[data-skin="workspace"] .lrhub{color:var(--ink)}
 /* halaman tertanam (Otomasi, FlowSpace baru) */
-.embp{padding:0}
+.embp{padding:0;width:100%;box-sizing:border-box;justify-self:stretch;align-self:stretch}
+main.wrap:has(>.embp:not([hidden])){width:100%;box-sizing:border-box;justify-self:stretch}
+.embp:not([hidden]){display:block;min-width:0}
+html[data-skin="workspace"] body.railon main.wrap>section.embp{max-width:none;margin-inline:0;width:100%}
 .cprnew{display:block;margin:8px 10px 0;padding:9px 12px;border-radius:10px;border:1px solid color-mix(in srgb,var(--on-navy) 25%,transparent);color:inherit;font:600 13px/1.2 var(--body);text-decoration:none}.cprnew:hover{background:color-mix(in srgb,var(--on-navy) 12%,transparent)}
 .embf{display:block;width:100%;height:calc(100vh - var(--hh,72px) - 24px);border:0;border-radius:12px;background:var(--surface)}
 html[data-skin="workspace"] main.wrap>section.embp{max-width:none}
