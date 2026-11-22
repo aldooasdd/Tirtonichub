@@ -332,6 +332,26 @@ export type AutomationPolicy = $Result.DefaultSelection<Prisma.$AutomationPolicy
  * 
  */
 export type AutomationAudit = $Result.DefaultSelection<Prisma.$AutomationAuditPayload>
+/**
+ * Model ScriptDoc
+ * 
+ */
+export type ScriptDoc = $Result.DefaultSelection<Prisma.$ScriptDocPayload>
+/**
+ * Model ScriptRevision
+ * 
+ */
+export type ScriptRevision = $Result.DefaultSelection<Prisma.$ScriptRevisionPayload>
+/**
+ * Model ScriptComment
+ * 
+ */
+export type ScriptComment = $Result.DefaultSelection<Prisma.$ScriptCommentPayload>
+/**
+ * Model ScriptReview
+ * 
+ */
+export type ScriptReview = $Result.DefaultSelection<Prisma.$ScriptReviewPayload>
 
 /**
  * Enums
@@ -1203,6 +1223,46 @@ export class PrismaClient<
     * ```
     */
   get automationAudit(): Prisma.AutomationAuditDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.scriptDoc`: Exposes CRUD operations for the **ScriptDoc** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ScriptDocs
+    * const scriptDocs = await prisma.scriptDoc.findMany()
+    * ```
+    */
+  get scriptDoc(): Prisma.ScriptDocDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.scriptRevision`: Exposes CRUD operations for the **ScriptRevision** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ScriptRevisions
+    * const scriptRevisions = await prisma.scriptRevision.findMany()
+    * ```
+    */
+  get scriptRevision(): Prisma.ScriptRevisionDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.scriptComment`: Exposes CRUD operations for the **ScriptComment** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ScriptComments
+    * const scriptComments = await prisma.scriptComment.findMany()
+    * ```
+    */
+  get scriptComment(): Prisma.ScriptCommentDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.scriptReview`: Exposes CRUD operations for the **ScriptReview** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more ScriptReviews
+    * const scriptReviews = await prisma.scriptReview.findMany()
+    * ```
+    */
+  get scriptReview(): Prisma.ScriptReviewDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1706,7 +1766,11 @@ export namespace Prisma {
     AutomationTimer: 'AutomationTimer',
     AutomationDelivery: 'AutomationDelivery',
     AutomationPolicy: 'AutomationPolicy',
-    AutomationAudit: 'AutomationAudit'
+    AutomationAudit: 'AutomationAudit',
+    ScriptDoc: 'ScriptDoc',
+    ScriptRevision: 'ScriptRevision',
+    ScriptComment: 'ScriptComment',
+    ScriptReview: 'ScriptReview'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1725,7 +1789,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit" | "scriptDoc" | "scriptRevision" | "scriptComment" | "scriptReview"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6391,6 +6455,302 @@ export namespace Prisma {
           }
         }
       }
+      ScriptDoc: {
+        payload: Prisma.$ScriptDocPayload<ExtArgs>
+        fields: Prisma.ScriptDocFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ScriptDocFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptDocPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ScriptDocFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptDocPayload>
+          }
+          findFirst: {
+            args: Prisma.ScriptDocFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptDocPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ScriptDocFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptDocPayload>
+          }
+          findMany: {
+            args: Prisma.ScriptDocFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptDocPayload>[]
+          }
+          create: {
+            args: Prisma.ScriptDocCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptDocPayload>
+          }
+          createMany: {
+            args: Prisma.ScriptDocCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ScriptDocCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptDocPayload>[]
+          }
+          delete: {
+            args: Prisma.ScriptDocDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptDocPayload>
+          }
+          update: {
+            args: Prisma.ScriptDocUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptDocPayload>
+          }
+          deleteMany: {
+            args: Prisma.ScriptDocDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ScriptDocUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ScriptDocUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptDocPayload>[]
+          }
+          upsert: {
+            args: Prisma.ScriptDocUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptDocPayload>
+          }
+          aggregate: {
+            args: Prisma.ScriptDocAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateScriptDoc>
+          }
+          groupBy: {
+            args: Prisma.ScriptDocGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ScriptDocGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ScriptDocCountArgs<ExtArgs>
+            result: $Utils.Optional<ScriptDocCountAggregateOutputType> | number
+          }
+        }
+      }
+      ScriptRevision: {
+        payload: Prisma.$ScriptRevisionPayload<ExtArgs>
+        fields: Prisma.ScriptRevisionFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ScriptRevisionFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptRevisionPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ScriptRevisionFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptRevisionPayload>
+          }
+          findFirst: {
+            args: Prisma.ScriptRevisionFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptRevisionPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ScriptRevisionFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptRevisionPayload>
+          }
+          findMany: {
+            args: Prisma.ScriptRevisionFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptRevisionPayload>[]
+          }
+          create: {
+            args: Prisma.ScriptRevisionCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptRevisionPayload>
+          }
+          createMany: {
+            args: Prisma.ScriptRevisionCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ScriptRevisionCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptRevisionPayload>[]
+          }
+          delete: {
+            args: Prisma.ScriptRevisionDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptRevisionPayload>
+          }
+          update: {
+            args: Prisma.ScriptRevisionUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptRevisionPayload>
+          }
+          deleteMany: {
+            args: Prisma.ScriptRevisionDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ScriptRevisionUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ScriptRevisionUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptRevisionPayload>[]
+          }
+          upsert: {
+            args: Prisma.ScriptRevisionUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptRevisionPayload>
+          }
+          aggregate: {
+            args: Prisma.ScriptRevisionAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateScriptRevision>
+          }
+          groupBy: {
+            args: Prisma.ScriptRevisionGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ScriptRevisionGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ScriptRevisionCountArgs<ExtArgs>
+            result: $Utils.Optional<ScriptRevisionCountAggregateOutputType> | number
+          }
+        }
+      }
+      ScriptComment: {
+        payload: Prisma.$ScriptCommentPayload<ExtArgs>
+        fields: Prisma.ScriptCommentFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ScriptCommentFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptCommentPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ScriptCommentFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptCommentPayload>
+          }
+          findFirst: {
+            args: Prisma.ScriptCommentFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptCommentPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ScriptCommentFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptCommentPayload>
+          }
+          findMany: {
+            args: Prisma.ScriptCommentFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptCommentPayload>[]
+          }
+          create: {
+            args: Prisma.ScriptCommentCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptCommentPayload>
+          }
+          createMany: {
+            args: Prisma.ScriptCommentCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ScriptCommentCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptCommentPayload>[]
+          }
+          delete: {
+            args: Prisma.ScriptCommentDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptCommentPayload>
+          }
+          update: {
+            args: Prisma.ScriptCommentUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptCommentPayload>
+          }
+          deleteMany: {
+            args: Prisma.ScriptCommentDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ScriptCommentUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ScriptCommentUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptCommentPayload>[]
+          }
+          upsert: {
+            args: Prisma.ScriptCommentUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptCommentPayload>
+          }
+          aggregate: {
+            args: Prisma.ScriptCommentAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateScriptComment>
+          }
+          groupBy: {
+            args: Prisma.ScriptCommentGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ScriptCommentGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ScriptCommentCountArgs<ExtArgs>
+            result: $Utils.Optional<ScriptCommentCountAggregateOutputType> | number
+          }
+        }
+      }
+      ScriptReview: {
+        payload: Prisma.$ScriptReviewPayload<ExtArgs>
+        fields: Prisma.ScriptReviewFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.ScriptReviewFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptReviewPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.ScriptReviewFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptReviewPayload>
+          }
+          findFirst: {
+            args: Prisma.ScriptReviewFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptReviewPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.ScriptReviewFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptReviewPayload>
+          }
+          findMany: {
+            args: Prisma.ScriptReviewFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptReviewPayload>[]
+          }
+          create: {
+            args: Prisma.ScriptReviewCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptReviewPayload>
+          }
+          createMany: {
+            args: Prisma.ScriptReviewCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.ScriptReviewCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptReviewPayload>[]
+          }
+          delete: {
+            args: Prisma.ScriptReviewDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptReviewPayload>
+          }
+          update: {
+            args: Prisma.ScriptReviewUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptReviewPayload>
+          }
+          deleteMany: {
+            args: Prisma.ScriptReviewDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.ScriptReviewUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.ScriptReviewUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptReviewPayload>[]
+          }
+          upsert: {
+            args: Prisma.ScriptReviewUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$ScriptReviewPayload>
+          }
+          aggregate: {
+            args: Prisma.ScriptReviewAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateScriptReview>
+          }
+          groupBy: {
+            args: Prisma.ScriptReviewGroupByArgs<ExtArgs>
+            result: $Utils.Optional<ScriptReviewGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.ScriptReviewCountArgs<ExtArgs>
+            result: $Utils.Optional<ScriptReviewCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -6550,6 +6910,10 @@ export namespace Prisma {
     automationDelivery?: AutomationDeliveryOmit
     automationPolicy?: AutomationPolicyOmit
     automationAudit?: AutomationAuditOmit
+    scriptDoc?: ScriptDocOmit
+    scriptRevision?: ScriptRevisionOmit
+    scriptComment?: ScriptCommentOmit
+    scriptReview?: ScriptReviewOmit
   }
 
   /* Types for Logging */
@@ -77595,6 +77959,4318 @@ export namespace Prisma {
 
 
   /**
+   * Model ScriptDoc
+   */
+
+  export type AggregateScriptDoc = {
+    _count: ScriptDocCountAggregateOutputType | null
+    _avg: ScriptDocAvgAggregateOutputType | null
+    _sum: ScriptDocSumAggregateOutputType | null
+    _min: ScriptDocMinAggregateOutputType | null
+    _max: ScriptDocMaxAggregateOutputType | null
+  }
+
+  export type ScriptDocAvgAggregateOutputType = {
+    version: number | null
+    submittedRev: number | null
+    approvedRev: number | null
+  }
+
+  export type ScriptDocSumAggregateOutputType = {
+    version: number | null
+    submittedRev: number | null
+    approvedRev: number | null
+  }
+
+  export type ScriptDocMinAggregateOutputType = {
+    id: string | null
+    taskId: string | null
+    cprId: string | null
+    title: string | null
+    version: number | null
+    status: string | null
+    submittedRev: number | null
+    approvedRev: number | null
+    createdById: string | null
+    updatedById: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ScriptDocMaxAggregateOutputType = {
+    id: string | null
+    taskId: string | null
+    cprId: string | null
+    title: string | null
+    version: number | null
+    status: string | null
+    submittedRev: number | null
+    approvedRev: number | null
+    createdById: string | null
+    updatedById: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type ScriptDocCountAggregateOutputType = {
+    id: number
+    taskId: number
+    cprId: number
+    title: number
+    content: number
+    version: number
+    status: number
+    submittedRev: number
+    approvedRev: number
+    writers: number
+    createdById: number
+    updatedById: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type ScriptDocAvgAggregateInputType = {
+    version?: true
+    submittedRev?: true
+    approvedRev?: true
+  }
+
+  export type ScriptDocSumAggregateInputType = {
+    version?: true
+    submittedRev?: true
+    approvedRev?: true
+  }
+
+  export type ScriptDocMinAggregateInputType = {
+    id?: true
+    taskId?: true
+    cprId?: true
+    title?: true
+    version?: true
+    status?: true
+    submittedRev?: true
+    approvedRev?: true
+    createdById?: true
+    updatedById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ScriptDocMaxAggregateInputType = {
+    id?: true
+    taskId?: true
+    cprId?: true
+    title?: true
+    version?: true
+    status?: true
+    submittedRev?: true
+    approvedRev?: true
+    createdById?: true
+    updatedById?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type ScriptDocCountAggregateInputType = {
+    id?: true
+    taskId?: true
+    cprId?: true
+    title?: true
+    content?: true
+    version?: true
+    status?: true
+    submittedRev?: true
+    approvedRev?: true
+    writers?: true
+    createdById?: true
+    updatedById?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type ScriptDocAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScriptDoc to aggregate.
+     */
+    where?: ScriptDocWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptDocs to fetch.
+     */
+    orderBy?: ScriptDocOrderByWithRelationInput | ScriptDocOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ScriptDocWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptDocs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptDocs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ScriptDocs
+    **/
+    _count?: true | ScriptDocCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ScriptDocAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ScriptDocSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ScriptDocMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ScriptDocMaxAggregateInputType
+  }
+
+  export type GetScriptDocAggregateType<T extends ScriptDocAggregateArgs> = {
+        [P in keyof T & keyof AggregateScriptDoc]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateScriptDoc[P]>
+      : GetScalarType<T[P], AggregateScriptDoc[P]>
+  }
+
+
+
+
+  export type ScriptDocGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScriptDocWhereInput
+    orderBy?: ScriptDocOrderByWithAggregationInput | ScriptDocOrderByWithAggregationInput[]
+    by: ScriptDocScalarFieldEnum[] | ScriptDocScalarFieldEnum
+    having?: ScriptDocScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ScriptDocCountAggregateInputType | true
+    _avg?: ScriptDocAvgAggregateInputType
+    _sum?: ScriptDocSumAggregateInputType
+    _min?: ScriptDocMinAggregateInputType
+    _max?: ScriptDocMaxAggregateInputType
+  }
+
+  export type ScriptDocGroupByOutputType = {
+    id: string
+    taskId: string
+    cprId: string
+    title: string
+    content: JsonValue
+    version: number
+    status: string
+    submittedRev: number | null
+    approvedRev: number | null
+    writers: string[]
+    createdById: string
+    updatedById: string
+    createdAt: Date
+    updatedAt: Date
+    _count: ScriptDocCountAggregateOutputType | null
+    _avg: ScriptDocAvgAggregateOutputType | null
+    _sum: ScriptDocSumAggregateOutputType | null
+    _min: ScriptDocMinAggregateOutputType | null
+    _max: ScriptDocMaxAggregateOutputType | null
+  }
+
+  type GetScriptDocGroupByPayload<T extends ScriptDocGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ScriptDocGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ScriptDocGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ScriptDocGroupByOutputType[P]>
+            : GetScalarType<T[P], ScriptDocGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ScriptDocSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    taskId?: boolean
+    cprId?: boolean
+    title?: boolean
+    content?: boolean
+    version?: boolean
+    status?: boolean
+    submittedRev?: boolean
+    approvedRev?: boolean
+    writers?: boolean
+    createdById?: boolean
+    updatedById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["scriptDoc"]>
+
+  export type ScriptDocSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    taskId?: boolean
+    cprId?: boolean
+    title?: boolean
+    content?: boolean
+    version?: boolean
+    status?: boolean
+    submittedRev?: boolean
+    approvedRev?: boolean
+    writers?: boolean
+    createdById?: boolean
+    updatedById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["scriptDoc"]>
+
+  export type ScriptDocSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    taskId?: boolean
+    cprId?: boolean
+    title?: boolean
+    content?: boolean
+    version?: boolean
+    status?: boolean
+    submittedRev?: boolean
+    approvedRev?: boolean
+    writers?: boolean
+    createdById?: boolean
+    updatedById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["scriptDoc"]>
+
+  export type ScriptDocSelectScalar = {
+    id?: boolean
+    taskId?: boolean
+    cprId?: boolean
+    title?: boolean
+    content?: boolean
+    version?: boolean
+    status?: boolean
+    submittedRev?: boolean
+    approvedRev?: boolean
+    writers?: boolean
+    createdById?: boolean
+    updatedById?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type ScriptDocOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "taskId" | "cprId" | "title" | "content" | "version" | "status" | "submittedRev" | "approvedRev" | "writers" | "createdById" | "updatedById" | "createdAt" | "updatedAt", ExtArgs["result"]["scriptDoc"]>
+
+  export type $ScriptDocPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ScriptDoc"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      taskId: string
+      cprId: string
+      title: string
+      content: Prisma.JsonValue
+      version: number
+      status: string
+      submittedRev: number | null
+      approvedRev: number | null
+      writers: string[]
+      createdById: string
+      updatedById: string
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["scriptDoc"]>
+    composites: {}
+  }
+
+  type ScriptDocGetPayload<S extends boolean | null | undefined | ScriptDocDefaultArgs> = $Result.GetResult<Prisma.$ScriptDocPayload, S>
+
+  type ScriptDocCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ScriptDocFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ScriptDocCountAggregateInputType | true
+    }
+
+  export interface ScriptDocDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ScriptDoc'], meta: { name: 'ScriptDoc' } }
+    /**
+     * Find zero or one ScriptDoc that matches the filter.
+     * @param {ScriptDocFindUniqueArgs} args - Arguments to find a ScriptDoc
+     * @example
+     * // Get one ScriptDoc
+     * const scriptDoc = await prisma.scriptDoc.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ScriptDocFindUniqueArgs>(args: SelectSubset<T, ScriptDocFindUniqueArgs<ExtArgs>>): Prisma__ScriptDocClient<$Result.GetResult<Prisma.$ScriptDocPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ScriptDoc that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ScriptDocFindUniqueOrThrowArgs} args - Arguments to find a ScriptDoc
+     * @example
+     * // Get one ScriptDoc
+     * const scriptDoc = await prisma.scriptDoc.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ScriptDocFindUniqueOrThrowArgs>(args: SelectSubset<T, ScriptDocFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ScriptDocClient<$Result.GetResult<Prisma.$ScriptDocPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScriptDoc that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptDocFindFirstArgs} args - Arguments to find a ScriptDoc
+     * @example
+     * // Get one ScriptDoc
+     * const scriptDoc = await prisma.scriptDoc.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ScriptDocFindFirstArgs>(args?: SelectSubset<T, ScriptDocFindFirstArgs<ExtArgs>>): Prisma__ScriptDocClient<$Result.GetResult<Prisma.$ScriptDocPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScriptDoc that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptDocFindFirstOrThrowArgs} args - Arguments to find a ScriptDoc
+     * @example
+     * // Get one ScriptDoc
+     * const scriptDoc = await prisma.scriptDoc.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ScriptDocFindFirstOrThrowArgs>(args?: SelectSubset<T, ScriptDocFindFirstOrThrowArgs<ExtArgs>>): Prisma__ScriptDocClient<$Result.GetResult<Prisma.$ScriptDocPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ScriptDocs that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptDocFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ScriptDocs
+     * const scriptDocs = await prisma.scriptDoc.findMany()
+     * 
+     * // Get first 10 ScriptDocs
+     * const scriptDocs = await prisma.scriptDoc.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const scriptDocWithIdOnly = await prisma.scriptDoc.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ScriptDocFindManyArgs>(args?: SelectSubset<T, ScriptDocFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScriptDocPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ScriptDoc.
+     * @param {ScriptDocCreateArgs} args - Arguments to create a ScriptDoc.
+     * @example
+     * // Create one ScriptDoc
+     * const ScriptDoc = await prisma.scriptDoc.create({
+     *   data: {
+     *     // ... data to create a ScriptDoc
+     *   }
+     * })
+     * 
+     */
+    create<T extends ScriptDocCreateArgs>(args: SelectSubset<T, ScriptDocCreateArgs<ExtArgs>>): Prisma__ScriptDocClient<$Result.GetResult<Prisma.$ScriptDocPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ScriptDocs.
+     * @param {ScriptDocCreateManyArgs} args - Arguments to create many ScriptDocs.
+     * @example
+     * // Create many ScriptDocs
+     * const scriptDoc = await prisma.scriptDoc.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ScriptDocCreateManyArgs>(args?: SelectSubset<T, ScriptDocCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ScriptDocs and returns the data saved in the database.
+     * @param {ScriptDocCreateManyAndReturnArgs} args - Arguments to create many ScriptDocs.
+     * @example
+     * // Create many ScriptDocs
+     * const scriptDoc = await prisma.scriptDoc.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ScriptDocs and only return the `id`
+     * const scriptDocWithIdOnly = await prisma.scriptDoc.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ScriptDocCreateManyAndReturnArgs>(args?: SelectSubset<T, ScriptDocCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScriptDocPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ScriptDoc.
+     * @param {ScriptDocDeleteArgs} args - Arguments to delete one ScriptDoc.
+     * @example
+     * // Delete one ScriptDoc
+     * const ScriptDoc = await prisma.scriptDoc.delete({
+     *   where: {
+     *     // ... filter to delete one ScriptDoc
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ScriptDocDeleteArgs>(args: SelectSubset<T, ScriptDocDeleteArgs<ExtArgs>>): Prisma__ScriptDocClient<$Result.GetResult<Prisma.$ScriptDocPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ScriptDoc.
+     * @param {ScriptDocUpdateArgs} args - Arguments to update one ScriptDoc.
+     * @example
+     * // Update one ScriptDoc
+     * const scriptDoc = await prisma.scriptDoc.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ScriptDocUpdateArgs>(args: SelectSubset<T, ScriptDocUpdateArgs<ExtArgs>>): Prisma__ScriptDocClient<$Result.GetResult<Prisma.$ScriptDocPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ScriptDocs.
+     * @param {ScriptDocDeleteManyArgs} args - Arguments to filter ScriptDocs to delete.
+     * @example
+     * // Delete a few ScriptDocs
+     * const { count } = await prisma.scriptDoc.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ScriptDocDeleteManyArgs>(args?: SelectSubset<T, ScriptDocDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScriptDocs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptDocUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ScriptDocs
+     * const scriptDoc = await prisma.scriptDoc.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ScriptDocUpdateManyArgs>(args: SelectSubset<T, ScriptDocUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScriptDocs and returns the data updated in the database.
+     * @param {ScriptDocUpdateManyAndReturnArgs} args - Arguments to update many ScriptDocs.
+     * @example
+     * // Update many ScriptDocs
+     * const scriptDoc = await prisma.scriptDoc.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ScriptDocs and only return the `id`
+     * const scriptDocWithIdOnly = await prisma.scriptDoc.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ScriptDocUpdateManyAndReturnArgs>(args: SelectSubset<T, ScriptDocUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScriptDocPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ScriptDoc.
+     * @param {ScriptDocUpsertArgs} args - Arguments to update or create a ScriptDoc.
+     * @example
+     * // Update or create a ScriptDoc
+     * const scriptDoc = await prisma.scriptDoc.upsert({
+     *   create: {
+     *     // ... data to create a ScriptDoc
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ScriptDoc we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ScriptDocUpsertArgs>(args: SelectSubset<T, ScriptDocUpsertArgs<ExtArgs>>): Prisma__ScriptDocClient<$Result.GetResult<Prisma.$ScriptDocPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ScriptDocs.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptDocCountArgs} args - Arguments to filter ScriptDocs to count.
+     * @example
+     * // Count the number of ScriptDocs
+     * const count = await prisma.scriptDoc.count({
+     *   where: {
+     *     // ... the filter for the ScriptDocs we want to count
+     *   }
+     * })
+    **/
+    count<T extends ScriptDocCountArgs>(
+      args?: Subset<T, ScriptDocCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ScriptDocCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ScriptDoc.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptDocAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ScriptDocAggregateArgs>(args: Subset<T, ScriptDocAggregateArgs>): Prisma.PrismaPromise<GetScriptDocAggregateType<T>>
+
+    /**
+     * Group by ScriptDoc.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptDocGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ScriptDocGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ScriptDocGroupByArgs['orderBy'] }
+        : { orderBy?: ScriptDocGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ScriptDocGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetScriptDocGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ScriptDoc model
+   */
+  readonly fields: ScriptDocFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ScriptDoc.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ScriptDocClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ScriptDoc model
+   */
+  interface ScriptDocFieldRefs {
+    readonly id: FieldRef<"ScriptDoc", 'String'>
+    readonly taskId: FieldRef<"ScriptDoc", 'String'>
+    readonly cprId: FieldRef<"ScriptDoc", 'String'>
+    readonly title: FieldRef<"ScriptDoc", 'String'>
+    readonly content: FieldRef<"ScriptDoc", 'Json'>
+    readonly version: FieldRef<"ScriptDoc", 'Int'>
+    readonly status: FieldRef<"ScriptDoc", 'String'>
+    readonly submittedRev: FieldRef<"ScriptDoc", 'Int'>
+    readonly approvedRev: FieldRef<"ScriptDoc", 'Int'>
+    readonly writers: FieldRef<"ScriptDoc", 'String[]'>
+    readonly createdById: FieldRef<"ScriptDoc", 'String'>
+    readonly updatedById: FieldRef<"ScriptDoc", 'String'>
+    readonly createdAt: FieldRef<"ScriptDoc", 'DateTime'>
+    readonly updatedAt: FieldRef<"ScriptDoc", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ScriptDoc findUnique
+   */
+  export type ScriptDocFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptDoc
+     */
+    select?: ScriptDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptDoc
+     */
+    omit?: ScriptDocOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptDoc to fetch.
+     */
+    where: ScriptDocWhereUniqueInput
+  }
+
+  /**
+   * ScriptDoc findUniqueOrThrow
+   */
+  export type ScriptDocFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptDoc
+     */
+    select?: ScriptDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptDoc
+     */
+    omit?: ScriptDocOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptDoc to fetch.
+     */
+    where: ScriptDocWhereUniqueInput
+  }
+
+  /**
+   * ScriptDoc findFirst
+   */
+  export type ScriptDocFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptDoc
+     */
+    select?: ScriptDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptDoc
+     */
+    omit?: ScriptDocOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptDoc to fetch.
+     */
+    where?: ScriptDocWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptDocs to fetch.
+     */
+    orderBy?: ScriptDocOrderByWithRelationInput | ScriptDocOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScriptDocs.
+     */
+    cursor?: ScriptDocWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptDocs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptDocs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScriptDocs.
+     */
+    distinct?: ScriptDocScalarFieldEnum | ScriptDocScalarFieldEnum[]
+  }
+
+  /**
+   * ScriptDoc findFirstOrThrow
+   */
+  export type ScriptDocFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptDoc
+     */
+    select?: ScriptDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptDoc
+     */
+    omit?: ScriptDocOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptDoc to fetch.
+     */
+    where?: ScriptDocWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptDocs to fetch.
+     */
+    orderBy?: ScriptDocOrderByWithRelationInput | ScriptDocOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScriptDocs.
+     */
+    cursor?: ScriptDocWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptDocs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptDocs.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScriptDocs.
+     */
+    distinct?: ScriptDocScalarFieldEnum | ScriptDocScalarFieldEnum[]
+  }
+
+  /**
+   * ScriptDoc findMany
+   */
+  export type ScriptDocFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptDoc
+     */
+    select?: ScriptDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptDoc
+     */
+    omit?: ScriptDocOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptDocs to fetch.
+     */
+    where?: ScriptDocWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptDocs to fetch.
+     */
+    orderBy?: ScriptDocOrderByWithRelationInput | ScriptDocOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ScriptDocs.
+     */
+    cursor?: ScriptDocWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptDocs from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptDocs.
+     */
+    skip?: number
+    distinct?: ScriptDocScalarFieldEnum | ScriptDocScalarFieldEnum[]
+  }
+
+  /**
+   * ScriptDoc create
+   */
+  export type ScriptDocCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptDoc
+     */
+    select?: ScriptDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptDoc
+     */
+    omit?: ScriptDocOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ScriptDoc.
+     */
+    data: XOR<ScriptDocCreateInput, ScriptDocUncheckedCreateInput>
+  }
+
+  /**
+   * ScriptDoc createMany
+   */
+  export type ScriptDocCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ScriptDocs.
+     */
+    data: ScriptDocCreateManyInput | ScriptDocCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScriptDoc createManyAndReturn
+   */
+  export type ScriptDocCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptDoc
+     */
+    select?: ScriptDocSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptDoc
+     */
+    omit?: ScriptDocOmit<ExtArgs> | null
+    /**
+     * The data used to create many ScriptDocs.
+     */
+    data: ScriptDocCreateManyInput | ScriptDocCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScriptDoc update
+   */
+  export type ScriptDocUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptDoc
+     */
+    select?: ScriptDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptDoc
+     */
+    omit?: ScriptDocOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ScriptDoc.
+     */
+    data: XOR<ScriptDocUpdateInput, ScriptDocUncheckedUpdateInput>
+    /**
+     * Choose, which ScriptDoc to update.
+     */
+    where: ScriptDocWhereUniqueInput
+  }
+
+  /**
+   * ScriptDoc updateMany
+   */
+  export type ScriptDocUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ScriptDocs.
+     */
+    data: XOR<ScriptDocUpdateManyMutationInput, ScriptDocUncheckedUpdateManyInput>
+    /**
+     * Filter which ScriptDocs to update
+     */
+    where?: ScriptDocWhereInput
+    /**
+     * Limit how many ScriptDocs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScriptDoc updateManyAndReturn
+   */
+  export type ScriptDocUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptDoc
+     */
+    select?: ScriptDocSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptDoc
+     */
+    omit?: ScriptDocOmit<ExtArgs> | null
+    /**
+     * The data used to update ScriptDocs.
+     */
+    data: XOR<ScriptDocUpdateManyMutationInput, ScriptDocUncheckedUpdateManyInput>
+    /**
+     * Filter which ScriptDocs to update
+     */
+    where?: ScriptDocWhereInput
+    /**
+     * Limit how many ScriptDocs to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScriptDoc upsert
+   */
+  export type ScriptDocUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptDoc
+     */
+    select?: ScriptDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptDoc
+     */
+    omit?: ScriptDocOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ScriptDoc to update in case it exists.
+     */
+    where: ScriptDocWhereUniqueInput
+    /**
+     * In case the ScriptDoc found by the `where` argument doesn't exist, create a new ScriptDoc with this data.
+     */
+    create: XOR<ScriptDocCreateInput, ScriptDocUncheckedCreateInput>
+    /**
+     * In case the ScriptDoc was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ScriptDocUpdateInput, ScriptDocUncheckedUpdateInput>
+  }
+
+  /**
+   * ScriptDoc delete
+   */
+  export type ScriptDocDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptDoc
+     */
+    select?: ScriptDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptDoc
+     */
+    omit?: ScriptDocOmit<ExtArgs> | null
+    /**
+     * Filter which ScriptDoc to delete.
+     */
+    where: ScriptDocWhereUniqueInput
+  }
+
+  /**
+   * ScriptDoc deleteMany
+   */
+  export type ScriptDocDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScriptDocs to delete
+     */
+    where?: ScriptDocWhereInput
+    /**
+     * Limit how many ScriptDocs to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScriptDoc without action
+   */
+  export type ScriptDocDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptDoc
+     */
+    select?: ScriptDocSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptDoc
+     */
+    omit?: ScriptDocOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ScriptRevision
+   */
+
+  export type AggregateScriptRevision = {
+    _count: ScriptRevisionCountAggregateOutputType | null
+    _avg: ScriptRevisionAvgAggregateOutputType | null
+    _sum: ScriptRevisionSumAggregateOutputType | null
+    _min: ScriptRevisionMinAggregateOutputType | null
+    _max: ScriptRevisionMaxAggregateOutputType | null
+  }
+
+  export type ScriptRevisionAvgAggregateOutputType = {
+    rev: number | null
+  }
+
+  export type ScriptRevisionSumAggregateOutputType = {
+    rev: number | null
+  }
+
+  export type ScriptRevisionMinAggregateOutputType = {
+    id: string | null
+    docId: string | null
+    rev: number | null
+    kind: string | null
+    title: string | null
+    byId: string | null
+    createdAt: Date | null
+  }
+
+  export type ScriptRevisionMaxAggregateOutputType = {
+    id: string | null
+    docId: string | null
+    rev: number | null
+    kind: string | null
+    title: string | null
+    byId: string | null
+    createdAt: Date | null
+  }
+
+  export type ScriptRevisionCountAggregateOutputType = {
+    id: number
+    docId: number
+    rev: number
+    kind: number
+    title: number
+    content: number
+    byId: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ScriptRevisionAvgAggregateInputType = {
+    rev?: true
+  }
+
+  export type ScriptRevisionSumAggregateInputType = {
+    rev?: true
+  }
+
+  export type ScriptRevisionMinAggregateInputType = {
+    id?: true
+    docId?: true
+    rev?: true
+    kind?: true
+    title?: true
+    byId?: true
+    createdAt?: true
+  }
+
+  export type ScriptRevisionMaxAggregateInputType = {
+    id?: true
+    docId?: true
+    rev?: true
+    kind?: true
+    title?: true
+    byId?: true
+    createdAt?: true
+  }
+
+  export type ScriptRevisionCountAggregateInputType = {
+    id?: true
+    docId?: true
+    rev?: true
+    kind?: true
+    title?: true
+    content?: true
+    byId?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ScriptRevisionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScriptRevision to aggregate.
+     */
+    where?: ScriptRevisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptRevisions to fetch.
+     */
+    orderBy?: ScriptRevisionOrderByWithRelationInput | ScriptRevisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ScriptRevisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptRevisions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptRevisions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ScriptRevisions
+    **/
+    _count?: true | ScriptRevisionCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ScriptRevisionAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ScriptRevisionSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ScriptRevisionMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ScriptRevisionMaxAggregateInputType
+  }
+
+  export type GetScriptRevisionAggregateType<T extends ScriptRevisionAggregateArgs> = {
+        [P in keyof T & keyof AggregateScriptRevision]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateScriptRevision[P]>
+      : GetScalarType<T[P], AggregateScriptRevision[P]>
+  }
+
+
+
+
+  export type ScriptRevisionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScriptRevisionWhereInput
+    orderBy?: ScriptRevisionOrderByWithAggregationInput | ScriptRevisionOrderByWithAggregationInput[]
+    by: ScriptRevisionScalarFieldEnum[] | ScriptRevisionScalarFieldEnum
+    having?: ScriptRevisionScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ScriptRevisionCountAggregateInputType | true
+    _avg?: ScriptRevisionAvgAggregateInputType
+    _sum?: ScriptRevisionSumAggregateInputType
+    _min?: ScriptRevisionMinAggregateInputType
+    _max?: ScriptRevisionMaxAggregateInputType
+  }
+
+  export type ScriptRevisionGroupByOutputType = {
+    id: string
+    docId: string
+    rev: number
+    kind: string
+    title: string
+    content: JsonValue
+    byId: string
+    createdAt: Date
+    _count: ScriptRevisionCountAggregateOutputType | null
+    _avg: ScriptRevisionAvgAggregateOutputType | null
+    _sum: ScriptRevisionSumAggregateOutputType | null
+    _min: ScriptRevisionMinAggregateOutputType | null
+    _max: ScriptRevisionMaxAggregateOutputType | null
+  }
+
+  type GetScriptRevisionGroupByPayload<T extends ScriptRevisionGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ScriptRevisionGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ScriptRevisionGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ScriptRevisionGroupByOutputType[P]>
+            : GetScalarType<T[P], ScriptRevisionGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ScriptRevisionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    docId?: boolean
+    rev?: boolean
+    kind?: boolean
+    title?: boolean
+    content?: boolean
+    byId?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["scriptRevision"]>
+
+  export type ScriptRevisionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    docId?: boolean
+    rev?: boolean
+    kind?: boolean
+    title?: boolean
+    content?: boolean
+    byId?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["scriptRevision"]>
+
+  export type ScriptRevisionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    docId?: boolean
+    rev?: boolean
+    kind?: boolean
+    title?: boolean
+    content?: boolean
+    byId?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["scriptRevision"]>
+
+  export type ScriptRevisionSelectScalar = {
+    id?: boolean
+    docId?: boolean
+    rev?: boolean
+    kind?: boolean
+    title?: boolean
+    content?: boolean
+    byId?: boolean
+    createdAt?: boolean
+  }
+
+  export type ScriptRevisionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "docId" | "rev" | "kind" | "title" | "content" | "byId" | "createdAt", ExtArgs["result"]["scriptRevision"]>
+
+  export type $ScriptRevisionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ScriptRevision"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      docId: string
+      rev: number
+      kind: string
+      title: string
+      content: Prisma.JsonValue
+      byId: string
+      createdAt: Date
+    }, ExtArgs["result"]["scriptRevision"]>
+    composites: {}
+  }
+
+  type ScriptRevisionGetPayload<S extends boolean | null | undefined | ScriptRevisionDefaultArgs> = $Result.GetResult<Prisma.$ScriptRevisionPayload, S>
+
+  type ScriptRevisionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ScriptRevisionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ScriptRevisionCountAggregateInputType | true
+    }
+
+  export interface ScriptRevisionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ScriptRevision'], meta: { name: 'ScriptRevision' } }
+    /**
+     * Find zero or one ScriptRevision that matches the filter.
+     * @param {ScriptRevisionFindUniqueArgs} args - Arguments to find a ScriptRevision
+     * @example
+     * // Get one ScriptRevision
+     * const scriptRevision = await prisma.scriptRevision.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ScriptRevisionFindUniqueArgs>(args: SelectSubset<T, ScriptRevisionFindUniqueArgs<ExtArgs>>): Prisma__ScriptRevisionClient<$Result.GetResult<Prisma.$ScriptRevisionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ScriptRevision that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ScriptRevisionFindUniqueOrThrowArgs} args - Arguments to find a ScriptRevision
+     * @example
+     * // Get one ScriptRevision
+     * const scriptRevision = await prisma.scriptRevision.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ScriptRevisionFindUniqueOrThrowArgs>(args: SelectSubset<T, ScriptRevisionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ScriptRevisionClient<$Result.GetResult<Prisma.$ScriptRevisionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScriptRevision that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptRevisionFindFirstArgs} args - Arguments to find a ScriptRevision
+     * @example
+     * // Get one ScriptRevision
+     * const scriptRevision = await prisma.scriptRevision.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ScriptRevisionFindFirstArgs>(args?: SelectSubset<T, ScriptRevisionFindFirstArgs<ExtArgs>>): Prisma__ScriptRevisionClient<$Result.GetResult<Prisma.$ScriptRevisionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScriptRevision that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptRevisionFindFirstOrThrowArgs} args - Arguments to find a ScriptRevision
+     * @example
+     * // Get one ScriptRevision
+     * const scriptRevision = await prisma.scriptRevision.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ScriptRevisionFindFirstOrThrowArgs>(args?: SelectSubset<T, ScriptRevisionFindFirstOrThrowArgs<ExtArgs>>): Prisma__ScriptRevisionClient<$Result.GetResult<Prisma.$ScriptRevisionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ScriptRevisions that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptRevisionFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ScriptRevisions
+     * const scriptRevisions = await prisma.scriptRevision.findMany()
+     * 
+     * // Get first 10 ScriptRevisions
+     * const scriptRevisions = await prisma.scriptRevision.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const scriptRevisionWithIdOnly = await prisma.scriptRevision.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ScriptRevisionFindManyArgs>(args?: SelectSubset<T, ScriptRevisionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScriptRevisionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ScriptRevision.
+     * @param {ScriptRevisionCreateArgs} args - Arguments to create a ScriptRevision.
+     * @example
+     * // Create one ScriptRevision
+     * const ScriptRevision = await prisma.scriptRevision.create({
+     *   data: {
+     *     // ... data to create a ScriptRevision
+     *   }
+     * })
+     * 
+     */
+    create<T extends ScriptRevisionCreateArgs>(args: SelectSubset<T, ScriptRevisionCreateArgs<ExtArgs>>): Prisma__ScriptRevisionClient<$Result.GetResult<Prisma.$ScriptRevisionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ScriptRevisions.
+     * @param {ScriptRevisionCreateManyArgs} args - Arguments to create many ScriptRevisions.
+     * @example
+     * // Create many ScriptRevisions
+     * const scriptRevision = await prisma.scriptRevision.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ScriptRevisionCreateManyArgs>(args?: SelectSubset<T, ScriptRevisionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ScriptRevisions and returns the data saved in the database.
+     * @param {ScriptRevisionCreateManyAndReturnArgs} args - Arguments to create many ScriptRevisions.
+     * @example
+     * // Create many ScriptRevisions
+     * const scriptRevision = await prisma.scriptRevision.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ScriptRevisions and only return the `id`
+     * const scriptRevisionWithIdOnly = await prisma.scriptRevision.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ScriptRevisionCreateManyAndReturnArgs>(args?: SelectSubset<T, ScriptRevisionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScriptRevisionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ScriptRevision.
+     * @param {ScriptRevisionDeleteArgs} args - Arguments to delete one ScriptRevision.
+     * @example
+     * // Delete one ScriptRevision
+     * const ScriptRevision = await prisma.scriptRevision.delete({
+     *   where: {
+     *     // ... filter to delete one ScriptRevision
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ScriptRevisionDeleteArgs>(args: SelectSubset<T, ScriptRevisionDeleteArgs<ExtArgs>>): Prisma__ScriptRevisionClient<$Result.GetResult<Prisma.$ScriptRevisionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ScriptRevision.
+     * @param {ScriptRevisionUpdateArgs} args - Arguments to update one ScriptRevision.
+     * @example
+     * // Update one ScriptRevision
+     * const scriptRevision = await prisma.scriptRevision.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ScriptRevisionUpdateArgs>(args: SelectSubset<T, ScriptRevisionUpdateArgs<ExtArgs>>): Prisma__ScriptRevisionClient<$Result.GetResult<Prisma.$ScriptRevisionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ScriptRevisions.
+     * @param {ScriptRevisionDeleteManyArgs} args - Arguments to filter ScriptRevisions to delete.
+     * @example
+     * // Delete a few ScriptRevisions
+     * const { count } = await prisma.scriptRevision.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ScriptRevisionDeleteManyArgs>(args?: SelectSubset<T, ScriptRevisionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScriptRevisions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptRevisionUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ScriptRevisions
+     * const scriptRevision = await prisma.scriptRevision.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ScriptRevisionUpdateManyArgs>(args: SelectSubset<T, ScriptRevisionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScriptRevisions and returns the data updated in the database.
+     * @param {ScriptRevisionUpdateManyAndReturnArgs} args - Arguments to update many ScriptRevisions.
+     * @example
+     * // Update many ScriptRevisions
+     * const scriptRevision = await prisma.scriptRevision.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ScriptRevisions and only return the `id`
+     * const scriptRevisionWithIdOnly = await prisma.scriptRevision.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ScriptRevisionUpdateManyAndReturnArgs>(args: SelectSubset<T, ScriptRevisionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScriptRevisionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ScriptRevision.
+     * @param {ScriptRevisionUpsertArgs} args - Arguments to update or create a ScriptRevision.
+     * @example
+     * // Update or create a ScriptRevision
+     * const scriptRevision = await prisma.scriptRevision.upsert({
+     *   create: {
+     *     // ... data to create a ScriptRevision
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ScriptRevision we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ScriptRevisionUpsertArgs>(args: SelectSubset<T, ScriptRevisionUpsertArgs<ExtArgs>>): Prisma__ScriptRevisionClient<$Result.GetResult<Prisma.$ScriptRevisionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ScriptRevisions.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptRevisionCountArgs} args - Arguments to filter ScriptRevisions to count.
+     * @example
+     * // Count the number of ScriptRevisions
+     * const count = await prisma.scriptRevision.count({
+     *   where: {
+     *     // ... the filter for the ScriptRevisions we want to count
+     *   }
+     * })
+    **/
+    count<T extends ScriptRevisionCountArgs>(
+      args?: Subset<T, ScriptRevisionCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ScriptRevisionCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ScriptRevision.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptRevisionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ScriptRevisionAggregateArgs>(args: Subset<T, ScriptRevisionAggregateArgs>): Prisma.PrismaPromise<GetScriptRevisionAggregateType<T>>
+
+    /**
+     * Group by ScriptRevision.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptRevisionGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ScriptRevisionGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ScriptRevisionGroupByArgs['orderBy'] }
+        : { orderBy?: ScriptRevisionGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ScriptRevisionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetScriptRevisionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ScriptRevision model
+   */
+  readonly fields: ScriptRevisionFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ScriptRevision.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ScriptRevisionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ScriptRevision model
+   */
+  interface ScriptRevisionFieldRefs {
+    readonly id: FieldRef<"ScriptRevision", 'String'>
+    readonly docId: FieldRef<"ScriptRevision", 'String'>
+    readonly rev: FieldRef<"ScriptRevision", 'Int'>
+    readonly kind: FieldRef<"ScriptRevision", 'String'>
+    readonly title: FieldRef<"ScriptRevision", 'String'>
+    readonly content: FieldRef<"ScriptRevision", 'Json'>
+    readonly byId: FieldRef<"ScriptRevision", 'String'>
+    readonly createdAt: FieldRef<"ScriptRevision", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ScriptRevision findUnique
+   */
+  export type ScriptRevisionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptRevision
+     */
+    select?: ScriptRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptRevision
+     */
+    omit?: ScriptRevisionOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptRevision to fetch.
+     */
+    where: ScriptRevisionWhereUniqueInput
+  }
+
+  /**
+   * ScriptRevision findUniqueOrThrow
+   */
+  export type ScriptRevisionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptRevision
+     */
+    select?: ScriptRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptRevision
+     */
+    omit?: ScriptRevisionOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptRevision to fetch.
+     */
+    where: ScriptRevisionWhereUniqueInput
+  }
+
+  /**
+   * ScriptRevision findFirst
+   */
+  export type ScriptRevisionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptRevision
+     */
+    select?: ScriptRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptRevision
+     */
+    omit?: ScriptRevisionOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptRevision to fetch.
+     */
+    where?: ScriptRevisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptRevisions to fetch.
+     */
+    orderBy?: ScriptRevisionOrderByWithRelationInput | ScriptRevisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScriptRevisions.
+     */
+    cursor?: ScriptRevisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptRevisions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptRevisions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScriptRevisions.
+     */
+    distinct?: ScriptRevisionScalarFieldEnum | ScriptRevisionScalarFieldEnum[]
+  }
+
+  /**
+   * ScriptRevision findFirstOrThrow
+   */
+  export type ScriptRevisionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptRevision
+     */
+    select?: ScriptRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptRevision
+     */
+    omit?: ScriptRevisionOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptRevision to fetch.
+     */
+    where?: ScriptRevisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptRevisions to fetch.
+     */
+    orderBy?: ScriptRevisionOrderByWithRelationInput | ScriptRevisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScriptRevisions.
+     */
+    cursor?: ScriptRevisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptRevisions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptRevisions.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScriptRevisions.
+     */
+    distinct?: ScriptRevisionScalarFieldEnum | ScriptRevisionScalarFieldEnum[]
+  }
+
+  /**
+   * ScriptRevision findMany
+   */
+  export type ScriptRevisionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptRevision
+     */
+    select?: ScriptRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptRevision
+     */
+    omit?: ScriptRevisionOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptRevisions to fetch.
+     */
+    where?: ScriptRevisionWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptRevisions to fetch.
+     */
+    orderBy?: ScriptRevisionOrderByWithRelationInput | ScriptRevisionOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ScriptRevisions.
+     */
+    cursor?: ScriptRevisionWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptRevisions from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptRevisions.
+     */
+    skip?: number
+    distinct?: ScriptRevisionScalarFieldEnum | ScriptRevisionScalarFieldEnum[]
+  }
+
+  /**
+   * ScriptRevision create
+   */
+  export type ScriptRevisionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptRevision
+     */
+    select?: ScriptRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptRevision
+     */
+    omit?: ScriptRevisionOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ScriptRevision.
+     */
+    data: XOR<ScriptRevisionCreateInput, ScriptRevisionUncheckedCreateInput>
+  }
+
+  /**
+   * ScriptRevision createMany
+   */
+  export type ScriptRevisionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ScriptRevisions.
+     */
+    data: ScriptRevisionCreateManyInput | ScriptRevisionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScriptRevision createManyAndReturn
+   */
+  export type ScriptRevisionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptRevision
+     */
+    select?: ScriptRevisionSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptRevision
+     */
+    omit?: ScriptRevisionOmit<ExtArgs> | null
+    /**
+     * The data used to create many ScriptRevisions.
+     */
+    data: ScriptRevisionCreateManyInput | ScriptRevisionCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScriptRevision update
+   */
+  export type ScriptRevisionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptRevision
+     */
+    select?: ScriptRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptRevision
+     */
+    omit?: ScriptRevisionOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ScriptRevision.
+     */
+    data: XOR<ScriptRevisionUpdateInput, ScriptRevisionUncheckedUpdateInput>
+    /**
+     * Choose, which ScriptRevision to update.
+     */
+    where: ScriptRevisionWhereUniqueInput
+  }
+
+  /**
+   * ScriptRevision updateMany
+   */
+  export type ScriptRevisionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ScriptRevisions.
+     */
+    data: XOR<ScriptRevisionUpdateManyMutationInput, ScriptRevisionUncheckedUpdateManyInput>
+    /**
+     * Filter which ScriptRevisions to update
+     */
+    where?: ScriptRevisionWhereInput
+    /**
+     * Limit how many ScriptRevisions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScriptRevision updateManyAndReturn
+   */
+  export type ScriptRevisionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptRevision
+     */
+    select?: ScriptRevisionSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptRevision
+     */
+    omit?: ScriptRevisionOmit<ExtArgs> | null
+    /**
+     * The data used to update ScriptRevisions.
+     */
+    data: XOR<ScriptRevisionUpdateManyMutationInput, ScriptRevisionUncheckedUpdateManyInput>
+    /**
+     * Filter which ScriptRevisions to update
+     */
+    where?: ScriptRevisionWhereInput
+    /**
+     * Limit how many ScriptRevisions to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScriptRevision upsert
+   */
+  export type ScriptRevisionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptRevision
+     */
+    select?: ScriptRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptRevision
+     */
+    omit?: ScriptRevisionOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ScriptRevision to update in case it exists.
+     */
+    where: ScriptRevisionWhereUniqueInput
+    /**
+     * In case the ScriptRevision found by the `where` argument doesn't exist, create a new ScriptRevision with this data.
+     */
+    create: XOR<ScriptRevisionCreateInput, ScriptRevisionUncheckedCreateInput>
+    /**
+     * In case the ScriptRevision was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ScriptRevisionUpdateInput, ScriptRevisionUncheckedUpdateInput>
+  }
+
+  /**
+   * ScriptRevision delete
+   */
+  export type ScriptRevisionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptRevision
+     */
+    select?: ScriptRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptRevision
+     */
+    omit?: ScriptRevisionOmit<ExtArgs> | null
+    /**
+     * Filter which ScriptRevision to delete.
+     */
+    where: ScriptRevisionWhereUniqueInput
+  }
+
+  /**
+   * ScriptRevision deleteMany
+   */
+  export type ScriptRevisionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScriptRevisions to delete
+     */
+    where?: ScriptRevisionWhereInput
+    /**
+     * Limit how many ScriptRevisions to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScriptRevision without action
+   */
+  export type ScriptRevisionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptRevision
+     */
+    select?: ScriptRevisionSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptRevision
+     */
+    omit?: ScriptRevisionOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ScriptComment
+   */
+
+  export type AggregateScriptComment = {
+    _count: ScriptCommentCountAggregateOutputType | null
+    _min: ScriptCommentMinAggregateOutputType | null
+    _max: ScriptCommentMaxAggregateOutputType | null
+  }
+
+  export type ScriptCommentMinAggregateOutputType = {
+    id: string | null
+    docId: string | null
+    byId: string | null
+    body: string | null
+    quote: string | null
+    resolvedAt: Date | null
+    resolvedById: string | null
+    createdAt: Date | null
+  }
+
+  export type ScriptCommentMaxAggregateOutputType = {
+    id: string | null
+    docId: string | null
+    byId: string | null
+    body: string | null
+    quote: string | null
+    resolvedAt: Date | null
+    resolvedById: string | null
+    createdAt: Date | null
+  }
+
+  export type ScriptCommentCountAggregateOutputType = {
+    id: number
+    docId: number
+    byId: number
+    body: number
+    quote: number
+    resolvedAt: number
+    resolvedById: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ScriptCommentMinAggregateInputType = {
+    id?: true
+    docId?: true
+    byId?: true
+    body?: true
+    quote?: true
+    resolvedAt?: true
+    resolvedById?: true
+    createdAt?: true
+  }
+
+  export type ScriptCommentMaxAggregateInputType = {
+    id?: true
+    docId?: true
+    byId?: true
+    body?: true
+    quote?: true
+    resolvedAt?: true
+    resolvedById?: true
+    createdAt?: true
+  }
+
+  export type ScriptCommentCountAggregateInputType = {
+    id?: true
+    docId?: true
+    byId?: true
+    body?: true
+    quote?: true
+    resolvedAt?: true
+    resolvedById?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ScriptCommentAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScriptComment to aggregate.
+     */
+    where?: ScriptCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptComments to fetch.
+     */
+    orderBy?: ScriptCommentOrderByWithRelationInput | ScriptCommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ScriptCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ScriptComments
+    **/
+    _count?: true | ScriptCommentCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ScriptCommentMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ScriptCommentMaxAggregateInputType
+  }
+
+  export type GetScriptCommentAggregateType<T extends ScriptCommentAggregateArgs> = {
+        [P in keyof T & keyof AggregateScriptComment]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateScriptComment[P]>
+      : GetScalarType<T[P], AggregateScriptComment[P]>
+  }
+
+
+
+
+  export type ScriptCommentGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScriptCommentWhereInput
+    orderBy?: ScriptCommentOrderByWithAggregationInput | ScriptCommentOrderByWithAggregationInput[]
+    by: ScriptCommentScalarFieldEnum[] | ScriptCommentScalarFieldEnum
+    having?: ScriptCommentScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ScriptCommentCountAggregateInputType | true
+    _min?: ScriptCommentMinAggregateInputType
+    _max?: ScriptCommentMaxAggregateInputType
+  }
+
+  export type ScriptCommentGroupByOutputType = {
+    id: string
+    docId: string
+    byId: string
+    body: string
+    quote: string | null
+    resolvedAt: Date | null
+    resolvedById: string | null
+    createdAt: Date
+    _count: ScriptCommentCountAggregateOutputType | null
+    _min: ScriptCommentMinAggregateOutputType | null
+    _max: ScriptCommentMaxAggregateOutputType | null
+  }
+
+  type GetScriptCommentGroupByPayload<T extends ScriptCommentGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ScriptCommentGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ScriptCommentGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ScriptCommentGroupByOutputType[P]>
+            : GetScalarType<T[P], ScriptCommentGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ScriptCommentSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    docId?: boolean
+    byId?: boolean
+    body?: boolean
+    quote?: boolean
+    resolvedAt?: boolean
+    resolvedById?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["scriptComment"]>
+
+  export type ScriptCommentSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    docId?: boolean
+    byId?: boolean
+    body?: boolean
+    quote?: boolean
+    resolvedAt?: boolean
+    resolvedById?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["scriptComment"]>
+
+  export type ScriptCommentSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    docId?: boolean
+    byId?: boolean
+    body?: boolean
+    quote?: boolean
+    resolvedAt?: boolean
+    resolvedById?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["scriptComment"]>
+
+  export type ScriptCommentSelectScalar = {
+    id?: boolean
+    docId?: boolean
+    byId?: boolean
+    body?: boolean
+    quote?: boolean
+    resolvedAt?: boolean
+    resolvedById?: boolean
+    createdAt?: boolean
+  }
+
+  export type ScriptCommentOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "docId" | "byId" | "body" | "quote" | "resolvedAt" | "resolvedById" | "createdAt", ExtArgs["result"]["scriptComment"]>
+
+  export type $ScriptCommentPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ScriptComment"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      docId: string
+      byId: string
+      body: string
+      quote: string | null
+      resolvedAt: Date | null
+      resolvedById: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["scriptComment"]>
+    composites: {}
+  }
+
+  type ScriptCommentGetPayload<S extends boolean | null | undefined | ScriptCommentDefaultArgs> = $Result.GetResult<Prisma.$ScriptCommentPayload, S>
+
+  type ScriptCommentCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ScriptCommentFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ScriptCommentCountAggregateInputType | true
+    }
+
+  export interface ScriptCommentDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ScriptComment'], meta: { name: 'ScriptComment' } }
+    /**
+     * Find zero or one ScriptComment that matches the filter.
+     * @param {ScriptCommentFindUniqueArgs} args - Arguments to find a ScriptComment
+     * @example
+     * // Get one ScriptComment
+     * const scriptComment = await prisma.scriptComment.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ScriptCommentFindUniqueArgs>(args: SelectSubset<T, ScriptCommentFindUniqueArgs<ExtArgs>>): Prisma__ScriptCommentClient<$Result.GetResult<Prisma.$ScriptCommentPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ScriptComment that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ScriptCommentFindUniqueOrThrowArgs} args - Arguments to find a ScriptComment
+     * @example
+     * // Get one ScriptComment
+     * const scriptComment = await prisma.scriptComment.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ScriptCommentFindUniqueOrThrowArgs>(args: SelectSubset<T, ScriptCommentFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ScriptCommentClient<$Result.GetResult<Prisma.$ScriptCommentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScriptComment that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptCommentFindFirstArgs} args - Arguments to find a ScriptComment
+     * @example
+     * // Get one ScriptComment
+     * const scriptComment = await prisma.scriptComment.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ScriptCommentFindFirstArgs>(args?: SelectSubset<T, ScriptCommentFindFirstArgs<ExtArgs>>): Prisma__ScriptCommentClient<$Result.GetResult<Prisma.$ScriptCommentPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScriptComment that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptCommentFindFirstOrThrowArgs} args - Arguments to find a ScriptComment
+     * @example
+     * // Get one ScriptComment
+     * const scriptComment = await prisma.scriptComment.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ScriptCommentFindFirstOrThrowArgs>(args?: SelectSubset<T, ScriptCommentFindFirstOrThrowArgs<ExtArgs>>): Prisma__ScriptCommentClient<$Result.GetResult<Prisma.$ScriptCommentPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ScriptComments that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptCommentFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ScriptComments
+     * const scriptComments = await prisma.scriptComment.findMany()
+     * 
+     * // Get first 10 ScriptComments
+     * const scriptComments = await prisma.scriptComment.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const scriptCommentWithIdOnly = await prisma.scriptComment.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ScriptCommentFindManyArgs>(args?: SelectSubset<T, ScriptCommentFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScriptCommentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ScriptComment.
+     * @param {ScriptCommentCreateArgs} args - Arguments to create a ScriptComment.
+     * @example
+     * // Create one ScriptComment
+     * const ScriptComment = await prisma.scriptComment.create({
+     *   data: {
+     *     // ... data to create a ScriptComment
+     *   }
+     * })
+     * 
+     */
+    create<T extends ScriptCommentCreateArgs>(args: SelectSubset<T, ScriptCommentCreateArgs<ExtArgs>>): Prisma__ScriptCommentClient<$Result.GetResult<Prisma.$ScriptCommentPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ScriptComments.
+     * @param {ScriptCommentCreateManyArgs} args - Arguments to create many ScriptComments.
+     * @example
+     * // Create many ScriptComments
+     * const scriptComment = await prisma.scriptComment.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ScriptCommentCreateManyArgs>(args?: SelectSubset<T, ScriptCommentCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ScriptComments and returns the data saved in the database.
+     * @param {ScriptCommentCreateManyAndReturnArgs} args - Arguments to create many ScriptComments.
+     * @example
+     * // Create many ScriptComments
+     * const scriptComment = await prisma.scriptComment.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ScriptComments and only return the `id`
+     * const scriptCommentWithIdOnly = await prisma.scriptComment.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ScriptCommentCreateManyAndReturnArgs>(args?: SelectSubset<T, ScriptCommentCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScriptCommentPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ScriptComment.
+     * @param {ScriptCommentDeleteArgs} args - Arguments to delete one ScriptComment.
+     * @example
+     * // Delete one ScriptComment
+     * const ScriptComment = await prisma.scriptComment.delete({
+     *   where: {
+     *     // ... filter to delete one ScriptComment
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ScriptCommentDeleteArgs>(args: SelectSubset<T, ScriptCommentDeleteArgs<ExtArgs>>): Prisma__ScriptCommentClient<$Result.GetResult<Prisma.$ScriptCommentPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ScriptComment.
+     * @param {ScriptCommentUpdateArgs} args - Arguments to update one ScriptComment.
+     * @example
+     * // Update one ScriptComment
+     * const scriptComment = await prisma.scriptComment.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ScriptCommentUpdateArgs>(args: SelectSubset<T, ScriptCommentUpdateArgs<ExtArgs>>): Prisma__ScriptCommentClient<$Result.GetResult<Prisma.$ScriptCommentPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ScriptComments.
+     * @param {ScriptCommentDeleteManyArgs} args - Arguments to filter ScriptComments to delete.
+     * @example
+     * // Delete a few ScriptComments
+     * const { count } = await prisma.scriptComment.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ScriptCommentDeleteManyArgs>(args?: SelectSubset<T, ScriptCommentDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScriptComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptCommentUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ScriptComments
+     * const scriptComment = await prisma.scriptComment.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ScriptCommentUpdateManyArgs>(args: SelectSubset<T, ScriptCommentUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScriptComments and returns the data updated in the database.
+     * @param {ScriptCommentUpdateManyAndReturnArgs} args - Arguments to update many ScriptComments.
+     * @example
+     * // Update many ScriptComments
+     * const scriptComment = await prisma.scriptComment.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ScriptComments and only return the `id`
+     * const scriptCommentWithIdOnly = await prisma.scriptComment.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ScriptCommentUpdateManyAndReturnArgs>(args: SelectSubset<T, ScriptCommentUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScriptCommentPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ScriptComment.
+     * @param {ScriptCommentUpsertArgs} args - Arguments to update or create a ScriptComment.
+     * @example
+     * // Update or create a ScriptComment
+     * const scriptComment = await prisma.scriptComment.upsert({
+     *   create: {
+     *     // ... data to create a ScriptComment
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ScriptComment we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ScriptCommentUpsertArgs>(args: SelectSubset<T, ScriptCommentUpsertArgs<ExtArgs>>): Prisma__ScriptCommentClient<$Result.GetResult<Prisma.$ScriptCommentPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ScriptComments.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptCommentCountArgs} args - Arguments to filter ScriptComments to count.
+     * @example
+     * // Count the number of ScriptComments
+     * const count = await prisma.scriptComment.count({
+     *   where: {
+     *     // ... the filter for the ScriptComments we want to count
+     *   }
+     * })
+    **/
+    count<T extends ScriptCommentCountArgs>(
+      args?: Subset<T, ScriptCommentCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ScriptCommentCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ScriptComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptCommentAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ScriptCommentAggregateArgs>(args: Subset<T, ScriptCommentAggregateArgs>): Prisma.PrismaPromise<GetScriptCommentAggregateType<T>>
+
+    /**
+     * Group by ScriptComment.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptCommentGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ScriptCommentGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ScriptCommentGroupByArgs['orderBy'] }
+        : { orderBy?: ScriptCommentGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ScriptCommentGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetScriptCommentGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ScriptComment model
+   */
+  readonly fields: ScriptCommentFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ScriptComment.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ScriptCommentClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ScriptComment model
+   */
+  interface ScriptCommentFieldRefs {
+    readonly id: FieldRef<"ScriptComment", 'String'>
+    readonly docId: FieldRef<"ScriptComment", 'String'>
+    readonly byId: FieldRef<"ScriptComment", 'String'>
+    readonly body: FieldRef<"ScriptComment", 'String'>
+    readonly quote: FieldRef<"ScriptComment", 'String'>
+    readonly resolvedAt: FieldRef<"ScriptComment", 'DateTime'>
+    readonly resolvedById: FieldRef<"ScriptComment", 'String'>
+    readonly createdAt: FieldRef<"ScriptComment", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ScriptComment findUnique
+   */
+  export type ScriptCommentFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptComment
+     */
+    select?: ScriptCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptComment
+     */
+    omit?: ScriptCommentOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptComment to fetch.
+     */
+    where: ScriptCommentWhereUniqueInput
+  }
+
+  /**
+   * ScriptComment findUniqueOrThrow
+   */
+  export type ScriptCommentFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptComment
+     */
+    select?: ScriptCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptComment
+     */
+    omit?: ScriptCommentOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptComment to fetch.
+     */
+    where: ScriptCommentWhereUniqueInput
+  }
+
+  /**
+   * ScriptComment findFirst
+   */
+  export type ScriptCommentFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptComment
+     */
+    select?: ScriptCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptComment
+     */
+    omit?: ScriptCommentOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptComment to fetch.
+     */
+    where?: ScriptCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptComments to fetch.
+     */
+    orderBy?: ScriptCommentOrderByWithRelationInput | ScriptCommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScriptComments.
+     */
+    cursor?: ScriptCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScriptComments.
+     */
+    distinct?: ScriptCommentScalarFieldEnum | ScriptCommentScalarFieldEnum[]
+  }
+
+  /**
+   * ScriptComment findFirstOrThrow
+   */
+  export type ScriptCommentFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptComment
+     */
+    select?: ScriptCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptComment
+     */
+    omit?: ScriptCommentOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptComment to fetch.
+     */
+    where?: ScriptCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptComments to fetch.
+     */
+    orderBy?: ScriptCommentOrderByWithRelationInput | ScriptCommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScriptComments.
+     */
+    cursor?: ScriptCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptComments.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScriptComments.
+     */
+    distinct?: ScriptCommentScalarFieldEnum | ScriptCommentScalarFieldEnum[]
+  }
+
+  /**
+   * ScriptComment findMany
+   */
+  export type ScriptCommentFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptComment
+     */
+    select?: ScriptCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptComment
+     */
+    omit?: ScriptCommentOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptComments to fetch.
+     */
+    where?: ScriptCommentWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptComments to fetch.
+     */
+    orderBy?: ScriptCommentOrderByWithRelationInput | ScriptCommentOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ScriptComments.
+     */
+    cursor?: ScriptCommentWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptComments from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptComments.
+     */
+    skip?: number
+    distinct?: ScriptCommentScalarFieldEnum | ScriptCommentScalarFieldEnum[]
+  }
+
+  /**
+   * ScriptComment create
+   */
+  export type ScriptCommentCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptComment
+     */
+    select?: ScriptCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptComment
+     */
+    omit?: ScriptCommentOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ScriptComment.
+     */
+    data: XOR<ScriptCommentCreateInput, ScriptCommentUncheckedCreateInput>
+  }
+
+  /**
+   * ScriptComment createMany
+   */
+  export type ScriptCommentCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ScriptComments.
+     */
+    data: ScriptCommentCreateManyInput | ScriptCommentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScriptComment createManyAndReturn
+   */
+  export type ScriptCommentCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptComment
+     */
+    select?: ScriptCommentSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptComment
+     */
+    omit?: ScriptCommentOmit<ExtArgs> | null
+    /**
+     * The data used to create many ScriptComments.
+     */
+    data: ScriptCommentCreateManyInput | ScriptCommentCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScriptComment update
+   */
+  export type ScriptCommentUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptComment
+     */
+    select?: ScriptCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptComment
+     */
+    omit?: ScriptCommentOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ScriptComment.
+     */
+    data: XOR<ScriptCommentUpdateInput, ScriptCommentUncheckedUpdateInput>
+    /**
+     * Choose, which ScriptComment to update.
+     */
+    where: ScriptCommentWhereUniqueInput
+  }
+
+  /**
+   * ScriptComment updateMany
+   */
+  export type ScriptCommentUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ScriptComments.
+     */
+    data: XOR<ScriptCommentUpdateManyMutationInput, ScriptCommentUncheckedUpdateManyInput>
+    /**
+     * Filter which ScriptComments to update
+     */
+    where?: ScriptCommentWhereInput
+    /**
+     * Limit how many ScriptComments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScriptComment updateManyAndReturn
+   */
+  export type ScriptCommentUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptComment
+     */
+    select?: ScriptCommentSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptComment
+     */
+    omit?: ScriptCommentOmit<ExtArgs> | null
+    /**
+     * The data used to update ScriptComments.
+     */
+    data: XOR<ScriptCommentUpdateManyMutationInput, ScriptCommentUncheckedUpdateManyInput>
+    /**
+     * Filter which ScriptComments to update
+     */
+    where?: ScriptCommentWhereInput
+    /**
+     * Limit how many ScriptComments to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScriptComment upsert
+   */
+  export type ScriptCommentUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptComment
+     */
+    select?: ScriptCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptComment
+     */
+    omit?: ScriptCommentOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ScriptComment to update in case it exists.
+     */
+    where: ScriptCommentWhereUniqueInput
+    /**
+     * In case the ScriptComment found by the `where` argument doesn't exist, create a new ScriptComment with this data.
+     */
+    create: XOR<ScriptCommentCreateInput, ScriptCommentUncheckedCreateInput>
+    /**
+     * In case the ScriptComment was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ScriptCommentUpdateInput, ScriptCommentUncheckedUpdateInput>
+  }
+
+  /**
+   * ScriptComment delete
+   */
+  export type ScriptCommentDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptComment
+     */
+    select?: ScriptCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptComment
+     */
+    omit?: ScriptCommentOmit<ExtArgs> | null
+    /**
+     * Filter which ScriptComment to delete.
+     */
+    where: ScriptCommentWhereUniqueInput
+  }
+
+  /**
+   * ScriptComment deleteMany
+   */
+  export type ScriptCommentDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScriptComments to delete
+     */
+    where?: ScriptCommentWhereInput
+    /**
+     * Limit how many ScriptComments to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScriptComment without action
+   */
+  export type ScriptCommentDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptComment
+     */
+    select?: ScriptCommentSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptComment
+     */
+    omit?: ScriptCommentOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model ScriptReview
+   */
+
+  export type AggregateScriptReview = {
+    _count: ScriptReviewCountAggregateOutputType | null
+    _avg: ScriptReviewAvgAggregateOutputType | null
+    _sum: ScriptReviewSumAggregateOutputType | null
+    _min: ScriptReviewMinAggregateOutputType | null
+    _max: ScriptReviewMaxAggregateOutputType | null
+  }
+
+  export type ScriptReviewAvgAggregateOutputType = {
+    rev: number | null
+  }
+
+  export type ScriptReviewSumAggregateOutputType = {
+    rev: number | null
+  }
+
+  export type ScriptReviewMinAggregateOutputType = {
+    id: string | null
+    docId: string | null
+    rev: number | null
+    byId: string | null
+    decision: string | null
+    note: string | null
+    exc: string | null
+    createdAt: Date | null
+  }
+
+  export type ScriptReviewMaxAggregateOutputType = {
+    id: string | null
+    docId: string | null
+    rev: number | null
+    byId: string | null
+    decision: string | null
+    note: string | null
+    exc: string | null
+    createdAt: Date | null
+  }
+
+  export type ScriptReviewCountAggregateOutputType = {
+    id: number
+    docId: number
+    rev: number
+    byId: number
+    decision: number
+    note: number
+    exc: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type ScriptReviewAvgAggregateInputType = {
+    rev?: true
+  }
+
+  export type ScriptReviewSumAggregateInputType = {
+    rev?: true
+  }
+
+  export type ScriptReviewMinAggregateInputType = {
+    id?: true
+    docId?: true
+    rev?: true
+    byId?: true
+    decision?: true
+    note?: true
+    exc?: true
+    createdAt?: true
+  }
+
+  export type ScriptReviewMaxAggregateInputType = {
+    id?: true
+    docId?: true
+    rev?: true
+    byId?: true
+    decision?: true
+    note?: true
+    exc?: true
+    createdAt?: true
+  }
+
+  export type ScriptReviewCountAggregateInputType = {
+    id?: true
+    docId?: true
+    rev?: true
+    byId?: true
+    decision?: true
+    note?: true
+    exc?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type ScriptReviewAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScriptReview to aggregate.
+     */
+    where?: ScriptReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptReviews to fetch.
+     */
+    orderBy?: ScriptReviewOrderByWithRelationInput | ScriptReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: ScriptReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned ScriptReviews
+    **/
+    _count?: true | ScriptReviewCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: ScriptReviewAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: ScriptReviewSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: ScriptReviewMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: ScriptReviewMaxAggregateInputType
+  }
+
+  export type GetScriptReviewAggregateType<T extends ScriptReviewAggregateArgs> = {
+        [P in keyof T & keyof AggregateScriptReview]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateScriptReview[P]>
+      : GetScalarType<T[P], AggregateScriptReview[P]>
+  }
+
+
+
+
+  export type ScriptReviewGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ScriptReviewWhereInput
+    orderBy?: ScriptReviewOrderByWithAggregationInput | ScriptReviewOrderByWithAggregationInput[]
+    by: ScriptReviewScalarFieldEnum[] | ScriptReviewScalarFieldEnum
+    having?: ScriptReviewScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: ScriptReviewCountAggregateInputType | true
+    _avg?: ScriptReviewAvgAggregateInputType
+    _sum?: ScriptReviewSumAggregateInputType
+    _min?: ScriptReviewMinAggregateInputType
+    _max?: ScriptReviewMaxAggregateInputType
+  }
+
+  export type ScriptReviewGroupByOutputType = {
+    id: string
+    docId: string
+    rev: number
+    byId: string
+    decision: string
+    note: string | null
+    exc: string | null
+    createdAt: Date
+    _count: ScriptReviewCountAggregateOutputType | null
+    _avg: ScriptReviewAvgAggregateOutputType | null
+    _sum: ScriptReviewSumAggregateOutputType | null
+    _min: ScriptReviewMinAggregateOutputType | null
+    _max: ScriptReviewMaxAggregateOutputType | null
+  }
+
+  type GetScriptReviewGroupByPayload<T extends ScriptReviewGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<ScriptReviewGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof ScriptReviewGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], ScriptReviewGroupByOutputType[P]>
+            : GetScalarType<T[P], ScriptReviewGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type ScriptReviewSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    docId?: boolean
+    rev?: boolean
+    byId?: boolean
+    decision?: boolean
+    note?: boolean
+    exc?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["scriptReview"]>
+
+  export type ScriptReviewSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    docId?: boolean
+    rev?: boolean
+    byId?: boolean
+    decision?: boolean
+    note?: boolean
+    exc?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["scriptReview"]>
+
+  export type ScriptReviewSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    docId?: boolean
+    rev?: boolean
+    byId?: boolean
+    decision?: boolean
+    note?: boolean
+    exc?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["scriptReview"]>
+
+  export type ScriptReviewSelectScalar = {
+    id?: boolean
+    docId?: boolean
+    rev?: boolean
+    byId?: boolean
+    decision?: boolean
+    note?: boolean
+    exc?: boolean
+    createdAt?: boolean
+  }
+
+  export type ScriptReviewOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "docId" | "rev" | "byId" | "decision" | "note" | "exc" | "createdAt", ExtArgs["result"]["scriptReview"]>
+
+  export type $ScriptReviewPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "ScriptReview"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      docId: string
+      rev: number
+      byId: string
+      decision: string
+      note: string | null
+      exc: string | null
+      createdAt: Date
+    }, ExtArgs["result"]["scriptReview"]>
+    composites: {}
+  }
+
+  type ScriptReviewGetPayload<S extends boolean | null | undefined | ScriptReviewDefaultArgs> = $Result.GetResult<Prisma.$ScriptReviewPayload, S>
+
+  type ScriptReviewCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<ScriptReviewFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: ScriptReviewCountAggregateInputType | true
+    }
+
+  export interface ScriptReviewDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['ScriptReview'], meta: { name: 'ScriptReview' } }
+    /**
+     * Find zero or one ScriptReview that matches the filter.
+     * @param {ScriptReviewFindUniqueArgs} args - Arguments to find a ScriptReview
+     * @example
+     * // Get one ScriptReview
+     * const scriptReview = await prisma.scriptReview.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends ScriptReviewFindUniqueArgs>(args: SelectSubset<T, ScriptReviewFindUniqueArgs<ExtArgs>>): Prisma__ScriptReviewClient<$Result.GetResult<Prisma.$ScriptReviewPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one ScriptReview that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {ScriptReviewFindUniqueOrThrowArgs} args - Arguments to find a ScriptReview
+     * @example
+     * // Get one ScriptReview
+     * const scriptReview = await prisma.scriptReview.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends ScriptReviewFindUniqueOrThrowArgs>(args: SelectSubset<T, ScriptReviewFindUniqueOrThrowArgs<ExtArgs>>): Prisma__ScriptReviewClient<$Result.GetResult<Prisma.$ScriptReviewPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScriptReview that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptReviewFindFirstArgs} args - Arguments to find a ScriptReview
+     * @example
+     * // Get one ScriptReview
+     * const scriptReview = await prisma.scriptReview.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends ScriptReviewFindFirstArgs>(args?: SelectSubset<T, ScriptReviewFindFirstArgs<ExtArgs>>): Prisma__ScriptReviewClient<$Result.GetResult<Prisma.$ScriptReviewPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first ScriptReview that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptReviewFindFirstOrThrowArgs} args - Arguments to find a ScriptReview
+     * @example
+     * // Get one ScriptReview
+     * const scriptReview = await prisma.scriptReview.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends ScriptReviewFindFirstOrThrowArgs>(args?: SelectSubset<T, ScriptReviewFindFirstOrThrowArgs<ExtArgs>>): Prisma__ScriptReviewClient<$Result.GetResult<Prisma.$ScriptReviewPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more ScriptReviews that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptReviewFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all ScriptReviews
+     * const scriptReviews = await prisma.scriptReview.findMany()
+     * 
+     * // Get first 10 ScriptReviews
+     * const scriptReviews = await prisma.scriptReview.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const scriptReviewWithIdOnly = await prisma.scriptReview.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends ScriptReviewFindManyArgs>(args?: SelectSubset<T, ScriptReviewFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScriptReviewPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a ScriptReview.
+     * @param {ScriptReviewCreateArgs} args - Arguments to create a ScriptReview.
+     * @example
+     * // Create one ScriptReview
+     * const ScriptReview = await prisma.scriptReview.create({
+     *   data: {
+     *     // ... data to create a ScriptReview
+     *   }
+     * })
+     * 
+     */
+    create<T extends ScriptReviewCreateArgs>(args: SelectSubset<T, ScriptReviewCreateArgs<ExtArgs>>): Prisma__ScriptReviewClient<$Result.GetResult<Prisma.$ScriptReviewPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many ScriptReviews.
+     * @param {ScriptReviewCreateManyArgs} args - Arguments to create many ScriptReviews.
+     * @example
+     * // Create many ScriptReviews
+     * const scriptReview = await prisma.scriptReview.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends ScriptReviewCreateManyArgs>(args?: SelectSubset<T, ScriptReviewCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many ScriptReviews and returns the data saved in the database.
+     * @param {ScriptReviewCreateManyAndReturnArgs} args - Arguments to create many ScriptReviews.
+     * @example
+     * // Create many ScriptReviews
+     * const scriptReview = await prisma.scriptReview.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many ScriptReviews and only return the `id`
+     * const scriptReviewWithIdOnly = await prisma.scriptReview.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends ScriptReviewCreateManyAndReturnArgs>(args?: SelectSubset<T, ScriptReviewCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScriptReviewPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a ScriptReview.
+     * @param {ScriptReviewDeleteArgs} args - Arguments to delete one ScriptReview.
+     * @example
+     * // Delete one ScriptReview
+     * const ScriptReview = await prisma.scriptReview.delete({
+     *   where: {
+     *     // ... filter to delete one ScriptReview
+     *   }
+     * })
+     * 
+     */
+    delete<T extends ScriptReviewDeleteArgs>(args: SelectSubset<T, ScriptReviewDeleteArgs<ExtArgs>>): Prisma__ScriptReviewClient<$Result.GetResult<Prisma.$ScriptReviewPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one ScriptReview.
+     * @param {ScriptReviewUpdateArgs} args - Arguments to update one ScriptReview.
+     * @example
+     * // Update one ScriptReview
+     * const scriptReview = await prisma.scriptReview.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends ScriptReviewUpdateArgs>(args: SelectSubset<T, ScriptReviewUpdateArgs<ExtArgs>>): Prisma__ScriptReviewClient<$Result.GetResult<Prisma.$ScriptReviewPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more ScriptReviews.
+     * @param {ScriptReviewDeleteManyArgs} args - Arguments to filter ScriptReviews to delete.
+     * @example
+     * // Delete a few ScriptReviews
+     * const { count } = await prisma.scriptReview.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends ScriptReviewDeleteManyArgs>(args?: SelectSubset<T, ScriptReviewDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScriptReviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptReviewUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many ScriptReviews
+     * const scriptReview = await prisma.scriptReview.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends ScriptReviewUpdateManyArgs>(args: SelectSubset<T, ScriptReviewUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more ScriptReviews and returns the data updated in the database.
+     * @param {ScriptReviewUpdateManyAndReturnArgs} args - Arguments to update many ScriptReviews.
+     * @example
+     * // Update many ScriptReviews
+     * const scriptReview = await prisma.scriptReview.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more ScriptReviews and only return the `id`
+     * const scriptReviewWithIdOnly = await prisma.scriptReview.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends ScriptReviewUpdateManyAndReturnArgs>(args: SelectSubset<T, ScriptReviewUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ScriptReviewPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one ScriptReview.
+     * @param {ScriptReviewUpsertArgs} args - Arguments to update or create a ScriptReview.
+     * @example
+     * // Update or create a ScriptReview
+     * const scriptReview = await prisma.scriptReview.upsert({
+     *   create: {
+     *     // ... data to create a ScriptReview
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the ScriptReview we want to update
+     *   }
+     * })
+     */
+    upsert<T extends ScriptReviewUpsertArgs>(args: SelectSubset<T, ScriptReviewUpsertArgs<ExtArgs>>): Prisma__ScriptReviewClient<$Result.GetResult<Prisma.$ScriptReviewPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of ScriptReviews.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptReviewCountArgs} args - Arguments to filter ScriptReviews to count.
+     * @example
+     * // Count the number of ScriptReviews
+     * const count = await prisma.scriptReview.count({
+     *   where: {
+     *     // ... the filter for the ScriptReviews we want to count
+     *   }
+     * })
+    **/
+    count<T extends ScriptReviewCountArgs>(
+      args?: Subset<T, ScriptReviewCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], ScriptReviewCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a ScriptReview.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptReviewAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends ScriptReviewAggregateArgs>(args: Subset<T, ScriptReviewAggregateArgs>): Prisma.PrismaPromise<GetScriptReviewAggregateType<T>>
+
+    /**
+     * Group by ScriptReview.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {ScriptReviewGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends ScriptReviewGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: ScriptReviewGroupByArgs['orderBy'] }
+        : { orderBy?: ScriptReviewGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, ScriptReviewGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetScriptReviewGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the ScriptReview model
+   */
+  readonly fields: ScriptReviewFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for ScriptReview.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__ScriptReviewClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the ScriptReview model
+   */
+  interface ScriptReviewFieldRefs {
+    readonly id: FieldRef<"ScriptReview", 'String'>
+    readonly docId: FieldRef<"ScriptReview", 'String'>
+    readonly rev: FieldRef<"ScriptReview", 'Int'>
+    readonly byId: FieldRef<"ScriptReview", 'String'>
+    readonly decision: FieldRef<"ScriptReview", 'String'>
+    readonly note: FieldRef<"ScriptReview", 'String'>
+    readonly exc: FieldRef<"ScriptReview", 'String'>
+    readonly createdAt: FieldRef<"ScriptReview", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * ScriptReview findUnique
+   */
+  export type ScriptReviewFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptReview
+     */
+    select?: ScriptReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptReview
+     */
+    omit?: ScriptReviewOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptReview to fetch.
+     */
+    where: ScriptReviewWhereUniqueInput
+  }
+
+  /**
+   * ScriptReview findUniqueOrThrow
+   */
+  export type ScriptReviewFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptReview
+     */
+    select?: ScriptReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptReview
+     */
+    omit?: ScriptReviewOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptReview to fetch.
+     */
+    where: ScriptReviewWhereUniqueInput
+  }
+
+  /**
+   * ScriptReview findFirst
+   */
+  export type ScriptReviewFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptReview
+     */
+    select?: ScriptReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptReview
+     */
+    omit?: ScriptReviewOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptReview to fetch.
+     */
+    where?: ScriptReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptReviews to fetch.
+     */
+    orderBy?: ScriptReviewOrderByWithRelationInput | ScriptReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScriptReviews.
+     */
+    cursor?: ScriptReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScriptReviews.
+     */
+    distinct?: ScriptReviewScalarFieldEnum | ScriptReviewScalarFieldEnum[]
+  }
+
+  /**
+   * ScriptReview findFirstOrThrow
+   */
+  export type ScriptReviewFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptReview
+     */
+    select?: ScriptReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptReview
+     */
+    omit?: ScriptReviewOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptReview to fetch.
+     */
+    where?: ScriptReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptReviews to fetch.
+     */
+    orderBy?: ScriptReviewOrderByWithRelationInput | ScriptReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for ScriptReviews.
+     */
+    cursor?: ScriptReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptReviews.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of ScriptReviews.
+     */
+    distinct?: ScriptReviewScalarFieldEnum | ScriptReviewScalarFieldEnum[]
+  }
+
+  /**
+   * ScriptReview findMany
+   */
+  export type ScriptReviewFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptReview
+     */
+    select?: ScriptReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptReview
+     */
+    omit?: ScriptReviewOmit<ExtArgs> | null
+    /**
+     * Filter, which ScriptReviews to fetch.
+     */
+    where?: ScriptReviewWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of ScriptReviews to fetch.
+     */
+    orderBy?: ScriptReviewOrderByWithRelationInput | ScriptReviewOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing ScriptReviews.
+     */
+    cursor?: ScriptReviewWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` ScriptReviews from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` ScriptReviews.
+     */
+    skip?: number
+    distinct?: ScriptReviewScalarFieldEnum | ScriptReviewScalarFieldEnum[]
+  }
+
+  /**
+   * ScriptReview create
+   */
+  export type ScriptReviewCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptReview
+     */
+    select?: ScriptReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptReview
+     */
+    omit?: ScriptReviewOmit<ExtArgs> | null
+    /**
+     * The data needed to create a ScriptReview.
+     */
+    data: XOR<ScriptReviewCreateInput, ScriptReviewUncheckedCreateInput>
+  }
+
+  /**
+   * ScriptReview createMany
+   */
+  export type ScriptReviewCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many ScriptReviews.
+     */
+    data: ScriptReviewCreateManyInput | ScriptReviewCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScriptReview createManyAndReturn
+   */
+  export type ScriptReviewCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptReview
+     */
+    select?: ScriptReviewSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptReview
+     */
+    omit?: ScriptReviewOmit<ExtArgs> | null
+    /**
+     * The data used to create many ScriptReviews.
+     */
+    data: ScriptReviewCreateManyInput | ScriptReviewCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * ScriptReview update
+   */
+  export type ScriptReviewUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptReview
+     */
+    select?: ScriptReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptReview
+     */
+    omit?: ScriptReviewOmit<ExtArgs> | null
+    /**
+     * The data needed to update a ScriptReview.
+     */
+    data: XOR<ScriptReviewUpdateInput, ScriptReviewUncheckedUpdateInput>
+    /**
+     * Choose, which ScriptReview to update.
+     */
+    where: ScriptReviewWhereUniqueInput
+  }
+
+  /**
+   * ScriptReview updateMany
+   */
+  export type ScriptReviewUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update ScriptReviews.
+     */
+    data: XOR<ScriptReviewUpdateManyMutationInput, ScriptReviewUncheckedUpdateManyInput>
+    /**
+     * Filter which ScriptReviews to update
+     */
+    where?: ScriptReviewWhereInput
+    /**
+     * Limit how many ScriptReviews to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScriptReview updateManyAndReturn
+   */
+  export type ScriptReviewUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptReview
+     */
+    select?: ScriptReviewSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptReview
+     */
+    omit?: ScriptReviewOmit<ExtArgs> | null
+    /**
+     * The data used to update ScriptReviews.
+     */
+    data: XOR<ScriptReviewUpdateManyMutationInput, ScriptReviewUncheckedUpdateManyInput>
+    /**
+     * Filter which ScriptReviews to update
+     */
+    where?: ScriptReviewWhereInput
+    /**
+     * Limit how many ScriptReviews to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScriptReview upsert
+   */
+  export type ScriptReviewUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptReview
+     */
+    select?: ScriptReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptReview
+     */
+    omit?: ScriptReviewOmit<ExtArgs> | null
+    /**
+     * The filter to search for the ScriptReview to update in case it exists.
+     */
+    where: ScriptReviewWhereUniqueInput
+    /**
+     * In case the ScriptReview found by the `where` argument doesn't exist, create a new ScriptReview with this data.
+     */
+    create: XOR<ScriptReviewCreateInput, ScriptReviewUncheckedCreateInput>
+    /**
+     * In case the ScriptReview was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<ScriptReviewUpdateInput, ScriptReviewUncheckedUpdateInput>
+  }
+
+  /**
+   * ScriptReview delete
+   */
+  export type ScriptReviewDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptReview
+     */
+    select?: ScriptReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptReview
+     */
+    omit?: ScriptReviewOmit<ExtArgs> | null
+    /**
+     * Filter which ScriptReview to delete.
+     */
+    where: ScriptReviewWhereUniqueInput
+  }
+
+  /**
+   * ScriptReview deleteMany
+   */
+  export type ScriptReviewDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which ScriptReviews to delete
+     */
+    where?: ScriptReviewWhereInput
+    /**
+     * Limit how many ScriptReviews to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * ScriptReview without action
+   */
+  export type ScriptReviewDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the ScriptReview
+     */
+    select?: ScriptReviewSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the ScriptReview
+     */
+    omit?: ScriptReviewOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -78592,6 +83268,68 @@ export namespace Prisma {
   };
 
   export type AutomationAuditScalarFieldEnum = (typeof AutomationAuditScalarFieldEnum)[keyof typeof AutomationAuditScalarFieldEnum]
+
+
+  export const ScriptDocScalarFieldEnum: {
+    id: 'id',
+    taskId: 'taskId',
+    cprId: 'cprId',
+    title: 'title',
+    content: 'content',
+    version: 'version',
+    status: 'status',
+    submittedRev: 'submittedRev',
+    approvedRev: 'approvedRev',
+    writers: 'writers',
+    createdById: 'createdById',
+    updatedById: 'updatedById',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type ScriptDocScalarFieldEnum = (typeof ScriptDocScalarFieldEnum)[keyof typeof ScriptDocScalarFieldEnum]
+
+
+  export const ScriptRevisionScalarFieldEnum: {
+    id: 'id',
+    docId: 'docId',
+    rev: 'rev',
+    kind: 'kind',
+    title: 'title',
+    content: 'content',
+    byId: 'byId',
+    createdAt: 'createdAt'
+  };
+
+  export type ScriptRevisionScalarFieldEnum = (typeof ScriptRevisionScalarFieldEnum)[keyof typeof ScriptRevisionScalarFieldEnum]
+
+
+  export const ScriptCommentScalarFieldEnum: {
+    id: 'id',
+    docId: 'docId',
+    byId: 'byId',
+    body: 'body',
+    quote: 'quote',
+    resolvedAt: 'resolvedAt',
+    resolvedById: 'resolvedById',
+    createdAt: 'createdAt'
+  };
+
+  export type ScriptCommentScalarFieldEnum = (typeof ScriptCommentScalarFieldEnum)[keyof typeof ScriptCommentScalarFieldEnum]
+
+
+  export const ScriptReviewScalarFieldEnum: {
+    id: 'id',
+    docId: 'docId',
+    rev: 'rev',
+    byId: 'byId',
+    decision: 'decision',
+    note: 'note',
+    exc: 'exc',
+    createdAt: 'createdAt'
+  };
+
+  export type ScriptReviewScalarFieldEnum = (typeof ScriptReviewScalarFieldEnum)[keyof typeof ScriptReviewScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -83853,6 +88591,311 @@ export namespace Prisma {
     outcome?: StringWithAggregatesFilter<"AutomationAudit"> | string
     correlationId?: StringWithAggregatesFilter<"AutomationAudit"> | string
     detail?: JsonNullableWithAggregatesFilter<"AutomationAudit">
+  }
+
+  export type ScriptDocWhereInput = {
+    AND?: ScriptDocWhereInput | ScriptDocWhereInput[]
+    OR?: ScriptDocWhereInput[]
+    NOT?: ScriptDocWhereInput | ScriptDocWhereInput[]
+    id?: StringFilter<"ScriptDoc"> | string
+    taskId?: StringFilter<"ScriptDoc"> | string
+    cprId?: StringFilter<"ScriptDoc"> | string
+    title?: StringFilter<"ScriptDoc"> | string
+    content?: JsonFilter<"ScriptDoc">
+    version?: IntFilter<"ScriptDoc"> | number
+    status?: StringFilter<"ScriptDoc"> | string
+    submittedRev?: IntNullableFilter<"ScriptDoc"> | number | null
+    approvedRev?: IntNullableFilter<"ScriptDoc"> | number | null
+    writers?: StringNullableListFilter<"ScriptDoc">
+    createdById?: StringFilter<"ScriptDoc"> | string
+    updatedById?: StringFilter<"ScriptDoc"> | string
+    createdAt?: DateTimeFilter<"ScriptDoc"> | Date | string
+    updatedAt?: DateTimeFilter<"ScriptDoc"> | Date | string
+  }
+
+  export type ScriptDocOrderByWithRelationInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    cprId?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    version?: SortOrder
+    status?: SortOrder
+    submittedRev?: SortOrderInput | SortOrder
+    approvedRev?: SortOrderInput | SortOrder
+    writers?: SortOrder
+    createdById?: SortOrder
+    updatedById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScriptDocWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    taskId?: string
+    AND?: ScriptDocWhereInput | ScriptDocWhereInput[]
+    OR?: ScriptDocWhereInput[]
+    NOT?: ScriptDocWhereInput | ScriptDocWhereInput[]
+    cprId?: StringFilter<"ScriptDoc"> | string
+    title?: StringFilter<"ScriptDoc"> | string
+    content?: JsonFilter<"ScriptDoc">
+    version?: IntFilter<"ScriptDoc"> | number
+    status?: StringFilter<"ScriptDoc"> | string
+    submittedRev?: IntNullableFilter<"ScriptDoc"> | number | null
+    approvedRev?: IntNullableFilter<"ScriptDoc"> | number | null
+    writers?: StringNullableListFilter<"ScriptDoc">
+    createdById?: StringFilter<"ScriptDoc"> | string
+    updatedById?: StringFilter<"ScriptDoc"> | string
+    createdAt?: DateTimeFilter<"ScriptDoc"> | Date | string
+    updatedAt?: DateTimeFilter<"ScriptDoc"> | Date | string
+  }, "id" | "taskId">
+
+  export type ScriptDocOrderByWithAggregationInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    cprId?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    version?: SortOrder
+    status?: SortOrder
+    submittedRev?: SortOrderInput | SortOrder
+    approvedRev?: SortOrderInput | SortOrder
+    writers?: SortOrder
+    createdById?: SortOrder
+    updatedById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: ScriptDocCountOrderByAggregateInput
+    _avg?: ScriptDocAvgOrderByAggregateInput
+    _max?: ScriptDocMaxOrderByAggregateInput
+    _min?: ScriptDocMinOrderByAggregateInput
+    _sum?: ScriptDocSumOrderByAggregateInput
+  }
+
+  export type ScriptDocScalarWhereWithAggregatesInput = {
+    AND?: ScriptDocScalarWhereWithAggregatesInput | ScriptDocScalarWhereWithAggregatesInput[]
+    OR?: ScriptDocScalarWhereWithAggregatesInput[]
+    NOT?: ScriptDocScalarWhereWithAggregatesInput | ScriptDocScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ScriptDoc"> | string
+    taskId?: StringWithAggregatesFilter<"ScriptDoc"> | string
+    cprId?: StringWithAggregatesFilter<"ScriptDoc"> | string
+    title?: StringWithAggregatesFilter<"ScriptDoc"> | string
+    content?: JsonWithAggregatesFilter<"ScriptDoc">
+    version?: IntWithAggregatesFilter<"ScriptDoc"> | number
+    status?: StringWithAggregatesFilter<"ScriptDoc"> | string
+    submittedRev?: IntNullableWithAggregatesFilter<"ScriptDoc"> | number | null
+    approvedRev?: IntNullableWithAggregatesFilter<"ScriptDoc"> | number | null
+    writers?: StringNullableListFilter<"ScriptDoc">
+    createdById?: StringWithAggregatesFilter<"ScriptDoc"> | string
+    updatedById?: StringWithAggregatesFilter<"ScriptDoc"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ScriptDoc"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"ScriptDoc"> | Date | string
+  }
+
+  export type ScriptRevisionWhereInput = {
+    AND?: ScriptRevisionWhereInput | ScriptRevisionWhereInput[]
+    OR?: ScriptRevisionWhereInput[]
+    NOT?: ScriptRevisionWhereInput | ScriptRevisionWhereInput[]
+    id?: StringFilter<"ScriptRevision"> | string
+    docId?: StringFilter<"ScriptRevision"> | string
+    rev?: IntFilter<"ScriptRevision"> | number
+    kind?: StringFilter<"ScriptRevision"> | string
+    title?: StringFilter<"ScriptRevision"> | string
+    content?: JsonFilter<"ScriptRevision">
+    byId?: StringFilter<"ScriptRevision"> | string
+    createdAt?: DateTimeFilter<"ScriptRevision"> | Date | string
+  }
+
+  export type ScriptRevisionOrderByWithRelationInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    rev?: SortOrder
+    kind?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    byId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ScriptRevisionWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    docId_rev?: ScriptRevisionDocIdRevCompoundUniqueInput
+    AND?: ScriptRevisionWhereInput | ScriptRevisionWhereInput[]
+    OR?: ScriptRevisionWhereInput[]
+    NOT?: ScriptRevisionWhereInput | ScriptRevisionWhereInput[]
+    docId?: StringFilter<"ScriptRevision"> | string
+    rev?: IntFilter<"ScriptRevision"> | number
+    kind?: StringFilter<"ScriptRevision"> | string
+    title?: StringFilter<"ScriptRevision"> | string
+    content?: JsonFilter<"ScriptRevision">
+    byId?: StringFilter<"ScriptRevision"> | string
+    createdAt?: DateTimeFilter<"ScriptRevision"> | Date | string
+  }, "id" | "docId_rev">
+
+  export type ScriptRevisionOrderByWithAggregationInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    rev?: SortOrder
+    kind?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    byId?: SortOrder
+    createdAt?: SortOrder
+    _count?: ScriptRevisionCountOrderByAggregateInput
+    _avg?: ScriptRevisionAvgOrderByAggregateInput
+    _max?: ScriptRevisionMaxOrderByAggregateInput
+    _min?: ScriptRevisionMinOrderByAggregateInput
+    _sum?: ScriptRevisionSumOrderByAggregateInput
+  }
+
+  export type ScriptRevisionScalarWhereWithAggregatesInput = {
+    AND?: ScriptRevisionScalarWhereWithAggregatesInput | ScriptRevisionScalarWhereWithAggregatesInput[]
+    OR?: ScriptRevisionScalarWhereWithAggregatesInput[]
+    NOT?: ScriptRevisionScalarWhereWithAggregatesInput | ScriptRevisionScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ScriptRevision"> | string
+    docId?: StringWithAggregatesFilter<"ScriptRevision"> | string
+    rev?: IntWithAggregatesFilter<"ScriptRevision"> | number
+    kind?: StringWithAggregatesFilter<"ScriptRevision"> | string
+    title?: StringWithAggregatesFilter<"ScriptRevision"> | string
+    content?: JsonWithAggregatesFilter<"ScriptRevision">
+    byId?: StringWithAggregatesFilter<"ScriptRevision"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"ScriptRevision"> | Date | string
+  }
+
+  export type ScriptCommentWhereInput = {
+    AND?: ScriptCommentWhereInput | ScriptCommentWhereInput[]
+    OR?: ScriptCommentWhereInput[]
+    NOT?: ScriptCommentWhereInput | ScriptCommentWhereInput[]
+    id?: StringFilter<"ScriptComment"> | string
+    docId?: StringFilter<"ScriptComment"> | string
+    byId?: StringFilter<"ScriptComment"> | string
+    body?: StringFilter<"ScriptComment"> | string
+    quote?: StringNullableFilter<"ScriptComment"> | string | null
+    resolvedAt?: DateTimeNullableFilter<"ScriptComment"> | Date | string | null
+    resolvedById?: StringNullableFilter<"ScriptComment"> | string | null
+    createdAt?: DateTimeFilter<"ScriptComment"> | Date | string
+  }
+
+  export type ScriptCommentOrderByWithRelationInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    byId?: SortOrder
+    body?: SortOrder
+    quote?: SortOrderInput | SortOrder
+    resolvedAt?: SortOrderInput | SortOrder
+    resolvedById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ScriptCommentWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ScriptCommentWhereInput | ScriptCommentWhereInput[]
+    OR?: ScriptCommentWhereInput[]
+    NOT?: ScriptCommentWhereInput | ScriptCommentWhereInput[]
+    docId?: StringFilter<"ScriptComment"> | string
+    byId?: StringFilter<"ScriptComment"> | string
+    body?: StringFilter<"ScriptComment"> | string
+    quote?: StringNullableFilter<"ScriptComment"> | string | null
+    resolvedAt?: DateTimeNullableFilter<"ScriptComment"> | Date | string | null
+    resolvedById?: StringNullableFilter<"ScriptComment"> | string | null
+    createdAt?: DateTimeFilter<"ScriptComment"> | Date | string
+  }, "id">
+
+  export type ScriptCommentOrderByWithAggregationInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    byId?: SortOrder
+    body?: SortOrder
+    quote?: SortOrderInput | SortOrder
+    resolvedAt?: SortOrderInput | SortOrder
+    resolvedById?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: ScriptCommentCountOrderByAggregateInput
+    _max?: ScriptCommentMaxOrderByAggregateInput
+    _min?: ScriptCommentMinOrderByAggregateInput
+  }
+
+  export type ScriptCommentScalarWhereWithAggregatesInput = {
+    AND?: ScriptCommentScalarWhereWithAggregatesInput | ScriptCommentScalarWhereWithAggregatesInput[]
+    OR?: ScriptCommentScalarWhereWithAggregatesInput[]
+    NOT?: ScriptCommentScalarWhereWithAggregatesInput | ScriptCommentScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ScriptComment"> | string
+    docId?: StringWithAggregatesFilter<"ScriptComment"> | string
+    byId?: StringWithAggregatesFilter<"ScriptComment"> | string
+    body?: StringWithAggregatesFilter<"ScriptComment"> | string
+    quote?: StringNullableWithAggregatesFilter<"ScriptComment"> | string | null
+    resolvedAt?: DateTimeNullableWithAggregatesFilter<"ScriptComment"> | Date | string | null
+    resolvedById?: StringNullableWithAggregatesFilter<"ScriptComment"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ScriptComment"> | Date | string
+  }
+
+  export type ScriptReviewWhereInput = {
+    AND?: ScriptReviewWhereInput | ScriptReviewWhereInput[]
+    OR?: ScriptReviewWhereInput[]
+    NOT?: ScriptReviewWhereInput | ScriptReviewWhereInput[]
+    id?: StringFilter<"ScriptReview"> | string
+    docId?: StringFilter<"ScriptReview"> | string
+    rev?: IntFilter<"ScriptReview"> | number
+    byId?: StringFilter<"ScriptReview"> | string
+    decision?: StringFilter<"ScriptReview"> | string
+    note?: StringNullableFilter<"ScriptReview"> | string | null
+    exc?: StringNullableFilter<"ScriptReview"> | string | null
+    createdAt?: DateTimeFilter<"ScriptReview"> | Date | string
+  }
+
+  export type ScriptReviewOrderByWithRelationInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    rev?: SortOrder
+    byId?: SortOrder
+    decision?: SortOrder
+    note?: SortOrderInput | SortOrder
+    exc?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ScriptReviewWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: ScriptReviewWhereInput | ScriptReviewWhereInput[]
+    OR?: ScriptReviewWhereInput[]
+    NOT?: ScriptReviewWhereInput | ScriptReviewWhereInput[]
+    docId?: StringFilter<"ScriptReview"> | string
+    rev?: IntFilter<"ScriptReview"> | number
+    byId?: StringFilter<"ScriptReview"> | string
+    decision?: StringFilter<"ScriptReview"> | string
+    note?: StringNullableFilter<"ScriptReview"> | string | null
+    exc?: StringNullableFilter<"ScriptReview"> | string | null
+    createdAt?: DateTimeFilter<"ScriptReview"> | Date | string
+  }, "id">
+
+  export type ScriptReviewOrderByWithAggregationInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    rev?: SortOrder
+    byId?: SortOrder
+    decision?: SortOrder
+    note?: SortOrderInput | SortOrder
+    exc?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    _count?: ScriptReviewCountOrderByAggregateInput
+    _avg?: ScriptReviewAvgOrderByAggregateInput
+    _max?: ScriptReviewMaxOrderByAggregateInput
+    _min?: ScriptReviewMinOrderByAggregateInput
+    _sum?: ScriptReviewSumOrderByAggregateInput
+  }
+
+  export type ScriptReviewScalarWhereWithAggregatesInput = {
+    AND?: ScriptReviewScalarWhereWithAggregatesInput | ScriptReviewScalarWhereWithAggregatesInput[]
+    OR?: ScriptReviewScalarWhereWithAggregatesInput[]
+    NOT?: ScriptReviewScalarWhereWithAggregatesInput | ScriptReviewScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"ScriptReview"> | string
+    docId?: StringWithAggregatesFilter<"ScriptReview"> | string
+    rev?: IntWithAggregatesFilter<"ScriptReview"> | number
+    byId?: StringWithAggregatesFilter<"ScriptReview"> | string
+    decision?: StringWithAggregatesFilter<"ScriptReview"> | string
+    note?: StringNullableWithAggregatesFilter<"ScriptReview"> | string | null
+    exc?: StringNullableWithAggregatesFilter<"ScriptReview"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"ScriptReview"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -89536,6 +94579,356 @@ export namespace Prisma {
     detail?: NullableJsonNullValueInput | InputJsonValue
   }
 
+  export type ScriptDocCreateInput = {
+    id?: string
+    taskId: string
+    cprId: string
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    status?: string
+    submittedRev?: number | null
+    approvedRev?: number | null
+    writers?: ScriptDocCreatewritersInput | string[]
+    createdById: string
+    updatedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScriptDocUncheckedCreateInput = {
+    id?: string
+    taskId: string
+    cprId: string
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    status?: string
+    submittedRev?: number | null
+    approvedRev?: number | null
+    writers?: ScriptDocCreatewritersInput | string[]
+    createdById: string
+    updatedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScriptDocUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    taskId?: StringFieldUpdateOperationsInput | string
+    cprId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    submittedRev?: NullableIntFieldUpdateOperationsInput | number | null
+    approvedRev?: NullableIntFieldUpdateOperationsInput | number | null
+    writers?: ScriptDocUpdatewritersInput | string[]
+    createdById?: StringFieldUpdateOperationsInput | string
+    updatedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptDocUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    taskId?: StringFieldUpdateOperationsInput | string
+    cprId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    submittedRev?: NullableIntFieldUpdateOperationsInput | number | null
+    approvedRev?: NullableIntFieldUpdateOperationsInput | number | null
+    writers?: ScriptDocUpdatewritersInput | string[]
+    createdById?: StringFieldUpdateOperationsInput | string
+    updatedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptDocCreateManyInput = {
+    id?: string
+    taskId: string
+    cprId: string
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    version?: number
+    status?: string
+    submittedRev?: number | null
+    approvedRev?: number | null
+    writers?: ScriptDocCreatewritersInput | string[]
+    createdById: string
+    updatedById: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ScriptDocUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    taskId?: StringFieldUpdateOperationsInput | string
+    cprId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    submittedRev?: NullableIntFieldUpdateOperationsInput | number | null
+    approvedRev?: NullableIntFieldUpdateOperationsInput | number | null
+    writers?: ScriptDocUpdatewritersInput | string[]
+    createdById?: StringFieldUpdateOperationsInput | string
+    updatedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptDocUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    taskId?: StringFieldUpdateOperationsInput | string
+    cprId?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    version?: IntFieldUpdateOperationsInput | number
+    status?: StringFieldUpdateOperationsInput | string
+    submittedRev?: NullableIntFieldUpdateOperationsInput | number | null
+    approvedRev?: NullableIntFieldUpdateOperationsInput | number | null
+    writers?: ScriptDocUpdatewritersInput | string[]
+    createdById?: StringFieldUpdateOperationsInput | string
+    updatedById?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptRevisionCreateInput = {
+    id?: string
+    docId: string
+    rev: number
+    kind: string
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    byId: string
+    createdAt?: Date | string
+  }
+
+  export type ScriptRevisionUncheckedCreateInput = {
+    id?: string
+    docId: string
+    rev: number
+    kind: string
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    byId: string
+    createdAt?: Date | string
+  }
+
+  export type ScriptRevisionUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    rev?: IntFieldUpdateOperationsInput | number
+    kind?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    byId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptRevisionUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    rev?: IntFieldUpdateOperationsInput | number
+    kind?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    byId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptRevisionCreateManyInput = {
+    id?: string
+    docId: string
+    rev: number
+    kind: string
+    title: string
+    content: JsonNullValueInput | InputJsonValue
+    byId: string
+    createdAt?: Date | string
+  }
+
+  export type ScriptRevisionUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    rev?: IntFieldUpdateOperationsInput | number
+    kind?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    byId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptRevisionUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    rev?: IntFieldUpdateOperationsInput | number
+    kind?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    content?: JsonNullValueInput | InputJsonValue
+    byId?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptCommentCreateInput = {
+    id?: string
+    docId: string
+    byId: string
+    body: string
+    quote?: string | null
+    resolvedAt?: Date | string | null
+    resolvedById?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ScriptCommentUncheckedCreateInput = {
+    id?: string
+    docId: string
+    byId: string
+    body: string
+    quote?: string | null
+    resolvedAt?: Date | string | null
+    resolvedById?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ScriptCommentUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    byId?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    quote?: NullableStringFieldUpdateOperationsInput | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptCommentUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    byId?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    quote?: NullableStringFieldUpdateOperationsInput | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptCommentCreateManyInput = {
+    id?: string
+    docId: string
+    byId: string
+    body: string
+    quote?: string | null
+    resolvedAt?: Date | string | null
+    resolvedById?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ScriptCommentUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    byId?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    quote?: NullableStringFieldUpdateOperationsInput | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptCommentUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    byId?: StringFieldUpdateOperationsInput | string
+    body?: StringFieldUpdateOperationsInput | string
+    quote?: NullableStringFieldUpdateOperationsInput | string | null
+    resolvedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    resolvedById?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptReviewCreateInput = {
+    id?: string
+    docId: string
+    rev: number
+    byId: string
+    decision: string
+    note?: string | null
+    exc?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ScriptReviewUncheckedCreateInput = {
+    id?: string
+    docId: string
+    rev: number
+    byId: string
+    decision: string
+    note?: string | null
+    exc?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ScriptReviewUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    rev?: IntFieldUpdateOperationsInput | number
+    byId?: StringFieldUpdateOperationsInput | string
+    decision?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    exc?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptReviewUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    rev?: IntFieldUpdateOperationsInput | number
+    byId?: StringFieldUpdateOperationsInput | string
+    decision?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    exc?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptReviewCreateManyInput = {
+    id?: string
+    docId: string
+    rev: number
+    byId: string
+    decision: string
+    note?: string | null
+    exc?: string | null
+    createdAt?: Date | string
+  }
+
+  export type ScriptReviewUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    rev?: IntFieldUpdateOperationsInput | number
+    byId?: StringFieldUpdateOperationsInput | string
+    decision?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    exc?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ScriptReviewUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    docId?: StringFieldUpdateOperationsInput | string
+    rev?: IntFieldUpdateOperationsInput | number
+    byId?: StringFieldUpdateOperationsInput | string
+    decision?: StringFieldUpdateOperationsInput | string
+    note?: NullableStringFieldUpdateOperationsInput | string | null
+    exc?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -93046,6 +98439,183 @@ export namespace Prisma {
     correlationId?: SortOrder
   }
 
+  export type ScriptDocCountOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    cprId?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    version?: SortOrder
+    status?: SortOrder
+    submittedRev?: SortOrder
+    approvedRev?: SortOrder
+    writers?: SortOrder
+    createdById?: SortOrder
+    updatedById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScriptDocAvgOrderByAggregateInput = {
+    version?: SortOrder
+    submittedRev?: SortOrder
+    approvedRev?: SortOrder
+  }
+
+  export type ScriptDocMaxOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    cprId?: SortOrder
+    title?: SortOrder
+    version?: SortOrder
+    status?: SortOrder
+    submittedRev?: SortOrder
+    approvedRev?: SortOrder
+    createdById?: SortOrder
+    updatedById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScriptDocMinOrderByAggregateInput = {
+    id?: SortOrder
+    taskId?: SortOrder
+    cprId?: SortOrder
+    title?: SortOrder
+    version?: SortOrder
+    status?: SortOrder
+    submittedRev?: SortOrder
+    approvedRev?: SortOrder
+    createdById?: SortOrder
+    updatedById?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type ScriptDocSumOrderByAggregateInput = {
+    version?: SortOrder
+    submittedRev?: SortOrder
+    approvedRev?: SortOrder
+  }
+
+  export type ScriptRevisionDocIdRevCompoundUniqueInput = {
+    docId: string
+    rev: number
+  }
+
+  export type ScriptRevisionCountOrderByAggregateInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    rev?: SortOrder
+    kind?: SortOrder
+    title?: SortOrder
+    content?: SortOrder
+    byId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ScriptRevisionAvgOrderByAggregateInput = {
+    rev?: SortOrder
+  }
+
+  export type ScriptRevisionMaxOrderByAggregateInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    rev?: SortOrder
+    kind?: SortOrder
+    title?: SortOrder
+    byId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ScriptRevisionMinOrderByAggregateInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    rev?: SortOrder
+    kind?: SortOrder
+    title?: SortOrder
+    byId?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ScriptRevisionSumOrderByAggregateInput = {
+    rev?: SortOrder
+  }
+
+  export type ScriptCommentCountOrderByAggregateInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    byId?: SortOrder
+    body?: SortOrder
+    quote?: SortOrder
+    resolvedAt?: SortOrder
+    resolvedById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ScriptCommentMaxOrderByAggregateInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    byId?: SortOrder
+    body?: SortOrder
+    quote?: SortOrder
+    resolvedAt?: SortOrder
+    resolvedById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ScriptCommentMinOrderByAggregateInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    byId?: SortOrder
+    body?: SortOrder
+    quote?: SortOrder
+    resolvedAt?: SortOrder
+    resolvedById?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ScriptReviewCountOrderByAggregateInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    rev?: SortOrder
+    byId?: SortOrder
+    decision?: SortOrder
+    note?: SortOrder
+    exc?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ScriptReviewAvgOrderByAggregateInput = {
+    rev?: SortOrder
+  }
+
+  export type ScriptReviewMaxOrderByAggregateInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    rev?: SortOrder
+    byId?: SortOrder
+    decision?: SortOrder
+    note?: SortOrder
+    exc?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ScriptReviewMinOrderByAggregateInput = {
+    id?: SortOrder
+    docId?: SortOrder
+    rev?: SortOrder
+    byId?: SortOrder
+    decision?: SortOrder
+    note?: SortOrder
+    exc?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type ScriptReviewSumOrderByAggregateInput = {
+    rev?: SortOrder
+  }
+
   export type BranchCreateNestedOneWithoutUsersInput = {
     create?: XOR<BranchCreateWithoutUsersInput, BranchUncheckedCreateWithoutUsersInput>
     connectOrCreate?: BranchCreateOrConnectWithoutUsersInput
@@ -95079,6 +100649,15 @@ export namespace Prisma {
     upsert?: AutomationRunUpsertWithoutStepsInput
     connect?: AutomationRunWhereUniqueInput
     update?: XOR<XOR<AutomationRunUpdateToOneWithWhereWithoutStepsInput, AutomationRunUpdateWithoutStepsInput>, AutomationRunUncheckedUpdateWithoutStepsInput>
+  }
+
+  export type ScriptDocCreatewritersInput = {
+    set: string[]
+  }
+
+  export type ScriptDocUpdatewritersInput = {
+    set?: string[]
+    push?: string | string[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {

@@ -21,6 +21,13 @@ const REVIEW: Record<string, [string, string]> = { none: ["—", "text-[#73777F]
 const BULAN = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agu", "Sep", "Okt", "Nov", "Des"];
 const fmt = (d: string) => (d ? Number(d.slice(8)) + " " + BULAN[Number(d.slice(5, 7)) - 1] : "");
 /** Bila halaman ini tertanam di Studio (iframe), buka Detail kartu di Studio induk tanpa memuat ulang. */
+function openScriptInStudio(e: React.MouseEvent, id: string) {
+  if (typeof window !== "undefined" && window.parent !== window) {
+    e.preventDefault();
+    window.parent.postMessage({ type: "ts-open-script", id }, window.location.origin);
+  }
+}
+const scriptLink = (id: string) => "/studio/?p=script&card=" + encodeURIComponent(id);
 function openInStudio(e: React.MouseEvent, id: string, tab: string) {
   if (typeof window !== "undefined" && window.parent !== window) {
     e.preventDefault();
@@ -251,6 +258,7 @@ function Panel({ t, names, people, types, canManage, code, pending, onClose, onM
         <Row l="Rencana syuting">{fmt(t.shootPlan) || "—"}</Row>
         <Row l="Jadwal tayang">{t.postAt ? fmt(t.postAt) + (t.postTime ? " · " + t.postTime.replace(":", ".") : "") + (t.meta ? " · dijadwalkan di Meta" : "") : "—"}</Row>
         <Row l="Content Brief"><span className={BRIEF[t.brief][1]}>{BRIEF[t.brief][0]}</span> <a className="ml-1 text-[12px] text-[#2F6FEB] hover:underline" href={studioLink(t.id, "brief")} target="_top" onClick={(e) => openInStudio(e, t.id, "brief")}>Buka</a></Row>
+        {(t.type === "vrv" || t.type === "evt") && t.cprId && <Row l="Script"><a className="text-[12px] text-[#2F6FEB] hover:underline" href={scriptLink(t.id)} target="_top" onClick={(e) => openScriptInStudio(e, t.id)}>Buka Script Konten</a></Row>}
         <Row l="Creative Review"><span className={REVIEW[t.review]?.[1]}>{REVIEW[t.review]?.[0]}</span> <a className="ml-1 text-[12px] text-[#2F6FEB] hover:underline" href={studioLink(t.id, "qa")} target="_top" onClick={(e) => openInStudio(e, t.id, "qa")}>Buka</a></Row>
         <Row l="File final">{t.driveUrl ? <a className="inline-flex items-center gap-1 text-[#2F6FEB] hover:underline" href={t.driveUrl} target="_blank" rel="noopener"><CheckCircle2 className="size-3.5" />Sudah upload</a> : <span className="text-[#73777F]">Belum upload</span>}</Row>
         <div className="mt-3 grid gap-1.5">

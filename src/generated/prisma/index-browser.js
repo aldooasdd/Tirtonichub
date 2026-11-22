@@ -918,6 +918,56 @@ exports.Prisma.AutomationAuditScalarFieldEnum = {
   detail: 'detail'
 };
 
+exports.Prisma.ScriptDocScalarFieldEnum = {
+  id: 'id',
+  taskId: 'taskId',
+  cprId: 'cprId',
+  title: 'title',
+  content: 'content',
+  version: 'version',
+  status: 'status',
+  submittedRev: 'submittedRev',
+  approvedRev: 'approvedRev',
+  writers: 'writers',
+  createdById: 'createdById',
+  updatedById: 'updatedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
+exports.Prisma.ScriptRevisionScalarFieldEnum = {
+  id: 'id',
+  docId: 'docId',
+  rev: 'rev',
+  kind: 'kind',
+  title: 'title',
+  content: 'content',
+  byId: 'byId',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ScriptCommentScalarFieldEnum = {
+  id: 'id',
+  docId: 'docId',
+  byId: 'byId',
+  body: 'body',
+  quote: 'quote',
+  resolvedAt: 'resolvedAt',
+  resolvedById: 'resolvedById',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.ScriptReviewScalarFieldEnum = {
+  id: 'id',
+  docId: 'docId',
+  rev: 'rev',
+  byId: 'byId',
+  decision: 'decision',
+  note: 'note',
+  exc: 'exc',
+  createdAt: 'createdAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1072,7 +1122,11 @@ exports.Prisma.ModelName = {
   AutomationTimer: 'AutomationTimer',
   AutomationDelivery: 'AutomationDelivery',
   AutomationPolicy: 'AutomationPolicy',
-  AutomationAudit: 'AutomationAudit'
+  AutomationAudit: 'AutomationAudit',
+  ScriptDoc: 'ScriptDoc',
+  ScriptRevision: 'ScriptRevision',
+  ScriptComment: 'ScriptComment',
+  ScriptReview: 'ScriptReview'
 };
 
 /**
