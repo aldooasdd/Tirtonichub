@@ -173,7 +173,7 @@ async function writeDocInner(u: StudioUser, op: "set" | "update" | "delete", pat
       after.brief = b;
     }
     if (qaAct !== undefined) {
-      if (!before) throw new StudioError("invalid-argument", "QA hanya untuk kartu yang sudah ada.");
+      if (!before) throw new StudioError("invalid-argument", "Creative Review hanya untuk kartu yang sudah ada.");
       const q = nextQa(before.qa, qaAct, after, u, qaCfgOf((await getRaw("settings/main"))?.qaCfg));
       if (typeof q === "string") throw new StudioError("permission-denied", "Tidak diizinkan: " + q + ".");
       after.qa = q;

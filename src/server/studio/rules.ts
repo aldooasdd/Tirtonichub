@@ -197,7 +197,7 @@ export function canWrite(
       if (!u.full && ["katalogWa", "katalogTo"].some((k) => JSON.stringify(before?.[k] ?? null) !== JSON.stringify(after?.[k] ?? null))) return deny("pengaturan notifikasi hanya untuk admin");
       // Standar QA CPR (indikator & bobot per jenis konten): hanya admin penuh, harus sah (cpr.ts qaCfgWhy)
       if (JSON.stringify(before?.qaCfg ?? null) !== JSON.stringify(after?.qaCfg ?? null)) {
-        if (!u.full) return deny("standar QA hanya diatur admin penuh");
+        if (!u.full) return deny("standar Creative Review hanya diatur admin penuh");
         const w = after?.qaCfg === undefined ? null : qaCfgWhy(after.qaCfg);
         if (w) return deny(w);
       }

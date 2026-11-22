@@ -2,7 +2,8 @@
 // Script Konten: daftar script (kiri) + editor dokumen (tengah) + panel Creative Review / Komentar / Riwayat / Brief (kanan).
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { EditorContent, useEditor } from "@tiptap/react";
-import { ArrowUpRight, CheckCircle2, ClipboardList, FileText, History, Loader2, MessageSquare, PanelLeft, PanelRight, RotateCcw, Search, ShieldCheck, X } from "lucide-react";
+import { ArrowDownUp, ArrowUpRight, CheckCircle2, ClipboardList, FileText, History, Loader2, MessageSquare, PanelLeft, PanelRight, RotateCcw, Search, ShieldCheck, X } from "lucide-react";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { SCRIPT_ST, type ScriptStatus } from "@/lib/media/script";
 import {
   addComment, createScript, getRevision, loadScript, pollScript, restoreRevision, reviewScript, saveScript, setComment, submitScript, type ScriptPayload,
@@ -20,7 +21,7 @@ const TYPE_L: Record<string, string> = { vrv: "Video review", evt: "Video event"
 const ST_C: Record<string, string> = {
   draft: "bg-[#F2F3F5] text-[#4b505a]", review: "bg-[#E8EEFC] text-[#465EA5]", revision: "bg-[#FBEAEA] text-[#C34646]", approved: "bg-[#E5F3EA] text-[#20864E]", none: "bg-white text-[#9AA0A9] border border-dashed border-[#D9DCE1]",
 };
-const KIND_L: Record<string, string> = { create: "Dibuat", save: "Disimpan", submit: "Diajukan ke Creative Review", approve: "Disetujui", revise: "Diminta revisi", restore: "Dipulihkan" };
+const KIND_L: Record<string, string> = { create: "Dibuat", save: "Disimpan", submit: "Diajukan ke Creative Review Script", approve: "Disetujui", revise: "Diminta revisi", restore: "Dipulihkan" };
 const when = (t: number) => new Date(t).toLocaleString("id-ID", { day: "numeric", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "Asia/Jakarta" });
 const ago = (t: number) => {
   const m = Math.round((Date.now() - t) / 60000);
@@ -97,16 +98,21 @@ export function ScriptClient({ rows: rows0, initial, initialCard, me, canManage,
             <Search className="pointer-events-none absolute left-2.5 top-2.5 size-4 text-[#9AA0A9]" />
             <input className="h-9 w-full rounded-lg border border-[#E7E9ED] pl-8 pr-2 text-[13px]" placeholder="Cari judul, produk, Content ID…" value={q} onChange={(e) => setQ(e.target.value)} />
           </label>
-          <div className="grid grid-cols-3 gap-1.5">
-            <select className="h-8 min-w-0 flex-1 rounded-lg border border-[#E7E9ED] px-1.5 text-[12px]" value={fType} onChange={(e) => setFType(e.target.value)} aria-label="Jenis konten">
-              <option value="">Semua jenis</option><option value="vrv">Video review</option><option value="evt">Video event</option>
-            </select>
-            <select className="h-8 min-w-0 flex-1 rounded-lg border border-[#E7E9ED] px-1.5 text-[12px]" value={fHas} onChange={(e) => setFHas(e.target.value)} aria-label="Ada script">
-              <option value="">Semua</option><option value="yes">Sudah ada</option><option value="no">Belum ada</option>
-            </select>
-            <select className="h-8 min-w-0 flex-1 rounded-lg border border-[#E7E9ED] px-1.5 text-[12px]" value={sort} onChange={(e) => setSort(e.target.value as typeof sort)} aria-label="Urutkan">
-              <option value="recent">Terbaru</option><option value="title">Judul</option><option value="status">Status</option>
-            </select>
+          <Seg label="Jenis konten" value={fType} onChange={setFType} options={[["", "Semua"], ["vrv", "Video review"], ["evt", "Video event"]]} />
+          <div className="flex items-center gap-1.5">
+            <Seg label="Ada script" value={fHas} onChange={setFHas} options={[["", "Semua"], ["yes", "Sudah ada"], ["no", "Belum ada"]]} />
+            <DropdownMenu>
+              <DropdownMenuTrigger className="inline-flex h-7 shrink-0 items-center gap-1 rounded-md px-2 text-[12px] text-[#4b505a] hover:bg-[#F2F3F5]" aria-label="Urutkan">
+                <ArrowDownUp className="size-3.5" />{{ recent: "Terbaru", title: "Judul", status: "Status" }[sort]}
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="min-w-36">
+                <DropdownMenuRadioGroup value={sort} onValueChange={(v) => setSort(v as typeof sort)}>
+                  <DropdownMenuRadioItem value="recent">Terbaru diubah</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="title">Judul A–Z</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="status">Status</DropdownMenuRadioItem>
+                </DropdownMenuRadioGroup>
+              </DropdownMenuContent>
+            </DropdownMenu>
           </div>
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-3">
@@ -164,6 +170,19 @@ export function ScriptClient({ rows: rows0, initial, initialCard, me, canManage,
             onSaved={(p) => patchRow(d.task!.id, p)} listOpen={listOpenS === null && initialCard ? "auto" : listOpen} onOpenList={() => setListOpen(true)} />
         )}
       </main>
+    </div>
+  );
+}
+
+function Seg({ label, value, onChange, options }: { label: string; value: string; onChange: (v: string) => void; options: [string, string][] }) {
+  return (
+    <div role="radiogroup" aria-label={label} className="flex min-w-0 flex-1 rounded-lg bg-[#F2F3F5] p-0.5">
+      {options.map(([v, l]) => (
+        <button key={v} type="button" role="radio" aria-checked={value === v} onClick={() => onChange(v)}
+          className="h-6 min-w-0 flex-1 truncate rounded-md px-1.5 text-[11.5px] text-[#747B86] hover:text-[#202328] aria-checked:bg-white aria-checked:font-semibold aria-checked:text-[#202328] aria-checked:shadow-[0_1px_2px_rgba(16,24,40,.08)] focus-visible:outline-2 focus-visible:outline-[#B5D916]">
+          {l}
+        </button>
+      ))}
     </div>
   );
 }
@@ -356,7 +375,7 @@ function DocEditor({ data, me, canManage, full, people, panel, setPanel, quote, 
             <span className={"text-[12px] " + (st === "error" || st === "conflict" ? "text-[#C34646]" : "text-[#747B86]")} aria-live="polite">{saveLabel}</span>
             {st === "error" && <button type="button" className="h-7 rounded-md border border-[#E7E9ED] px-2 text-[12px]" onClick={() => save()}>Coba lagi</button>}
             <div className="flex items-center gap-1">
-              {([["review", ShieldCheck, "Creative Review"], ["comments", MessageSquare, "Komentar" + (openComments ? " (" + openComments + ")" : "")], ["history", History, "Riwayat versi"], ["brief", ClipboardList, "Brief & info"]] as const).map(([k, I, l]) => (
+              {([["review", ShieldCheck, "Creative Review Script"], ["comments", MessageSquare, "Komentar" + (openComments ? " (" + openComments + ")" : "")], ["history", History, "Riwayat versi"], ["brief", ClipboardList, "Brief & info"]] as const).map(([k, I, l]) => (
                 <button key={k} type="button" title={l} aria-label={l} aria-pressed={panel === k} onClick={() => setPanel(panel === k ? "" : k)}
                   className="relative inline-flex size-8 items-center justify-center rounded-md text-[#3c4049] hover:bg-[#F2F3F5] aria-pressed:bg-[#E9F2C4]">
                   <I className="size-4" />{k === "comments" && openComments > 0 && <span className="absolute -right-0.5 -top-0.5 grid size-4 place-items-center rounded-full bg-[#B5D916] text-[9px] font-bold text-[#1c2700]">{openComments}</span>}
@@ -382,7 +401,7 @@ function DocEditor({ data, me, canManage, full, people, panel, setPanel, quote, 
               </span>
             ) : remote ? <span>{remote} baru saja mengubah script ini. Perubahan Anda akan dicek saat disimpan.</span>
               : msg ? <span className="text-[#C34646]">{msg}</span>
-                : <span>Script sedang di Creative Review. Mengubah isi akan membatalkan pengajuan (versi yang diajukan tetap tersimpan di Riwayat).</span>}
+                : <span>Script sedang di Creative Review Script. Mengubah isi akan membatalkan pengajuan (versi yang diajukan tetap tersimpan di Riwayat).</span>}
           </div>
         )}
         <div className="min-h-0 flex-1 overflow-auto px-3 py-6 min-[900px]:px-8">
@@ -395,7 +414,7 @@ function DocEditor({ data, me, canManage, full, people, panel, setPanel, quote, 
       {panel && (
         <aside className="absolute inset-y-0 right-0 z-30 flex w-[92vw] max-w-[340px] flex-col border-l border-[#E7E9ED] bg-white shadow-xl min-[1200px]:static min-[1200px]:w-[320px] min-[1200px]:shadow-none" aria-label="Panel samping">
           <div className="flex items-center justify-between border-b border-[#E7E9ED] px-4 py-3">
-            <b className="text-[14px]">{{ review: "Creative Review", comments: "Komentar", history: "Riwayat versi", brief: "Brief & info konten" }[panel]}</b>
+            <b className="text-[14px]">{{ review: "Creative Review Script", comments: "Komentar", history: "Riwayat versi", brief: "Brief & info konten" }[panel]}</b>
             <button type="button" className="inline-flex size-8 items-center justify-center rounded-md hover:bg-[#F2F3F5]" aria-label="Tutup panel" onClick={() => setPanel("")}><PanelRight className="size-4" /></button>
           </div>
           <div className="min-h-0 flex-1 overflow-y-auto p-4 text-[13px]">
@@ -431,16 +450,16 @@ function ReviewPanel({ data, status, me, canManage, full, busy, n, onSubmit, onR
         <div className="flex items-center gap-2">{stChip(status)}{doc.submittedRev && status === "review" && <span className="text-[#747B86]">versi r{doc.submittedRev}</span>}</div>
         {doc.approvedRev && <p className="text-[#20864E]"><CheckCircle2 className="mr-1 inline size-3.5" />Versi disetujui terakhir: r{doc.approvedRev}{status !== "approved" ? " (isi sudah diubah setelahnya)" : ""}</p>}
         <p className="text-[12px] text-[#747B86]">Penulis: {doc.writers.map(n).join(", ") || "—"}</p>
-        <p className="text-[12px] text-[#9AA0A9]">Persetujuan script tidak mengubah tahap kartu di FlowSpace.</p>
+        <p className="text-[12px] text-[#9AA0A9]">Terpisah dari Creative Review konten (file final) di Detail kartu. Persetujuan script tidak mengubah tahap kartu di FlowSpace.</p>
       </div>
       {(status === "draft" || status === "revision") && (
         <button type="button" disabled={busy || wait} className="h-9 rounded-lg bg-[#222428] font-semibold text-white disabled:opacity-40" onClick={() => run(onSubmit)}>
-          {busy ? "Tunggu tersimpan…" : "Ajukan ke Creative Review"}
+          {busy ? "Tunggu tersimpan…" : "Ajukan Creative Review Script"}
         </button>
       )}
       {status === "review" && canManage && (
         <div className="grid gap-2 rounded-lg border border-[#E7E9ED] p-3">
-          <b>Keputusan Creative Review</b>
+          <b>Keputusan Creative Review Script</b>
           <textarea className="min-h-20 rounded-md border border-[#E7E9ED] p-2" placeholder="Catatan (wajib bila minta revisi)" value={note} onChange={(e) => setNote(e.target.value)} maxLength={2000} />
           {isWriter && full && <input className="h-9 rounded-md border border-[#E7E9ED] px-2" placeholder="Alasan menyetujui script yang Anda tulis" value={exc} onChange={(e) => setExc(e.target.value)} maxLength={500} />}
           {isWriter && !full && <p className="text-[12px] text-[#C34646]">Anda ikut menulis script ini, jadi tidak bisa menyetujuinya.</p>}
