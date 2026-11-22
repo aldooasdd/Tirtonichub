@@ -13,6 +13,13 @@
 - Semua workflow masih **draft**; terbitkan dari Builder setelah aturannya aktif.
 - Aturan bisnis (tab Konfigurasi) semuanya `needs_configuration` sampai admin mengisi: pemetaan PIC (jobdesk FlowSpace), saluran notifikasi, jadwal pengingat (jam batas + jarak jam), checkpoint evaluasi (D+1/D+7/D+30 + jam + penerima).
 
+## 2b. Aturan yang diputuskan Zaki (22 Nov 2026, migrasi `20261122150000_automation_policies`)
+- Pemetaan PIC: jobdesk FlowSpace (hanya mengisi yang kosong).
+- Saluran: aplikasi + WhatsApp.
+- Pengingat Deadline Ready: 24 & 3 jam sebelum, deadline 15.00 WIB, ke PIC kartu.
+- Pengingat metrik: D+1, D+7, D+30 pukul 09.00 WIB, ke reviewer (admin & Admin 2).
+Workflow tetap draft & worker tetap mati: Test Run → Publish → Nyalakan worker dilakukan admin di halaman Otomasi.
+
 ## 3. Belum bisa / diblokir
 - **Campaign master** tidak ada (hanya Campaign ID di kartu, dan isian itu sudah disembunyikan dari Detail kartu). Workflow D selalu Needs Configuration.
 - **Analitik Meta/Instagram** tidak terhubung: workflow E hanya mengingatkan mencatat metrik manual di tab CPR; tidak ada angka otomatis.
