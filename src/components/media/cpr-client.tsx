@@ -19,6 +19,13 @@ const rp = (n: number) => "Rp " + n.toLocaleString("id-ID");
 const pct = (a: number, b: number) => (b ? Math.round((a / b) * 100) + "%" : "—");
 const NA = <span className="rounded bg-[#F2F3F5] px-1.5 text-[11px] text-[#747B86]">N/A</span>;
 
+function openScriptInStudio(e: React.MouseEvent, id: string) {
+  if (typeof window !== "undefined" && window.parent !== window) {
+    e.preventDefault();
+    window.parent.postMessage({ type: "ts-open-script", id }, window.location.origin);
+  }
+}
+const scriptLink = (id: string) => "/studio/?p=script&card=" + encodeURIComponent(id);
 function openInStudio(e: React.MouseEvent, id: string, tab: string) {
   if (typeof window !== "undefined" && window.parent !== window) {
     e.preventDefault();
@@ -165,7 +172,7 @@ export function CprClient({ rows, names, labels, today }: { rows: CprRow[]; name
             </section>
             <section className="grid gap-1"><h3 className="text-[13px] font-bold">Bisnis</h3><p>{sel.inquiries} qualified inquiry · {sel.orders} order teratribusi{sel.orders ? " · " + rp(sel.revenue) : ""}</p></section>
           </div>
-          <div className="border-t border-[#E7E9ED] p-3"><a href={studioLink(sel.id)} target="_top" onClick={(e) => openInStudio(e, sel.id, "det")} className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#202328] hover:underline"><ExternalLink className="size-3.5" />Buka Detail kartu di Studio</a></div>
+          <div className="border-t border-[#E7E9ED] p-3"><a href={studioLink(sel.id)} target="_top" onClick={(e) => openInStudio(e, sel.id, "det")} className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#202328] hover:underline"><ExternalLink className="size-3.5" />Buka Detail kartu di Studio</a>{(sel.type === "vrv" || sel.type === "evt") && <a href={scriptLink(sel.id)} target="_top" onClick={(e) => openScriptInStudio(e, sel.id)} className="ml-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#202328] hover:underline"><ExternalLink className="size-3.5" />Script Konten</a>}</div>
         </aside>
       )}
     </div>

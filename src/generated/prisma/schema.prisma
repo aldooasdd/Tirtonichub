@@ -1167,3 +1167,69 @@ model AutomationAudit {
   @@index([at])
   @@index([resourceType, resourceId])
 }
+
+// ---------- Script Konten (22 Nov 2026) — tabel baru saja, tidak mengubah tabel lama ----------
+// Satu dokumen utama per kartu Video review / Video event yang punya Content ID (MediaTask.cprId).
+// taskId tanpa relasi FK supaya menghapus kartu tidak ikut menghapus script (tidak ada penghapusan otomatis).
+model ScriptDoc {
+  id           String   @id @default(cuid())
+  taskId       String   @unique
+  cprId        String
+  title        String
+  content      Json // dokumen Tiptap (JSON, divalidasi server; tidak pernah HTML mentah)
+  version      Int      @default(1) // naik setiap simpan; cek bentrok simpan bersamaan
+  status       String   @default("draft") // draft | review | revision | approved
+  submittedRev Int? // revisi yang sedang diajukan ke Creative Review
+  approvedRev  Int? // revisi terakhir yang disetujui (tetap ada walau isi diubah lagi)
+  writers      String[] // userId yang pernah mengubah isi (tidak boleh menyetujui)
+  createdById  String
+  updatedById  String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([cprId])
+  @@index([updatedAt])
+}
+
+// Riwayat versi: dibuat saat script dibuat, diajukan, disetujui, dipulihkan, dan saat simpan otomatis
+// bila versi terakhir sudah >15 menit atau dari orang lain (bukan setiap ketikan).
+model ScriptRevision {
+  id        String   @id @default(cuid())
+  docId     String
+  rev       Int
+  kind      String // create | save | submit | approve | revise | restore
+  title     String
+  content   Json
+  byId      String
+  createdAt DateTime @default(now())
+
+  @@unique([docId, rev])
+  @@index([docId])
+}
+
+model ScriptComment {
+  id           String    @id @default(cuid())
+  docId        String
+  byId         String
+  body         String
+  quote        String? // teks yang dipilih saat berkomentar
+  resolvedAt   DateTime?
+  resolvedById String?
+  createdAt    DateTime  @default(now())
+
+  @@index([docId])
+}
+
+// Keputusan Creative Review script: terikat ke revisi tertentu.
+model ScriptReview {
+  id        String   @id @default(cuid())
+  docId     String
+  rev       Int
+  byId      String
+  decision  String // approve | revise
+  note      String?
+  exc       String? // alasan admin penuh menyetujui script yang ia tulis sendiri
+  createdAt DateTime @default(now())
+
+  @@index([docId])
+}
