@@ -18,7 +18,8 @@ export type RunStatus = "running" | "waiting_for_human" | "completed" | "failed"
 export type Run = { id: string; workflowKey: string; version: number; eventId: string; entityId: string; status: RunStatus; cursor: string; waitKey: string | null; ctx: Doc; dryRun: boolean; error: string | null; correlationId: string };
 export type StepRec = { runId: string; nodeId: string; status: "completed" | "needs_configuration" | "failed" | "waiting" | "skipped"; handle: string | null; result: Doc; at: Date };
 export type Timer = { id?: string; key: string; kind: "reminder" | "performance"; entityId: string; dueAt: Date; payload: Doc; runId: string | null };
-export type ActiveWf = { key: string; version: number; graph: Graph };
+/** since = event sebelum waktu ini tidak memulai run (versi diterbitkan / worker dinyalakan): tumpukan event lama tidak membanjiri notifikasi. */
+export type ActiveWf = { key: string; version: number; graph: Graph; since?: Date };
 export type AuditIn = { actorType: "system" | "user"; actorId: string; action: string; resourceType: string; resourceId: string; outcome: string; correlationId: string; detail?: Doc };
 
 export interface AutoStore {
@@ -203,6 +204,7 @@ export async function processEvent(ev: AutoEvent, d: Deps): Promise<Run[]> {
   for (const wf of await d.store.activeWorkflows()) {
     const trig = wf.graph.nodes.find((n) => n.type === "trigger");
     if (!trig || trig.data.event !== ev.type) continue;
+    if (wf.since && ev.occurredAt < wf.since) continue; // event lama (sebelum terbit / sebelum worker menyala): diabaikan
     if (!(await d.store.inboxTry(ev.id, wf.key + ":v" + wf.version))) continue; // event ganda
     const run = await d.store.createRun({ workflowKey: wf.key, version: wf.version, eventId: ev.id, entityId: ev.entityId, status: "running", cursor: trig.id, waitKey: null, ctx: { event: ev.type, ...ev.payload }, dryRun: false, error: null, correlationId: ev.correlationId });
     if (run) out.push(await advance(run, wf.graph, d));
