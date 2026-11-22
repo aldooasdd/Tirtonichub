@@ -9,3 +9,10 @@ test("aturan di migrasi keputusan Zaki sah menurut validasi aturan", () => {
   assert.equal(rows.length, 4);
   for (const [, k, cfg] of rows) assert.equal(policyConfigWhy(k as PolicyKey, JSON.parse(cfg)), null, k);
 });
+
+test("aturan 'lebih tenang' (D+7 saja, aplikasi saja) sah menurut validasi", () => {
+  const sql = readFileSync("prisma/migrations/20261122210000_automation_policies_quiet/migration.sql", "utf8");
+  const rows = [...sql.matchAll(/WHERE "key" = '([a-z.]+)' AND "config" <> '(\{[^']+\})'/g)];
+  assert.equal(rows.length, 2);
+  for (const [, k, cfg] of rows) assert.equal(policyConfigWhy(k as PolicyKey, JSON.parse(cfg)), null, k);
+});

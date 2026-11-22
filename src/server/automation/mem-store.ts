@@ -5,7 +5,7 @@ import type { Graph } from "./types";
 
 type Doc = Record<string, unknown>;
 export class MemDb {
-  workflows = new Map<string, { version: number; graphs: Map<number, Graph> }>();
+  workflows = new Map<string, { version: number; graphs: Map<number, Graph>; since?: Date }>();
   inbox = new Set<string>();
   runs = new Map<string, Run>();
   runKeys = new Set<string>();
@@ -20,16 +20,17 @@ export class MemDb {
   assigned: { id: string; role: string; code: string }[] = [];
   snapshots = new Set<string>();
   n = 0;
-  publish(key: string, g: Graph) {
-    const w = this.workflows.get(key) ?? { version: 0, graphs: new Map() };
+  publish(key: string, g: Graph, since?: Date) {
+    const w: { version: number; graphs: Map<number, Graph>; since?: Date } = this.workflows.get(key) ?? { version: 0, graphs: new Map() };
     w.version++;
     w.graphs.set(w.version, structuredClone(g));
+    w.since = since;
     this.workflows.set(key, w);
   }
 }
 export function memStore(db: MemDb): AutoStore {
   return {
-    activeWorkflows: async () => [...db.workflows].map(([key, w]): ActiveWf => ({ key, version: w.version, graph: w.graphs.get(w.version)! })),
+    activeWorkflows: async () => [...db.workflows].map(([key, w]): ActiveWf => ({ key, version: w.version, graph: w.graphs.get(w.version)!, since: w.since })),
     versionGraph: async (k, v) => db.workflows.get(k)?.graphs.get(v) ?? null,
     inboxTry: async (e, c) => (db.inbox.has(e + "|" + c) ? false : (db.inbox.add(e + "|" + c), true)),
     createRun: async (r) => {

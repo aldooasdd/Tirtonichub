@@ -153,3 +153,16 @@ test("event diturunkan dari perubahan kartu", () => {
   assert.deepEqual(taskEvents("x", { ...b, status: "Ready" }, { ...b, status: "Tayang", postAt: "2026-11-21" }).map((e) => e.type), ["task.deadline_changed.v1", "content.published.v1"]);
   assert.deepEqual(taskEvents("x", { type: "ktl" }, { type: "ktl", status: "Tayang" }), []); // bukan jenis CPR
 });
+
+test("event lama (sebelum terbit / worker menyala) tidak memulai run & tidak mengirim notifikasi", async () => {
+  const { db, deps } = setup();
+  db.publish("qa-approval", wf("qa-approval"), new Date("2026-11-22T00:00:00Z"));
+  active(db, "notify.channel");
+  db.tasks.set("t9", { type: "vrv", title: "Lama", producer: "R", editor: "R", qa: { ver: 1 } });
+  const old = { ...ev("production.submitted_for_qa.v1", "t9", { ver: 1 }), occurredAt: new Date("2026-11-21T05:00:00Z") };
+  assert.equal((await processEvent(old, deps())).length, 0);
+  assert.equal(db.sent.length, 0);
+  const baru = { ...ev("production.submitted_for_qa.v1", "t9", { ver: 1 }), occurredAt: new Date("2026-11-22T05:00:00Z") };
+  assert.equal((await processEvent(baru, deps())).length, 1);
+  assert.equal(db.sent.length, 1); // reviewer diberi tahu untuk pengajuan baru saja
+});

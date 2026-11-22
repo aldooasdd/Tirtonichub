@@ -20,8 +20,14 @@ const DONE = ["completed", "failed", "needs_configuration", "skipped"];
 export const dbStore: AutoStore = {
   async activeWorkflows() {
     const ws = await prisma.automationWorkflow.findMany({ where: { status: "published", activeVersion: { not: null } } });
-    const vs = await prisma.automationWorkflowVersion.findMany({ where: { OR: ws.map((w) => ({ workflowKey: w.key, version: w.activeVersion! })) } });
-    return vs.map((v) => ({ key: v.workflowKey, version: v.version, graph: v.graph as unknown as Graph }));
+    if (!ws.length) return [];
+    const [vs, flag] = await Promise.all([
+      prisma.automationWorkflowVersion.findMany({ where: { OR: ws.map((w) => ({ workflowKey: w.key, version: w.activeVersion! })) } }),
+      prisma.automationPolicy.findUnique({ where: { key: "worker.enabled" }, select: { status: true, updatedAt: true } }),
+    ]);
+    // Event yang terjadi sebelum versi ini terbit atau sebelum worker terakhir dinyalakan tidak memulai run baru.
+    const on = flag?.status === "active" ? flag.updatedAt : null;
+    return vs.map((v) => ({ key: v.workflowKey, version: v.version, graph: v.graph as unknown as Graph, since: on && on > v.publishedAt ? on : v.publishedAt }));
   },
   async versionGraph(key, version) {
     const v = await prisma.automationWorkflowVersion.findUnique({ where: { workflowKey_version: { workflowKey: key, version } } });
