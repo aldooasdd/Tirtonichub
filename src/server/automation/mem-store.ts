@@ -16,7 +16,7 @@ export class MemDb {
   auditLog: AuditIn[] = [];
   tasks = new Map<string, Doc>();
   settingsDoc: Doc = {};
-  sent: { userIds: string[]; title: string }[] = [];
+  sent: { userIds: string[]; title: string; wa?: boolean }[] = [];
   assigned: { id: string; role: string; code: string }[] = [];
   snapshots = new Set<string>();
   n = 0;
@@ -75,7 +75,7 @@ export function memBiz(db: MemDb): Biz {
     },
     userIdsForCodes: async (codes) => codes.map((c) => "u-" + c),
     staffUserIds: async () => ["u-Z", "u-A"],
-    notify: async (userIds, m) => void db.sent.push({ userIds, title: m.title }),
+    notify: async (userIds, m) => void db.sent.push({ userIds, title: m.title, wa: m.wa }),
     hasSnapshot: async (id, cp) => db.snapshots.has(id + ":" + cp),
   };
 }

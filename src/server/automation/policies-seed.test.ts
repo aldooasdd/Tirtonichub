@@ -16,3 +16,9 @@ test("aturan 'lebih tenang' (D+7 saja, aplikasi saja) sah menurut validasi", () 
   assert.equal(rows.length, 2);
   for (const [, k, cfg] of rows) assert.equal(policyConfigWhy(k as PolicyKey, JSON.parse(cfg)), null, k);
 });
+
+test("E D+7 + WhatsApp sah", () => {
+  const sql = readFileSync("prisma/migrations/20261123090000_automation_perf_wa/migration.sql", "utf8");
+  const m = sql.match(/WHERE "key" = '([a-z.]+)' AND "config" <> '(\{[^']+\})'/)!;
+  assert.equal(policyConfigWhy(m[1] as PolicyKey, JSON.parse(m[2])), null);
+});

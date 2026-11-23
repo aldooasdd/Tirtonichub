@@ -274,6 +274,7 @@ function PolicyCard({ p, edit, onSaved }: { p: Policy; edit: boolean; onSaved: (
           <div className="flex gap-3">{[1, 7, 30].map((d) => <label key={d} className="flex items-center gap-1.5"><input type="checkbox" disabled={!edit} checked={days.includes(d)} onChange={(e) => setC({ ...c, days: e.target.checked ? [...days, d].sort((a, b) => a - b) : days.filter((x) => x !== d) })} />D+{d}</label>)}</div>
           <label className="flex items-center gap-2">Jam kirim (WIB) <input type="time" disabled={!edit} className={inp} value={String(c.sendTime ?? "")} onChange={(e) => setC({ ...c, sendTime: e.target.value })} /></label>
           <label className="flex items-center gap-2">Penerima <select disabled={!edit} className={inp} value={String(c.recipients ?? "")} onChange={(e) => setC({ ...c, recipients: e.target.value })}><option value="">Pilih…</option>{Object.entries(RECIPIENTS).map(([k, l]) => <option key={k} value={k}>{l}</option>)}</select></label>
+          <label className="flex items-center gap-2"><input type="checkbox" disabled={!edit} checked={c.wa === true} onChange={(e) => setC({ ...c, wa: e.target.checked })} />Kirim juga lewat WhatsApp (khusus pengingat metrik)</label>
           <p className="text-[12px] text-[#73777F]">Hanya pengingat untuk mencatat metrik di tab CPR. Tidak ada data analitik yang diambil otomatis (belum ada integrasi Meta).</p>
         </div>
       )}

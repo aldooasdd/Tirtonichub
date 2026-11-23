@@ -231,6 +231,7 @@ export async function fireTimers(d: Deps): Promise<{ sent: number; suppressed: n
     let why = "";
     let to = "pic";
     let tpl: TemplateKey = "deadline_reminder";
+    let waPerf = false; // pengingat metrik: WhatsApp bisa dinyalakan khusus (performance.checkpoints.wa), terpisah dari saluran umum
     if (!task) why = "kartu tidak ada";
     else if (t.kind === "reminder") {
       const p = await pol(d, "reminder.schedule");
@@ -241,6 +242,7 @@ export async function fireTimers(d: Deps): Promise<{ sent: number; suppressed: n
     } else {
       const p = await pol(d, "performance.checkpoints");
       tpl = "metrics_due";
+      waPerf = p?.config.wa === true;
       if (!p) why = "aturan evaluasi tidak aktif";
       else if (task.status !== "Tayang" || s(task.postAt) !== s(t.payload.postAt)) why = "tanggal tayang berubah";
       else if (await d.biz.hasSnapshot(t.entityId, s(t.payload.cp))) why = "metrik sudah dicatat";
@@ -257,7 +259,7 @@ export async function fireTimers(d: Deps): Promise<{ sent: number; suppressed: n
     const ids = await recipients(d, to, task);
     const fresh: string[] = [];
     for (const u of ids) if (await d.store.deliveryTry(t.key + ":" + u)) fresh.push(u);
-    if (fresh.length) await d.biz.notify(fresh, { type: "studio_auto", title: TEMPLATES[tpl] + (t.kind === "performance" ? " (" + s(t.payload.cp) + ")" : ""), body: s(task.title), url: cardLink(t.entityId), wa: ch!.config.channel === "app_wa" });
+    if (fresh.length) await d.biz.notify(fresh, { type: "studio_auto", title: TEMPLATES[tpl] + (t.kind === "performance" ? " (" + s(t.payload.cp) + ")" : ""), body: s(task.title), url: cardLink(t.entityId), wa: ch!.config.channel === "app_wa" || waPerf });
     await d.store.finishTimer(t.id!, "sent");
     await d.store.audit({ actorType: "system", actorId: "automation", action: "reminder.sent", resourceType: "task", resourceId: t.entityId, outcome: "sent:" + fresh.length, correlationId: t.key });
     sent++;
