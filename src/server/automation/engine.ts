@@ -244,6 +244,7 @@ export async function fireTimers(d: Deps): Promise<{ sent: number; suppressed: n
       tpl = "metrics_due";
       waPerf = p?.config.wa === true;
       if (!p) why = "aturan evaluasi tidak aktif";
+      else if (!(Array.isArray(p.config.days) ? (p.config.days as number[]) : []).map((n) => "D+" + n).includes(s(t.payload.cp))) why = "checkpoint " + s(t.payload.cp) + " tidak dipakai lagi";
       else if (task.status !== "Tayang" || s(task.postAt) !== s(t.payload.postAt)) why = "tanggal tayang berubah";
       else if (await d.biz.hasSnapshot(t.entityId, s(t.payload.cp))) why = "metrik sudah dicatat";
       to = s(p?.config.recipients) || "pic";

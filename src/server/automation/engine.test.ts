@@ -180,3 +180,17 @@ test("E: WhatsApp khusus pengingat metrik (wa:true) walau saluran umum aplikasi 
   assert.equal(db.sent.at(-1)?.wa, true);
   assert.match(String(db.sent.at(-1)?.title), /D\+7/);
 });
+
+test("E: pengingat checkpoint yang sudah tidak dipakai (mis. D+1 setelah diganti D+7 saja) dibatalkan", async () => {
+  const { db, deps } = setup();
+  db.publish("performance", wf("performance"));
+  active(db, "notify.channel");
+  db.policies.set("performance.checkpoints", { key: "performance.checkpoints", status: "active", config: { days: [1, 7], sendTime: "09:00", recipients: "pic" }, version: 1 });
+  db.tasks.set("t7", { type: "igf", title: "Foto", producer: "R", status: "Tayang", postAt: "2026-11-21" });
+  await processEvent(ev("content.published.v1", "t7"), deps());
+  assert.equal(db.timers.length, 2);
+  db.policies.set("performance.checkpoints", { key: "performance.checkpoints", status: "active", config: { days: [7], sendTime: "09:00", recipients: "pic" }, version: 2 });
+  const r = await fireTimers(deps(new Date("2026-11-22T03:00:00Z"))); // D+1 jatuh tempo
+  assert.equal(r.sent, 0);
+  assert.equal(r.suppressed, 1);
+});
