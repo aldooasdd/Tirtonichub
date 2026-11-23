@@ -267,6 +267,20 @@ export function nextQa(prev: unknown, act: unknown, task: Doc, who: Who, cfg: Qa
   return { ...p, st, round: p.round + 1, rev, appBy: st === "approved" ? by : "", appAt: st === "approved" ? at : 0, log: [...p.log, entry].slice(-QA_LOG_MAX) };
 }
 
+/** Ajukan Creative Review otomatis (keputusan Zaki 23 Nov 2026): kartu masuk Ready, atau file final diganti saat Ready,
+ *  langsung diajukan bila syaratnya lengkap (file final, brief disetujui). Status Approved/sudah diajukan tidak disentuh;
+ *  syarat belum lengkap = diam (kartu tetap boleh Ready, tombol Ajukan manual tetap ada). null = tidak ada perubahan. */
+export function qaAutoSubmit(before: Doc | null, after: Doc, by: string, cfg: QaCfg = QA_DEFAULT, at = Date.now()): Qa | null {
+  if (!before || s(after.status) !== "Ready" || !needsCpr(after.type) || !after.cprId) return null;
+  const entered = s(before.status) !== "Ready";
+  const newFile = s(before.driveUrl) !== s(after.driveUrl);
+  if (!entered && !newFile) return null;
+  const st = qaOf(after.qa).st;
+  if (st === "submitted" || st === "approved") return null;
+  const q = nextQa(after.qa, { act: "submit" }, after, { name: by, code: "", full: false, staff: false }, cfg, at);
+  return typeof q === "string" ? null : q;
+}
+
 /** Perubahan material setelah diajukan/Approved (file final atau informasi produk) membuka QA kembali. null = tidak berubah. */
 export const QA_MATERIAL: Record<string, string> = { driveUrl: "file final", title: "judul", productSku: "SKU", itemId: "barang", type: "jenis konten" };
 export function qaReopen(prev: unknown, before: Doc | null, after: Doc, by: string, at = Date.now()): Qa | null {

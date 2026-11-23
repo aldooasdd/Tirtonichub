@@ -13,7 +13,7 @@ import { canRead, canWrite, type Doc, type StudioUser } from "./rules";
 import { loadAccess } from "./access";
 import * as M from "./map";
 import { nextPlanLog } from "./plan-log";
-import { cprIdOf, cprYymm, needsCpr, nextQa, qaBlocks, qaCfgOf, qaReopen } from "./cpr";
+import { cprIdOf, cprYymm, needsCpr, nextQa, qaBlocks, qaAutoSubmit, qaCfgOf, qaReopen } from "./cpr";
 import { briefBlocks, nextBrief } from "./brief";
 import { briefCfgOf } from "./brief-master";
 import { withKey } from "./lock";
@@ -181,6 +181,9 @@ async function writeDocInner(u: StudioUser, op: "set" | "update" | "delete", pat
       // file final / info produk berubah setelah QA diajukan atau Approved → QA dibuka kembali
       const r = qaReopen(after.qa, before, after, u.name);
       if (r) after.qa = r;
+      // masuk Ready / file final diganti saat Ready → Creative Review diajukan otomatis
+      const auto = qaAutoSubmit(before, after, u.name, qaCfgOf((await getRaw("settings/main"))?.qaCfg));
+      if (auto) after.qa = auto;
     }
     if (!before && needsCpr(after.type)) {
       after.qaReq = true; // kartu baru: wajib QA Approved sebelum Tayang/Meta
