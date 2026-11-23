@@ -228,6 +228,11 @@ export type MediaPcal = $Result.DefaultSelection<Prisma.$MediaPcalPayload>
  */
 export type StudioDoc = $Result.DefaultSelection<Prisma.$StudioDocPayload>
 /**
+ * Model StudioPageUse
+ * 
+ */
+export type StudioPageUse = $Result.DefaultSelection<Prisma.$StudioPageUsePayload>
+/**
  * Model StudioTombstone
  * 
  */
@@ -1015,6 +1020,16 @@ export class PrismaClient<
   get studioDoc(): Prisma.StudioDocDelegate<ExtArgs, ClientOptions>;
 
   /**
+   * `prisma.studioPageUse`: Exposes CRUD operations for the **StudioPageUse** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more StudioPageUses
+    * const studioPageUses = await prisma.studioPageUse.findMany()
+    * ```
+    */
+  get studioPageUse(): Prisma.StudioPageUseDelegate<ExtArgs, ClientOptions>;
+
+  /**
    * `prisma.studioTombstone`: Exposes CRUD operations for the **StudioTombstone** model.
     * Example usage:
     * ```ts
@@ -1746,6 +1761,7 @@ export namespace Prisma {
     PersonalCalEvent: 'PersonalCalEvent',
     MediaPcal: 'MediaPcal',
     StudioDoc: 'StudioDoc',
+    StudioPageUse: 'StudioPageUse',
     StudioTombstone: 'StudioTombstone',
     PushSubscription: 'PushSubscription',
     PushLog: 'PushLog',
@@ -1789,7 +1805,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit" | "scriptDoc" | "scriptRevision" | "scriptComment" | "scriptReview"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioPageUse" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit" | "scriptDoc" | "scriptRevision" | "scriptComment" | "scriptReview"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -4901,6 +4917,80 @@ export namespace Prisma {
           }
         }
       }
+      StudioPageUse: {
+        payload: Prisma.$StudioPageUsePayload<ExtArgs>
+        fields: Prisma.StudioPageUseFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.StudioPageUseFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioPageUsePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.StudioPageUseFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioPageUsePayload>
+          }
+          findFirst: {
+            args: Prisma.StudioPageUseFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioPageUsePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.StudioPageUseFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioPageUsePayload>
+          }
+          findMany: {
+            args: Prisma.StudioPageUseFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioPageUsePayload>[]
+          }
+          create: {
+            args: Prisma.StudioPageUseCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioPageUsePayload>
+          }
+          createMany: {
+            args: Prisma.StudioPageUseCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.StudioPageUseCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioPageUsePayload>[]
+          }
+          delete: {
+            args: Prisma.StudioPageUseDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioPageUsePayload>
+          }
+          update: {
+            args: Prisma.StudioPageUseUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioPageUsePayload>
+          }
+          deleteMany: {
+            args: Prisma.StudioPageUseDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.StudioPageUseUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.StudioPageUseUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioPageUsePayload>[]
+          }
+          upsert: {
+            args: Prisma.StudioPageUseUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$StudioPageUsePayload>
+          }
+          aggregate: {
+            args: Prisma.StudioPageUseAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateStudioPageUse>
+          }
+          groupBy: {
+            args: Prisma.StudioPageUseGroupByArgs<ExtArgs>
+            result: $Utils.Optional<StudioPageUseGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.StudioPageUseCountArgs<ExtArgs>
+            result: $Utils.Optional<StudioPageUseCountAggregateOutputType> | number
+          }
+        }
+      }
       StudioTombstone: {
         payload: Prisma.$StudioTombstonePayload<ExtArgs>
         fields: Prisma.StudioTombstoneFieldRefs
@@ -6889,6 +6979,7 @@ export namespace Prisma {
     personalCalEvent?: PersonalCalEventOmit
     mediaPcal?: MediaPcalOmit
     studioDoc?: StudioDocOmit
+    studioPageUse?: StudioPageUseOmit
     studioTombstone?: StudioTombstoneOmit
     pushSubscription?: PushSubscriptionOmit
     pushLog?: PushLogOmit
@@ -55995,6 +56086,1035 @@ export namespace Prisma {
 
 
   /**
+   * Model StudioPageUse
+   */
+
+  export type AggregateStudioPageUse = {
+    _count: StudioPageUseCountAggregateOutputType | null
+    _avg: StudioPageUseAvgAggregateOutputType | null
+    _sum: StudioPageUseSumAggregateOutputType | null
+    _min: StudioPageUseMinAggregateOutputType | null
+    _max: StudioPageUseMaxAggregateOutputType | null
+  }
+
+  export type StudioPageUseAvgAggregateOutputType = {
+    n: number | null
+  }
+
+  export type StudioPageUseSumAggregateOutputType = {
+    n: number | null
+  }
+
+  export type StudioPageUseMinAggregateOutputType = {
+    userId: string | null
+    day: string | null
+    page: string | null
+    n: number | null
+    lastAt: Date | null
+  }
+
+  export type StudioPageUseMaxAggregateOutputType = {
+    userId: string | null
+    day: string | null
+    page: string | null
+    n: number | null
+    lastAt: Date | null
+  }
+
+  export type StudioPageUseCountAggregateOutputType = {
+    userId: number
+    day: number
+    page: number
+    n: number
+    lastAt: number
+    _all: number
+  }
+
+
+  export type StudioPageUseAvgAggregateInputType = {
+    n?: true
+  }
+
+  export type StudioPageUseSumAggregateInputType = {
+    n?: true
+  }
+
+  export type StudioPageUseMinAggregateInputType = {
+    userId?: true
+    day?: true
+    page?: true
+    n?: true
+    lastAt?: true
+  }
+
+  export type StudioPageUseMaxAggregateInputType = {
+    userId?: true
+    day?: true
+    page?: true
+    n?: true
+    lastAt?: true
+  }
+
+  export type StudioPageUseCountAggregateInputType = {
+    userId?: true
+    day?: true
+    page?: true
+    n?: true
+    lastAt?: true
+    _all?: true
+  }
+
+  export type StudioPageUseAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StudioPageUse to aggregate.
+     */
+    where?: StudioPageUseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudioPageUses to fetch.
+     */
+    orderBy?: StudioPageUseOrderByWithRelationInput | StudioPageUseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: StudioPageUseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudioPageUses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudioPageUses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned StudioPageUses
+    **/
+    _count?: true | StudioPageUseCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: StudioPageUseAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: StudioPageUseSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: StudioPageUseMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: StudioPageUseMaxAggregateInputType
+  }
+
+  export type GetStudioPageUseAggregateType<T extends StudioPageUseAggregateArgs> = {
+        [P in keyof T & keyof AggregateStudioPageUse]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateStudioPageUse[P]>
+      : GetScalarType<T[P], AggregateStudioPageUse[P]>
+  }
+
+
+
+
+  export type StudioPageUseGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: StudioPageUseWhereInput
+    orderBy?: StudioPageUseOrderByWithAggregationInput | StudioPageUseOrderByWithAggregationInput[]
+    by: StudioPageUseScalarFieldEnum[] | StudioPageUseScalarFieldEnum
+    having?: StudioPageUseScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: StudioPageUseCountAggregateInputType | true
+    _avg?: StudioPageUseAvgAggregateInputType
+    _sum?: StudioPageUseSumAggregateInputType
+    _min?: StudioPageUseMinAggregateInputType
+    _max?: StudioPageUseMaxAggregateInputType
+  }
+
+  export type StudioPageUseGroupByOutputType = {
+    userId: string
+    day: string
+    page: string
+    n: number
+    lastAt: Date
+    _count: StudioPageUseCountAggregateOutputType | null
+    _avg: StudioPageUseAvgAggregateOutputType | null
+    _sum: StudioPageUseSumAggregateOutputType | null
+    _min: StudioPageUseMinAggregateOutputType | null
+    _max: StudioPageUseMaxAggregateOutputType | null
+  }
+
+  type GetStudioPageUseGroupByPayload<T extends StudioPageUseGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<StudioPageUseGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof StudioPageUseGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], StudioPageUseGroupByOutputType[P]>
+            : GetScalarType<T[P], StudioPageUseGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type StudioPageUseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    day?: boolean
+    page?: boolean
+    n?: boolean
+    lastAt?: boolean
+  }, ExtArgs["result"]["studioPageUse"]>
+
+  export type StudioPageUseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    day?: boolean
+    page?: boolean
+    n?: boolean
+    lastAt?: boolean
+  }, ExtArgs["result"]["studioPageUse"]>
+
+  export type StudioPageUseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    userId?: boolean
+    day?: boolean
+    page?: boolean
+    n?: boolean
+    lastAt?: boolean
+  }, ExtArgs["result"]["studioPageUse"]>
+
+  export type StudioPageUseSelectScalar = {
+    userId?: boolean
+    day?: boolean
+    page?: boolean
+    n?: boolean
+    lastAt?: boolean
+  }
+
+  export type StudioPageUseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"userId" | "day" | "page" | "n" | "lastAt", ExtArgs["result"]["studioPageUse"]>
+
+  export type $StudioPageUsePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "StudioPageUse"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      userId: string
+      day: string
+      page: string
+      n: number
+      lastAt: Date
+    }, ExtArgs["result"]["studioPageUse"]>
+    composites: {}
+  }
+
+  type StudioPageUseGetPayload<S extends boolean | null | undefined | StudioPageUseDefaultArgs> = $Result.GetResult<Prisma.$StudioPageUsePayload, S>
+
+  type StudioPageUseCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<StudioPageUseFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: StudioPageUseCountAggregateInputType | true
+    }
+
+  export interface StudioPageUseDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['StudioPageUse'], meta: { name: 'StudioPageUse' } }
+    /**
+     * Find zero or one StudioPageUse that matches the filter.
+     * @param {StudioPageUseFindUniqueArgs} args - Arguments to find a StudioPageUse
+     * @example
+     * // Get one StudioPageUse
+     * const studioPageUse = await prisma.studioPageUse.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends StudioPageUseFindUniqueArgs>(args: SelectSubset<T, StudioPageUseFindUniqueArgs<ExtArgs>>): Prisma__StudioPageUseClient<$Result.GetResult<Prisma.$StudioPageUsePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one StudioPageUse that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {StudioPageUseFindUniqueOrThrowArgs} args - Arguments to find a StudioPageUse
+     * @example
+     * // Get one StudioPageUse
+     * const studioPageUse = await prisma.studioPageUse.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends StudioPageUseFindUniqueOrThrowArgs>(args: SelectSubset<T, StudioPageUseFindUniqueOrThrowArgs<ExtArgs>>): Prisma__StudioPageUseClient<$Result.GetResult<Prisma.$StudioPageUsePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StudioPageUse that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioPageUseFindFirstArgs} args - Arguments to find a StudioPageUse
+     * @example
+     * // Get one StudioPageUse
+     * const studioPageUse = await prisma.studioPageUse.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends StudioPageUseFindFirstArgs>(args?: SelectSubset<T, StudioPageUseFindFirstArgs<ExtArgs>>): Prisma__StudioPageUseClient<$Result.GetResult<Prisma.$StudioPageUsePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first StudioPageUse that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioPageUseFindFirstOrThrowArgs} args - Arguments to find a StudioPageUse
+     * @example
+     * // Get one StudioPageUse
+     * const studioPageUse = await prisma.studioPageUse.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends StudioPageUseFindFirstOrThrowArgs>(args?: SelectSubset<T, StudioPageUseFindFirstOrThrowArgs<ExtArgs>>): Prisma__StudioPageUseClient<$Result.GetResult<Prisma.$StudioPageUsePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more StudioPageUses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioPageUseFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all StudioPageUses
+     * const studioPageUses = await prisma.studioPageUse.findMany()
+     * 
+     * // Get first 10 StudioPageUses
+     * const studioPageUses = await prisma.studioPageUse.findMany({ take: 10 })
+     * 
+     * // Only select the `userId`
+     * const studioPageUseWithUserIdOnly = await prisma.studioPageUse.findMany({ select: { userId: true } })
+     * 
+     */
+    findMany<T extends StudioPageUseFindManyArgs>(args?: SelectSubset<T, StudioPageUseFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudioPageUsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a StudioPageUse.
+     * @param {StudioPageUseCreateArgs} args - Arguments to create a StudioPageUse.
+     * @example
+     * // Create one StudioPageUse
+     * const StudioPageUse = await prisma.studioPageUse.create({
+     *   data: {
+     *     // ... data to create a StudioPageUse
+     *   }
+     * })
+     * 
+     */
+    create<T extends StudioPageUseCreateArgs>(args: SelectSubset<T, StudioPageUseCreateArgs<ExtArgs>>): Prisma__StudioPageUseClient<$Result.GetResult<Prisma.$StudioPageUsePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many StudioPageUses.
+     * @param {StudioPageUseCreateManyArgs} args - Arguments to create many StudioPageUses.
+     * @example
+     * // Create many StudioPageUses
+     * const studioPageUse = await prisma.studioPageUse.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends StudioPageUseCreateManyArgs>(args?: SelectSubset<T, StudioPageUseCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many StudioPageUses and returns the data saved in the database.
+     * @param {StudioPageUseCreateManyAndReturnArgs} args - Arguments to create many StudioPageUses.
+     * @example
+     * // Create many StudioPageUses
+     * const studioPageUse = await prisma.studioPageUse.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many StudioPageUses and only return the `userId`
+     * const studioPageUseWithUserIdOnly = await prisma.studioPageUse.createManyAndReturn({
+     *   select: { userId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends StudioPageUseCreateManyAndReturnArgs>(args?: SelectSubset<T, StudioPageUseCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudioPageUsePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a StudioPageUse.
+     * @param {StudioPageUseDeleteArgs} args - Arguments to delete one StudioPageUse.
+     * @example
+     * // Delete one StudioPageUse
+     * const StudioPageUse = await prisma.studioPageUse.delete({
+     *   where: {
+     *     // ... filter to delete one StudioPageUse
+     *   }
+     * })
+     * 
+     */
+    delete<T extends StudioPageUseDeleteArgs>(args: SelectSubset<T, StudioPageUseDeleteArgs<ExtArgs>>): Prisma__StudioPageUseClient<$Result.GetResult<Prisma.$StudioPageUsePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one StudioPageUse.
+     * @param {StudioPageUseUpdateArgs} args - Arguments to update one StudioPageUse.
+     * @example
+     * // Update one StudioPageUse
+     * const studioPageUse = await prisma.studioPageUse.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends StudioPageUseUpdateArgs>(args: SelectSubset<T, StudioPageUseUpdateArgs<ExtArgs>>): Prisma__StudioPageUseClient<$Result.GetResult<Prisma.$StudioPageUsePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more StudioPageUses.
+     * @param {StudioPageUseDeleteManyArgs} args - Arguments to filter StudioPageUses to delete.
+     * @example
+     * // Delete a few StudioPageUses
+     * const { count } = await prisma.studioPageUse.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends StudioPageUseDeleteManyArgs>(args?: SelectSubset<T, StudioPageUseDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StudioPageUses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioPageUseUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many StudioPageUses
+     * const studioPageUse = await prisma.studioPageUse.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends StudioPageUseUpdateManyArgs>(args: SelectSubset<T, StudioPageUseUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more StudioPageUses and returns the data updated in the database.
+     * @param {StudioPageUseUpdateManyAndReturnArgs} args - Arguments to update many StudioPageUses.
+     * @example
+     * // Update many StudioPageUses
+     * const studioPageUse = await prisma.studioPageUse.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more StudioPageUses and only return the `userId`
+     * const studioPageUseWithUserIdOnly = await prisma.studioPageUse.updateManyAndReturn({
+     *   select: { userId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends StudioPageUseUpdateManyAndReturnArgs>(args: SelectSubset<T, StudioPageUseUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$StudioPageUsePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one StudioPageUse.
+     * @param {StudioPageUseUpsertArgs} args - Arguments to update or create a StudioPageUse.
+     * @example
+     * // Update or create a StudioPageUse
+     * const studioPageUse = await prisma.studioPageUse.upsert({
+     *   create: {
+     *     // ... data to create a StudioPageUse
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the StudioPageUse we want to update
+     *   }
+     * })
+     */
+    upsert<T extends StudioPageUseUpsertArgs>(args: SelectSubset<T, StudioPageUseUpsertArgs<ExtArgs>>): Prisma__StudioPageUseClient<$Result.GetResult<Prisma.$StudioPageUsePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of StudioPageUses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioPageUseCountArgs} args - Arguments to filter StudioPageUses to count.
+     * @example
+     * // Count the number of StudioPageUses
+     * const count = await prisma.studioPageUse.count({
+     *   where: {
+     *     // ... the filter for the StudioPageUses we want to count
+     *   }
+     * })
+    **/
+    count<T extends StudioPageUseCountArgs>(
+      args?: Subset<T, StudioPageUseCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], StudioPageUseCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a StudioPageUse.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioPageUseAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends StudioPageUseAggregateArgs>(args: Subset<T, StudioPageUseAggregateArgs>): Prisma.PrismaPromise<GetStudioPageUseAggregateType<T>>
+
+    /**
+     * Group by StudioPageUse.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {StudioPageUseGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends StudioPageUseGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: StudioPageUseGroupByArgs['orderBy'] }
+        : { orderBy?: StudioPageUseGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, StudioPageUseGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetStudioPageUseGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the StudioPageUse model
+   */
+  readonly fields: StudioPageUseFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for StudioPageUse.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__StudioPageUseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the StudioPageUse model
+   */
+  interface StudioPageUseFieldRefs {
+    readonly userId: FieldRef<"StudioPageUse", 'String'>
+    readonly day: FieldRef<"StudioPageUse", 'String'>
+    readonly page: FieldRef<"StudioPageUse", 'String'>
+    readonly n: FieldRef<"StudioPageUse", 'Int'>
+    readonly lastAt: FieldRef<"StudioPageUse", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * StudioPageUse findUnique
+   */
+  export type StudioPageUseFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioPageUse
+     */
+    select?: StudioPageUseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioPageUse
+     */
+    omit?: StudioPageUseOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioPageUse to fetch.
+     */
+    where: StudioPageUseWhereUniqueInput
+  }
+
+  /**
+   * StudioPageUse findUniqueOrThrow
+   */
+  export type StudioPageUseFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioPageUse
+     */
+    select?: StudioPageUseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioPageUse
+     */
+    omit?: StudioPageUseOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioPageUse to fetch.
+     */
+    where: StudioPageUseWhereUniqueInput
+  }
+
+  /**
+   * StudioPageUse findFirst
+   */
+  export type StudioPageUseFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioPageUse
+     */
+    select?: StudioPageUseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioPageUse
+     */
+    omit?: StudioPageUseOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioPageUse to fetch.
+     */
+    where?: StudioPageUseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudioPageUses to fetch.
+     */
+    orderBy?: StudioPageUseOrderByWithRelationInput | StudioPageUseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StudioPageUses.
+     */
+    cursor?: StudioPageUseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudioPageUses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudioPageUses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StudioPageUses.
+     */
+    distinct?: StudioPageUseScalarFieldEnum | StudioPageUseScalarFieldEnum[]
+  }
+
+  /**
+   * StudioPageUse findFirstOrThrow
+   */
+  export type StudioPageUseFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioPageUse
+     */
+    select?: StudioPageUseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioPageUse
+     */
+    omit?: StudioPageUseOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioPageUse to fetch.
+     */
+    where?: StudioPageUseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudioPageUses to fetch.
+     */
+    orderBy?: StudioPageUseOrderByWithRelationInput | StudioPageUseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for StudioPageUses.
+     */
+    cursor?: StudioPageUseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudioPageUses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudioPageUses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of StudioPageUses.
+     */
+    distinct?: StudioPageUseScalarFieldEnum | StudioPageUseScalarFieldEnum[]
+  }
+
+  /**
+   * StudioPageUse findMany
+   */
+  export type StudioPageUseFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioPageUse
+     */
+    select?: StudioPageUseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioPageUse
+     */
+    omit?: StudioPageUseOmit<ExtArgs> | null
+    /**
+     * Filter, which StudioPageUses to fetch.
+     */
+    where?: StudioPageUseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of StudioPageUses to fetch.
+     */
+    orderBy?: StudioPageUseOrderByWithRelationInput | StudioPageUseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing StudioPageUses.
+     */
+    cursor?: StudioPageUseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` StudioPageUses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` StudioPageUses.
+     */
+    skip?: number
+    distinct?: StudioPageUseScalarFieldEnum | StudioPageUseScalarFieldEnum[]
+  }
+
+  /**
+   * StudioPageUse create
+   */
+  export type StudioPageUseCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioPageUse
+     */
+    select?: StudioPageUseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioPageUse
+     */
+    omit?: StudioPageUseOmit<ExtArgs> | null
+    /**
+     * The data needed to create a StudioPageUse.
+     */
+    data: XOR<StudioPageUseCreateInput, StudioPageUseUncheckedCreateInput>
+  }
+
+  /**
+   * StudioPageUse createMany
+   */
+  export type StudioPageUseCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many StudioPageUses.
+     */
+    data: StudioPageUseCreateManyInput | StudioPageUseCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StudioPageUse createManyAndReturn
+   */
+  export type StudioPageUseCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioPageUse
+     */
+    select?: StudioPageUseSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioPageUse
+     */
+    omit?: StudioPageUseOmit<ExtArgs> | null
+    /**
+     * The data used to create many StudioPageUses.
+     */
+    data: StudioPageUseCreateManyInput | StudioPageUseCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * StudioPageUse update
+   */
+  export type StudioPageUseUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioPageUse
+     */
+    select?: StudioPageUseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioPageUse
+     */
+    omit?: StudioPageUseOmit<ExtArgs> | null
+    /**
+     * The data needed to update a StudioPageUse.
+     */
+    data: XOR<StudioPageUseUpdateInput, StudioPageUseUncheckedUpdateInput>
+    /**
+     * Choose, which StudioPageUse to update.
+     */
+    where: StudioPageUseWhereUniqueInput
+  }
+
+  /**
+   * StudioPageUse updateMany
+   */
+  export type StudioPageUseUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update StudioPageUses.
+     */
+    data: XOR<StudioPageUseUpdateManyMutationInput, StudioPageUseUncheckedUpdateManyInput>
+    /**
+     * Filter which StudioPageUses to update
+     */
+    where?: StudioPageUseWhereInput
+    /**
+     * Limit how many StudioPageUses to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudioPageUse updateManyAndReturn
+   */
+  export type StudioPageUseUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioPageUse
+     */
+    select?: StudioPageUseSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioPageUse
+     */
+    omit?: StudioPageUseOmit<ExtArgs> | null
+    /**
+     * The data used to update StudioPageUses.
+     */
+    data: XOR<StudioPageUseUpdateManyMutationInput, StudioPageUseUncheckedUpdateManyInput>
+    /**
+     * Filter which StudioPageUses to update
+     */
+    where?: StudioPageUseWhereInput
+    /**
+     * Limit how many StudioPageUses to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudioPageUse upsert
+   */
+  export type StudioPageUseUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioPageUse
+     */
+    select?: StudioPageUseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioPageUse
+     */
+    omit?: StudioPageUseOmit<ExtArgs> | null
+    /**
+     * The filter to search for the StudioPageUse to update in case it exists.
+     */
+    where: StudioPageUseWhereUniqueInput
+    /**
+     * In case the StudioPageUse found by the `where` argument doesn't exist, create a new StudioPageUse with this data.
+     */
+    create: XOR<StudioPageUseCreateInput, StudioPageUseUncheckedCreateInput>
+    /**
+     * In case the StudioPageUse was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<StudioPageUseUpdateInput, StudioPageUseUncheckedUpdateInput>
+  }
+
+  /**
+   * StudioPageUse delete
+   */
+  export type StudioPageUseDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioPageUse
+     */
+    select?: StudioPageUseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioPageUse
+     */
+    omit?: StudioPageUseOmit<ExtArgs> | null
+    /**
+     * Filter which StudioPageUse to delete.
+     */
+    where: StudioPageUseWhereUniqueInput
+  }
+
+  /**
+   * StudioPageUse deleteMany
+   */
+  export type StudioPageUseDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which StudioPageUses to delete
+     */
+    where?: StudioPageUseWhereInput
+    /**
+     * Limit how many StudioPageUses to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * StudioPageUse without action
+   */
+  export type StudioPageUseDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the StudioPageUse
+     */
+    select?: StudioPageUseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the StudioPageUse
+     */
+    omit?: StudioPageUseOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Model StudioTombstone
    */
 
@@ -82999,6 +84119,17 @@ export namespace Prisma {
   export type StudioDocScalarFieldEnum = (typeof StudioDocScalarFieldEnum)[keyof typeof StudioDocScalarFieldEnum]
 
 
+  export const StudioPageUseScalarFieldEnum: {
+    userId: 'userId',
+    day: 'day',
+    page: 'page',
+    n: 'n',
+    lastAt: 'lastAt'
+  };
+
+  export type StudioPageUseScalarFieldEnum = (typeof StudioPageUseScalarFieldEnum)[keyof typeof StudioPageUseScalarFieldEnum]
+
+
   export const StudioTombstoneScalarFieldEnum: {
     path: 'path',
     deletedAt: 'deletedAt'
@@ -87267,6 +88398,61 @@ export namespace Prisma {
     coll?: StringWithAggregatesFilter<"StudioDoc"> | string
     data?: JsonWithAggregatesFilter<"StudioDoc">
     updatedAt?: DateTimeWithAggregatesFilter<"StudioDoc"> | Date | string
+  }
+
+  export type StudioPageUseWhereInput = {
+    AND?: StudioPageUseWhereInput | StudioPageUseWhereInput[]
+    OR?: StudioPageUseWhereInput[]
+    NOT?: StudioPageUseWhereInput | StudioPageUseWhereInput[]
+    userId?: StringFilter<"StudioPageUse"> | string
+    day?: StringFilter<"StudioPageUse"> | string
+    page?: StringFilter<"StudioPageUse"> | string
+    n?: IntFilter<"StudioPageUse"> | number
+    lastAt?: DateTimeFilter<"StudioPageUse"> | Date | string
+  }
+
+  export type StudioPageUseOrderByWithRelationInput = {
+    userId?: SortOrder
+    day?: SortOrder
+    page?: SortOrder
+    n?: SortOrder
+    lastAt?: SortOrder
+  }
+
+  export type StudioPageUseWhereUniqueInput = Prisma.AtLeast<{
+    userId_day_page?: StudioPageUseUserIdDayPageCompoundUniqueInput
+    AND?: StudioPageUseWhereInput | StudioPageUseWhereInput[]
+    OR?: StudioPageUseWhereInput[]
+    NOT?: StudioPageUseWhereInput | StudioPageUseWhereInput[]
+    userId?: StringFilter<"StudioPageUse"> | string
+    day?: StringFilter<"StudioPageUse"> | string
+    page?: StringFilter<"StudioPageUse"> | string
+    n?: IntFilter<"StudioPageUse"> | number
+    lastAt?: DateTimeFilter<"StudioPageUse"> | Date | string
+  }, "userId_day_page">
+
+  export type StudioPageUseOrderByWithAggregationInput = {
+    userId?: SortOrder
+    day?: SortOrder
+    page?: SortOrder
+    n?: SortOrder
+    lastAt?: SortOrder
+    _count?: StudioPageUseCountOrderByAggregateInput
+    _avg?: StudioPageUseAvgOrderByAggregateInput
+    _max?: StudioPageUseMaxOrderByAggregateInput
+    _min?: StudioPageUseMinOrderByAggregateInput
+    _sum?: StudioPageUseSumOrderByAggregateInput
+  }
+
+  export type StudioPageUseScalarWhereWithAggregatesInput = {
+    AND?: StudioPageUseScalarWhereWithAggregatesInput | StudioPageUseScalarWhereWithAggregatesInput[]
+    OR?: StudioPageUseScalarWhereWithAggregatesInput[]
+    NOT?: StudioPageUseScalarWhereWithAggregatesInput | StudioPageUseScalarWhereWithAggregatesInput[]
+    userId?: StringWithAggregatesFilter<"StudioPageUse"> | string
+    day?: StringWithAggregatesFilter<"StudioPageUse"> | string
+    page?: StringWithAggregatesFilter<"StudioPageUse"> | string
+    n?: IntWithAggregatesFilter<"StudioPageUse"> | number
+    lastAt?: DateTimeWithAggregatesFilter<"StudioPageUse"> | Date | string
   }
 
   export type StudioTombstoneWhereInput = {
@@ -93118,6 +94304,62 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type StudioPageUseCreateInput = {
+    userId: string
+    day: string
+    page: string
+    n?: number
+    lastAt?: Date | string
+  }
+
+  export type StudioPageUseUncheckedCreateInput = {
+    userId: string
+    day: string
+    page: string
+    n?: number
+    lastAt?: Date | string
+  }
+
+  export type StudioPageUseUpdateInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    day?: StringFieldUpdateOperationsInput | string
+    page?: StringFieldUpdateOperationsInput | string
+    n?: IntFieldUpdateOperationsInput | number
+    lastAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudioPageUseUncheckedUpdateInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    day?: StringFieldUpdateOperationsInput | string
+    page?: StringFieldUpdateOperationsInput | string
+    n?: IntFieldUpdateOperationsInput | number
+    lastAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudioPageUseCreateManyInput = {
+    userId: string
+    day: string
+    page: string
+    n?: number
+    lastAt?: Date | string
+  }
+
+  export type StudioPageUseUpdateManyMutationInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    day?: StringFieldUpdateOperationsInput | string
+    page?: StringFieldUpdateOperationsInput | string
+    n?: IntFieldUpdateOperationsInput | number
+    lastAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type StudioPageUseUncheckedUpdateManyInput = {
+    userId?: StringFieldUpdateOperationsInput | string
+    day?: StringFieldUpdateOperationsInput | string
+    page?: StringFieldUpdateOperationsInput | string
+    n?: IntFieldUpdateOperationsInput | number
+    lastAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StudioTombstoneCreateInput = {
     path: string
     deletedAt?: Date | string
@@ -97725,6 +98967,44 @@ export namespace Prisma {
     path?: SortOrder
     coll?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type StudioPageUseUserIdDayPageCompoundUniqueInput = {
+    userId: string
+    day: string
+    page: string
+  }
+
+  export type StudioPageUseCountOrderByAggregateInput = {
+    userId?: SortOrder
+    day?: SortOrder
+    page?: SortOrder
+    n?: SortOrder
+    lastAt?: SortOrder
+  }
+
+  export type StudioPageUseAvgOrderByAggregateInput = {
+    n?: SortOrder
+  }
+
+  export type StudioPageUseMaxOrderByAggregateInput = {
+    userId?: SortOrder
+    day?: SortOrder
+    page?: SortOrder
+    n?: SortOrder
+    lastAt?: SortOrder
+  }
+
+  export type StudioPageUseMinOrderByAggregateInput = {
+    userId?: SortOrder
+    day?: SortOrder
+    page?: SortOrder
+    n?: SortOrder
+    lastAt?: SortOrder
+  }
+
+  export type StudioPageUseSumOrderByAggregateInput = {
+    n?: SortOrder
   }
 
   export type StudioTombstoneCountOrderByAggregateInput = {
