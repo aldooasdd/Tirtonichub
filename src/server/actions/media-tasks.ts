@@ -9,8 +9,9 @@ import { loadCtx, runBalance, todayWIB } from "@/server/media/schedule-runner";
 import type { Task } from "@/lib/media/schedule";
 import type { Prisma } from "@/generated/prisma";
 import { nextPlanLog } from "@/server/studio/plan-log";
-import { qaBlocks, qaReopen } from "@/server/studio/cpr";
+import { qaAutoSubmit, qaBlocks, qaCfgOf, qaReopen } from "@/server/studio/cpr";
 import { briefBlocks } from "@/server/studio/brief";
+import { getRaw } from "@/server/studio/store";
 import { taskEvents } from "@/server/automation/events";
 import { kickAutomation, outboxCreate } from "@/server/automation/worker";
 import { queueEditNotif } from "@/server/push/edit";
@@ -47,6 +48,9 @@ function qaWhy(task: { status: string; metaAt: Date | null; extra: unknown }, ne
   const before = { status: task.status, metaAt: task.metaAt ? 1 : 0 };
   return qaBlocks(before, { qaReq: ex.qaReq, qa: ex.qa, status: next.status ?? task.status, metaAt: next.metaAt || before.metaAt });
 }
+
+/** Standar Creative Review yang tersimpan (settings/main.qaCfg). */
+const qaCfgNow = async () => qaCfgOf((await getRaw("settings/main"))?.qaCfg);
 
 /** Bentuk ringkas kartu untuk menurunkan event otomasi (events.ts). */
 function evDoc(t: Record<string, unknown>): Record<string, unknown> {
@@ -86,6 +90,9 @@ export async function setTaskStatus(id: string, status: string): Promise<ActionR
   const data: Record<string, unknown> = { status, history };
   if (IDX[status] >= IDX["Diproduksi"] && !task.shotAt) data.shotAt = today;
   if (IDX[status] >= IDX["Ready"] && !task.readyAt) data.readyAt = today;
+  // masuk Ready → Creative Review diajukan otomatis (sama dengan Studio, cpr.ts qaAutoSubmit)
+  const auto = qaAutoSubmit({ status: task.status, driveUrl: task.driveUrl }, { ...exB, type: task.type, cprId: task.cprId, status, driveUrl: task.driveUrl }, meName, await qaCfgNow());
+  if (auto) data.extra = { ...exB, qa: auto } as Prisma.InputJsonValue;
   await saveTask(id, task as unknown as Record<string, unknown>, data);
   await queueEditNotif(id, task as unknown as Record<string, unknown>, { ...task, ...data }, meName, acc.code ?? "");
   await runBalance();
@@ -131,6 +138,9 @@ export async function updateTask(
     const ex = (data.extra ?? (task.extra && typeof task.extra === "object" && !Array.isArray(task.extra) ? task.extra : {})) as Record<string, unknown>;
     const r = qaReopen(ex.qa, { driveUrl: task.driveUrl }, { driveUrl: data.driveUrl }, meName);
     if (r) data.extra = { ...ex, qa: r } as Prisma.InputJsonValue;
+    const cur = (data.extra ?? ex) as Record<string, unknown>;
+    const auto = qaAutoSubmit({ status: task.status, driveUrl: task.driveUrl }, { ...cur, type: task.type, cprId: task.cprId, status: task.status, driveUrl: data.driveUrl }, meName, await qaCfgNow());
+    if (auto) data.extra = { ...cur, qa: auto } as Prisma.InputJsonValue;
   }
   await saveTask(id, task as unknown as Record<string, unknown>, data);
   await queueEditNotif(id, task as unknown as Record<string, unknown>, { ...task, ...data }, meName, acc.code ?? "");
