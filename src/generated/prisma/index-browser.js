@@ -710,6 +710,14 @@ exports.Prisma.StudioDocScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.StudioPageUseScalarFieldEnum = {
+  userId: 'userId',
+  day: 'day',
+  page: 'page',
+  n: 'n',
+  lastAt: 'lastAt'
+};
+
 exports.Prisma.StudioTombstoneScalarFieldEnum = {
   path: 'path',
   deletedAt: 'deletedAt'
@@ -1102,6 +1110,7 @@ exports.Prisma.ModelName = {
   PersonalCalEvent: 'PersonalCalEvent',
   MediaPcal: 'MediaPcal',
   StudioDoc: 'StudioDoc',
+  StudioPageUse: 'StudioPageUse',
   StudioTombstone: 'StudioTombstone',
   PushSubscription: 'PushSubscription',
   PushLog: 'PushLog',

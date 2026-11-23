@@ -889,6 +889,19 @@ model StudioDoc {
   @@index([updatedAt])
 }
 
+// Pemakaian halaman Studio (23 Nov 2026): satu baris per orang × hari WIB × halaman; hanya dibaca admin penuh.
+// Hanya nama halaman + jumlah buka, bukan isi yang dibaca/diketik.
+model StudioPageUse {
+  userId String
+  day    String // YYYY-MM-DD WIB
+  page   String
+  n      Int      @default(1)
+  lastAt DateTime @default(now())
+
+  @@id([userId, day, page])
+  @@index([day])
+}
+
 // Jejak dokumen yang dihapus, supaya semua layar yang terbuka ikut menghapus saat sinkron.
 model StudioTombstone {
   path      String   @id
