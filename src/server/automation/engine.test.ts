@@ -166,3 +166,17 @@ test("event lama (sebelum terbit / worker menyala) tidak memulai run & tidak men
   assert.equal((await processEvent(baru, deps())).length, 1);
   assert.equal(db.sent.length, 1); // reviewer diberi tahu untuk pengajuan baru saja
 });
+
+test("E: WhatsApp khusus pengingat metrik (wa:true) walau saluran umum aplikasi saja", async () => {
+  const { db, deps } = setup();
+  db.publish("performance", wf("performance"));
+  active(db, "notify.channel");
+  db.policies.set("performance.checkpoints", { key: "performance.checkpoints", status: "active", config: { days: [7], sendTime: "09:00", recipients: "pic", wa: true }, version: 1 });
+  db.tasks.set("t6", { type: "vrv", title: "Review", producer: "R", status: "Tayang", postAt: "2026-11-21" });
+  await processEvent(ev("content.published.v1", "t6"), deps());
+  assert.equal(db.timers.length, 1); // D+7 saja
+  const r = await fireTimers(deps(new Date("2026-11-28T03:00:00Z")));
+  assert.equal(r.sent, 1);
+  assert.equal(db.sent.at(-1)?.wa, true);
+  assert.match(String(db.sent.at(-1)?.title), /D\+7/);
+});

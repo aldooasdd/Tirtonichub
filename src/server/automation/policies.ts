@@ -40,6 +40,7 @@ export function policyConfigWhy(key: PolicyKey, c: Record<string, unknown>): str
       const d = c.days;
       if (!Array.isArray(d) || d.length < 1 || !d.every((x) => [1, 7, 30].includes(Number(x))) || new Set(d).size !== d.length) return "pilih checkpoint D+1 / D+7 / D+30";
       if (!HHMM.test(String(c.sendTime ?? ""))) return "isi jam kirim pengingat (HH:MM, WIB)";
+      if (c.wa !== undefined && typeof c.wa !== "boolean") return "pilihan WhatsApp tidak valid";
       return RECIP.includes(String(c.recipients)) ? null : "pilih penerima";
     }
     case "campaign.master":
