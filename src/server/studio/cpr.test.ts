@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { cprIdOf, cprYymm, critChecks, needsCpr, nextQa, qaBlocks, qaCfgOf, qaCfgWhy, qaOf, qaReopen, qaResult, qaScore, QA_DEFAULT, type Qa } from "./cpr";
+import { cprIdOf, cprYymm, critChecks, needsCpr, nextQa, qaAutoSubmit, qaBlocks, qaCfgOf, qaCfgWhy, qaOf, qaReopen, qaResult, qaScore, QA_DEFAULT, type Qa } from "./cpr";
 
 const AT = 1_763_700_000_000;
 const zaki = { name: "Zaki", code: "Z", full: true, staff: true };
@@ -141,4 +141,26 @@ test("QA lama dibaca aman; isi sampah dibersihkan", () => {
   assert.equal(qaOf({ st: "hack" }).st, "none");
   assert.equal(qaOf({ sys: 2, st: "hack" }).st, "none");
   assert.equal(qaOf(undefined).st, "none");
+});
+
+test("masuk Ready / ganti file saat Ready = Creative Review diajukan otomatis; syarat kurang atau sudah diajukan = diam", () => {
+  const edit = { ...card, status: "Editing" };
+  const q = qaAutoSubmit(edit, card, "Rayhan", QA_DEFAULT, AT);
+  assert.equal(q?.st, "submitted");
+  assert.equal(q?.sub?.by, "Rayhan");
+  assert.equal(qaAutoSubmit(card, card, "Rayhan"), null); // tetap Ready, file sama
+  assert.equal(qaAutoSubmit(edit, { ...card, qa: q }, "Rayhan"), null); // sudah diajukan
+  assert.equal(qaAutoSubmit(edit, { ...card, driveUrl: "" }, "Rayhan"), null); // file final belum ada
+  assert.equal(qaAutoSubmit(edit, { ...card, brief: {} }, "Rayhan"), null); // brief belum disetujui
+  assert.equal(qaAutoSubmit(edit, { ...card, cprId: "" }, "Rayhan"), null); // tanpa Content ID
+  assert.equal(qaAutoSubmit(edit, { ...card, type: "ktl" }, "Rayhan"), null);
+  assert.equal(qaAutoSubmit(null, card, "Rayhan"), null); // kartu baru
+  assert.equal(qaAutoSubmit(edit, { ...card, status: "Editing" }, "Rayhan"), null); // belum Ready
+  // revisi lalu file diganti saat masih Ready → diajukan ulang (versi naik)
+  const rev = nextQa(q, { act: "review", scores: all(2), checks: pass, note: "warna kurang", decision: "revise" }, card, zaki, QA_DEFAULT, AT);
+  assert.ok(typeof rev === "object");
+  assert.equal(qaAutoSubmit(card, { ...card, qa: rev }, "Rayhan"), null); // revisi tanpa ganti file: tidak diajukan sendiri
+  const again = qaAutoSubmit(card, { ...card, qa: rev, driveUrl: "/api/file?key=y" }, "Rayhan", QA_DEFAULT, AT);
+  assert.equal(again?.st, "submitted");
+  assert.equal(again?.ver, 2);
 });
