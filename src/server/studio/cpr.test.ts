@@ -40,12 +40,13 @@ test("standar QA bawaan sah: bobot tiap jenis 100%, Product Accuracy critical", 
   assert.notEqual(qaCfgWhy({ ...QA_DEFAULT, checks: [] }), null);
 });
 
-test("skor: Σ nilai/5 × bobot; ≥80 eligible, 70–79 revisi, <70 major, critical gagal = blocked", () => {
+test("skor: Σ nilai/5 × bobot; ≥60 eligible, 50–59 revisi, <50 major, critical gagal = blocked", () => {
   assert.equal(qaScore(IND, all(5)), 100);
   assert.equal(qaScore(IND, all(4)), 80);
-  assert.equal(qaResult(80, 0), "eligible");
-  assert.equal(qaResult(79.9, 0), "revision");
-  assert.equal(qaResult(69, 0), "major");
+  assert.equal(qaResult(60, 0), "eligible");
+  assert.equal(qaResult(59.9, 0), "revision");
+  assert.equal(qaResult(50, 0), "revision");
+  assert.equal(qaResult(49, 0), "major");
   assert.equal(qaResult(100, 1), "blocked");
 });
 
@@ -63,7 +64,7 @@ test("ajukan QA: hanya Editing/Ready, file final ada, brief wajib sudah disetuju
   assert.equal(typeof nextQa(q, { act: "submit" }, card, rayhan, QA_DEFAULT, AT), "string"); // sudah diajukan
 });
 
-test("approve: lengkap, skor ≥80, semua critical Pass; anggota tidak bisa review", () => {
+test("approve: lengkap, skor ≥60, semua critical Pass; anggota tidak bisa review", () => {
   const q = submitted();
   assert.equal(typeof nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: pass }, card, rayhan, QA_DEFAULT, AT), "string");
   const partial = { ...all(5) };
@@ -71,7 +72,8 @@ test("approve: lengkap, skor ≥80, semua critical Pass; anggota tidak bisa revi
   assert.match(String(nextQa(q, { act: "review", decision: "approve", scores: partial, checks: pass }, card, aulia, QA_DEFAULT, AT)), /semua indikator/);
   assert.match(String(nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: { ...pass, rights: undefined } }, card, aulia, QA_DEFAULT, AT)), /critical check/);
   assert.match(String(nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: { ...pass, c_acc: false } }, card, aulia, QA_DEFAULT, AT)), /diblokir/);
-  assert.match(String(nextQa(q, { act: "review", decision: "approve", scores: all(3), checks: pass }, card, aulia, QA_DEFAULT, AT)), /di bawah 80/);
+  assert.match(String(nextQa(q, { act: "review", decision: "approve", scores: all(2), checks: pass }, card, aulia, QA_DEFAULT, AT)), /di bawah 60/);
+  assert.equal((nextQa(q, { act: "review", decision: "approve", scores: all(3), checks: pass }, card, aulia, QA_DEFAULT, AT) as Qa).st, "approved"); // 60 lolos
   const ok = nextQa(q, { act: "review", decision: "approve", scores: all(4), checks: pass }, card, aulia, QA_DEFAULT, AT + 5) as Qa;
   assert.equal(ok.st, "approved");
   assert.equal(ok.appBy, "Aulia");
@@ -83,7 +85,7 @@ test("approve: lengkap, skor ≥80, semua critical Pass; anggota tidak bisa revi
 test("revisi wajib catatan; status mengikuti skor/critical; pengajuan ulang = versi & riwayat baru", () => {
   const q = submitted();
   assert.match(String(nextQa(q, { act: "review", decision: "revise", scores: all(3), checks: pass, note: "" }, card, aulia, QA_DEFAULT, AT)), /catatan/);
-  const r = nextQa(q, { act: "review", decision: "revise", scores: all(3), checks: pass, note: "audio pecah" }, card, aulia, QA_DEFAULT, AT) as Qa;
+  const r = nextQa(q, { act: "review", decision: "revise", scores: all(2), checks: pass, note: "audio pecah" }, card, aulia, QA_DEFAULT, AT) as Qa;
   assert.equal(r.st, "major");
   const b = nextQa(q, { act: "review", decision: "revise", scores: all(5), checks: { ...pass, info: false }, note: "harga salah" }, card, aulia, QA_DEFAULT, AT) as Qa;
   assert.equal(b.st, "blocked");
@@ -95,12 +97,12 @@ test("revisi wajib catatan; status mengikuti skor/critical; pengajuan ulang = ve
   assert.equal(r2.log.length, 3);
 });
 
-test("self-approval: Admin 2 ditolak; admin penuh hanya dengan alasan pengecualian tercatat", () => {
+test("self-approval: Admin 2 ditolak; admin penuh (Zaki) boleh tanpa alasan, alasan opsional tetap tercatat", () => {
   const q = submitted();
   const own = { ...card, editor: "A" };
   assert.match(String(nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: pass }, own, aulia, QA_DEFAULT, AT)), /admin lain/);
   const zOwn = { ...card, producer: "Z" };
-  assert.match(String(nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: pass }, zOwn, zaki, QA_DEFAULT, AT)), /pengecualian/);
+  assert.equal((nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: pass }, zOwn, zaki, QA_DEFAULT, AT) as Qa).st, "approved");
   const ok = nextQa(q, { act: "review", decision: "approve", scores: all(5), checks: pass, exc: "Aulia cuti, deadline payday" }, zOwn, zaki, QA_DEFAULT, AT) as Qa;
   assert.equal(ok.st, "approved");
   assert.equal(ok.log.at(-1)?.exc, "Aulia cuti, deadline payday");

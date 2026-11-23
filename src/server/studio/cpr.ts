@@ -120,7 +120,7 @@ export function qaCfgOf(v: unknown): QaCfg {
 export const critChecks = (inds: QaInd[], checks: QaCheck[]): QaCheck[] => [...checks, ...inds.filter((i) => i.c).map((i) => ({ k: "c_" + i.k, l: i.l + " lolos (critical)" }))];
 
 // ---------- QA per kartu ----------
-/** none belum diajukan · submitted menunggu review · revision 70–79 · major <70 · blocked critical gagal · approved · reopened dibuka ulang */
+/** none belum diajukan · submitted menunggu review · revision 50–59 · major <50 · blocked critical gagal · approved · reopened dibuka ulang */
 export type QaSt = "none" | "submitted" | "revision" | "major" | "blocked" | "approved" | "reopened";
 const QA_STS: QaSt[] = ["none", "submitted", "revision", "major", "blocked", "approved", "reopened"];
 export type QaResult = "eligible" | "revision" | "major" | "blocked";
@@ -182,10 +182,10 @@ export function qaScore(inds: QaInd[], scores: Record<string, number>): number {
   const t = inds.reduce((a, i) => a + ((Number(scores[i.k]) || 0) / 5) * i.w, 0);
   return Math.round(t * 10) / 10;
 }
-/** ≥80 eligible (bila semua critical lolos) · 70–79 revision · <70 major · critical gagal = blocked. */
+/** ≥60 eligible (bila semua critical lolos) · 50–59 revision · <50 major · critical gagal = blocked (keputusan Zaki 23 Nov 2026; dulu 80/70). */
 export function qaResult(score: number, failed: number): QaResult {
   if (failed > 0) return "blocked";
-  return score >= 80 ? "eligible" : score >= 70 ? "revision" : "major";
+  return score >= 60 ? "eligible" : score >= 50 ? "revision" : "major";
 }
 
 type Who = { name: string; code: string; full: boolean; staff: boolean };
@@ -199,8 +199,8 @@ const briefOkV = (b: unknown) => {
  * Perintah QA dari klien:
  * - `{act:'submit'}` ajukan QA (anggota kartu / admin): hanya Editing/Ready, file final sudah ada, brief wajib sudah disetujui.
  * - `{act:'review', scores:{k:1..5}, checks:{k:bool}, note, decision:'approve'|'revise', exc?}` admin / Admin 2.
- *   Approve hanya bila skor ≥80 dan semua critical Pass. Kreator tidak menyetujui kontennya sendiri; admin penuh boleh
- *   dengan alasan pengecualian yang tercatat (`exc`). Revisi wajib catatan.
+ *   Approve hanya bila skor ≥60 dan semua critical Pass. Admin 2 tidak menyetujui kontennya sendiri; admin penuh (Zaki)
+ *   boleh tanpa alasan (keputusan 23 Nov 2026; `exc` opsional tetap dicatat bila dikirim). Revisi wajib catatan.
  * Mengembalikan QA baru, atau string alasan ditolak.
  */
 export function nextQa(prev: unknown, act: unknown, task: Doc, who: Who, cfg: QaCfg = QA_DEFAULT, at = Date.now()): Qa | string {
@@ -252,11 +252,10 @@ export function nextQa(prev: unknown, act: unknown, task: Doc, who: Who, cfg: Qa
   let exc = "";
   if (a.decision === "approve") {
     if (result === "blocked") return "critical check gagal: Creative Review diblokir, tidak bisa Approved";
-    if (result !== "eligible") return "skor " + score + " di bawah 80: belum bisa Approved";
+    if (result !== "eligible") return "skor " + score + " di bawah 60: belum bisa Approved";
     if (isCreator(task, who)) {
       if (!who.full) return "konten sendiri harus disetujui admin lain";
-      exc = s(a.exc).trim().slice(0, 300);
-      if (exc.length < 5) return "konten Anda sendiri: tulis alasan pengecualian untuk menyetujui";
+      exc = s(a.exc).trim().slice(0, 300); // opsional sejak 23 Nov 2026
     }
     st = "approved";
   } else if (a.decision === "revise") {
