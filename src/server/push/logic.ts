@@ -1,3 +1,4 @@
+import { pausedOf } from "@/lib/media/card";
 // Logika murni notifikasi push Studio (tanpa DB), supaya bisa diuji: pilih konten syuting pagi + gabung barang masuk.
 
 const WIB_MS = 7 * 3600_000;
@@ -46,12 +47,13 @@ export type MTask = {
   readyBy?: string | null;
   due?: string | null;
   createdAt: Date;
+  extra?: unknown;
 };
 export type MMember = { userId: string; code: string; name: string; offDays: number[] };
 export type Push = { userId: string; title: string; body: string; url: string; wa?: string };
 
 /** Konten hangus 1 bulan setelah dibuat (sama dengan expiryOf di UI): tidak diingatkan lagi. */
-export function expired(createdAt: Date, dayKey: string): boolean {
+export function expired(createdAt: Date, dayKey: string, pausedMs = 0): boolean {
   const c = wibKey(createdAt);
   let y = +c.slice(0, 4);
   let m = +c.slice(5, 7) + 1;
@@ -62,7 +64,8 @@ export function expired(createdAt: Date, dayKey: string): boolean {
   }
   const last = new Date(Date.UTC(y, m, 0)).getUTCDate();
   const exp = `${y}-${String(m).padStart(2, "0")}-${String(Math.min(d, last)).padStart(2, "0")}`;
-  return dayKey >= exp;
+  const end = pausedMs ? new Date(Date.parse(exp + "T00:00:00Z") + Math.ceil(pausedMs / 864e5) * 864e5).toISOString().slice(0, 10) : exp;
+  return dayKey >= end;
 }
 
 const MAX_LIST = 6;
@@ -105,7 +108,7 @@ export type MorningParts = { day: string; shoot: MTask[]; dueToday: MTask[]; lat
 
 /** Bagian pesan pagi satu orang. Syuting: produksi/talent/skrip. Deadline & upload: produksi/editor. */
 export function morningParts(tasks: MTask[], code: string, day: string): MorningParts {
-  const open = tasks.filter((t) => ACTIVE.has(t.status) && !expired(t.createdAt, day));
+  const open = tasks.filter((t) => ACTIVE.has(t.status) && !expired(t.createdAt, day, pausedOf(t.extra)));
   const crew = (t: MTask) => t.producer === code || t.talent === code || t.script === code;
   const owner = (t: MTask) => t.producer === code || t.editor === code;
   const lateUpload = open.filter((t) => owner(t) && dueOf(t) && dueOf(t)! < day);

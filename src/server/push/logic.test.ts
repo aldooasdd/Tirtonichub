@@ -63,6 +63,8 @@ test("hanya terlambat tetap dikirim; konten hangus tidak", () => {
   assert.equal(p[0].title, "Konten terlambat · 1");
   assert.equal(p[0].body, "1 terlambat produksi");
   assert.equal(expired(new Date("2026-09-30T03:00:00Z"), "2026-10-30"), true);
+  assert.equal(expired(new Date("2026-09-30T03:00:00Z"), "2026-10-30", 5 * 864e5), false);
+  assert.equal(expired(new Date("2026-09-30T03:00:00Z"), "2026-11-04", 5 * 864e5), true);
   assert.deepEqual(morningPushes([task({ producer: "Z", shootPlan: "2026-10-01", createdAt: new Date("2026-09-29T03:00:00Z") })], members, FRI_7), []);
 });
 

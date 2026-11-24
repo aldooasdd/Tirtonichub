@@ -18,7 +18,7 @@ export type WfTask = {
   shootPlan: string | null; editPlan: string | null; postAt: string | null; postTime: string | null; postTimeAuto: string;
   due: string | null; shotAt: string | null; readyAt: string | null;
   locked: boolean; checked: boolean; meta: boolean; driveUrl: string | null; caption: string | null; srcDesc: string | null; note: string | null;
-  fileDue: string; history: { at: number; name?: string; from?: string; to?: string }[]; createdAt: number;
+  fileDue: string; history: { at: number; name?: string; from?: string; to?: string }[]; createdAt: number; pausedMs?: number;
 };
 
 const HARI = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];

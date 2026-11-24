@@ -37,6 +37,11 @@ const createdDay = (t: Task) => {
   const c = new Date(t.createdAt);
   return c.getUTCFullYear() + "-" + pad(c.getUTCMonth() + 1) + "-" + pad(c.getUTCDate());
 };
+/** Tambahan masa aktif kartu (kolom extra.pausedMs): dari Pulihkan atau Aktifkan lagi di Studio. */
+export function pausedOf(extra: unknown): number {
+  const v = extra && typeof extra === "object" ? (extra as Record<string, unknown>).pausedMs : 0;
+  return typeof v === "number" && Number.isFinite(v) && v > 0 ? v : 0;
+}
 export function expiryOf(t: Task): string {
   const c = createdDay(t);
   if (!c) return "";
@@ -48,7 +53,8 @@ export function expiryOf(t: Task): string {
     y++;
   }
   const last = new Date(Date.UTC(y, m, 0)).getUTCDate();
-  return y + "-" + pad(m) + "-" + pad(Math.min(d, last));
+  const e = y + "-" + pad(m) + "-" + pad(Math.min(d, last));
+  return t.pausedMs ? addDays(e, Math.ceil(t.pausedMs / 864e5)) : e; // sama dengan expiryOf di Studio
 }
 export const isExpired = (t: Task, today: string) => {
   const e = expiryOf(t);

@@ -2,7 +2,7 @@ import { requireMedia } from "@/server/auth/rbac";
 import { mediaAccess } from "@/server/media/auth";
 import { prisma } from "@/server/db";
 import { makeScheduler } from "@/lib/media/schedule";
-import { isExpired } from "@/lib/media/card";
+import { isExpired, pausedOf } from "@/lib/media/card";
 import { loadCtx, todayWIB, runBalance } from "@/server/media/schedule-runner";
 import { WorkflowClient, type WfTask } from "@/components/media/workflow-client";
 
@@ -54,8 +54,9 @@ export default async function WorkflowPage() {
       fileDue: sch.fileDue({ id: t.id, type: t.type, status: t.status, postAt: t.postAt, title: t.title, itemId: t.itemId, source: t.source }),
       history: (t.history as { at: number; name?: string; from?: string; to?: string }[]) ?? [],
       createdAt: t.createdAt.getTime(),
+      pausedMs: pausedOf(t.extra),
     }))
-    .filter((t) => !isExpired({ id: t.id, status: t.status, createdAt: t.createdAt, type: t.type, title: t.title }, today));
+    .filter((t) => !isExpired({ id: t.id, status: t.status, createdAt: t.createdAt, type: t.type, title: t.title, pausedMs: t.pausedMs }, today));
 
   return <WorkflowClient tasks={tasks} canManage={acc.canManage} code={acc.code} today={today} />;
 }
