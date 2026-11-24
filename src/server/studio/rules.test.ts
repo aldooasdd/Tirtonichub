@@ -107,6 +107,11 @@ test("tangguhkan konten hanya admin penuh", () => {
   const sus = { ...k, suspendedAt: 123, suspendedBy: "Zaki" };
   assert.equal(canWrite(zaki, "update", "tasks/k", k, sus), null);
   assert.equal(canWrite(zaki, "update", "tasks/k", sus, { ...k, suspendedAt: null, suspendedBy: "", pausedMs: 5 }), null);
+  // Aktifkan lagi kartu hangus (24 Nov 2026)
+  const act = { ...k, pausedMs: 5, reactivatedAt: 9, reactivatedBy: "Zaki" };
+  assert.equal(canWrite(zaki, "update", "tasks/k", k, act), null);
+  assert.notEqual(canWrite(aulia, "update", "tasks/k", k, act), null);
+  assert.notEqual(canWrite(rayhan, "update", "tasks/k", k, act), null);
   assert.notEqual(canWrite(aulia, "update", "tasks/k", k, sus), null);
   assert.notEqual(canWrite(aulia, "update", "tasks/k", sus, { ...k, suspendedAt: null }), null);
   assert.notEqual(canWrite(rayhan, "update", "tasks/k", k, sus), null);

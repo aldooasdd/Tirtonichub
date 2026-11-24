@@ -2,7 +2,7 @@ import { requireMedia } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { fileUrl } from "@/server/storage";
 import { STAGES, IDX, POSTED, TYPES, CATLBL, isOff, toT, addDays, workBetween } from "@/lib/media/schedule";
-import { isExpired, late, ready } from "@/lib/media/card";
+import { isExpired, pausedOf, late, ready } from "@/lib/media/card";
 import { todayWIB } from "@/server/media/schedule-runner";
 
 const HARI = ["Min", "Sen", "Sel", "Rab", "Kam", "Jum", "Sab"];
@@ -21,7 +21,7 @@ export default async function MediaQueuePage() {
   const photoByName = new Map(items.map((i, idx) => [i.name, itemPhotos[idx]]));
   const tasks = rawTasks
     .map((t) => ({ ...t, metaAtMs: t.metaAt ? t.metaAt.getTime() : 0 }))
-    .filter((t) => !isExpired({ id: t.id, status: t.status, createdAt: t.createdAt.getTime(), type: t.type, title: t.title }, today));
+    .filter((t) => !isExpired({ id: t.id, status: t.status, createdAt: t.createdAt.getTime(), type: t.type, title: t.title, pausedMs: pausedOf(t.extra) }, today));
   const sched = (t: { status: string; metaAtMs: number }) => t.status === "Tayang" || (t.status === "Ready" && !!t.metaAtMs);
 
   const op = tasks.filter((t) => !ready({ status: t.status }));

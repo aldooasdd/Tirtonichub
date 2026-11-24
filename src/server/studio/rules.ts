@@ -28,7 +28,7 @@ const jpOnly = (d: Doc | null) => !d || ((str(d.tier) || "JP") === "JP" && !d.se
 
 const PEOPLE = ["Z", "R", "A", "S"];
 const KTL_SERVER_KEYS = ["ktlNotifAt", "ktlNotifUrl", "ktlNotifErr", "ktlNotifWhy"];
-const SUSPEND_KEYS = ["suspendedAt", "suspendedBy", "pausedMs"];
+const SUSPEND_KEYS = ["suspendedAt", "suspendedBy", "pausedMs", "reactivatedAt", "reactivatedBy"];
 // tanggal produksi/edit & Deadline Ready kartu yang sudah ada: hanya admin penuh (permintaan Zaki, 12 Nov 2026)
 const PLAN_KEYS = ["shootPlan", "editPlan", "readyBy", "due"];
 // gabungkan kartu Video review: hanya admin penuh (13 Nov 2026)

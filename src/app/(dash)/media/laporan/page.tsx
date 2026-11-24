@@ -2,7 +2,7 @@ import { requireMedia } from "@/server/auth/rbac";
 import { mediaAccess } from "@/server/media/auth";
 import { prisma } from "@/server/db";
 import { PEOPLE, NAMES, IDX, POSTED, STAGES } from "@/lib/media/schedule";
-import { isExpired, late } from "@/lib/media/card";
+import { isExpired, pausedOf, late } from "@/lib/media/card";
 import { todayWIB } from "@/server/media/schedule-runner";
 import { addDays } from "@/lib/media/schedule";
 
@@ -16,7 +16,7 @@ export default async function MediaLaporanPage() {
   const today = todayWIB();
   const wk = addDays(today, -7);
   const rows = await prisma.mediaTask.findMany();
-  const tasks = rows.filter((t) => !isExpired({ id: t.id, status: t.status, createdAt: t.createdAt.getTime(), type: t.type, title: t.title }, today));
+  const tasks = rows.filter((t) => !isExpired({ id: t.id, status: t.status, createdAt: t.createdAt.getTime(), type: t.type, title: t.title, pausedMs: pausedOf(t.extra) }, today));
   const sched = (t: { status: string; metaAt: Date | null }) => t.status === "Tayang" || (t.status === "Ready" && !!t.metaAt);
 
   const readyWeek = tasks.filter((t) => t.readyAt && t.readyAt > wk);

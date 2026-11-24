@@ -4,7 +4,7 @@ import { prisma } from "@/server/db";
 import { requireMedia } from "@/server/auth/rbac";
 import { mediaAccess } from "@/server/media/auth";
 import { IDX, POSTED, makeScheduler } from "@/lib/media/schedule";
-import { isExpired, mine, MEMBER_STAGES } from "@/lib/media/card";
+import { isExpired, pausedOf, mine, MEMBER_STAGES } from "@/lib/media/card";
 import { loadCtx, runBalance, todayWIB } from "@/server/media/schedule-runner";
 import type { Task } from "@/lib/media/schedule";
 import type { Prisma } from "@/generated/prisma";
@@ -38,7 +38,7 @@ function toTask(t: NonNullable<Awaited<ReturnType<typeof prisma.mediaTask.findUn
     editPlan: t.editPlan, postAt: t.postAt, postTime: t.postTime, due: t.due, target: t.target,
     shotAt: t.shotAt, readyAt: t.readyAt, locked: t.locked, checked: t.checked, metaAt: t.metaAt ? t.metaAt.getTime() : 0,
     caption: t.caption, srcDesc: t.srcDesc, driveUrl: t.driveUrl, note: t.note, title: t.title, cat: t.cat,
-    createdAt: t.createdAt.getTime(),
+    createdAt: t.createdAt.getTime(), pausedMs: pausedOf(t.extra),
   };
 }
 

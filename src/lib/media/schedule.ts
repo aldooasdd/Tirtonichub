@@ -45,6 +45,7 @@ export type Task = {
   eventKey?: string | null;
   cat?: string | null;
   createdAt?: number; // ms
+  pausedMs?: number; // tambahan masa aktif (dipulihkan dari tangguhkan / Aktifkan lagi)
 };
 
 export type Settings = { idccDay: number; jobdesk?: Record<string, { prod?: string[]; tal?: string[]; edit?: string[] }> };

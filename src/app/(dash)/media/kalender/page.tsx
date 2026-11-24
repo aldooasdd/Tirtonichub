@@ -1,7 +1,7 @@
 import { requireMedia } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { IDX, POSTED, TYPES, makeScheduler, nm } from "@/lib/media/schedule";
-import { isExpired } from "@/lib/media/card";
+import { isExpired, pausedOf } from "@/lib/media/card";
 import { loadCtx, todayWIB } from "@/server/media/schedule-runner";
 import { MediaKalenderClient, type CalData } from "@/components/media/media-kalender-client";
 
@@ -15,7 +15,7 @@ export default async function MediaKalenderPage() {
     prisma.mediaPcal.findUnique({ where: { userId: ctx.userId } }),
   ]);
   const sch = makeScheduler(schedCtx);
-  const tasks = rows.filter((t) => !isExpired({ id: t.id, status: t.status, createdAt: t.createdAt.getTime(), type: t.type, title: t.title }, today));
+  const tasks = rows.filter((t) => !isExpired({ id: t.id, status: t.status, createdAt: t.createdAt.getTime(), type: t.type, title: t.title, pausedMs: pausedOf(t.extra) }, today));
 
   const prod = tasks
     .filter((t) => t.shootPlan && IDX[t.status] <= IDX["Diproduksi"])

@@ -1,7 +1,7 @@
 import { requireMedia } from "@/server/auth/rbac";
 import { mediaAccess } from "@/server/media/auth";
 import { prisma } from "@/server/db";
-import { isExpired } from "@/lib/media/card";
+import { isExpired, pausedOf } from "@/lib/media/card";
 import { NAMES, PEOPLE, TYPES } from "@/lib/media/schedule";
 import { toFsTask, type FsTask, type FsView } from "@/lib/media/flowspace";
 import { todayWIB } from "@/server/media/schedule-runner";
@@ -20,7 +20,7 @@ export async function FlowspaceView() {
   ]);
   const thumb = new Map(items.map((i) => [i.id, i.thumb]));
   const tasks: FsTask[] = rows
-    .filter((r) => !isExpired({ id: r.id, status: r.status, createdAt: r.createdAt.getTime(), type: r.type, title: r.title }, today))
+    .filter((r) => !isExpired({ id: r.id, status: r.status, createdAt: r.createdAt.getTime(), type: r.type, title: r.title, pausedMs: pausedOf(r.extra) }, today))
     .map((r) => toFsTask(r, today, (r.itemId && thumb.get(r.itemId)) || null))
     .filter((t): t is FsTask => !!t);
   const names: Record<string, string> = { ...NAMES };
