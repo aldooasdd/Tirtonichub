@@ -13,7 +13,7 @@ export default async function PasangTagPage() {
         <Link href="/channel/produk" className="text-14 text-muted-foreground">← Produk Master</Link>
         <h1 className="text-24 font-semibold">Pasangkan Tag</h1>
         <p className="text-14 text-muted-foreground">
-          Scan barcode barang, pilih cabangnya, sapu stikernya sampai baris ID tag terisi, lalu tekan Simpan. Total {tags} tag di {skus} SKU.{" "}
+          Scan barcode barang, sapu stikernya sampai baris ID tag terisi, lalu tekan Simpan. Tag otomatis masuk Jogja, kecuali cabang lain dipilih. Total {tags} tag di {skus} SKU.{" "}
           <Link href="/channel/produk/tag/data" className="text-primary underline">Lihat data tag</Link>
         </p>
       </div>
