@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Check, FileUp, ScanLine, Send, Undo2, X } from "lucide-react";
-import { confirmSaran, loadSkuCheckFile, markMissing, pushCheckedSkus, reopenCheck, setScannedSku } from "@/server/actions/sku-check";
+import { confirmSaran, confirmSaranBulk, loadSkuCheckFile, markMissing, pushCheckedSkus, reopenCheck, setScannedSku } from "@/server/actions/sku-check";
 
 type Res = { ok: boolean; message?: string };
 const toBase64 = (f: File) =>
@@ -119,6 +119,44 @@ export function SkuCheckLoad({ replace = false }: { replace?: boolean }) {
           }}
         />
       </label>
+      {msg && <p className={`text-12 ${msg.ok ? "text-emerald-600" : "text-destructive"}`}>{msg.text}</p>}
+    </div>
+  );
+}
+
+/** Terima semua saran Accurate di hasil yang tampil (semua halaman). */
+export function SkuCheckAll({ keys }: { keys: string[] }) {
+  const router = useRouter();
+  const [prog, setProg] = useState<number | null>(null);
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
+
+  async function go() {
+    if (!confirm(`Terima ${keys.length} saran Accurate sekaligus sebagai SKU? Saran ini belum pasti cocok. SKU yang sudah dipakai barang lain dilewati. Belum dikirim ke marketplace.`)) return;
+    let saved = 0, clash = 0;
+    setMsg(null);
+    try {
+      for (let i = 0; i < keys.length; i += 100) {
+        setProg(i);
+        const r = await confirmSaranBulk(keys.slice(i, i + 100));
+        saved += r.saved;
+        clash += r.clash;
+      }
+      setMsg({ ok: true, text: `${saved} SKU tersimpan.${clash ? ` ${clash} dilewati karena SKU sudah dipakai barang lain, masih di Belum dicek.` : ""}` });
+    } catch {
+      setMsg({ ok: false, text: `Berhenti di tengah, minimal ${saved} SKU sudah tersimpan. Muat ulang lalu tekan lagi.` });
+    }
+    setProg(null);
+    router.refresh();
+  }
+
+  if (!keys.length && !msg) return null;
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      {keys.length > 0 && (
+        <button type="button" disabled={prog != null} onClick={go} className="inline-flex h-9 items-center gap-1.5 rounded-md border border-emerald-600 bg-emerald-600 px-3 text-14 font-medium text-white disabled:opacity-40">
+          <Check className="size-4" /> {prog != null ? `Menyimpan ${prog}/${keys.length}…` : `Semua benar (${keys.length})`}
+        </button>
+      )}
       {msg && <p className={`text-12 ${msg.ok ? "text-emerald-600" : "text-destructive"}`}>{msg.text}</p>}
     </div>
   );

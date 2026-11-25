@@ -3,6 +3,8 @@ import { prisma } from "@/server/db";
 
 const TOKO: Record<string, string> = { SHOPEE: "Shopee", TOKOPEDIA: "Tokopedia", WEBSITE: "Tirtonic.com" };
 
+const DALAM_DAFTAR = "varian lain di daftar ini";
+
 /** SKU baru per varian → Map id → alasan bentrok. Kosong = tidak ada bentrok. Huruf besar-kecil dianggap sama. */
 export async function skuConflicts(lines: { id: string; sku: string }[]): Promise<Map<string, string>> {
   const out = new Map<string, string>();
@@ -26,22 +28,24 @@ export async function skuConflicts(lines: { id: string; sku: string }[]): Promis
     const k = `${p}|${l.sku.trim().toLowerCase()}`;
     const who = used.get(k);
     if (who) out.set(l.id, `SKU ${l.sku.trim()} sudah dipakai ${who} (${TOKO[p] ?? p}).`);
-    else used.set(k, "varian lain di daftar ini"); // dua baris di 1 toko pakai SKU sama → baris kedua bentrok
+    else used.set(k, DALAM_DAFTAR); // dua baris di 1 toko pakai SKU sama → baris kedua bentrok
   }
   return out;
 }
 
 /** SKU bentrok → tambah 1 angka acak di belakang sampai bebas (user 2026-11-20: "biar bisa di save dulu").
+ *  ids = barang yang sama (boleh listing dobel di 1 toko), jadi sesama ids tidak dianggap bentrok.
  *  clash = alasan bentrok SKU asli (null = SKU asli dipakai apa adanya). */
 export async function freeSku(ids: string[], sku: string): Promise<{ sku: string; clash: string | null }> {
   const base = sku.trim();
-  const first = [...(await skuConflicts(ids.map((id) => ({ id, sku: base })))).values()][0] ?? null;
+  const clashOf = async (s: string) => [...(await skuConflicts(ids.map((id) => ({ id, sku: s })))).values()].find((x) => !x.includes(DALAM_DAFTAR)) ?? null;
+  const first = await clashOf(base);
   if (!first) return { sku: base, clash: null };
   let s = base;
   // ponytail: tiap putaran +1 angka acak; 1–2 putaran hampir selalu cukup.
   for (let i = 0; i < 20; i++) {
     s += Math.floor(Math.random() * 10);
-    if (!(await skuConflicts(ids.map((id) => ({ id, sku: s })))).size) return { sku: s, clash: first };
+    if (!(await clashOf(s))) return { sku: s, clash: first };
   }
   throw new Error("SKU pengganti tidak ketemu.");
 }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { requireChannel } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
-import { SkuCheckCard, SkuCheckLoad, SkuCheckPush } from "@/components/channel/sku-check";
+import { SkuCheckAll, SkuCheckCard, SkuCheckLoad, SkuCheckPush } from "@/components/channel/sku-check";
 
 const TOKO: Record<string, string> = { SHOPEE: "Shopee", TOKOPEDIA: "Tokopedia", WEBSITE: "Tirtonic.com" };
 const PER_PAGE = 30;
@@ -89,6 +89,8 @@ export default async function CekSkuPage({ searchParams }: { searchParams: Promi
             {tab("done", "Ada SKU", done)}
             {tab("missing", "Tidak ada", missing)}
           </div>
+
+          {status === "pending" && <SkuCheckAll keys={shown.filter((g) => g.some((r) => r.saranUpc)).map((g) => g[0].groupKey)} />}
 
           {pageRows.length === 0 ? (
             <p className="rounded-lg border bg-card py-10 text-center text-muted-foreground">Tidak ada barang.</p>

@@ -68,12 +68,13 @@ export async function loadSkuCheckFile(base64: string, replace = false): Promise
   return { ok: true, message: `${fresh.length} baris masuk antrian Cek SKU (${rows.length - fresh.length} dilewati: sudah dicek / produk tidak ada).` };
 }
 
-async function finish(groupKey: string, status: "done" | "missing", want: string | null): Promise<Res> {
+async function finish(groupKey: string, status: "done" | "missing", want: string | null, skipClash = false): Promise<Res> {
   const ctx = await requireChannel();
   const rows = await prisma.skuCheck.findMany({ where: { groupKey }, select: { id: true, itemId: true } });
   if (!rows.length) return { ok: false, message: "Barang tidak ditemukan di antrian." };
   // SKU sudah dipakai → otomatis ditambah angka acak supaya tetap tersimpan.
   const { sku, clash } = want ? await freeSku(rows.map((r) => r.itemId), want) : { sku: null, clash: null };
+  if (clash && skipClash) return { ok: false, message: clash };
   await prisma.$transaction([
     prisma.skuCheck.updateMany({ where: { groupKey }, data: { status, sku, checkedById: ctx.userId, checkedAt: new Date(), pushedAt: null } }),
     ...(sku ? [prisma.marketplaceItem.updateMany({ where: { id: { in: rows.map((r) => r.itemId) } }, data: { localSku: sku } })] : []),
@@ -90,6 +91,22 @@ export async function confirmSaran(groupKey: string): Promise<Res> {
   const r = await prisma.skuCheck.findFirst({ where: { groupKey, saranUpc: { not: null } }, select: { saranUpc: true } });
   if (!r?.saranUpc) return { ok: false, message: "Saran ini tidak punya UPC — scan barcode barangnya." };
   return finish(groupKey, "done", r.saranUpc);
+}
+
+/** Tombol "Semua benar": banyak saran sekaligus (maks 100 per panggilan). SKU bentrok dilewati, tetap di antrian. */
+export async function confirmSaranBulk(groupKeys: string[]): Promise<{ saved: number; clash: number }> {
+  await requireChannel();
+  const keys = [...new Set(groupKeys)].slice(0, 100);
+  const rows = await prisma.skuCheck.findMany({ where: { groupKey: { in: keys }, status: "pending", saranUpc: { not: null } }, select: { groupKey: true, saranUpc: true } });
+  const upc = new Map<string, string>();
+  for (const r of rows) if (!upc.has(r.groupKey)) upc.set(r.groupKey, r.saranUpc!);
+  let saved = 0, clash = 0;
+  // Berurutan: dua barang dengan saran SKU sama → yang kedua ketahuan bentrok.
+  for (const [k, s] of upc) {
+    if ((await finish(k, "done", s, true)).ok) saved++;
+    else clash++;
+  }
+  return { saved, clash };
 }
 
 /** Scan barcode (Zebra) / ketik SKU. */
