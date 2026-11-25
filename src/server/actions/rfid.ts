@@ -6,13 +6,14 @@ import { prisma } from "@/server/db";
 import { requireChannel } from "@/server/auth/rbac";
 import { buildCatalog } from "@/server/pos-catalog";
 import { productKey } from "@/server/marketplace/product-groups";
+import { setBranchStock } from "@/server/pos-stock";
 import { freeSku } from "@/server/sku-unique";
 import { logActivity } from "@/server/activity-log";
 import { clientMeta } from "@/server/request-meta";
 
 export type SkuInfo = {
   sku: string; name: string | null; variant: string | null; image: string | null;
-  tagList: string[]; stock: number | null; stocks: { label: string; stock: number }[];
+  tagList: string[]; stock: number | null; stocks: { label: string; stock: number; branchId: string | null }[];
 };
 export type BatchRes = { tagList: string[]; other: { epc: string; sku: string }[] };
 
@@ -35,7 +36,7 @@ export async function lookupSku(raw: string): Promise<SkuInfo> {
     image: it?.img ?? null,
     tagList,
     stock: it ? it.stock : null,
-    stocks: it?.stocks.map((s) => ({ label: s.label, stock: s.stock })) ?? [],
+    stocks: it?.stocks.map((s) => ({ label: s.label, stock: s.stock, branchId: s.branchId })) ?? [],
   };
 }
 
@@ -157,4 +158,24 @@ export async function gantiSku(itemId: string, rawSku: string, edit = false): Pr
   await logActivity({ ...ctx, ip }, { action: "rfid_ganti_sku", entity: "MarketplaceItem", entityId: itemId, before: { skus: lama }, after: { sku, ids, tags, kosong } });
   revalidatePath("/channel/produk");
   return { ok: true, message: `SKU ${lama.length ? `${lama.join(", ")} diganti jadi ${sku}` : `${sku} tersimpan`}.${tags ? ` ${tags} tag lama ikut pindah.` : ""}${kosong.length ? ` SKU di ${kosong.length} listing barang yang salah dikosongkan.` : ""}` };
+}
+
+/** Edit stok per cabang → langsung ke Shopee & Tokopedia (tirtonic.com menyusul lewat sinkron stok). */
+export async function simpanStok(rawSku: string, changes: { branchId: string; stock: number }[]): Promise<{ ok: boolean; message: string }> {
+  const ctx = await requireChannel();
+  const sku = rawSku.trim();
+  if (!sku || !changes.length) return { ok: false, message: "Tidak ada stok yang diubah." };
+  if (changes.some((c) => !Number.isInteger(c.stock) || c.stock < 0 || c.stock > 9999)) return { ok: false, message: "Stok harus angka bulat 0–9999." };
+  const results = [];
+  for (const c of changes) {
+    const r = await setBranchStock(sku, c.branchId, c.stock);
+    if (!r.length) return { ok: false, message: "Tidak ada listing Shopee/Tokopedia dengan gudang cabang ini." };
+    results.push(...r);
+  }
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "rfid_stok", entity: "MarketplaceItem", entityId: sku, after: { changes, results } });
+  revalidatePath("/channel/produk");
+  const bad = results.filter((r) => r.error);
+  const base = `Stok tersimpan di ${results.length - bad.length} listing.`;
+  return { ok: !bad.length, message: bad.length ? `${base} Gagal ${bad.length}: ${bad.map((r) => `${TOKO[r.platform]}: ${r.error}`).join(" · ")}` : base };
 }
