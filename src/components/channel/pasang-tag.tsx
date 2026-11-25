@@ -163,7 +163,13 @@ export function PasangTag() {
   // Semua kerja server antre satu per satu, supaya tag tidak masuk ke SKU yang salah.
   const queue = useRef(Promise.resolve());
 
-  const putSku = (s: SkuInfo | null) => { skuRef.current = s; setSku(s); };
+  const putSku = (s: SkuInfo | null) => {
+    skuRef.current = s;
+    setSku(s);
+    // Sementara: tag otomatis masuk Jogja, sampai cabang lain dipilih.
+    const jogja = s?.cabang.find((c) => /jogja|yogya/i.test(c.label));
+    if (!cabangRef.current && jogja) { cabangRef.current = jogja.id; setCabang(jogja.id); }
+  };
   const putDrafts = (d: Draft[]) => { draftRef.current = d; setDrafts(d); };
   const putNext = (s: string | null) => { nextRef.current = s; setNext(s); };
 
@@ -198,8 +204,9 @@ export function PasangTag() {
     const list = [...new Set(pending.current)];
     pending.current = [];
     if (!list.length) return;
-    const tujuan = cabangRef.current; // cabang saat tag terbaca
+    const dipilih = cabangRef.current; // cabang saat tag terbaca
     enqueue(async () => {
+      const tujuan = dipilih ?? cabangRef.current; // barang pertama masih dimuat → cabang bawaan
       if (nextRef.current) return setMsg({ ok: false, text: `${list.length} tag tidak dimasukkan. Simpan atau buang dulu tag barang sebelumnya.` });
       const cur = skuRef.current;
       const owner = new Map((await ownersOf(list)).map((o) => [o.epc, o.name]));
