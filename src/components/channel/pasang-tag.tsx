@@ -2,13 +2,72 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Save, ScanLine, X } from "lucide-react";
-import { lookupSku, ownersOf, pairTags, type SkuInfo } from "@/server/actions/rfid";
+import { cariBarang, gantiSku, lookupSku, ownersOf, pairTags, type Barang, type SkuInfo } from "@/server/actions/rfid";
 
 // EPC stiker UHF = hex 24–32 huruf; barcode barang (EAN/UPC/SKU) lebih pendek → dianggap SKU.
 const isTag = (v: string) => /^[0-9A-F]{24,32}$/i.test(v);
 const MAX_ROWS = 300; // batas baris kosong; 999 = stok web "tak terbatas"
 type Draft = { epc: string; owner: string | null; move: boolean }; // owner = SKU lain pemilik tag
 const siap = (d: Draft) => !d.owner || d.move;
+
+/** SKU belum terdaftar → cari & pilih barang; SKU barang itu diganti SKU hasil scan. */
+function PilihBarang({ sku, disabled, onPick }: { sku: string; disabled: boolean; onPick: (b: Barang) => void }) {
+  const [q, setQ] = useState("");
+  const [list, setList] = useState<Barang[] | null>(null);
+  const [err, setErr] = useState(false);
+  const cur = useRef("");
+  useEffect(() => {
+    const s = q.trim();
+    cur.current = s;
+    if (s.length < 2) return;
+    const t = setTimeout(async () => {
+      try {
+        const r = await cariBarang(s);
+        if (cur.current === s) { setList(r); setErr(false); }
+      } catch {
+        if (cur.current === s) setErr(true);
+      }
+    }, 350);
+    return () => clearTimeout(t);
+  }, [q]);
+  const show = q.trim().length >= 2;
+  return (
+    <div className="space-y-2 border-t bg-amber-500/5 p-3" onClick={(e) => e.stopPropagation()}>
+      <p className="text-14">SKU <b className="font-mono">{sku}</b> belum ada di Produk Master. Pilih barangnya, SKU barang itu langsung diganti dengan SKU ini.</p>
+      <input
+        value={q}
+        onChange={(e) => setQ(e.target.value)}
+        placeholder="Cari nama barang / varian / SKU lama"
+        aria-label="Cari barang"
+        autoComplete="off"
+        className="h-10 w-full rounded-full border bg-background px-4 text-14"
+      />
+      {err && <p className="text-12 text-red-600">Gagal mencari. Cek koneksi lalu ketik ulang.</p>}
+      {show && list && (
+        <ul className="max-h-80 divide-y overflow-y-auto rounded-md border bg-background">
+          {list.length === 0 && <li className="p-3 text-14 text-muted-foreground">Barang tidak ketemu.</li>}
+          {list.map((b) => (
+            <li key={b.id}>
+              <button type="button" disabled={disabled} onClick={() => onPick(b)} className="flex w-full items-center gap-3 p-2 text-left hover:bg-muted disabled:opacity-40">
+                {b.image ? (
+                  // eslint-disable-next-line @next/next/no-img-element -- foto dari CDN marketplace
+                  <img src={b.image} alt="" className="size-10 shrink-0 rounded border object-cover" />
+                ) : (
+                  <span className="size-10 shrink-0 rounded bg-muted" aria-hidden />
+                )}
+                <span className="min-w-0">
+                  <span className="block text-14 font-medium leading-snug">{b.name}</span>
+                  <span className="block text-12 text-muted-foreground">{b.variant ? `${b.variant} · ` : ""}{b.skus.length ? `SKU ${b.skus.join(", ")}` : "Belum ada SKU"} · {b.shops.join(", ")}</span>
+                </span>
+              </button>
+            </li>
+          ))}
+          {list.length === 50 && <li className="p-2 text-12 text-muted-foreground">Hanya 50 hasil pertama. Ketik lebih lengkap.</li>}
+        </ul>
+      )}
+    </div>
+  );
+}
 
 // Tanpa confirm(): reader mengetik Enter, dialog bisa ter-OK sendiri.
 export function PasangTag() {
@@ -125,6 +184,22 @@ export function PasangTag() {
       await open(code);
     });
   };
+  const pilih = (b: Barang) => {
+    flush();
+    const s = skuRef.current?.sku;
+    if (!s) return;
+    enqueue(async () => {
+      const r = await gantiSku(b.id, s);
+      // Tag yang belum disimpan tetap di daftar (SKU-nya sama).
+      if (r.ok) {
+        const info = await lookupSku(s);
+        putSku(info);
+        putDrafts(draftRef.current.filter((d) => !info.tagList.includes(d.epc)));
+      }
+      setMsg({ ok: r.ok, text: r.message });
+      if (r.ok) input.current?.focus();
+    });
+  };
   const hapus = (epc: string) => putDrafts(draftRef.current.filter((d) => d.epc !== epc));
   const pindahkan = (epc: string) => putDrafts(draftRef.current.map((d) => (d.epc === epc ? { ...d, move: !d.move } : d)));
 
@@ -175,11 +250,13 @@ export function PasangTag() {
             )}
             <div className="min-w-0 flex-1">
               <p className="font-mono text-12 text-muted-foreground">SKU {sku.sku}</p>
-              <p className="font-medium leading-snug">{sku.name ?? <span className="text-amber-600">SKU tidak ada di Produk Master — tag tetap bisa dipasang.</span>}</p>
+              <p className="font-medium leading-snug">{sku.name ?? <span className="text-amber-600">SKU tidak ada di Produk Master</span>}</p>
               {sku.variant && <p className="text-12 text-muted-foreground">{sku.variant}</p>}
               {sku.stocks.length > 0 && <p className="text-12 text-muted-foreground">Stok: {sku.stocks.map((s) => `${s.label} ${s.stock}`).join(" · ")}</p>}
             </div>
           </div>
+
+          {!sku.name && <PilihBarang key={sku.sku} sku={sku.sku} disabled={busy > 0} onPick={pilih} />}
 
           <div className="sticky top-0 z-10 flex flex-wrap items-center justify-between gap-2 border-y bg-card px-3 py-2 text-14">
             <span>Terisi <b>{isi}</b>{stok != null ? ` dari ${stok} stok` : ""} · {sku.tagList.length} tersimpan{drafts.length ? ` · ${drafts.length} belum disimpan` : ""}</span>
