@@ -7,7 +7,8 @@ import { cariBarang, gantiSku, lookupSku, ownersOf, pairTags, pemakaiSku, simpan
 // EPC stiker UHF = hex 24–32 huruf; barcode barang (EAN/UPC/SKU) lebih pendek → dianggap SKU.
 const isTag = (v: string) => /^[0-9A-F]{24,32}$/i.test(v);
 const MAX_ROWS = 300; // batas baris kosong; 999 = stok web "tak terbatas"
-type Draft = { epc: string; owner: string | null; move: boolean }; // owner = SKU lain pemilik tag
+type Draft = { epc: string; owner: string | null; move: boolean }; // owner = nama barang lain pemilik tag
+const namaBarang = (s: SkuInfo) => (s.name ? (s.variant ? `${s.name} · ${s.variant}` : s.name) : `SKU ${s.sku}`);
 const siap = (d: Draft) => !d.owner || d.move;
 
 /** SKU belum terdaftar, atau barangnya salah (edit) → cari & pilih barang; SKU barang itu diganti SKU hasil scan. */
@@ -197,17 +198,29 @@ export function PasangTag() {
     enqueue(async () => {
       if (nextRef.current) return setMsg({ ok: false, text: `${list.length} tag tidak dimasukkan. Simpan atau buang dulu tag barang sebelumnya.` });
       const cur = skuRef.current;
-      const owner = new Map((await ownersOf(list)).map((o) => [o.epc, o.sku]));
+      const owner = new Map((await ownersOf(list)).map((o) => [o.epc, o.name]));
       if (!cur) {
         const n = new Map<string, number>();
         for (const e of list) n.set(owner.get(e) ?? "", (n.get(owner.get(e) ?? "") ?? 0) + 1);
-        return setMsg({ ok: true, text: `Belum pilih SKU. Tag terbaca: ${[...n].map(([s, c]) => (s ? `${c} milik SKU ${s}` : `${c} belum terpasang`)).join(" · ")}` });
+        return setMsg({ ok: true, text: `Belum pilih barang. Tag terbaca: ${[...n].map(([s, c]) => (s ? `${c} milik ${s}` : `${c} belum terpasang`)).join(" · ")}` });
       }
       const have = new Set([...cur.tagList, ...draftRef.current.map((d) => d.epc)]);
       const baru = list.filter((e) => !have.has(e));
       putDrafts([...draftRef.current, ...baru.map((epc) => ({ epc, owner: owner.get(epc) ?? null, move: false }))]);
-      const dobel = list.length - baru.length;
-      setMsg({ ok: true, text: `${baru.length} tag masuk${dobel ? ` · ${dobel} sudah ada di daftar` : ""}. Belum disimpan.` });
+      const milik = new Map<string, number>(); // tag baru terbaca, tapi sudah terpasang di barang lain
+      for (const e of baru) { const n = owner.get(e); if (n) milik.set(n, (milik.get(n) ?? 0) + 1); }
+      const simpanan = list.filter((e) => cur.tagList.includes(e)).length;
+      const bebas = baru.filter((e) => !owner.has(e)).length;
+      const ulang = list.length - baru.length - simpanan;
+      setMsg({
+        ok: !milik.size,
+        text: [
+          bebas && `${bebas} tag masuk, belum disimpan`,
+          simpanan && `${simpanan} tag sudah terpasang di ${namaBarang(cur)}`,
+          ulang && `${ulang} tag sudah terbaca, belum disimpan`,
+          ...[...milik].map(([n, c]) => `${c} tag sudah terpasang di ${n}`),
+        ].filter(Boolean).join(" · "),
+      });
     });
   }
 
@@ -240,13 +253,13 @@ export function PasangTag() {
     const pindah = list.filter((d) => d.owner && d.move).map((d) => d.epc);
     if (!baru.length && !pindah.length) return;
     let r = await pairTags(baru, cur.sku);
-    const other = new Map(r.other.map((o) => [o.epc, o.sku])); // keburu dipasang orang lain
+    const other = new Map(r.other.map((o) => [o.epc, o.name])); // keburu dipasang orang lain
     if (pindah.length) r = await pairTags(pindah, cur.sku, true);
     const saved = new Set(r.tagList);
     const rest = list.filter((d) => !saved.has(d.epc)).map((d) => ({ ...d, owner: other.get(d.epc) ?? d.owner }));
     putDrafts(rest);
     putSku({ ...cur, tagList: r.tagList });
-    setMsg({ ok: !rest.length, text: `${list.length - rest.length} tag tersimpan.${rest.length ? ` ${rest.length} milik SKU lain belum disimpan.` : ""}` });
+    setMsg({ ok: !rest.length, text: `${list.length - rest.length} tag tersimpan di ${namaBarang(cur)}.${rest.length ? ` ${rest.length} milik barang lain belum disimpan.` : ""}` });
   }
   const klikSimpan = () => { flush(); enqueue(simpan); };
   const lanjut = (save: boolean) => {
@@ -318,7 +331,7 @@ export function PasangTag() {
 
       {next && (
         <div className="space-y-2 rounded-lg border border-amber-500 bg-amber-500/10 p-3 text-14">
-          <p>Barcode <b className="font-mono">{next}</b> terbaca, tapi {drafts.length} tag untuk SKU {sku?.sku} belum disimpan.</p>
+          <p>Barcode <b className="font-mono">{next}</b> terbaca, tapi {drafts.length} tag untuk {sku && namaBarang(sku)} belum disimpan.</p>
           <div className="flex flex-wrap gap-2">
             <button type="button" disabled={busy > 0} onClick={() => lanjut(true)} className={`${btn} bg-primary text-primary-foreground`}>Simpan {nSiap} tag, lalu ganti</button>
             <button type="button" disabled={busy > 0} onClick={() => lanjut(false)} className={`${btn} border text-destructive`}>Buang, lalu ganti</button>
@@ -392,7 +405,7 @@ export function PasangTag() {
                       <td className="px-3 py-2">
                         {d.owner ? (
                           <>
-                            <span className="text-red-600">Milik SKU {d.owner}</span>{" "}
+                            <span className="text-red-600">Milik {d.owner}</span>{" "}
                             <button type="button" onClick={() => pindahkan(d.epc)} className="underline">{d.move ? "Batal pindah" : "Pindahkan ke sini"}</button>
                           </>
                         ) : (
