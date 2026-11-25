@@ -82,7 +82,7 @@ export async function ubahStokGudang(platform: MP, productId: string, skuId: str
     if (platform === "SHOPEE") await shopee.shopeeSetLocationStock(s.accessToken, s.shopId, productId, skuId, warehouseId, next);
     else await tiktokSetStock(s.accessToken, s.cipher ?? "", productId, skuId, warehouseId || null, next);
     await prisma.marketplaceItem.updateMany({ where: { platform, itemId: productId, modelId: skuId }, data: { stock: { increment: d } } });
-    // Stok per gudang (Produk Quantity & kasir) ikut diperbarui tanpa menunggu sync.
+    // Stok per gudang (Stok Gudang & kasir) ikut diperbarui tanpa menunggu sync.
     const it = await prisma.marketplaceItem.findFirst({ where: { platform, itemId: productId, modelId: skuId }, select: { id: true, whStock: true } });
     const wh = (it?.whStock as { id: string; stock: number }[] | null) ?? null;
     if (it && wh?.some((w) => w.id === warehouseId))

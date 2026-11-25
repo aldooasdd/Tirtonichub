@@ -1,4 +1,4 @@
-// Katalog barang ber-SKU + stok per cabang (gudang marketplace → cabang). Dipakai kasir /pos & Produk Quantity.
+// Katalog barang ber-SKU + stok per cabang (gudang marketplace → cabang). Dipakai kasir /pos & Stok Gudang.
 import { prisma } from "@/server/db";
 
 export type PosProduct = { sku: string; name: string; price: number; stock: number };

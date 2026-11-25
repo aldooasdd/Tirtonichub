@@ -43,7 +43,7 @@ async function namaSku(skus: string[]) {
 }
 const label = (nama: Map<string, string>, sku: string) => nama.get(sku.trim().toLowerCase()) ?? `SKU ${sku} (tidak ada di Produk Master)`;
 
-/** Barang + stok sistem (per cabang, sama seperti Produk Quantity) + tag yang sudah terpasang. */
+/** Barang + stok sistem (per cabang, sama seperti Stok Gudang) + tag yang sudah terpasang. */
 export async function lookupSku(raw: string): Promise<SkuInfo> {
   await requireChannel();
   const sku = raw.trim();
