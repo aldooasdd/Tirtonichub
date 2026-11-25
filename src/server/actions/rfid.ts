@@ -52,7 +52,7 @@ export async function pairTags(epcs: string[], rawSku: string, move = false): Pr
 export async function unpairTags(epcs: string[], rawSku: string): Promise<{ tags: number }> {
   await requireChannel();
   const sku = rawSku.trim();
-  await prisma.rfidTag.deleteMany({ where: { epc: { in: clean(epcs) }, sku } });
+  await prisma.rfidTag.deleteMany({ where: { epc: { in: clean(epcs) }, sku: { equals: sku, mode: "insensitive" } } });
   return { tags: await prisma.rfidTag.count({ where: { sku } }) };
 }
 
