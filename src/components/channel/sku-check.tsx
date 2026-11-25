@@ -2,8 +2,8 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Check, FileUp, ScanLine, Send, Undo2, X } from "lucide-react";
-import { confirmSaran, confirmSaranBulk, loadSkuCheckFile, markMissing, pushCheckedSkus, reopenCheck, setScannedSku } from "@/server/actions/sku-check";
+import { Archive, Check, FileUp, ScanLine, Send, Undo2, X } from "lucide-react";
+import { confirmSaran, confirmSaranBulk, loadSkuCheckFile, markMissing, pushCheckedSkus, reopenCheck, saveNoSku, saveNoSkuAll, setScannedSku } from "@/server/actions/sku-check";
 
 type Res = { ok: boolean; message?: string };
 const toBase64 = (f: File) =>
@@ -58,7 +58,7 @@ export function SkuCheckCard(p: {
         </div>
       </div>
 
-      {p.status === "pending" ? (
+      {p.status === "pending" || p.status === "nosku" ? (
         <div className="mt-3 flex flex-wrap items-center gap-2">
           {p.saranUpc && (
             <button type="button" disabled={pending} onClick={() => run(() => confirmSaran(p.groupKey))} className={`${btn} border-emerald-600 bg-emerald-600 text-white`}>
@@ -78,6 +78,11 @@ export function SkuCheckCard(p: {
               {pending ? "Menyimpan…" : "Simpan"}
             </button>
           </form>
+          {p.status === "pending" && (
+            <button type="button" disabled={pending} onClick={() => run(() => saveNoSku(p.groupKey))} className={btn}>
+              <Archive className="size-4" /> Simpan tanpa SKU
+            </button>
+          )}
           <button type="button" disabled={pending} onClick={() => run(() => markMissing(p.groupKey))} className={`${btn} text-destructive`}>
             <X className="size-4" /> Tidak ada di toko
           </button>
@@ -156,6 +161,27 @@ export function SkuCheckAll({ keys }: { keys: string[] }) {
       {keys.length > 0 && (
         <button type="button" disabled={prog != null} onClick={go} className="inline-flex h-9 items-center gap-1.5 rounded-md border border-emerald-600 bg-emerald-600 px-3 text-14 font-medium text-white disabled:opacity-40">
           <Check className="size-4" /> {prog != null ? `Menyimpan ${prog}/${keys.length}…` : `Semua benar (${keys.length})`}
+        </button>
+      )}
+      {msg && <p className={`text-12 ${msg.ok ? "text-emerald-600" : "text-destructive"}`}>{msg.text}</p>}
+    </div>
+  );
+}
+
+/** Semua sisa Belum dicek → tanpa SKU. */
+export function SkuCheckNoSkuAll({ count }: { count: number }) {
+  const { pending, msg, run } = useRun();
+  if (!count && !msg) return null;
+  return (
+    <div className="flex flex-wrap items-center gap-2">
+      {count > 0 && (
+        <button
+          type="button"
+          disabled={pending}
+          onClick={() => confirm(`Simpan ${count} barang yang belum dicek tanpa SKU? Barang pindah ke tab Tanpa SKU, SKU bisa diisi nanti.`) && run(() => saveNoSkuAll())}
+          className="inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-14 font-medium disabled:opacity-40"
+        >
+          <Archive className="size-4" /> {pending ? "Menyimpan…" : `Simpan semua tanpa SKU (${count})`}
         </button>
       )}
       {msg && <p className={`text-12 ${msg.ok ? "text-emerald-600" : "text-destructive"}`}>{msg.text}</p>}

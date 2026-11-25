@@ -68,7 +68,7 @@ export async function loadSkuCheckFile(base64: string, replace = false): Promise
   return { ok: true, message: `${fresh.length} baris masuk antrian Cek SKU (${rows.length - fresh.length} dilewati: sudah dicek / produk tidak ada).` };
 }
 
-async function finish(groupKey: string, status: "done" | "missing", want: string | null): Promise<Res & { clash?: boolean }> {
+async function finish(groupKey: string, status: "done" | "missing" | "nosku", want: string | null): Promise<Res & { clash?: boolean }> {
   const ctx = await requireChannel();
   const rows = await prisma.skuCheck.findMany({ where: { groupKey }, select: { id: true, itemId: true } });
   if (!rows.length) return { ok: false, message: "Barang tidak ditemukan di antrian." };
@@ -81,7 +81,7 @@ async function finish(groupKey: string, status: "done" | "missing", want: string
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "sku_check", entity: "SkuCheck", entityId: groupKey, after: { status, sku } });
   revalidatePath(PATH);
-  return { ok: true, clash: !!clash, message: status === "missing" ? "Ditandai tidak ada di toko." : clash ? `${clash} Disimpan sebagai ${sku}.` : `SKU ${sku} tersimpan.` };
+  return { ok: true, clash: !!clash, message: status === "missing" ? "Ditandai tidak ada di toko." : status === "nosku" ? "Tersimpan tanpa SKU." : clash ? `${clash} Disimpan sebagai ${sku}.` : `SKU ${sku} tersimpan.` };
 }
 
 /** Saran Accurate benar → pakai UPC saran. */
@@ -129,6 +129,22 @@ export async function setScannedSku(groupKey: string, raw: string): Promise<Res>
 
 export async function markMissing(groupKey: string): Promise<Res> {
   return finish(groupKey, "missing", null);
+}
+
+/** Simpan tanpa SKU: barang tetap ada di Produk Master, SKU bisa diisi nanti. SKU yang sudah ada tidak dihapus. */
+export async function saveNoSku(groupKey: string): Promise<Res> {
+  return finish(groupKey, "nosku", null);
+}
+
+/** Semua sisa Belum dicek (RAGU & tidak ketemu) → tanpa SKU. */
+export async function saveNoSkuAll(): Promise<Res> {
+  const ctx = await requireChannel();
+  const groups = await prisma.skuCheck.groupBy({ by: ["groupKey"], where: { status: "pending" } });
+  const r = await prisma.skuCheck.updateMany({ where: { status: "pending" }, data: { status: "nosku", sku: null, checkedById: ctx.userId, checkedAt: new Date(), pushedAt: null } });
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "sku_check_nosku", entity: "SkuCheck", entityId: "bulk", after: { groups: groups.length, rows: r.count } });
+  revalidatePath(PATH);
+  return { ok: true, message: `${groups.length} barang tersimpan tanpa SKU.` };
 }
 
 /** Buka lagi (salah klik). SKU lokal tidak dihapus. */
