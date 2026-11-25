@@ -34,6 +34,7 @@ export type Listing = {
   minPrice: number;
   maxPrice: number;
   variants: number;
+  noSku: number; // varian tanpa SKU (data contoh tidak dihitung)
   active: boolean;
   status: string | null; // status produk Tokopedia (detail)
 };
@@ -78,6 +79,7 @@ export async function loadProductGroups(trash = false): Promise<ProductGroup[]> 
       minPrice: Math.min(...prices),
       maxPrice: Math.max(...prices),
       variants: vs.length,
+      noSku: vs.filter((v) => v.shopId !== DEMO && !(v.localSku ?? v.sku ?? "").trim()).length,
       active: d ? d.status === "ACTIVATE" : vs.some((v) => v.skuStatus !== "DEACTIVATED"),
       status: d?.status ?? null,
     };

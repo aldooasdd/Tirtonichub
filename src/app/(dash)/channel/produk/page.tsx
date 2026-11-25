@@ -26,6 +26,8 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
   ]);
   const stockOf = (g: (typeof all)[number]) => g.listings.reduce((n, l) => n + l.stock, 0);
 
+  const noSkuOf = (g: (typeof all)[number]) => g.listings.reduce((n, l) => n + l.noSku, 0);
+
   const rows = all
     .filter((g) => !sp.p || g.listings.some((l) => l.platform === sp.p))
     .filter((g) =>
@@ -35,10 +37,14 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
           ? stockOf(g) === 0
           : sp.status === "multi"
             ? new Set(g.listings.map((l) => l.platform)).size > 1
-            : g.listings.some((l) => l.status === sp.status),
+            : sp.status === "tanpa-sku"
+              ? noSkuOf(g) > 0
+              : g.listings.some((l) => l.status === sp.status),
     )
     .filter((g) => !q || g.title.toLowerCase().includes(q) || g.skus.toLowerCase().includes(q) || (g.brand ?? "").toLowerCase().includes(q))
     .sort((a, b) => a.title.localeCompare(b.title, "id"));
+  const tanpaSku = all.filter((g) => noSkuOf(g) > 0).length;
+  const varianTanpaSku = all.reduce((n, g) => n + noSkuOf(g), 0);
   const habis = all.filter((g) => stockOf(g) === 0).length;
   const multi = all.filter((g) => new Set(g.listings.map((l) => l.platform)).size > 1).length;
   const tokoProducts = new Set(all.flatMap((g) => g.listings.filter((l) => l.platform === "TOKOPEDIA" && !l.demo).map((l) => l.itemId))).size;
@@ -54,6 +60,13 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
             {all.length} produk{multi ? ` · ${multi} dijual di lebih dari 1 toko` : ""}
             {habis ? ` · ${habis} stok habis` : ""}. Klik produk untuk ubah harga & stok per marketplace.
           </p>
+          {tanpaSku > 0 ? (
+            <Link href="/channel/produk?status=tanpa-sku" className="mt-1 inline-block rounded-md bg-amber-500/10 px-2 py-1 text-14 text-amber-700 hover:underline dark:text-amber-400">
+              <b>{tanpaSku}</b> produk belum ada SKU ({varianTanpaSku} varian di semua toko) — lihat
+            </Link>
+          ) : (
+            all.length > 0 && <p className="mt-1 text-14 text-emerald-600">Semua produk sudah ada SKU.</p>
+          )}
           {tanpaDetail > 0 && <p className="mt-1 text-12 text-amber-600">{tanpaDetail} produk Tokopedia detailnya (foto, kategori, merek, deskripsi) sedang disinkron di latar belakang. Muat ulang halaman beberapa menit lagi.</p>}
         </div>
         <div className="flex shrink-0 flex-wrap items-start gap-2">
@@ -86,6 +99,7 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
             <option value="SELLER_DEACTIVATED">Nonaktif (Tokopedia)</option>
             <option value="DRAFT">Draft</option>
             <option value="habis">Stok habis</option>
+            <option value="tanpa-sku">Belum ada SKU</option>
             <option value="multi">Dijual di &gt;1 toko</option>
           </select>
         </label>
@@ -138,6 +152,7 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
                           <span className="mt-0.5 flex flex-wrap items-center gap-1.5 text-12 text-muted-foreground">
                             {g.brand && <span>{g.brand}</span>}
                             {st && <span className={st.tone}>{st.label}</span>}
+                            {noSkuOf(g) > 0 && <span className="text-amber-600">{noSkuOf(g)} varian tanpa SKU</span>}
                             {g.listings.some((l) => l.demo) && <span className="text-amber-600">contoh</span>}
                           </span>
                         </span>
