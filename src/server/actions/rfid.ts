@@ -15,12 +15,31 @@ export type SkuInfo = {
   sku: string; name: string | null; variant: string | null; image: string | null;
   tagList: string[]; stock: number | null; stocks: { label: string; stock: number; branchId: string | null }[];
 };
-export type BatchRes = { tagList: string[]; other: { epc: string; sku: string }[] };
+export type BatchRes = { tagList: string[]; other: { epc: string; name: string }[] }; // name = nama barang pemilik tag
 
 const clean = (list: string[]) => [...new Set(list.map((e) => e.trim().toUpperCase()).filter(Boolean))];
 
 const same = (sku: string) => ({ equals: sku, mode: "insensitive" as const });
 const tagsOf = async (sku: string) => (await prisma.rfidTag.findMany({ where: { sku: same(sku) }, orderBy: { createdAt: "asc" }, select: { epc: true } })).map((t) => t.epc);
+
+/** Nama barang (+ varian) per SKU (huruf kecil), untuk pemberitahuan. SKU tak terdaftar tidak ada di hasil. */
+async function namaSku(skus: string[]) {
+  const list = [...new Set(skus.map((s) => s.toLowerCase()))];
+  const out = new Map<string, string>();
+  if (!list.length) return out;
+  const items = await prisma.marketplaceItem.findMany({
+    where: { deletedAt: null, shopId: { not: "demo" }, OR: list.flatMap((s) => [{ localSku: same(s) }, { localSku: null, sku: same(s) }]) },
+    select: { name: true, localName: true, variant: true, sku: true, localSku: true },
+    orderBy: { name: "asc" },
+  });
+  for (const i of items) {
+    const k = skuOf(i).toLowerCase();
+    const n = i.localName ?? i.name;
+    if (!out.has(k)) out.set(k, i.variant && !n.includes(i.variant) ? `${n} · ${i.variant}` : n);
+  }
+  return out;
+}
+const label = (nama: Map<string, string>, sku: string) => nama.get(sku.trim().toLowerCase()) ?? `SKU ${sku} (tidak ada di Produk Master)`;
 
 /** Barang + stok sistem (per cabang, sama seperti Produk Quantity) + tag yang sudah terpasang. */
 export async function lookupSku(raw: string): Promise<SkuInfo> {
@@ -48,7 +67,9 @@ export async function pairTags(epcs: string[], rawSku: string, move = false): Pr
   const cur = await prisma.rfidTag.findMany({ where: { epc: { in: list } } });
   const owner = new Map(cur.map((t) => [t.epc, t.sku]));
   const added = list.filter((e) => !owner.has(e) || (move && owner.get(e)!.toLowerCase() !== sku.toLowerCase()));
-  const other = move ? [] : cur.filter((t) => t.sku.toLowerCase() !== sku.toLowerCase()).map((t) => ({ epc: t.epc, sku: t.sku }));
+  const lain = move ? [] : cur.filter((t) => t.sku.toLowerCase() !== sku.toLowerCase());
+  const nama = await namaSku(lain.map((t) => t.sku));
+  const other = lain.map((t) => ({ epc: t.epc, name: label(nama, t.sku) }));
   await prisma.$transaction([
     prisma.rfidTag.deleteMany({ where: { epc: { in: added } } }),
     prisma.rfidTag.createMany({ data: added.map((epc) => ({ epc, sku, userId: ctx.userId })) }),
@@ -64,9 +85,11 @@ export async function unpairTags(epcs: string[], rawSku: string): Promise<void> 
 }
 
 /** Pemilik tiap tag (yang belum terpasang tidak ada di hasil). */
-export async function ownersOf(epcs: string[]): Promise<{ epc: string; sku: string }[]> {
+export async function ownersOf(epcs: string[]): Promise<{ epc: string; name: string }[]> {
   await requireChannel();
-  return prisma.rfidTag.findMany({ where: { epc: { in: clean(epcs) } }, select: { epc: true, sku: true } });
+  const tags = await prisma.rfidTag.findMany({ where: { epc: { in: clean(epcs) } }, select: { epc: true, sku: true } });
+  const nama = await namaSku(tags.map((t) => t.sku));
+  return tags.map((t) => ({ epc: t.epc, name: label(nama, t.sku) }));
 }
 
 export type Barang = { id: string; name: string; variant: string | null; image: string | null; skus: string[]; shops: string[] };
