@@ -6,6 +6,7 @@
 // Semua akses data lewat antarmuka AutoStore & Biz supaya bisa diuji tanpa database.
 
 import { DEFAULT_JOB } from "@/lib/media/schedule";
+import { expired } from "@/server/push/logic";
 import { qaCfgOf } from "@/server/studio/cpr";
 import { policyReady, type Policy, type PolicyKey } from "./policies";
 import { COND_FIELDS, TEMPLATES, type AutoEvent, type GNode, type Graph, type TemplateKey } from "./types";
@@ -231,18 +232,25 @@ export async function fireTimers(d: Deps): Promise<{ sent: number; suppressed: n
     let why = "";
     let to = "pic";
     let tpl: TemplateKey = "deadline_reminder";
-    let waPerf = false; // pengingat metrik: WhatsApp bisa dinyalakan khusus (performance.checkpoints.wa), terpisah dari saluran umum
+    let body = s(task?.title);
+    let waOwn = false; // WhatsApp khusus pengingat metrik / deadline (policy .wa), terpisah dari saluran umum
     if (!task) why = "kartu tidak ada";
     else if (t.kind === "reminder") {
       const p = await pol(d, "reminder.schedule");
+      waOwn = p?.config.wa === true;
+      if (p) body += " · Deadline Ready " + s(t.payload.deadline).split("-").reverse().join("-") + " " + s(p.config.deadlineTime).replace(":", ".") + " WIB";
       if (!p) why = "aturan pengingat tidak aktif";
+      else if (task.suspendedAt || task.mergedInto) why = "kartu ditangguhkan / digabung";
+      else if (d.now >= deadlineMoment(s(t.payload.deadline), s(p.config.deadlineTime))) why = "deadline sudah lewat";
+      else if (Number(task.createdAt) && expired(new Date(Number(task.createdAt)), new Date(d.now.getTime() + 7 * 3600_000).toISOString().slice(0, 10), Number(task.pausedMs) || 0)) why = "kartu hangus";
+      else if (!(p.config.offsetsHours as number[]).includes(Number(t.payload.hours))) why = "jarak pengingat tidak dipakai lagi";
       else if ((IDX[s(task.status)] ?? 0) >= 3) why = "sudah Ready";
       else if (s(task.readyBy || task.due) !== s(t.payload.deadline)) why = "deadline sudah berubah";
       to = s(p?.config.recipients) || "pic";
     } else {
       const p = await pol(d, "performance.checkpoints");
       tpl = "metrics_due";
-      waPerf = p?.config.wa === true;
+      waOwn = p?.config.wa === true;
       if (!p) why = "aturan evaluasi tidak aktif";
       else if (!(Array.isArray(p.config.days) ? (p.config.days as number[]) : []).map((n) => "D+" + n).includes(s(t.payload.cp))) why = "checkpoint " + s(t.payload.cp) + " tidak dipakai lagi";
       else if (task.status !== "Tayang" || s(task.postAt) !== s(t.payload.postAt)) why = "tanggal tayang berubah";
@@ -260,7 +268,7 @@ export async function fireTimers(d: Deps): Promise<{ sent: number; suppressed: n
     const ids = await recipients(d, to, task);
     const fresh: string[] = [];
     for (const u of ids) if (await d.store.deliveryTry(t.key + ":" + u)) fresh.push(u);
-    if (fresh.length) await d.biz.notify(fresh, { type: "studio_auto", title: TEMPLATES[tpl] + (t.kind === "performance" ? " (" + s(t.payload.cp) + ")" : ""), body: s(task.title), url: cardLink(t.entityId), wa: ch!.config.channel === "app_wa" || waPerf });
+    if (fresh.length) await d.biz.notify(fresh, { type: "studio_auto", title: TEMPLATES[tpl] + (t.kind === "performance" ? " (" + s(t.payload.cp) + ")" : ""), body, url: cardLink(t.entityId), wa: ch!.config.channel === "app_wa" || waOwn });
     await d.store.finishTimer(t.id!, "sent");
     await d.store.audit({ actorType: "system", actorId: "automation", action: "reminder.sent", resourceType: "task", resourceId: t.entityId, outcome: "sent:" + fresh.length, correlationId: t.key });
     sent++;

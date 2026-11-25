@@ -34,6 +34,7 @@ export function policyConfigWhy(key: PolicyKey, c: Record<string, unknown>): str
       const o = c.offsetsHours;
       if (!Array.isArray(o) || o.length < 1 || o.length > 3 || !o.every((x) => intIn(x, 1, 168)) || new Set(o).size !== o.length) return "isi 1–3 jarak jam (1–168) yang berbeda";
       if (!HHMM.test(String(c.deadlineTime ?? ""))) return "isi jam batas Deadline Ready (HH:MM, WIB)";
+      if (c.wa !== undefined && typeof c.wa !== "boolean") return "pilihan WhatsApp tidak valid";
       return c.recipients === "pic" ? null : "pilih penerima pengingat";
     }
     case "performance.checkpoints": {
