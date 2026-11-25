@@ -28,7 +28,7 @@ export default async function ProdukQuantityPage() {
   return (
     <div className="space-y-4">
       <div>
-        <h1 className="text-24 font-semibold">Produk Quantity</h1>
+        <h1 className="text-24 font-semibold">Stok Gudang</h1>
         <p className="text-14 text-muted-foreground">Stok tiap barang per cabang. Barang ber-SKU saja; SKU sama di Shopee & Tokopedia dihitung satu.</p>
       </div>
       {!mapped && (
