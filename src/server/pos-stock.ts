@@ -85,3 +85,42 @@ export async function deductPosStock(lines: StockLine[], ctx: { notaNo: string; 
       link: "/channel/produk",
     }).catch(() => {});
 }
+
+/** Edit stok (Pasangkan Tag): stok 1 SKU di 1 cabang dijadikan `target` di tiap listing Tokopedia & Shopee yang punya gudang cabang itu. */
+export async function setBranchStock(sku: string, branchId: string, target: number): Promise<Result[]> {
+  const b = await prisma.branch.findUnique({ where: { id: branchId }, select: { warehouseIds: true } });
+  const wh = new Set(b?.warehouseIds ?? []);
+  const items = await prisma.marketplaceItem.findMany({
+    where: {
+      deletedAt: null,
+      shopId: { not: DEMO },
+      platform: { in: ["TOKOPEDIA", "SHOPEE"] },
+      OR: [{ localSku: { equals: sku, mode: "insensitive" } }, { localSku: null, sku: { equals: sku, mode: "insensitive" } }],
+    },
+  });
+  const results: Result[] = [];
+  for (const it of items) {
+    const list = (it.whStock as Wh[] | null) ?? [];
+    const mine = list.filter((w) => wh.has(`${it.platform}:${w.id}`)).sort((x, y) => y.stock - x.stock);
+    if (!mine.length) continue;
+    const r: Result = { sku, platform: it.platform, warehouse: mine[0].id };
+    try {
+      if (!bolehUbah(it.platform)) throw new Error("ubah produk sedang dimatikan");
+      const live = new Map<string, number>();
+      for (const w of mine) live.set(w.id, await readStock(it.platform, it.itemId, it.modelId, w.id));
+      const before = [...live.values()].reduce((n, x) => n + x, 0);
+      // Cabang dengan >1 gudang: selisihnya ditaruh di gudang yang stoknya paling banyak.
+      const next = live.get(mine[0].id)! + (target - before);
+      if (next < 0) throw new Error("stok tersebar di beberapa gudang, ubah di Produk Master");
+      if (next !== live.get(mine[0].id)) await writeStock(it.platform, it.itemId, it.modelId, mine[0].id, next);
+      live.set(mine[0].id, next);
+      const whStock = list.map((w) => ({ ...w, stock: live.get(w.id) ?? w.stock }));
+      await prisma.marketplaceItem.update({ where: { id: it.id }, data: { whStock, stock: whStock.reduce((n, w) => n + w.stock, 0) } });
+      Object.assign(r, { before, after: target });
+    } catch (e) {
+      r.error = e instanceof Error ? e.message : "gagal";
+    }
+    results.push(r);
+  }
+  return results;
+}

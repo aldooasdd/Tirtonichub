@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Pencil, Save, ScanLine, X } from "lucide-react";
-import { cariBarang, gantiSku, lookupSku, ownersOf, pairTags, pemakaiSku, type Barang, type SkuInfo } from "@/server/actions/rfid";
+import { Boxes, Pencil, Save, ScanLine, X } from "lucide-react";
+import { cariBarang, gantiSku, lookupSku, ownersOf, pairTags, pemakaiSku, simpanStok, type Barang, type SkuInfo } from "@/server/actions/rfid";
 
 // EPC stiker UHF = hex 24–32 huruf; barcode barang (EAN/UPC/SKU) lebih pendek → dianggap SKU.
 const isTag = (v: string) => /^[0-9A-F]{24,32}$/i.test(v);
@@ -94,12 +94,59 @@ function PilihBarang({ sku, edit, disabled, onPick, onClose }: { sku: string; ed
   );
 }
 
+/** Stok per cabang → marketplace. Tanpa <form>: Enter dari reader tidak boleh menyimpan. */
+function EditStok({ info, disabled, onSave, onClose }: { info: SkuInfo; disabled: boolean; onSave: (c: { branchId: string; stock: number }[]) => void; onClose: () => void }) {
+  const cabang = info.stocks.filter((s) => s.branchId);
+  const [val, setVal] = useState<Record<string, string>>(() => Object.fromEntries(cabang.map((s) => [s.branchId!, String(s.stock)])));
+  const [pakai, setPakai] = useState<string[] | null>(null);
+  useEffect(() => {
+    let on = true;
+    pemakaiSku(info.sku).then((r) => on && setPakai(r)).catch(() => {});
+    return () => { on = false; };
+  }, [info.sku]);
+  const ubah = cabang.filter((s) => val[s.branchId!] !== String(s.stock));
+  const salah = ubah.some((s) => !/^\d{1,4}$/.test(val[s.branchId!]));
+  return (
+    <div className="space-y-3 border-t bg-muted/40 p-3 text-14" onClick={(e) => e.stopPropagation()}>
+      {cabang.length ? (
+        <div className="flex flex-wrap gap-3">
+          {cabang.map((s) => (
+            <label key={s.branchId} className="flex flex-col gap-1 text-12 text-muted-foreground">
+              {s.label} (sekarang {s.stock})
+              <input inputMode="numeric" value={val[s.branchId!]} onChange={(e) => setVal((v) => ({ ...v, [s.branchId!]: e.target.value.trim() }))} className="h-10 w-32 rounded-md border bg-background px-3 text-14 text-foreground" />
+            </label>
+          ))}
+        </div>
+      ) : (
+        <p>Barang ini belum punya stok di gudang yang dipetakan ke cabang. Ubah stoknya di Produk Master.</p>
+      )}
+      {cabang.length > 0 && cabang.length < info.stocks.length && <p className="text-12 text-muted-foreground">Gudang yang belum dipetakan ke cabang tidak bisa diubah di sini.</p>}
+      {salah && <p className="text-12 text-red-600">Stok harus angka 0–9999.</p>}
+      {cabang.length > 0 && (
+        <div className="text-12 text-muted-foreground">
+          Langsung mengubah stok di Shopee & Tokopedia untuk:
+          <ul className="list-disc pl-5">{pakai ? pakai.map((x, i) => <li key={i}>{x}</li>) : <li>Memuat…</li>}</ul>
+        </div>
+      )}
+      <div className="flex gap-2">
+        {cabang.length > 0 && (
+          <button type="button" disabled={disabled || !pakai || !ubah.length || salah} onClick={() => onSave(ubah.map((s) => ({ branchId: s.branchId!, stock: Number(val[s.branchId!]) })))} className="h-9 rounded-md bg-primary px-4 font-medium text-primary-foreground disabled:opacity-40">
+            {disabled ? "Memproses…" : "Simpan stok"}
+          </button>
+        )}
+        <button type="button" onClick={onClose} className="h-9 rounded-md border px-4">Tutup</button>
+      </div>
+    </div>
+  );
+}
+
 // Tanpa confirm(): reader mengetik Enter, dialog bisa ter-OK sendiri.
 export function PasangTag() {
   const [sku, setSku] = useState<SkuInfo | null>(null);
   const [drafts, setDrafts] = useState<Draft[]>([]);
   const [next, setNext] = useState<string | null>(null); // barcode baru di-scan saat tag belum disimpan
   const [edit, setEdit] = useState(false);
+  const [editStok, setEditStok] = useState(false);
   const [val, setVal] = useState("");
   const [busy, setBusy] = useState(0);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
@@ -136,6 +183,7 @@ export function PasangTag() {
     putDrafts([]);
     putNext(null);
     setEdit(false);
+    setEditStok(false);
     putSku(await lookupSku(code));
     setMsg(null);
   }
@@ -228,6 +276,19 @@ export function PasangTag() {
       if (r.ok) input.current?.focus();
     });
   };
+  const ubahStok = (c: { branchId: string; stock: number }[]) => {
+    const s = skuRef.current?.sku;
+    if (!s) return;
+    enqueue(async () => {
+      const r = await simpanStok(s, c);
+      setMsg({ ok: r.ok, text: r.message });
+      putSku(await lookupSku(s)); // baris mengikuti stok baru
+      if (r.ok) {
+        setEditStok(false);
+        input.current?.focus();
+      }
+    });
+  };
   const hapus = (epc: string) => putDrafts(draftRef.current.filter((d) => d.epc !== epc));
   const pindahkan = (epc: string) => putDrafts(draftRef.current.map((d) => (d.epc === epc ? { ...d, move: !d.move } : d)));
 
@@ -283,13 +344,20 @@ export function PasangTag() {
               {sku.stocks.length > 0 && <p className="text-12 text-muted-foreground">Stok: {sku.stocks.map((s) => `${s.label} ${s.stock}`).join(" · ")}</p>}
             </div>
             {sku.name && !edit && (
-              <button type="button" disabled={busy > 0} onClick={(e) => { e.stopPropagation(); setEdit(true); }} className={`${btn} shrink-0 self-start border`}>
+              <div className="flex shrink-0 flex-wrap justify-end gap-2 self-start">
+              <button type="button" disabled={busy > 0} onClick={(e) => { e.stopPropagation(); setEditStok(false); setEdit(true); }} className={`${btn} border`}>
                 <Pencil className="size-4" /> Edit barang
               </button>
+              <button type="button" disabled={busy > 0} onClick={(e) => { e.stopPropagation(); setEditStok(true); }} className={`${btn} border`}>
+                <Boxes className="size-4" /> Edit stok
+              </button>
+              </div>
             )}
           </div>
 
           {(!sku.name || edit) && <PilihBarang key={`${sku.sku}|${edit}`} sku={sku.sku} edit={edit} disabled={busy > 0} onPick={pilih} onClose={() => setEdit(false)} />}
+
+          {editStok && <EditStok key={sku.sku} info={sku} disabled={busy > 0} onSave={ubahStok} onClose={() => setEditStok(false)} />}
 
           <div className="sticky top-0 z-10 flex flex-wrap items-center justify-between gap-2 border-y bg-card px-3 py-2 text-14">
             <span>Terisi <b>{isi}</b>{stok != null ? ` dari ${stok} stok` : ""} · {sku.tagList.length} tersimpan{drafts.length ? ` · ${drafts.length} belum disimpan` : ""}</span>
