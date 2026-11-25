@@ -1,9 +1,9 @@
 // Script Konten (22 Nov 2026): aturan murni (diuji di script.test.ts). Penyimpanan & izin di src/server/actions/script.ts.
-// Keputusan Zaki 22 Nov 2026: hanya Video review (vrv) & Video event (evt) yang punya Content ID; semua anggota media boleh
+// Keputusan Zaki 22 Nov 2026: hanya Video review (vrv), Video event (evt) & sejak 25 Nov 2026 Video IDCC (idc) yang punya Content ID; semua anggota media boleh
 // menulis; Creative Review script disetujui admin / Admin 2 yang bukan penulisnya (admin penuh boleh dengan alasan);
 // status script tidak menahan tahap FlowSpace; script baru diawali foto barang utama.
 
-export const SCRIPT_TYPES = ["vrv", "evt"] as const;
+export const SCRIPT_TYPES = ["vrv", "evt", "idc"] as const;
 export type ScriptStatus = "draft" | "review" | "revision" | "approved";
 export const SCRIPT_ST: Record<ScriptStatus, string> = { draft: "Draft", review: "Creative Review Script", revision: "Perlu revisi", approved: "Disetujui" };
 
@@ -13,7 +13,7 @@ const obj = (v: unknown): Record<string, unknown> => (v && typeof v === "object"
 /** Kartu boleh punya script: jenis vrv/evt, punya Content ID, tidak ditangguhkan/digabung. */
 export function scriptEligible(t: TaskLite | null | undefined): string | null {
   if (!t) return "Kartu tidak ditemukan.";
-  if (!(SCRIPT_TYPES as readonly string[]).includes(t.type)) return "Script Konten hanya untuk Video review dan Video event.";
+  if (!(SCRIPT_TYPES as readonly string[]).includes(t.type)) return "Script Konten hanya untuk Video review, Video event, dan Video IDCC.";
   if (!t.cprId) return "Kartu ini belum punya Content ID.";
   const ex = obj(t.extra);
   if (ex.mergedInto) return "Kartu ini sudah digabung ke kartu lain.";

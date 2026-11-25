@@ -168,7 +168,7 @@ export async function loadRuns(): Promise<R<{ id: string; workflowKey: string; v
 export async function loadApprovals(): Promise<R<{ id: string; title: string; type: string; cprId: string; kind: "review" | "brief"; since: string; ver: number; waitingRun: boolean }[]>> {
   const c = await ctx();
   if (!c.perms.approvals) return deny();
-  const rows = await prisma.mediaTask.findMany({ where: { type: { in: ["igf", "vpr", "vrv", "evt"] }, status: { not: "Tayang" } }, select: { id: true, title: true, type: true, extra: true } });
+  const rows = await prisma.mediaTask.findMany({ where: { type: { in: ["igf", "vpr", "vrv", "evt", "idc", "idf"] }, status: { not: "Tayang" } }, select: { id: true, title: true, type: true, extra: true } });
   const waiting = new Set((await prisma.automationRun.findMany({ where: { status: "waiting_for_human" }, select: { entityId: true } })).map((r) => r.entityId));
   const out: { id: string; title: string; type: string; cprId: string; kind: "review" | "brief"; since: string; ver: number; waitingRun: boolean }[] = [];
   for (const t of rows) {
@@ -192,6 +192,6 @@ export async function loadAudit(): Promise<R<{ id: string; at: string; actorType
 export async function testCards(): Promise<R<{ id: string; title: string; type: string; status: string }[]>> {
   const c = await ctx();
   if (!c.perms.test) return deny();
-  const rows = await prisma.mediaTask.findMany({ where: { type: { in: ["igf", "vpr", "vrv", "evt"] } }, orderBy: { updatedAt: "desc" }, take: 40, select: { id: true, title: true, type: true, status: true } });
+  const rows = await prisma.mediaTask.findMany({ where: { type: { in: ["igf", "vpr", "vrv", "evt", "idc", "idf"] } }, orderBy: { updatedAt: "desc" }, take: 40, select: { id: true, title: true, type: true, status: true } });
   return { ok: true, data: rows };
 }

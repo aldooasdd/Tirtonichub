@@ -4,12 +4,17 @@
 
 type Doc = Record<string, unknown>;
 
-/** Jenis konten Studio → kode CPR. CPR hanya untuk Foto IG, Video produk, Video review, Video event (permintaan Zaki 21 Nov 2026). */
-export const CPR_TYPE: Record<string, string> = { vpr: "VPD", igf: "FIP", vrv: "VRV", evt: "VEV" };
+const s = (v: unknown) => (v == null ? "" : String(v));
+/** Jenis konten Studio → kode CPR: Foto IG, Video produk, Video review, Video event (21 Nov 2026) + Video/Foto IDCC, kode IDCC untuk keduanya (keputusan Zaki 25 Nov 2026). */
+export const CPR_TYPE: Record<string, string> = { vpr: "VPD", igf: "FIP", vrv: "VRV", evt: "VEV", idc: "IDCC", idf: "IDCC" };
+/** Jenis yang wajib Content Brief: semua jenis CPR kecuali Foto IDCC (story; keputusan Zaki 25 Nov 2026). */
+export const needsBrief = (type: unknown) => !!CPR_TYPE[s(type)] && type !== "idf";
+/** Standar Creative Review IDCC meminjam jenis lain sampai admin mengisi sendiri (keputusan Zaki 25 Nov 2026). */
+export const QA_BORROW: Record<string, string> = { idc: "vrv", idf: "igf" };
+export const isIdcc = (type: unknown) => type === "idc" || type === "idf";
 export const QA_LOG_MAX = 40;
 export const QA_STAGES = ["Editing", "Ready"];
 
-const s = (v: unknown) => (v == null ? "" : String(v));
 const obj = (v: unknown): Doc => (v && typeof v === "object" && !Array.isArray(v) ? (v as Doc) : {});
 
 /** YYMM menurut WIB (UTC+7). */
@@ -74,6 +79,7 @@ export function qaCfgWhy(v: unknown): string | null {
   const types = obj(o.types);
   for (const t of Object.keys(CPR_TYPE)) {
     const L = types[t];
+    if (L === undefined && QA_BORROW[t]) continue; // meminjam standar lain
     if (!Array.isArray(L) || L.length < 2 || L.length > 10) return "setiap jenis konten butuh 2–10 indikator";
     const keys = new Set<string>();
     let sum = 0;
@@ -112,7 +118,7 @@ export function qaCfgOf(v: unknown): QaCfg {
   };
   return {
     v: Number(o.v) || 1,
-    types: Object.fromEntries(Object.keys(CPR_TYPE).map((t) => [t, (types[t] as unknown[]).map(ind)])),
+    types: Object.fromEntries(Object.keys(CPR_TYPE).map((t) => [t, ((types[t] ?? types[QA_BORROW[t]]) as unknown[]).map(ind)])),
     checks: (o.checks as unknown[]).map((x) => ({ k: s(obj(x).k), l: s(obj(x).l).trim() })),
   };
 }
@@ -214,14 +220,16 @@ export function nextQa(prev: unknown, act: unknown, task: Doc, who: Who, cfg: Qa
     if (task.briefReq === true && !briefOkV(task.brief)) return "Content Brief belum disetujui Creative Lead";
     if (p.st === "submitted") return "Creative Review sudah diajukan, tunggu review";
     if (p.st === "approved") return "Creative Review sudah Approved";
-    const inds = cfg.types[s(task.type)] ?? QA_DEFAULT.types[s(task.type)];
+    const ty = s(task.type), from = QA_BORROW[ty] ?? ty;
+    const inds = cfg.types[ty] ?? cfg.types[from] ?? QA_DEFAULT.types[from];
+    const must = needsBrief(ty) ? cfg.checks : cfg.checks.filter((c) => c.k !== "brief"); // Foto IDCC tanpa brief
     const ver = p.ver + 1;
     return {
       ...p,
       st: "submitted",
       ver,
       inds,
-      checks: critChecks(inds, cfg.checks),
+      checks: critChecks(inds, must),
       sub: { by, at, file: s(task.driveUrl), briefV: briefOkV(task.brief) },
       rev: null,
       appBy: "",
@@ -291,6 +299,13 @@ export function qaReopen(prev: unknown, before: Doc | null, after: Doc, by: stri
   if (!ch.length) return null;
   const note = "Dibuka ulang: " + ch.map((k) => QA_MATERIAL[k]).join(", ") + " berubah";
   return { ...p, st: "reopened", appBy: "", appAt: 0, log: [...p.log, { at, by: by || "?", act: "reopen" as const, ver: p.ver, st: "reopened" as const, note }].slice(-QA_LOG_MAX) };
+}
+
+/** IDCC masuk Tayang pertama kali: catat stok barang saat itu sebagai stok awal (null = stok tidak diketahui). undefined = tidak perlu dicatat. */
+export function stockAtPublish(before: Doc | null, after: Doc, qty: unknown, at = Date.now()): { n: number | null; at: number } | undefined {
+  if (!isIdcc(after.type) || !after.cprId || after.stock0 || after.status !== "Tayang" || before?.status === "Tayang") return undefined;
+  const n = qty == null || qty === "" ? NaN : Number(qty);
+  return { n: Number.isInteger(n) && n >= 0 ? n : null, at };
 }
 
 /** Kartu ber-QA tidak boleh Tayang atau dijadwalkan di Meta sebelum QA Approved. null = boleh. */

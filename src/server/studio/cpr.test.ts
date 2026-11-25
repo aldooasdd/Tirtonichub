@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { cprIdOf, cprYymm, critChecks, needsCpr, nextQa, qaAutoSubmit, qaBlocks, qaCfgOf, qaCfgWhy, qaOf, qaReopen, qaResult, qaScore, QA_DEFAULT, type Qa } from "./cpr";
+import { QA_DEFAULT, cprIdOf, cprYymm, critChecks, needsBrief, needsCpr, nextQa, qaAutoSubmit, qaBlocks, qaCfgOf, qaCfgWhy, qaOf, qaReopen, qaResult, qaScore, stockAtPublish, type Qa } from "./cpr";
 
 const AT = 1_763_700_000_000;
 const zaki = { name: "Zaki", code: "Z", full: true, staff: true };
@@ -26,7 +26,7 @@ test("Content ID: format, nomor 4 digit, bulan WIB", () => {
 
 test("Content ID hanya untuk jenis yang tayang sebagai konten CPR", () => {
   for (const t of ["vpr", "igf", "vrv", "evt"]) assert.equal(needsCpr(t), true, t);
-  for (const t of ["idf", "idc", "ktl", "khs", "cmp", "", undefined]) assert.equal(needsCpr(t), false, String(t));
+  for (const t of ["ktl", "khs", "cmp", "", undefined]) assert.equal(needsCpr(t), false, String(t));
 });
 
 test("standar QA bawaan sah: bobot tiap jenis 100%, Product Accuracy critical", () => {
@@ -130,7 +130,7 @@ test("Tayang & jadwal Meta ditolak sebelum QA Approved (hanya kartu ber-qaReq)",
   assert.equal(qaBlocks(b, { ...b, status: "Tayang", qa: ok }), null);
   assert.equal(qaBlocks(b, { ...b, status: "Tayang", qa: { st: "ok" } }), null); // QA lama (6 centang) yang sudah lolos tetap sah
   assert.equal(qaBlocks({ status: "Ready" }, { status: "Tayang" }), null);
-  assert.equal(qaBlocks({ status: "Ready", qaReq: true, type: "idc" }, { status: "Tayang", qaReq: true, type: "idc" }), null);
+  assert.equal(qaBlocks({ status: "Ready", qaReq: true, type: "khs" }, { status: "Tayang", qaReq: true, type: "khs" }), null);
 });
 
 test("QA lama dibaca aman; isi sampah dibersihkan", () => {
@@ -163,4 +163,29 @@ test("masuk Ready / ganti file saat Ready = Creative Review diajukan otomatis; s
   const again = qaAutoSubmit(card, { ...card, qa: rev, driveUrl: "/api/file?key=y" }, "Rayhan", QA_DEFAULT, AT);
   assert.equal(again?.st, "submitted");
   assert.equal(again?.ver, 2);
+});
+
+test("IDCC: Content ID, pinjam standar, Foto IDCC tanpa brief, stok awal", () => {
+  assert.equal(cprIdOf("idc", "2611", 7), "TRT-CPR-IDCC-2611-0007");
+  assert.equal(cprIdOf("idf", "2611", 8), "TRT-CPR-IDCC-2611-0008");
+  assert.equal(needsBrief("idc"), true);
+  assert.equal(needsBrief("idf"), false);
+  // standar tersimpan tanpa IDCC tetap sah dan tidak kembali ke bawaan
+  const saved = { ...QA_DEFAULT, v: 5, types: { ...QA_DEFAULT.types, vrv: [{ k: "a", l: "A", w: 60 }, { k: "b", l: "B", w: 40 }] } };
+  assert.equal(qaCfgWhy(saved), null);
+  const cfg = qaCfgOf(saved);
+  assert.equal(cfg.v, 5);
+  assert.deepEqual(cfg.types.idc.map((i) => i.k), ["a", "b"]);
+  const who = { name: "R", code: "R", full: false, staff: false };
+  const c = { type: "idf", cprId: "X", status: "Ready", driveUrl: "/f" };
+  const q = nextQa(undefined, { act: "submit" }, c, who, cfg);
+  assert.ok(typeof q !== "string" && q.inds[0].k === "acc" && !q.checks.some((x) => x.k === "brief"));
+  assert.equal(typeof nextQa(undefined, { act: "submit" }, { ...c, type: "idc", briefReq: true }, who, cfg), "string");
+  assert.ok(qaBlocks({ status: "Ready" }, { type: "idf", qaReq: true, status: "Tayang" }));
+  const pub = { type: "idc", cprId: "X", status: "Tayang" };
+  assert.deepEqual(stockAtPublish({ status: "Ready" }, pub, 12, 1), { n: 12, at: 1 });
+  assert.deepEqual(stockAtPublish({ status: "Ready" }, pub, null, 1), { n: null, at: 1 });
+  assert.equal(stockAtPublish({ status: "Tayang" }, pub, 12), undefined);
+  assert.equal(stockAtPublish({ status: "Ready" }, { ...pub, stock0: { n: 1, at: 1 } }, 12), undefined);
+  assert.equal(stockAtPublish({ status: "Ready" }, { ...pub, type: "vrv" }, 12), undefined);
 });

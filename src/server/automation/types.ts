@@ -39,7 +39,7 @@ export type NodeType = keyof typeof NODE_TYPES;
 
 /** Field kartu yang boleh dicek di node Condition, beserta pilihan nilainya (dari daftar resmi yang sudah ada). */
 export const COND_FIELDS: Record<string, { l: string; values: string[] }> = {
-  type: { l: "Jenis konten", values: ["igf", "vpr", "vrv", "evt"] },
+  type: { l: "Jenis konten", values: ["igf", "vpr", "vrv", "evt", "idc", "idf"] },
   status: { l: "Tahap", values: ["Terdata", "Diproduksi", "Editing", "Ready", "Tayang"] },
   briefReq: { l: "Wajib brief (kartu baru)", values: ["true", "false"] },
   primary: { l: "Primary Objective (brief)", values: ["AWR", "ENT", "QIN", "CNV", "RET"] },
