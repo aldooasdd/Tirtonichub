@@ -68,13 +68,12 @@ export async function loadSkuCheckFile(base64: string, replace = false): Promise
   return { ok: true, message: `${fresh.length} baris masuk antrian Cek SKU (${rows.length - fresh.length} dilewati: sudah dicek / produk tidak ada).` };
 }
 
-async function finish(groupKey: string, status: "done" | "missing", want: string | null, skipClash = false): Promise<Res> {
+async function finish(groupKey: string, status: "done" | "missing", want: string | null): Promise<Res & { clash?: boolean }> {
   const ctx = await requireChannel();
   const rows = await prisma.skuCheck.findMany({ where: { groupKey }, select: { id: true, itemId: true } });
   if (!rows.length) return { ok: false, message: "Barang tidak ditemukan di antrian." };
   // SKU sudah dipakai → otomatis ditambah angka acak supaya tetap tersimpan.
   const { sku, clash } = want ? await freeSku(rows.map((r) => r.itemId), want) : { sku: null, clash: null };
-  if (clash && skipClash) return { ok: false, message: clash };
   await prisma.$transaction([
     prisma.skuCheck.updateMany({ where: { groupKey }, data: { status, sku, checkedById: ctx.userId, checkedAt: new Date(), pushedAt: null } }),
     ...(sku ? [prisma.marketplaceItem.updateMany({ where: { id: { in: rows.map((r) => r.itemId) } }, data: { localSku: sku } })] : []),
@@ -82,7 +81,7 @@ async function finish(groupKey: string, status: "done" | "missing", want: string
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "sku_check", entity: "SkuCheck", entityId: groupKey, after: { status, sku } });
   revalidatePath(PATH);
-  return { ok: true, message: status === "missing" ? "Ditandai tidak ada di toko." : clash ? `${clash} Disimpan sebagai ${sku}.` : `SKU ${sku} tersimpan.` };
+  return { ok: true, clash: !!clash, message: status === "missing" ? "Ditandai tidak ada di toko." : clash ? `${clash} Disimpan sebagai ${sku}.` : `SKU ${sku} tersimpan.` };
 }
 
 /** Saran Accurate benar → pakai UPC saran. */
@@ -93,20 +92,30 @@ export async function confirmSaran(groupKey: string): Promise<Res> {
   return finish(groupKey, "done", r.saranUpc);
 }
 
-/** Tombol "Semua benar": banyak saran sekaligus (maks 100 per panggilan). SKU bentrok dilewati, tetap di antrian. */
-export async function confirmSaranBulk(groupKeys: string[]): Promise<{ saved: number; clash: number }> {
+/** Tombol "Semua benar": banyak saran sekaligus (maks 25 per panggilan). Sama seperti Benar satuan: SKU bentrok ditambah angka acak. */
+export async function confirmSaranBulk(groupKeys: string[]): Promise<{ saved: number; clash: number; fail: number }> {
   await requireChannel();
-  const keys = [...new Set(groupKeys)].slice(0, 100);
+  const keys = [...new Set(groupKeys)].slice(0, 25);
   const rows = await prisma.skuCheck.findMany({ where: { groupKey: { in: keys }, status: "pending", saranUpc: { not: null } }, select: { groupKey: true, saranUpc: true } });
   const upc = new Map<string, string>();
   for (const r of rows) if (!upc.has(r.groupKey)) upc.set(r.groupKey, r.saranUpc!);
-  let saved = 0, clash = 0;
+  let saved = 0, clash = 0, fail = 0;
   // Berurutan: dua barang dengan saran SKU sama → yang kedua ketahuan bentrok.
   for (const [k, s] of upc) {
-    if ((await finish(k, "done", s, true)).ok) saved++;
-    else clash++;
+    // Satu barang gagal tidak menghentikan sisanya; yang gagal tetap di Belum dicek.
+    try {
+      const r = await finish(k, "done", s);
+      if (!r.ok) fail++;
+      else {
+        saved++;
+        if (r.clash) clash++;
+      }
+    } catch (e) {
+      console.error("[cek sku] semua benar", k, e);
+      fail++;
+    }
   }
-  return { saved, clash };
+  return { saved, clash, fail };
 }
 
 /** Scan barcode (Zebra) / ketik SKU. */
