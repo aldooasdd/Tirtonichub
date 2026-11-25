@@ -267,6 +267,7 @@ function PolicyCard({ p, edit, onSaved }: { p: Policy; edit: boolean; onSaved: (
           <label className="flex items-center gap-2">Jam batas Deadline Ready (WIB) <input type="time" disabled={!edit} className={inp} value={String(c.deadlineTime ?? "")} onChange={(e) => setC({ ...c, deadlineTime: e.target.value })} /></label>
           <div className="flex flex-wrap items-center gap-2">Kirim pengingat {[0, 1, 2].map((i) => <input key={i} type="number" min={1} max={168} disabled={!edit} placeholder="jam" className={inp + " w-20"} value={offs[i] ?? ""} onChange={(e) => { const o = [...offs]; o[i] = Number(e.target.value); setC({ ...c, offsetsHours: o.filter((x) => x > 0) }); }} />)} jam sebelumnya</div>
           <label className="flex items-center gap-2"><input type="radio" disabled={!edit} checked={c.recipients === "pic"} onChange={() => setC({ ...c, recipients: "pic" })} />Ke PIC kartu</label>
+          <label className="flex items-center gap-2"><input type="checkbox" disabled={!edit} checked={c.wa === true} onChange={(e) => setC({ ...c, wa: e.target.checked })} />Kirim juga lewat WhatsApp (khusus pengingat deadline)</label>
         </div>
       )}
       {p.key === "performance.checkpoints" && (

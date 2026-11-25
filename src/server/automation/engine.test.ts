@@ -194,3 +194,20 @@ test("E: pengingat checkpoint yang sudah tidak dipakai (mis. D+1 setelah diganti
   assert.equal(r.sent, 0);
   assert.equal(r.suppressed, 1);
 });
+
+test("C: WhatsApp khusus pengingat deadline; kartu ditangguhkan/hangus tidak diingatkan; isi memuat deadline", async () => {
+  const { db, deps } = setup();
+  db.publish("deadline-reminder", wf("deadline-reminder"));
+  active(db, "reminder.schedule", "notify.channel");
+  db.policies.set("reminder.schedule", { key: "reminder.schedule", status: "active", version: 2, config: { deadlineTime: "15:00", offsetsHours: [24], recipients: "pic", wa: true } });
+  db.policies.set("notify.channel", { key: "notify.channel", status: "active", version: 2, config: { channel: "app" } });
+  const card = { type: "vpr", title: "Video", producer: "Z", editor: "Z", status: "Editing", readyBy: "2026-11-27" };
+  db.tasks.set("a", { ...card });
+  db.tasks.set("b", { ...card, suspendedAt: 1 });
+  db.tasks.set("c", { ...card, createdAt: Date.parse("2026-09-01") });
+  for (const id of ["a", "b", "c"]) await processEvent(ev("task.deadline_changed.v1", id), deps());
+  const r = await fireTimers(deps(new Date("2026-11-26T08:30:00Z")));
+  assert.deepEqual(r, { sent: 1, suppressed: 2 });
+  assert.equal(db.sent.at(-1)!.wa, true);
+  assert.match(db.sent.at(-1)!.body ?? "", /Deadline Ready 27-11-2026 15\.00 WIB/);
+});
