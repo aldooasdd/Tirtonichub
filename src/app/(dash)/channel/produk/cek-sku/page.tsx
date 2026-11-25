@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { requireChannel } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
-import { SkuCheckAll, SkuCheckCard, SkuCheckLoad, SkuCheckPush } from "@/components/channel/sku-check";
+import { SkuCheckAll, SkuCheckCard, SkuCheckLoad, SkuCheckNoSkuAll, SkuCheckPush } from "@/components/channel/sku-check";
 
 const TOKO: Record<string, string> = { SHOPEE: "Shopee", TOKOPEDIA: "Tokopedia", WEBSITE: "Tirtonic.com" };
 const PER_PAGE = 30;
@@ -11,7 +11,7 @@ type SP = { q?: string; s?: string; k?: string; page?: string };
 export default async function CekSkuPage({ searchParams }: { searchParams: Promise<SP> }) {
   await requireChannel();
   const sp = await searchParams;
-  const status = sp.s === "done" || sp.s === "missing" ? sp.s : "pending";
+  const status = sp.s === "done" || sp.s === "missing" || sp.s === "nosku" ? sp.s : "pending";
   const q = (sp.q ?? "").trim().toLowerCase();
   const page = Math.max(1, Number(sp.page) || 1);
 
@@ -35,8 +35,8 @@ export default async function CekSkuPage({ searchParams }: { searchParams: Promi
   const users = await prisma.user.findMany({ where: { id: { in: [...new Set(pageRows.map((g) => g[0].checkedById).filter(Boolean) as string[])] } }, select: { id: true, fullName: true, nickname: true } });
   const userName = new Map(users.map((u) => [u.id, u.nickname || u.fullName]));
 
-  const total = list.length, done = count("done"), missing = count("missing");
-  const pct = total ? Math.round(((done + missing) / total) * 100) : 0;
+  const total = list.length, done = count("done"), missing = count("missing"), nosku = count("nosku");
+  const pct = total ? Math.round(((done + missing + nosku) / total) * 100) : 0;
   const qs = (o: Partial<SP>) => "?" + new URLSearchParams(Object.entries({ q: sp.q, s: status, k: sp.k, ...o }).filter(([, v]) => v) as [string, string][]).toString();
   const tab = (s: string, label: string, n: number) => (
     <Link href={qs({ s, page: undefined })} className={`rounded-md px-3 py-1.5 text-14 font-medium ${status === s ? "bg-background shadow-sm" : "text-muted-foreground"}`}>
@@ -67,8 +67,8 @@ export default async function CekSkuPage({ searchParams }: { searchParams: Promi
         <>
           <div className="rounded-lg border bg-card p-4">
             <div className="flex items-center justify-between text-14">
-              <span><b>{done + missing}</b> / {total} barang selesai ({pct}%)</span>
-              <span className="text-muted-foreground">{done} ada SKU · {missing} tidak ada di toko</span>
+              <span><b>{done + missing + nosku}</b> / {total} barang selesai ({pct}%)</span>
+              <span className="text-muted-foreground">{done} ada SKU · {nosku} tanpa SKU · {missing} tidak ada di toko</span>
             </div>
             <div className="mt-2 h-2 overflow-hidden rounded-full bg-muted"><div className="h-full rounded-full bg-emerald-500" style={{ width: `${pct}%` }} /></div>
           </div>
@@ -84,12 +84,14 @@ export default async function CekSkuPage({ searchParams }: { searchParams: Promi
             <button className="h-9 rounded-md bg-primary px-4 text-14 font-medium text-primary-foreground">Cari</button>
           </form>
 
-          <div className="flex gap-1 rounded-lg bg-muted p-1">
+          <div className="flex flex-wrap gap-1 rounded-lg bg-muted p-1">
             {tab("pending", "Belum dicek", count("pending"))}
             {tab("done", "Ada SKU", done)}
+            {tab("nosku", "Tanpa SKU", nosku)}
             {tab("missing", "Tidak ada", missing)}
           </div>
 
+          {status === "pending" && <SkuCheckNoSkuAll count={count("pending")} />}
           {status === "pending" && <SkuCheckAll keys={list.filter((g) => g[0].status === "pending" && g.some((r) => r.saranUpc)).map((g) => g[0].groupKey)} />}
 
           {pageRows.length === 0 ? (
