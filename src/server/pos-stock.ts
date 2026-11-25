@@ -86,10 +86,10 @@ export async function deductPosStock(lines: StockLine[], ctx: { notaNo: string; 
     }).catch(() => {});
 }
 
-/** Edit stok (Pasangkan Tag): stok 1 SKU di 1 cabang dijadikan `target` di tiap listing Tokopedia & Shopee yang punya gudang cabang itu. */
-export async function setBranchStock(sku: string, branchId: string, target: number): Promise<Result[]> {
-  const b = await prisma.branch.findUnique({ where: { id: branchId }, select: { warehouseIds: true } });
-  const wh = new Set(b?.warehouseIds ?? []);
+/** Edit stok (Pasangkan Tag): stok 1 SKU di 1 cabang dijadikan `target` di tiap listing Tokopedia & Shopee. keys = gudang cabang itu ("PLATFORM:id").
+ *  Listing yang belum punya stok di gudang cabang itu → dibuatkan, kalau gudangnya cuma satu. */
+export async function setBranchStock(sku: string, keys: string[], target: number): Promise<Result[]> {
+  const wh = new Set(keys);
   const items = await prisma.marketplaceItem.findMany({
     where: {
       deletedAt: null,
@@ -102,6 +102,13 @@ export async function setBranchStock(sku: string, branchId: string, target: numb
   for (const it of items) {
     const list = (it.whStock as Wh[] | null) ?? [];
     const mine = list.filter((w) => wh.has(`${it.platform}:${w.id}`)).sort((x, y) => y.stock - x.stock);
+    const milik = keys.filter((k) => k.startsWith(`${it.platform}:`)).map((k) => k.slice(it.platform.length + 1));
+    // id kosong = toko tanpa multi-gudang: jangan dibuatkan gudang baru.
+    if (!mine.length && milik.length === 1 && milik[0] && list.length && list.every((w) => w.id)) {
+      const baru = { id: milik[0], stock: 0 };
+      list.push(baru);
+      mine.push(baru);
+    }
     if (!mine.length) continue;
     const r: Result = { sku, platform: it.platform, warehouse: mine[0].id };
     try {

@@ -96,7 +96,7 @@ export default async function DataTagPage({ searchParams }: { searchParams: Prom
                   <table className="w-full text-14">
                     <thead>
                       <tr className="text-left text-12 text-muted-foreground">
-                        <th className="px-3 py-2">No</th><th className="px-3 py-2">Kode stiker</th><th className="px-3 py-2">Dipasang</th><th className="px-3 py-2">Oleh</th><th className="px-3 py-2" />
+                        <th className="px-3 py-2">No</th><th className="px-3 py-2">Kode stiker</th><th className="px-3 py-2">Cabang</th><th className="px-3 py-2">Dipasang</th><th className="px-3 py-2">Oleh</th><th className="px-3 py-2" />
                       </tr>
                     </thead>
                     <tbody>
@@ -104,6 +104,7 @@ export default async function DataTagPage({ searchParams }: { searchParams: Prom
                         <tr key={t.epc} className={`border-t ${q && t.epc.toLowerCase().includes(q.toLowerCase()) ? "bg-amber-500/10" : ""}`}>
                           <td className="px-3 py-2 tabular-nums">{i + 1}</td>
                           <td className="px-3 py-2 font-mono text-12">{t.epc}</td>
+                          <td className="px-3 py-2">{t.cabang ?? "-"}</td>
                           <td className="whitespace-nowrap px-3 py-2">{fmtWIB(t.at)}</td>
                           <td className="px-3 py-2">{t.by ?? "-"}</td>
                           <td className="px-3 py-2 text-right"><LepasTag epc={t.epc} sku={r.sku} /></td>

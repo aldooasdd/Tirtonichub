@@ -4,7 +4,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/server/db";
 import { requireChannel } from "@/server/auth/rbac";
-import { buildCatalog } from "@/server/pos-catalog";
+import { buildCatalog, tokoGudang } from "@/server/pos-catalog";
 import { productKey } from "@/server/marketplace/product-groups";
 import { setBranchStock } from "@/server/pos-stock";
 import { freeSku } from "@/server/sku-unique";
@@ -13,14 +13,16 @@ import { clientMeta } from "@/server/request-meta";
 
 export type SkuInfo = {
   sku: string; name: string | null; variant: string | null; image: string | null;
-  tagList: string[]; stock: number | null; stocks: { label: string; stock: number; branchId: string | null }[];
+  tagList: Tag[]; stock: number | null; stocks: { label: string; stock: number; branchId: string | null }[];
+  cabang: { id: string; label: string; stock: number | null; bisa: boolean }[]; // bisa = punya gudang marketplace, stoknya bisa diubah
 };
-export type BatchRes = { tagList: string[]; other: { epc: string; name: string }[] }; // name = nama barang pemilik tag
+export type Tag = { epc: string; branchId: string | null };
+export type BatchRes = { tagList: Tag[]; other: { epc: string; name: string }[] }; // name = nama barang pemilik tag
 
 const clean = (list: string[]) => [...new Set(list.map((e) => e.trim().toUpperCase()).filter(Boolean))];
 
 const same = (sku: string) => ({ equals: sku, mode: "insensitive" as const });
-const tagsOf = async (sku: string) => (await prisma.rfidTag.findMany({ where: { sku: same(sku) }, orderBy: { createdAt: "asc" }, select: { epc: true } })).map((t) => t.epc);
+const tagsOf = (sku: string): Promise<Tag[]> => prisma.rfidTag.findMany({ where: { sku: same(sku) }, orderBy: { createdAt: "asc" }, select: { epc: true, branchId: true } });
 
 /** Nama barang (+ varian) per SKU (huruf kecil), untuk pemberitahuan. SKU tak terdaftar tidak ada di hasil. */
 async function namaSku(skus: string[]) {
@@ -45,8 +47,9 @@ const label = (nama: Map<string, string>, sku: string) => nama.get(sku.trim().to
 export async function lookupSku(raw: string): Promise<SkuInfo> {
   await requireChannel();
   const sku = raw.trim();
+  const toko = await tokoGudang();
   // ponytail: muat katalog penuh per scan barcode (sekali per barang); cache kalau terasa lambat.
-  const [cat, tagList] = await Promise.all([buildCatalog(null), tagsOf(sku)]);
+  const [cat, tagList] = await Promise.all([buildCatalog(null, toko), tagsOf(sku)]);
   const it = cat.items.find((x) => x.key === sku.toLowerCase());
   return {
     sku: it?.sku ?? sku,
@@ -56,23 +59,32 @@ export async function lookupSku(raw: string): Promise<SkuInfo> {
     tagList,
     stock: it ? it.stock : null,
     stocks: it?.stocks.map((s) => ({ label: s.label, stock: s.stock, branchId: s.branchId })) ?? [],
+    cabang: toko.map((t) => ({ id: t.id, label: t.label, stock: it?.stocks.length ? (it.stocks.find((s) => s.branchId === t.id)?.stock ?? 0) : null, bisa: t.keys.length > 0 })),
   };
 }
 
-/** Pasang banyak tag sekaligus ke 1 SKU. Tag milik SKU lain tidak dipindah kecuali move=true. */
-export async function pairTags(epcs: string[], rawSku: string, move = false): Promise<BatchRes> {
+/** Pasang banyak tag sekaligus ke 1 SKU di 1 cabang. Tag milik SKU/cabang lain tidak dipindah kecuali move=true; tag SKU ini yang belum ada cabang langsung diisi. */
+export async function pairTags(epcs: string[], rawSku: string, branchId: string, move = false): Promise<BatchRes> {
   const ctx = await requireChannel();
   const sku = rawSku.trim();
   const list = clean(epcs);
+  const toko = await prisma.branch.findMany({ select: { id: true, name: true } });
+  if (!toko.some((b) => b.id === branchId)) throw new Error("Cabang tidak ditemukan.");
   const cur = await prisma.rfidTag.findMany({ where: { epc: { in: list } } });
-  const owner = new Map(cur.map((t) => [t.epc, t.sku]));
-  const added = list.filter((e) => !owner.has(e) || (move && owner.get(e)!.toLowerCase() !== sku.toLowerCase()));
-  const lain = move ? [] : cur.filter((t) => t.sku.toLowerCase() !== sku.toLowerCase());
+  const owner = new Map(cur.map((t) => [t.epc, t]));
+  const skuIni = (t: { sku: string }) => t.sku.toLowerCase() === sku.toLowerCase();
+  const pas = (t: { sku: string; branchId: string | null }) => skuIni(t) && t.branchId === branchId;
+  const bebas = (t: { sku: string; branchId: string | null }) => skuIni(t) && !t.branchId;
+  const added = list.filter((e) => {
+    const t = owner.get(e);
+    return !t || (!pas(t) && (move || bebas(t)));
+  });
+  const lain = move ? [] : cur.filter((t) => !pas(t) && !bebas(t));
   const nama = await namaSku(lain.map((t) => t.sku));
-  const other = lain.map((t) => ({ epc: t.epc, name: label(nama, t.sku) }));
+  const other = lain.map((t) => ({ epc: t.epc, name: `${label(nama, t.sku)}${skuIni(t) ? ` (${toko.find((b) => b.id === t.branchId)?.name ?? "cabang lain"})` : ""}` }));
   await prisma.$transaction([
     prisma.rfidTag.deleteMany({ where: { epc: { in: added } } }),
-    prisma.rfidTag.createMany({ data: added.map((epc) => ({ epc, sku, userId: ctx.userId })) }),
+    prisma.rfidTag.createMany({ data: added.map((epc) => ({ epc, sku, branchId, userId: ctx.userId })) }),
   ]);
   return { tagList: await tagsOf(sku), other };
 }
@@ -189,16 +201,19 @@ export async function simpanStok(rawSku: string, changes: { branchId: string; st
   const sku = rawSku.trim();
   if (!sku || !changes.length) return { ok: false, message: "Tidak ada stok yang diubah." };
   if (changes.some((c) => !Number.isInteger(c.stock) || c.stock < 0 || c.stock > 9999)) return { ok: false, message: "Stok harus angka bulat 0–9999." };
-  const results = [];
+  const toko = await tokoGudang();
+  const results: Awaited<ReturnType<typeof setBranchStock>> = [];
+  const gagal: string[] = [];
   for (const c of changes) {
-    const r = await setBranchStock(sku, c.branchId, c.stock);
-    if (!r.length) return { ok: false, message: "Tidak ada listing Shopee/Tokopedia dengan gudang cabang ini." };
+    const t = toko.find((x) => x.id === c.branchId);
+    const r = t ? await setBranchStock(sku, t.keys, c.stock) : [];
+    if (!r.length) gagal.push(`${t?.label ?? "Cabang"}: tidak ada listing Shopee/Tokopedia dengan gudang cabang ini`);
+    gagal.push(...r.filter((x) => x.error).map((x) => `${t?.label} ${TOKO[x.platform]}: ${x.error}`));
     results.push(...r);
   }
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "rfid_stok", entity: "MarketplaceItem", entityId: sku, after: { changes, results } });
   revalidatePath("/channel/produk");
-  const bad = results.filter((r) => r.error);
-  const base = `Stok tersimpan di ${results.length - bad.length} listing.`;
-  return { ok: !bad.length, message: bad.length ? `${base} Gagal ${bad.length}: ${bad.map((r) => `${TOKO[r.platform]}: ${r.error}`).join(" · ")}` : base };
+  const base = `Stok tersimpan (${results.filter((r) => !r.error).length} perubahan listing).`;
+  return { ok: !gagal.length, message: gagal.length ? `${base} Gagal ${gagal.length}: ${gagal.join(" · ")}` : base };
 }

@@ -7,7 +7,7 @@ import { cariBarang, gantiSku, lookupSku, ownersOf, pairTags, pemakaiSku, simpan
 // EPC stiker UHF = hex 24–32 huruf; barcode barang (EAN/UPC/SKU) lebih pendek → dianggap SKU.
 const isTag = (v: string) => /^[0-9A-F]{24,32}$/i.test(v);
 const MAX_ROWS = 300; // batas baris kosong; 999 = stok web "tak terbatas"
-type Draft = { epc: string; owner: string | null; move: boolean }; // owner = nama barang lain pemilik tag
+type Draft = { epc: string; branchId: string; owner: string | null; move: boolean }; // owner = nama barang lain pemilik tag
 const namaBarang = (s: SkuInfo) => (s.name ? (s.variant ? `${s.name} · ${s.variant}` : s.name) : `SKU ${s.sku}`);
 const siap = (d: Draft) => !d.owner || d.move;
 
@@ -97,8 +97,9 @@ function PilihBarang({ sku, edit, disabled, onPick, onClose }: { sku: string; ed
 
 /** Stok per cabang → marketplace. Tanpa <form>: Enter dari reader tidak boleh menyimpan. */
 function EditStok({ info, disabled, onSave, onClose }: { info: SkuInfo; disabled: boolean; onSave: (c: { branchId: string; stock: number }[]) => void; onClose: () => void }) {
-  const cabang = info.stocks.filter((s) => s.branchId);
-  const [val, setVal] = useState<Record<string, string>>(() => Object.fromEntries(cabang.map((s) => [s.branchId!, String(s.stock)])));
+  const cabang = info.cabang.filter((s) => s.bisa).map((s) => ({ branchId: s.id, label: s.label, stock: s.stock ?? 0 }));
+  const belum = info.cabang.filter((s) => !s.bisa);
+  const [val, setVal] = useState<Record<string, string>>(() => Object.fromEntries(cabang.map((s) => [s.branchId, String(s.stock)])));
   const [pakai, setPakai] = useState<string[] | null>(null);
   useEffect(() => {
     let on = true;
@@ -119,9 +120,9 @@ function EditStok({ info, disabled, onSave, onClose }: { info: SkuInfo; disabled
           ))}
         </div>
       ) : (
-        <p>Barang ini belum punya stok di gudang yang dipetakan ke cabang. Ubah stoknya di Produk Master.</p>
+        <p>Belum ada cabang yang punya gudang Shopee/Tokopedia.</p>
       )}
-      {cabang.length > 0 && cabang.length < info.stocks.length && <p className="text-12 text-muted-foreground">Gudang yang belum dipetakan ke cabang tidak bisa diubah di sini.</p>}
+      {belum.length > 0 && <p className="text-12 text-amber-600">{belum.map((s) => s.label).join(", ")} belum punya gudang. Pilih gudangnya di Tirtonic POS → Per cabang.</p>}
       {salah && <p className="text-12 text-red-600">Stok harus angka 0–9999.</p>}
       {cabang.length > 0 && (
         <div className="text-12 text-muted-foreground">
@@ -148,6 +149,7 @@ export function PasangTag() {
   const [next, setNext] = useState<string | null>(null); // barcode baru di-scan saat tag belum disimpan
   const [edit, setEdit] = useState(false);
   const [editStok, setEditStok] = useState(false);
+  const [cabang, setCabang] = useState<string | null>(null); // cabang tujuan scan
   const [val, setVal] = useState("");
   const [busy, setBusy] = useState(0);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
@@ -157,6 +159,7 @@ export function PasangTag() {
   const nextRef = useRef<string | null>(null);
   const pending = useRef<string[]>([]);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const cabangRef = useRef<string | null>(null);
   // Semua kerja server antre satu per satu, supaya tag tidak masuk ke SKU yang salah.
   const queue = useRef(Promise.resolve());
 
@@ -195,6 +198,7 @@ export function PasangTag() {
     const list = [...new Set(pending.current)];
     pending.current = [];
     if (!list.length) return;
+    const tujuan = cabangRef.current; // cabang saat tag terbaca
     enqueue(async () => {
       if (nextRef.current) return setMsg({ ok: false, text: `${list.length} tag tidak dimasukkan. Simpan atau buang dulu tag barang sebelumnya.` });
       const cur = skuRef.current;
@@ -204,19 +208,29 @@ export function PasangTag() {
         for (const e of list) n.set(owner.get(e) ?? "", (n.get(owner.get(e) ?? "") ?? 0) + 1);
         return setMsg({ ok: true, text: `Belum pilih barang. Tag terbaca: ${[...n].map(([s, c]) => (s ? `${c} milik ${s}` : `${c} belum terpasang`)).join(" · ")}` });
       }
-      const have = new Set([...cur.tagList, ...draftRef.current.map((d) => d.epc)]);
+      const di = cur.cabang.find((c) => c.id === tujuan);
+      if (!di) return setMsg({ ok: false, text: `${list.length} tag terbaca, tapi cabang belum dipilih. Klik "Scan ke sini" di cabangnya, lalu sapu lagi.` });
+      // Tag tersimpan barang ini: cabang lain → perlu "Pindahkan"; belum ada cabang → langsung diisi.
+      const simpan = new Map(cur.tagList.map((t) => [t.epc, t.branchId]));
+      for (const e of list) {
+        if (!simpan.has(e)) continue;
+        const asal = cur.cabang.find((c) => c.id === simpan.get(e));
+        if (asal) owner.set(e, `${namaBarang(cur)} (${asal.label})`);
+        else owner.delete(e);
+      }
+      const have = new Set([...cur.tagList.filter((t) => t.branchId === tujuan).map((t) => t.epc), ...draftRef.current.map((d) => d.epc)]);
       const baru = list.filter((e) => !have.has(e));
-      putDrafts([...draftRef.current, ...baru.map((epc) => ({ epc, owner: owner.get(epc) ?? null, move: false }))]);
+      putDrafts([...draftRef.current, ...baru.map((epc) => ({ epc, branchId: di.id, owner: owner.get(epc) ?? null, move: false }))]);
       const milik = new Map<string, number>(); // tag baru terbaca, tapi sudah terpasang di barang lain
       for (const e of baru) { const n = owner.get(e); if (n) milik.set(n, (milik.get(n) ?? 0) + 1); }
-      const simpanan = list.filter((e) => cur.tagList.includes(e)).length;
+      const simpanan = list.filter((e) => simpan.get(e) === di.id).length;
       const bebas = baru.filter((e) => !owner.has(e)).length;
       const ulang = list.length - baru.length - simpanan;
       setMsg({
         ok: !milik.size,
         text: [
-          bebas && `${bebas} tag masuk, belum disimpan`,
-          simpanan && `${simpanan} tag sudah terpasang di ${namaBarang(cur)}`,
+          bebas && `${bebas} tag masuk ke ${di.label}, belum disimpan`,
+          simpanan && `${simpanan} tag sudah terpasang di ${namaBarang(cur)} (${di.label})`,
           ulang && `${ulang} tag sudah terbaca, belum disimpan`,
           ...[...milik].map(([n, c]) => `${c} tag sudah terpasang di ${n}`),
         ].filter(Boolean).join(" · "),
@@ -249,17 +263,25 @@ export function PasangTag() {
     const cur = skuRef.current;
     if (!cur) return;
     const list = draftRef.current;
-    const baru = list.filter((d) => !d.owner).map((d) => d.epc);
-    const pindah = list.filter((d) => d.owner && d.move).map((d) => d.epc);
-    if (!baru.length && !pindah.length) return;
-    let r = await pairTags(baru, cur.sku);
-    const other = new Map(r.other.map((o) => [o.epc, o.name])); // keburu dipasang orang lain
-    if (pindah.length) r = await pairTags(pindah, cur.sku, true);
-    const saved = new Set(r.tagList);
-    const rest = list.filter((d) => !saved.has(d.epc)).map((d) => ({ ...d, owner: other.get(d.epc) ?? d.owner }));
+    if (!list.some(siap)) return;
+    const other = new Map<string, string>(); // keburu dipasang orang lain
+    let tagList = cur.tagList;
+    for (const b of new Set(list.map((d) => d.branchId))) {
+      const punya = list.filter((d) => d.branchId === b);
+      const baru = punya.filter((d) => !d.owner).map((d) => d.epc);
+      const pindah = punya.filter((d) => d.owner && d.move).map((d) => d.epc);
+      if (baru.length) {
+        const r = await pairTags(baru, cur.sku, b);
+        for (const o of r.other) other.set(o.epc, o.name);
+        tagList = r.tagList;
+      }
+      if (pindah.length) tagList = (await pairTags(pindah, cur.sku, b, true)).tagList;
+    }
+    const saved = new Map(tagList.map((t) => [t.epc, t.branchId]));
+    const rest = list.filter((d) => saved.get(d.epc) !== d.branchId).map((d) => ({ ...d, owner: other.get(d.epc) ?? d.owner }));
     putDrafts(rest);
-    putSku({ ...cur, tagList: r.tagList });
-    setMsg({ ok: !rest.length, text: `${list.length - rest.length} tag tersimpan di ${namaBarang(cur)}.${rest.length ? ` ${rest.length} milik barang lain belum disimpan.` : ""}` });
+    putSku({ ...cur, tagList });
+    setMsg({ ok: !rest.length, text: `${list.length - rest.length} tag tersimpan di ${namaBarang(cur)}.${rest.length ? ` ${rest.length} milik barang/cabang lain belum disimpan.` : ""}` });
   }
   const klikSimpan = () => { flush(); enqueue(simpan); };
   const lanjut = (save: boolean) => {
@@ -282,7 +304,7 @@ export function PasangTag() {
       if (r.ok) {
         const info = await lookupSku(s);
         putSku(info);
-        putDrafts(draftRef.current.filter((d) => !info.tagList.includes(d.epc)));
+        putDrafts(draftRef.current.filter((d) => !info.tagList.some((t) => t.epc === d.epc && t.branchId === d.branchId)));
       }
       setMsg({ ok: r.ok, text: r.message });
       if (r.ok) setEdit(false);
@@ -305,12 +327,29 @@ export function PasangTag() {
   const hapus = (epc: string) => putDrafts(draftRef.current.filter((d) => d.epc !== epc));
   const pindahkan = (epc: string) => putDrafts(draftRef.current.map((d) => (d.epc === epc ? { ...d, move: !d.move } : d)));
 
-  const isi = sku ? sku.tagList.length + drafts.length : 0;
+  const pilihCabang = (id: string) => { flush(); cabangRef.current = id; setCabang(id); input.current?.focus(); };
+
+  const draftEpc = new Set(drafts.map((d) => d.epc));
+  const isi = new Set([...(sku?.tagList.map((t) => t.epc) ?? []), ...draftEpc]).size;
   const stok = sku?.stock != null && sku.stock < 999 ? sku.stock : null;
-  const kosong = Math.max(0, Math.min(stok ?? 0, MAX_ROWS) - isi);
   const nSiap = drafts.filter(siap).length;
   const btn = "inline-flex h-9 items-center gap-1.5 rounded-md px-4 text-14 font-medium disabled:opacity-40";
-  const lebih = (i: number) => (stok != null && i >= stok ? <span className="text-amber-600"> · lebih dari stok</span> : null);
+  const label = (id: string) => sku?.cabang.find((c) => c.id === id)?.label ?? "";
+  // 1 bagian per cabang + tag lama yang belum ada cabangnya.
+  const bagian = sku
+    ? [
+        ...sku.cabang.map((c) => ({
+          id: c.id as string | null, label: c.label, stok: c.stock != null && c.stock < 999 ? c.stock : null,
+          saved: sku.tagList.filter((t) => t.branchId === c.id && !draftEpc.has(t.epc)).map((t) => t.epc),
+          baru: drafts.filter((d) => d.branchId === c.id),
+        })),
+        {
+          id: null as string | null, label: "Belum ada cabang", stok: null as number | null,
+          saved: sku.tagList.filter((t) => !draftEpc.has(t.epc) && !sku.cabang.some((c) => c.id === t.branchId)).map((t) => t.epc),
+          baru: [] as Draft[],
+        },
+      ].filter((b) => b.id || b.saved.length)
+    : [];
 
   return (
     <div className="space-y-4" onClick={() => input.current?.focus()}>
@@ -321,7 +360,7 @@ export function PasangTag() {
           autoFocus
           value={val}
           onChange={(e) => setVal(e.target.value)}
-          placeholder={sku ? "Sapu stiker barang ini… (scan barcode lain = ganti SKU)" : "Scan barcode SKU barang / ketik SKU lalu Enter"}
+          placeholder={sku ? "Sapu stiker barang ini… (scan barcode lain = ganti barang)" : "Scan barcode SKU barang / ketik SKU lalu Enter"}
           aria-label="Scan"
           autoComplete="off"
           className="h-10 min-w-0 flex-1 rounded-md border bg-background px-3 font-mono text-14"
@@ -382,55 +421,75 @@ export function PasangTag() {
             </span>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-14">
-              <thead>
-                <tr className="text-left text-12 text-muted-foreground"><th className="w-12 px-3 py-2">No</th><th className="px-3 py-2">ID Tag</th><th className="px-3 py-2">Status</th><th className="w-10" /></tr>
-              </thead>
-              <tbody>
-                {sku.tagList.map((e, i) => (
-                  <tr key={e} className="border-t">
-                    <td className="px-3 py-2 tabular-nums">{i + 1}</td>
-                    <td className="px-3 py-2 font-mono text-12">{e}</td>
-                    <td className="px-3 py-2 text-emerald-600">Tersimpan{lebih(i)}</td>
-                    <td />
-                  </tr>
-                ))}
-                {drafts.map((d, j) => {
-                  const i = sku.tagList.length + j;
-                  return (
-                    <tr key={d.epc} className="border-t bg-amber-500/5">
-                      <td className="px-3 py-2 tabular-nums">{i + 1}</td>
-                      <td className="px-3 py-2 font-mono text-12">{d.epc}</td>
-                      <td className="px-3 py-2">
-                        {d.owner ? (
-                          <>
-                            <span className="text-red-600">Milik {d.owner}</span>{" "}
-                            <button type="button" onClick={() => pindahkan(d.epc)} className="underline">{d.move ? "Batal pindah" : "Pindahkan ke sini"}</button>
-                          </>
-                        ) : (
-                          <span className="text-amber-600">Belum disimpan</span>
-                        )}
-                        {lebih(i)}
-                      </td>
-                      <td><button type="button" disabled={busy > 0} onClick={() => hapus(d.epc)} aria-label={`Hapus tag ${d.epc}`} className="p-2 text-muted-foreground"><X className="size-4" /></button></td>
-                    </tr>
-                  );
-                })}
-                {Array.from({ length: kosong }, (_, j) => (
-                  <tr key={`k${j}`} className="border-t text-muted-foreground">
-                    <td className="px-3 py-2 tabular-nums">{isi + j + 1}</td>
-                    <td className="px-3 py-2"><span className="block h-6 rounded border border-dashed" /></td>
-                    <td className="px-3 py-2 text-12">Menunggu scan</td>
-                    <td />
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            {stok != null && stok > MAX_ROWS && <p className="border-t px-3 py-2 text-12 text-muted-foreground">Baris kosong ditampilkan sampai {MAX_ROWS}; baris berikutnya muncul saat tag terbaca.</p>}
-            {stok == null && isi === 0 && <p className="border-t px-3 py-2 text-12 text-muted-foreground">Stok tidak diketahui — baris muncul saat tag terbaca.</p>}
-            {stok === 0 && isi === 0 && <p className="border-t px-3 py-2 text-12 text-muted-foreground">Stok sistem 0 — tag tetap bisa di-scan.</p>}
-          </div>
+          {bagian.map((b) => {
+            const n = b.saved.length + b.baru.length;
+            const kosong = Math.max(0, Math.min(b.stok ?? 0, MAX_ROWS) - n);
+            const aktif = b.id != null && b.id === cabang;
+            const lebih = (i: number) => (b.stok != null && i >= b.stok ? <span className="text-amber-600"> · lebih dari stok</span> : null);
+            return (
+              <section key={b.id ?? "-"} className="border-t first-of-type:border-t-0">
+                <div className={`flex flex-wrap items-center justify-between gap-2 px-3 py-2 ${aktif ? "bg-primary/10" : "bg-muted/40"}`}>
+                  <h2 className="text-14"><b>{b.label}</b> <span className="text-muted-foreground">· {n} tag{b.stok != null ? ` dari ${b.stok} stok` : ""}</span></h2>
+                  {b.id ? (
+                    <button type="button" aria-pressed={aktif} onClick={() => pilihCabang(b.id!)} className={`${btn} ${aktif ? "bg-primary text-primary-foreground" : "border"}`}>
+                      <ScanLine className="size-4" /> {aktif ? "Scan masuk ke sini" : "Scan ke sini"}
+                    </button>
+                  ) : (
+                    <span className="text-12 text-muted-foreground">Pilih cabang, lalu sapu ulang stikernya.</span>
+                  )}
+                </div>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-14">
+                    <thead>
+                      <tr className="text-left text-12 text-muted-foreground"><th className="w-12 px-3 py-2">No</th><th className="px-3 py-2">ID Tag</th><th className="px-3 py-2">Status</th><th className="w-10" /></tr>
+                    </thead>
+                    <tbody>
+                      {b.saved.map((e, i) => (
+                        <tr key={e} className="border-t">
+                          <td className="px-3 py-2 tabular-nums">{i + 1}</td>
+                          <td className="px-3 py-2 font-mono text-12">{e}</td>
+                          <td className="px-3 py-2 text-emerald-600">Tersimpan{lebih(i)}</td>
+                          <td />
+                        </tr>
+                      ))}
+                      {b.baru.map((d, j) => {
+                        const i = b.saved.length + j;
+                        return (
+                          <tr key={d.epc} className="border-t bg-amber-500/5">
+                            <td className="px-3 py-2 tabular-nums">{i + 1}</td>
+                            <td className="px-3 py-2 font-mono text-12">{d.epc}</td>
+                            <td className="px-3 py-2">
+                              {d.owner ? (
+                                <>
+                                  <span className="text-red-600">Milik {d.owner}</span>{" "}
+                                  <button type="button" onClick={() => pindahkan(d.epc)} className="underline">{d.move ? "Batal pindah" : `Pindahkan ke ${label(d.branchId)}`}</button>
+                                </>
+                              ) : (
+                                <span className="text-amber-600">Belum disimpan</span>
+                              )}
+                              {lebih(i)}
+                            </td>
+                            <td><button type="button" disabled={busy > 0} onClick={() => hapus(d.epc)} aria-label={`Hapus tag ${d.epc}`} className="p-2 text-muted-foreground"><X className="size-4" /></button></td>
+                          </tr>
+                        );
+                      })}
+                      {Array.from({ length: kosong }, (_, j) => (
+                        <tr key={`k${j}`} className="border-t text-muted-foreground">
+                          <td className="px-3 py-2 tabular-nums">{n + j + 1}</td>
+                          <td className="px-3 py-2"><span className="block h-6 rounded border border-dashed" /></td>
+                          <td className="px-3 py-2 text-12">Menunggu scan</td>
+                          <td />
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+                {b.stok != null && b.stok > MAX_ROWS && <p className="border-t px-3 py-2 text-12 text-muted-foreground">Baris kosong ditampilkan sampai {MAX_ROWS}; baris berikutnya muncul saat tag terbaca.</p>}
+                {b.id && n === 0 && b.stok == null && <p className="border-t px-3 py-2 text-12 text-muted-foreground">Stok tidak diketahui. Baris muncul saat tag terbaca.</p>}
+                {b.id && n === 0 && b.stok === 0 && <p className="border-t px-3 py-2 text-12 text-muted-foreground">Stok sistem 0. Tag tetap bisa di-scan.</p>}
+              </section>
+            );
+          })}
         </div>
       ) : (
         <p className="rounded-lg border border-dashed p-4 text-14 text-muted-foreground">Scan barcode barang dulu. Baris sebanyak stoknya akan muncul di sini.</p>

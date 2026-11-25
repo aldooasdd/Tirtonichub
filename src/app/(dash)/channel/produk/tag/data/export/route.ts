@@ -19,11 +19,11 @@ export async function GET(req: NextRequest) {
   const b = wb.addWorksheet("Per Stiker");
   b.columns = [
     { header: "Kode stiker", key: "epc", width: 34 }, { header: "SKU", key: "sku", width: 20 }, { header: "Nama", key: "name", width: 60 },
-    { header: "Varian", key: "variant", width: 28 }, { header: "Dipasang", key: "at", width: 22 }, { header: "Oleh", key: "by", width: 20 },
+    { header: "Varian", key: "variant", width: 28 }, { header: "Cabang", key: "cabang", width: 16 }, { header: "Dipasang", key: "at", width: 22 }, { header: "Oleh", key: "by", width: 20 },
   ];
   for (const r of rows) {
     a.addRow({ sku: r.sku, name: r.name ?? "(tidak ada di Produk Master)", variant: r.variant, price: r.price, tag: r.tags.length, stock: r.stock, diff: selisih(r), stocks: r.stocks.map((s) => `${s.label} ${s.stock}`).join(", "), at: fmtWIB(r.tags[0].at) });
-    for (const t of r.tags) b.addRow({ epc: t.epc, sku: r.sku, name: r.name, variant: r.variant, at: fmtWIB(t.at), by: t.by });
+    for (const t of r.tags) b.addRow({ epc: t.epc, sku: r.sku, name: r.name, variant: r.variant, cabang: t.cabang, at: fmtWIB(t.at), by: t.by });
   }
   a.getColumn("price").numFmt = "#,##0";
   for (const ws of [a, b]) {

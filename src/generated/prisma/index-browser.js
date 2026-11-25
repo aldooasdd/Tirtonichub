@@ -805,6 +805,7 @@ exports.Prisma.DemoPhotoScalarFieldEnum = {
 exports.Prisma.RfidTagScalarFieldEnum = {
   epc: 'epc',
   sku: 'sku',
+  branchId: 'branchId',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
