@@ -1,6 +1,6 @@
 "use server";
 // Aksi halaman Otomasi. Izin dicek di server pada setiap aksi (tombol yang disembunyikan di UI tidak cukup).
-// Pemetaan izin → peran yang SUDAH ada: baca = admin penuh & Admin 2; ubah/uji/terbitkan/aturan/audit = admin penuh.
+// Pemetaan izin → peran yang SUDAH ada: semua (baca, ubah, uji, terbitkan, aturan, audit) = admin penuh saja.
 
 import { createHash } from "node:crypto";
 import type { Prisma } from "@/generated/prisma";
@@ -23,8 +23,8 @@ async function ctx() {
   const a = await requireMedia();
   const acc = await mediaAccess(a);
   const me = await prisma.user.findUnique({ where: { id: a.userId }, select: { fullName: true, nickname: true } });
-  const full = acc.full, staff = acc.canManage;
-  const perms: Perms = { read: staff, edit: full, publish: full, test: full, runs: staff, approvals: staff, audit: full, policy: full };
+  const full = acc.full; // keputusan Zaki 25 Nov 2026: Otomasi hanya admin penuh
+  const perms: Perms = { read: full, edit: full, publish: full, test: full, runs: full, approvals: full, audit: full, policy: full };
   return { userId: a.userId, name: me?.nickname || me?.fullName || "?", perms };
 }
 const deny = (): { ok: false; message: string } => ({ ok: false, message: "Tidak diizinkan." });

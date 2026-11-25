@@ -92,7 +92,7 @@ export function CprClient({ rows, names, labels, today }: { rows: CprRow[]; name
   return (
     <div className={"grid gap-4 p-4 text-[#202328] md:p-6 " + (sel ? "lg:pr-[436px]" : "")}>
       <div className="flex flex-wrap items-end justify-between gap-3">
-        <div><p className="text-[12px] font-medium text-[#747B86]">Media · Content Production Report</p><h1 className="text-[22px] font-bold tracking-tight">CPR <span className="align-middle text-[12px] font-medium text-[#747B86]">beta · hanya baca</span></h1></div>
+        <div><p className="text-[12px] font-medium text-[#747B86]">Media · Content Production Report</p><h1 className="text-[22px] font-bold tracking-tight">CPR</h1></div>
         <div className="flex items-center gap-2">
           <input type="month" value={month} onChange={(e) => e.target.value && setMonth(e.target.value)} className="h-9 rounded-lg border border-[#E7E9ED] bg-white px-2 text-[13px]" aria-label="Bulan brief" />
           <Button variant="outline" size="sm" onClick={csv}><Download />Export CSV</Button>
@@ -141,7 +141,7 @@ export function CprClient({ rows, names, labels, today }: { rows: CprRow[]; name
           </div>
         )}
       </div>
-      <p className="text-[12px] text-[#747B86]">Bulan = bulan brief (kartu dibuat). N/A = data belum dicatat, bukan 0. Mengisi brief, review, metrik, inquiry & order tetap di Studio.</p>
+      <p className="text-[12px] text-[#747B86]">Bulan = bulan brief (kartu dibuat). N/A = data belum dicatat, bukan 0. Brief & review diisi di Detail kartu; metrik, inquiry & order lewat menu CPR di Studio.</p>
 
       {sel && (
         <aside aria-label="Detail CPR" className="fixed inset-y-0 right-0 z-40 flex w-full flex-col border-l border-[#E7E9ED] bg-white sm:w-[420px]">
