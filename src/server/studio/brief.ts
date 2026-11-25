@@ -4,7 +4,7 @@
 // → Key Message → Hook → CTA → Performance Metrics. Semua klasifikasi disimpan sebagai master ID (brief-master.ts).
 // Kartu baru (briefReq) tidak bisa pindah dari Terdata ke Produksi sebelum brief disetujui.
 
-import { needsCpr } from "./cpr";
+import { needsBrief } from "./cpr";
 import { AUD_CATS, BRIEF_DEFAULT, EVT_SUBS, PILLARS, PRIMARY_IDS, libOk, optActive, type BriefCfg } from "./brief-master";
 
 export { PILLARS };
@@ -126,7 +126,7 @@ type Who = { name: string; code: string; full: boolean; staff: boolean };
  * - `{act:'revisi', note}` Creative Lead meminta revisi (catatan wajib).
  */
 export function nextBrief(prev: unknown, act: unknown, task: Doc, who: Who, cfg: BriefCfg = BRIEF_DEFAULT, at = Date.now()): Brief | string {
-  if (!needsCpr(task.type)) return "Content Brief hanya untuk Foto IG, Video produk, Video review, dan Video event";
+  if (!needsBrief(task.type)) return "Content Brief hanya untuk Foto IG, Video produk, Video review, Video event, dan Video IDCC";
   const type = s(task.type);
   const a = obj(act);
   const p = briefOf(prev);
@@ -179,7 +179,7 @@ export function nextBrief(prev: unknown, act: unknown, task: Doc, who: Who, cfg:
 
 /** Kartu wajib brief tidak boleh keluar dari Terdata (ke Produksi dst.) sebelum brief pernah disetujui. null = boleh. */
 export function briefBlocks(before: Doc | null, after: Doc): string | null {
-  if (!before || after.briefReq !== true || !needsCpr(after.type)) return null;
+  if (!before || after.briefReq !== true || !needsBrief(after.type)) return null;
   if (!STAGE0.includes(s(before.status)) || STAGE0.includes(s(after.status))) return null;
   return briefApproved(after.brief) ? null : "Content Brief belum disetujui Creative Lead (tab Content Brief di Detail kartu)";
 }

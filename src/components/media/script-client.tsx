@@ -17,7 +17,7 @@ export type ScriptListRow = {
 type Props = { rows: ScriptListRow[]; initial: ScriptPayload | null; initialCard: string; me: string; canManage: boolean; full: boolean; people: Record<string, string> };
 type Data = Extract<ScriptPayload, { doc: unknown }>;
 
-const TYPE_L: Record<string, string> = { vrv: "Video review", evt: "Video event" };
+const TYPE_L: Record<string, string> = { vrv: "Video review", evt: "Video event", idc: "Video IDCC" };
 const ST_C: Record<string, string> = {
   draft: "bg-[#F2F3F5] text-[#4b505a]", review: "bg-[#E8EEFC] text-[#465EA5]", revision: "bg-[#FBEAEA] text-[#C34646]", approved: "bg-[#E5F3EA] text-[#20864E]", none: "bg-white text-[#9AA0A9] border border-dashed border-[#D9DCE1]",
 };
@@ -98,7 +98,7 @@ export function ScriptClient({ rows: rows0, initial, initialCard, me, canManage,
             <Search className="pointer-events-none absolute left-2.5 top-2.5 size-4 text-[#9AA0A9]" />
             <input className="h-9 w-full rounded-lg border border-[#E7E9ED] pl-8 pr-2 text-[13px]" placeholder="Cari judul, produk, Content ID…" value={q} onChange={(e) => setQ(e.target.value)} />
           </label>
-          <Seg label="Jenis konten" value={fType} onChange={setFType} options={[["", "Semua"], ["vrv", "Video review"], ["evt", "Video event"]]} />
+          <Seg label="Jenis konten" value={fType} onChange={setFType} options={[["", "Semua"], ["vrv", "Video review"], ["evt", "Video event"], ["idc", "Video IDCC"]]} />
           <div className="flex items-center gap-1.5">
             <Seg label="Ada script" value={fHas} onChange={setFHas} options={[["", "Semua"], ["yes", "Sudah ada"], ["no", "Belum ada"]]} />
             <DropdownMenu>
@@ -116,7 +116,7 @@ export function ScriptClient({ rows: rows0, initial, initialCard, me, canManage,
           </div>
         </div>
         <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-3">
-          {(["vrv", "evt"] as const).filter((t) => !fType || fType === t).map((t) => {
+          {(["vrv", "evt", "idc"] as const).filter((t) => !fType || fType === t).map((t) => {
             const L = view.filter((r) => r.type === t);
             return (
               <section key={t} className="mb-2">
@@ -151,7 +151,7 @@ export function ScriptClient({ rows: rows0, initial, initialCard, me, canManage,
         ) : err ? (
           <Empty><p className="text-[#C34646]">{err}</p></Empty>
         ) : !data ? (
-          <Empty><FileText className="mx-auto mb-2 size-8 text-[#9AA0A9]" /><p className="font-semibold">Pilih script di daftar</p><p className="text-[#747B86]">Script Konten tersedia untuk Video review dan Video event yang punya Content ID.</p></Empty>
+          <Empty><FileText className="mx-auto mb-2 size-8 text-[#9AA0A9]" /><p className="font-semibold">Pilih script di daftar</p><p className="text-[#747B86]">Script Konten tersedia untuk Video review, Video event, dan Video IDCC yang punya Content ID.</p></Empty>
         ) : !data.task ? (
           <Empty><p>{data.why}</p></Empty>
         ) : !d?.doc ? (

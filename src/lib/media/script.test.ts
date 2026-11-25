@@ -7,7 +7,8 @@ const t = (type: string, cprId: string | null, extra?: unknown) => ({ id: "t1", 
 test("hanya Video review & Video event dengan Content ID", () => {
   assert.equal(scriptEligible(t("vrv", "TRT-CPR-VRV-2611-0001")), null);
   assert.equal(scriptEligible(t("evt", "TRT-CPR-VEV-2611-0002")), null);
-  for (const ty of ["vpr", "igf", "ktl", "idc", "cmp"]) assert.ok(scriptEligible(t(ty, "TRT-X")));
+  assert.equal(scriptEligible(t("idc", "TRT-CPR-IDCC-2611-0003")), null);
+  for (const ty of ["vpr", "igf", "ktl", "idf", "cmp"]) assert.ok(scriptEligible(t(ty, "TRT-X")));
   assert.ok(scriptEligible(t("vrv", null)));
   assert.ok(scriptEligible(t("vrv", "X", { mergedInto: "t2" })));
   assert.ok(scriptEligible(null));

@@ -9,7 +9,7 @@ import { loadCtx, runBalance, todayWIB } from "@/server/media/schedule-runner";
 import type { Task } from "@/lib/media/schedule";
 import type { Prisma } from "@/generated/prisma";
 import { nextPlanLog } from "@/server/studio/plan-log";
-import { qaAutoSubmit, qaBlocks, qaCfgOf, qaReopen } from "@/server/studio/cpr";
+import { isIdcc, qaAutoSubmit, qaBlocks, qaCfgOf, qaReopen, stockAtPublish } from "@/server/studio/cpr";
 import { briefBlocks } from "@/server/studio/brief";
 import { getRaw } from "@/server/studio/store";
 import { taskEvents } from "@/server/automation/events";
@@ -43,10 +43,10 @@ function toTask(t: NonNullable<Awaited<ReturnType<typeof prisma.mediaTask.findUn
 }
 
 /** CPR: kartu ber-QA tidak boleh Tayang / dijadwalkan di Meta sebelum QA lolos (sama dengan Studio, cpr.ts). */
-function qaWhy(task: { status: string; metaAt: Date | null; extra: unknown }, next: { status?: string; metaAt?: boolean }) {
+function qaWhy(task: { status: string; type: string; metaAt: Date | null; extra: unknown }, next: { status?: string; metaAt?: boolean }) {
   const ex = (task.extra && typeof task.extra === "object" ? task.extra : {}) as Record<string, unknown>;
   const before = { status: task.status, metaAt: task.metaAt ? 1 : 0 };
-  return qaBlocks(before, { qaReq: ex.qaReq, qa: ex.qa, status: next.status ?? task.status, metaAt: next.metaAt || before.metaAt });
+  return qaBlocks(before, { qaReq: ex.qaReq, type: task.type, qa: ex.qa, status: next.status ?? task.status, metaAt: next.metaAt || before.metaAt });
 }
 
 /** Standar Creative Review yang tersimpan (settings/main.qaCfg). */
@@ -55,7 +55,7 @@ const qaCfgNow = async () => qaCfgOf((await getRaw("settings/main"))?.qaCfg);
 /** Bentuk ringkas kartu untuk menurunkan event otomasi (events.ts). */
 function evDoc(t: Record<string, unknown>): Record<string, unknown> {
   const ex = (t.extra && typeof t.extra === "object" ? t.extra : {}) as Record<string, unknown>;
-  return { type: t.type, status: t.status, producer: t.producer, editor: t.editor, readyBy: ex.readyBy, due: t.due, postAt: t.postAt, campaignId: ex.campaignId, brief: ex.brief, qa: ex.qa };
+  return { type: t.type, cprId: t.cprId, status: t.status, producer: t.producer, editor: t.editor, readyBy: ex.readyBy, due: t.due, postAt: t.postAt, campaignId: ex.campaignId, brief: ex.brief, qa: ex.qa };
 }
 /** Simpan perubahan kartu dari dasbor + event otomasi dalam satu transaksi. */
 async function saveTask(id: string, task: Record<string, unknown>, data: Record<string, unknown>) {
@@ -93,6 +93,12 @@ export async function setTaskStatus(id: string, status: string): Promise<ActionR
   // masuk Ready → Creative Review diajukan otomatis (sama dengan Studio, cpr.ts qaAutoSubmit)
   const auto = qaAutoSubmit({ status: task.status, driveUrl: task.driveUrl }, { ...exB, type: task.type, cprId: task.cprId, status, driveUrl: task.driveUrl }, meName, await qaCfgNow());
   if (auto) data.extra = { ...exB, qa: auto } as Prisma.InputJsonValue;
+  // IDCC: stok awal dicatat sekali saat Tayang (sama dengan Studio, store.ts)
+  if (isIdcc(task.type) && status === "Tayang") {
+    const it = task.itemId ? await prisma.mediaItem.findUnique({ where: { id: task.itemId }, select: { qty: true } }) : null;
+    const st = stockAtPublish({ status: task.status }, { type: task.type, cprId: task.cprId, status, stock0: exB.stock0 }, it?.qty);
+    if (st) data.extra = { ...((data.extra ?? exB) as Record<string, unknown>), stock0: st } as Prisma.InputJsonValue;
+  }
   await saveTask(id, task as unknown as Record<string, unknown>, data);
   await queueEditNotif(id, task as unknown as Record<string, unknown>, { ...task, ...data }, meName, acc.code ?? "");
   await runBalance();

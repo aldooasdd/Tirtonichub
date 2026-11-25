@@ -13,7 +13,7 @@ import { canRead, canWrite, type Doc, type StudioUser } from "./rules";
 import { loadAccess } from "./access";
 import * as M from "./map";
 import { nextPlanLog } from "./plan-log";
-import { cprIdOf, cprYymm, needsCpr, nextQa, qaBlocks, qaAutoSubmit, qaCfgOf, qaReopen } from "./cpr";
+import { cprIdOf, cprYymm, isIdcc, needsBrief, needsCpr, nextQa, qaBlocks, qaAutoSubmit, qaCfgOf, qaReopen, stockAtPublish } from "./cpr";
 import { briefBlocks, nextBrief } from "./brief";
 import { briefCfgOf } from "./brief-master";
 import { withKey } from "./lock";
@@ -159,7 +159,7 @@ async function writeDocInner(u: StudioUser, op: "set" | "update" | "delete", pat
     else delete after.editNotif;
     // CPR (cpr.ts, brief.ts): Content ID, tanda wajib QA/brief, hasil QA, dan Content Brief milik server.
     // Klien hanya mengirim perintah qaAct / briefAct; kiriman qa/brief langsung diganti nilai tersimpan.
-    for (const k of ["cprId", "qaReq", "qa", "briefReq", "brief"]) {
+    for (const k of ["cprId", "qaReq", "qa", "briefReq", "brief", "stock0"]) {
       if (before?.[k] !== undefined && before[k] !== "") after[k] = before[k];
       else delete after[k];
     }
@@ -187,7 +187,7 @@ async function writeDocInner(u: StudioUser, op: "set" | "update" | "delete", pat
     }
     if (!before && needsCpr(after.type)) {
       after.qaReq = true; // kartu baru: wajib QA Approved sebelum Tayang/Meta
-      after.briefReq = true; // kartu baru: wajib brief disetujui sebelum Produksi
+      if (needsBrief(after.type)) after.briefReq = true; // kartu baru: wajib brief disetujui sebelum Produksi
     }
   }
   const why = opts.trusted ? null : canWrite(u, op, path, before, after) ?? (col === "tasks" && after ? qaBlocks(before, after) ?? briefBlocks(before, after) : null); // trusted: hanya skrip impor di server
@@ -252,6 +252,12 @@ async function writeDocInner(u: StudioUser, op: "set" | "update" | "delete", pat
       }
       // Content ID permanen untuk kartu baru (nomor urut global per bulan, atomik di database)
       if (!before && !opts.trusted && needsCpr(after.type) && !after.cprId) after.cprId = await allocCprId(String(after.type));
+      // IDCC: stok awal dicatat sekali saat kartu masuk Tayang (milik server)
+      if (!opts.trusted && isIdcc(after.type) && after.status === "Tayang") {
+        const it = after.itemId ? await prisma.mediaItem.findUnique({ where: { id: String(after.itemId) }, select: { qty: true } }) : null;
+        const st = stockAtPublish(before, after, it?.qty);
+        if (st) after.stock0 = st;
+      }
       const { row, itemId } = M.taskFromDoc(after);
       const okItem = itemId ? !!(await prisma.mediaItem.findUnique({ where: { id: itemId }, select: { id: true } })) : false;
       const data = { ...row, itemId: okItem ? itemId : null, extra: json(row.extra), history: row.history === undefined ? undefined : json(row.history) } as Prisma.MediaTaskUncheckedCreateInput;

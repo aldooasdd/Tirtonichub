@@ -8,8 +8,8 @@ import { ArrowDown, ArrowUp, Download, ExternalLink, Search, X } from "lucide-re
 import { Button } from "@/components/ui/button";
 import { CPR_CODE, cprKpi, type CprRow } from "@/lib/media/cpr-view";
 
-const TYPE_L: Record<string, string> = { igf: "Foto Instagram", vpr: "Video produk", vrv: "Video review", evt: "Video event" };
-const TYPE_C: Record<string, string> = { igf: "#E91E63", vpr: "#00ACC1", vrv: "#1F3A8A", evt: "#9E9D24" };
+const TYPE_L: Record<string, string> = { igf: "Foto Instagram", vpr: "Video produk", vrv: "Video review", evt: "Video event", idc: "Video IDCC", idf: "Foto IDCC" };
+const TYPE_C: Record<string, string> = { igf: "#E91E63", vpr: "#00ACC1", vrv: "#1F3A8A", evt: "#9E9D24", idc: "#8D6E63", idf: "#8D6E63" };
 const STAGES = ["Terdata", "Diproduksi", "Editing", "Ready", "Tayang"];
 const BRIEF: Record<string, [string, string]> = { none: ["—", "text-[#747B86]"], draft: ["Draf", "text-[#747B86]"], submitted: ["Menunggu", "text-amber-700"], approved: ["Disetujui", "text-emerald-700"], revisi: ["Revisi", "text-red-600"] };
 const REVIEW: Record<string, [string, string]> = { none: ["—", "text-[#747B86]"], submitted: ["Menunggu review", "text-amber-700"], revision: ["Revision", "text-amber-700"], major: ["Major revision", "text-red-600"], blocked: ["Blocked", "text-red-600"], approved: ["Approved", "text-emerald-700"], reopened: ["Dibuka ulang", "text-amber-700"] };
@@ -114,7 +114,7 @@ export function CprClient({ rows, names, labels, today }: { rows: CprRow[]; name
           <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Cari Content ID, judul, PIC, pillar…" className="h-8 flex-1 bg-transparent text-[13px] outline-none" aria-label="Cari" />
         </label>
         {Object.entries(CPR_CODE).map(([t, c]) => (
-          <button key={t} onClick={() => setTypes((x) => (x.includes(t) ? x.filter((y) => y !== t) : [...x, t]))} className={"rounded-md border px-2 py-1 text-[12.5px] " + (types.includes(t) ? "border-[#202328] bg-[#F2F3F5] font-semibold" : "border-[#E7E9ED] bg-white")}>{c}</button>
+          <button key={t} onClick={() => setTypes((x) => (x.includes(t) ? x.filter((y) => y !== t) : [...x, t]))} className={"rounded-md border px-2 py-1 text-[12.5px] " + (types.includes(t) ? "border-[#202328] bg-[#F2F3F5] font-semibold" : "border-[#E7E9ED] bg-white")}>{c === "IDCC" ? TYPE_L[t] : c}</button>
         ))}
         <select value={stage} onChange={(e) => setStage(e.target.value)} className="h-8 rounded-md border border-[#E7E9ED] bg-white px-2 text-[13px]" aria-label="Tahap"><option value="">Semua tahap</option>{STAGES.map((s2) => <option key={s2}>{s2}</option>)}</select>
         <span className="ml-auto text-[12px] text-[#747B86]">{shown.length} konten</span>
@@ -170,6 +170,11 @@ export function CprClient({ rows, names, labels, today }: { rows: CprRow[]; name
                 <tbody>{["D+1", "D+7", "D+30"].map((cp) => { const x = sel.snaps.find((y) => y.cp === cp); return <tr key={cp} className="border-t border-[#E7E9ED]"><td className="py-1 font-medium">{cp}</td>{(["reach", "views", "saves", "shares"] as const).map((m) => <td key={m}>{x && x[m] != null ? x[m]!.toLocaleString("id-ID") : NA}</td>)}</tr>; })}</tbody>
               </table>
             </section>
+            {["idc", "idf"].includes(sel.type) && (
+              <section className="grid gap-1"><h3 className="text-[13px] font-bold">Stok barang</h3>
+                <p>Awal (Tayang) {sel.stock0 ?? NA} · D+7 {sel.snaps.find((x) => x.cp === "D+7")?.stock ?? NA} · D+30 {sel.snaps.find((x) => x.cp === "D+30")?.stock ?? NA}</p>
+                <p className="text-[12px] text-[#747B86]">Perubahan stok bisa berasal dari penjualan mana pun, bukan bukti penjualan dari konten ini.</p></section>
+            )}
             <section className="grid gap-1"><h3 className="text-[13px] font-bold">Bisnis</h3><p>{sel.inquiries} qualified inquiry · {sel.orders} order teratribusi{sel.orders ? " · " + rp(sel.revenue) : ""}</p></section>
           </div>
           <div className="border-t border-[#E7E9ED] p-3"><a href={studioLink(sel.id)} target="_top" onClick={(e) => openInStudio(e, sel.id, "det")} className="inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#202328] hover:underline"><ExternalLink className="size-3.5" />Buka Detail kartu di Studio</a>{(sel.type === "vrv" || sel.type === "evt") && <a href={scriptLink(sel.id)} target="_top" onClick={(e) => openScriptInStudio(e, sel.id)} className="ml-4 inline-flex items-center gap-1.5 text-[13px] font-semibold text-[#202328] hover:underline"><ExternalLink className="size-3.5" />Script Konten</a>}</div>

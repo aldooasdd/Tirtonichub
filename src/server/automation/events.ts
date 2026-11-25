@@ -8,12 +8,13 @@ type Doc = Record<string, unknown>;
 const s = (v: unknown) => (v == null ? "" : String(v));
 const obj = (v: unknown): Doc => (v && typeof v === "object" && !Array.isArray(v) ? (v as Doc) : {});
 const CPR = ["igf", "vpr", "vrv", "evt"];
+const IDCC = ["idc", "idf"]; // hanya kartu ber-Content ID (kartu IDCC lama tidak ikut)
 
 export type NewEvent = Omit<AutoEvent, "id" | "occurredAt" | "correlationId"> & { dedupeKey: string };
 
 /** Event dari satu perubahan kartu. dedupeKey = kunci unik per kejadian (mencegah event ganda saat tulis ulang). */
 export function taskEvents(id: string, before: Doc | null, after: Doc | null): NewEvent[] {
-  if (!after || !CPR.includes(s(after.type))) return [];
+  if (!after || !(CPR.includes(s(after.type)) || (IDCC.includes(s(after.type)) && after.cprId))) return [];
   const out: NewEvent[] = [];
   const ev = (type: EventType, key: string, payload: Doc) => out.push({ type, entityType: "task", entityId: id, payload: { type: s(after.type), ...payload }, dedupeKey: type + ":" + id + ":" + key });
   const bOk = obj(obj(before?.brief).ok), aOk = obj(obj(after.brief).ok);

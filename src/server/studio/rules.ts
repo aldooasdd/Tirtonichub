@@ -278,7 +278,7 @@ function memberStatusUpdate(u: StudioUser, before: Doc, after: Doc): string | nu
 // ---------- tab CPR (koleksi cpr/{id}) ----------
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const CAMP_RE = /^CMP-[A-Z0-9]{2,12}-\d{4}$/;
-const CPR_METRICS = ["reach", "views", "likes", "comments", "saves", "shares", "profileVisits"];
+const CPR_METRICS = ["reach", "views", "likes", "comments", "saves", "shares", "profileVisits", "stock"];
 const INTENTS = ["stok", "harga", "varian", "ukuran", "kirim", "demo"];
 const okKeys = (d: Doc, keys: string[]) => Object.keys(d).every((k) => [...keys, "by", "at", "updatedAt"].includes(k));
 const intOk = (v: unknown, max = 1e12) => typeof v === "number" && Number.isInteger(v) && v >= 0 && v <= max;
