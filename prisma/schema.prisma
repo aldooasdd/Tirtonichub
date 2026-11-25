@@ -1020,6 +1020,7 @@ model DemoPhoto {
 model RfidTag {
   epc       String   @id
   sku       String
+  branchId  String? // cabang tempat barangnya; null = belum ada cabang
   userId    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

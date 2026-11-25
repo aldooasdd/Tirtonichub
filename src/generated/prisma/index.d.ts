@@ -66335,6 +66335,7 @@ export namespace Prisma {
   export type RfidTagMinAggregateOutputType = {
     epc: string | null
     sku: string | null
+    branchId: string | null
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -66343,6 +66344,7 @@ export namespace Prisma {
   export type RfidTagMaxAggregateOutputType = {
     epc: string | null
     sku: string | null
+    branchId: string | null
     userId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -66351,6 +66353,7 @@ export namespace Prisma {
   export type RfidTagCountAggregateOutputType = {
     epc: number
     sku: number
+    branchId: number
     userId: number
     createdAt: number
     updatedAt: number
@@ -66361,6 +66364,7 @@ export namespace Prisma {
   export type RfidTagMinAggregateInputType = {
     epc?: true
     sku?: true
+    branchId?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
@@ -66369,6 +66373,7 @@ export namespace Prisma {
   export type RfidTagMaxAggregateInputType = {
     epc?: true
     sku?: true
+    branchId?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
@@ -66377,6 +66382,7 @@ export namespace Prisma {
   export type RfidTagCountAggregateInputType = {
     epc?: true
     sku?: true
+    branchId?: true
     userId?: true
     createdAt?: true
     updatedAt?: true
@@ -66458,6 +66464,7 @@ export namespace Prisma {
   export type RfidTagGroupByOutputType = {
     epc: string
     sku: string
+    branchId: string | null
     userId: string | null
     createdAt: Date
     updatedAt: Date
@@ -66483,6 +66490,7 @@ export namespace Prisma {
   export type RfidTagSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     epc?: boolean
     sku?: boolean
+    branchId?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -66491,6 +66499,7 @@ export namespace Prisma {
   export type RfidTagSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     epc?: boolean
     sku?: boolean
+    branchId?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -66499,6 +66508,7 @@ export namespace Prisma {
   export type RfidTagSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     epc?: boolean
     sku?: boolean
+    branchId?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -66507,12 +66517,13 @@ export namespace Prisma {
   export type RfidTagSelectScalar = {
     epc?: boolean
     sku?: boolean
+    branchId?: boolean
     userId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type RfidTagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"epc" | "sku" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["rfidTag"]>
+  export type RfidTagOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"epc" | "sku" | "branchId" | "userId" | "createdAt" | "updatedAt", ExtArgs["result"]["rfidTag"]>
 
   export type $RfidTagPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "RfidTag"
@@ -66520,6 +66531,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       epc: string
       sku: string
+      branchId: string | null
       userId: string | null
       createdAt: Date
       updatedAt: Date
@@ -66948,6 +66960,7 @@ export namespace Prisma {
   interface RfidTagFieldRefs {
     readonly epc: FieldRef<"RfidTag", 'String'>
     readonly sku: FieldRef<"RfidTag", 'String'>
+    readonly branchId: FieldRef<"RfidTag", 'String'>
     readonly userId: FieldRef<"RfidTag", 'String'>
     readonly createdAt: FieldRef<"RfidTag", 'DateTime'>
     readonly updatedAt: FieldRef<"RfidTag", 'DateTime'>
@@ -84244,6 +84257,7 @@ export namespace Prisma {
   export const RfidTagScalarFieldEnum: {
     epc: 'epc',
     sku: 'sku',
+    branchId: 'branchId',
     userId: 'userId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -88994,6 +89008,7 @@ export namespace Prisma {
     NOT?: RfidTagWhereInput | RfidTagWhereInput[]
     epc?: StringFilter<"RfidTag"> | string
     sku?: StringFilter<"RfidTag"> | string
+    branchId?: StringNullableFilter<"RfidTag"> | string | null
     userId?: StringNullableFilter<"RfidTag"> | string | null
     createdAt?: DateTimeFilter<"RfidTag"> | Date | string
     updatedAt?: DateTimeFilter<"RfidTag"> | Date | string
@@ -89002,6 +89017,7 @@ export namespace Prisma {
   export type RfidTagOrderByWithRelationInput = {
     epc?: SortOrder
     sku?: SortOrder
+    branchId?: SortOrderInput | SortOrder
     userId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -89013,6 +89029,7 @@ export namespace Prisma {
     OR?: RfidTagWhereInput[]
     NOT?: RfidTagWhereInput | RfidTagWhereInput[]
     sku?: StringFilter<"RfidTag"> | string
+    branchId?: StringNullableFilter<"RfidTag"> | string | null
     userId?: StringNullableFilter<"RfidTag"> | string | null
     createdAt?: DateTimeFilter<"RfidTag"> | Date | string
     updatedAt?: DateTimeFilter<"RfidTag"> | Date | string
@@ -89021,6 +89038,7 @@ export namespace Prisma {
   export type RfidTagOrderByWithAggregationInput = {
     epc?: SortOrder
     sku?: SortOrder
+    branchId?: SortOrderInput | SortOrder
     userId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -89035,6 +89053,7 @@ export namespace Prisma {
     NOT?: RfidTagScalarWhereWithAggregatesInput | RfidTagScalarWhereWithAggregatesInput[]
     epc?: StringWithAggregatesFilter<"RfidTag"> | string
     sku?: StringWithAggregatesFilter<"RfidTag"> | string
+    branchId?: StringNullableWithAggregatesFilter<"RfidTag"> | string | null
     userId?: StringNullableWithAggregatesFilter<"RfidTag"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"RfidTag"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"RfidTag"> | Date | string
@@ -94950,6 +94969,7 @@ export namespace Prisma {
   export type RfidTagCreateInput = {
     epc: string
     sku: string
+    branchId?: string | null
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -94958,6 +94978,7 @@ export namespace Prisma {
   export type RfidTagUncheckedCreateInput = {
     epc: string
     sku: string
+    branchId?: string | null
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -94966,6 +94987,7 @@ export namespace Prisma {
   export type RfidTagUpdateInput = {
     epc?: StringFieldUpdateOperationsInput | string
     sku?: StringFieldUpdateOperationsInput | string
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -94974,6 +94996,7 @@ export namespace Prisma {
   export type RfidTagUncheckedUpdateInput = {
     epc?: StringFieldUpdateOperationsInput | string
     sku?: StringFieldUpdateOperationsInput | string
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -94982,6 +95005,7 @@ export namespace Prisma {
   export type RfidTagCreateManyInput = {
     epc: string
     sku: string
+    branchId?: string | null
     userId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -94990,6 +95014,7 @@ export namespace Prisma {
   export type RfidTagUpdateManyMutationInput = {
     epc?: StringFieldUpdateOperationsInput | string
     sku?: StringFieldUpdateOperationsInput | string
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -94998,6 +95023,7 @@ export namespace Prisma {
   export type RfidTagUncheckedUpdateManyInput = {
     epc?: StringFieldUpdateOperationsInput | string
     sku?: StringFieldUpdateOperationsInput | string
+    branchId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -99270,6 +99296,7 @@ export namespace Prisma {
   export type RfidTagCountOrderByAggregateInput = {
     epc?: SortOrder
     sku?: SortOrder
+    branchId?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -99278,6 +99305,7 @@ export namespace Prisma {
   export type RfidTagMaxOrderByAggregateInput = {
     epc?: SortOrder
     sku?: SortOrder
+    branchId?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -99286,6 +99314,7 @@ export namespace Prisma {
   export type RfidTagMinOrderByAggregateInput = {
     epc?: SortOrder
     sku?: SortOrder
+    branchId?: SortOrder
     userId?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder

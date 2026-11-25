@@ -30,9 +30,29 @@ async function warehouseNames() {
   return map;
 }
 
+export type Toko = { id: string; label: string; keys: string[] };
+/** Cabang toko (tanpa office) + gudangnya: pemetaan Tirtonic POS. Cabang yang belum dipetakan di satu platform
+ *  → gudang bernama cabang itu ("TIRTONIC Warehouse Solo"), asal hanya cocok ke satu cabang. */
+export async function tokoGudang(): Promise<Toko[]> {
+  const [branches, names] = await Promise.all([
+    prisma.branch.findMany({ orderBy: { name: "asc" }, select: { id: true, name: true, warehouseIds: true } }),
+    warehouseNames().catch(() => new Map<string, string>()),
+  ]);
+  const toko = branches.filter((b) => !/office/i.test(b.name)).map((b) => ({ id: b.id, label: b.name.split(/\s+/).pop() ?? b.name, keys: [...b.warehouseIds] }));
+  const mapped = new Set(branches.flatMap((b) => b.warehouseIds));
+  const plat = (k: string) => k.slice(0, k.indexOf(":"));
+  const sudah = new Set(toko.flatMap((t) => t.keys.map((k) => `${t.id}|${plat(k)}`)));
+  for (const [key, name] of names) {
+    if (mapped.has(key)) continue;
+    const kata = name.toLowerCase().split(/[^a-z0-9]+/);
+    const cocok = toko.filter((t) => kata.includes(t.label.toLowerCase()));
+    if (cocok.length === 1 && !sudah.has(`${cocok[0].id}|${plat(key)}`)) cocok[0].keys.push(key);
+  }
+  return toko;
+}
 
-/** branchId = cabang mesin kasir (stok "mine"); null = tanpa cabang (dashboard). */
-export async function buildCatalog(branchId: string | null): Promise<PosCatalog> {
+/** branchId = cabang mesin kasir (stok "mine"); null = tanpa cabang (dashboard). toko = pemetaan gudang dari tokoGudang (menimpa pemetaan POS). */
+export async function buildCatalog(branchId: string | null, toko: Toko[] = []): Promise<PosCatalog> {
   const [items, details, branches, names] = await Promise.all([
     prisma.marketplaceItem.findMany({
       where: { deletedAt: null, OR: [{ localSku: { not: null } }, { sku: { not: null } }] },
@@ -46,6 +66,7 @@ export async function buildCatalog(branchId: string | null): Promise<PosCatalog>
   const owner = new Map<string, { label: string; mine: boolean; branchId: string | null }>();
   for (const b of branches)
     for (const k of b.warehouseIds) owner.set(k, { label: b.name.split(/\s+/).pop() ?? b.name, mine: b.id === branchId, branchId: b.id });
+  for (const t of toko) for (const k of t.keys) owner.set(k, { label: t.label, mine: t.id === branchId, branchId: t.id });
   const cover = new Map(details.map((d) => [`${d.platform}:${d.productId}`, ((d.images as string[] | null) ?? [])[0] ?? null]));
 
   // Satu barang = SKU sama di semua marketplace.
