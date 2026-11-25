@@ -90,7 +90,7 @@ export default async function CekSkuPage({ searchParams }: { searchParams: Promi
             {tab("missing", "Tidak ada", missing)}
           </div>
 
-          {status === "pending" && <SkuCheckAll keys={shown.filter((g) => g.some((r) => r.saranUpc)).map((g) => g[0].groupKey)} />}
+          {status === "pending" && <SkuCheckAll keys={list.filter((g) => g[0].status === "pending" && g.some((r) => r.saranUpc)).map((g) => g[0].groupKey)} />}
 
           {pageRows.length === 0 ? (
             <p className="rounded-lg border bg-card py-10 text-center text-muted-foreground">Tidak ada barang.</p>
