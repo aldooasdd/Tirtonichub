@@ -8,7 +8,7 @@ export default async function PasangTagPage() {
   await requireChannel();
   const [tags, skus] = await Promise.all([prisma.rfidTag.count(), prisma.rfidTag.groupBy({ by: ["sku"] }).then((g) => g.length)]);
   return (
-    <div className="max-w-2xl space-y-4">
+    <div className="space-y-4">
       <div>
         <Link href="/channel/produk" className="text-14 text-muted-foreground">← Produk Master</Link>
         <h1 className="text-24 font-semibold">Pasangkan Tag</h1>
