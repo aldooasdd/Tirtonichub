@@ -1,55 +1,79 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { ScanLine } from "lucide-react";
-import { lookupSku, pairTags, unpairTags, whoseTags, type SkuInfo } from "@/server/actions/rfid";
+import { useEffect, useRef, useState } from "react";
+import { Save, ScanLine, X } from "lucide-react";
+import { lookupSku, ownersOf, pairTags, type SkuInfo } from "@/server/actions/rfid";
 
 // EPC stiker UHF = hex 24–32 huruf; barcode barang (EAN/UPC/SKU) lebih pendek → dianggap SKU.
 const isTag = (v: string) => /^[0-9A-F]{24,32}$/i.test(v);
-type Sesi = { read: Set<string>; added: string[]; already: number; other: { epc: string; sku: string }[] };
-const baru = (): Sesi => ({ read: new Set(), added: [], already: 0, other: [] });
+const MAX_ROWS = 300; // batas baris kosong; 999 = stok web "tak terbatas"
+type Draft = { epc: string; owner: string | null; move: boolean }; // owner = SKU lain pemilik tag
+const siap = (d: Draft) => !d.owner || d.move;
 
+// Tanpa confirm(): reader mengetik Enter, dialog bisa ter-OK sendiri.
 export function PasangTag() {
   const [sku, setSku] = useState<SkuInfo | null>(null);
-  const [sesi, setSesi] = useState<Sesi>(baru);
-  const [lepas, setLepas] = useState<{ sku: string; n: number }[] | null>(null);
+  const [drafts, setDrafts] = useState<Draft[]>([]);
+  const [next, setNext] = useState<string | null>(null); // barcode baru di-scan saat tag belum disimpan
   const [val, setVal] = useState("");
   const [busy, setBusy] = useState(0);
-  const [err, setErr] = useState("");
+  const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
   const input = useRef<HTMLInputElement>(null);
   const skuRef = useRef<SkuInfo | null>(null);
-  const sesiRef = useRef<Sesi>(baru());
+  const draftRef = useRef<Draft[]>([]);
+  const nextRef = useRef<string | null>(null);
   const pending = useRef<string[]>([]);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
-  // Semua kerja server antre satu per satu (sapuan cepat = puluhan kode beruntun).
+  // Semua kerja server antre satu per satu, supaya tag tidak masuk ke SKU yang salah.
   const queue = useRef(Promise.resolve());
+
+  const putSku = (s: SkuInfo | null) => { skuRef.current = s; setSku(s); };
+  const putDrafts = (d: Draft[]) => { draftRef.current = d; setDrafts(d); };
+  const putNext = (s: string | null) => { nextRef.current = s; setNext(s); };
+
+  useEffect(() => {
+    if (!drafts.length) return;
+    const warn = (e: BeforeUnloadEvent) => e.preventDefault();
+    window.addEventListener("beforeunload", warn);
+    return () => window.removeEventListener("beforeunload", warn);
+  }, [drafts.length]);
 
   const enqueue = (fn: () => Promise<void>) => {
     setBusy((b) => b + 1);
     queue.current = queue.current
       .then(fn)
-      .then(() => setErr(""))
-      .catch(() => setErr("Gagal tersimpan. Cek koneksi lalu sapu ulang."))
+      .catch(() => setMsg({ ok: false, text: "Gagal. Cek koneksi lalu ulangi." }))
       .finally(() => setBusy((b) => b - 1));
   };
-  const pushSesi = (s: Sesi) => { sesiRef.current = s; setSesi(s); };
 
-  // Kode tag dikumpulkan dulu, dikirim sekali setelah reader berhenti ±0,7 detik.
+  async function open(code: string) {
+    putSku(null); // lookup gagal → jangan sampai tag masuk ke SKU lama
+    putDrafts([]);
+    putNext(null);
+    putSku(await lookupSku(code));
+    setMsg(null);
+  }
+
+  // Kode tag dikumpulkan sebentar lalu dicek pemiliknya sekaligus.
   function flush() {
     clearTimeout(timer.current);
-    const list = pending.current;
+    const list = [...new Set(pending.current)];
     pending.current = [];
     if (!list.length) return;
     enqueue(async () => {
+      if (nextRef.current) return setMsg({ ok: false, text: `${list.length} tag tidak dimasukkan. Simpan atau buang dulu tag barang sebelumnya.` });
       const cur = skuRef.current;
-      if (!cur) return setLepas(await whoseTags(list));
-      const r = await pairTags(list, cur.sku).catch((e) => {
-        list.forEach((x) => sesiRef.current.read.delete(x)); // gagal → boleh disapu ulang
-        throw e;
-      });
-      const s = sesiRef.current;
-      pushSesi({ ...s, added: [...s.added, ...r.added], already: s.already + r.already, other: [...s.other, ...r.other] });
-      setSku((x) => (x ? { ...x, tags: r.tags } : x));
+      const owner = new Map((await ownersOf(list)).map((o) => [o.epc, o.sku]));
+      if (!cur) {
+        const n = new Map<string, number>();
+        for (const e of list) n.set(owner.get(e) ?? "", (n.get(owner.get(e) ?? "") ?? 0) + 1);
+        return setMsg({ ok: true, text: `Belum pilih SKU. Tag terbaca: ${[...n].map(([s, c]) => (s ? `${c} milik SKU ${s}` : `${c} belum terpasang`)).join(" · ")}` });
+      }
+      const have = new Set([...cur.tagList, ...draftRef.current.map((d) => d.epc)]);
+      const baru = list.filter((e) => !have.has(e));
+      putDrafts([...draftRef.current, ...baru.map((epc) => ({ epc, owner: owner.get(epc) ?? null, move: false }))]);
+      const dobel = list.length - baru.length;
+      setMsg({ ok: true, text: `${baru.length} tag masuk${dobel ? ` · ${dobel} sudah ada di daftar` : ""}. Belum disimpan.` });
     });
   }
 
@@ -59,46 +83,58 @@ export function PasangTag() {
     setVal("");
     if (!code) return;
     if (isTag(code)) {
-      const up = code.toUpperCase();
-      if (sesiRef.current.read.has(up)) return;
-      sesiRef.current.read.add(up);
-      setSesi({ ...sesiRef.current });
-      pending.current.push(up);
+      pending.current.push(code.toUpperCase());
       clearTimeout(timer.current);
-      timer.current = setTimeout(flush, 700);
+      timer.current = setTimeout(flush, 400);
       return;
     }
     flush();
     enqueue(async () => {
-      const info = await lookupSku(code);
-      skuRef.current = info;
-      setSku(info);
-      setLepas(null);
-      pushSesi(baru());
+      if (draftRef.current.length) {
+        if (code.toLowerCase() !== skuRef.current?.sku.toLowerCase()) putNext(code);
+        return;
+      }
+      await open(code);
     });
   }
 
-  const pindah = () => {
-    const s = sesiRef.current, cur = skuRef.current;
-    if (!cur || !confirm(`Pindahkan ${s.other.length} tag ke SKU ${cur.sku}?`)) return;
+  async function simpan() {
+    const cur = skuRef.current;
+    if (!cur) return;
+    const list = draftRef.current;
+    const baru = list.filter((d) => !d.owner).map((d) => d.epc);
+    const pindah = list.filter((d) => d.owner && d.move).map((d) => d.epc);
+    if (!baru.length && !pindah.length) return;
+    let r = await pairTags(baru, cur.sku);
+    const other = new Map(r.other.map((o) => [o.epc, o.sku])); // keburu dipasang orang lain
+    if (pindah.length) r = await pairTags(pindah, cur.sku, true);
+    const saved = new Set(r.tagList);
+    const rest = list.filter((d) => !saved.has(d.epc)).map((d) => ({ ...d, owner: other.get(d.epc) ?? d.owner }));
+    putDrafts(rest);
+    putSku({ ...cur, tagList: r.tagList });
+    setMsg({ ok: !rest.length, text: `${list.length - rest.length} tag tersimpan.${rest.length ? ` ${rest.length} milik SKU lain belum disimpan.` : ""}` });
+  }
+  const klikSimpan = () => { flush(); enqueue(simpan); };
+  const lanjut = (save: boolean) => {
+    flush();
     enqueue(async () => {
-      const r = await pairTags(s.other.map((o) => o.epc), cur.sku, true);
-      pushSesi({ ...sesiRef.current, added: [...sesiRef.current.added, ...r.added], other: [] });
-      setSku((x) => (x ? { ...x, tags: r.tags } : x));
+      const code = nextRef.current;
+      if (!code) return;
+      if (save) await simpan();
+      // Tag milik SKU lain yang tidak dipindah memang tidak disimpan.
+      await open(code);
     });
   };
-  const batal = () => {
-    const s = sesiRef.current, cur = skuRef.current;
-    if (!cur || !confirm(`Lepas ${s.added.length} tag yang baru dipasang di sapuan ini?`)) return;
-    enqueue(async () => {
-      const r = await unpairTags(s.added, cur.sku);
-      pushSesi(baru());
-      setSku((x) => (x ? { ...x, tags: r.tags } : x));
-    });
-  };
-  const ganti = () => { flush(); skuRef.current = null; setSku(null); pushSesi(baru()); };
+  const hapus = (epc: string) => putDrafts(draftRef.current.filter((d) => d.epc !== epc));
+  const pindahkan = (epc: string) => putDrafts(draftRef.current.map((d) => (d.epc === epc ? { ...d, move: !d.move } : d)));
 
-  const selisih = sku?.stock != null ? sku.tags - sku.stock : null;
+  const isi = sku ? sku.tagList.length + drafts.length : 0;
+  const stok = sku?.stock != null && sku.stock < 999 ? sku.stock : null;
+  const kosong = Math.max(0, Math.min(stok ?? 0, MAX_ROWS) - isi);
+  const nSiap = drafts.filter(siap).length;
+  const btn = "inline-flex h-9 items-center gap-1.5 rounded-md px-4 text-14 font-medium disabled:opacity-40";
+  const lebih = (i: number) => (stok != null && i >= stok ? <span className="text-amber-600"> · lebih dari stok</span> : null);
+
   return (
     <div className="space-y-4" onClick={() => input.current?.focus()}>
       <form onSubmit={submit} className="flex items-center gap-2 rounded-lg border bg-card p-3">
@@ -108,18 +144,29 @@ export function PasangTag() {
           autoFocus
           value={val}
           onChange={(e) => setVal(e.target.value)}
-          placeholder={sku ? "Sapu semua stiker barang ini… (scan barcode lain = ganti SKU)" : "Scan barcode SKU barang / ketik SKU lalu Enter"}
+          placeholder={sku ? "Sapu stiker barang ini… (scan barcode lain = ganti SKU)" : "Scan barcode SKU barang / ketik SKU lalu Enter"}
           aria-label="Scan"
           autoComplete="off"
           className="h-10 min-w-0 flex-1 rounded-md border bg-background px-3 font-mono text-14"
         />
-        {busy > 0 && <span className="text-12 text-muted-foreground">Menyimpan…</span>}
+        {busy > 0 && <span className="text-12 text-muted-foreground">Memproses…</span>}
       </form>
-      {err && <p className="rounded-md bg-red-500/10 px-3 py-2 text-14 text-red-600">{err}</p>}
+
+      {next && (
+        <div className="space-y-2 rounded-lg border border-amber-500 bg-amber-500/10 p-3 text-14">
+          <p>Barcode <b className="font-mono">{next}</b> terbaca, tapi {drafts.length} tag untuk SKU {sku?.sku} belum disimpan.</p>
+          <div className="flex flex-wrap gap-2">
+            <button type="button" disabled={busy > 0} onClick={() => lanjut(true)} className={`${btn} bg-primary text-primary-foreground`}>Simpan {nSiap} tag, lalu ganti</button>
+            <button type="button" disabled={busy > 0} onClick={() => lanjut(false)} className={`${btn} border text-destructive`}>Buang, lalu ganti</button>
+            <button type="button" onClick={() => putNext(null)} className={`${btn} border`}>Tetap di SKU ini</button>
+          </div>
+        </div>
+      )}
+      {msg && <p role="status" className={`rounded-md px-3 py-2 text-14 ${msg.ok ? "bg-muted" : "bg-red-500/10 text-red-600"}`}>{msg.text}</p>}
 
       {sku ? (
-        <div className="space-y-3 rounded-lg border bg-card p-3">
-          <div className="flex gap-3">
+        <div className="rounded-lg border bg-card">
+          <div className="flex gap-3 p-3">
             {sku.image ? (
               // eslint-disable-next-line @next/next/no-img-element -- foto dari CDN marketplace
               <img src={sku.image} alt="" className="size-16 shrink-0 rounded-md border object-cover" />
@@ -129,42 +176,73 @@ export function PasangTag() {
             <div className="min-w-0 flex-1">
               <p className="font-mono text-12 text-muted-foreground">SKU {sku.sku}</p>
               <p className="font-medium leading-snug">{sku.name ?? <span className="text-amber-600">SKU tidak ada di Produk Master — tag tetap bisa dipasang.</span>}</p>
-              {sku.stocks.length > 1 && <p className="text-12 text-muted-foreground">{sku.stocks.map((s) => `${s.label} ${s.stock}`).join(" · ")}</p>}
-            </div>
-            <button type="button" onClick={ganti} className="self-start text-12 text-primary">Ganti SKU</button>
-          </div>
-
-          <div className="grid grid-cols-3 gap-2 text-center">
-            <div className="rounded-md bg-muted p-2"><p className="text-24 font-semibold">{sku.tags}</p><p className="text-12 text-muted-foreground">tag terpasang</p></div>
-            <div className="rounded-md bg-muted p-2"><p className="text-24 font-semibold">{sku.stock ?? "–"}</p><p className="text-12 text-muted-foreground">stok sistem</p></div>
-            <div className={`rounded-md p-2 ${selisih == null ? "bg-muted" : selisih === 0 ? "bg-emerald-500/15 text-emerald-700 dark:text-emerald-400" : "bg-amber-500/15 text-amber-700 dark:text-amber-400"}`}>
-              <p className="text-24 font-semibold">{selisih == null ? "–" : selisih === 0 ? "Cocok" : selisih > 0 ? `+${selisih}` : selisih}</p>
-              <p className="text-12">{selisih == null ? "selisih" : selisih === 0 ? "tag = stok" : selisih > 0 ? "tag lebih dari stok" : "tag kurang dari stok"}</p>
+              {sku.variant && <p className="text-12 text-muted-foreground">{sku.variant}</p>}
+              {sku.stocks.length > 0 && <p className="text-12 text-muted-foreground">Stok: {sku.stocks.map((s) => `${s.label} ${s.stock}`).join(" · ")}</p>}
             </div>
           </div>
 
-          {sesi.read.size > 0 && (
-            <div className="space-y-2 rounded-md border p-2 text-14">
-              <p>Sapuan ini: <b>{sesi.read.size}</b> terbaca · <b>{sesi.added.length}</b> baru dipasang · {sesi.already} sudah terpasang</p>
-              {sesi.other.length > 0 && (
-                <p className="text-amber-700 dark:text-amber-400">
-                  {sesi.other.length} tag milik SKU lain ({[...new Set(sesi.other.map((o) => o.sku))].slice(0, 3).join(", ")}) — tidak dipindah.{" "}
-                  <button type="button" onClick={pindah} className="underline">Pindahkan ke SKU ini</button>
-                </p>
-              )}
-              {sesi.added.length > 0 && <button type="button" onClick={batal} className="text-12 text-red-600 underline">Batalkan sapuan ini (lepas {sesi.added.length} tag baru)</button>}
-            </div>
-          )}
+          <div className="sticky top-0 z-10 flex flex-wrap items-center justify-between gap-2 border-y bg-card px-3 py-2 text-14">
+            <span>Terisi <b>{isi}</b>{stok != null ? ` dari ${stok} stok` : ""} · {sku.tagList.length} tersimpan{drafts.length ? ` · ${drafts.length} belum disimpan` : ""}</span>
+            <span className="flex gap-2">
+              {drafts.length > 0 && <button type="button" disabled={busy > 0} onClick={() => putDrafts([])} className={`${btn} border`}>Kosongkan</button>}
+              <button type="button" disabled={busy > 0 || nSiap === 0} onClick={klikSimpan} className={`${btn} bg-primary text-primary-foreground`}>
+                <Save className="size-4" /> Simpan{nSiap ? ` (${nSiap})` : ""}
+              </button>
+            </span>
+          </div>
+
+          <div className="overflow-x-auto">
+            <table className="w-full text-14">
+              <thead>
+                <tr className="text-left text-12 text-muted-foreground"><th className="w-12 px-3 py-2">No</th><th className="px-3 py-2">ID Tag</th><th className="px-3 py-2">Status</th><th className="w-10" /></tr>
+              </thead>
+              <tbody>
+                {sku.tagList.map((e, i) => (
+                  <tr key={e} className="border-t">
+                    <td className="px-3 py-2 tabular-nums">{i + 1}</td>
+                    <td className="px-3 py-2 font-mono text-12">{e}</td>
+                    <td className="px-3 py-2 text-emerald-600">Tersimpan{lebih(i)}</td>
+                    <td />
+                  </tr>
+                ))}
+                {drafts.map((d, j) => {
+                  const i = sku.tagList.length + j;
+                  return (
+                    <tr key={d.epc} className="border-t bg-amber-500/5">
+                      <td className="px-3 py-2 tabular-nums">{i + 1}</td>
+                      <td className="px-3 py-2 font-mono text-12">{d.epc}</td>
+                      <td className="px-3 py-2">
+                        {d.owner ? (
+                          <>
+                            <span className="text-red-600">Milik SKU {d.owner}</span>{" "}
+                            <button type="button" onClick={() => pindahkan(d.epc)} className="underline">{d.move ? "Batal pindah" : "Pindahkan ke sini"}</button>
+                          </>
+                        ) : (
+                          <span className="text-amber-600">Belum disimpan</span>
+                        )}
+                        {lebih(i)}
+                      </td>
+                      <td><button type="button" disabled={busy > 0} onClick={() => hapus(d.epc)} aria-label={`Hapus tag ${d.epc}`} className="p-2 text-muted-foreground"><X className="size-4" /></button></td>
+                    </tr>
+                  );
+                })}
+                {Array.from({ length: kosong }, (_, j) => (
+                  <tr key={`k${j}`} className="border-t text-muted-foreground">
+                    <td className="px-3 py-2 tabular-nums">{isi + j + 1}</td>
+                    <td className="px-3 py-2"><span className="block h-6 rounded border border-dashed" /></td>
+                    <td className="px-3 py-2 text-12">Menunggu scan</td>
+                    <td />
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {stok != null && stok > MAX_ROWS && <p className="border-t px-3 py-2 text-12 text-muted-foreground">Baris kosong ditampilkan sampai {MAX_ROWS}; baris berikutnya muncul saat tag terbaca.</p>}
+            {stok == null && isi === 0 && <p className="border-t px-3 py-2 text-12 text-muted-foreground">Stok tidak diketahui — baris muncul saat tag terbaca.</p>}
+            {stok === 0 && isi === 0 && <p className="border-t px-3 py-2 text-12 text-muted-foreground">Stok sistem 0 — tag tetap bisa di-scan.</p>}
+          </div>
         </div>
       ) : (
-        <div className="space-y-2 rounded-lg border border-dashed p-4 text-14 text-muted-foreground">
-          <p>1. Scan barcode barang → muncul produk & stok sistem.<br />2. Sapu semua stiker barang itu sekaligus → tersimpan & langsung dibandingkan dengan stok.</p>
-          {lepas && (
-            <p className="text-foreground">
-              Tanpa SKU dipilih — tag terbaca: {lepas.map((x) => (x.sku ? `${x.n} milik SKU ${x.sku}` : `${x.n} belum terpasang`)).join(" · ")}
-            </p>
-          )}
-        </div>
+        <p className="rounded-lg border border-dashed p-4 text-14 text-muted-foreground">Scan barcode barang dulu. Baris sebanyak stoknya akan muncul di sini.</p>
       )}
       <p className="text-12 text-muted-foreground">Jauhkan gulungan stiker & barang lain yang sudah bertag dari reader saat menyapu, supaya tidak ikut terbaca.</p>
     </div>
