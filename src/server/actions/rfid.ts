@@ -195,7 +195,7 @@ export async function gantiSku(itemId: string, rawSku: string, edit = false): Pr
   return { ok: true, message: `SKU ${lama.length ? `${lama.join(", ")} diganti jadi ${sku}` : `${sku} tersimpan`}.${tags ? ` ${tags} tag lama ikut pindah.` : ""}${kosong.length ? ` SKU di ${kosong.length} listing barang yang salah dikosongkan.` : ""}` };
 }
 
-/** Edit stok per cabang → langsung ke Shopee & Tokopedia (tirtonic.com menyusul lewat sinkron stok). */
+/** Edit stok per cabang (Pasangkan Tag & Stok Gudang) → langsung ke Shopee & Tokopedia (tirtonic.com menyusul lewat sinkron stok). */
 export async function simpanStok(rawSku: string, changes: { branchId: string; stock: number }[]): Promise<{ ok: boolean; message: string }> {
   const ctx = await requireChannel();
   const sku = rawSku.trim();
@@ -213,7 +213,8 @@ export async function simpanStok(rawSku: string, changes: { branchId: string; st
   }
   const { ip } = await clientMeta();
   await logActivity({ ...ctx, ip }, { action: "rfid_stok", entity: "MarketplaceItem", entityId: sku, after: { changes, results } });
-  revalidatePath("/channel/produk");
+  revalidatePath("/channel/produk", "layout"); // termasuk halaman detail barang
+  revalidatePath("/channel/produk-quantity");
   const base = `Stok tersimpan (${results.filter((r) => !r.error).length} perubahan listing).`;
   return { ok: !gagal.length, message: gagal.length ? `${base} Gagal ${gagal.length}: ${gagal.join(" · ")}` : base };
 }
