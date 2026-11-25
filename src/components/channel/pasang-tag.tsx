@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Save, ScanLine, X } from "lucide-react";
-import { cariBarang, gantiSku, lookupSku, ownersOf, pairTags, type Barang, type SkuInfo } from "@/server/actions/rfid";
+import { Pencil, Save, ScanLine, X } from "lucide-react";
+import { cariBarang, gantiSku, lookupSku, ownersOf, pairTags, pemakaiSku, type Barang, type SkuInfo } from "@/server/actions/rfid";
 
 // EPC stiker UHF = hex 24–32 huruf; barcode barang (EAN/UPC/SKU) lebih pendek → dianggap SKU.
 const isTag = (v: string) => /^[0-9A-F]{24,32}$/i.test(v);
@@ -10,12 +10,20 @@ const MAX_ROWS = 300; // batas baris kosong; 999 = stok web "tak terbatas"
 type Draft = { epc: string; owner: string | null; move: boolean }; // owner = SKU lain pemilik tag
 const siap = (d: Draft) => !d.owner || d.move;
 
-/** SKU belum terdaftar → cari & pilih barang; SKU barang itu diganti SKU hasil scan. */
-function PilihBarang({ sku, disabled, onPick }: { sku: string; disabled: boolean; onPick: (b: Barang) => void }) {
+/** SKU belum terdaftar, atau barangnya salah (edit) → cari & pilih barang; SKU barang itu diganti SKU hasil scan. */
+function PilihBarang({ sku, edit, disabled, onPick, onClose }: { sku: string; edit: boolean; disabled: boolean; onPick: (b: Barang) => void; onClose: () => void }) {
+  const [pilihan, setPilihan] = useState<Barang | null>(null);
+  const [pakai, setPakai] = useState<string[] | null>(null);
   const [q, setQ] = useState("");
   const [list, setList] = useState<Barang[] | null>(null);
   const [err, setErr] = useState(false);
   const cur = useRef("");
+  useEffect(() => {
+    if (!edit) return;
+    let on = true;
+    pemakaiSku(sku).then((r) => on && setPakai(r)).catch(() => on && setErr(true));
+    return () => { on = false; };
+  }, [edit, sku]);
   useEffect(() => {
     const s = q.trim();
     cur.current = s;
@@ -33,7 +41,24 @@ function PilihBarang({ sku, disabled, onPick }: { sku: string; disabled: boolean
   const show = q.trim().length >= 2;
   return (
     <div className="space-y-2 border-t bg-amber-500/5 p-3" onClick={(e) => e.stopPropagation()}>
-      <p className="text-14">SKU <b className="font-mono">{sku}</b> belum ada di Produk Master. Pilih barangnya, SKU barang itu langsung diganti dengan SKU ini.</p>
+      {edit ? (
+        <div className="flex items-start justify-between gap-3 text-14">
+          <div>
+            <p>Pilih barang yang benar untuk SKU <b className="font-mono">{sku}</b>. Barang lain yang sekarang memakai SKU ini akan jadi tanpa SKU:</p>
+            <ul className="mt-1 list-disc pl-5 text-12 text-muted-foreground">{pakai ? pakai.map((x, i) => <li key={i}>{x}</li>) : <li>Memuat…</li>}</ul>
+          </div>
+          <button type="button" onClick={onClose} className="shrink-0 underline">Batal</button>
+        </div>
+      ) : (
+        <p className="text-14">SKU <b className="font-mono">{sku}</b> belum ada di Produk Master. Pilih barangnya, SKU barang itu langsung diganti dengan SKU ini.</p>
+      )}
+      {pilihan && (
+        <div className="flex flex-wrap items-center gap-2 rounded-md border border-primary p-2 text-14">
+          <span className="min-w-0 flex-1">Ganti ke <b>{pilihan.name}</b>{pilihan.variant ? ` · ${pilihan.variant}` : ""}?</span>
+          <button type="button" disabled={disabled || !pakai} onClick={() => onPick(pilihan)} className="h-9 rounded-md bg-primary px-4 font-medium text-primary-foreground disabled:opacity-40">Ya, ganti</button>
+          <button type="button" onClick={() => setPilihan(null)} className="h-9 rounded-md border px-4">Batal</button>
+        </div>
+      )}
       <input
         value={q}
         onChange={(e) => setQ(e.target.value)}
@@ -42,13 +67,13 @@ function PilihBarang({ sku, disabled, onPick }: { sku: string; disabled: boolean
         autoComplete="off"
         className="h-10 w-full rounded-full border bg-background px-4 text-14"
       />
-      {err && <p className="text-12 text-red-600">Gagal mencari. Cek koneksi lalu ketik ulang.</p>}
+      {err && <p className="text-12 text-red-600">Gagal memuat. Cek koneksi lalu ketik ulang.</p>}
       {show && list && (
         <ul className="max-h-80 divide-y overflow-y-auto rounded-md border bg-background">
           {list.length === 0 && <li className="p-3 text-14 text-muted-foreground">Barang tidak ketemu.</li>}
           {list.map((b) => (
             <li key={b.id}>
-              <button type="button" disabled={disabled} onClick={() => onPick(b)} className="flex w-full items-center gap-3 p-2 text-left hover:bg-muted disabled:opacity-40">
+              <button type="button" disabled={disabled} onClick={() => (edit ? setPilihan(b) : onPick(b))} className="flex w-full items-center gap-3 p-2 text-left hover:bg-muted disabled:opacity-40">
                 {b.image ? (
                   // eslint-disable-next-line @next/next/no-img-element -- foto dari CDN marketplace
                   <img src={b.image} alt="" className="size-10 shrink-0 rounded border object-cover" />
@@ -74,6 +99,7 @@ export function PasangTag() {
   const [sku, setSku] = useState<SkuInfo | null>(null);
   const [drafts, setDrafts] = useState<Draft[]>([]);
   const [next, setNext] = useState<string | null>(null); // barcode baru di-scan saat tag belum disimpan
+  const [edit, setEdit] = useState(false);
   const [val, setVal] = useState("");
   const [busy, setBusy] = useState(0);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
@@ -109,6 +135,7 @@ export function PasangTag() {
     putSku(null); // lookup gagal → jangan sampai tag masuk ke SKU lama
     putDrafts([]);
     putNext(null);
+    setEdit(false);
     putSku(await lookupSku(code));
     setMsg(null);
   }
@@ -189,7 +216,7 @@ export function PasangTag() {
     const s = skuRef.current?.sku;
     if (!s) return;
     enqueue(async () => {
-      const r = await gantiSku(b.id, s);
+      const r = await gantiSku(b.id, s, edit);
       // Tag yang belum disimpan tetap di daftar (SKU-nya sama).
       if (r.ok) {
         const info = await lookupSku(s);
@@ -197,6 +224,7 @@ export function PasangTag() {
         putDrafts(draftRef.current.filter((d) => !info.tagList.includes(d.epc)));
       }
       setMsg({ ok: r.ok, text: r.message });
+      if (r.ok) setEdit(false);
       if (r.ok) input.current?.focus();
     });
   };
@@ -254,9 +282,14 @@ export function PasangTag() {
               {sku.variant && <p className="text-12 text-muted-foreground">{sku.variant}</p>}
               {sku.stocks.length > 0 && <p className="text-12 text-muted-foreground">Stok: {sku.stocks.map((s) => `${s.label} ${s.stock}`).join(" · ")}</p>}
             </div>
+            {sku.name && !edit && (
+              <button type="button" disabled={busy > 0} onClick={(e) => { e.stopPropagation(); setEdit(true); }} className={`${btn} shrink-0 self-start border`}>
+                <Pencil className="size-4" /> Edit barang
+              </button>
+            )}
           </div>
 
-          {!sku.name && <PilihBarang key={sku.sku} sku={sku.sku} disabled={busy > 0} onPick={pilih} />}
+          {(!sku.name || edit) && <PilihBarang key={`${sku.sku}|${edit}`} sku={sku.sku} edit={edit} disabled={busy > 0} onPick={pilih} onClose={() => setEdit(false)} />}
 
           <div className="sticky top-0 z-10 flex flex-wrap items-center justify-between gap-2 border-y bg-card px-3 py-2 text-14">
             <span>Terisi <b>{isi}</b>{stok != null ? ` dari ${stok} stok` : ""} · {sku.tagList.length} tersimpan{drafts.length ? ` · ${drafts.length} belum disimpan` : ""}</span>

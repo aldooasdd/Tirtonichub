@@ -110,19 +110,40 @@ export async function cariBarang(raw: string): Promise<Barang[]> {
     }));
 }
 
-/** SKU hasil scan yang belum terdaftar → jadi SKU barang ini di semua toko (Tirtonichub saja, belum dikirim ke marketplace). */
-export async function gantiSku(itemId: string, rawSku: string): Promise<{ ok: boolean; message: string }> {
+/** Barang yang sekarang memakai SKU ini (Edit barang di Pasangkan Tag). */
+export async function pemakaiSku(rawSku: string): Promise<string[]> {
+  await requireChannel();
+  const s = rawSku.trim().toLowerCase();
+  return (await semuaBarang()).flat().filter((i) => skuOf(i).toLowerCase() === s).map((i) => `${i.localName ?? i.name}${i.variant ? ` · ${i.variant}` : ""} (${TOKO[i.platform] ?? i.platform})`);
+}
+
+/** SKU hasil scan → jadi SKU barang ini di semua toko (Tirtonichub saja, belum dikirim ke marketplace).
+ *  edit = barang yang muncul salah: barang lain yang memakai SKU ini dikosongkan SKU-nya. */
+export async function gantiSku(itemId: string, rawSku: string, edit = false): Promise<{ ok: boolean; message: string }> {
   const ctx = await requireChannel();
   const sku = rawSku.trim();
   if (!sku || /\s/.test(sku) || sku.length > 50) return { ok: false, message: "SKU tidak boleh kosong, berspasi, atau lebih dari 50 huruf." };
   const g = (await semuaBarang()).find((x) => x.some((i) => i.id === itemId));
   if (!g) return { ok: false, message: "Barang tidak ditemukan. Cari ulang." };
   const ids = g.map((i) => i.id);
-  const { clash } = await freeSku(ids, sku);
-  if (clash) return { ok: false, message: clash };
+  if (!edit) {
+    const { clash } = await freeSku(ids, sku);
+    if (clash) return { ok: false, message: clash };
+  }
   const lama = [...new Set(g.map(skuOf).filter((s) => s && s.toLowerCase() !== sku.toLowerCase()))];
   let tags = 0;
+  let kosong: string[] = [];
   await prisma.$transaction(async (tx) => {
+    if (edit) {
+      const salah = await tx.marketplaceItem.findMany({
+        where: { id: { notIn: ids }, deletedAt: null, shopId: { not: "demo" }, OR: [{ localSku: same(sku) }, { localSku: null, sku: same(sku) }] },
+        select: { id: true },
+      });
+      kosong = salah.map((i) => i.id);
+      // "" (bukan null): null berarti kembali ke SKU marketplace, yang bisa jadi SKU salah ini juga.
+      await tx.marketplaceItem.updateMany({ where: { id: { in: kosong } }, data: { localSku: "" } });
+      await tx.skuCheck.updateMany({ where: { itemId: { in: kosong } }, data: { status: "nosku", sku: null, checkedById: ctx.userId, checkedAt: new Date(), pushedAt: null } });
+    }
     await tx.marketplaceItem.updateMany({ where: { id: { in: ids } }, data: { localSku: sku } });
     // Keluar dari antrian Cek SKU supaya saran lama tidak menimpa SKU hasil scan.
     await tx.skuCheck.updateMany({ where: { itemId: { in: ids } }, data: { status: "done", sku, checkedById: ctx.userId, checkedAt: new Date(), pushedAt: null } });
@@ -133,7 +154,7 @@ export async function gantiSku(itemId: string, rawSku: string): Promise<{ ok: bo
     }
   });
   const { ip } = await clientMeta();
-  await logActivity({ ...ctx, ip }, { action: "rfid_ganti_sku", entity: "MarketplaceItem", entityId: itemId, before: { skus: lama }, after: { sku, ids, tags } });
+  await logActivity({ ...ctx, ip }, { action: "rfid_ganti_sku", entity: "MarketplaceItem", entityId: itemId, before: { skus: lama }, after: { sku, ids, tags, kosong } });
   revalidatePath("/channel/produk");
-  return { ok: true, message: `SKU ${lama.length ? `${lama.join(", ")} diganti jadi ${sku}` : `${sku} tersimpan`}.${tags ? ` ${tags} tag lama ikut pindah.` : ""}` };
+  return { ok: true, message: `SKU ${lama.length ? `${lama.join(", ")} diganti jadi ${sku}` : `${sku} tersimpan`}.${tags ? ` ${tags} tag lama ikut pindah.` : ""}${kosong.length ? ` SKU di ${kosong.length} listing barang yang salah dikosongkan.` : ""}` };
 }
