@@ -25,53 +25,7 @@ const attendingUsers = {
 
 /** Rekap absen satu hari (semua karyawan yang wajib absen), opsional filter cabang. */
 export async function dailyRekap(date: Date, branchId?: string) {
-  const users = await prisma.user.findMany({
-    where: { ...attendingUsers, ...(branchId ? { branchId } : {}) },
-    include: { branch: true },
-    orderBy: { fullName: "asc" },
-  });
-  const ids = users.map((u) => u.id);
-  const [atts, holiday, shifts] = await Promise.all([
-    prisma.attendance.findMany({ where: { date, userId: { in: ids } } }),
-    prisma.holiday.findUnique({ where: { date } }),
-    prisma.shift.findMany({ where: { date, userId: { in: ids } }, select: { userId: true, code: true } }),
-  ]);
-  const byUser = new Map(atts.map((a) => [a.userId, a]));
-  const shiftByUser = new Map(shifts.map((s) => [s.userId, s.code]));
-  const day = date.getUTCDate();
-
-  // Shift kerja efektif hari itu (Shift tersimpan ?? pola PDF).
-  const defFor = (u: { id: string; fullName: string }) => {
-    const code = shiftByUser.get(u.id) ?? defaultShift(u.fullName, day, date.getUTCDay());
-    return code && isShiftCode(code) ? SHIFTS[code as ShiftCode] : null;
-  };
-
-  const rows: DailyRow[] = users.map((u) => {
-    const a = byUser.get(u.id);
-    const def = defFor(u);
-    const status = a?.status ?? (holiday ? "HOLIDAY" : def?.working ? "ABSENT" : "OFF");
-    // Menit absen awal: hanya saat tepat waktu & masuk sebelum jam shift.
-    let earlyMinutes = 0;
-    if (a?.checkInAt && a.status === "ON_TIME" && def?.working && def.start) {
-      const diff = parseHHMM(def.start) - wibMinutesOfDay(a.checkInAt);
-      if (diff > 0) earlyMinutes = diff;
-    }
-    return {
-      userId: u.id,
-      name: u.fullName,
-      branch: u.branch?.name ?? null,
-      checkInAt: a?.checkInAt ?? null,
-      checkOutAt: a?.checkOutAt ?? null,
-      status,
-      lateMinutes: a?.lateMinutes ?? 0,
-      earlyMinutes,
-      jadwal: def?.working && def.start && def.end ? `${def.start}–${def.end}` : null,
-      checkInLat: a?.checkInLat ?? null,
-      checkInLng: a?.checkInLng ?? null,
-      checkInPhotoKey: a?.checkInPhotoKey ?? null,
-    };
-  });
-
+  const [{ rows, holiday }] = await rekapDays([date], branchId);
   const summary = {
     onTime: rows.filter((r) => r.status === "ON_TIME").length,
     late: rows.filter((r) => r.status === "LATE").length,
@@ -81,7 +35,66 @@ export async function dailyRekap(date: Date, branchId?: string) {
     leave: rows.filter((r) => r.status === "LEAVE").length,
     holiday: rows.filter((r) => r.status === "HOLIDAY").length,
   };
-  return { rows, summary, isHoliday: !!holiday };
+  return { rows, summary, isHoliday: holiday };
+}
+
+/** Rekap banyak hari sekaligus (export bulanan): 4 query untuk semua hari, logika status sama dengan rekap harian.
+ *  Karyawan nonaktif/pindah ikut, tapi hanya di hari yang ada catatan absennya. */
+export async function rekapDays(dates: Date[], branchId?: string): Promise<{ date: Date; rows: DailyRow[]; holiday: boolean }[]> {
+  if (!dates.length) return [];
+  const range = { gte: dates.reduce((a, b) => (a < b ? a : b)), lte: dates.reduce((a, b) => (a > b ? a : b)) };
+  const inRange = { date: range, ...(branchId ? { user: { branchId } } : {}) };
+  const [users, atts, holidays] = await Promise.all([
+    prisma.user.findMany({
+      where: { OR: [{ ...attendingUsers, ...(branchId ? { branchId } : {}) }, { attendances: { some: inRange } }] },
+      include: { branch: true },
+      orderBy: { fullName: "asc" },
+    }),
+    prisma.attendance.findMany({ where: inRange }),
+    prisma.holiday.findMany({ where: { date: range }, select: { date: true } }),
+  ]);
+  const wajib = new Set(
+    (await prisma.user.findMany({ where: { ...attendingUsers, ...(branchId ? { branchId } : {}) }, select: { id: true } })).map((u) => u.id),
+  );
+  const shifts = await prisma.shift.findMany({ where: { date: range, userId: { in: users.map((u) => u.id) } }, select: { userId: true, date: true, code: true } });
+  const k = (userId: string, d: Date) => `${userId}|${d.toISOString().slice(0, 10)}`;
+  const att = new Map(atts.map((a) => [k(a.userId, a.date), a]));
+  const shift = new Map(shifts.map((s) => [k(s.userId, s.date), s.code]));
+  const libur = new Set(holidays.map((h) => h.date.toISOString().slice(0, 10)));
+
+  return dates.map((date) => {
+    const holiday = libur.has(date.toISOString().slice(0, 10));
+    const rows: DailyRow[] = [];
+    for (const u of users) {
+      const a = att.get(k(u.id, date));
+      if (!a && !wajib.has(u.id)) continue;
+      // Shift kerja efektif hari itu (Shift tersimpan ?? pola PDF).
+      const code = shift.get(k(u.id, date)) ?? defaultShift(u.fullName, date.getUTCDate(), date.getUTCDay());
+      const def = code && isShiftCode(code) ? SHIFTS[code as ShiftCode] : null;
+      const status = a?.status ?? (holiday ? "HOLIDAY" : def?.working ? "ABSENT" : "OFF");
+      // Menit absen awal: hanya saat tepat waktu & masuk sebelum jam shift.
+      let earlyMinutes = 0;
+      if (a?.checkInAt && a.status === "ON_TIME" && def?.working && def.start) {
+        const diff = parseHHMM(def.start) - wibMinutesOfDay(a.checkInAt);
+        if (diff > 0) earlyMinutes = diff;
+      }
+      rows.push({
+        userId: u.id,
+        name: u.fullName,
+        branch: u.branch?.name ?? null,
+        checkInAt: a?.checkInAt ?? null,
+        checkOutAt: a?.checkOutAt ?? null,
+        status,
+        lateMinutes: a?.lateMinutes ?? 0,
+        earlyMinutes,
+        jadwal: def?.working && def.start && def.end ? `${def.start}–${def.end}` : null,
+        checkInLat: a?.checkInLat ?? null,
+        checkInLng: a?.checkInLng ?? null,
+        checkInPhotoKey: a?.checkInPhotoKey ?? null,
+      });
+    }
+    return { date, rows, holiday };
+  });
 }
 
 export type MonthlyRow = {
