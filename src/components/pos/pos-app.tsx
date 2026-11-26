@@ -2,14 +2,16 @@
 
 import { useDeferredValue, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { CircleAlert, CircleCheck, LogOut, Minus, Plus, ScanBarcode, Trash2, UserRound, X } from "lucide-react";
+import { CircleAlert, CircleCheck, Keyboard, LogOut, Minus, Plus, ScanBarcode, Trash2, UserRound, X } from "lucide-react";
 import { pickSource, type BranchStock } from "@/lib/pos-source";
 import { DISPLAY_CHANNEL, type DisplayMsg } from "@/components/pos/customer-display";
-import { posCatalog, posLogout, posLookup, posSave, type PosCatalog, type PosProduct, type PosSaleResult } from "@/server/actions/pos";
+import { posCatalog, posLogout, posLookup, posSave, posTags, type PosCatalog, type PosProduct, type PosSaleResult } from "@/server/actions/pos";
 
 type User = { id: string; name: string; role: string };
-type Line = PosProduct & { qty: number; stocks: BranchStock[]; from: string | null; tie: string[] | null; manual: boolean };
-type Addable = PosProduct & { stocks?: BranchStock[] };
+type Line = PosProduct & { qty: number; stocks: BranchStock[]; from: string | null; tie: string[] | null; manual: boolean; epcs: string[] }; // epcs = stiker RFID yang di-scan
+type Addable = PosProduct & { stocks?: BranchStock[]; epc?: string };
+// EPC stiker UHF = hex 24–32 huruf; barcode lebih pendek.
+const isTag = (v: string) => /^[0-9A-F]{24,32}$/i.test(v);
 // Sumber stok dihitung ulang tiap qty berubah, kecuali kasir sudah memilih sendiri.
 const withSource = (l: Line): Line => (l.manual ? l : { ...l, ...pickSource(l.stocks, l.qty) });
 type Flash = { ok: boolean; title: string; sub: string } | null;
@@ -77,14 +79,18 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
 
   function add(p: Addable) {
     setCart((c) => {
+      // Stiker yang sama terbaca lagi (reader UHF membaca berulang) → abaikan.
+      if (p.epc && c.some((l) => l.epcs.includes(p.epc!))) return c;
+      const tag = p.epc ? [p.epc] : [];
       const i = c.findIndex((l) => l.sku.toLowerCase() === p.sku.toLowerCase());
-      if (i < 0) return [...c, withSource({ ...p, stocks: p.stocks ?? [], qty: 1, from: null, tie: null, manual: false })];
+      if (i < 0) return [...c, withSource({ ...p, stocks: p.stocks ?? [], qty: 1, from: null, tie: null, manual: false, epcs: tag })];
       const n = [...c];
-      n[i] = withSource({ ...n[i], qty: n[i].qty + 1 });
+      n[i] = withSource({ ...n[i], qty: n[i].qty + 1, epcs: [...n[i].epcs, ...tag] });
       return n;
     });
   }
-  const setQty = (sku: string, qty: number) => setCart((c) => (qty <= 0 ? c.filter((l) => l.sku !== sku) : c.map((l) => (l.sku === sku ? withSource({ ...l, qty }) : l))));
+  // Qty dikurangi → stiker terakhir ikut keluar dari daftar (tidak dilepas).
+  const setQty = (sku: string, qty: number) => setCart((c) => (qty <= 0 ? c.filter((l) => l.sku !== sku) : c.map((l) => (l.sku === sku ? withSource({ ...l, qty, epcs: l.epcs.slice(0, qty) }) : l))));
   const setFrom = (sku: string, from: string) => setCart((c) => c.map((l) => (l.sku === sku ? { ...l, from, tie: null, manual: true } : l)));
   const needPick = cart.some((l) => l.tie);
   const labelOf = (l: Line, id: string | null) => l.stocks.find((x) => x.branchId === id)?.label ?? "";
@@ -97,7 +103,7 @@ export function PosApp({ branch, users }: { branch: { id: string; name: string }
         salesId: user!.id, // sales = pengguna POS yang login
         customer,
         phone,
-        items: cart.map((l) => ({ sku: l.sku, name: l.name, qty: l.qty, price: l.price, fromBranchId: l.from })),
+        items: cart.map((l) => ({ sku: l.sku, name: l.name, qty: l.qty, price: l.price, fromBranchId: l.from, epcs: l.epcs })),
         discount,
         method,
         paid: method === "Tunai" ? paid : total,
@@ -293,9 +299,18 @@ function useCatalog() {
 function CatalogPanel({ onAdd }: { onAdd: (p: Addable) => void }) {
   const ref = useRef<HTMLInputElement>(null);
   const { items, bySku, branchStock } = useCatalog();
-  const [q, setQ] = useState("");
+  const [q, setQ] = useState(""); // teks cari (ditunda); isi kolom tidak di-render ulang tiap huruf, supaya scan cepat di iMin
+  const [kb, setKb] = useState(false); // keyboard layar hanya kalau diminta
   const [flash, setFlash] = useState<Flash>(null);
   const dq = useDeferredValue(q);
+  const typing = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const tags = useRef<string[]>([]);
+  const tagTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const clear = () => {
+    clearTimeout(typing.current);
+    if (ref.current) ref.current.value = "";
+    setQ("");
+  };
 
   // Scanner = keyboard: kolom cari selalu fokus bila tak ada field lain yang aktif.
   useEffect(() => {
@@ -323,21 +338,54 @@ function CatalogPanel({ onAdd }: { onAdd: (p: Addable) => void }) {
     setFlash({ ok: true, title: `Ditambahkan: ${p.name}`, sub: `${p.sku} · ${rp(p.price)}` });
   }
 
+  // Stiker RFID dikumpulkan sebentar (sapuan bisa membaca banyak sekaligus), lalu dicari barangnya.
+  async function flushTags() {
+    const list = [...new Set(tags.current)];
+    tags.current = [];
+    if (!list.length) return;
+    try {
+      const found = await posTags(list);
+      const sku = new Map(found.map((t) => [t.epc, t.sku]));
+      let added = 0;
+      for (const epc of list) {
+        const p = sku.has(epc) ? (bySku.get(sku.get(epc)!.toLowerCase()) ?? (await posLookup(sku.get(epc)!))) : null;
+        if (p) { onAdd({ ...p, epc }); added++; }
+      }
+      const miss = list.length - added;
+      beep(!miss);
+      setFlash(miss ? { ok: false, title: `${miss} stiker belum dipasangkan ke barang`, sub: added ? `${added} barang masuk keranjang.` : "Pasangkan di Tirtonichub → Pasangkan Tag, atau scan barcode-nya." } : { ok: true, title: `${added} barang dari stiker RFID`, sub: "Stiker yang sama tidak dihitung dua kali." });
+    } catch {
+      beep(false);
+      setFlash({ ok: false, title: "Gagal membaca stiker", sub: "Cek koneksi, lalu scan ulang." });
+    }
+  }
+
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    const c = q.trim();
+    const c = (ref.current?.value ?? "").trim();
+    if (isTag(c)) {
+      clear();
+      tags.current.push(c.toUpperCase());
+      clearTimeout(tagTimer.current);
+      tagTimer.current = setTimeout(flushTags, 300);
+      return;
+    }
     if (!c) return;
     // Enter / scan: SKU persis → langsung masuk keranjang. Bukan SKU → biarkan jadi pencarian.
     const hit = bySku.get(c.toLowerCase()) ?? (items ? null : await posLookup(c));
     if (hit) {
-      setQ("");
+      clear();
       return pick(hit);
     }
-    if (shown.length === 1) {
-      setQ("");
-      return pick(shown[0]);
+    // Daftar belum ikut teks terakhir (cari ditunda) → hitung langsung.
+    const words = c.toLowerCase().split(/\s+/);
+    const now = (items ?? []).filter((p) => words.every((w) => `${p.name} ${p.sku} ${p.variant ?? ""}`.toLowerCase().includes(w)));
+    if (now.length === 1) {
+      clear();
+      return pick(now[0]);
     }
-    if (shown.length === 0) {
+    setQ(c);
+    if (now.length === 0) {
       beep(false);
       setFlash({ ok: false, title: `"${c}" tidak ditemukan di Produk Master`, sub: "Cek label SKU, atau cari pakai nama." });
     }
@@ -350,12 +398,38 @@ function CatalogPanel({ onAdd }: { onAdd: (p: Addable) => void }) {
         <input
           ref={ref}
           autoFocus
-          value={q}
-          onChange={(e) => setQ(e.target.value)}
-          placeholder="Scan barcode, atau cari nama / SKU"
+          defaultValue=""
+          inputMode={kb ? "text" : "none"}
+          autoComplete="off"
+          onChange={(e) => {
+            const v = e.target.value;
+            clearTimeout(typing.current);
+            // Ketikan reader/scanner tidak memicu pencarian; hanya ketikan manual yang berhenti sebentar.
+            typing.current = setTimeout(() => !isTag(v.trim()) && setQ(v), 250);
+          }}
+          onBlur={() => setKb(false)}
+          placeholder="Scan barcode / stiker RFID, atau cari nama / SKU"
           className="h-full flex-1 bg-transparent text-16 outline-none"
         />
-        {q && <button type="button" onClick={() => setQ("")}><X className="h-4 w-4 text-muted-foreground" /></button>}
+        {q && <button type="button" onClick={clear} aria-label="Hapus pencarian"><X className="h-4 w-4 text-muted-foreground" /></button>}
+        <button
+          type="button"
+          aria-label="Tampilkan keyboard"
+          aria-pressed={kb}
+          onPointerDown={(e) => e.preventDefault()}
+          onClick={() => {
+            const el = ref.current;
+            if (!el) return;
+            // inputMode baru terpakai setelah fokus ulang.
+            el.blur();
+            el.inputMode = "text";
+            el.focus();
+            setKb(true);
+          }}
+          className={`grid h-9 w-9 place-items-center rounded-md ${kb ? "bg-primary text-primary-foreground" : "bg-muted text-muted-foreground"}`}
+        >
+          <Keyboard className="h-5 w-5" />
+        </button>
         <span className="rounded-sm bg-success/10 px-2 py-1 text-12 font-medium text-success">{items ? "Scanner siap" : "Memuat barang…"}</span>
       </form>
       {flash && (

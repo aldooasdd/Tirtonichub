@@ -82,6 +82,13 @@ export async function posLookup(code: string): Promise<PosProduct | null> {
   return items.length ? toProduct(best(items)) : null;
 }
 
+/** Stiker RFID → SKU barangnya (tag yang belum dipasangkan tidak ada di hasil). */
+export async function posTags(epcs: string[]): Promise<{ epc: string; sku: string }[]> {
+  await requireBranch();
+  const list = [...new Set(epcs.map((e) => e.trim().toUpperCase()).filter((e) => /^[0-9A-F]{24,32}$/.test(e)))].slice(0, 200);
+  return list.length ? prisma.rfidTag.findMany({ where: { epc: { in: list } }, select: { epc: true, sku: true } }) : [];
+}
+
 export async function posCatalog(): Promise<PosCatalog> {
   return buildCatalog((await requireBranch()).id);
 }
@@ -103,7 +110,7 @@ export type PosSaleInput = {
   salesId: string;
   customer: string;
   phone: string;
-  items: { sku: string; name: string; qty: number; price: number; fromBranchId?: string | null }[]; // fromBranchId = stok diambil dari cabang ini
+  items: { sku: string; name: string; qty: number; price: number; fromBranchId?: string | null; epcs?: string[] }[]; // fromBranchId = stok diambil dari cabang ini; epcs = stiker RFID yang di-scan
   discount: number;
   method: string; // "Tunai" | "Debit BCA" | "Debit BRI" | "Debit Mandiri" | "Transfer"
   paid: number; // uang diterima (tunai); metode lain = total
@@ -184,7 +191,13 @@ export async function posSave(input: PosSaleInput): Promise<PosSaleResult> {
     .filter((i) => i.sku && i.fromBranchId && branchNames.has(i.fromBranchId))
     .map((i) => ({ sku: i.sku, qty: Math.max(1, Math.round(i.qty) || 1), fromBranchId: i.fromBranchId! }));
   if (stockLines.length) void deductPosStock(stockLines, { notaNo, userId: cashier.id, role }).catch(() => {});
-  if (role) await logActivity({ userId: cashier.id, activeRole: role, ip }, { action: "pos_sale", entity: "SalesReport", entityId: rep.id });
+  // Stiker RFID barang yang terjual dilepas, supaya tidak terhitung stok lagi.
+  let tagLepas = 0;
+  for (const i of valid) {
+    const epcs = (i.epcs ?? []).map((e) => String(e).trim().toUpperCase()).slice(0, 200);
+    if (i.sku && epcs.length) tagLepas += (await prisma.rfidTag.deleteMany({ where: { epc: { in: epcs }, sku: { equals: i.sku, mode: "insensitive" } } })).count;
+  }
+  if (role) await logActivity({ userId: cashier.id, activeRole: role, ip }, { action: "pos_sale", entity: "SalesReport", entityId: rep.id, after: tagLepas ? { notaNo, tagLepas, tags: valid.flatMap((i) => i.epcs ?? []) } : undefined });
   await notifyBranchHeads(branch.id, {
     type: "sales_pending",
     title: `Penjualan kasir perlu ACC: Rp ${new Intl.NumberFormat("id-ID").format(total)} · ${sales.fullName}`,
