@@ -218,3 +218,32 @@ export async function simpanStok(rawSku: string, changes: { branchId: string; st
   const base = `Stok tersimpan (${results.filter((r) => !r.error).length} perubahan listing).`;
   return { ok: !gagal.length, message: gagal.length ? `${base} Gagal ${gagal.length}: ${gagal.join(" · ")}` : base };
 }
+
+/** Restok (Produk Master → Restok): stok masuk ditambahkan ke stok cabang sekarang → langsung ke Shopee & Tokopedia.
+ *  ponytail: jalan pintas sebelum alur Purchasing; stok sekarang dibaca di server saat simpan, bukan dari layar. */
+export async function tambahStok(branchId: string, items: { sku: string; qty: number }[]): Promise<{ ok: boolean; message: string }> {
+  const ctx = await requireChannel();
+  if (!items.length) return { ok: false, message: "Belum ada barang." };
+  if (items.some((i) => !Number.isInteger(i.qty) || i.qty < 1 || i.qty > 9999)) return { ok: false, message: "Jumlah masuk harus angka bulat 1–9999." };
+  const toko = await tokoGudang();
+  const t = toko.find((x) => x.id === branchId);
+  if (!t?.keys.length) return { ok: false, message: "Cabang ini belum punya gudang marketplace. Pilih gudangnya di Tirtonic POS → Per cabang." };
+  const cat = await buildCatalog(null, toko);
+  const gagal: string[] = [];
+  const log: { sku: string; dari: number; jadi: number }[] = [];
+  for (const i of items) {
+    const it = cat.items.find((x) => x.key === i.sku.trim().toLowerCase());
+    if (!it) { gagal.push(`SKU ${i.sku} tidak ada di Produk Master`); continue; }
+    const dari = it.stocks.find((s) => s.branchId === branchId)?.stock ?? 0;
+    const r = await setBranchStock(it.sku, t.keys, dari + i.qty);
+    if (!r.length) gagal.push(`${it.name}: tidak ada listing Shopee/Tokopedia dengan gudang ${t.label}`);
+    gagal.push(...r.filter((x) => x.error).map((x) => `${it.name} ${TOKO[x.platform]}: ${x.error}`));
+    if (r.some((x) => !x.error)) log.push({ sku: it.sku, dari, jadi: dari + i.qty });
+  }
+  const { ip } = await clientMeta();
+  await logActivity({ ...ctx, ip }, { action: "restok", entity: "MarketplaceItem", entityId: t.label, after: { branchId, items, log } });
+  revalidatePath("/channel/produk", "layout");
+  revalidatePath("/channel/produk-quantity");
+  const base = `${log.length} barang ditambah stoknya di ${t.label}.`;
+  return { ok: !gagal.length, message: gagal.length ? `${base} Gagal ${gagal.length}: ${gagal.join(" · ")}` : base };
+}
