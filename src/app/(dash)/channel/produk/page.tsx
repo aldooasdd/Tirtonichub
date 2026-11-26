@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Barcode, Plus, Trash2 } from "lucide-react";
+import { Barcode, PackagePlus, Plus, Trash2 } from "lucide-react";
 import { requireProduk } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { PLATFORM_LABEL } from "@/server/marketplace/sync";
@@ -70,6 +70,9 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
           {tanpaDetail > 0 && <p className="mt-1 text-12 text-amber-600">{tanpaDetail} produk Tokopedia detailnya (foto, kategori, merek, deskripsi) sedang disinkron di latar belakang. Muat ulang halaman beberapa menit lagi.</p>}
         </div>
         <div className="flex shrink-0 flex-wrap items-start gap-2">
+        <Link href="/channel/produk/restok" className="inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-14 font-medium">
+          <PackagePlus className="size-4" /> Restok
+        </Link>
         <Link href="/channel/produk/sku" className="inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-14 font-medium">
           <Barcode className="size-4" /> Isi SKU massal
         </Link>
