@@ -38,20 +38,11 @@ export default async function RekapPage({
   const dateStr = sp.date && /^\d{4}-\d{2}-\d{2}$/.test(sp.date) ? sp.date : todayKeyStr();
   const monthStr = sp.m && /^\d{4}-\d{2}$/.test(sp.m) ? sp.m : dateStr.slice(0, 7);
 
-  const qs = new URLSearchParams();
-  if (branchId) qs.set("branch", branchId);
-  qs.set("view", view);
-  if (view === "harian") qs.set("date", dateStr);
-  else qs.set("m", monthStr);
-  const exportHref = `/hr/rekap/export?${qs.toString()}`;
 
   return (
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h1 className="text-24 font-semibold">Rekap Absen</h1>
-        <Button asChild variant="secondary">
-          <a href={exportHref}>Export Excel</a>
-        </Button>
       </div>
 
       <form method="get" className="flex flex-wrap items-end gap-3 rounded-lg border bg-card p-4">
@@ -85,6 +76,8 @@ export default async function RekapPage({
           </select>
         </label>
         <Button type="submit">Terapkan</Button>
+        {/* Export memakai isian form saat ini, jadi tidak perlu klik Terapkan dulu. */}
+        <Button type="submit" variant="secondary" formAction="/hr/rekap/export">Export Excel</Button>
       </form>
 
       {view === "harian" ? (

@@ -3,7 +3,7 @@ import ExcelJS from "exceljs";
 import { getSession } from "@/server/auth/session";
 import { can } from "@/server/auth/permissions";
 import { prisma } from "@/server/db";
-import { dailyRekap, type DailyRow } from "@/server/attendance/rekap";
+import { dailyRekap, rekapDays, type DailyRow } from "@/server/attendance/rekap";
 import { ABSEN_ON } from "@/lib/flags";
 
 const STATUS_LABEL: Record<string, string> = {
@@ -65,7 +65,8 @@ const tidy = (ws: ExcelJS.Worksheet, from = 5) => {
 export async function GET(req: NextRequest) {
   if (!ABSEN_ON) return new Response("Fitur absen nonaktif", { status: 404 });
   const s = await getSession();
-  if (!s || !s.activeRole || !can.manageEmployees(s.activeRole)) {
+  // Sama dengan halaman Rekap (requireHr): boleh kalau salah satu role-nya HR/Admin/Boss.
+  if (!s || !s.roles.some(can.manageEmployees)) {
     return new Response("Forbidden", { status: 403 });
   }
 
@@ -107,8 +108,7 @@ export async function GET(req: NextRequest) {
     const today = todayWIB();
     // Hari yang sudah lewat/hari ini saja (hari depan belum ada absen).
     const days = Array.from({ length: last }, (_, i) => `${monthStr}-${String(i + 1).padStart(2, "0")}`).filter((d) => d <= today);
-    // ponytail: pakai dailyRekap per hari (≤31 x 3 query) — logika status sama persis dengan rekap harian.
-    const perDay = await Promise.all(days.map(async (d) => ({ d, rows: (await dailyRekap(new Date(d + "T00:00:00Z"), branchId)).rows })));
+    const perDay = (await rekapDays(days.map((d) => new Date(d + "T00:00:00Z")), branchId)).map((x) => ({ d: x.date.toISOString().slice(0, 10), rows: x.rows }));
     const title = `${BULAN[m - 1]} ${y}`;
 
     // Per karyawan.
