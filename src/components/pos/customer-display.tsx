@@ -74,8 +74,8 @@ export function CustomerDisplay({ branch, slides }: { branch: string; slides: Sl
     return (
       <div className="flex h-screen flex-col items-center justify-center gap-5 bg-white text-[#1a1a1a]">
         <CircleCheck className="h-28 w-28 text-[#22c55e]" />
-        <p className="text-[48px] font-bold">Terima kasih!</p>
-        <p className="text-20 text-[#8a8a8e]">Pembayaran {rp(msg.total)} berhasil</p>
+        <p className="text-[48px] font-bold">Transaksi berhasil</p>
+        <p className="text-20 text-[#8a8a8e]">Pembayaran {rp(msg.total)} diterima. Terima kasih sudah belanja di Tirtonic!</p>
         {msg.change > 0 && (
           <div className="rounded-lg bg-[#f5f5f5] px-8 py-4 text-center">
             <p className="text-14 text-[#8a8a8e]">Kembalian</p>

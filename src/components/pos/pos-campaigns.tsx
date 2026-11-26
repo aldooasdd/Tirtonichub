@@ -67,7 +67,7 @@ export function PosCampaigns({ campaigns, branches }: { campaigns: Campaign[]; b
       <div>
         <h2 className="text-16 font-semibold">Campaign layar depan</h2>
         <p className="text-14 text-muted-foreground">
-          Tampil bergantian di layar pembeli saat kasir tidak sedang transaksi. Buka di layar depan: <code>/pos/layar</code>.
+          Sementara tidak ditampilkan: layar depan hanya menampilkan keranjang dan transaksi berhasil. Buka di layar depan: <code>/pos/layar</code>.
         </p>
       </div>
 
