@@ -27,7 +27,7 @@ const ago = (t: number) => {
   const m = Math.round((Date.now() - t) / 60000);
   return m < 1 ? "baru saja" : m < 60 ? m + " mnt lalu" : m < 1440 ? Math.round(m / 60) + " jam lalu" : when(t);
 };
-const stChip = (s: string | null) => <span className={"inline-flex h-5 items-center rounded-md px-1.5 text-[11px] font-semibold " + ST_C[s || "none"]}>{s ? SCRIPT_ST[s as ScriptStatus] || s : "Belum ada script"}</span>;
+const stChip = (s: string | null) => <span className={"inline-flex h-5 min-w-0 max-w-full items-center truncate whitespace-nowrap rounded-md px-1.5 text-[11px] font-semibold " + ST_C[s || "none"]}>{s ? SCRIPT_ST[s as ScriptStatus] || s : "Belum ada script"}</span>;
 function openCardInStudio(e: React.MouseEvent, id: string) {
   if (window.parent !== window) {
     e.preventDefault();
@@ -93,14 +93,14 @@ export function ScriptClient({ rows: rows0, initial, initialCard, me, canManage,
           <h1 className="text-[17px] font-bold" style={{ fontFamily: "Manrope,sans-serif" }}>Script Konten</h1>
           <button type="button" className="inline-flex size-8 items-center justify-center rounded-md hover:bg-[#F2F3F5]" title="Sembunyikan daftar" aria-label="Sembunyikan daftar" onClick={() => setListOpen(false)}><PanelLeft className="size-4" /></button>
         </div>
-        <div className="grid gap-2 px-3 pb-2">
+        <div className="grid grid-cols-[minmax(0,1fr)] gap-2 px-3 pb-2">
           <label className="relative block">
             <Search className="pointer-events-none absolute left-2.5 top-2.5 size-4 text-[#9AA0A9]" />
             <input className="h-9 w-full rounded-lg border border-[#E7E9ED] pl-8 pr-2 text-[13px]" placeholder="Cari judul, produk, Content ID…" value={q} onChange={(e) => setQ(e.target.value)} />
           </label>
-          <Seg label="Jenis konten" value={fType} onChange={setFType} options={[["", "Semua"], ["vrv", "Video review"], ["evt", "Video event"], ["idc", "Video IDCC"]]} />
-          <div className="flex items-center gap-1.5">
-            <Seg label="Ada script" value={fHas} onChange={setFHas} options={[["", "Semua"], ["yes", "Sudah ada"], ["no", "Belum ada"]]} />
+          <Seg label="Jenis konten" value={fType} onChange={setFType} options={[["", "Semua"], ["vrv", "Review"], ["evt", "Event"], ["idc", "IDCC"]]} />
+          <div className="flex min-w-0 items-center gap-1.5">
+            <Seg label="Ada script" value={fHas} onChange={setFHas} options={[["", "Semua"], ["yes", "Ada"], ["no", "Belum"]]} />
             <DropdownMenu>
               <DropdownMenuTrigger className="inline-flex h-7 shrink-0 items-center gap-1 rounded-md px-2 text-[12px] text-[#4b505a] hover:bg-[#F2F3F5]" aria-label="Urutkan">
                 <ArrowDownUp className="size-3.5" />{{ recent: "Terbaru", title: "Judul", status: "Status" }[sort]}
@@ -128,7 +128,7 @@ export function ScriptClient({ rows: rows0, initial, initialCard, me, canManage,
                     <span className="min-w-0 flex-1">
                       <span className="block truncate text-[13px] font-medium">{r.doc?.title || r.title}</span>
                       <span className="block truncate font-mono text-[10.5px] text-[#9AA0A9]">{r.cprId}</span>
-                      <span className="mt-1 flex items-center gap-1.5">{stChip(r.doc?.status ?? null)}{r.doc && <span className="text-[11px] text-[#9AA0A9]">{ago(r.doc.updatedAt)}</span>}</span>
+                      <span className="mt-1 flex min-w-0 flex-wrap items-center gap-x-1.5 gap-y-0.5">{stChip(r.doc?.status ?? null)}{r.doc && <span className="whitespace-nowrap text-[11px] text-[#9AA0A9]">{ago(r.doc.updatedAt)}</span>}</span>
                     </span>
                   </button>
                 )) : <p className="px-2 py-1 text-[12px] text-[#9AA0A9]">Tidak ada.</p>}
