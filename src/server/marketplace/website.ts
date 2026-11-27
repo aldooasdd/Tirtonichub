@@ -131,3 +131,48 @@ export async function websiteImport(product: WebImportProduct): Promise<{ create
 export async function websiteWeights(weights: { ref: string; names: string[]; gram: number }[]): Promise<{ updated: number }> {
   return hub<{ updated: number }>({ body: { action: "weights", weights } });
 }
+
+// --- Produk web baru (form manual "Produk web baru") ---
+export type WebFormKategori = {
+  db: string;
+  label: string;
+  lab: string | null;
+  atribut: { key: string; label: string; opsi: string[] }[];
+  spek: { label: string; contoh: string }[];
+  kriteria: string[];
+};
+
+/** Kategori + field filter shop tirtonic.com (opsi diambil dari data yang sudah ada di web). */
+export async function websiteForm(): Promise<WebFormKategori[]> {
+  return (await hub<{ kategori: WebFormKategori[] }>({ query: { type: "form" } })).kategori;
+}
+
+/** Upload 1 foto (base64 JPEG/PNG/WEBP, ≤3 MB) ke storage tirtonic.com → URL publik. */
+export async function websiteUpload(foto: { nama: string; tipe: string; data: string }): Promise<string> {
+  return (await hub<{ url: string }>({ body: { action: "upload", foto } })).url;
+}
+
+export type WebProdukBaru = {
+  ref: string; // "HUB:<uuid>" — upsert, kirim ulang = update produk yang sama
+  nama: string;
+  kategori: string;
+  brand?: string | null;
+  harga: number;
+  hargaDiskon?: number | null;
+  stok?: number | null;
+  berat?: number | null;
+  deskripsi?: string | null;
+  gambar: string[];
+  ukuran?: string[];
+  varianLabel?: string | null;
+  variants?: { warna: string; ukuran?: string; harga: number; hargaDiskon?: number | null; stok: number }[];
+  atribut?: Record<string, string[]>;
+  spek?: Record<string, string>;
+  nilai?: Record<string, number>;
+  skor?: number | null;
+};
+
+/** Buat / perbarui produk manual di tirtonic.com. */
+export async function websiteSimpan(produk: WebProdukBaru): Promise<{ id: string; slug: string | null; created: boolean }> {
+  return hub<{ id: string; slug: string | null; created: boolean }>({ body: { action: "simpan", produk } });
+}
