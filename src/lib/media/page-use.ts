@@ -10,6 +10,7 @@ export const USE_PAGES: Record<string, string> = {
   "card:qa": "Creative Review",
   queue: "Konten",
   script: "Script Konten",
+  kal: "Kalender",
   hasil: "File",
   jumat: "Laporan",
   cpr: "CPR",
