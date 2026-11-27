@@ -12,7 +12,15 @@ import { coverRequest } from "@/server/actions/requests";
 const CATEGORIES = ["Agenda", "Rapat", "Deadline", "Pengingat", "Libur", "Cuti", "Izin", "Sakit", "Pengajuan"];
 const TAGS = ["Penting", "Mendesak", "Kantor", "Tim", "Pribadi"];
 
-export function KalenderClient({ events }: { events: Event[] }) {
+const STUDIO_CATS = ["Syuting", "Deadline Ready", "Tayang"];
+/** Di dalam Studio (iframe): buka Detail kartu FlowSpace di jendela Studio. */
+function openStudioCard(id: string) {
+  if (window.parent !== window) window.parent.postMessage({ type: "ts-open-card", id, tab: "det" }, window.location.origin);
+  else window.open("/studio/?p=pipeline&card=" + encodeURIComponent(id), "_blank");
+}
+
+/** studio = tampil di Tirtonic Studio: ada filter jadwal konten & tombol Buka Detail kartu. */
+export function KalenderClient({ events, studio = false }: { events: Event[]; studio?: boolean }) {
   const router = useRouter();
   // key = sidik data server; berubah setelah refresh → remount, buang state optimistik.
   const key = events.map((e) => e.id).join("|");
@@ -25,6 +33,8 @@ export function KalenderClient({ events }: { events: Event[] }) {
         events={events}
         categories={CATEGORIES}
         availableTags={TAGS}
+        filterCategories={studio ? STUDIO_CATS : undefined}
+        onOpenCard={studio ? openStudioCard : undefined}
         onEventCreate={async (ev) => {
           await createCalendarEvent({
             title: ev.title,

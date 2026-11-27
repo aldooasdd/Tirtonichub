@@ -39,6 +39,7 @@ export interface Event {
   tags?: string[]
   requestId?: string // pengajuan terkait (buat ACC pengganti dari kalender)
   canRespond?: boolean // viewer = pengganti yang bisa setuju
+  cardId?: string // jadwal kartu FlowSpace Studio (id ts_…)
 }
 
 export interface EventManagerProps {
@@ -52,6 +53,8 @@ export interface EventManagerProps {
   defaultView?: "month" | "week" | "day" | "list"
   className?: string
   availableTags?: string[]
+  filterCategories?: string[] // kategori tambahan khusus filter (event turunan), tidak muncul di formulir
+  onOpenCard?: (cardId: string) => void
 }
 
 const defaultColors = [
@@ -74,6 +77,8 @@ export function EventManager({
   defaultView = "month",
   className,
   availableTags = ["Important", "Urgent", "Work", "Personal", "Team", "Client"],
+  filterCategories,
+  onOpenCard,
 }: EventManagerProps) {
   const [events, setEvents] = useState<Event[]>(initialEvents)
   const [currentDate, setCurrentDate] = useState(new Date())
@@ -82,7 +87,7 @@ export function EventManager({
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [isCreating, setIsCreating] = useState(false)
   // Event turunan (jadwal shift/libur/pengajuan) tak bisa diedit, hanya dilihat.
-  const isReadOnly = !isCreating && !!selectedEvent && /^(shift_|hol_|req_)/.test(selectedEvent.id)
+  const isReadOnly = !isCreating && !!selectedEvent && /^(shift_|hol_|req_|ts_)/.test(selectedEvent.id)
   const [draggedEvent, setDraggedEvent] = useState<Event | null>(null)
   const [newEvent, setNewEvent] = useState<Partial<Event>>({
     title: "",
@@ -194,6 +199,11 @@ export function EventManager({
   const handleDrop = useCallback(
     (date: Date, hour?: number) => {
       if (!draggedEvent) return
+      // jadwal turunan (shift/libur/pengajuan/kartu Studio) tidak bisa dipindah dari kalender
+      if (/^(shift_|hol_|req_|ts_)/.test(draggedEvent.id)) {
+        setDraggedEvent(null)
+        return
+      }
 
       const duration = draggedEvent.endTime.getTime() - draggedEvent.startTime.getTime()
       const newStartTime = new Date(date)
@@ -457,7 +467,7 @@ export function EventManager({
             <DropdownMenuContent align="start" className="w-48">
               <DropdownMenuLabel>Filter kategori</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              {categories.map((category) => (
+              {[...categories, ...(filterCategories ?? []).filter((c) => !categories.includes(c))].map((category) => (
                 <DropdownMenuCheckboxItem
                   key={category}
                   checked={selectedCategories.includes(category)}
@@ -583,6 +593,17 @@ export function EventManager({
                     }}
                   >
                     Setuju gantiin (long shift)
+                  </Button>
+                )}
+                {selectedEvent.cardId && onOpenCard && (
+                  <Button
+                    onClick={() => {
+                      onOpenCard(selectedEvent.cardId!)
+                      setIsDialogOpen(false)
+                      setSelectedEvent(null)
+                    }}
+                  >
+                    Buka Detail kartu
                   </Button>
                 )}
                 <Button
