@@ -47,6 +47,7 @@ export function WebProductForm({ kategori }: { kategori: WebFormKategori[] }) {
   const [spek, setSpek] = useState<Record<string, string>>({});
   const [nilai, setNilai] = useState<Record<string, string>>({});
   const [skor, setSkor] = useState("");
+  const [punyaData, setPunyaData] = useState(false);
 
   const [uploading, setUploading] = useState(0);
   const [busy, start] = useTransition();
@@ -98,10 +99,11 @@ export function WebProductForm({ kategori }: { kategori: WebFormKategori[] }) {
         ukuran: kat === "Sepatu Tenis" ? ukuran.split(",").map((x) => x.trim()).filter(Boolean) : [],
         varianLabel: pakaiVarian ? varianLabel || null : null,
         variants: pakaiVarian ? vs.map((v) => ({ warna: v.warna, ukuran: v.ukuran, harga: angka(v.harga) ?? 0, hargaDiskon: angka(v.hargaDiskon), stok: angka(v.stok) ?? 0 })) : [],
-        atribut: atr,
-        spek: Object.fromEntries((k?.spek ?? []).map((s) => [s.label, spek[s.label] ?? ""])),
-        nilai: Object.fromEntries((k?.kriteria ?? []).map((c) => [c, angka(nilai[c] ?? "")]).filter(([, v]) => v != null)),
-        skor: angka(skor),
+        // data tambahan hanya dikirim kalau "Barang ini punya data" dicentang
+        atribut: punyaData ? atr : {},
+        spek: punyaData ? Object.fromEntries((k?.spek ?? []).map((s) => [s.label, spek[s.label] ?? ""])) : {},
+        nilai: punyaData ? Object.fromEntries((k?.kriteria ?? []).map((c) => [c, angka(nilai[c] ?? "")]).filter(([, v]) => v != null)) : {},
+        skor: punyaData ? angka(skor) : null,
       });
       if (r.ok) setHasil(r.data);
       else setErr(r.message);
@@ -202,7 +204,17 @@ export function WebProductForm({ kategori }: { kategori: WebFormKategori[] }) {
         )}
       </section>
 
-      {k && k.atribut.length > 0 && (
+      {k && (k.atribut.length > 0 || k.spek.length > 0 || k.kriteria.length > 0) && (
+        <label className="flex items-start gap-3 rounded-lg border bg-card p-4">
+          <input type="checkbox" className="mt-1" checked={punyaData} onChange={(e) => setPunyaData(e.target.checked)} />
+          <span>
+            <span className="block text-14 font-medium">Barang ini punya data</span>
+            <span className="block text-12 text-muted-foreground">Centang untuk mengisi filter shop, spesifikasi, dan skor Tirtoniclab. Kalau tidak, filter ditebak otomatis dari nama.</span>
+          </span>
+        </label>
+      )}
+
+      {punyaData && k && k.atribut.length > 0 && (
         <section className={card}>
           <div>
             <h2 className="text-16 font-semibold">Filter di shop</h2>
@@ -220,7 +232,7 @@ export function WebProductForm({ kategori }: { kategori: WebFormKategori[] }) {
         </section>
       )}
 
-      {k && k.spek.length > 0 && (
+      {punyaData && k && k.spek.length > 0 && (
         <section className={card}>
           <h2 className="text-16 font-semibold">Spesifikasi</h2>
           <div className="grid gap-3 sm:grid-cols-3">
@@ -234,7 +246,7 @@ export function WebProductForm({ kategori }: { kategori: WebFormKategori[] }) {
         </section>
       )}
 
-      {k && k.kriteria.length > 0 && (
+      {punyaData && k && k.kriteria.length > 0 && (
         <section className={card}>
           <div>
             <h2 className="text-16 font-semibold">Skor Tirtoniclab (opsional)</h2>
