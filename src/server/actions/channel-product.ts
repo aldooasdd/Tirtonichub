@@ -141,11 +141,18 @@ async function createBody(c: { token: string; cipher: string }, d: ProductDraft,
   if (!variants.length) throw new Error("Isi harga & stok.");
   const wh = await tp.defaultWarehouse(c);
   const name = (d.variantName ?? "").trim();
+  const name2 = name ? (d.variantName2 ?? "").trim() : "";
   const salesDef = name ? defs.find((a) => a.sales && norm(a.name) === norm(name)) : undefined;
+  const salesDef2 = name2 ? defs.find((a) => a.sales && norm(a.name) === norm(name2)) : undefined;
   if (name && variants.some((v) => !v.value.trim())) throw new Error("Isi nama setiap varian.");
+  if (name2 && norm(name2) === norm(name)) throw new Error("Nama varian tingkat 1 dan 2 harus beda.");
+  if (name2 && variants.some((v) => !(v.value2 ?? "").trim())) throw new Error(`Isi ${name2} di setiap baris varian.`);
+  const kombi = variants.map((v) => `${norm(v.value)}|${norm(v.value2 ?? "")}`);
+  if (name && new Set(kombi).size !== kombi.length) throw new Error("Ada kombinasi varian yang dobel.");
   const skus = variants.map((v) => {
     if (!(v.price > 0)) throw new Error("Harga harus lebih dari 0.");
     const hit = salesDef?.values.find((x) => norm(x.name) === norm(v.value));
+    const hit2 = salesDef2?.values.find((x) => norm(x.name) === norm(v.value2 ?? ""));
     return {
       ...(name
         ? {
@@ -155,6 +162,9 @@ async function createBody(c: { token: string; cipher: string }, d: ProductDraft,
                 ...(hit ? { value_id: hit.id } : { value_name: v.value.trim() }),
                 ...(v.image ? { sku_img: { uri: v.image.uri } } : {}),
               },
+              ...(name2
+                ? [{ ...(salesDef2 ? { id: salesDef2.id } : { name: name2 }), ...(hit2 ? { value_id: hit2.id } : { value_name: (v.value2 ?? "").trim() }) }]
+                : []),
             ],
           }
         : {}),

@@ -1,6 +1,6 @@
 // Draft produk dari form Tirtonic Channel → dikirim ke Tokopedia (Create / Edit / Partial Edit Product).
 export type Img = { uri: string; url: string };
-export type DraftVariant = { skuId?: string; value: string; price: number; stock: number; sellerSku: string; image?: Img | null };
+export type DraftVariant = { skuId?: string; value: string; value2?: string; price: number; stock: number; sellerSku: string; image?: Img | null };
 export type DraftCert = { id: string; images: Img[]; files: { id: string; name: string }[] };
 
 export type ProductDraft = {
@@ -14,6 +14,7 @@ export type ProductDraft = {
   brandId?: string | null;
   attributes: { id: string; value: string }[]; // nilai dipisah koma untuk pilihan ganda
   variantName?: string; // buat baru: nama varian (mis. Warna); kosong = tanpa varian
+  variantName2?: string; // varian tingkat 2 (mis. Ukuran); kosong = 1 tingkat
   variants?: DraftVariant[]; // buat baru saja; edit stok/harga lewat tabel varian
   weightKg: string;
   length: string;

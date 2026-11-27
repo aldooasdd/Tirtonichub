@@ -5,12 +5,12 @@ import { ExternalLink, ImagePlus, Loader2, Plus, Trash2, X } from "lucide-react"
 import { compressImage } from "@/lib/image";
 import { simpanProdukWeb, uploadFotoWeb } from "@/server/actions/web-produk";
 import type { WebFormKategori } from "@/server/marketplace/website";
+import { useWebData } from "@/components/channel/web-data-fields";
 
 const field = "h-9 w-full rounded-md border bg-background px-2 text-14";
 const label = "text-12 font-medium text-muted-foreground";
 const card = "space-y-3 rounded-lg border bg-card p-4";
 const btn = "inline-flex h-9 items-center justify-center gap-1.5 rounded-md border bg-background px-3 text-14 font-medium hover:bg-muted disabled:opacity-50";
-const chip = (on: boolean) => `rounded-full border px-3 py-1 text-12 ${on ? "border-primary bg-primary text-primary-foreground" : "bg-background hover:bg-muted"}`;
 
 type Varian = { warna: string; ukuran: string; harga: string; hargaDiskon: string; stok: string };
 const varianKosong = (): Varian => ({ warna: "", ukuran: "", harga: "", hargaDiskon: "", stok: "" });
@@ -42,20 +42,13 @@ export function WebProductForm({ kategori }: { kategori: WebFormKategori[] }) {
   const [varianLabel, setVarianLabel] = useState("");
   const [varian, setVarian] = useState<Varian[]>([varianKosong()]);
   const [ukuran, setUkuran] = useState("");
-  const [atribut, setAtribut] = useState<Record<string, string[]>>({});
-  const [lain, setLain] = useState<Record<string, string>>({});
-  const [spek, setSpek] = useState<Record<string, string>>({});
-  const [nilai, setNilai] = useState<Record<string, string>>({});
-  const [skor, setSkor] = useState("");
-  const [punyaData, setPunyaData] = useState(false);
 
   const [uploading, setUploading] = useState(0);
   const [busy, start] = useTransition();
   const [err, setErr] = useState("");
+  const data = useWebData(k);
   const [hasil, setHasil] = useState<{ url: string; created: boolean } | null>(null);
 
-  const toggle = (key: string, v: string) =>
-    setAtribut((a) => ({ ...a, [key]: (a[key] ?? []).includes(v) ? a[key].filter((x) => x !== v) : [...(a[key] ?? []), v] }));
   const setV = (i: number, kk: keyof Varian, v: string) => setVarian((vs) => vs.map((x, j) => (j === i ? { ...x, [kk]: v } : x)));
 
   async function tambahFoto(files: FileList | null) {
@@ -83,7 +76,6 @@ export function WebProductForm({ kategori }: { kategori: WebFormKategori[] }) {
     if (!foto.length) return setErr("Tambahkan minimal 1 foto.");
     if (pakaiVarian && !vs.length) return setErr("Isi minimal 1 varian.");
     if (!pakaiVarian && !(angka(harga)! > 0)) return setErr("Harga wajib diisi.");
-    const atr = Object.fromEntries((k?.atribut ?? []).map((a) => [a.key, [...(atribut[a.key] ?? []), ...(lain[a.key] ?? "").split(",").map((x) => x.trim()).filter(Boolean)]]));
     start(async () => {
       const r = await simpanProdukWeb({
         ref,
@@ -99,11 +91,7 @@ export function WebProductForm({ kategori }: { kategori: WebFormKategori[] }) {
         ukuran: kat === "Sepatu Tenis" ? ukuran.split(",").map((x) => x.trim()).filter(Boolean) : [],
         varianLabel: pakaiVarian ? varianLabel || null : null,
         variants: pakaiVarian ? vs.map((v) => ({ warna: v.warna, ukuran: v.ukuran, harga: angka(v.harga) ?? 0, hargaDiskon: angka(v.hargaDiskon), stok: angka(v.stok) ?? 0 })) : [],
-        // data tambahan hanya dikirim kalau "Barang ini punya data" dicentang
-        atribut: punyaData ? atr : {},
-        spek: punyaData ? Object.fromEntries((k?.spek ?? []).map((s) => [s.label, spek[s.label] ?? ""])) : {},
-        nilai: punyaData ? Object.fromEntries((k?.kriteria ?? []).map((c) => [c, angka(nilai[c] ?? "")]).filter(([, v]) => v != null)) : {},
-        skor: punyaData ? angka(skor) : null,
+        ...data.payload(),
       });
       if (r.ok) setHasil(r.data);
       else setErr(r.message);
@@ -117,7 +105,7 @@ export function WebProductForm({ kategori }: { kategori: WebFormKategori[] }) {
         <div className="grid gap-3 sm:grid-cols-2">
           <label className="space-y-1">
             <span className={label}>Kategori</span>
-            <select className={field} value={kat} onChange={(e) => { setKat(e.target.value); setAtribut({}); setLain({}); }}>
+            <select className={field} value={kat} onChange={(e) => { setKat(e.target.value); data.reset(); }}>
               {kategori.map((x) => <option key={x.db} value={x.db}>{x.label}</option>)}
             </select>
           </label>
@@ -204,65 +192,7 @@ export function WebProductForm({ kategori }: { kategori: WebFormKategori[] }) {
         )}
       </section>
 
-      {k && (k.atribut.length > 0 || k.spek.length > 0 || k.kriteria.length > 0) && (
-        <label className="flex items-start gap-3 rounded-lg border bg-card p-4">
-          <input type="checkbox" className="mt-1" checked={punyaData} onChange={(e) => setPunyaData(e.target.checked)} />
-          <span>
-            <span className="block text-14 font-medium">Barang ini punya data</span>
-            <span className="block text-12 text-muted-foreground">Centang untuk mengisi filter shop, spesifikasi, dan skor Tirtoniclab. Kalau tidak, filter ditebak otomatis dari nama.</span>
-          </span>
-        </label>
-      )}
-
-      {punyaData && k && k.atribut.length > 0 && (
-        <section className={card}>
-          <div>
-            <h2 className="text-16 font-semibold">Filter di shop</h2>
-            <p className="text-12 text-muted-foreground">Pilih yang sesuai supaya produk muncul saat pembeli menyaring. Kosong = ditebak otomatis dari nama.</p>
-          </div>
-          {k.atribut.map((a) => (
-            <div key={a.key} className="space-y-1.5">
-              <p className={label}>{a.label}</p>
-              <div className="flex flex-wrap gap-1.5">
-                {a.opsi.map((o) => <button key={o} type="button" className={chip((atribut[a.key] ?? []).includes(o))} onClick={() => toggle(a.key, o)}>{o}</button>)}
-                <input className="h-7 w-40 rounded-full border bg-background px-3 text-12" value={lain[a.key] ?? ""} onChange={(e) => setLain((x) => ({ ...x, [a.key]: e.target.value }))} placeholder="Lainnya, pisah koma" />
-              </div>
-            </div>
-          ))}
-        </section>
-      )}
-
-      {punyaData && k && k.spek.length > 0 && (
-        <section className={card}>
-          <h2 className="text-16 font-semibold">Spesifikasi</h2>
-          <div className="grid gap-3 sm:grid-cols-3">
-            {k.spek.map((s) => (
-              <label key={s.label} className="space-y-1">
-                <span className={label}>{s.label}</span>
-                <input className={field} value={spek[s.label] ?? ""} onChange={(e) => setSpek((x) => ({ ...x, [s.label]: e.target.value }))} placeholder={s.contoh} />
-              </label>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {punyaData && k && k.kriteria.length > 0 && (
-        <section className={card}>
-          <div>
-            <h2 className="text-16 font-semibold">Skor Tirtoniclab (opsional)</h2>
-            <p className="text-12 text-muted-foreground">Nilai 0–100 dari hasil uji lab dan playtest. Dipakai filter skor, Compare, dan Match.</p>
-          </div>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-            <label className="space-y-1"><span className={label}>Skor total</span><input className={field} inputMode="numeric" value={skor} onChange={(e) => setSkor(e.target.value)} /></label>
-            {k.kriteria.map((c) => (
-              <label key={c} className="space-y-1">
-                <span className={label}>{c}</span>
-                <input className={field} inputMode="numeric" value={nilai[c] ?? ""} onChange={(e) => setNilai((x) => ({ ...x, [c]: e.target.value }))} />
-              </label>
-            ))}
-          </div>
-        </section>
-      )}
+      {data.ui}
 
       {err && <p className="rounded-md bg-destructive/10 p-3 text-14 text-destructive">{err}</p>}
       {hasil && (

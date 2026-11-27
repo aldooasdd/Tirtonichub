@@ -6,6 +6,9 @@ import { CheckCircle2, ImagePlus, Loader2, Plus, Sparkles, Trash2, XCircle } fro
 import { brandSearch, catInfo, catRecommend, catSearch, checkProduct, saveProduct, uploadMedia } from "@/server/actions/channel-product";
 import type { Attribute, Brand, Category, CategoryRules, ListingCheck, ShipTemplate } from "@/server/marketplace/tiktok-product";
 import type { DraftCert, DraftVariant, Img, ProductDraft } from "@/lib/product-draft";
+import type { WebFormKategori } from "@/server/marketplace/website";
+import { simpanProdukWeb } from "@/server/actions/web-produk";
+import { useWebData } from "@/components/channel/web-data-fields";
 
 const field = "h-9 w-full rounded-md border bg-background px-2 text-14";
 const label = "text-12 font-medium text-muted-foreground";
@@ -25,13 +28,17 @@ async function send(file: File, kind: string): Promise<Uploaded> {
 const emptyVariant = (): DraftVariant => ({ value: "", price: 0, stock: 0, sellerSku: "", image: null });
 
 /** Form buat / edit produk Tokopedia. `initial.productId` ada = mode edit. */
-export function ProductForm({ initial, brandName }: { initial: ProductDraft; brandName?: string | null }) {
+export function ProductForm({ initial, brandName, webKategori = [] }: { initial: ProductDraft; brandName?: string | null; webKategori?: WebFormKategori[] }) {
   const router = useRouter();
   const edit = !!initial.productId;
   const [d, setD] = useState<ProductDraft>(initial);
   const set = <K extends keyof ProductDraft>(k: K, v: ProductDraft[K]) => setD((x) => ({ ...x, [k]: v }));
   const [descDirty, setDescDirty] = useState(!edit);
   const [hasVariant, setHasVariant] = useState(!!initial.variantName);
+  // tujuan tirtonic.com (buat baru saja): produk yang sama ikut tayang di web, ref TOKOPEDIA:<id>
+  const [web, setWeb] = useState(false);
+  const [webKat, setWebKat] = useState(webKategori[0]?.db ?? "");
+  const webData = useWebData(webKategori.find((x) => x.db === webKat));
 
   const [busy, start] = useTransition();
   const [uploading, setUploading] = useState("");
@@ -83,6 +90,7 @@ export function ProductForm({ initial, brandName }: { initial: ProductDraft; bra
     ...d,
     description: descDirty ? (d.description ?? "") : undefined,
     variantName: hasVariant ? d.variantName : "",
+    variantName2: hasVariant ? d.variantName2 : "",
     variants: edit ? undefined : hasVariant ? d.variants : (d.variants ?? []).slice(0, 1),
   });
 
@@ -98,10 +106,30 @@ export function ProductForm({ initial, brandName }: { initial: ProductDraft; bra
   function doSave(saveMode: ProductDraft["saveMode"]) {
     setErr("");
     start(async () => {
-      const r = await saveProduct({ ...draft(), saveMode });
+      const dr = { ...draft(), saveMode };
+      const r = await saveProduct(dr);
       if (!r.ok) return setErr(r.message);
       const w = r.data.warnings.length ? `\n\nCatatan Tokopedia:\n- ${r.data.warnings.join("\n- ")}` : "";
-      alert((edit ? "Perubahan tersimpan di Tokopedia." : saveMode === "AS_DRAFT" ? "Draft produk tersimpan di Tokopedia." : "Produk dibuat di Tokopedia.") + w + "\n\nData di Tirtonichub diperbarui beberapa menit lagi.");
+      let webMsg = "";
+      if (!edit && web && saveMode === "LISTING") {
+        const vs = dr.variants ?? [];
+        const rw = await simpanProdukWeb({
+          ref: `TOKOPEDIA:${r.data.productId}`,
+          nama: dr.title,
+          kategori: webKat,
+          brand: brandQ || null,
+          harga: vs[0]?.price ?? 0,
+          stok: hasVariant ? null : (vs[0]?.stock ?? 0),
+          berat: Math.round(Number(dr.weightKg) * 1000) || null,
+          deskripsi: dr.description ?? null,
+          gambar: dr.images.map((i) => i.url),
+          varianLabel: hasVariant ? dr.variantName || null : null,
+          variants: hasVariant ? vs.map((v) => ({ warna: v.value, ukuran: v.value2 ?? "", harga: v.price, stok: v.stock })) : [],
+          ...webData.payload(),
+        });
+        webMsg = rw.ok ? "\n\nTayang juga di tirtonic.com." : `\n\nGagal tayang di tirtonic.com: ${rw.message}`;
+      }
+      alert((edit ? "Perubahan tersimpan di Tokopedia." : saveMode === "AS_DRAFT" ? "Draft produk tersimpan di Tokopedia." : "Produk dibuat di Tokopedia.") + w + webMsg + "\n\nData di Tirtonichub diperbarui beberapa menit lagi.");
       router.push(edit ? `/channel/produk/TOKOPEDIA/${r.data.productId}` : "/channel/produk");
       router.refresh();
     });
@@ -362,8 +390,9 @@ export function ProductForm({ initial, brandName }: { initial: ProductDraft; bra
             </label>
           </div>
           {hasVariant && (
-            <label className="block max-w-xs space-y-1">
-              <span className={label}>Nama varian (mis. Warna, Ukuran)</span>
+            <div className="grid max-w-xl gap-3 sm:grid-cols-2">
+            <label className="block space-y-1">
+              <span className={label}>Varian tingkat 1 (mis. Warna)</span>
               <input value={d.variantName ?? ""} onChange={(e) => set("variantName", e.target.value)} list="sales-attrs" className={field} />
               <datalist id="sales-attrs">
                 {(info?.attributes ?? [])
@@ -373,12 +402,18 @@ export function ProductForm({ initial, brandName }: { initial: ProductDraft; bra
                   ))}
               </datalist>
             </label>
+            <label className="block space-y-1">
+              <span className={label}>Varian tingkat 2 (opsional, mis. Ukuran)</span>
+              <input value={d.variantName2 ?? ""} onChange={(e) => set("variantName2", e.target.value)} list="sales-attrs" className={field} />
+            </label>
+            </div>
           )}
           <div className="overflow-x-auto">
             <table className="w-full text-14">
               <thead>
                 <tr className="text-left text-12 text-muted-foreground">
-                  {hasVariant && <th className="p-1">Varian</th>}
+                  {hasVariant && <th className="p-1">{d.variantName || "Varian"}</th>}
+                  {hasVariant && !!d.variantName2?.trim() && <th className="p-1">{d.variantName2}</th>}
                   {hasVariant && <th className="p-1">Foto</th>}
                   <th className="p-1">Harga (Rp)</th>
                   <th className="p-1">Stok</th>
@@ -392,6 +427,11 @@ export function ProductForm({ initial, brandName }: { initial: ProductDraft; bra
                     {hasVariant && (
                       <td className="p-1">
                         <input value={v.value} onChange={(e) => setVariant(i, { value: e.target.value })} placeholder="mis. Merah" className={field} />
+                      </td>
+                    )}
+                    {hasVariant && !!d.variantName2?.trim() && (
+                      <td className="p-1">
+                        <input value={v.value2 ?? ""} onChange={(e) => setVariant(i, { value2: e.target.value })} placeholder="mis. 42" className={`${field} w-28`} />
                       </td>
                     )}
                     {hasVariant && (
@@ -433,7 +473,7 @@ export function ProductForm({ initial, brandName }: { initial: ProductDraft; bra
             </table>
           </div>
           {hasVariant && (
-            <button type="button" className={btn} onClick={() => set("variants", [...variants, emptyVariant()])}>
+            <button type="button" className={btn} onClick={() => set("variants", [...variants, { ...emptyVariant(), value: variants.at(-1)?.value ?? "", price: variants.at(-1)?.price ?? 0 }])}>
               <Plus className="size-4" /> Tambah varian
             </button>
           )}
@@ -485,9 +525,25 @@ export function ProductForm({ initial, brandName }: { initial: ProductDraft; bra
                 {p === "TOKOPEDIA" ? "Tokopedia" : "TikTok Shop"}
               </label>
             ))}
+            {webKategori.length > 0 && (
+              <label className="flex items-center gap-2">
+                <input type="checkbox" checked={web} onChange={(e) => setWeb(e.target.checked)} />
+                tirtonic.com
+              </label>
+            )}
           </div>
         )}
+        {!edit && web && (
+          <label className="block max-w-xs space-y-1">
+            <span className={label}>Kategori di tirtonic.com</span>
+            <select value={webKat} onChange={(e) => { setWebKat(e.target.value); webData.reset(); }} className={field}>
+              {webKategori.map((x) => <option key={x.db} value={x.db}>{x.label}</option>)}
+            </select>
+          </label>
+        )}
       </section>
+
+      {!edit && web && webData.ui}
 
       {/* Sertifikat & size chart */}
       {info && (info.rules.certifications.length > 0 || info.rules.sizeChartSupported) && (

@@ -6,6 +6,7 @@ import { PRODUK_KE_MARKETPLACE } from "@/lib/flags";
 import { DEMO, activeShop, fresh } from "@/server/marketplace/sync";
 import { listingPrerequisites } from "@/server/marketplace/tiktok-product";
 import { ProductForm } from "@/components/channel/product-form";
+import { websiteForm, websiteReady, type WebFormKategori } from "@/server/marketplace/website";
 
 const CHECK_LABEL: Record<string, string> = {
   SHOP_STATUS: "Status toko",
@@ -33,6 +34,8 @@ export default async function TambahProdukPage() {
     }
   }
   const failed = checks.filter((c) => c.failed);
+  // pilihan tujuan tirtonic.com: kategori & field filter dari web (gagal = pilihan web disembunyikan)
+  const webKategori: WebFormKategori[] = websiteReady() ? await websiteForm().catch(() => []) : [];
 
   return (
     <div className="space-y-5">
@@ -60,6 +63,7 @@ export default async function TambahProdukPage() {
       {real && checks.length > 0 && failed.length === 0 && <p className="text-14 text-emerald-600">Syarat toko lengkap: siap menayangkan produk.</p>}
       {real && (
         <ProductForm
+          webKategori={webKategori}
           initial={{
             title: "",
             description: "",
