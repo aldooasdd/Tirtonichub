@@ -128,3 +128,26 @@ export async function kirimMeta(channel: string, accountId: string, to: string, 
     return { ok: false, error: e instanceof Error ? e.message : "Gagal mengirim." };
   }
 }
+
+/** Nama + @username pengirim IG (Graph API, token Page META_IG_TOKEN). null = coba lagi nanti; "" = Meta menolak (tidak dicoba lagi). */
+export async function namaIg(igsid: string): Promise<string | null> {
+  const token = process.env.META_IG_TOKEN;
+  if (!token) return null;
+  try {
+    const r = await fetch(`${GRAPH}/${igsid}?fields=name,username`, { headers: { authorization: `Bearer ${token}` }, signal: AbortSignal.timeout(8000) });
+    if (!r.ok) return "";
+    const j = (await r.json()) as { name?: string; username?: string };
+    return j.name && j.username ? `${j.name} (@${j.username})` : j.username ? `@${j.username}` : (j.name ?? "");
+  } catch {
+    return null;
+  }
+}
+
+/** Isi nama chat IG yang masih kosong (dipanggil setelah webhook & saat Inbox dibuka). */
+export async function isiNamaIg(limit = 10): Promise<void> {
+  const ts = await prisma.inboxThread.findMany({ where: { channel: "IG", name: null }, select: { id: true, contactId: true }, take: limit, orderBy: { lastAt: "desc" } });
+  for (const t of ts) {
+    const n = await namaIg(t.contactId);
+    if (n !== null) await prisma.inboxThread.update({ where: { id: t.id }, data: { name: n } });
+  }
+}
