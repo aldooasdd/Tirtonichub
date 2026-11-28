@@ -20,7 +20,7 @@ export default async function InboxPage({ searchParams }: { searchParams: Promis
   await isiNamaIg(); // chat IG lama yang belum punya nama
   const s = (q ?? "").trim();
   const threads = await prisma.inboxThread.findMany({
-    where: s ? { OR: [{ name: { contains: s, mode: "insensitive" } }, { contactId: { contains: s } }, { lastText: { contains: s, mode: "insensitive" } }] } : {},
+    where: s ? { channel: { not: "IGK" }, OR: [{ name: { contains: s, mode: "insensitive" } }, { contactId: { contains: s } }, { lastText: { contains: s, mode: "insensitive" } }] } : { channel: { not: "IGK" } }, // komentar IG punya menu sendiri (Komentar IG)
     orderBy: { lastAt: "desc" },
     take: 200,
   });

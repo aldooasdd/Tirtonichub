@@ -1,4 +1,5 @@
 import {
+  MessageCircle,
   Camera,
   Home,
   Clock,
@@ -147,6 +148,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
         { label: "Kelola Pesanan", href: "/channel", icon: Store },
         { label: "Inbox WA & IG", href: "/channel/inbox", icon: MessageSquare },
         { label: "Instagram", href: "/channel/instagram", icon: Camera },
+        { label: "Komentar IG", href: "/channel/instagram/komentar", icon: MessageCircle },
         { label: "Tirtonic POS", href: "/channel/pos", icon: ShoppingCart },
         { label: "Produk Master", href: "/channel/produk", icon: Boxes },
         { label: "Cek SKU", href: "/channel/produk/cek-sku", icon: ClipboardCheck },
