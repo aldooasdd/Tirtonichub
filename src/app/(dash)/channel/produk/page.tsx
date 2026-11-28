@@ -85,9 +85,6 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
         <Link href="/channel/produk/sampah" className="inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-14 font-medium">
           <Trash2 className="size-4" /> Sampah{sampah.length ? ` (${sampah.length})` : ""}
         </Link>
-        <Link href="/channel/produk/web-baru" className="inline-flex h-9 items-center gap-1.5 rounded-md border px-3 text-14 font-medium">
-          <Plus className="size-4" /> Produk web baru
-        </Link>
         {PRODUK_KE_MARKETPLACE ? (
           <Link href="/channel/produk/baru" className="inline-flex h-9 shrink-0 items-center gap-1.5 rounded-md bg-primary px-4 text-14 font-medium text-primary-foreground">
             <Plus className="size-4" /> Tambah produk
