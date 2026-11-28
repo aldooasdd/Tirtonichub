@@ -13,11 +13,11 @@ export default async function KomentarIgPage({ searchParams }: { searchParams: P
   let posts: IgMedia[] = [];
   let gagal = "";
   try {
-    posts = await igMedia(30);
+    posts = (await igMedia(100)).filter((p) => p.comments > 0 || p.id === m); // hanya postingan yang ada komentarnya
   } catch (e) {
     gagal = err(e);
   }
-  const pilih = m ?? posts.find((p) => p.comments > 0)?.id ?? posts[0]?.id;
+  const pilih = m ?? posts[0]?.id;
   let post: IgMedia | null = posts.find((p) => p.id === pilih) ?? null;
   let kom: IgKomentar[] = [];
   let gagalKom = "";
@@ -33,11 +33,12 @@ export default async function KomentarIgPage({ searchParams }: { searchParams: P
     <div className="space-y-3">
       <div>
         <h1 className="text-24 font-semibold">Komentar IG</h1>
-        <p className="text-14 text-muted-foreground">Pilih postingan, lalu balas komentarnya: publik di postingan atau lewat DM. Angka = jumlah komentar.</p>
+        <p className="text-14 text-muted-foreground">Postingan yang ada komentarnya (100 postingan terakhir). Pilih postingan, lalu balas komentarnya: publik di postingan atau lewat DM.</p>
       </div>
       {gagal && <p className="rounded-md bg-destructive/10 p-3 text-14 text-destructive">Instagram belum bisa dibaca: {gagal}</p>}
       <div className="grid gap-3 lg:grid-cols-[360px_1fr]">
         <div className="grid max-h-[calc(100dvh-12rem)] grid-cols-3 content-start gap-1.5 overflow-y-auto rounded-lg border bg-card p-1.5">
+          {!gagal && posts.length === 0 && <p className="col-span-3 p-4 text-center text-14 text-muted-foreground">Belum ada komentar di 100 postingan terakhir.</p>}
           {posts.map((p) => (
             <Link key={p.id} href={`/channel/instagram/komentar?m=${p.id}`} className={`relative block overflow-hidden rounded-md border-2 ${p.id === pilih ? "border-primary" : "border-transparent"}`}>
               {p.img ? (
