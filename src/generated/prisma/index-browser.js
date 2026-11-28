@@ -988,6 +988,28 @@ exports.Prisma.DraftProdukScalarFieldEnum = {
   updatedAt: 'updatedAt'
 };
 
+exports.Prisma.InboxThreadScalarFieldEnum = {
+  id: 'id',
+  channel: 'channel',
+  accountId: 'accountId',
+  contactId: 'contactId',
+  name: 'name',
+  lastText: 'lastText',
+  lastAt: 'lastAt',
+  unread: 'unread'
+};
+
+exports.Prisma.InboxMessageScalarFieldEnum = {
+  id: 'id',
+  threadId: 'threadId',
+  dir: 'dir',
+  text: 'text',
+  metaId: 'metaId',
+  userId: 'userId',
+  error: 'error',
+  at: 'at'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1148,7 +1170,9 @@ exports.Prisma.ModelName = {
   ScriptRevision: 'ScriptRevision',
   ScriptComment: 'ScriptComment',
   ScriptReview: 'ScriptReview',
-  DraftProduk: 'DraftProduk'
+  DraftProduk: 'DraftProduk',
+  InboxThread: 'InboxThread',
+  InboxMessage: 'InboxMessage'
 };
 
 /**

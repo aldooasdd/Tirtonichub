@@ -363,6 +363,16 @@ export type ScriptReview = $Result.DefaultSelection<Prisma.$ScriptReviewPayload>
  * data = isi form Tambah Produk (ProductDraft + pilihan tirtonic.com), lihat src/lib/product-draft.ts.
  */
 export type DraftProduk = $Result.DefaultSelection<Prisma.$DraftProdukPayload>
+/**
+ * Model InboxThread
+ * Inbox WA + IG (Tirtonic Channel → Inbox): chat pelanggan dari Meta (WhatsApp Cloud API coexistence + Instagram API) lewat webhook /api/meta/webhook.
+ */
+export type InboxThread = $Result.DefaultSelection<Prisma.$InboxThreadPayload>
+/**
+ * Model InboxMessage
+ * 
+ */
+export type InboxMessage = $Result.DefaultSelection<Prisma.$InboxMessagePayload>
 
 /**
  * Enums
@@ -1294,6 +1304,26 @@ export class PrismaClient<
     * ```
     */
   get draftProduk(): Prisma.DraftProdukDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.inboxThread`: Exposes CRUD operations for the **InboxThread** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InboxThreads
+    * const inboxThreads = await prisma.inboxThread.findMany()
+    * ```
+    */
+  get inboxThread(): Prisma.InboxThreadDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.inboxMessage`: Exposes CRUD operations for the **InboxMessage** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InboxMessages
+    * const inboxMessages = await prisma.inboxMessage.findMany()
+    * ```
+    */
+  get inboxMessage(): Prisma.InboxMessageDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1803,7 +1833,9 @@ export namespace Prisma {
     ScriptRevision: 'ScriptRevision',
     ScriptComment: 'ScriptComment',
     ScriptReview: 'ScriptReview',
-    DraftProduk: 'DraftProduk'
+    DraftProduk: 'DraftProduk',
+    InboxThread: 'InboxThread',
+    InboxMessage: 'InboxMessage'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1822,7 +1854,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioPageUse" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit" | "scriptDoc" | "scriptRevision" | "scriptComment" | "scriptReview" | "draftProduk"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioPageUse" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit" | "scriptDoc" | "scriptRevision" | "scriptComment" | "scriptReview" | "draftProduk" | "inboxThread" | "inboxMessage"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6932,6 +6964,154 @@ export namespace Prisma {
           }
         }
       }
+      InboxThread: {
+        payload: Prisma.$InboxThreadPayload<ExtArgs>
+        fields: Prisma.InboxThreadFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InboxThreadFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxThreadPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InboxThreadFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxThreadPayload>
+          }
+          findFirst: {
+            args: Prisma.InboxThreadFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxThreadPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InboxThreadFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxThreadPayload>
+          }
+          findMany: {
+            args: Prisma.InboxThreadFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxThreadPayload>[]
+          }
+          create: {
+            args: Prisma.InboxThreadCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxThreadPayload>
+          }
+          createMany: {
+            args: Prisma.InboxThreadCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InboxThreadCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxThreadPayload>[]
+          }
+          delete: {
+            args: Prisma.InboxThreadDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxThreadPayload>
+          }
+          update: {
+            args: Prisma.InboxThreadUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxThreadPayload>
+          }
+          deleteMany: {
+            args: Prisma.InboxThreadDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InboxThreadUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InboxThreadUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxThreadPayload>[]
+          }
+          upsert: {
+            args: Prisma.InboxThreadUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxThreadPayload>
+          }
+          aggregate: {
+            args: Prisma.InboxThreadAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInboxThread>
+          }
+          groupBy: {
+            args: Prisma.InboxThreadGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InboxThreadGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InboxThreadCountArgs<ExtArgs>
+            result: $Utils.Optional<InboxThreadCountAggregateOutputType> | number
+          }
+        }
+      }
+      InboxMessage: {
+        payload: Prisma.$InboxMessagePayload<ExtArgs>
+        fields: Prisma.InboxMessageFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InboxMessageFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxMessagePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InboxMessageFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxMessagePayload>
+          }
+          findFirst: {
+            args: Prisma.InboxMessageFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxMessagePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InboxMessageFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxMessagePayload>
+          }
+          findMany: {
+            args: Prisma.InboxMessageFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxMessagePayload>[]
+          }
+          create: {
+            args: Prisma.InboxMessageCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxMessagePayload>
+          }
+          createMany: {
+            args: Prisma.InboxMessageCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InboxMessageCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxMessagePayload>[]
+          }
+          delete: {
+            args: Prisma.InboxMessageDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxMessagePayload>
+          }
+          update: {
+            args: Prisma.InboxMessageUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxMessagePayload>
+          }
+          deleteMany: {
+            args: Prisma.InboxMessageDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InboxMessageUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InboxMessageUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxMessagePayload>[]
+          }
+          upsert: {
+            args: Prisma.InboxMessageUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxMessagePayload>
+          }
+          aggregate: {
+            args: Prisma.InboxMessageAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInboxMessage>
+          }
+          groupBy: {
+            args: Prisma.InboxMessageGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InboxMessageGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InboxMessageCountArgs<ExtArgs>
+            result: $Utils.Optional<InboxMessageCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -7097,6 +7277,8 @@ export namespace Prisma {
     scriptComment?: ScriptCommentOmit
     scriptReview?: ScriptReviewOmit
     draftProduk?: DraftProdukOmit
+    inboxThread?: InboxThreadOmit
+    inboxMessage?: InboxMessageOmit
   }
 
   /* Types for Logging */
@@ -7633,6 +7815,37 @@ export namespace Prisma {
    */
   export type AutomationRunCountOutputTypeCountStepsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: AutomationRunStepWhereInput
+  }
+
+
+  /**
+   * Count Type InboxThreadCountOutputType
+   */
+
+  export type InboxThreadCountOutputType = {
+    messages: number
+  }
+
+  export type InboxThreadCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    messages?: boolean | InboxThreadCountOutputTypeCountMessagesArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * InboxThreadCountOutputType without action
+   */
+  export type InboxThreadCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxThreadCountOutputType
+     */
+    select?: InboxThreadCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * InboxThreadCountOutputType without action
+   */
+  export type InboxThreadCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InboxMessageWhereInput
   }
 
 
@@ -84526,6 +84739,2246 @@ export namespace Prisma {
 
 
   /**
+   * Model InboxThread
+   */
+
+  export type AggregateInboxThread = {
+    _count: InboxThreadCountAggregateOutputType | null
+    _avg: InboxThreadAvgAggregateOutputType | null
+    _sum: InboxThreadSumAggregateOutputType | null
+    _min: InboxThreadMinAggregateOutputType | null
+    _max: InboxThreadMaxAggregateOutputType | null
+  }
+
+  export type InboxThreadAvgAggregateOutputType = {
+    unread: number | null
+  }
+
+  export type InboxThreadSumAggregateOutputType = {
+    unread: number | null
+  }
+
+  export type InboxThreadMinAggregateOutputType = {
+    id: string | null
+    channel: string | null
+    accountId: string | null
+    contactId: string | null
+    name: string | null
+    lastText: string | null
+    lastAt: Date | null
+    unread: number | null
+  }
+
+  export type InboxThreadMaxAggregateOutputType = {
+    id: string | null
+    channel: string | null
+    accountId: string | null
+    contactId: string | null
+    name: string | null
+    lastText: string | null
+    lastAt: Date | null
+    unread: number | null
+  }
+
+  export type InboxThreadCountAggregateOutputType = {
+    id: number
+    channel: number
+    accountId: number
+    contactId: number
+    name: number
+    lastText: number
+    lastAt: number
+    unread: number
+    _all: number
+  }
+
+
+  export type InboxThreadAvgAggregateInputType = {
+    unread?: true
+  }
+
+  export type InboxThreadSumAggregateInputType = {
+    unread?: true
+  }
+
+  export type InboxThreadMinAggregateInputType = {
+    id?: true
+    channel?: true
+    accountId?: true
+    contactId?: true
+    name?: true
+    lastText?: true
+    lastAt?: true
+    unread?: true
+  }
+
+  export type InboxThreadMaxAggregateInputType = {
+    id?: true
+    channel?: true
+    accountId?: true
+    contactId?: true
+    name?: true
+    lastText?: true
+    lastAt?: true
+    unread?: true
+  }
+
+  export type InboxThreadCountAggregateInputType = {
+    id?: true
+    channel?: true
+    accountId?: true
+    contactId?: true
+    name?: true
+    lastText?: true
+    lastAt?: true
+    unread?: true
+    _all?: true
+  }
+
+  export type InboxThreadAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InboxThread to aggregate.
+     */
+    where?: InboxThreadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxThreads to fetch.
+     */
+    orderBy?: InboxThreadOrderByWithRelationInput | InboxThreadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InboxThreadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxThreads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxThreads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned InboxThreads
+    **/
+    _count?: true | InboxThreadCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: InboxThreadAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: InboxThreadSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InboxThreadMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InboxThreadMaxAggregateInputType
+  }
+
+  export type GetInboxThreadAggregateType<T extends InboxThreadAggregateArgs> = {
+        [P in keyof T & keyof AggregateInboxThread]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInboxThread[P]>
+      : GetScalarType<T[P], AggregateInboxThread[P]>
+  }
+
+
+
+
+  export type InboxThreadGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InboxThreadWhereInput
+    orderBy?: InboxThreadOrderByWithAggregationInput | InboxThreadOrderByWithAggregationInput[]
+    by: InboxThreadScalarFieldEnum[] | InboxThreadScalarFieldEnum
+    having?: InboxThreadScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InboxThreadCountAggregateInputType | true
+    _avg?: InboxThreadAvgAggregateInputType
+    _sum?: InboxThreadSumAggregateInputType
+    _min?: InboxThreadMinAggregateInputType
+    _max?: InboxThreadMaxAggregateInputType
+  }
+
+  export type InboxThreadGroupByOutputType = {
+    id: string
+    channel: string
+    accountId: string
+    contactId: string
+    name: string | null
+    lastText: string | null
+    lastAt: Date
+    unread: number
+    _count: InboxThreadCountAggregateOutputType | null
+    _avg: InboxThreadAvgAggregateOutputType | null
+    _sum: InboxThreadSumAggregateOutputType | null
+    _min: InboxThreadMinAggregateOutputType | null
+    _max: InboxThreadMaxAggregateOutputType | null
+  }
+
+  type GetInboxThreadGroupByPayload<T extends InboxThreadGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InboxThreadGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InboxThreadGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InboxThreadGroupByOutputType[P]>
+            : GetScalarType<T[P], InboxThreadGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InboxThreadSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    channel?: boolean
+    accountId?: boolean
+    contactId?: boolean
+    name?: boolean
+    lastText?: boolean
+    lastAt?: boolean
+    unread?: boolean
+    messages?: boolean | InboxThread$messagesArgs<ExtArgs>
+    _count?: boolean | InboxThreadCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["inboxThread"]>
+
+  export type InboxThreadSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    channel?: boolean
+    accountId?: boolean
+    contactId?: boolean
+    name?: boolean
+    lastText?: boolean
+    lastAt?: boolean
+    unread?: boolean
+  }, ExtArgs["result"]["inboxThread"]>
+
+  export type InboxThreadSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    channel?: boolean
+    accountId?: boolean
+    contactId?: boolean
+    name?: boolean
+    lastText?: boolean
+    lastAt?: boolean
+    unread?: boolean
+  }, ExtArgs["result"]["inboxThread"]>
+
+  export type InboxThreadSelectScalar = {
+    id?: boolean
+    channel?: boolean
+    accountId?: boolean
+    contactId?: boolean
+    name?: boolean
+    lastText?: boolean
+    lastAt?: boolean
+    unread?: boolean
+  }
+
+  export type InboxThreadOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "channel" | "accountId" | "contactId" | "name" | "lastText" | "lastAt" | "unread", ExtArgs["result"]["inboxThread"]>
+  export type InboxThreadInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    messages?: boolean | InboxThread$messagesArgs<ExtArgs>
+    _count?: boolean | InboxThreadCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type InboxThreadIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type InboxThreadIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $InboxThreadPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "InboxThread"
+    objects: {
+      messages: Prisma.$InboxMessagePayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      channel: string
+      accountId: string
+      contactId: string
+      name: string | null
+      lastText: string | null
+      lastAt: Date
+      unread: number
+    }, ExtArgs["result"]["inboxThread"]>
+    composites: {}
+  }
+
+  type InboxThreadGetPayload<S extends boolean | null | undefined | InboxThreadDefaultArgs> = $Result.GetResult<Prisma.$InboxThreadPayload, S>
+
+  type InboxThreadCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InboxThreadFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InboxThreadCountAggregateInputType | true
+    }
+
+  export interface InboxThreadDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InboxThread'], meta: { name: 'InboxThread' } }
+    /**
+     * Find zero or one InboxThread that matches the filter.
+     * @param {InboxThreadFindUniqueArgs} args - Arguments to find a InboxThread
+     * @example
+     * // Get one InboxThread
+     * const inboxThread = await prisma.inboxThread.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InboxThreadFindUniqueArgs>(args: SelectSubset<T, InboxThreadFindUniqueArgs<ExtArgs>>): Prisma__InboxThreadClient<$Result.GetResult<Prisma.$InboxThreadPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one InboxThread that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InboxThreadFindUniqueOrThrowArgs} args - Arguments to find a InboxThread
+     * @example
+     * // Get one InboxThread
+     * const inboxThread = await prisma.inboxThread.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InboxThreadFindUniqueOrThrowArgs>(args: SelectSubset<T, InboxThreadFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InboxThreadClient<$Result.GetResult<Prisma.$InboxThreadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InboxThread that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxThreadFindFirstArgs} args - Arguments to find a InboxThread
+     * @example
+     * // Get one InboxThread
+     * const inboxThread = await prisma.inboxThread.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InboxThreadFindFirstArgs>(args?: SelectSubset<T, InboxThreadFindFirstArgs<ExtArgs>>): Prisma__InboxThreadClient<$Result.GetResult<Prisma.$InboxThreadPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InboxThread that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxThreadFindFirstOrThrowArgs} args - Arguments to find a InboxThread
+     * @example
+     * // Get one InboxThread
+     * const inboxThread = await prisma.inboxThread.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InboxThreadFindFirstOrThrowArgs>(args?: SelectSubset<T, InboxThreadFindFirstOrThrowArgs<ExtArgs>>): Prisma__InboxThreadClient<$Result.GetResult<Prisma.$InboxThreadPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more InboxThreads that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxThreadFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InboxThreads
+     * const inboxThreads = await prisma.inboxThread.findMany()
+     * 
+     * // Get first 10 InboxThreads
+     * const inboxThreads = await prisma.inboxThread.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const inboxThreadWithIdOnly = await prisma.inboxThread.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InboxThreadFindManyArgs>(args?: SelectSubset<T, InboxThreadFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboxThreadPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a InboxThread.
+     * @param {InboxThreadCreateArgs} args - Arguments to create a InboxThread.
+     * @example
+     * // Create one InboxThread
+     * const InboxThread = await prisma.inboxThread.create({
+     *   data: {
+     *     // ... data to create a InboxThread
+     *   }
+     * })
+     * 
+     */
+    create<T extends InboxThreadCreateArgs>(args: SelectSubset<T, InboxThreadCreateArgs<ExtArgs>>): Prisma__InboxThreadClient<$Result.GetResult<Prisma.$InboxThreadPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many InboxThreads.
+     * @param {InboxThreadCreateManyArgs} args - Arguments to create many InboxThreads.
+     * @example
+     * // Create many InboxThreads
+     * const inboxThread = await prisma.inboxThread.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InboxThreadCreateManyArgs>(args?: SelectSubset<T, InboxThreadCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many InboxThreads and returns the data saved in the database.
+     * @param {InboxThreadCreateManyAndReturnArgs} args - Arguments to create many InboxThreads.
+     * @example
+     * // Create many InboxThreads
+     * const inboxThread = await prisma.inboxThread.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many InboxThreads and only return the `id`
+     * const inboxThreadWithIdOnly = await prisma.inboxThread.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InboxThreadCreateManyAndReturnArgs>(args?: SelectSubset<T, InboxThreadCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboxThreadPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a InboxThread.
+     * @param {InboxThreadDeleteArgs} args - Arguments to delete one InboxThread.
+     * @example
+     * // Delete one InboxThread
+     * const InboxThread = await prisma.inboxThread.delete({
+     *   where: {
+     *     // ... filter to delete one InboxThread
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InboxThreadDeleteArgs>(args: SelectSubset<T, InboxThreadDeleteArgs<ExtArgs>>): Prisma__InboxThreadClient<$Result.GetResult<Prisma.$InboxThreadPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one InboxThread.
+     * @param {InboxThreadUpdateArgs} args - Arguments to update one InboxThread.
+     * @example
+     * // Update one InboxThread
+     * const inboxThread = await prisma.inboxThread.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InboxThreadUpdateArgs>(args: SelectSubset<T, InboxThreadUpdateArgs<ExtArgs>>): Prisma__InboxThreadClient<$Result.GetResult<Prisma.$InboxThreadPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more InboxThreads.
+     * @param {InboxThreadDeleteManyArgs} args - Arguments to filter InboxThreads to delete.
+     * @example
+     * // Delete a few InboxThreads
+     * const { count } = await prisma.inboxThread.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InboxThreadDeleteManyArgs>(args?: SelectSubset<T, InboxThreadDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InboxThreads.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxThreadUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InboxThreads
+     * const inboxThread = await prisma.inboxThread.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InboxThreadUpdateManyArgs>(args: SelectSubset<T, InboxThreadUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InboxThreads and returns the data updated in the database.
+     * @param {InboxThreadUpdateManyAndReturnArgs} args - Arguments to update many InboxThreads.
+     * @example
+     * // Update many InboxThreads
+     * const inboxThread = await prisma.inboxThread.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more InboxThreads and only return the `id`
+     * const inboxThreadWithIdOnly = await prisma.inboxThread.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InboxThreadUpdateManyAndReturnArgs>(args: SelectSubset<T, InboxThreadUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboxThreadPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one InboxThread.
+     * @param {InboxThreadUpsertArgs} args - Arguments to update or create a InboxThread.
+     * @example
+     * // Update or create a InboxThread
+     * const inboxThread = await prisma.inboxThread.upsert({
+     *   create: {
+     *     // ... data to create a InboxThread
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InboxThread we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InboxThreadUpsertArgs>(args: SelectSubset<T, InboxThreadUpsertArgs<ExtArgs>>): Prisma__InboxThreadClient<$Result.GetResult<Prisma.$InboxThreadPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of InboxThreads.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxThreadCountArgs} args - Arguments to filter InboxThreads to count.
+     * @example
+     * // Count the number of InboxThreads
+     * const count = await prisma.inboxThread.count({
+     *   where: {
+     *     // ... the filter for the InboxThreads we want to count
+     *   }
+     * })
+    **/
+    count<T extends InboxThreadCountArgs>(
+      args?: Subset<T, InboxThreadCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InboxThreadCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InboxThread.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxThreadAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InboxThreadAggregateArgs>(args: Subset<T, InboxThreadAggregateArgs>): Prisma.PrismaPromise<GetInboxThreadAggregateType<T>>
+
+    /**
+     * Group by InboxThread.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxThreadGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InboxThreadGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InboxThreadGroupByArgs['orderBy'] }
+        : { orderBy?: InboxThreadGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InboxThreadGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInboxThreadGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the InboxThread model
+   */
+  readonly fields: InboxThreadFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for InboxThread.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InboxThreadClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    messages<T extends InboxThread$messagesArgs<ExtArgs> = {}>(args?: Subset<T, InboxThread$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboxMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the InboxThread model
+   */
+  interface InboxThreadFieldRefs {
+    readonly id: FieldRef<"InboxThread", 'String'>
+    readonly channel: FieldRef<"InboxThread", 'String'>
+    readonly accountId: FieldRef<"InboxThread", 'String'>
+    readonly contactId: FieldRef<"InboxThread", 'String'>
+    readonly name: FieldRef<"InboxThread", 'String'>
+    readonly lastText: FieldRef<"InboxThread", 'String'>
+    readonly lastAt: FieldRef<"InboxThread", 'DateTime'>
+    readonly unread: FieldRef<"InboxThread", 'Int'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * InboxThread findUnique
+   */
+  export type InboxThreadFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxThread
+     */
+    select?: InboxThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxThread
+     */
+    omit?: InboxThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxThreadInclude<ExtArgs> | null
+    /**
+     * Filter, which InboxThread to fetch.
+     */
+    where: InboxThreadWhereUniqueInput
+  }
+
+  /**
+   * InboxThread findUniqueOrThrow
+   */
+  export type InboxThreadFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxThread
+     */
+    select?: InboxThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxThread
+     */
+    omit?: InboxThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxThreadInclude<ExtArgs> | null
+    /**
+     * Filter, which InboxThread to fetch.
+     */
+    where: InboxThreadWhereUniqueInput
+  }
+
+  /**
+   * InboxThread findFirst
+   */
+  export type InboxThreadFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxThread
+     */
+    select?: InboxThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxThread
+     */
+    omit?: InboxThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxThreadInclude<ExtArgs> | null
+    /**
+     * Filter, which InboxThread to fetch.
+     */
+    where?: InboxThreadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxThreads to fetch.
+     */
+    orderBy?: InboxThreadOrderByWithRelationInput | InboxThreadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InboxThreads.
+     */
+    cursor?: InboxThreadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxThreads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxThreads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InboxThreads.
+     */
+    distinct?: InboxThreadScalarFieldEnum | InboxThreadScalarFieldEnum[]
+  }
+
+  /**
+   * InboxThread findFirstOrThrow
+   */
+  export type InboxThreadFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxThread
+     */
+    select?: InboxThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxThread
+     */
+    omit?: InboxThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxThreadInclude<ExtArgs> | null
+    /**
+     * Filter, which InboxThread to fetch.
+     */
+    where?: InboxThreadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxThreads to fetch.
+     */
+    orderBy?: InboxThreadOrderByWithRelationInput | InboxThreadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InboxThreads.
+     */
+    cursor?: InboxThreadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxThreads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxThreads.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InboxThreads.
+     */
+    distinct?: InboxThreadScalarFieldEnum | InboxThreadScalarFieldEnum[]
+  }
+
+  /**
+   * InboxThread findMany
+   */
+  export type InboxThreadFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxThread
+     */
+    select?: InboxThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxThread
+     */
+    omit?: InboxThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxThreadInclude<ExtArgs> | null
+    /**
+     * Filter, which InboxThreads to fetch.
+     */
+    where?: InboxThreadWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxThreads to fetch.
+     */
+    orderBy?: InboxThreadOrderByWithRelationInput | InboxThreadOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing InboxThreads.
+     */
+    cursor?: InboxThreadWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxThreads from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxThreads.
+     */
+    skip?: number
+    distinct?: InboxThreadScalarFieldEnum | InboxThreadScalarFieldEnum[]
+  }
+
+  /**
+   * InboxThread create
+   */
+  export type InboxThreadCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxThread
+     */
+    select?: InboxThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxThread
+     */
+    omit?: InboxThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxThreadInclude<ExtArgs> | null
+    /**
+     * The data needed to create a InboxThread.
+     */
+    data: XOR<InboxThreadCreateInput, InboxThreadUncheckedCreateInput>
+  }
+
+  /**
+   * InboxThread createMany
+   */
+  export type InboxThreadCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many InboxThreads.
+     */
+    data: InboxThreadCreateManyInput | InboxThreadCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InboxThread createManyAndReturn
+   */
+  export type InboxThreadCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxThread
+     */
+    select?: InboxThreadSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxThread
+     */
+    omit?: InboxThreadOmit<ExtArgs> | null
+    /**
+     * The data used to create many InboxThreads.
+     */
+    data: InboxThreadCreateManyInput | InboxThreadCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InboxThread update
+   */
+  export type InboxThreadUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxThread
+     */
+    select?: InboxThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxThread
+     */
+    omit?: InboxThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxThreadInclude<ExtArgs> | null
+    /**
+     * The data needed to update a InboxThread.
+     */
+    data: XOR<InboxThreadUpdateInput, InboxThreadUncheckedUpdateInput>
+    /**
+     * Choose, which InboxThread to update.
+     */
+    where: InboxThreadWhereUniqueInput
+  }
+
+  /**
+   * InboxThread updateMany
+   */
+  export type InboxThreadUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update InboxThreads.
+     */
+    data: XOR<InboxThreadUpdateManyMutationInput, InboxThreadUncheckedUpdateManyInput>
+    /**
+     * Filter which InboxThreads to update
+     */
+    where?: InboxThreadWhereInput
+    /**
+     * Limit how many InboxThreads to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboxThread updateManyAndReturn
+   */
+  export type InboxThreadUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxThread
+     */
+    select?: InboxThreadSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxThread
+     */
+    omit?: InboxThreadOmit<ExtArgs> | null
+    /**
+     * The data used to update InboxThreads.
+     */
+    data: XOR<InboxThreadUpdateManyMutationInput, InboxThreadUncheckedUpdateManyInput>
+    /**
+     * Filter which InboxThreads to update
+     */
+    where?: InboxThreadWhereInput
+    /**
+     * Limit how many InboxThreads to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboxThread upsert
+   */
+  export type InboxThreadUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxThread
+     */
+    select?: InboxThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxThread
+     */
+    omit?: InboxThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxThreadInclude<ExtArgs> | null
+    /**
+     * The filter to search for the InboxThread to update in case it exists.
+     */
+    where: InboxThreadWhereUniqueInput
+    /**
+     * In case the InboxThread found by the `where` argument doesn't exist, create a new InboxThread with this data.
+     */
+    create: XOR<InboxThreadCreateInput, InboxThreadUncheckedCreateInput>
+    /**
+     * In case the InboxThread was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InboxThreadUpdateInput, InboxThreadUncheckedUpdateInput>
+  }
+
+  /**
+   * InboxThread delete
+   */
+  export type InboxThreadDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxThread
+     */
+    select?: InboxThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxThread
+     */
+    omit?: InboxThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxThreadInclude<ExtArgs> | null
+    /**
+     * Filter which InboxThread to delete.
+     */
+    where: InboxThreadWhereUniqueInput
+  }
+
+  /**
+   * InboxThread deleteMany
+   */
+  export type InboxThreadDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InboxThreads to delete
+     */
+    where?: InboxThreadWhereInput
+    /**
+     * Limit how many InboxThreads to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboxThread.messages
+   */
+  export type InboxThread$messagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxMessage
+     */
+    select?: InboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxMessage
+     */
+    omit?: InboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxMessageInclude<ExtArgs> | null
+    where?: InboxMessageWhereInput
+    orderBy?: InboxMessageOrderByWithRelationInput | InboxMessageOrderByWithRelationInput[]
+    cursor?: InboxMessageWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: InboxMessageScalarFieldEnum | InboxMessageScalarFieldEnum[]
+  }
+
+  /**
+   * InboxThread without action
+   */
+  export type InboxThreadDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxThread
+     */
+    select?: InboxThreadSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxThread
+     */
+    omit?: InboxThreadOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxThreadInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model InboxMessage
+   */
+
+  export type AggregateInboxMessage = {
+    _count: InboxMessageCountAggregateOutputType | null
+    _min: InboxMessageMinAggregateOutputType | null
+    _max: InboxMessageMaxAggregateOutputType | null
+  }
+
+  export type InboxMessageMinAggregateOutputType = {
+    id: string | null
+    threadId: string | null
+    dir: string | null
+    text: string | null
+    metaId: string | null
+    userId: string | null
+    error: string | null
+    at: Date | null
+  }
+
+  export type InboxMessageMaxAggregateOutputType = {
+    id: string | null
+    threadId: string | null
+    dir: string | null
+    text: string | null
+    metaId: string | null
+    userId: string | null
+    error: string | null
+    at: Date | null
+  }
+
+  export type InboxMessageCountAggregateOutputType = {
+    id: number
+    threadId: number
+    dir: number
+    text: number
+    metaId: number
+    userId: number
+    error: number
+    at: number
+    _all: number
+  }
+
+
+  export type InboxMessageMinAggregateInputType = {
+    id?: true
+    threadId?: true
+    dir?: true
+    text?: true
+    metaId?: true
+    userId?: true
+    error?: true
+    at?: true
+  }
+
+  export type InboxMessageMaxAggregateInputType = {
+    id?: true
+    threadId?: true
+    dir?: true
+    text?: true
+    metaId?: true
+    userId?: true
+    error?: true
+    at?: true
+  }
+
+  export type InboxMessageCountAggregateInputType = {
+    id?: true
+    threadId?: true
+    dir?: true
+    text?: true
+    metaId?: true
+    userId?: true
+    error?: true
+    at?: true
+    _all?: true
+  }
+
+  export type InboxMessageAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InboxMessage to aggregate.
+     */
+    where?: InboxMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxMessages to fetch.
+     */
+    orderBy?: InboxMessageOrderByWithRelationInput | InboxMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InboxMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned InboxMessages
+    **/
+    _count?: true | InboxMessageCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InboxMessageMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InboxMessageMaxAggregateInputType
+  }
+
+  export type GetInboxMessageAggregateType<T extends InboxMessageAggregateArgs> = {
+        [P in keyof T & keyof AggregateInboxMessage]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInboxMessage[P]>
+      : GetScalarType<T[P], AggregateInboxMessage[P]>
+  }
+
+
+
+
+  export type InboxMessageGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InboxMessageWhereInput
+    orderBy?: InboxMessageOrderByWithAggregationInput | InboxMessageOrderByWithAggregationInput[]
+    by: InboxMessageScalarFieldEnum[] | InboxMessageScalarFieldEnum
+    having?: InboxMessageScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InboxMessageCountAggregateInputType | true
+    _min?: InboxMessageMinAggregateInputType
+    _max?: InboxMessageMaxAggregateInputType
+  }
+
+  export type InboxMessageGroupByOutputType = {
+    id: string
+    threadId: string
+    dir: string
+    text: string
+    metaId: string | null
+    userId: string | null
+    error: string | null
+    at: Date
+    _count: InboxMessageCountAggregateOutputType | null
+    _min: InboxMessageMinAggregateOutputType | null
+    _max: InboxMessageMaxAggregateOutputType | null
+  }
+
+  type GetInboxMessageGroupByPayload<T extends InboxMessageGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InboxMessageGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InboxMessageGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InboxMessageGroupByOutputType[P]>
+            : GetScalarType<T[P], InboxMessageGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InboxMessageSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    threadId?: boolean
+    dir?: boolean
+    text?: boolean
+    metaId?: boolean
+    userId?: boolean
+    error?: boolean
+    at?: boolean
+    thread?: boolean | InboxThreadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["inboxMessage"]>
+
+  export type InboxMessageSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    threadId?: boolean
+    dir?: boolean
+    text?: boolean
+    metaId?: boolean
+    userId?: boolean
+    error?: boolean
+    at?: boolean
+    thread?: boolean | InboxThreadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["inboxMessage"]>
+
+  export type InboxMessageSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    threadId?: boolean
+    dir?: boolean
+    text?: boolean
+    metaId?: boolean
+    userId?: boolean
+    error?: boolean
+    at?: boolean
+    thread?: boolean | InboxThreadDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["inboxMessage"]>
+
+  export type InboxMessageSelectScalar = {
+    id?: boolean
+    threadId?: boolean
+    dir?: boolean
+    text?: boolean
+    metaId?: boolean
+    userId?: boolean
+    error?: boolean
+    at?: boolean
+  }
+
+  export type InboxMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "threadId" | "dir" | "text" | "metaId" | "userId" | "error" | "at", ExtArgs["result"]["inboxMessage"]>
+  export type InboxMessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    thread?: boolean | InboxThreadDefaultArgs<ExtArgs>
+  }
+  export type InboxMessageIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    thread?: boolean | InboxThreadDefaultArgs<ExtArgs>
+  }
+  export type InboxMessageIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    thread?: boolean | InboxThreadDefaultArgs<ExtArgs>
+  }
+
+  export type $InboxMessagePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "InboxMessage"
+    objects: {
+      thread: Prisma.$InboxThreadPayload<ExtArgs>
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      threadId: string
+      dir: string
+      text: string
+      metaId: string | null
+      userId: string | null
+      error: string | null
+      at: Date
+    }, ExtArgs["result"]["inboxMessage"]>
+    composites: {}
+  }
+
+  type InboxMessageGetPayload<S extends boolean | null | undefined | InboxMessageDefaultArgs> = $Result.GetResult<Prisma.$InboxMessagePayload, S>
+
+  type InboxMessageCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InboxMessageFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InboxMessageCountAggregateInputType | true
+    }
+
+  export interface InboxMessageDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InboxMessage'], meta: { name: 'InboxMessage' } }
+    /**
+     * Find zero or one InboxMessage that matches the filter.
+     * @param {InboxMessageFindUniqueArgs} args - Arguments to find a InboxMessage
+     * @example
+     * // Get one InboxMessage
+     * const inboxMessage = await prisma.inboxMessage.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InboxMessageFindUniqueArgs>(args: SelectSubset<T, InboxMessageFindUniqueArgs<ExtArgs>>): Prisma__InboxMessageClient<$Result.GetResult<Prisma.$InboxMessagePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one InboxMessage that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InboxMessageFindUniqueOrThrowArgs} args - Arguments to find a InboxMessage
+     * @example
+     * // Get one InboxMessage
+     * const inboxMessage = await prisma.inboxMessage.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InboxMessageFindUniqueOrThrowArgs>(args: SelectSubset<T, InboxMessageFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InboxMessageClient<$Result.GetResult<Prisma.$InboxMessagePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InboxMessage that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxMessageFindFirstArgs} args - Arguments to find a InboxMessage
+     * @example
+     * // Get one InboxMessage
+     * const inboxMessage = await prisma.inboxMessage.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InboxMessageFindFirstArgs>(args?: SelectSubset<T, InboxMessageFindFirstArgs<ExtArgs>>): Prisma__InboxMessageClient<$Result.GetResult<Prisma.$InboxMessagePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InboxMessage that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxMessageFindFirstOrThrowArgs} args - Arguments to find a InboxMessage
+     * @example
+     * // Get one InboxMessage
+     * const inboxMessage = await prisma.inboxMessage.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InboxMessageFindFirstOrThrowArgs>(args?: SelectSubset<T, InboxMessageFindFirstOrThrowArgs<ExtArgs>>): Prisma__InboxMessageClient<$Result.GetResult<Prisma.$InboxMessagePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more InboxMessages that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxMessageFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InboxMessages
+     * const inboxMessages = await prisma.inboxMessage.findMany()
+     * 
+     * // Get first 10 InboxMessages
+     * const inboxMessages = await prisma.inboxMessage.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const inboxMessageWithIdOnly = await prisma.inboxMessage.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InboxMessageFindManyArgs>(args?: SelectSubset<T, InboxMessageFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboxMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a InboxMessage.
+     * @param {InboxMessageCreateArgs} args - Arguments to create a InboxMessage.
+     * @example
+     * // Create one InboxMessage
+     * const InboxMessage = await prisma.inboxMessage.create({
+     *   data: {
+     *     // ... data to create a InboxMessage
+     *   }
+     * })
+     * 
+     */
+    create<T extends InboxMessageCreateArgs>(args: SelectSubset<T, InboxMessageCreateArgs<ExtArgs>>): Prisma__InboxMessageClient<$Result.GetResult<Prisma.$InboxMessagePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many InboxMessages.
+     * @param {InboxMessageCreateManyArgs} args - Arguments to create many InboxMessages.
+     * @example
+     * // Create many InboxMessages
+     * const inboxMessage = await prisma.inboxMessage.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InboxMessageCreateManyArgs>(args?: SelectSubset<T, InboxMessageCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many InboxMessages and returns the data saved in the database.
+     * @param {InboxMessageCreateManyAndReturnArgs} args - Arguments to create many InboxMessages.
+     * @example
+     * // Create many InboxMessages
+     * const inboxMessage = await prisma.inboxMessage.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many InboxMessages and only return the `id`
+     * const inboxMessageWithIdOnly = await prisma.inboxMessage.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InboxMessageCreateManyAndReturnArgs>(args?: SelectSubset<T, InboxMessageCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboxMessagePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a InboxMessage.
+     * @param {InboxMessageDeleteArgs} args - Arguments to delete one InboxMessage.
+     * @example
+     * // Delete one InboxMessage
+     * const InboxMessage = await prisma.inboxMessage.delete({
+     *   where: {
+     *     // ... filter to delete one InboxMessage
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InboxMessageDeleteArgs>(args: SelectSubset<T, InboxMessageDeleteArgs<ExtArgs>>): Prisma__InboxMessageClient<$Result.GetResult<Prisma.$InboxMessagePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one InboxMessage.
+     * @param {InboxMessageUpdateArgs} args - Arguments to update one InboxMessage.
+     * @example
+     * // Update one InboxMessage
+     * const inboxMessage = await prisma.inboxMessage.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InboxMessageUpdateArgs>(args: SelectSubset<T, InboxMessageUpdateArgs<ExtArgs>>): Prisma__InboxMessageClient<$Result.GetResult<Prisma.$InboxMessagePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more InboxMessages.
+     * @param {InboxMessageDeleteManyArgs} args - Arguments to filter InboxMessages to delete.
+     * @example
+     * // Delete a few InboxMessages
+     * const { count } = await prisma.inboxMessage.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InboxMessageDeleteManyArgs>(args?: SelectSubset<T, InboxMessageDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InboxMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxMessageUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InboxMessages
+     * const inboxMessage = await prisma.inboxMessage.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InboxMessageUpdateManyArgs>(args: SelectSubset<T, InboxMessageUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InboxMessages and returns the data updated in the database.
+     * @param {InboxMessageUpdateManyAndReturnArgs} args - Arguments to update many InboxMessages.
+     * @example
+     * // Update many InboxMessages
+     * const inboxMessage = await prisma.inboxMessage.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more InboxMessages and only return the `id`
+     * const inboxMessageWithIdOnly = await prisma.inboxMessage.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InboxMessageUpdateManyAndReturnArgs>(args: SelectSubset<T, InboxMessageUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboxMessagePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one InboxMessage.
+     * @param {InboxMessageUpsertArgs} args - Arguments to update or create a InboxMessage.
+     * @example
+     * // Update or create a InboxMessage
+     * const inboxMessage = await prisma.inboxMessage.upsert({
+     *   create: {
+     *     // ... data to create a InboxMessage
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InboxMessage we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InboxMessageUpsertArgs>(args: SelectSubset<T, InboxMessageUpsertArgs<ExtArgs>>): Prisma__InboxMessageClient<$Result.GetResult<Prisma.$InboxMessagePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of InboxMessages.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxMessageCountArgs} args - Arguments to filter InboxMessages to count.
+     * @example
+     * // Count the number of InboxMessages
+     * const count = await prisma.inboxMessage.count({
+     *   where: {
+     *     // ... the filter for the InboxMessages we want to count
+     *   }
+     * })
+    **/
+    count<T extends InboxMessageCountArgs>(
+      args?: Subset<T, InboxMessageCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InboxMessageCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InboxMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxMessageAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InboxMessageAggregateArgs>(args: Subset<T, InboxMessageAggregateArgs>): Prisma.PrismaPromise<GetInboxMessageAggregateType<T>>
+
+    /**
+     * Group by InboxMessage.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxMessageGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InboxMessageGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InboxMessageGroupByArgs['orderBy'] }
+        : { orderBy?: InboxMessageGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InboxMessageGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInboxMessageGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the InboxMessage model
+   */
+  readonly fields: InboxMessageFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for InboxMessage.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InboxMessageClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    thread<T extends InboxThreadDefaultArgs<ExtArgs> = {}>(args?: Subset<T, InboxThreadDefaultArgs<ExtArgs>>): Prisma__InboxThreadClient<$Result.GetResult<Prisma.$InboxThreadPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the InboxMessage model
+   */
+  interface InboxMessageFieldRefs {
+    readonly id: FieldRef<"InboxMessage", 'String'>
+    readonly threadId: FieldRef<"InboxMessage", 'String'>
+    readonly dir: FieldRef<"InboxMessage", 'String'>
+    readonly text: FieldRef<"InboxMessage", 'String'>
+    readonly metaId: FieldRef<"InboxMessage", 'String'>
+    readonly userId: FieldRef<"InboxMessage", 'String'>
+    readonly error: FieldRef<"InboxMessage", 'String'>
+    readonly at: FieldRef<"InboxMessage", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * InboxMessage findUnique
+   */
+  export type InboxMessageFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxMessage
+     */
+    select?: InboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxMessage
+     */
+    omit?: InboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which InboxMessage to fetch.
+     */
+    where: InboxMessageWhereUniqueInput
+  }
+
+  /**
+   * InboxMessage findUniqueOrThrow
+   */
+  export type InboxMessageFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxMessage
+     */
+    select?: InboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxMessage
+     */
+    omit?: InboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which InboxMessage to fetch.
+     */
+    where: InboxMessageWhereUniqueInput
+  }
+
+  /**
+   * InboxMessage findFirst
+   */
+  export type InboxMessageFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxMessage
+     */
+    select?: InboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxMessage
+     */
+    omit?: InboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which InboxMessage to fetch.
+     */
+    where?: InboxMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxMessages to fetch.
+     */
+    orderBy?: InboxMessageOrderByWithRelationInput | InboxMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InboxMessages.
+     */
+    cursor?: InboxMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InboxMessages.
+     */
+    distinct?: InboxMessageScalarFieldEnum | InboxMessageScalarFieldEnum[]
+  }
+
+  /**
+   * InboxMessage findFirstOrThrow
+   */
+  export type InboxMessageFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxMessage
+     */
+    select?: InboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxMessage
+     */
+    omit?: InboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which InboxMessage to fetch.
+     */
+    where?: InboxMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxMessages to fetch.
+     */
+    orderBy?: InboxMessageOrderByWithRelationInput | InboxMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InboxMessages.
+     */
+    cursor?: InboxMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxMessages.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InboxMessages.
+     */
+    distinct?: InboxMessageScalarFieldEnum | InboxMessageScalarFieldEnum[]
+  }
+
+  /**
+   * InboxMessage findMany
+   */
+  export type InboxMessageFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxMessage
+     */
+    select?: InboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxMessage
+     */
+    omit?: InboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxMessageInclude<ExtArgs> | null
+    /**
+     * Filter, which InboxMessages to fetch.
+     */
+    where?: InboxMessageWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxMessages to fetch.
+     */
+    orderBy?: InboxMessageOrderByWithRelationInput | InboxMessageOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing InboxMessages.
+     */
+    cursor?: InboxMessageWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxMessages from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxMessages.
+     */
+    skip?: number
+    distinct?: InboxMessageScalarFieldEnum | InboxMessageScalarFieldEnum[]
+  }
+
+  /**
+   * InboxMessage create
+   */
+  export type InboxMessageCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxMessage
+     */
+    select?: InboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxMessage
+     */
+    omit?: InboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to create a InboxMessage.
+     */
+    data: XOR<InboxMessageCreateInput, InboxMessageUncheckedCreateInput>
+  }
+
+  /**
+   * InboxMessage createMany
+   */
+  export type InboxMessageCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many InboxMessages.
+     */
+    data: InboxMessageCreateManyInput | InboxMessageCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InboxMessage createManyAndReturn
+   */
+  export type InboxMessageCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxMessage
+     */
+    select?: InboxMessageSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxMessage
+     */
+    omit?: InboxMessageOmit<ExtArgs> | null
+    /**
+     * The data used to create many InboxMessages.
+     */
+    data: InboxMessageCreateManyInput | InboxMessageCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxMessageIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InboxMessage update
+   */
+  export type InboxMessageUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxMessage
+     */
+    select?: InboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxMessage
+     */
+    omit?: InboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxMessageInclude<ExtArgs> | null
+    /**
+     * The data needed to update a InboxMessage.
+     */
+    data: XOR<InboxMessageUpdateInput, InboxMessageUncheckedUpdateInput>
+    /**
+     * Choose, which InboxMessage to update.
+     */
+    where: InboxMessageWhereUniqueInput
+  }
+
+  /**
+   * InboxMessage updateMany
+   */
+  export type InboxMessageUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update InboxMessages.
+     */
+    data: XOR<InboxMessageUpdateManyMutationInput, InboxMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which InboxMessages to update
+     */
+    where?: InboxMessageWhereInput
+    /**
+     * Limit how many InboxMessages to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboxMessage updateManyAndReturn
+   */
+  export type InboxMessageUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxMessage
+     */
+    select?: InboxMessageSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxMessage
+     */
+    omit?: InboxMessageOmit<ExtArgs> | null
+    /**
+     * The data used to update InboxMessages.
+     */
+    data: XOR<InboxMessageUpdateManyMutationInput, InboxMessageUncheckedUpdateManyInput>
+    /**
+     * Filter which InboxMessages to update
+     */
+    where?: InboxMessageWhereInput
+    /**
+     * Limit how many InboxMessages to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxMessageIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * InboxMessage upsert
+   */
+  export type InboxMessageUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxMessage
+     */
+    select?: InboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxMessage
+     */
+    omit?: InboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxMessageInclude<ExtArgs> | null
+    /**
+     * The filter to search for the InboxMessage to update in case it exists.
+     */
+    where: InboxMessageWhereUniqueInput
+    /**
+     * In case the InboxMessage found by the `where` argument doesn't exist, create a new InboxMessage with this data.
+     */
+    create: XOR<InboxMessageCreateInput, InboxMessageUncheckedCreateInput>
+    /**
+     * In case the InboxMessage was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InboxMessageUpdateInput, InboxMessageUncheckedUpdateInput>
+  }
+
+  /**
+   * InboxMessage delete
+   */
+  export type InboxMessageDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxMessage
+     */
+    select?: InboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxMessage
+     */
+    omit?: InboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxMessageInclude<ExtArgs> | null
+    /**
+     * Filter which InboxMessage to delete.
+     */
+    where: InboxMessageWhereUniqueInput
+  }
+
+  /**
+   * InboxMessage deleteMany
+   */
+  export type InboxMessageDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InboxMessages to delete
+     */
+    where?: InboxMessageWhereInput
+    /**
+     * Limit how many InboxMessages to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboxMessage without action
+   */
+  export type InboxMessageDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxMessage
+     */
+    select?: InboxMessageSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxMessage
+     */
+    omit?: InboxMessageOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: InboxMessageInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -85611,6 +88064,34 @@ export namespace Prisma {
   };
 
   export type DraftProdukScalarFieldEnum = (typeof DraftProdukScalarFieldEnum)[keyof typeof DraftProdukScalarFieldEnum]
+
+
+  export const InboxThreadScalarFieldEnum: {
+    id: 'id',
+    channel: 'channel',
+    accountId: 'accountId',
+    contactId: 'contactId',
+    name: 'name',
+    lastText: 'lastText',
+    lastAt: 'lastAt',
+    unread: 'unread'
+  };
+
+  export type InboxThreadScalarFieldEnum = (typeof InboxThreadScalarFieldEnum)[keyof typeof InboxThreadScalarFieldEnum]
+
+
+  export const InboxMessageScalarFieldEnum: {
+    id: 'id',
+    threadId: 'threadId',
+    dir: 'dir',
+    text: 'text',
+    metaId: 'metaId',
+    userId: 'userId',
+    error: 'error',
+    at: 'at'
+  };
+
+  export type InboxMessageScalarFieldEnum = (typeof InboxMessageScalarFieldEnum)[keyof typeof InboxMessageScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -91304,6 +93785,149 @@ export namespace Prisma {
     updatedBy?: StringNullableWithAggregatesFilter<"DraftProduk"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"DraftProduk"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"DraftProduk"> | Date | string
+  }
+
+  export type InboxThreadWhereInput = {
+    AND?: InboxThreadWhereInput | InboxThreadWhereInput[]
+    OR?: InboxThreadWhereInput[]
+    NOT?: InboxThreadWhereInput | InboxThreadWhereInput[]
+    id?: StringFilter<"InboxThread"> | string
+    channel?: StringFilter<"InboxThread"> | string
+    accountId?: StringFilter<"InboxThread"> | string
+    contactId?: StringFilter<"InboxThread"> | string
+    name?: StringNullableFilter<"InboxThread"> | string | null
+    lastText?: StringNullableFilter<"InboxThread"> | string | null
+    lastAt?: DateTimeFilter<"InboxThread"> | Date | string
+    unread?: IntFilter<"InboxThread"> | number
+    messages?: InboxMessageListRelationFilter
+  }
+
+  export type InboxThreadOrderByWithRelationInput = {
+    id?: SortOrder
+    channel?: SortOrder
+    accountId?: SortOrder
+    contactId?: SortOrder
+    name?: SortOrderInput | SortOrder
+    lastText?: SortOrderInput | SortOrder
+    lastAt?: SortOrder
+    unread?: SortOrder
+    messages?: InboxMessageOrderByRelationAggregateInput
+  }
+
+  export type InboxThreadWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    channel_accountId_contactId?: InboxThreadChannelAccountIdContactIdCompoundUniqueInput
+    AND?: InboxThreadWhereInput | InboxThreadWhereInput[]
+    OR?: InboxThreadWhereInput[]
+    NOT?: InboxThreadWhereInput | InboxThreadWhereInput[]
+    channel?: StringFilter<"InboxThread"> | string
+    accountId?: StringFilter<"InboxThread"> | string
+    contactId?: StringFilter<"InboxThread"> | string
+    name?: StringNullableFilter<"InboxThread"> | string | null
+    lastText?: StringNullableFilter<"InboxThread"> | string | null
+    lastAt?: DateTimeFilter<"InboxThread"> | Date | string
+    unread?: IntFilter<"InboxThread"> | number
+    messages?: InboxMessageListRelationFilter
+  }, "id" | "channel_accountId_contactId">
+
+  export type InboxThreadOrderByWithAggregationInput = {
+    id?: SortOrder
+    channel?: SortOrder
+    accountId?: SortOrder
+    contactId?: SortOrder
+    name?: SortOrderInput | SortOrder
+    lastText?: SortOrderInput | SortOrder
+    lastAt?: SortOrder
+    unread?: SortOrder
+    _count?: InboxThreadCountOrderByAggregateInput
+    _avg?: InboxThreadAvgOrderByAggregateInput
+    _max?: InboxThreadMaxOrderByAggregateInput
+    _min?: InboxThreadMinOrderByAggregateInput
+    _sum?: InboxThreadSumOrderByAggregateInput
+  }
+
+  export type InboxThreadScalarWhereWithAggregatesInput = {
+    AND?: InboxThreadScalarWhereWithAggregatesInput | InboxThreadScalarWhereWithAggregatesInput[]
+    OR?: InboxThreadScalarWhereWithAggregatesInput[]
+    NOT?: InboxThreadScalarWhereWithAggregatesInput | InboxThreadScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"InboxThread"> | string
+    channel?: StringWithAggregatesFilter<"InboxThread"> | string
+    accountId?: StringWithAggregatesFilter<"InboxThread"> | string
+    contactId?: StringWithAggregatesFilter<"InboxThread"> | string
+    name?: StringNullableWithAggregatesFilter<"InboxThread"> | string | null
+    lastText?: StringNullableWithAggregatesFilter<"InboxThread"> | string | null
+    lastAt?: DateTimeWithAggregatesFilter<"InboxThread"> | Date | string
+    unread?: IntWithAggregatesFilter<"InboxThread"> | number
+  }
+
+  export type InboxMessageWhereInput = {
+    AND?: InboxMessageWhereInput | InboxMessageWhereInput[]
+    OR?: InboxMessageWhereInput[]
+    NOT?: InboxMessageWhereInput | InboxMessageWhereInput[]
+    id?: StringFilter<"InboxMessage"> | string
+    threadId?: StringFilter<"InboxMessage"> | string
+    dir?: StringFilter<"InboxMessage"> | string
+    text?: StringFilter<"InboxMessage"> | string
+    metaId?: StringNullableFilter<"InboxMessage"> | string | null
+    userId?: StringNullableFilter<"InboxMessage"> | string | null
+    error?: StringNullableFilter<"InboxMessage"> | string | null
+    at?: DateTimeFilter<"InboxMessage"> | Date | string
+    thread?: XOR<InboxThreadScalarRelationFilter, InboxThreadWhereInput>
+  }
+
+  export type InboxMessageOrderByWithRelationInput = {
+    id?: SortOrder
+    threadId?: SortOrder
+    dir?: SortOrder
+    text?: SortOrder
+    metaId?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
+    error?: SortOrderInput | SortOrder
+    at?: SortOrder
+    thread?: InboxThreadOrderByWithRelationInput
+  }
+
+  export type InboxMessageWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    metaId?: string
+    AND?: InboxMessageWhereInput | InboxMessageWhereInput[]
+    OR?: InboxMessageWhereInput[]
+    NOT?: InboxMessageWhereInput | InboxMessageWhereInput[]
+    threadId?: StringFilter<"InboxMessage"> | string
+    dir?: StringFilter<"InboxMessage"> | string
+    text?: StringFilter<"InboxMessage"> | string
+    userId?: StringNullableFilter<"InboxMessage"> | string | null
+    error?: StringNullableFilter<"InboxMessage"> | string | null
+    at?: DateTimeFilter<"InboxMessage"> | Date | string
+    thread?: XOR<InboxThreadScalarRelationFilter, InboxThreadWhereInput>
+  }, "id" | "metaId">
+
+  export type InboxMessageOrderByWithAggregationInput = {
+    id?: SortOrder
+    threadId?: SortOrder
+    dir?: SortOrder
+    text?: SortOrder
+    metaId?: SortOrderInput | SortOrder
+    userId?: SortOrderInput | SortOrder
+    error?: SortOrderInput | SortOrder
+    at?: SortOrder
+    _count?: InboxMessageCountOrderByAggregateInput
+    _max?: InboxMessageMaxOrderByAggregateInput
+    _min?: InboxMessageMinOrderByAggregateInput
+  }
+
+  export type InboxMessageScalarWhereWithAggregatesInput = {
+    AND?: InboxMessageScalarWhereWithAggregatesInput | InboxMessageScalarWhereWithAggregatesInput[]
+    OR?: InboxMessageScalarWhereWithAggregatesInput[]
+    NOT?: InboxMessageScalarWhereWithAggregatesInput | InboxMessageScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"InboxMessage"> | string
+    threadId?: StringWithAggregatesFilter<"InboxMessage"> | string
+    dir?: StringWithAggregatesFilter<"InboxMessage"> | string
+    text?: StringWithAggregatesFilter<"InboxMessage"> | string
+    metaId?: StringNullableWithAggregatesFilter<"InboxMessage"> | string | null
+    userId?: StringNullableWithAggregatesFilter<"InboxMessage"> | string | null
+    error?: StringNullableWithAggregatesFilter<"InboxMessage"> | string | null
+    at?: DateTimeWithAggregatesFilter<"InboxMessage"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -97477,6 +100101,163 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type InboxThreadCreateInput = {
+    id?: string
+    channel: string
+    accountId: string
+    contactId: string
+    name?: string | null
+    lastText?: string | null
+    lastAt?: Date | string
+    unread?: number
+    messages?: InboxMessageCreateNestedManyWithoutThreadInput
+  }
+
+  export type InboxThreadUncheckedCreateInput = {
+    id?: string
+    channel: string
+    accountId: string
+    contactId: string
+    name?: string | null
+    lastText?: string | null
+    lastAt?: Date | string
+    unread?: number
+    messages?: InboxMessageUncheckedCreateNestedManyWithoutThreadInput
+  }
+
+  export type InboxThreadUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    lastText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    unread?: IntFieldUpdateOperationsInput | number
+    messages?: InboxMessageUpdateManyWithoutThreadNestedInput
+  }
+
+  export type InboxThreadUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    lastText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    unread?: IntFieldUpdateOperationsInput | number
+    messages?: InboxMessageUncheckedUpdateManyWithoutThreadNestedInput
+  }
+
+  export type InboxThreadCreateManyInput = {
+    id?: string
+    channel: string
+    accountId: string
+    contactId: string
+    name?: string | null
+    lastText?: string | null
+    lastAt?: Date | string
+    unread?: number
+  }
+
+  export type InboxThreadUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    lastText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    unread?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type InboxThreadUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    lastText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    unread?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type InboxMessageCreateInput = {
+    id?: string
+    dir: string
+    text: string
+    metaId?: string | null
+    userId?: string | null
+    error?: string | null
+    at?: Date | string
+    thread: InboxThreadCreateNestedOneWithoutMessagesInput
+  }
+
+  export type InboxMessageUncheckedCreateInput = {
+    id?: string
+    threadId: string
+    dir: string
+    text: string
+    metaId?: string | null
+    userId?: string | null
+    error?: string | null
+    at?: Date | string
+  }
+
+  export type InboxMessageUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dir?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    metaId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+    thread?: InboxThreadUpdateOneRequiredWithoutMessagesNestedInput
+  }
+
+  export type InboxMessageUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    threadId?: StringFieldUpdateOperationsInput | string
+    dir?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    metaId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboxMessageCreateManyInput = {
+    id?: string
+    threadId: string
+    dir: string
+    text: string
+    metaId?: string | null
+    userId?: string | null
+    error?: string | null
+    at?: Date | string
+  }
+
+  export type InboxMessageUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dir?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    metaId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboxMessageUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    threadId?: StringFieldUpdateOperationsInput | string
+    dir?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    metaId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -101236,6 +104017,101 @@ export namespace Prisma {
     updatedAt?: SortOrder
   }
 
+  export type InboxMessageListRelationFilter = {
+    every?: InboxMessageWhereInput
+    some?: InboxMessageWhereInput
+    none?: InboxMessageWhereInput
+  }
+
+  export type InboxMessageOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type InboxThreadChannelAccountIdContactIdCompoundUniqueInput = {
+    channel: string
+    accountId: string
+    contactId: string
+  }
+
+  export type InboxThreadCountOrderByAggregateInput = {
+    id?: SortOrder
+    channel?: SortOrder
+    accountId?: SortOrder
+    contactId?: SortOrder
+    name?: SortOrder
+    lastText?: SortOrder
+    lastAt?: SortOrder
+    unread?: SortOrder
+  }
+
+  export type InboxThreadAvgOrderByAggregateInput = {
+    unread?: SortOrder
+  }
+
+  export type InboxThreadMaxOrderByAggregateInput = {
+    id?: SortOrder
+    channel?: SortOrder
+    accountId?: SortOrder
+    contactId?: SortOrder
+    name?: SortOrder
+    lastText?: SortOrder
+    lastAt?: SortOrder
+    unread?: SortOrder
+  }
+
+  export type InboxThreadMinOrderByAggregateInput = {
+    id?: SortOrder
+    channel?: SortOrder
+    accountId?: SortOrder
+    contactId?: SortOrder
+    name?: SortOrder
+    lastText?: SortOrder
+    lastAt?: SortOrder
+    unread?: SortOrder
+  }
+
+  export type InboxThreadSumOrderByAggregateInput = {
+    unread?: SortOrder
+  }
+
+  export type InboxThreadScalarRelationFilter = {
+    is?: InboxThreadWhereInput
+    isNot?: InboxThreadWhereInput
+  }
+
+  export type InboxMessageCountOrderByAggregateInput = {
+    id?: SortOrder
+    threadId?: SortOrder
+    dir?: SortOrder
+    text?: SortOrder
+    metaId?: SortOrder
+    userId?: SortOrder
+    error?: SortOrder
+    at?: SortOrder
+  }
+
+  export type InboxMessageMaxOrderByAggregateInput = {
+    id?: SortOrder
+    threadId?: SortOrder
+    dir?: SortOrder
+    text?: SortOrder
+    metaId?: SortOrder
+    userId?: SortOrder
+    error?: SortOrder
+    at?: SortOrder
+  }
+
+  export type InboxMessageMinOrderByAggregateInput = {
+    id?: SortOrder
+    threadId?: SortOrder
+    dir?: SortOrder
+    text?: SortOrder
+    metaId?: SortOrder
+    userId?: SortOrder
+    error?: SortOrder
+    at?: SortOrder
+  }
+
   export type BranchCreateNestedOneWithoutUsersInput = {
     create?: XOR<BranchCreateWithoutUsersInput, BranchUncheckedCreateWithoutUsersInput>
     connectOrCreate?: BranchCreateOrConnectWithoutUsersInput
@@ -103278,6 +106154,62 @@ export namespace Prisma {
   export type ScriptDocUpdatewritersInput = {
     set?: string[]
     push?: string | string[]
+  }
+
+  export type InboxMessageCreateNestedManyWithoutThreadInput = {
+    create?: XOR<InboxMessageCreateWithoutThreadInput, InboxMessageUncheckedCreateWithoutThreadInput> | InboxMessageCreateWithoutThreadInput[] | InboxMessageUncheckedCreateWithoutThreadInput[]
+    connectOrCreate?: InboxMessageCreateOrConnectWithoutThreadInput | InboxMessageCreateOrConnectWithoutThreadInput[]
+    createMany?: InboxMessageCreateManyThreadInputEnvelope
+    connect?: InboxMessageWhereUniqueInput | InboxMessageWhereUniqueInput[]
+  }
+
+  export type InboxMessageUncheckedCreateNestedManyWithoutThreadInput = {
+    create?: XOR<InboxMessageCreateWithoutThreadInput, InboxMessageUncheckedCreateWithoutThreadInput> | InboxMessageCreateWithoutThreadInput[] | InboxMessageUncheckedCreateWithoutThreadInput[]
+    connectOrCreate?: InboxMessageCreateOrConnectWithoutThreadInput | InboxMessageCreateOrConnectWithoutThreadInput[]
+    createMany?: InboxMessageCreateManyThreadInputEnvelope
+    connect?: InboxMessageWhereUniqueInput | InboxMessageWhereUniqueInput[]
+  }
+
+  export type InboxMessageUpdateManyWithoutThreadNestedInput = {
+    create?: XOR<InboxMessageCreateWithoutThreadInput, InboxMessageUncheckedCreateWithoutThreadInput> | InboxMessageCreateWithoutThreadInput[] | InboxMessageUncheckedCreateWithoutThreadInput[]
+    connectOrCreate?: InboxMessageCreateOrConnectWithoutThreadInput | InboxMessageCreateOrConnectWithoutThreadInput[]
+    upsert?: InboxMessageUpsertWithWhereUniqueWithoutThreadInput | InboxMessageUpsertWithWhereUniqueWithoutThreadInput[]
+    createMany?: InboxMessageCreateManyThreadInputEnvelope
+    set?: InboxMessageWhereUniqueInput | InboxMessageWhereUniqueInput[]
+    disconnect?: InboxMessageWhereUniqueInput | InboxMessageWhereUniqueInput[]
+    delete?: InboxMessageWhereUniqueInput | InboxMessageWhereUniqueInput[]
+    connect?: InboxMessageWhereUniqueInput | InboxMessageWhereUniqueInput[]
+    update?: InboxMessageUpdateWithWhereUniqueWithoutThreadInput | InboxMessageUpdateWithWhereUniqueWithoutThreadInput[]
+    updateMany?: InboxMessageUpdateManyWithWhereWithoutThreadInput | InboxMessageUpdateManyWithWhereWithoutThreadInput[]
+    deleteMany?: InboxMessageScalarWhereInput | InboxMessageScalarWhereInput[]
+  }
+
+  export type InboxMessageUncheckedUpdateManyWithoutThreadNestedInput = {
+    create?: XOR<InboxMessageCreateWithoutThreadInput, InboxMessageUncheckedCreateWithoutThreadInput> | InboxMessageCreateWithoutThreadInput[] | InboxMessageUncheckedCreateWithoutThreadInput[]
+    connectOrCreate?: InboxMessageCreateOrConnectWithoutThreadInput | InboxMessageCreateOrConnectWithoutThreadInput[]
+    upsert?: InboxMessageUpsertWithWhereUniqueWithoutThreadInput | InboxMessageUpsertWithWhereUniqueWithoutThreadInput[]
+    createMany?: InboxMessageCreateManyThreadInputEnvelope
+    set?: InboxMessageWhereUniqueInput | InboxMessageWhereUniqueInput[]
+    disconnect?: InboxMessageWhereUniqueInput | InboxMessageWhereUniqueInput[]
+    delete?: InboxMessageWhereUniqueInput | InboxMessageWhereUniqueInput[]
+    connect?: InboxMessageWhereUniqueInput | InboxMessageWhereUniqueInput[]
+    update?: InboxMessageUpdateWithWhereUniqueWithoutThreadInput | InboxMessageUpdateWithWhereUniqueWithoutThreadInput[]
+    updateMany?: InboxMessageUpdateManyWithWhereWithoutThreadInput | InboxMessageUpdateManyWithWhereWithoutThreadInput[]
+    deleteMany?: InboxMessageScalarWhereInput | InboxMessageScalarWhereInput[]
+  }
+
+  export type InboxThreadCreateNestedOneWithoutMessagesInput = {
+    create?: XOR<InboxThreadCreateWithoutMessagesInput, InboxThreadUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: InboxThreadCreateOrConnectWithoutMessagesInput
+    connect?: InboxThreadWhereUniqueInput
+  }
+
+  export type InboxThreadUpdateOneRequiredWithoutMessagesNestedInput = {
+    create?: XOR<InboxThreadCreateWithoutMessagesInput, InboxThreadUncheckedCreateWithoutMessagesInput>
+    connectOrCreate?: InboxThreadCreateOrConnectWithoutMessagesInput
+    upsert?: InboxThreadUpsertWithoutMessagesInput
+    connect?: InboxThreadWhereUniqueInput
+    update?: XOR<XOR<InboxThreadUpdateToOneWithWhereWithoutMessagesInput, InboxThreadUpdateWithoutMessagesInput>, InboxThreadUncheckedUpdateWithoutMessagesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -111128,6 +114060,126 @@ export namespace Prisma {
     finishedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
+  export type InboxMessageCreateWithoutThreadInput = {
+    id?: string
+    dir: string
+    text: string
+    metaId?: string | null
+    userId?: string | null
+    error?: string | null
+    at?: Date | string
+  }
+
+  export type InboxMessageUncheckedCreateWithoutThreadInput = {
+    id?: string
+    dir: string
+    text: string
+    metaId?: string | null
+    userId?: string | null
+    error?: string | null
+    at?: Date | string
+  }
+
+  export type InboxMessageCreateOrConnectWithoutThreadInput = {
+    where: InboxMessageWhereUniqueInput
+    create: XOR<InboxMessageCreateWithoutThreadInput, InboxMessageUncheckedCreateWithoutThreadInput>
+  }
+
+  export type InboxMessageCreateManyThreadInputEnvelope = {
+    data: InboxMessageCreateManyThreadInput | InboxMessageCreateManyThreadInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type InboxMessageUpsertWithWhereUniqueWithoutThreadInput = {
+    where: InboxMessageWhereUniqueInput
+    update: XOR<InboxMessageUpdateWithoutThreadInput, InboxMessageUncheckedUpdateWithoutThreadInput>
+    create: XOR<InboxMessageCreateWithoutThreadInput, InboxMessageUncheckedCreateWithoutThreadInput>
+  }
+
+  export type InboxMessageUpdateWithWhereUniqueWithoutThreadInput = {
+    where: InboxMessageWhereUniqueInput
+    data: XOR<InboxMessageUpdateWithoutThreadInput, InboxMessageUncheckedUpdateWithoutThreadInput>
+  }
+
+  export type InboxMessageUpdateManyWithWhereWithoutThreadInput = {
+    where: InboxMessageScalarWhereInput
+    data: XOR<InboxMessageUpdateManyMutationInput, InboxMessageUncheckedUpdateManyWithoutThreadInput>
+  }
+
+  export type InboxMessageScalarWhereInput = {
+    AND?: InboxMessageScalarWhereInput | InboxMessageScalarWhereInput[]
+    OR?: InboxMessageScalarWhereInput[]
+    NOT?: InboxMessageScalarWhereInput | InboxMessageScalarWhereInput[]
+    id?: StringFilter<"InboxMessage"> | string
+    threadId?: StringFilter<"InboxMessage"> | string
+    dir?: StringFilter<"InboxMessage"> | string
+    text?: StringFilter<"InboxMessage"> | string
+    metaId?: StringNullableFilter<"InboxMessage"> | string | null
+    userId?: StringNullableFilter<"InboxMessage"> | string | null
+    error?: StringNullableFilter<"InboxMessage"> | string | null
+    at?: DateTimeFilter<"InboxMessage"> | Date | string
+  }
+
+  export type InboxThreadCreateWithoutMessagesInput = {
+    id?: string
+    channel: string
+    accountId: string
+    contactId: string
+    name?: string | null
+    lastText?: string | null
+    lastAt?: Date | string
+    unread?: number
+  }
+
+  export type InboxThreadUncheckedCreateWithoutMessagesInput = {
+    id?: string
+    channel: string
+    accountId: string
+    contactId: string
+    name?: string | null
+    lastText?: string | null
+    lastAt?: Date | string
+    unread?: number
+  }
+
+  export type InboxThreadCreateOrConnectWithoutMessagesInput = {
+    where: InboxThreadWhereUniqueInput
+    create: XOR<InboxThreadCreateWithoutMessagesInput, InboxThreadUncheckedCreateWithoutMessagesInput>
+  }
+
+  export type InboxThreadUpsertWithoutMessagesInput = {
+    update: XOR<InboxThreadUpdateWithoutMessagesInput, InboxThreadUncheckedUpdateWithoutMessagesInput>
+    create: XOR<InboxThreadCreateWithoutMessagesInput, InboxThreadUncheckedCreateWithoutMessagesInput>
+    where?: InboxThreadWhereInput
+  }
+
+  export type InboxThreadUpdateToOneWithWhereWithoutMessagesInput = {
+    where?: InboxThreadWhereInput
+    data: XOR<InboxThreadUpdateWithoutMessagesInput, InboxThreadUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type InboxThreadUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    lastText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    unread?: IntFieldUpdateOperationsInput | number
+  }
+
+  export type InboxThreadUncheckedUpdateWithoutMessagesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    channel?: StringFieldUpdateOperationsInput | string
+    accountId?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    name?: NullableStringFieldUpdateOperationsInput | string | null
+    lastText?: NullableStringFieldUpdateOperationsInput | string | null
+    lastAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    unread?: IntFieldUpdateOperationsInput | number
+  }
+
   export type UserRoleCreateManyUserInput = {
     roleId: string
     assignedById?: string | null
@@ -112939,6 +115991,46 @@ export namespace Prisma {
     status?: StringFieldUpdateOperationsInput | string
     handle?: NullableStringFieldUpdateOperationsInput | string | null
     result?: JsonNullValueInput | InputJsonValue
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboxMessageCreateManyThreadInput = {
+    id?: string
+    dir: string
+    text: string
+    metaId?: string | null
+    userId?: string | null
+    error?: string | null
+    at?: Date | string
+  }
+
+  export type InboxMessageUpdateWithoutThreadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dir?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    metaId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboxMessageUncheckedUpdateWithoutThreadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dir?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    metaId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    at?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboxMessageUncheckedUpdateManyWithoutThreadInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    dir?: StringFieldUpdateOperationsInput | string
+    text?: StringFieldUpdateOperationsInput | string
+    metaId?: NullableStringFieldUpdateOperationsInput | string | null
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
     at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
