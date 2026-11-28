@@ -4,7 +4,7 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { prisma } from "@/server/db";
 
-export type MetaEvent = { channel: "WA" | "IG"; accountId: string; contactId: string; name?: string; dir: "in" | "out"; text: string; metaId: string; at: Date };
+export type MetaEvent = { channel: "WA" | "IG"; accountId: string; contactId: string; name?: string; dir: "in" | "out"; text: string; metaId: string; at: Date; riwayat?: boolean }; // riwayat = sinkron chat lama (coexistence), tidak menambah belum dibaca
 
 const GRAPH = "https://graph.facebook.com/v23.0";
 
@@ -49,6 +49,10 @@ export function parseMeta(p: Any): MetaEvent[] {
         const nama = new Map<string, string>((v.contacts ?? []).map((x: Any) => [x.wa_id, x.profile?.name]));
         for (const m of v.messages ?? []) out.push({ channel: "WA", accountId: acc, contactId: m.from, name: nama.get(m.from), dir: "in", text: isi(m), metaId: m.id, at: waktu(m.timestamp) });
         for (const m of v.message_echoes ?? []) out.push({ channel: "WA", accountId: acc, contactId: m.to, dir: "out", text: isi(m), metaId: m.id, at: waktu(m.timestamp) });
+        // sinkron riwayat chat lama (field "history"): thread.id = nomor pelanggan
+        for (const h of v.history ?? [])
+          for (const th of h.threads ?? [])
+            for (const m of th.messages ?? []) out.push({ channel: "WA", accountId: acc, contactId: th.id, dir: m.from === th.id ? "in" : "out", text: isi(m), metaId: m.id, at: waktu(m.timestamp), riwayat: true });
       }
     }
     if (p.object === "instagram") {
@@ -64,16 +68,37 @@ export function parseMeta(p: Any): MetaEvent[] {
   return out.filter((x) => x.contactId && x.metaId);
 }
 
+/** Nama kontak dari HP WA Business (field "smb_app_state_sync") → nama chat. */
+export function kontakMeta(p: Any): { accountId: string; contactId: string; name: string }[] {
+  const out: { accountId: string; contactId: string; name: string }[] = [];
+  if (p?.object !== "whatsapp_business_account") return out;
+  for (const e of p.entry ?? [])
+    for (const c of e.changes ?? []) {
+      const acc = c.value?.metadata?.phone_number_id;
+      for (const s of c.value?.state_sync ?? []) {
+        const k = s.contact;
+        const name = k?.full_name || k?.first_name;
+        if (acc && s.type === "contact" && s.action !== "remove" && k?.phone_number && name) out.push({ accountId: acc, contactId: String(k.phone_number).replace(/\D/g, ""), name });
+      }
+    }
+  return out;
+}
+
 /** Simpan pesan; metaId sudah ada (dikirim dari web / webhook diulang) → dilewati. */
 export async function simpanPesan(ev: MetaEvent[]): Promise<number> {
   let n = 0;
   for (const m of ev) {
     if (await prisma.inboxMessage.findUnique({ where: { metaId: m.metaId }, select: { id: true } })) continue;
     const key = { channel: m.channel, accountId: m.accountId, contactId: m.contactId };
+    // thread baru dibuat "kosong" (lastAt 1970) lalu diperbarui di bawah, supaya pesan riwayat/terlambat tidak menimpa pesan terbaru
     const t = await prisma.inboxThread.upsert({
       where: { channel_accountId_contactId: key },
-      create: { ...key, name: m.name ?? null, lastText: m.text, lastAt: m.at, unread: m.dir === "in" ? 1 : 0 },
-      update: { ...(m.name ? { name: m.name } : {}), lastText: m.text, lastAt: m.at, ...(m.dir === "in" ? { unread: { increment: 1 } } : { unread: 0 }) },
+      create: { ...key, name: m.name ?? null, lastAt: new Date(0) },
+      update: m.name ? { name: m.name } : {},
+    });
+    await prisma.inboxThread.update({
+      where: { id: t.id },
+      data: { ...(m.at > t.lastAt ? { lastText: m.text, lastAt: m.at } : {}), ...(m.riwayat ? {} : m.dir === "in" ? { unread: { increment: 1 } } : { unread: 0 }) },
     });
     await prisma.inboxMessage.create({ data: { threadId: t.id, dir: m.dir, text: m.text, metaId: m.metaId, at: m.at } }).catch(() => null); // dobel bersamaan → abaikan
     n++;
@@ -84,7 +109,8 @@ export async function simpanPesan(ev: MetaEvent[]): Promise<number> {
 /** Kirim teks ke pelanggan. WA: maks 24 jam sejak pesan terakhir pelanggan (di luar itu Meta menolak). IG: sama, 24 jam. */
 export async function kirimMeta(channel: string, accountId: string, to: string, text: string): Promise<{ ok: true; id: string } | { ok: false; error: string }> {
   const wa = channel === "WA";
-  const token = wa ? process.env.META_WA_TOKEN : process.env.META_IG_TOKEN || process.env.META_WA_TOKEN;
+  // WA: token per nomor dari Sambungkan WhatsApp (tabel WaNumber), cadangan env META_WA_TOKEN
+  const token = wa ? ((await prisma.waNumber.findUnique({ where: { phoneNumberId: accountId }, select: { token: true } }))?.token ?? process.env.META_WA_TOKEN) : process.env.META_IG_TOKEN || process.env.META_WA_TOKEN;
   if (!token) return { ok: false, error: `Token ${wa ? "META_WA_TOKEN" : "META_IG_TOKEN"} belum diisi di server.` };
   const body = wa ? { messaging_product: "whatsapp", to, type: "text", text: { body: text } } : { recipient: { id: to }, message: { text } };
   try {

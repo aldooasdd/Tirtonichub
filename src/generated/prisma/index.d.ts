@@ -373,6 +373,12 @@ export type InboxThread = $Result.DefaultSelection<Prisma.$InboxThreadPayload>
  * 
  */
 export type InboxMessage = $Result.DefaultSelection<Prisma.$InboxMessagePayload>
+/**
+ * Model WaNumber
+ * Nomor WA admin yang disambungkan lewat Embedded Signup (coexistence) di Inbox → Sambungkan WhatsApp.
+ * token = token pengguna sistem integrasi bisnis dari Meta (tidak kedaluwarsa); dipakai kirim balasan.
+ */
+export type WaNumber = $Result.DefaultSelection<Prisma.$WaNumberPayload>
 
 /**
  * Enums
@@ -1324,6 +1330,16 @@ export class PrismaClient<
     * ```
     */
   get inboxMessage(): Prisma.InboxMessageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.waNumber`: Exposes CRUD operations for the **WaNumber** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more WaNumbers
+    * const waNumbers = await prisma.waNumber.findMany()
+    * ```
+    */
+  get waNumber(): Prisma.WaNumberDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1835,7 +1851,8 @@ export namespace Prisma {
     ScriptReview: 'ScriptReview',
     DraftProduk: 'DraftProduk',
     InboxThread: 'InboxThread',
-    InboxMessage: 'InboxMessage'
+    InboxMessage: 'InboxMessage',
+    WaNumber: 'WaNumber'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1854,7 +1871,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioPageUse" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit" | "scriptDoc" | "scriptRevision" | "scriptComment" | "scriptReview" | "draftProduk" | "inboxThread" | "inboxMessage"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioPageUse" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit" | "scriptDoc" | "scriptRevision" | "scriptComment" | "scriptReview" | "draftProduk" | "inboxThread" | "inboxMessage" | "waNumber"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -7112,6 +7129,80 @@ export namespace Prisma {
           }
         }
       }
+      WaNumber: {
+        payload: Prisma.$WaNumberPayload<ExtArgs>
+        fields: Prisma.WaNumberFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.WaNumberFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WaNumberPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.WaNumberFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WaNumberPayload>
+          }
+          findFirst: {
+            args: Prisma.WaNumberFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WaNumberPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.WaNumberFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WaNumberPayload>
+          }
+          findMany: {
+            args: Prisma.WaNumberFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WaNumberPayload>[]
+          }
+          create: {
+            args: Prisma.WaNumberCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WaNumberPayload>
+          }
+          createMany: {
+            args: Prisma.WaNumberCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.WaNumberCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WaNumberPayload>[]
+          }
+          delete: {
+            args: Prisma.WaNumberDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WaNumberPayload>
+          }
+          update: {
+            args: Prisma.WaNumberUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WaNumberPayload>
+          }
+          deleteMany: {
+            args: Prisma.WaNumberDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.WaNumberUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.WaNumberUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WaNumberPayload>[]
+          }
+          upsert: {
+            args: Prisma.WaNumberUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$WaNumberPayload>
+          }
+          aggregate: {
+            args: Prisma.WaNumberAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateWaNumber>
+          }
+          groupBy: {
+            args: Prisma.WaNumberGroupByArgs<ExtArgs>
+            result: $Utils.Optional<WaNumberGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.WaNumberCountArgs<ExtArgs>
+            result: $Utils.Optional<WaNumberCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -7279,6 +7370,7 @@ export namespace Prisma {
     draftProduk?: DraftProdukOmit
     inboxThread?: InboxThreadOmit
     inboxMessage?: InboxMessageOmit
+    waNumber?: WaNumberOmit
   }
 
   /* Types for Logging */
@@ -86979,6 +87071,1040 @@ export namespace Prisma {
 
 
   /**
+   * Model WaNumber
+   */
+
+  export type AggregateWaNumber = {
+    _count: WaNumberCountAggregateOutputType | null
+    _min: WaNumberMinAggregateOutputType | null
+    _max: WaNumberMaxAggregateOutputType | null
+  }
+
+  export type WaNumberMinAggregateOutputType = {
+    phoneNumberId: string | null
+    wabaId: string | null
+    label: string | null
+    displayPhone: string | null
+    token: string | null
+    createdBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WaNumberMaxAggregateOutputType = {
+    phoneNumberId: string | null
+    wabaId: string | null
+    label: string | null
+    displayPhone: string | null
+    token: string | null
+    createdBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type WaNumberCountAggregateOutputType = {
+    phoneNumberId: number
+    wabaId: number
+    label: number
+    displayPhone: number
+    token: number
+    createdBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type WaNumberMinAggregateInputType = {
+    phoneNumberId?: true
+    wabaId?: true
+    label?: true
+    displayPhone?: true
+    token?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WaNumberMaxAggregateInputType = {
+    phoneNumberId?: true
+    wabaId?: true
+    label?: true
+    displayPhone?: true
+    token?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type WaNumberCountAggregateInputType = {
+    phoneNumberId?: true
+    wabaId?: true
+    label?: true
+    displayPhone?: true
+    token?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type WaNumberAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WaNumber to aggregate.
+     */
+    where?: WaNumberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WaNumbers to fetch.
+     */
+    orderBy?: WaNumberOrderByWithRelationInput | WaNumberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: WaNumberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WaNumbers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WaNumbers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned WaNumbers
+    **/
+    _count?: true | WaNumberCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: WaNumberMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: WaNumberMaxAggregateInputType
+  }
+
+  export type GetWaNumberAggregateType<T extends WaNumberAggregateArgs> = {
+        [P in keyof T & keyof AggregateWaNumber]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateWaNumber[P]>
+      : GetScalarType<T[P], AggregateWaNumber[P]>
+  }
+
+
+
+
+  export type WaNumberGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: WaNumberWhereInput
+    orderBy?: WaNumberOrderByWithAggregationInput | WaNumberOrderByWithAggregationInput[]
+    by: WaNumberScalarFieldEnum[] | WaNumberScalarFieldEnum
+    having?: WaNumberScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: WaNumberCountAggregateInputType | true
+    _min?: WaNumberMinAggregateInputType
+    _max?: WaNumberMaxAggregateInputType
+  }
+
+  export type WaNumberGroupByOutputType = {
+    phoneNumberId: string
+    wabaId: string
+    label: string
+    displayPhone: string | null
+    token: string
+    createdBy: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: WaNumberCountAggregateOutputType | null
+    _min: WaNumberMinAggregateOutputType | null
+    _max: WaNumberMaxAggregateOutputType | null
+  }
+
+  type GetWaNumberGroupByPayload<T extends WaNumberGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<WaNumberGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof WaNumberGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], WaNumberGroupByOutputType[P]>
+            : GetScalarType<T[P], WaNumberGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type WaNumberSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    phoneNumberId?: boolean
+    wabaId?: boolean
+    label?: boolean
+    displayPhone?: boolean
+    token?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["waNumber"]>
+
+  export type WaNumberSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    phoneNumberId?: boolean
+    wabaId?: boolean
+    label?: boolean
+    displayPhone?: boolean
+    token?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["waNumber"]>
+
+  export type WaNumberSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    phoneNumberId?: boolean
+    wabaId?: boolean
+    label?: boolean
+    displayPhone?: boolean
+    token?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["waNumber"]>
+
+  export type WaNumberSelectScalar = {
+    phoneNumberId?: boolean
+    wabaId?: boolean
+    label?: boolean
+    displayPhone?: boolean
+    token?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type WaNumberOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"phoneNumberId" | "wabaId" | "label" | "displayPhone" | "token" | "createdBy" | "createdAt" | "updatedAt", ExtArgs["result"]["waNumber"]>
+
+  export type $WaNumberPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "WaNumber"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      phoneNumberId: string
+      wabaId: string
+      label: string
+      displayPhone: string | null
+      token: string
+      createdBy: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["waNumber"]>
+    composites: {}
+  }
+
+  type WaNumberGetPayload<S extends boolean | null | undefined | WaNumberDefaultArgs> = $Result.GetResult<Prisma.$WaNumberPayload, S>
+
+  type WaNumberCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<WaNumberFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: WaNumberCountAggregateInputType | true
+    }
+
+  export interface WaNumberDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WaNumber'], meta: { name: 'WaNumber' } }
+    /**
+     * Find zero or one WaNumber that matches the filter.
+     * @param {WaNumberFindUniqueArgs} args - Arguments to find a WaNumber
+     * @example
+     * // Get one WaNumber
+     * const waNumber = await prisma.waNumber.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends WaNumberFindUniqueArgs>(args: SelectSubset<T, WaNumberFindUniqueArgs<ExtArgs>>): Prisma__WaNumberClient<$Result.GetResult<Prisma.$WaNumberPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one WaNumber that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {WaNumberFindUniqueOrThrowArgs} args - Arguments to find a WaNumber
+     * @example
+     * // Get one WaNumber
+     * const waNumber = await prisma.waNumber.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends WaNumberFindUniqueOrThrowArgs>(args: SelectSubset<T, WaNumberFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WaNumberClient<$Result.GetResult<Prisma.$WaNumberPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WaNumber that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WaNumberFindFirstArgs} args - Arguments to find a WaNumber
+     * @example
+     * // Get one WaNumber
+     * const waNumber = await prisma.waNumber.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends WaNumberFindFirstArgs>(args?: SelectSubset<T, WaNumberFindFirstArgs<ExtArgs>>): Prisma__WaNumberClient<$Result.GetResult<Prisma.$WaNumberPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first WaNumber that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WaNumberFindFirstOrThrowArgs} args - Arguments to find a WaNumber
+     * @example
+     * // Get one WaNumber
+     * const waNumber = await prisma.waNumber.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends WaNumberFindFirstOrThrowArgs>(args?: SelectSubset<T, WaNumberFindFirstOrThrowArgs<ExtArgs>>): Prisma__WaNumberClient<$Result.GetResult<Prisma.$WaNumberPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more WaNumbers that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WaNumberFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all WaNumbers
+     * const waNumbers = await prisma.waNumber.findMany()
+     * 
+     * // Get first 10 WaNumbers
+     * const waNumbers = await prisma.waNumber.findMany({ take: 10 })
+     * 
+     * // Only select the `phoneNumberId`
+     * const waNumberWithPhoneNumberIdOnly = await prisma.waNumber.findMany({ select: { phoneNumberId: true } })
+     * 
+     */
+    findMany<T extends WaNumberFindManyArgs>(args?: SelectSubset<T, WaNumberFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WaNumberPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a WaNumber.
+     * @param {WaNumberCreateArgs} args - Arguments to create a WaNumber.
+     * @example
+     * // Create one WaNumber
+     * const WaNumber = await prisma.waNumber.create({
+     *   data: {
+     *     // ... data to create a WaNumber
+     *   }
+     * })
+     * 
+     */
+    create<T extends WaNumberCreateArgs>(args: SelectSubset<T, WaNumberCreateArgs<ExtArgs>>): Prisma__WaNumberClient<$Result.GetResult<Prisma.$WaNumberPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many WaNumbers.
+     * @param {WaNumberCreateManyArgs} args - Arguments to create many WaNumbers.
+     * @example
+     * // Create many WaNumbers
+     * const waNumber = await prisma.waNumber.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends WaNumberCreateManyArgs>(args?: SelectSubset<T, WaNumberCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many WaNumbers and returns the data saved in the database.
+     * @param {WaNumberCreateManyAndReturnArgs} args - Arguments to create many WaNumbers.
+     * @example
+     * // Create many WaNumbers
+     * const waNumber = await prisma.waNumber.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many WaNumbers and only return the `phoneNumberId`
+     * const waNumberWithPhoneNumberIdOnly = await prisma.waNumber.createManyAndReturn({
+     *   select: { phoneNumberId: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends WaNumberCreateManyAndReturnArgs>(args?: SelectSubset<T, WaNumberCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WaNumberPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a WaNumber.
+     * @param {WaNumberDeleteArgs} args - Arguments to delete one WaNumber.
+     * @example
+     * // Delete one WaNumber
+     * const WaNumber = await prisma.waNumber.delete({
+     *   where: {
+     *     // ... filter to delete one WaNumber
+     *   }
+     * })
+     * 
+     */
+    delete<T extends WaNumberDeleteArgs>(args: SelectSubset<T, WaNumberDeleteArgs<ExtArgs>>): Prisma__WaNumberClient<$Result.GetResult<Prisma.$WaNumberPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one WaNumber.
+     * @param {WaNumberUpdateArgs} args - Arguments to update one WaNumber.
+     * @example
+     * // Update one WaNumber
+     * const waNumber = await prisma.waNumber.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends WaNumberUpdateArgs>(args: SelectSubset<T, WaNumberUpdateArgs<ExtArgs>>): Prisma__WaNumberClient<$Result.GetResult<Prisma.$WaNumberPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more WaNumbers.
+     * @param {WaNumberDeleteManyArgs} args - Arguments to filter WaNumbers to delete.
+     * @example
+     * // Delete a few WaNumbers
+     * const { count } = await prisma.waNumber.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends WaNumberDeleteManyArgs>(args?: SelectSubset<T, WaNumberDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WaNumbers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WaNumberUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many WaNumbers
+     * const waNumber = await prisma.waNumber.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends WaNumberUpdateManyArgs>(args: SelectSubset<T, WaNumberUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more WaNumbers and returns the data updated in the database.
+     * @param {WaNumberUpdateManyAndReturnArgs} args - Arguments to update many WaNumbers.
+     * @example
+     * // Update many WaNumbers
+     * const waNumber = await prisma.waNumber.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more WaNumbers and only return the `phoneNumberId`
+     * const waNumberWithPhoneNumberIdOnly = await prisma.waNumber.updateManyAndReturn({
+     *   select: { phoneNumberId: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends WaNumberUpdateManyAndReturnArgs>(args: SelectSubset<T, WaNumberUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WaNumberPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one WaNumber.
+     * @param {WaNumberUpsertArgs} args - Arguments to update or create a WaNumber.
+     * @example
+     * // Update or create a WaNumber
+     * const waNumber = await prisma.waNumber.upsert({
+     *   create: {
+     *     // ... data to create a WaNumber
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the WaNumber we want to update
+     *   }
+     * })
+     */
+    upsert<T extends WaNumberUpsertArgs>(args: SelectSubset<T, WaNumberUpsertArgs<ExtArgs>>): Prisma__WaNumberClient<$Result.GetResult<Prisma.$WaNumberPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of WaNumbers.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WaNumberCountArgs} args - Arguments to filter WaNumbers to count.
+     * @example
+     * // Count the number of WaNumbers
+     * const count = await prisma.waNumber.count({
+     *   where: {
+     *     // ... the filter for the WaNumbers we want to count
+     *   }
+     * })
+    **/
+    count<T extends WaNumberCountArgs>(
+      args?: Subset<T, WaNumberCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], WaNumberCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a WaNumber.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WaNumberAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends WaNumberAggregateArgs>(args: Subset<T, WaNumberAggregateArgs>): Prisma.PrismaPromise<GetWaNumberAggregateType<T>>
+
+    /**
+     * Group by WaNumber.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {WaNumberGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends WaNumberGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: WaNumberGroupByArgs['orderBy'] }
+        : { orderBy?: WaNumberGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, WaNumberGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWaNumberGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the WaNumber model
+   */
+  readonly fields: WaNumberFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for WaNumber.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__WaNumberClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the WaNumber model
+   */
+  interface WaNumberFieldRefs {
+    readonly phoneNumberId: FieldRef<"WaNumber", 'String'>
+    readonly wabaId: FieldRef<"WaNumber", 'String'>
+    readonly label: FieldRef<"WaNumber", 'String'>
+    readonly displayPhone: FieldRef<"WaNumber", 'String'>
+    readonly token: FieldRef<"WaNumber", 'String'>
+    readonly createdBy: FieldRef<"WaNumber", 'String'>
+    readonly createdAt: FieldRef<"WaNumber", 'DateTime'>
+    readonly updatedAt: FieldRef<"WaNumber", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * WaNumber findUnique
+   */
+  export type WaNumberFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WaNumber
+     */
+    select?: WaNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WaNumber
+     */
+    omit?: WaNumberOmit<ExtArgs> | null
+    /**
+     * Filter, which WaNumber to fetch.
+     */
+    where: WaNumberWhereUniqueInput
+  }
+
+  /**
+   * WaNumber findUniqueOrThrow
+   */
+  export type WaNumberFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WaNumber
+     */
+    select?: WaNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WaNumber
+     */
+    omit?: WaNumberOmit<ExtArgs> | null
+    /**
+     * Filter, which WaNumber to fetch.
+     */
+    where: WaNumberWhereUniqueInput
+  }
+
+  /**
+   * WaNumber findFirst
+   */
+  export type WaNumberFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WaNumber
+     */
+    select?: WaNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WaNumber
+     */
+    omit?: WaNumberOmit<ExtArgs> | null
+    /**
+     * Filter, which WaNumber to fetch.
+     */
+    where?: WaNumberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WaNumbers to fetch.
+     */
+    orderBy?: WaNumberOrderByWithRelationInput | WaNumberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WaNumbers.
+     */
+    cursor?: WaNumberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WaNumbers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WaNumbers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WaNumbers.
+     */
+    distinct?: WaNumberScalarFieldEnum | WaNumberScalarFieldEnum[]
+  }
+
+  /**
+   * WaNumber findFirstOrThrow
+   */
+  export type WaNumberFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WaNumber
+     */
+    select?: WaNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WaNumber
+     */
+    omit?: WaNumberOmit<ExtArgs> | null
+    /**
+     * Filter, which WaNumber to fetch.
+     */
+    where?: WaNumberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WaNumbers to fetch.
+     */
+    orderBy?: WaNumberOrderByWithRelationInput | WaNumberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for WaNumbers.
+     */
+    cursor?: WaNumberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WaNumbers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WaNumbers.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of WaNumbers.
+     */
+    distinct?: WaNumberScalarFieldEnum | WaNumberScalarFieldEnum[]
+  }
+
+  /**
+   * WaNumber findMany
+   */
+  export type WaNumberFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WaNumber
+     */
+    select?: WaNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WaNumber
+     */
+    omit?: WaNumberOmit<ExtArgs> | null
+    /**
+     * Filter, which WaNumbers to fetch.
+     */
+    where?: WaNumberWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of WaNumbers to fetch.
+     */
+    orderBy?: WaNumberOrderByWithRelationInput | WaNumberOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing WaNumbers.
+     */
+    cursor?: WaNumberWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` WaNumbers from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` WaNumbers.
+     */
+    skip?: number
+    distinct?: WaNumberScalarFieldEnum | WaNumberScalarFieldEnum[]
+  }
+
+  /**
+   * WaNumber create
+   */
+  export type WaNumberCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WaNumber
+     */
+    select?: WaNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WaNumber
+     */
+    omit?: WaNumberOmit<ExtArgs> | null
+    /**
+     * The data needed to create a WaNumber.
+     */
+    data: XOR<WaNumberCreateInput, WaNumberUncheckedCreateInput>
+  }
+
+  /**
+   * WaNumber createMany
+   */
+  export type WaNumberCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many WaNumbers.
+     */
+    data: WaNumberCreateManyInput | WaNumberCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WaNumber createManyAndReturn
+   */
+  export type WaNumberCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WaNumber
+     */
+    select?: WaNumberSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WaNumber
+     */
+    omit?: WaNumberOmit<ExtArgs> | null
+    /**
+     * The data used to create many WaNumbers.
+     */
+    data: WaNumberCreateManyInput | WaNumberCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * WaNumber update
+   */
+  export type WaNumberUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WaNumber
+     */
+    select?: WaNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WaNumber
+     */
+    omit?: WaNumberOmit<ExtArgs> | null
+    /**
+     * The data needed to update a WaNumber.
+     */
+    data: XOR<WaNumberUpdateInput, WaNumberUncheckedUpdateInput>
+    /**
+     * Choose, which WaNumber to update.
+     */
+    where: WaNumberWhereUniqueInput
+  }
+
+  /**
+   * WaNumber updateMany
+   */
+  export type WaNumberUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update WaNumbers.
+     */
+    data: XOR<WaNumberUpdateManyMutationInput, WaNumberUncheckedUpdateManyInput>
+    /**
+     * Filter which WaNumbers to update
+     */
+    where?: WaNumberWhereInput
+    /**
+     * Limit how many WaNumbers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WaNumber updateManyAndReturn
+   */
+  export type WaNumberUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WaNumber
+     */
+    select?: WaNumberSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the WaNumber
+     */
+    omit?: WaNumberOmit<ExtArgs> | null
+    /**
+     * The data used to update WaNumbers.
+     */
+    data: XOR<WaNumberUpdateManyMutationInput, WaNumberUncheckedUpdateManyInput>
+    /**
+     * Filter which WaNumbers to update
+     */
+    where?: WaNumberWhereInput
+    /**
+     * Limit how many WaNumbers to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * WaNumber upsert
+   */
+  export type WaNumberUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WaNumber
+     */
+    select?: WaNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WaNumber
+     */
+    omit?: WaNumberOmit<ExtArgs> | null
+    /**
+     * The filter to search for the WaNumber to update in case it exists.
+     */
+    where: WaNumberWhereUniqueInput
+    /**
+     * In case the WaNumber found by the `where` argument doesn't exist, create a new WaNumber with this data.
+     */
+    create: XOR<WaNumberCreateInput, WaNumberUncheckedCreateInput>
+    /**
+     * In case the WaNumber was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<WaNumberUpdateInput, WaNumberUncheckedUpdateInput>
+  }
+
+  /**
+   * WaNumber delete
+   */
+  export type WaNumberDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WaNumber
+     */
+    select?: WaNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WaNumber
+     */
+    omit?: WaNumberOmit<ExtArgs> | null
+    /**
+     * Filter which WaNumber to delete.
+     */
+    where: WaNumberWhereUniqueInput
+  }
+
+  /**
+   * WaNumber deleteMany
+   */
+  export type WaNumberDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which WaNumbers to delete
+     */
+    where?: WaNumberWhereInput
+    /**
+     * Limit how many WaNumbers to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * WaNumber without action
+   */
+  export type WaNumberDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the WaNumber
+     */
+    select?: WaNumberSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the WaNumber
+     */
+    omit?: WaNumberOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -88092,6 +89218,20 @@ export namespace Prisma {
   };
 
   export type InboxMessageScalarFieldEnum = (typeof InboxMessageScalarFieldEnum)[keyof typeof InboxMessageScalarFieldEnum]
+
+
+  export const WaNumberScalarFieldEnum: {
+    phoneNumberId: 'phoneNumberId',
+    wabaId: 'wabaId',
+    label: 'label',
+    displayPhone: 'displayPhone',
+    token: 'token',
+    createdBy: 'createdBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type WaNumberScalarFieldEnum = (typeof WaNumberScalarFieldEnum)[keyof typeof WaNumberScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -93928,6 +95068,73 @@ export namespace Prisma {
     userId?: StringNullableWithAggregatesFilter<"InboxMessage"> | string | null
     error?: StringNullableWithAggregatesFilter<"InboxMessage"> | string | null
     at?: DateTimeWithAggregatesFilter<"InboxMessage"> | Date | string
+  }
+
+  export type WaNumberWhereInput = {
+    AND?: WaNumberWhereInput | WaNumberWhereInput[]
+    OR?: WaNumberWhereInput[]
+    NOT?: WaNumberWhereInput | WaNumberWhereInput[]
+    phoneNumberId?: StringFilter<"WaNumber"> | string
+    wabaId?: StringFilter<"WaNumber"> | string
+    label?: StringFilter<"WaNumber"> | string
+    displayPhone?: StringNullableFilter<"WaNumber"> | string | null
+    token?: StringFilter<"WaNumber"> | string
+    createdBy?: StringNullableFilter<"WaNumber"> | string | null
+    createdAt?: DateTimeFilter<"WaNumber"> | Date | string
+    updatedAt?: DateTimeFilter<"WaNumber"> | Date | string
+  }
+
+  export type WaNumberOrderByWithRelationInput = {
+    phoneNumberId?: SortOrder
+    wabaId?: SortOrder
+    label?: SortOrder
+    displayPhone?: SortOrderInput | SortOrder
+    token?: SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WaNumberWhereUniqueInput = Prisma.AtLeast<{
+    phoneNumberId?: string
+    AND?: WaNumberWhereInput | WaNumberWhereInput[]
+    OR?: WaNumberWhereInput[]
+    NOT?: WaNumberWhereInput | WaNumberWhereInput[]
+    wabaId?: StringFilter<"WaNumber"> | string
+    label?: StringFilter<"WaNumber"> | string
+    displayPhone?: StringNullableFilter<"WaNumber"> | string | null
+    token?: StringFilter<"WaNumber"> | string
+    createdBy?: StringNullableFilter<"WaNumber"> | string | null
+    createdAt?: DateTimeFilter<"WaNumber"> | Date | string
+    updatedAt?: DateTimeFilter<"WaNumber"> | Date | string
+  }, "phoneNumberId">
+
+  export type WaNumberOrderByWithAggregationInput = {
+    phoneNumberId?: SortOrder
+    wabaId?: SortOrder
+    label?: SortOrder
+    displayPhone?: SortOrderInput | SortOrder
+    token?: SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: WaNumberCountOrderByAggregateInput
+    _max?: WaNumberMaxOrderByAggregateInput
+    _min?: WaNumberMinOrderByAggregateInput
+  }
+
+  export type WaNumberScalarWhereWithAggregatesInput = {
+    AND?: WaNumberScalarWhereWithAggregatesInput | WaNumberScalarWhereWithAggregatesInput[]
+    OR?: WaNumberScalarWhereWithAggregatesInput[]
+    NOT?: WaNumberScalarWhereWithAggregatesInput | WaNumberScalarWhereWithAggregatesInput[]
+    phoneNumberId?: StringWithAggregatesFilter<"WaNumber"> | string
+    wabaId?: StringWithAggregatesFilter<"WaNumber"> | string
+    label?: StringWithAggregatesFilter<"WaNumber"> | string
+    displayPhone?: StringNullableWithAggregatesFilter<"WaNumber"> | string | null
+    token?: StringWithAggregatesFilter<"WaNumber"> | string
+    createdBy?: StringNullableWithAggregatesFilter<"WaNumber"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"WaNumber"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"WaNumber"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -100258,6 +101465,83 @@ export namespace Prisma {
     at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type WaNumberCreateInput = {
+    phoneNumberId: string
+    wabaId: string
+    label: string
+    displayPhone?: string | null
+    token: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WaNumberUncheckedCreateInput = {
+    phoneNumberId: string
+    wabaId: string
+    label: string
+    displayPhone?: string | null
+    token: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WaNumberUpdateInput = {
+    phoneNumberId?: StringFieldUpdateOperationsInput | string
+    wabaId?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    displayPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WaNumberUncheckedUpdateInput = {
+    phoneNumberId?: StringFieldUpdateOperationsInput | string
+    wabaId?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    displayPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WaNumberCreateManyInput = {
+    phoneNumberId: string
+    wabaId: string
+    label: string
+    displayPhone?: string | null
+    token: string
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type WaNumberUpdateManyMutationInput = {
+    phoneNumberId?: StringFieldUpdateOperationsInput | string
+    wabaId?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    displayPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type WaNumberUncheckedUpdateManyInput = {
+    phoneNumberId?: StringFieldUpdateOperationsInput | string
+    wabaId?: StringFieldUpdateOperationsInput | string
+    label?: StringFieldUpdateOperationsInput | string
+    displayPhone?: NullableStringFieldUpdateOperationsInput | string | null
+    token?: StringFieldUpdateOperationsInput | string
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -104110,6 +105394,39 @@ export namespace Prisma {
     userId?: SortOrder
     error?: SortOrder
     at?: SortOrder
+  }
+
+  export type WaNumberCountOrderByAggregateInput = {
+    phoneNumberId?: SortOrder
+    wabaId?: SortOrder
+    label?: SortOrder
+    displayPhone?: SortOrder
+    token?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WaNumberMaxOrderByAggregateInput = {
+    phoneNumberId?: SortOrder
+    wabaId?: SortOrder
+    label?: SortOrder
+    displayPhone?: SortOrder
+    token?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type WaNumberMinOrderByAggregateInput = {
+    phoneNumberId?: SortOrder
+    wabaId?: SortOrder
+    label?: SortOrder
+    displayPhone?: SortOrder
+    token?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type BranchCreateNestedOneWithoutUsersInput = {

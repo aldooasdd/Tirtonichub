@@ -1,7 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert";
 import { createHmac } from "node:crypto";
-import { parseMeta, sahMeta } from "./meta-inbox";
+import { kontakMeta, parseMeta, sahMeta } from "./meta-inbox";
 
 test("parseMeta: WA masuk + echo dari HP + IG masuk/echo", () => {
   const wa = parseMeta({
@@ -21,6 +21,13 @@ test("parseMeta: tombol Uji dashboard (changes, timestamp teks detik)", () => {
   assert.strictEqual(ev.length, 1);
   assert.strictEqual(ev[0].text, "random_text");
   assert.strictEqual(ev[0].at.getUTCFullYear(), 2018);
+});
+
+test("parseMeta + kontakMeta: riwayat coexistence & kontak HP", () => {
+  const p = { object: "whatsapp_business_account", entry: [{ changes: [{ field: "history", value: { metadata: { phone_number_id: "P1" }, history: [{ threads: [{ id: "6281", messages: [{ from: "6281", id: "h1", timestamp: "1700000000", type: "text", text: { body: "lama" } }, { from: "6280000", id: "h2", timestamp: "1700000005", type: "text", text: { body: "balasan lama" } }] }] }] } }] }] };
+  assert.deepStrictEqual(parseMeta(p).map((m) => [m.dir, m.riwayat]), [["in", true], ["out", true]]);
+  const k = kontakMeta({ object: "whatsapp_business_account", entry: [{ changes: [{ field: "smb_app_state_sync", value: { metadata: { phone_number_id: "P1" }, state_sync: [{ type: "contact", action: "add", contact: { full_name: "Budi Raket", phone_number: "+62 81" } }] } }] }] });
+  assert.deepStrictEqual(k, [{ accountId: "P1", contactId: "6281", name: "Budi Raket" }]);
 });
 
 test("sahMeta: tanda tangan benar / salah", () => {
