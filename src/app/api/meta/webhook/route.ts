@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { prisma } from "@/server/db";
-import { isiNamaIg, kontakMeta, parseMeta, sahMeta, simpanPesan } from "@/server/meta-inbox";
+import { autoDmKomentar, isiNamaIg, kontakMeta, parseMeta, sahMeta, simpanPesan } from "@/server/meta-inbox";
 
 /** Verifikasi URL webhook dari dashboard Meta (hub.challenge). */
 export async function GET(req: NextRequest) {
@@ -16,9 +16,9 @@ export async function POST(req: NextRequest) {
   if (!sahMeta(body, req.headers.get("x-hub-signature-256"))) return new NextResponse("bad signature", { status: 401 });
   try {
     const p = JSON.parse(body);
-    const ev = parseMeta(p);
-    await simpanPesan(ev);
-    if (ev.some((e) => e.channel === "IG")) await isiNamaIg(5);
+    const baru = await simpanPesan(parseMeta(p));
+    await autoDmKomentar(baru);
+    if (baru.some((e) => e.channel === "IG" || e.channel === "FB")) await isiNamaIg(5);
     for (const k of kontakMeta(p)) await prisma.inboxThread.updateMany({ where: { channel: "WA", accountId: k.accountId, contactId: k.contactId }, data: { name: k.name } });
   } catch (e) {
     console.error("meta webhook", e);

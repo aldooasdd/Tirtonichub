@@ -1007,6 +1007,7 @@ exports.Prisma.InboxMessageScalarFieldEnum = {
   metaId: 'metaId',
   userId: 'userId',
   error: 'error',
+  mediaUrl: 'mediaUrl',
   at: 'at'
 };
 
@@ -1019,6 +1020,21 @@ exports.Prisma.WaNumberScalarFieldEnum = {
   createdBy: 'createdBy',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
+};
+
+exports.Prisma.InboxTemplateScalarFieldEnum = {
+  id: 'id',
+  judul: 'judul',
+  teks: 'teks',
+  createdAt: 'createdAt'
+};
+
+exports.Prisma.InboxAutoScalarFieldEnum = {
+  id: 'id',
+  keyword: 'keyword',
+  balasan: 'balasan',
+  aktif: 'aktif',
+  createdAt: 'createdAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -1184,7 +1200,9 @@ exports.Prisma.ModelName = {
   DraftProduk: 'DraftProduk',
   InboxThread: 'InboxThread',
   InboxMessage: 'InboxMessage',
-  WaNumber: 'WaNumber'
+  WaNumber: 'WaNumber',
+  InboxTemplate: 'InboxTemplate',
+  InboxAuto: 'InboxAuto'
 };
 
 /**

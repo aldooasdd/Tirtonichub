@@ -379,6 +379,16 @@ export type InboxMessage = $Result.DefaultSelection<Prisma.$InboxMessagePayload>
  * token = token pengguna sistem integrasi bisnis dari Meta (tidak kedaluwarsa); dipakai kirim balasan.
  */
 export type WaNumber = $Result.DefaultSelection<Prisma.$WaNumberPayload>
+/**
+ * Model InboxTemplate
+ * Template balasan cepat di Inbox.
+ */
+export type InboxTemplate = $Result.DefaultSelection<Prisma.$InboxTemplatePayload>
+/**
+ * Model InboxAuto
+ * Auto DM komentar Instagram: komentar berisi keyword → kirim DM (private reply) otomatis, sekali per komentar.
+ */
+export type InboxAuto = $Result.DefaultSelection<Prisma.$InboxAutoPayload>
 
 /**
  * Enums
@@ -1340,6 +1350,26 @@ export class PrismaClient<
     * ```
     */
   get waNumber(): Prisma.WaNumberDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.inboxTemplate`: Exposes CRUD operations for the **InboxTemplate** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InboxTemplates
+    * const inboxTemplates = await prisma.inboxTemplate.findMany()
+    * ```
+    */
+  get inboxTemplate(): Prisma.InboxTemplateDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.inboxAuto`: Exposes CRUD operations for the **InboxAuto** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more InboxAutos
+    * const inboxAutos = await prisma.inboxAuto.findMany()
+    * ```
+    */
+  get inboxAuto(): Prisma.InboxAutoDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1852,7 +1882,9 @@ export namespace Prisma {
     DraftProduk: 'DraftProduk',
     InboxThread: 'InboxThread',
     InboxMessage: 'InboxMessage',
-    WaNumber: 'WaNumber'
+    WaNumber: 'WaNumber',
+    InboxTemplate: 'InboxTemplate',
+    InboxAuto: 'InboxAuto'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1871,7 +1903,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioPageUse" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit" | "scriptDoc" | "scriptRevision" | "scriptComment" | "scriptReview" | "draftProduk" | "inboxThread" | "inboxMessage" | "waNumber"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioPageUse" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit" | "scriptDoc" | "scriptRevision" | "scriptComment" | "scriptReview" | "draftProduk" | "inboxThread" | "inboxMessage" | "waNumber" | "inboxTemplate" | "inboxAuto"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -7203,6 +7235,154 @@ export namespace Prisma {
           }
         }
       }
+      InboxTemplate: {
+        payload: Prisma.$InboxTemplatePayload<ExtArgs>
+        fields: Prisma.InboxTemplateFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InboxTemplateFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxTemplatePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InboxTemplateFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxTemplatePayload>
+          }
+          findFirst: {
+            args: Prisma.InboxTemplateFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxTemplatePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InboxTemplateFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxTemplatePayload>
+          }
+          findMany: {
+            args: Prisma.InboxTemplateFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxTemplatePayload>[]
+          }
+          create: {
+            args: Prisma.InboxTemplateCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxTemplatePayload>
+          }
+          createMany: {
+            args: Prisma.InboxTemplateCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InboxTemplateCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxTemplatePayload>[]
+          }
+          delete: {
+            args: Prisma.InboxTemplateDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxTemplatePayload>
+          }
+          update: {
+            args: Prisma.InboxTemplateUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxTemplatePayload>
+          }
+          deleteMany: {
+            args: Prisma.InboxTemplateDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InboxTemplateUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InboxTemplateUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxTemplatePayload>[]
+          }
+          upsert: {
+            args: Prisma.InboxTemplateUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxTemplatePayload>
+          }
+          aggregate: {
+            args: Prisma.InboxTemplateAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInboxTemplate>
+          }
+          groupBy: {
+            args: Prisma.InboxTemplateGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InboxTemplateGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InboxTemplateCountArgs<ExtArgs>
+            result: $Utils.Optional<InboxTemplateCountAggregateOutputType> | number
+          }
+        }
+      }
+      InboxAuto: {
+        payload: Prisma.$InboxAutoPayload<ExtArgs>
+        fields: Prisma.InboxAutoFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.InboxAutoFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxAutoPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.InboxAutoFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxAutoPayload>
+          }
+          findFirst: {
+            args: Prisma.InboxAutoFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxAutoPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.InboxAutoFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxAutoPayload>
+          }
+          findMany: {
+            args: Prisma.InboxAutoFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxAutoPayload>[]
+          }
+          create: {
+            args: Prisma.InboxAutoCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxAutoPayload>
+          }
+          createMany: {
+            args: Prisma.InboxAutoCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.InboxAutoCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxAutoPayload>[]
+          }
+          delete: {
+            args: Prisma.InboxAutoDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxAutoPayload>
+          }
+          update: {
+            args: Prisma.InboxAutoUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxAutoPayload>
+          }
+          deleteMany: {
+            args: Prisma.InboxAutoDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.InboxAutoUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.InboxAutoUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxAutoPayload>[]
+          }
+          upsert: {
+            args: Prisma.InboxAutoUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$InboxAutoPayload>
+          }
+          aggregate: {
+            args: Prisma.InboxAutoAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateInboxAuto>
+          }
+          groupBy: {
+            args: Prisma.InboxAutoGroupByArgs<ExtArgs>
+            result: $Utils.Optional<InboxAutoGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.InboxAutoCountArgs<ExtArgs>
+            result: $Utils.Optional<InboxAutoCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -7371,6 +7551,8 @@ export namespace Prisma {
     inboxThread?: InboxThreadOmit
     inboxMessage?: InboxMessageOmit
     waNumber?: WaNumberOmit
+    inboxTemplate?: InboxTemplateOmit
+    inboxAuto?: InboxAutoOmit
   }
 
   /* Types for Logging */
@@ -85991,6 +86173,7 @@ export namespace Prisma {
     metaId: string | null
     userId: string | null
     error: string | null
+    mediaUrl: string | null
     at: Date | null
   }
 
@@ -86002,6 +86185,7 @@ export namespace Prisma {
     metaId: string | null
     userId: string | null
     error: string | null
+    mediaUrl: string | null
     at: Date | null
   }
 
@@ -86013,6 +86197,7 @@ export namespace Prisma {
     metaId: number
     userId: number
     error: number
+    mediaUrl: number
     at: number
     _all: number
   }
@@ -86026,6 +86211,7 @@ export namespace Prisma {
     metaId?: true
     userId?: true
     error?: true
+    mediaUrl?: true
     at?: true
   }
 
@@ -86037,6 +86223,7 @@ export namespace Prisma {
     metaId?: true
     userId?: true
     error?: true
+    mediaUrl?: true
     at?: true
   }
 
@@ -86048,6 +86235,7 @@ export namespace Prisma {
     metaId?: true
     userId?: true
     error?: true
+    mediaUrl?: true
     at?: true
     _all?: true
   }
@@ -86132,6 +86320,7 @@ export namespace Prisma {
     metaId: string | null
     userId: string | null
     error: string | null
+    mediaUrl: string | null
     at: Date
     _count: InboxMessageCountAggregateOutputType | null
     _min: InboxMessageMinAggregateOutputType | null
@@ -86160,6 +86349,7 @@ export namespace Prisma {
     metaId?: boolean
     userId?: boolean
     error?: boolean
+    mediaUrl?: boolean
     at?: boolean
     thread?: boolean | InboxThreadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["inboxMessage"]>
@@ -86172,6 +86362,7 @@ export namespace Prisma {
     metaId?: boolean
     userId?: boolean
     error?: boolean
+    mediaUrl?: boolean
     at?: boolean
     thread?: boolean | InboxThreadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["inboxMessage"]>
@@ -86184,6 +86375,7 @@ export namespace Prisma {
     metaId?: boolean
     userId?: boolean
     error?: boolean
+    mediaUrl?: boolean
     at?: boolean
     thread?: boolean | InboxThreadDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["inboxMessage"]>
@@ -86196,10 +86388,11 @@ export namespace Prisma {
     metaId?: boolean
     userId?: boolean
     error?: boolean
+    mediaUrl?: boolean
     at?: boolean
   }
 
-  export type InboxMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "threadId" | "dir" | "text" | "metaId" | "userId" | "error" | "at", ExtArgs["result"]["inboxMessage"]>
+  export type InboxMessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "threadId" | "dir" | "text" | "metaId" | "userId" | "error" | "mediaUrl" | "at", ExtArgs["result"]["inboxMessage"]>
   export type InboxMessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     thread?: boolean | InboxThreadDefaultArgs<ExtArgs>
   }
@@ -86223,6 +86416,7 @@ export namespace Prisma {
       metaId: string | null
       userId: string | null
       error: string | null
+      mediaUrl: string | null
       at: Date
     }, ExtArgs["result"]["inboxMessage"]>
     composites: {}
@@ -86655,6 +86849,7 @@ export namespace Prisma {
     readonly metaId: FieldRef<"InboxMessage", 'String'>
     readonly userId: FieldRef<"InboxMessage", 'String'>
     readonly error: FieldRef<"InboxMessage", 'String'>
+    readonly mediaUrl: FieldRef<"InboxMessage", 'String'>
     readonly at: FieldRef<"InboxMessage", 'DateTime'>
   }
     
@@ -88105,6 +88300,1983 @@ export namespace Prisma {
 
 
   /**
+   * Model InboxTemplate
+   */
+
+  export type AggregateInboxTemplate = {
+    _count: InboxTemplateCountAggregateOutputType | null
+    _min: InboxTemplateMinAggregateOutputType | null
+    _max: InboxTemplateMaxAggregateOutputType | null
+  }
+
+  export type InboxTemplateMinAggregateOutputType = {
+    id: string | null
+    judul: string | null
+    teks: string | null
+    createdAt: Date | null
+  }
+
+  export type InboxTemplateMaxAggregateOutputType = {
+    id: string | null
+    judul: string | null
+    teks: string | null
+    createdAt: Date | null
+  }
+
+  export type InboxTemplateCountAggregateOutputType = {
+    id: number
+    judul: number
+    teks: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type InboxTemplateMinAggregateInputType = {
+    id?: true
+    judul?: true
+    teks?: true
+    createdAt?: true
+  }
+
+  export type InboxTemplateMaxAggregateInputType = {
+    id?: true
+    judul?: true
+    teks?: true
+    createdAt?: true
+  }
+
+  export type InboxTemplateCountAggregateInputType = {
+    id?: true
+    judul?: true
+    teks?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type InboxTemplateAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InboxTemplate to aggregate.
+     */
+    where?: InboxTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxTemplates to fetch.
+     */
+    orderBy?: InboxTemplateOrderByWithRelationInput | InboxTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InboxTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned InboxTemplates
+    **/
+    _count?: true | InboxTemplateCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InboxTemplateMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InboxTemplateMaxAggregateInputType
+  }
+
+  export type GetInboxTemplateAggregateType<T extends InboxTemplateAggregateArgs> = {
+        [P in keyof T & keyof AggregateInboxTemplate]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInboxTemplate[P]>
+      : GetScalarType<T[P], AggregateInboxTemplate[P]>
+  }
+
+
+
+
+  export type InboxTemplateGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InboxTemplateWhereInput
+    orderBy?: InboxTemplateOrderByWithAggregationInput | InboxTemplateOrderByWithAggregationInput[]
+    by: InboxTemplateScalarFieldEnum[] | InboxTemplateScalarFieldEnum
+    having?: InboxTemplateScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InboxTemplateCountAggregateInputType | true
+    _min?: InboxTemplateMinAggregateInputType
+    _max?: InboxTemplateMaxAggregateInputType
+  }
+
+  export type InboxTemplateGroupByOutputType = {
+    id: string
+    judul: string
+    teks: string
+    createdAt: Date
+    _count: InboxTemplateCountAggregateOutputType | null
+    _min: InboxTemplateMinAggregateOutputType | null
+    _max: InboxTemplateMaxAggregateOutputType | null
+  }
+
+  type GetInboxTemplateGroupByPayload<T extends InboxTemplateGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InboxTemplateGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InboxTemplateGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InboxTemplateGroupByOutputType[P]>
+            : GetScalarType<T[P], InboxTemplateGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InboxTemplateSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    judul?: boolean
+    teks?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["inboxTemplate"]>
+
+  export type InboxTemplateSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    judul?: boolean
+    teks?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["inboxTemplate"]>
+
+  export type InboxTemplateSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    judul?: boolean
+    teks?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["inboxTemplate"]>
+
+  export type InboxTemplateSelectScalar = {
+    id?: boolean
+    judul?: boolean
+    teks?: boolean
+    createdAt?: boolean
+  }
+
+  export type InboxTemplateOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "judul" | "teks" | "createdAt", ExtArgs["result"]["inboxTemplate"]>
+
+  export type $InboxTemplatePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "InboxTemplate"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      judul: string
+      teks: string
+      createdAt: Date
+    }, ExtArgs["result"]["inboxTemplate"]>
+    composites: {}
+  }
+
+  type InboxTemplateGetPayload<S extends boolean | null | undefined | InboxTemplateDefaultArgs> = $Result.GetResult<Prisma.$InboxTemplatePayload, S>
+
+  type InboxTemplateCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InboxTemplateFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InboxTemplateCountAggregateInputType | true
+    }
+
+  export interface InboxTemplateDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InboxTemplate'], meta: { name: 'InboxTemplate' } }
+    /**
+     * Find zero or one InboxTemplate that matches the filter.
+     * @param {InboxTemplateFindUniqueArgs} args - Arguments to find a InboxTemplate
+     * @example
+     * // Get one InboxTemplate
+     * const inboxTemplate = await prisma.inboxTemplate.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InboxTemplateFindUniqueArgs>(args: SelectSubset<T, InboxTemplateFindUniqueArgs<ExtArgs>>): Prisma__InboxTemplateClient<$Result.GetResult<Prisma.$InboxTemplatePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one InboxTemplate that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InboxTemplateFindUniqueOrThrowArgs} args - Arguments to find a InboxTemplate
+     * @example
+     * // Get one InboxTemplate
+     * const inboxTemplate = await prisma.inboxTemplate.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InboxTemplateFindUniqueOrThrowArgs>(args: SelectSubset<T, InboxTemplateFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InboxTemplateClient<$Result.GetResult<Prisma.$InboxTemplatePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InboxTemplate that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxTemplateFindFirstArgs} args - Arguments to find a InboxTemplate
+     * @example
+     * // Get one InboxTemplate
+     * const inboxTemplate = await prisma.inboxTemplate.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InboxTemplateFindFirstArgs>(args?: SelectSubset<T, InboxTemplateFindFirstArgs<ExtArgs>>): Prisma__InboxTemplateClient<$Result.GetResult<Prisma.$InboxTemplatePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InboxTemplate that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxTemplateFindFirstOrThrowArgs} args - Arguments to find a InboxTemplate
+     * @example
+     * // Get one InboxTemplate
+     * const inboxTemplate = await prisma.inboxTemplate.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InboxTemplateFindFirstOrThrowArgs>(args?: SelectSubset<T, InboxTemplateFindFirstOrThrowArgs<ExtArgs>>): Prisma__InboxTemplateClient<$Result.GetResult<Prisma.$InboxTemplatePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more InboxTemplates that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxTemplateFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InboxTemplates
+     * const inboxTemplates = await prisma.inboxTemplate.findMany()
+     * 
+     * // Get first 10 InboxTemplates
+     * const inboxTemplates = await prisma.inboxTemplate.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const inboxTemplateWithIdOnly = await prisma.inboxTemplate.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InboxTemplateFindManyArgs>(args?: SelectSubset<T, InboxTemplateFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboxTemplatePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a InboxTemplate.
+     * @param {InboxTemplateCreateArgs} args - Arguments to create a InboxTemplate.
+     * @example
+     * // Create one InboxTemplate
+     * const InboxTemplate = await prisma.inboxTemplate.create({
+     *   data: {
+     *     // ... data to create a InboxTemplate
+     *   }
+     * })
+     * 
+     */
+    create<T extends InboxTemplateCreateArgs>(args: SelectSubset<T, InboxTemplateCreateArgs<ExtArgs>>): Prisma__InboxTemplateClient<$Result.GetResult<Prisma.$InboxTemplatePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many InboxTemplates.
+     * @param {InboxTemplateCreateManyArgs} args - Arguments to create many InboxTemplates.
+     * @example
+     * // Create many InboxTemplates
+     * const inboxTemplate = await prisma.inboxTemplate.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InboxTemplateCreateManyArgs>(args?: SelectSubset<T, InboxTemplateCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many InboxTemplates and returns the data saved in the database.
+     * @param {InboxTemplateCreateManyAndReturnArgs} args - Arguments to create many InboxTemplates.
+     * @example
+     * // Create many InboxTemplates
+     * const inboxTemplate = await prisma.inboxTemplate.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many InboxTemplates and only return the `id`
+     * const inboxTemplateWithIdOnly = await prisma.inboxTemplate.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InboxTemplateCreateManyAndReturnArgs>(args?: SelectSubset<T, InboxTemplateCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboxTemplatePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a InboxTemplate.
+     * @param {InboxTemplateDeleteArgs} args - Arguments to delete one InboxTemplate.
+     * @example
+     * // Delete one InboxTemplate
+     * const InboxTemplate = await prisma.inboxTemplate.delete({
+     *   where: {
+     *     // ... filter to delete one InboxTemplate
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InboxTemplateDeleteArgs>(args: SelectSubset<T, InboxTemplateDeleteArgs<ExtArgs>>): Prisma__InboxTemplateClient<$Result.GetResult<Prisma.$InboxTemplatePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one InboxTemplate.
+     * @param {InboxTemplateUpdateArgs} args - Arguments to update one InboxTemplate.
+     * @example
+     * // Update one InboxTemplate
+     * const inboxTemplate = await prisma.inboxTemplate.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InboxTemplateUpdateArgs>(args: SelectSubset<T, InboxTemplateUpdateArgs<ExtArgs>>): Prisma__InboxTemplateClient<$Result.GetResult<Prisma.$InboxTemplatePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more InboxTemplates.
+     * @param {InboxTemplateDeleteManyArgs} args - Arguments to filter InboxTemplates to delete.
+     * @example
+     * // Delete a few InboxTemplates
+     * const { count } = await prisma.inboxTemplate.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InboxTemplateDeleteManyArgs>(args?: SelectSubset<T, InboxTemplateDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InboxTemplates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxTemplateUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InboxTemplates
+     * const inboxTemplate = await prisma.inboxTemplate.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InboxTemplateUpdateManyArgs>(args: SelectSubset<T, InboxTemplateUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InboxTemplates and returns the data updated in the database.
+     * @param {InboxTemplateUpdateManyAndReturnArgs} args - Arguments to update many InboxTemplates.
+     * @example
+     * // Update many InboxTemplates
+     * const inboxTemplate = await prisma.inboxTemplate.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more InboxTemplates and only return the `id`
+     * const inboxTemplateWithIdOnly = await prisma.inboxTemplate.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InboxTemplateUpdateManyAndReturnArgs>(args: SelectSubset<T, InboxTemplateUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboxTemplatePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one InboxTemplate.
+     * @param {InboxTemplateUpsertArgs} args - Arguments to update or create a InboxTemplate.
+     * @example
+     * // Update or create a InboxTemplate
+     * const inboxTemplate = await prisma.inboxTemplate.upsert({
+     *   create: {
+     *     // ... data to create a InboxTemplate
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InboxTemplate we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InboxTemplateUpsertArgs>(args: SelectSubset<T, InboxTemplateUpsertArgs<ExtArgs>>): Prisma__InboxTemplateClient<$Result.GetResult<Prisma.$InboxTemplatePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of InboxTemplates.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxTemplateCountArgs} args - Arguments to filter InboxTemplates to count.
+     * @example
+     * // Count the number of InboxTemplates
+     * const count = await prisma.inboxTemplate.count({
+     *   where: {
+     *     // ... the filter for the InboxTemplates we want to count
+     *   }
+     * })
+    **/
+    count<T extends InboxTemplateCountArgs>(
+      args?: Subset<T, InboxTemplateCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InboxTemplateCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InboxTemplate.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxTemplateAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InboxTemplateAggregateArgs>(args: Subset<T, InboxTemplateAggregateArgs>): Prisma.PrismaPromise<GetInboxTemplateAggregateType<T>>
+
+    /**
+     * Group by InboxTemplate.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxTemplateGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InboxTemplateGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InboxTemplateGroupByArgs['orderBy'] }
+        : { orderBy?: InboxTemplateGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InboxTemplateGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInboxTemplateGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the InboxTemplate model
+   */
+  readonly fields: InboxTemplateFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for InboxTemplate.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InboxTemplateClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the InboxTemplate model
+   */
+  interface InboxTemplateFieldRefs {
+    readonly id: FieldRef<"InboxTemplate", 'String'>
+    readonly judul: FieldRef<"InboxTemplate", 'String'>
+    readonly teks: FieldRef<"InboxTemplate", 'String'>
+    readonly createdAt: FieldRef<"InboxTemplate", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * InboxTemplate findUnique
+   */
+  export type InboxTemplateFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxTemplate
+     */
+    select?: InboxTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxTemplate
+     */
+    omit?: InboxTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which InboxTemplate to fetch.
+     */
+    where: InboxTemplateWhereUniqueInput
+  }
+
+  /**
+   * InboxTemplate findUniqueOrThrow
+   */
+  export type InboxTemplateFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxTemplate
+     */
+    select?: InboxTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxTemplate
+     */
+    omit?: InboxTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which InboxTemplate to fetch.
+     */
+    where: InboxTemplateWhereUniqueInput
+  }
+
+  /**
+   * InboxTemplate findFirst
+   */
+  export type InboxTemplateFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxTemplate
+     */
+    select?: InboxTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxTemplate
+     */
+    omit?: InboxTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which InboxTemplate to fetch.
+     */
+    where?: InboxTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxTemplates to fetch.
+     */
+    orderBy?: InboxTemplateOrderByWithRelationInput | InboxTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InboxTemplates.
+     */
+    cursor?: InboxTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InboxTemplates.
+     */
+    distinct?: InboxTemplateScalarFieldEnum | InboxTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * InboxTemplate findFirstOrThrow
+   */
+  export type InboxTemplateFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxTemplate
+     */
+    select?: InboxTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxTemplate
+     */
+    omit?: InboxTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which InboxTemplate to fetch.
+     */
+    where?: InboxTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxTemplates to fetch.
+     */
+    orderBy?: InboxTemplateOrderByWithRelationInput | InboxTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InboxTemplates.
+     */
+    cursor?: InboxTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxTemplates.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InboxTemplates.
+     */
+    distinct?: InboxTemplateScalarFieldEnum | InboxTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * InboxTemplate findMany
+   */
+  export type InboxTemplateFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxTemplate
+     */
+    select?: InboxTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxTemplate
+     */
+    omit?: InboxTemplateOmit<ExtArgs> | null
+    /**
+     * Filter, which InboxTemplates to fetch.
+     */
+    where?: InboxTemplateWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxTemplates to fetch.
+     */
+    orderBy?: InboxTemplateOrderByWithRelationInput | InboxTemplateOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing InboxTemplates.
+     */
+    cursor?: InboxTemplateWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxTemplates from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxTemplates.
+     */
+    skip?: number
+    distinct?: InboxTemplateScalarFieldEnum | InboxTemplateScalarFieldEnum[]
+  }
+
+  /**
+   * InboxTemplate create
+   */
+  export type InboxTemplateCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxTemplate
+     */
+    select?: InboxTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxTemplate
+     */
+    omit?: InboxTemplateOmit<ExtArgs> | null
+    /**
+     * The data needed to create a InboxTemplate.
+     */
+    data: XOR<InboxTemplateCreateInput, InboxTemplateUncheckedCreateInput>
+  }
+
+  /**
+   * InboxTemplate createMany
+   */
+  export type InboxTemplateCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many InboxTemplates.
+     */
+    data: InboxTemplateCreateManyInput | InboxTemplateCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InboxTemplate createManyAndReturn
+   */
+  export type InboxTemplateCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxTemplate
+     */
+    select?: InboxTemplateSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxTemplate
+     */
+    omit?: InboxTemplateOmit<ExtArgs> | null
+    /**
+     * The data used to create many InboxTemplates.
+     */
+    data: InboxTemplateCreateManyInput | InboxTemplateCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InboxTemplate update
+   */
+  export type InboxTemplateUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxTemplate
+     */
+    select?: InboxTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxTemplate
+     */
+    omit?: InboxTemplateOmit<ExtArgs> | null
+    /**
+     * The data needed to update a InboxTemplate.
+     */
+    data: XOR<InboxTemplateUpdateInput, InboxTemplateUncheckedUpdateInput>
+    /**
+     * Choose, which InboxTemplate to update.
+     */
+    where: InboxTemplateWhereUniqueInput
+  }
+
+  /**
+   * InboxTemplate updateMany
+   */
+  export type InboxTemplateUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update InboxTemplates.
+     */
+    data: XOR<InboxTemplateUpdateManyMutationInput, InboxTemplateUncheckedUpdateManyInput>
+    /**
+     * Filter which InboxTemplates to update
+     */
+    where?: InboxTemplateWhereInput
+    /**
+     * Limit how many InboxTemplates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboxTemplate updateManyAndReturn
+   */
+  export type InboxTemplateUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxTemplate
+     */
+    select?: InboxTemplateSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxTemplate
+     */
+    omit?: InboxTemplateOmit<ExtArgs> | null
+    /**
+     * The data used to update InboxTemplates.
+     */
+    data: XOR<InboxTemplateUpdateManyMutationInput, InboxTemplateUncheckedUpdateManyInput>
+    /**
+     * Filter which InboxTemplates to update
+     */
+    where?: InboxTemplateWhereInput
+    /**
+     * Limit how many InboxTemplates to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboxTemplate upsert
+   */
+  export type InboxTemplateUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxTemplate
+     */
+    select?: InboxTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxTemplate
+     */
+    omit?: InboxTemplateOmit<ExtArgs> | null
+    /**
+     * The filter to search for the InboxTemplate to update in case it exists.
+     */
+    where: InboxTemplateWhereUniqueInput
+    /**
+     * In case the InboxTemplate found by the `where` argument doesn't exist, create a new InboxTemplate with this data.
+     */
+    create: XOR<InboxTemplateCreateInput, InboxTemplateUncheckedCreateInput>
+    /**
+     * In case the InboxTemplate was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InboxTemplateUpdateInput, InboxTemplateUncheckedUpdateInput>
+  }
+
+  /**
+   * InboxTemplate delete
+   */
+  export type InboxTemplateDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxTemplate
+     */
+    select?: InboxTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxTemplate
+     */
+    omit?: InboxTemplateOmit<ExtArgs> | null
+    /**
+     * Filter which InboxTemplate to delete.
+     */
+    where: InboxTemplateWhereUniqueInput
+  }
+
+  /**
+   * InboxTemplate deleteMany
+   */
+  export type InboxTemplateDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InboxTemplates to delete
+     */
+    where?: InboxTemplateWhereInput
+    /**
+     * Limit how many InboxTemplates to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboxTemplate without action
+   */
+  export type InboxTemplateDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxTemplate
+     */
+    select?: InboxTemplateSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxTemplate
+     */
+    omit?: InboxTemplateOmit<ExtArgs> | null
+  }
+
+
+  /**
+   * Model InboxAuto
+   */
+
+  export type AggregateInboxAuto = {
+    _count: InboxAutoCountAggregateOutputType | null
+    _min: InboxAutoMinAggregateOutputType | null
+    _max: InboxAutoMaxAggregateOutputType | null
+  }
+
+  export type InboxAutoMinAggregateOutputType = {
+    id: string | null
+    keyword: string | null
+    balasan: string | null
+    aktif: boolean | null
+    createdAt: Date | null
+  }
+
+  export type InboxAutoMaxAggregateOutputType = {
+    id: string | null
+    keyword: string | null
+    balasan: string | null
+    aktif: boolean | null
+    createdAt: Date | null
+  }
+
+  export type InboxAutoCountAggregateOutputType = {
+    id: number
+    keyword: number
+    balasan: number
+    aktif: number
+    createdAt: number
+    _all: number
+  }
+
+
+  export type InboxAutoMinAggregateInputType = {
+    id?: true
+    keyword?: true
+    balasan?: true
+    aktif?: true
+    createdAt?: true
+  }
+
+  export type InboxAutoMaxAggregateInputType = {
+    id?: true
+    keyword?: true
+    balasan?: true
+    aktif?: true
+    createdAt?: true
+  }
+
+  export type InboxAutoCountAggregateInputType = {
+    id?: true
+    keyword?: true
+    balasan?: true
+    aktif?: true
+    createdAt?: true
+    _all?: true
+  }
+
+  export type InboxAutoAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InboxAuto to aggregate.
+     */
+    where?: InboxAutoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxAutos to fetch.
+     */
+    orderBy?: InboxAutoOrderByWithRelationInput | InboxAutoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: InboxAutoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxAutos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxAutos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned InboxAutos
+    **/
+    _count?: true | InboxAutoCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: InboxAutoMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: InboxAutoMaxAggregateInputType
+  }
+
+  export type GetInboxAutoAggregateType<T extends InboxAutoAggregateArgs> = {
+        [P in keyof T & keyof AggregateInboxAuto]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateInboxAuto[P]>
+      : GetScalarType<T[P], AggregateInboxAuto[P]>
+  }
+
+
+
+
+  export type InboxAutoGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: InboxAutoWhereInput
+    orderBy?: InboxAutoOrderByWithAggregationInput | InboxAutoOrderByWithAggregationInput[]
+    by: InboxAutoScalarFieldEnum[] | InboxAutoScalarFieldEnum
+    having?: InboxAutoScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: InboxAutoCountAggregateInputType | true
+    _min?: InboxAutoMinAggregateInputType
+    _max?: InboxAutoMaxAggregateInputType
+  }
+
+  export type InboxAutoGroupByOutputType = {
+    id: string
+    keyword: string
+    balasan: string
+    aktif: boolean
+    createdAt: Date
+    _count: InboxAutoCountAggregateOutputType | null
+    _min: InboxAutoMinAggregateOutputType | null
+    _max: InboxAutoMaxAggregateOutputType | null
+  }
+
+  type GetInboxAutoGroupByPayload<T extends InboxAutoGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<InboxAutoGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof InboxAutoGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], InboxAutoGroupByOutputType[P]>
+            : GetScalarType<T[P], InboxAutoGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type InboxAutoSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    keyword?: boolean
+    balasan?: boolean
+    aktif?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["inboxAuto"]>
+
+  export type InboxAutoSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    keyword?: boolean
+    balasan?: boolean
+    aktif?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["inboxAuto"]>
+
+  export type InboxAutoSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    keyword?: boolean
+    balasan?: boolean
+    aktif?: boolean
+    createdAt?: boolean
+  }, ExtArgs["result"]["inboxAuto"]>
+
+  export type InboxAutoSelectScalar = {
+    id?: boolean
+    keyword?: boolean
+    balasan?: boolean
+    aktif?: boolean
+    createdAt?: boolean
+  }
+
+  export type InboxAutoOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "keyword" | "balasan" | "aktif" | "createdAt", ExtArgs["result"]["inboxAuto"]>
+
+  export type $InboxAutoPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "InboxAuto"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      keyword: string
+      balasan: string
+      aktif: boolean
+      createdAt: Date
+    }, ExtArgs["result"]["inboxAuto"]>
+    composites: {}
+  }
+
+  type InboxAutoGetPayload<S extends boolean | null | undefined | InboxAutoDefaultArgs> = $Result.GetResult<Prisma.$InboxAutoPayload, S>
+
+  type InboxAutoCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<InboxAutoFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: InboxAutoCountAggregateInputType | true
+    }
+
+  export interface InboxAutoDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['InboxAuto'], meta: { name: 'InboxAuto' } }
+    /**
+     * Find zero or one InboxAuto that matches the filter.
+     * @param {InboxAutoFindUniqueArgs} args - Arguments to find a InboxAuto
+     * @example
+     * // Get one InboxAuto
+     * const inboxAuto = await prisma.inboxAuto.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends InboxAutoFindUniqueArgs>(args: SelectSubset<T, InboxAutoFindUniqueArgs<ExtArgs>>): Prisma__InboxAutoClient<$Result.GetResult<Prisma.$InboxAutoPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one InboxAuto that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {InboxAutoFindUniqueOrThrowArgs} args - Arguments to find a InboxAuto
+     * @example
+     * // Get one InboxAuto
+     * const inboxAuto = await prisma.inboxAuto.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends InboxAutoFindUniqueOrThrowArgs>(args: SelectSubset<T, InboxAutoFindUniqueOrThrowArgs<ExtArgs>>): Prisma__InboxAutoClient<$Result.GetResult<Prisma.$InboxAutoPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InboxAuto that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxAutoFindFirstArgs} args - Arguments to find a InboxAuto
+     * @example
+     * // Get one InboxAuto
+     * const inboxAuto = await prisma.inboxAuto.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends InboxAutoFindFirstArgs>(args?: SelectSubset<T, InboxAutoFindFirstArgs<ExtArgs>>): Prisma__InboxAutoClient<$Result.GetResult<Prisma.$InboxAutoPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first InboxAuto that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxAutoFindFirstOrThrowArgs} args - Arguments to find a InboxAuto
+     * @example
+     * // Get one InboxAuto
+     * const inboxAuto = await prisma.inboxAuto.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends InboxAutoFindFirstOrThrowArgs>(args?: SelectSubset<T, InboxAutoFindFirstOrThrowArgs<ExtArgs>>): Prisma__InboxAutoClient<$Result.GetResult<Prisma.$InboxAutoPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more InboxAutos that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxAutoFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all InboxAutos
+     * const inboxAutos = await prisma.inboxAuto.findMany()
+     * 
+     * // Get first 10 InboxAutos
+     * const inboxAutos = await prisma.inboxAuto.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const inboxAutoWithIdOnly = await prisma.inboxAuto.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends InboxAutoFindManyArgs>(args?: SelectSubset<T, InboxAutoFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboxAutoPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a InboxAuto.
+     * @param {InboxAutoCreateArgs} args - Arguments to create a InboxAuto.
+     * @example
+     * // Create one InboxAuto
+     * const InboxAuto = await prisma.inboxAuto.create({
+     *   data: {
+     *     // ... data to create a InboxAuto
+     *   }
+     * })
+     * 
+     */
+    create<T extends InboxAutoCreateArgs>(args: SelectSubset<T, InboxAutoCreateArgs<ExtArgs>>): Prisma__InboxAutoClient<$Result.GetResult<Prisma.$InboxAutoPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many InboxAutos.
+     * @param {InboxAutoCreateManyArgs} args - Arguments to create many InboxAutos.
+     * @example
+     * // Create many InboxAutos
+     * const inboxAuto = await prisma.inboxAuto.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends InboxAutoCreateManyArgs>(args?: SelectSubset<T, InboxAutoCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many InboxAutos and returns the data saved in the database.
+     * @param {InboxAutoCreateManyAndReturnArgs} args - Arguments to create many InboxAutos.
+     * @example
+     * // Create many InboxAutos
+     * const inboxAuto = await prisma.inboxAuto.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many InboxAutos and only return the `id`
+     * const inboxAutoWithIdOnly = await prisma.inboxAuto.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends InboxAutoCreateManyAndReturnArgs>(args?: SelectSubset<T, InboxAutoCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboxAutoPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a InboxAuto.
+     * @param {InboxAutoDeleteArgs} args - Arguments to delete one InboxAuto.
+     * @example
+     * // Delete one InboxAuto
+     * const InboxAuto = await prisma.inboxAuto.delete({
+     *   where: {
+     *     // ... filter to delete one InboxAuto
+     *   }
+     * })
+     * 
+     */
+    delete<T extends InboxAutoDeleteArgs>(args: SelectSubset<T, InboxAutoDeleteArgs<ExtArgs>>): Prisma__InboxAutoClient<$Result.GetResult<Prisma.$InboxAutoPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one InboxAuto.
+     * @param {InboxAutoUpdateArgs} args - Arguments to update one InboxAuto.
+     * @example
+     * // Update one InboxAuto
+     * const inboxAuto = await prisma.inboxAuto.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends InboxAutoUpdateArgs>(args: SelectSubset<T, InboxAutoUpdateArgs<ExtArgs>>): Prisma__InboxAutoClient<$Result.GetResult<Prisma.$InboxAutoPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more InboxAutos.
+     * @param {InboxAutoDeleteManyArgs} args - Arguments to filter InboxAutos to delete.
+     * @example
+     * // Delete a few InboxAutos
+     * const { count } = await prisma.inboxAuto.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends InboxAutoDeleteManyArgs>(args?: SelectSubset<T, InboxAutoDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InboxAutos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxAutoUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many InboxAutos
+     * const inboxAuto = await prisma.inboxAuto.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends InboxAutoUpdateManyArgs>(args: SelectSubset<T, InboxAutoUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more InboxAutos and returns the data updated in the database.
+     * @param {InboxAutoUpdateManyAndReturnArgs} args - Arguments to update many InboxAutos.
+     * @example
+     * // Update many InboxAutos
+     * const inboxAuto = await prisma.inboxAuto.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more InboxAutos and only return the `id`
+     * const inboxAutoWithIdOnly = await prisma.inboxAuto.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends InboxAutoUpdateManyAndReturnArgs>(args: SelectSubset<T, InboxAutoUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$InboxAutoPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one InboxAuto.
+     * @param {InboxAutoUpsertArgs} args - Arguments to update or create a InboxAuto.
+     * @example
+     * // Update or create a InboxAuto
+     * const inboxAuto = await prisma.inboxAuto.upsert({
+     *   create: {
+     *     // ... data to create a InboxAuto
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the InboxAuto we want to update
+     *   }
+     * })
+     */
+    upsert<T extends InboxAutoUpsertArgs>(args: SelectSubset<T, InboxAutoUpsertArgs<ExtArgs>>): Prisma__InboxAutoClient<$Result.GetResult<Prisma.$InboxAutoPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of InboxAutos.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxAutoCountArgs} args - Arguments to filter InboxAutos to count.
+     * @example
+     * // Count the number of InboxAutos
+     * const count = await prisma.inboxAuto.count({
+     *   where: {
+     *     // ... the filter for the InboxAutos we want to count
+     *   }
+     * })
+    **/
+    count<T extends InboxAutoCountArgs>(
+      args?: Subset<T, InboxAutoCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], InboxAutoCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a InboxAuto.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxAutoAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends InboxAutoAggregateArgs>(args: Subset<T, InboxAutoAggregateArgs>): Prisma.PrismaPromise<GetInboxAutoAggregateType<T>>
+
+    /**
+     * Group by InboxAuto.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {InboxAutoGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends InboxAutoGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: InboxAutoGroupByArgs['orderBy'] }
+        : { orderBy?: InboxAutoGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, InboxAutoGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetInboxAutoGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the InboxAuto model
+   */
+  readonly fields: InboxAutoFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for InboxAuto.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__InboxAutoClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the InboxAuto model
+   */
+  interface InboxAutoFieldRefs {
+    readonly id: FieldRef<"InboxAuto", 'String'>
+    readonly keyword: FieldRef<"InboxAuto", 'String'>
+    readonly balasan: FieldRef<"InboxAuto", 'String'>
+    readonly aktif: FieldRef<"InboxAuto", 'Boolean'>
+    readonly createdAt: FieldRef<"InboxAuto", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * InboxAuto findUnique
+   */
+  export type InboxAutoFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxAuto
+     */
+    select?: InboxAutoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxAuto
+     */
+    omit?: InboxAutoOmit<ExtArgs> | null
+    /**
+     * Filter, which InboxAuto to fetch.
+     */
+    where: InboxAutoWhereUniqueInput
+  }
+
+  /**
+   * InboxAuto findUniqueOrThrow
+   */
+  export type InboxAutoFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxAuto
+     */
+    select?: InboxAutoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxAuto
+     */
+    omit?: InboxAutoOmit<ExtArgs> | null
+    /**
+     * Filter, which InboxAuto to fetch.
+     */
+    where: InboxAutoWhereUniqueInput
+  }
+
+  /**
+   * InboxAuto findFirst
+   */
+  export type InboxAutoFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxAuto
+     */
+    select?: InboxAutoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxAuto
+     */
+    omit?: InboxAutoOmit<ExtArgs> | null
+    /**
+     * Filter, which InboxAuto to fetch.
+     */
+    where?: InboxAutoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxAutos to fetch.
+     */
+    orderBy?: InboxAutoOrderByWithRelationInput | InboxAutoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InboxAutos.
+     */
+    cursor?: InboxAutoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxAutos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxAutos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InboxAutos.
+     */
+    distinct?: InboxAutoScalarFieldEnum | InboxAutoScalarFieldEnum[]
+  }
+
+  /**
+   * InboxAuto findFirstOrThrow
+   */
+  export type InboxAutoFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxAuto
+     */
+    select?: InboxAutoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxAuto
+     */
+    omit?: InboxAutoOmit<ExtArgs> | null
+    /**
+     * Filter, which InboxAuto to fetch.
+     */
+    where?: InboxAutoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxAutos to fetch.
+     */
+    orderBy?: InboxAutoOrderByWithRelationInput | InboxAutoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for InboxAutos.
+     */
+    cursor?: InboxAutoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxAutos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxAutos.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of InboxAutos.
+     */
+    distinct?: InboxAutoScalarFieldEnum | InboxAutoScalarFieldEnum[]
+  }
+
+  /**
+   * InboxAuto findMany
+   */
+  export type InboxAutoFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxAuto
+     */
+    select?: InboxAutoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxAuto
+     */
+    omit?: InboxAutoOmit<ExtArgs> | null
+    /**
+     * Filter, which InboxAutos to fetch.
+     */
+    where?: InboxAutoWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of InboxAutos to fetch.
+     */
+    orderBy?: InboxAutoOrderByWithRelationInput | InboxAutoOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing InboxAutos.
+     */
+    cursor?: InboxAutoWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` InboxAutos from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` InboxAutos.
+     */
+    skip?: number
+    distinct?: InboxAutoScalarFieldEnum | InboxAutoScalarFieldEnum[]
+  }
+
+  /**
+   * InboxAuto create
+   */
+  export type InboxAutoCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxAuto
+     */
+    select?: InboxAutoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxAuto
+     */
+    omit?: InboxAutoOmit<ExtArgs> | null
+    /**
+     * The data needed to create a InboxAuto.
+     */
+    data: XOR<InboxAutoCreateInput, InboxAutoUncheckedCreateInput>
+  }
+
+  /**
+   * InboxAuto createMany
+   */
+  export type InboxAutoCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many InboxAutos.
+     */
+    data: InboxAutoCreateManyInput | InboxAutoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InboxAuto createManyAndReturn
+   */
+  export type InboxAutoCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxAuto
+     */
+    select?: InboxAutoSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxAuto
+     */
+    omit?: InboxAutoOmit<ExtArgs> | null
+    /**
+     * The data used to create many InboxAutos.
+     */
+    data: InboxAutoCreateManyInput | InboxAutoCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * InboxAuto update
+   */
+  export type InboxAutoUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxAuto
+     */
+    select?: InboxAutoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxAuto
+     */
+    omit?: InboxAutoOmit<ExtArgs> | null
+    /**
+     * The data needed to update a InboxAuto.
+     */
+    data: XOR<InboxAutoUpdateInput, InboxAutoUncheckedUpdateInput>
+    /**
+     * Choose, which InboxAuto to update.
+     */
+    where: InboxAutoWhereUniqueInput
+  }
+
+  /**
+   * InboxAuto updateMany
+   */
+  export type InboxAutoUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update InboxAutos.
+     */
+    data: XOR<InboxAutoUpdateManyMutationInput, InboxAutoUncheckedUpdateManyInput>
+    /**
+     * Filter which InboxAutos to update
+     */
+    where?: InboxAutoWhereInput
+    /**
+     * Limit how many InboxAutos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboxAuto updateManyAndReturn
+   */
+  export type InboxAutoUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxAuto
+     */
+    select?: InboxAutoSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxAuto
+     */
+    omit?: InboxAutoOmit<ExtArgs> | null
+    /**
+     * The data used to update InboxAutos.
+     */
+    data: XOR<InboxAutoUpdateManyMutationInput, InboxAutoUncheckedUpdateManyInput>
+    /**
+     * Filter which InboxAutos to update
+     */
+    where?: InboxAutoWhereInput
+    /**
+     * Limit how many InboxAutos to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboxAuto upsert
+   */
+  export type InboxAutoUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxAuto
+     */
+    select?: InboxAutoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxAuto
+     */
+    omit?: InboxAutoOmit<ExtArgs> | null
+    /**
+     * The filter to search for the InboxAuto to update in case it exists.
+     */
+    where: InboxAutoWhereUniqueInput
+    /**
+     * In case the InboxAuto found by the `where` argument doesn't exist, create a new InboxAuto with this data.
+     */
+    create: XOR<InboxAutoCreateInput, InboxAutoUncheckedCreateInput>
+    /**
+     * In case the InboxAuto was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<InboxAutoUpdateInput, InboxAutoUncheckedUpdateInput>
+  }
+
+  /**
+   * InboxAuto delete
+   */
+  export type InboxAutoDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxAuto
+     */
+    select?: InboxAutoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxAuto
+     */
+    omit?: InboxAutoOmit<ExtArgs> | null
+    /**
+     * Filter which InboxAuto to delete.
+     */
+    where: InboxAutoWhereUniqueInput
+  }
+
+  /**
+   * InboxAuto deleteMany
+   */
+  export type InboxAutoDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which InboxAutos to delete
+     */
+    where?: InboxAutoWhereInput
+    /**
+     * Limit how many InboxAutos to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * InboxAuto without action
+   */
+  export type InboxAutoDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the InboxAuto
+     */
+    select?: InboxAutoSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the InboxAuto
+     */
+    omit?: InboxAutoOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -89214,6 +91386,7 @@ export namespace Prisma {
     metaId: 'metaId',
     userId: 'userId',
     error: 'error',
+    mediaUrl: 'mediaUrl',
     at: 'at'
   };
 
@@ -89232,6 +91405,27 @@ export namespace Prisma {
   };
 
   export type WaNumberScalarFieldEnum = (typeof WaNumberScalarFieldEnum)[keyof typeof WaNumberScalarFieldEnum]
+
+
+  export const InboxTemplateScalarFieldEnum: {
+    id: 'id',
+    judul: 'judul',
+    teks: 'teks',
+    createdAt: 'createdAt'
+  };
+
+  export type InboxTemplateScalarFieldEnum = (typeof InboxTemplateScalarFieldEnum)[keyof typeof InboxTemplateScalarFieldEnum]
+
+
+  export const InboxAutoScalarFieldEnum: {
+    id: 'id',
+    keyword: 'keyword',
+    balasan: 'balasan',
+    aktif: 'aktif',
+    createdAt: 'createdAt'
+  };
+
+  export type InboxAutoScalarFieldEnum = (typeof InboxAutoScalarFieldEnum)[keyof typeof InboxAutoScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -95011,6 +97205,7 @@ export namespace Prisma {
     metaId?: StringNullableFilter<"InboxMessage"> | string | null
     userId?: StringNullableFilter<"InboxMessage"> | string | null
     error?: StringNullableFilter<"InboxMessage"> | string | null
+    mediaUrl?: StringNullableFilter<"InboxMessage"> | string | null
     at?: DateTimeFilter<"InboxMessage"> | Date | string
     thread?: XOR<InboxThreadScalarRelationFilter, InboxThreadWhereInput>
   }
@@ -95023,6 +97218,7 @@ export namespace Prisma {
     metaId?: SortOrderInput | SortOrder
     userId?: SortOrderInput | SortOrder
     error?: SortOrderInput | SortOrder
+    mediaUrl?: SortOrderInput | SortOrder
     at?: SortOrder
     thread?: InboxThreadOrderByWithRelationInput
   }
@@ -95038,6 +97234,7 @@ export namespace Prisma {
     text?: StringFilter<"InboxMessage"> | string
     userId?: StringNullableFilter<"InboxMessage"> | string | null
     error?: StringNullableFilter<"InboxMessage"> | string | null
+    mediaUrl?: StringNullableFilter<"InboxMessage"> | string | null
     at?: DateTimeFilter<"InboxMessage"> | Date | string
     thread?: XOR<InboxThreadScalarRelationFilter, InboxThreadWhereInput>
   }, "id" | "metaId">
@@ -95050,6 +97247,7 @@ export namespace Prisma {
     metaId?: SortOrderInput | SortOrder
     userId?: SortOrderInput | SortOrder
     error?: SortOrderInput | SortOrder
+    mediaUrl?: SortOrderInput | SortOrder
     at?: SortOrder
     _count?: InboxMessageCountOrderByAggregateInput
     _max?: InboxMessageMaxOrderByAggregateInput
@@ -95067,6 +97265,7 @@ export namespace Prisma {
     metaId?: StringNullableWithAggregatesFilter<"InboxMessage"> | string | null
     userId?: StringNullableWithAggregatesFilter<"InboxMessage"> | string | null
     error?: StringNullableWithAggregatesFilter<"InboxMessage"> | string | null
+    mediaUrl?: StringNullableWithAggregatesFilter<"InboxMessage"> | string | null
     at?: DateTimeWithAggregatesFilter<"InboxMessage"> | Date | string
   }
 
@@ -95135,6 +97334,105 @@ export namespace Prisma {
     createdBy?: StringNullableWithAggregatesFilter<"WaNumber"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"WaNumber"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"WaNumber"> | Date | string
+  }
+
+  export type InboxTemplateWhereInput = {
+    AND?: InboxTemplateWhereInput | InboxTemplateWhereInput[]
+    OR?: InboxTemplateWhereInput[]
+    NOT?: InboxTemplateWhereInput | InboxTemplateWhereInput[]
+    id?: StringFilter<"InboxTemplate"> | string
+    judul?: StringFilter<"InboxTemplate"> | string
+    teks?: StringFilter<"InboxTemplate"> | string
+    createdAt?: DateTimeFilter<"InboxTemplate"> | Date | string
+  }
+
+  export type InboxTemplateOrderByWithRelationInput = {
+    id?: SortOrder
+    judul?: SortOrder
+    teks?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InboxTemplateWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: InboxTemplateWhereInput | InboxTemplateWhereInput[]
+    OR?: InboxTemplateWhereInput[]
+    NOT?: InboxTemplateWhereInput | InboxTemplateWhereInput[]
+    judul?: StringFilter<"InboxTemplate"> | string
+    teks?: StringFilter<"InboxTemplate"> | string
+    createdAt?: DateTimeFilter<"InboxTemplate"> | Date | string
+  }, "id">
+
+  export type InboxTemplateOrderByWithAggregationInput = {
+    id?: SortOrder
+    judul?: SortOrder
+    teks?: SortOrder
+    createdAt?: SortOrder
+    _count?: InboxTemplateCountOrderByAggregateInput
+    _max?: InboxTemplateMaxOrderByAggregateInput
+    _min?: InboxTemplateMinOrderByAggregateInput
+  }
+
+  export type InboxTemplateScalarWhereWithAggregatesInput = {
+    AND?: InboxTemplateScalarWhereWithAggregatesInput | InboxTemplateScalarWhereWithAggregatesInput[]
+    OR?: InboxTemplateScalarWhereWithAggregatesInput[]
+    NOT?: InboxTemplateScalarWhereWithAggregatesInput | InboxTemplateScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"InboxTemplate"> | string
+    judul?: StringWithAggregatesFilter<"InboxTemplate"> | string
+    teks?: StringWithAggregatesFilter<"InboxTemplate"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"InboxTemplate"> | Date | string
+  }
+
+  export type InboxAutoWhereInput = {
+    AND?: InboxAutoWhereInput | InboxAutoWhereInput[]
+    OR?: InboxAutoWhereInput[]
+    NOT?: InboxAutoWhereInput | InboxAutoWhereInput[]
+    id?: StringFilter<"InboxAuto"> | string
+    keyword?: StringFilter<"InboxAuto"> | string
+    balasan?: StringFilter<"InboxAuto"> | string
+    aktif?: BoolFilter<"InboxAuto"> | boolean
+    createdAt?: DateTimeFilter<"InboxAuto"> | Date | string
+  }
+
+  export type InboxAutoOrderByWithRelationInput = {
+    id?: SortOrder
+    keyword?: SortOrder
+    balasan?: SortOrder
+    aktif?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InboxAutoWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: InboxAutoWhereInput | InboxAutoWhereInput[]
+    OR?: InboxAutoWhereInput[]
+    NOT?: InboxAutoWhereInput | InboxAutoWhereInput[]
+    keyword?: StringFilter<"InboxAuto"> | string
+    balasan?: StringFilter<"InboxAuto"> | string
+    aktif?: BoolFilter<"InboxAuto"> | boolean
+    createdAt?: DateTimeFilter<"InboxAuto"> | Date | string
+  }, "id">
+
+  export type InboxAutoOrderByWithAggregationInput = {
+    id?: SortOrder
+    keyword?: SortOrder
+    balasan?: SortOrder
+    aktif?: SortOrder
+    createdAt?: SortOrder
+    _count?: InboxAutoCountOrderByAggregateInput
+    _max?: InboxAutoMaxOrderByAggregateInput
+    _min?: InboxAutoMinOrderByAggregateInput
+  }
+
+  export type InboxAutoScalarWhereWithAggregatesInput = {
+    AND?: InboxAutoScalarWhereWithAggregatesInput | InboxAutoScalarWhereWithAggregatesInput[]
+    OR?: InboxAutoScalarWhereWithAggregatesInput[]
+    NOT?: InboxAutoScalarWhereWithAggregatesInput | InboxAutoScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"InboxAuto"> | string
+    keyword?: StringWithAggregatesFilter<"InboxAuto"> | string
+    balasan?: StringWithAggregatesFilter<"InboxAuto"> | string
+    aktif?: BoolWithAggregatesFilter<"InboxAuto"> | boolean
+    createdAt?: DateTimeWithAggregatesFilter<"InboxAuto"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -101396,6 +103694,7 @@ export namespace Prisma {
     metaId?: string | null
     userId?: string | null
     error?: string | null
+    mediaUrl?: string | null
     at?: Date | string
     thread: InboxThreadCreateNestedOneWithoutMessagesInput
   }
@@ -101408,6 +103707,7 @@ export namespace Prisma {
     metaId?: string | null
     userId?: string | null
     error?: string | null
+    mediaUrl?: string | null
     at?: Date | string
   }
 
@@ -101418,6 +103718,7 @@ export namespace Prisma {
     metaId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     error?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     at?: DateTimeFieldUpdateOperationsInput | Date | string
     thread?: InboxThreadUpdateOneRequiredWithoutMessagesNestedInput
   }
@@ -101430,6 +103731,7 @@ export namespace Prisma {
     metaId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     error?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -101441,6 +103743,7 @@ export namespace Prisma {
     metaId?: string | null
     userId?: string | null
     error?: string | null
+    mediaUrl?: string | null
     at?: Date | string
   }
 
@@ -101451,6 +103754,7 @@ export namespace Prisma {
     metaId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     error?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -101462,6 +103766,7 @@ export namespace Prisma {
     metaId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     error?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -101540,6 +103845,111 @@ export namespace Prisma {
     createdBy?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboxTemplateCreateInput = {
+    id?: string
+    judul: string
+    teks: string
+    createdAt?: Date | string
+  }
+
+  export type InboxTemplateUncheckedCreateInput = {
+    id?: string
+    judul: string
+    teks: string
+    createdAt?: Date | string
+  }
+
+  export type InboxTemplateUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    teks?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboxTemplateUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    teks?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboxTemplateCreateManyInput = {
+    id?: string
+    judul: string
+    teks: string
+    createdAt?: Date | string
+  }
+
+  export type InboxTemplateUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    teks?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboxTemplateUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    judul?: StringFieldUpdateOperationsInput | string
+    teks?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboxAutoCreateInput = {
+    id?: string
+    keyword: string
+    balasan: string
+    aktif?: boolean
+    createdAt?: Date | string
+  }
+
+  export type InboxAutoUncheckedCreateInput = {
+    id?: string
+    keyword: string
+    balasan: string
+    aktif?: boolean
+    createdAt?: Date | string
+  }
+
+  export type InboxAutoUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    keyword?: StringFieldUpdateOperationsInput | string
+    balasan?: StringFieldUpdateOperationsInput | string
+    aktif?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboxAutoUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    keyword?: StringFieldUpdateOperationsInput | string
+    balasan?: StringFieldUpdateOperationsInput | string
+    aktif?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboxAutoCreateManyInput = {
+    id?: string
+    keyword: string
+    balasan: string
+    aktif?: boolean
+    createdAt?: Date | string
+  }
+
+  export type InboxAutoUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    keyword?: StringFieldUpdateOperationsInput | string
+    balasan?: StringFieldUpdateOperationsInput | string
+    aktif?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type InboxAutoUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    keyword?: StringFieldUpdateOperationsInput | string
+    balasan?: StringFieldUpdateOperationsInput | string
+    aktif?: BoolFieldUpdateOperationsInput | boolean
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type StringFilter<$PrismaModel = never> = {
@@ -105371,6 +107781,7 @@ export namespace Prisma {
     metaId?: SortOrder
     userId?: SortOrder
     error?: SortOrder
+    mediaUrl?: SortOrder
     at?: SortOrder
   }
 
@@ -105382,6 +107793,7 @@ export namespace Prisma {
     metaId?: SortOrder
     userId?: SortOrder
     error?: SortOrder
+    mediaUrl?: SortOrder
     at?: SortOrder
   }
 
@@ -105393,6 +107805,7 @@ export namespace Prisma {
     metaId?: SortOrder
     userId?: SortOrder
     error?: SortOrder
+    mediaUrl?: SortOrder
     at?: SortOrder
   }
 
@@ -105427,6 +107840,51 @@ export namespace Prisma {
     createdBy?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+  }
+
+  export type InboxTemplateCountOrderByAggregateInput = {
+    id?: SortOrder
+    judul?: SortOrder
+    teks?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InboxTemplateMaxOrderByAggregateInput = {
+    id?: SortOrder
+    judul?: SortOrder
+    teks?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InboxTemplateMinOrderByAggregateInput = {
+    id?: SortOrder
+    judul?: SortOrder
+    teks?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InboxAutoCountOrderByAggregateInput = {
+    id?: SortOrder
+    keyword?: SortOrder
+    balasan?: SortOrder
+    aktif?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InboxAutoMaxOrderByAggregateInput = {
+    id?: SortOrder
+    keyword?: SortOrder
+    balasan?: SortOrder
+    aktif?: SortOrder
+    createdAt?: SortOrder
+  }
+
+  export type InboxAutoMinOrderByAggregateInput = {
+    id?: SortOrder
+    keyword?: SortOrder
+    balasan?: SortOrder
+    aktif?: SortOrder
+    createdAt?: SortOrder
   }
 
   export type BranchCreateNestedOneWithoutUsersInput = {
@@ -115384,6 +117842,7 @@ export namespace Prisma {
     metaId?: string | null
     userId?: string | null
     error?: string | null
+    mediaUrl?: string | null
     at?: Date | string
   }
 
@@ -115394,6 +117853,7 @@ export namespace Prisma {
     metaId?: string | null
     userId?: string | null
     error?: string | null
+    mediaUrl?: string | null
     at?: Date | string
   }
 
@@ -115434,6 +117894,7 @@ export namespace Prisma {
     metaId?: StringNullableFilter<"InboxMessage"> | string | null
     userId?: StringNullableFilter<"InboxMessage"> | string | null
     error?: StringNullableFilter<"InboxMessage"> | string | null
+    mediaUrl?: StringNullableFilter<"InboxMessage"> | string | null
     at?: DateTimeFilter<"InboxMessage"> | Date | string
   }
 
@@ -117318,6 +119779,7 @@ export namespace Prisma {
     metaId?: string | null
     userId?: string | null
     error?: string | null
+    mediaUrl?: string | null
     at?: Date | string
   }
 
@@ -117328,6 +119790,7 @@ export namespace Prisma {
     metaId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     error?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -117338,6 +119801,7 @@ export namespace Prisma {
     metaId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     error?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -117348,6 +119812,7 @@ export namespace Prisma {
     metaId?: NullableStringFieldUpdateOperationsInput | string | null
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     error?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
     at?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 

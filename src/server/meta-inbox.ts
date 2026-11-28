@@ -4,7 +4,8 @@
 import { createHmac, timingSafeEqual } from "node:crypto";
 import { prisma } from "@/server/db";
 
-export type MetaEvent = { channel: "WA" | "IG"; accountId: string; contactId: string; name?: string; dir: "in" | "out"; text: string; metaId: string; at: Date; riwayat?: boolean }; // riwayat = sinkron chat lama (coexistence), tidak menambah belum dibaca
+/** channel: WA | IG (DM) | IGK (komentar IG) | FB (Messenger Page). metaId komentar = "c:<comment id>". */
+export type MetaEvent = { channel: "WA" | "IG" | "IGK" | "FB"; accountId: string; contactId: string; name?: string; dir: "in" | "out"; text: string; metaId: string; at: Date; riwayat?: boolean; mediaUrl?: string }; // riwayat = sinkron chat lama (coexistence), tidak menambah belum dibaca
 
 const GRAPH = "https://graph.facebook.com/v23.0";
 
@@ -55,13 +56,23 @@ export function parseMeta(p: Any): MetaEvent[] {
             for (const m of th.messages ?? []) out.push({ channel: "WA", accountId: acc, contactId: th.id, dir: m.from === th.id ? "in" : "out", text: isi(m), metaId: m.id, at: waktu(m.timestamp), riwayat: true });
       }
     }
-    if (p.object === "instagram") {
+    if (p.object === "instagram" || p.object === "page") {
+      const ch = p.object === "page" ? "FB" : "IG";
       // chat asli = entry.messaging; tombol "Uji" di dashboard Meta = entry.changes[].value
       const list = [...(e.messaging ?? []), ...(e.changes ?? []).filter((c: Any) => c.field === "messages").map((c: Any) => c.value)];
       for (const m of list) {
         if (!m.message?.mid) continue;
         const echo = !!m.message.is_echo;
-        out.push({ channel: "IG", accountId: e.id, contactId: echo ? m.recipient?.id : m.sender?.id, dir: echo ? "out" : "in", text: isi(m.message), metaId: m.message.mid, at: waktu(m.timestamp) });
+        const foto = (m.message.attachments ?? []).find((a: Any) => a.type === "image")?.payload?.url;
+        out.push({ channel: ch, accountId: e.id, contactId: echo ? m.recipient?.id : m.sender?.id, dir: echo ? "out" : "in", text: isi(m.message), metaId: m.message.mid, at: waktu(m.timestamp), ...(foto ? { mediaUrl: foto } : {}) });
+      }
+      // komentar postingan IG (field "comments"); komentar akun sendiri = balasan kita
+      for (const c of (e.changes ?? []).filter((x: Any) => x.field === "comments")) {
+        const v = c.value ?? {};
+        if (!v.id || !v.from?.id) continue;
+        const kita = v.from.id === e.id;
+        if (kita) continue; // balasan publik kita sudah dicatat saat dikirim
+        out.push({ channel: "IGK", accountId: e.id, contactId: v.from.id, name: v.from.username ? `@${v.from.username}` : undefined, dir: "in", text: `[Komentar] ${v.text ?? ""}`.trim(), metaId: `c:${v.id}`, at: waktu(e.time) });
       }
     }
   }
@@ -84,9 +95,9 @@ export function kontakMeta(p: Any): { accountId: string; contactId: string; name
   return out;
 }
 
-/** Simpan pesan; metaId sudah ada (dikirim dari web / webhook diulang) → dilewati. */
-export async function simpanPesan(ev: MetaEvent[]): Promise<number> {
-  let n = 0;
+/** Simpan pesan; metaId sudah ada (dikirim dari web / webhook diulang) → dilewati. Hasil = pesan yang baru disimpan. */
+export async function simpanPesan(ev: MetaEvent[]): Promise<MetaEvent[]> {
+  const baru: MetaEvent[] = [];
   for (const m of ev) {
     if (await prisma.inboxMessage.findUnique({ where: { metaId: m.metaId }, select: { id: true } })) continue;
     const key = { channel: m.channel, accountId: m.accountId, contactId: m.contactId };
@@ -100,41 +111,70 @@ export async function simpanPesan(ev: MetaEvent[]): Promise<number> {
       where: { id: t.id },
       data: { ...(m.at > t.lastAt ? { lastText: m.text, lastAt: m.at } : {}), ...(m.riwayat ? {} : m.dir === "in" ? { unread: { increment: 1 } } : { unread: 0 }) },
     });
-    await prisma.inboxMessage.create({ data: { threadId: t.id, dir: m.dir, text: m.text, metaId: m.metaId, at: m.at } }).catch(() => null); // dobel bersamaan → abaikan
-    n++;
+    const ok = await prisma.inboxMessage.create({ data: { threadId: t.id, dir: m.dir, text: m.text, metaId: m.metaId, at: m.at, mediaUrl: m.mediaUrl ?? null } }).catch(() => null); // dobel bersamaan → abaikan
+    if (ok) baru.push(m);
   }
-  return n;
+  return baru;
 }
 
-/** Kirim teks ke pelanggan. WA: maks 24 jam sejak pesan terakhir pelanggan (di luar itu Meta menolak). IG: sama, 24 jam. */
-export async function kirimMeta(channel: string, accountId: string, to: string, text: string): Promise<{ ok: true; id: string } | { ok: false; error: string }> {
-  const wa = channel === "WA";
-  // WA: token per nomor dari Sambungkan WhatsApp (tabel WaNumber), cadangan env META_WA_TOKEN
-  const token = wa ? ((await prisma.waNumber.findUnique({ where: { phoneNumberId: accountId }, select: { token: true } }))?.token ?? process.env.META_WA_TOKEN) : process.env.META_IG_TOKEN || process.env.META_WA_TOKEN;
-  if (!token) return { ok: false, error: `Token ${wa ? "META_WA_TOKEN" : "META_IG_TOKEN"} belum diisi di server.` };
-  const body = wa ? { messaging_product: "whatsapp", to, type: "text", text: { body: text } } : { recipient: { id: to }, message: { text } };
+type Kirim = { ok: true; id: string } | { ok: false; error: string };
+
+async function post(path: string, token: string, body: object): Promise<{ ok: boolean; j: Any; status: number }> {
+  const r = await fetch(`${GRAPH}/${path}`, { method: "POST", headers: { authorization: `Bearer ${token}`, "content-type": "application/json" }, body: JSON.stringify(body), signal: AbortSignal.timeout(20000) });
+  return { ok: r.ok, j: (await r.json().catch(() => ({}))) as Any, status: r.status };
+}
+const gagal = (j: Any, status: number) => j.error?.error_user_msg || j.error?.message || `HTTP ${status}`;
+
+/** Kirim ke pelanggan. WA: teks (24 jam). IG/FB: teks atau foto (24 jam). IGK: balas komentar publik, atau dm=true → DM (private reply, ≤7 hari). */
+export async function kirimMeta(channel: string, accountId: string, to: string, text: string, o: { foto?: string; commentId?: string; dm?: boolean } = {}): Promise<Kirim> {
   try {
-    const r = await fetch(`${GRAPH}/${accountId}/messages`, {
-      method: "POST",
-      headers: { authorization: `Bearer ${token}`, "content-type": "application/json" },
-      body: JSON.stringify(body),
-      signal: AbortSignal.timeout(15000),
-    });
-    const j = (await r.json().catch(() => ({}))) as Any;
-    if (!r.ok) return { ok: false, error: j.error?.error_user_msg || j.error?.message || `HTTP ${r.status}` };
-    const id = wa ? j.messages?.[0]?.id : j.message_id;
-    return id ? { ok: true, id } : { ok: false, error: "Meta tidak mengembalikan id pesan." };
+    if (channel === "WA") {
+      const token = (await prisma.waNumber.findUnique({ where: { phoneNumberId: accountId }, select: { token: true } }))?.token ?? process.env.META_WA_TOKEN;
+      if (!token) return { ok: false, error: "Token WhatsApp belum diisi di server." };
+      const r = await post(`${accountId}/messages`, token, { messaging_product: "whatsapp", to, type: "text", text: { body: text } });
+      return r.ok && r.j.messages?.[0]?.id ? { ok: true, id: r.j.messages[0].id } : { ok: false, error: gagal(r.j, r.status) };
+    }
+    const token = process.env.META_IG_TOKEN;
+    if (!token) return { ok: false, error: "META_IG_TOKEN belum diisi di server." };
+    if (channel === "IGK") {
+      if (!o.commentId) return { ok: false, error: "Komentar yang dibalas tidak ditemukan." };
+      if (o.foto) return { ok: false, error: "Balas komentar tidak bisa pakai foto. Centang Kirim lewat DM." };
+      if (o.dm) {
+        const r = await post(`${accountId}/messages`, token, { recipient: { comment_id: o.commentId }, message: { text } });
+        return r.ok ? { ok: true, id: r.j.message_id ?? `dm-${Date.now()}` } : { ok: false, error: gagal(r.j, r.status) };
+      }
+      const r = await post(`${o.commentId}/replies`, token, { message: text });
+      return r.ok && r.j.id ? { ok: true, id: `c:${r.j.id}` } : { ok: false, error: gagal(r.j, r.status) };
+    }
+    const message = o.foto ? { attachment: { type: "image", payload: { url: o.foto } } } : { text };
+    const r = await post(`${accountId}/messages`, token, { recipient: { id: to }, ...(channel === "FB" ? { messaging_type: "RESPONSE" } : {}), message });
+    return r.ok && r.j.message_id ? { ok: true, id: r.j.message_id } : { ok: false, error: gagal(r.j, r.status) };
   } catch (e) {
     return { ok: false, error: e instanceof Error ? e.message : "Gagal mengirim." };
   }
 }
 
+/** Komentar baru yang cocok keyword Auto DM → kirim DM (private reply) sekali. */
+export async function autoDmKomentar(ev: MetaEvent[]): Promise<void> {
+  const kom = ev.filter((e) => e.channel === "IGK" && e.dir === "in");
+  if (!kom.length) return;
+  const aturan = await prisma.inboxAuto.findMany({ where: { aktif: true } });
+  for (const k of kom) {
+    const teks = k.text.toLowerCase();
+    const a = aturan.find((x) => x.keyword.split(",").map((w) => w.trim().toLowerCase()).filter(Boolean).some((w) => teks.includes(w)));
+    if (!a) continue;
+    const r = await kirimMeta("IGK", k.accountId, k.contactId, a.balasan, { commentId: k.metaId.slice(2), dm: true });
+    const t = await prisma.inboxThread.findUnique({ where: { channel_accountId_contactId: { channel: "IGK", accountId: k.accountId, contactId: k.contactId } }, select: { id: true } });
+    if (t) await prisma.inboxMessage.create({ data: { threadId: t.id, dir: "out", text: `[Auto DM] ${a.balasan}`, metaId: r.ok ? `auto:${r.id}` : null, error: r.ok ? null : r.error } });
+  }
+}
+
 /** Nama + @username pengirim IG (Graph API, token Page META_IG_TOKEN). null = coba lagi nanti; "" = Meta menolak (tidak dicoba lagi). */
-export async function namaIg(igsid: string): Promise<string | null> {
+export async function namaIg(igsid: string, fb = false): Promise<string | null> {
   const token = process.env.META_IG_TOKEN;
   if (!token) return null;
   try {
-    const r = await fetch(`${GRAPH}/${igsid}?fields=name,username`, { headers: { authorization: `Bearer ${token}` }, signal: AbortSignal.timeout(8000) });
+    const r = await fetch(`${GRAPH}/${igsid}?fields=${fb ? "name" : "name,username"}`, { headers: { authorization: `Bearer ${token}` }, signal: AbortSignal.timeout(8000) });
     if (!r.ok) return "";
     const j = (await r.json()) as { name?: string; username?: string };
     return j.name && j.username ? `${j.name} (@${j.username})` : j.username ? `@${j.username}` : (j.name ?? "");
@@ -145,9 +185,9 @@ export async function namaIg(igsid: string): Promise<string | null> {
 
 /** Isi nama chat IG yang masih kosong (dipanggil setelah webhook & saat Inbox dibuka). */
 export async function isiNamaIg(limit = 10): Promise<void> {
-  const ts = await prisma.inboxThread.findMany({ where: { channel: "IG", name: null }, select: { id: true, contactId: true }, take: limit, orderBy: { lastAt: "desc" } });
+  const ts = await prisma.inboxThread.findMany({ where: { channel: { in: ["IG", "FB"] }, name: null }, select: { id: true, contactId: true, channel: true }, take: limit, orderBy: { lastAt: "desc" } });
   for (const t of ts) {
-    const n = await namaIg(t.contactId);
+    const n = await namaIg(t.contactId, t.channel === "FB");
     if (n !== null) await prisma.inboxThread.update({ where: { id: t.id }, data: { name: n } });
   }
 }

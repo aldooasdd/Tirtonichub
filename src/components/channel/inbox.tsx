@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Search, Send } from "lucide-react";
+import { ImagePlus, Search, Send, X } from "lucide-react";
 import { balasChat, tandaiDibaca } from "@/server/actions/inbox";
 
 export type Chat = { id: string; name: string; via: string; channel: string; lastText: string; lastAt: string; unread: number };
-type Msg = { id: string; dir: string; text: string; at: string; by: string | null; error: string | null };
+type Msg = { id: string; dir: string; text: string; at: string; by: string | null; error: string | null; mediaUrl: string | null };
+type Template = { id: string; judul: string; teks: string };
+const WARNA: Record<string, string> = { IG: "text-pink-600", IGK: "text-orange-500", FB: "text-blue-600", WA: "text-emerald-600" };
 
 const jam = (iso: string) => {
   const d = new Date(iso);
@@ -15,10 +17,12 @@ const jam = (iso: string) => {
   return d.toLocaleString("id-ID", { timeZone: "Asia/Jakarta", ...(hariIni ? { timeStyle: "short" } : { dateStyle: "short", timeStyle: "short" }) });
 };
 
-export function Inbox({ threads, aktif, msgs, q, buka }: { threads: Chat[]; aktif: Chat | null; msgs: Msg[]; q: string; buka: boolean }) {
+export function Inbox({ threads, aktif, msgs, q, buka, templates }: { threads: Chat[]; aktif: Chat | null; msgs: Msg[]; q: string; buka: boolean; templates: Template[] }) {
   const router = useRouter();
   const [text, setText] = useState("");
   const [err, setErr] = useState("");
+  const [foto, setFoto] = useState<File | null>(null);
+  const [dm, setDm] = useState(false);
   const [busy, start] = useTransition();
   const bawah = useRef<HTMLDivElement>(null);
 
@@ -31,11 +35,16 @@ export function Inbox({ threads, aktif, msgs, q, buka }: { threads: Chat[]; akti
   useEffect(() => { bawah.current?.scrollIntoView({ block: "end" }); }, [aktif?.id, msgs.length]);
 
   const kirim = () => {
-    if (!aktif || !text.trim() || busy) return;
+    if (!aktif || (!text.trim() && !foto) || busy) return;
     setErr("");
+    const fd = new FormData();
+    fd.set("threadId", aktif.id);
+    fd.set("text", text);
+    if (dm) fd.set("dm", "1");
+    if (foto) fd.set("foto", foto);
     start(async () => {
-      const r = await balasChat(aktif.id, text);
-      if (r.ok) setText("");
+      const r = await balasChat(fd);
+      if (r.ok) { setText(""); setFoto(null); }
       else setErr(r.message ?? "Gagal.");
       router.refresh();
     });
@@ -59,7 +68,7 @@ export function Inbox({ threads, aktif, msgs, q, buka }: { threads: Chat[]; akti
                 <span className="shrink-0 text-12 text-muted-foreground">{jam(c.lastAt)}</span>
               </span>
               <span className="flex items-center justify-between gap-2">
-                <span className="truncate text-12 text-muted-foreground"><span className={c.channel === "IG" ? "text-pink-600" : "text-emerald-600"}>{c.via}</span> · {c.lastText}</span>
+                <span className="truncate text-12 text-muted-foreground"><span className={WARNA[c.channel] ?? ""}>{c.via}</span> · {c.lastText}</span>
                 {c.unread > 0 && <span className="shrink-0 rounded-full bg-primary px-1.5 text-12 text-primary-foreground">{c.unread}</span>}
               </span>
             </Link>
@@ -72,13 +81,19 @@ export function Inbox({ threads, aktif, msgs, q, buka }: { threads: Chat[]; akti
           <div className="flex items-center gap-2 border-b px-3 py-2">
             <Link href={`/channel/inbox${q ? `?q=${encodeURIComponent(q)}` : ""}`} className="text-14 text-muted-foreground md:hidden">←</Link>
             <span className="font-medium">{aktif.name}</span>
-            <span className={`text-12 ${aktif.channel === "IG" ? "text-pink-600" : "text-emerald-600"}`}>{aktif.via}</span>
+            <span className={`text-12 ${WARNA[aktif.channel] ?? ""}`}>{aktif.via}</span>
           </div>
           <div className="min-h-0 flex-1 space-y-2 overflow-y-auto bg-muted/30 p-3">
             {msgs.map((m) => (
               <div key={m.id} className={`flex ${m.dir === "out" ? "justify-end" : "justify-start"}`}>
                 <div className={`max-w-[80%] rounded-lg px-3 py-2 text-14 whitespace-pre-wrap ${m.dir === "out" ? (m.error ? "bg-destructive/10" : "bg-primary text-primary-foreground") : "border bg-background"}`}>
-                  {m.text}
+                  {m.mediaUrl && (
+                    <a href={m.mediaUrl} target="_blank" rel="noreferrer">
+                      {/* eslint-disable-next-line @next/next/no-img-element -- foto chat (CDN Meta / storage) */}
+                      <img src={m.mediaUrl} alt="" className="mb-1 max-h-60 rounded-md" />
+                    </a>
+                  )}
+                  {m.text !== "[Foto]" && m.text}
                   <span className={`mt-0.5 block text-right text-[11px] ${m.dir === "out" && !m.error ? "text-primary-foreground/70" : "text-muted-foreground"}`}>
                     {m.by ? `${m.by} · ` : ""}{jam(m.at)}
                   </span>
@@ -91,6 +106,26 @@ export function Inbox({ threads, aktif, msgs, q, buka }: { threads: Chat[]; akti
           <div className="space-y-1 border-t p-2">
             {!buka && <p className="text-12 text-amber-600">Pesan terakhir pelanggan sudah lebih dari 24 jam. Meta bisa menolak balasan; balas dari HP atau tunggu pelanggan chat lagi.</p>}
             {err && <p role="alert" className="text-12 text-destructive">{err}</p>}
+            <div className="flex flex-wrap items-center gap-2 text-12">
+              {templates.length > 0 && (
+                <select value="" onChange={(e) => { const t = templates.find((x) => x.id === e.target.value); if (t) setText((v) => (v ? `${v}\n${t.teks}` : t.teks)); }} className="h-8 rounded-md border bg-background px-2">
+                  <option value="">Template balasan…</option>
+                  {templates.map((t) => <option key={t.id} value={t.id}>{t.judul}</option>)}
+                </select>
+              )}
+              {aktif.channel !== "IGK" || dm ? (
+                <label className="inline-flex h-8 cursor-pointer items-center gap-1 rounded-md border px-2">
+                  <ImagePlus className="size-4" /> Foto
+                  <input type="file" accept="image/jpeg,image/png" className="sr-only" onChange={(e) => setFoto(e.target.files?.[0] ?? null)} />
+                </label>
+              ) : null}
+              {foto && <span className="inline-flex items-center gap-1 rounded-md bg-muted px-2 py-1">{foto.name}<button type="button" aria-label="Batal foto" onClick={() => setFoto(null)}><X className="size-3" /></button></span>}
+              {aktif.channel === "IGK" && (
+                <label className="inline-flex items-center gap-1">
+                  <input type="checkbox" checked={dm} onChange={(e) => setDm(e.target.checked)} /> Kirim lewat DM (bukan balasan komentar publik)
+                </label>
+              )}
+            </div>
             <div className="flex items-end gap-2">
               <textarea
                 value={text}
@@ -100,7 +135,7 @@ export function Inbox({ threads, aktif, msgs, q, buka }: { threads: Chat[]; akti
                 placeholder="Tulis balasan… (Enter kirim, Shift+Enter baris baru)"
                 className="min-h-10 flex-1 resize-none rounded-md border bg-background px-3 py-2 text-14"
               />
-              <button type="button" onClick={kirim} disabled={busy || !text.trim()} aria-label="Kirim" className="h-10 rounded-md bg-primary px-4 text-primary-foreground disabled:opacity-40">
+              <button type="button" onClick={kirim} disabled={busy || (!text.trim() && !foto)} aria-label="Kirim" className="h-10 rounded-md bg-primary px-4 text-primary-foreground disabled:opacity-40">
                 <Send className="size-4" />
               </button>
             </div>
