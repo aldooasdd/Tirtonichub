@@ -66,6 +66,13 @@ export async function requireMedia(): Promise<AuthContext> {
   return ctx;
 }
 
+/** Instagram (posting, insight): Tirtonic Channel atau Media. */
+export async function requireIg(): Promise<AuthContext> {
+  const ctx = await requireAuth();
+  assert(ctx.allRoles.some((r) => can.manageChannel(r) || can.manageMedia(r)));
+  return ctx;
+}
+
 /** Sales/Boss: kirim rekap penjualan (foto nota). */
 export async function requireSales(): Promise<AuthContext> {
   const ctx = await requireAuth();

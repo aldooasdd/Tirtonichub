@@ -81,13 +81,19 @@ export async function runItems(now = new Date()) {
 
 export async function pushTick(now = new Date()) {
   markTick();
-  for (const job of [runMorning, runItems, runKatalog, runEditNotif, runBerita, runAutomation]) {
+  for (const job of [runMorning, runItems, runKatalog, runEditNotif, runBerita, runAutomation, runInstagram]) {
     try {
       await job(now);
     } catch (e) {
       console.error("[push]", job.name, e);
     }
   }
+}
+
+/** Posting Instagram terjadwal (Channel/Media → Instagram). */
+async function runInstagram(now: Date) {
+  const { igTick } = await import("@/server/instagram");
+  await igTick(now);
 }
 
 /** Workflow Automation (AUTOMATION_ENABLED=1); tanpa saklar ini tidak melakukan apa pun. */

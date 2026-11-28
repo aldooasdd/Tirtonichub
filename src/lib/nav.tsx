@@ -1,4 +1,5 @@
 import {
+  Camera,
   Home,
   Clock,
   FileText,
@@ -145,6 +146,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
       items: [
         { label: "Kelola Pesanan", href: "/channel", icon: Store },
         { label: "Inbox WA & IG", href: "/channel/inbox", icon: MessageSquare },
+        { label: "Instagram", href: "/channel/instagram", icon: Camera },
         { label: "Tirtonic POS", href: "/channel/pos", icon: ShoppingCart },
         { label: "Produk Master", href: "/channel/produk", icon: Boxes },
         { label: "Cek SKU", href: "/channel/produk/cek-sku", icon: ClipboardCheck },
@@ -192,6 +194,7 @@ export function navForRole(role: RoleCode): NavGroup[] {
       icon: MonitorSmartphone,
       items: [
         { label: "Tirtonic Studio", href: "/studio", icon: MonitorSmartphone, external: true },
+        ...(CHANNEL_ROLES.includes(role) ? [] : [{ label: "Instagram", href: "/channel/instagram", icon: Camera }]),
       ],
     });
   }

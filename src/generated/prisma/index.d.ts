@@ -389,6 +389,11 @@ export type InboxTemplate = $Result.DefaultSelection<Prisma.$InboxTemplatePayloa
  * Auto DM komentar Instagram: komentar berisi keyword → kirim DM (private reply) otomatis, sekali per komentar.
  */
 export type InboxAuto = $Result.DefaultSelection<Prisma.$InboxAutoPayload>
+/**
+ * Model IgPost
+ * Posting Instagram dari Tirtonichub (Channel/Media → Instagram). Terbit sekarang atau dijadwalkan (dicek tiap menit di pushTick).
+ */
+export type IgPost = $Result.DefaultSelection<Prisma.$IgPostPayload>
 
 /**
  * Enums
@@ -1370,6 +1375,16 @@ export class PrismaClient<
     * ```
     */
   get inboxAuto(): Prisma.InboxAutoDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.igPost`: Exposes CRUD operations for the **IgPost** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more IgPosts
+    * const igPosts = await prisma.igPost.findMany()
+    * ```
+    */
+  get igPost(): Prisma.IgPostDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1884,7 +1899,8 @@ export namespace Prisma {
     InboxMessage: 'InboxMessage',
     WaNumber: 'WaNumber',
     InboxTemplate: 'InboxTemplate',
-    InboxAuto: 'InboxAuto'
+    InboxAuto: 'InboxAuto',
+    IgPost: 'IgPost'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1903,7 +1919,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioPageUse" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit" | "scriptDoc" | "scriptRevision" | "scriptComment" | "scriptReview" | "draftProduk" | "inboxThread" | "inboxMessage" | "waNumber" | "inboxTemplate" | "inboxAuto"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioPageUse" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit" | "scriptDoc" | "scriptRevision" | "scriptComment" | "scriptReview" | "draftProduk" | "inboxThread" | "inboxMessage" | "waNumber" | "inboxTemplate" | "inboxAuto" | "igPost"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -7383,6 +7399,80 @@ export namespace Prisma {
           }
         }
       }
+      IgPost: {
+        payload: Prisma.$IgPostPayload<ExtArgs>
+        fields: Prisma.IgPostFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.IgPostFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IgPostPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.IgPostFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IgPostPayload>
+          }
+          findFirst: {
+            args: Prisma.IgPostFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IgPostPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.IgPostFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IgPostPayload>
+          }
+          findMany: {
+            args: Prisma.IgPostFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IgPostPayload>[]
+          }
+          create: {
+            args: Prisma.IgPostCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IgPostPayload>
+          }
+          createMany: {
+            args: Prisma.IgPostCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.IgPostCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IgPostPayload>[]
+          }
+          delete: {
+            args: Prisma.IgPostDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IgPostPayload>
+          }
+          update: {
+            args: Prisma.IgPostUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IgPostPayload>
+          }
+          deleteMany: {
+            args: Prisma.IgPostDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.IgPostUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.IgPostUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IgPostPayload>[]
+          }
+          upsert: {
+            args: Prisma.IgPostUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$IgPostPayload>
+          }
+          aggregate: {
+            args: Prisma.IgPostAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateIgPost>
+          }
+          groupBy: {
+            args: Prisma.IgPostGroupByArgs<ExtArgs>
+            result: $Utils.Optional<IgPostGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.IgPostCountArgs<ExtArgs>
+            result: $Utils.Optional<IgPostCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -7553,6 +7643,7 @@ export namespace Prisma {
     waNumber?: WaNumberOmit
     inboxTemplate?: InboxTemplateOmit
     inboxAuto?: InboxAutoOmit
+    igPost?: IgPostOmit
   }
 
   /* Types for Logging */
@@ -90277,6 +90368,1101 @@ export namespace Prisma {
 
 
   /**
+   * Model IgPost
+   */
+
+  export type AggregateIgPost = {
+    _count: IgPostCountAggregateOutputType | null
+    _min: IgPostMinAggregateOutputType | null
+    _max: IgPostMaxAggregateOutputType | null
+  }
+
+  export type IgPostMinAggregateOutputType = {
+    id: string | null
+    tipe: string | null
+    caption: string | null
+    jadwal: Date | null
+    status: string | null
+    containerId: string | null
+    igMediaId: string | null
+    permalink: string | null
+    error: string | null
+    createdBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type IgPostMaxAggregateOutputType = {
+    id: string | null
+    tipe: string | null
+    caption: string | null
+    jadwal: Date | null
+    status: string | null
+    containerId: string | null
+    igMediaId: string | null
+    permalink: string | null
+    error: string | null
+    createdBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type IgPostCountAggregateOutputType = {
+    id: number
+    tipe: number
+    caption: number
+    keys: number
+    jadwal: number
+    status: number
+    containerId: number
+    igMediaId: number
+    permalink: number
+    error: number
+    createdBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type IgPostMinAggregateInputType = {
+    id?: true
+    tipe?: true
+    caption?: true
+    jadwal?: true
+    status?: true
+    containerId?: true
+    igMediaId?: true
+    permalink?: true
+    error?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type IgPostMaxAggregateInputType = {
+    id?: true
+    tipe?: true
+    caption?: true
+    jadwal?: true
+    status?: true
+    containerId?: true
+    igMediaId?: true
+    permalink?: true
+    error?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type IgPostCountAggregateInputType = {
+    id?: true
+    tipe?: true
+    caption?: true
+    keys?: true
+    jadwal?: true
+    status?: true
+    containerId?: true
+    igMediaId?: true
+    permalink?: true
+    error?: true
+    createdBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type IgPostAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IgPost to aggregate.
+     */
+    where?: IgPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IgPosts to fetch.
+     */
+    orderBy?: IgPostOrderByWithRelationInput | IgPostOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: IgPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IgPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IgPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned IgPosts
+    **/
+    _count?: true | IgPostCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: IgPostMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: IgPostMaxAggregateInputType
+  }
+
+  export type GetIgPostAggregateType<T extends IgPostAggregateArgs> = {
+        [P in keyof T & keyof AggregateIgPost]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateIgPost[P]>
+      : GetScalarType<T[P], AggregateIgPost[P]>
+  }
+
+
+
+
+  export type IgPostGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: IgPostWhereInput
+    orderBy?: IgPostOrderByWithAggregationInput | IgPostOrderByWithAggregationInput[]
+    by: IgPostScalarFieldEnum[] | IgPostScalarFieldEnum
+    having?: IgPostScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: IgPostCountAggregateInputType | true
+    _min?: IgPostMinAggregateInputType
+    _max?: IgPostMaxAggregateInputType
+  }
+
+  export type IgPostGroupByOutputType = {
+    id: string
+    tipe: string
+    caption: string
+    keys: JsonValue
+    jadwal: Date | null
+    status: string
+    containerId: string | null
+    igMediaId: string | null
+    permalink: string | null
+    error: string | null
+    createdBy: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: IgPostCountAggregateOutputType | null
+    _min: IgPostMinAggregateOutputType | null
+    _max: IgPostMaxAggregateOutputType | null
+  }
+
+  type GetIgPostGroupByPayload<T extends IgPostGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<IgPostGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof IgPostGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], IgPostGroupByOutputType[P]>
+            : GetScalarType<T[P], IgPostGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type IgPostSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tipe?: boolean
+    caption?: boolean
+    keys?: boolean
+    jadwal?: boolean
+    status?: boolean
+    containerId?: boolean
+    igMediaId?: boolean
+    permalink?: boolean
+    error?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["igPost"]>
+
+  export type IgPostSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tipe?: boolean
+    caption?: boolean
+    keys?: boolean
+    jadwal?: boolean
+    status?: boolean
+    containerId?: boolean
+    igMediaId?: boolean
+    permalink?: boolean
+    error?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["igPost"]>
+
+  export type IgPostSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    tipe?: boolean
+    caption?: boolean
+    keys?: boolean
+    jadwal?: boolean
+    status?: boolean
+    containerId?: boolean
+    igMediaId?: boolean
+    permalink?: boolean
+    error?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["igPost"]>
+
+  export type IgPostSelectScalar = {
+    id?: boolean
+    tipe?: boolean
+    caption?: boolean
+    keys?: boolean
+    jadwal?: boolean
+    status?: boolean
+    containerId?: boolean
+    igMediaId?: boolean
+    permalink?: boolean
+    error?: boolean
+    createdBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type IgPostOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "tipe" | "caption" | "keys" | "jadwal" | "status" | "containerId" | "igMediaId" | "permalink" | "error" | "createdBy" | "createdAt" | "updatedAt", ExtArgs["result"]["igPost"]>
+
+  export type $IgPostPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "IgPost"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      tipe: string
+      caption: string
+      keys: Prisma.JsonValue
+      jadwal: Date | null
+      status: string
+      containerId: string | null
+      igMediaId: string | null
+      permalink: string | null
+      error: string | null
+      createdBy: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["igPost"]>
+    composites: {}
+  }
+
+  type IgPostGetPayload<S extends boolean | null | undefined | IgPostDefaultArgs> = $Result.GetResult<Prisma.$IgPostPayload, S>
+
+  type IgPostCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<IgPostFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: IgPostCountAggregateInputType | true
+    }
+
+  export interface IgPostDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['IgPost'], meta: { name: 'IgPost' } }
+    /**
+     * Find zero or one IgPost that matches the filter.
+     * @param {IgPostFindUniqueArgs} args - Arguments to find a IgPost
+     * @example
+     * // Get one IgPost
+     * const igPost = await prisma.igPost.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends IgPostFindUniqueArgs>(args: SelectSubset<T, IgPostFindUniqueArgs<ExtArgs>>): Prisma__IgPostClient<$Result.GetResult<Prisma.$IgPostPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one IgPost that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {IgPostFindUniqueOrThrowArgs} args - Arguments to find a IgPost
+     * @example
+     * // Get one IgPost
+     * const igPost = await prisma.igPost.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends IgPostFindUniqueOrThrowArgs>(args: SelectSubset<T, IgPostFindUniqueOrThrowArgs<ExtArgs>>): Prisma__IgPostClient<$Result.GetResult<Prisma.$IgPostPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IgPost that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IgPostFindFirstArgs} args - Arguments to find a IgPost
+     * @example
+     * // Get one IgPost
+     * const igPost = await prisma.igPost.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends IgPostFindFirstArgs>(args?: SelectSubset<T, IgPostFindFirstArgs<ExtArgs>>): Prisma__IgPostClient<$Result.GetResult<Prisma.$IgPostPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first IgPost that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IgPostFindFirstOrThrowArgs} args - Arguments to find a IgPost
+     * @example
+     * // Get one IgPost
+     * const igPost = await prisma.igPost.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends IgPostFindFirstOrThrowArgs>(args?: SelectSubset<T, IgPostFindFirstOrThrowArgs<ExtArgs>>): Prisma__IgPostClient<$Result.GetResult<Prisma.$IgPostPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more IgPosts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IgPostFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all IgPosts
+     * const igPosts = await prisma.igPost.findMany()
+     * 
+     * // Get first 10 IgPosts
+     * const igPosts = await prisma.igPost.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const igPostWithIdOnly = await prisma.igPost.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends IgPostFindManyArgs>(args?: SelectSubset<T, IgPostFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IgPostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a IgPost.
+     * @param {IgPostCreateArgs} args - Arguments to create a IgPost.
+     * @example
+     * // Create one IgPost
+     * const IgPost = await prisma.igPost.create({
+     *   data: {
+     *     // ... data to create a IgPost
+     *   }
+     * })
+     * 
+     */
+    create<T extends IgPostCreateArgs>(args: SelectSubset<T, IgPostCreateArgs<ExtArgs>>): Prisma__IgPostClient<$Result.GetResult<Prisma.$IgPostPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many IgPosts.
+     * @param {IgPostCreateManyArgs} args - Arguments to create many IgPosts.
+     * @example
+     * // Create many IgPosts
+     * const igPost = await prisma.igPost.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends IgPostCreateManyArgs>(args?: SelectSubset<T, IgPostCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many IgPosts and returns the data saved in the database.
+     * @param {IgPostCreateManyAndReturnArgs} args - Arguments to create many IgPosts.
+     * @example
+     * // Create many IgPosts
+     * const igPost = await prisma.igPost.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many IgPosts and only return the `id`
+     * const igPostWithIdOnly = await prisma.igPost.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends IgPostCreateManyAndReturnArgs>(args?: SelectSubset<T, IgPostCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IgPostPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a IgPost.
+     * @param {IgPostDeleteArgs} args - Arguments to delete one IgPost.
+     * @example
+     * // Delete one IgPost
+     * const IgPost = await prisma.igPost.delete({
+     *   where: {
+     *     // ... filter to delete one IgPost
+     *   }
+     * })
+     * 
+     */
+    delete<T extends IgPostDeleteArgs>(args: SelectSubset<T, IgPostDeleteArgs<ExtArgs>>): Prisma__IgPostClient<$Result.GetResult<Prisma.$IgPostPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one IgPost.
+     * @param {IgPostUpdateArgs} args - Arguments to update one IgPost.
+     * @example
+     * // Update one IgPost
+     * const igPost = await prisma.igPost.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends IgPostUpdateArgs>(args: SelectSubset<T, IgPostUpdateArgs<ExtArgs>>): Prisma__IgPostClient<$Result.GetResult<Prisma.$IgPostPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more IgPosts.
+     * @param {IgPostDeleteManyArgs} args - Arguments to filter IgPosts to delete.
+     * @example
+     * // Delete a few IgPosts
+     * const { count } = await prisma.igPost.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends IgPostDeleteManyArgs>(args?: SelectSubset<T, IgPostDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IgPosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IgPostUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many IgPosts
+     * const igPost = await prisma.igPost.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends IgPostUpdateManyArgs>(args: SelectSubset<T, IgPostUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more IgPosts and returns the data updated in the database.
+     * @param {IgPostUpdateManyAndReturnArgs} args - Arguments to update many IgPosts.
+     * @example
+     * // Update many IgPosts
+     * const igPost = await prisma.igPost.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more IgPosts and only return the `id`
+     * const igPostWithIdOnly = await prisma.igPost.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends IgPostUpdateManyAndReturnArgs>(args: SelectSubset<T, IgPostUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$IgPostPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one IgPost.
+     * @param {IgPostUpsertArgs} args - Arguments to update or create a IgPost.
+     * @example
+     * // Update or create a IgPost
+     * const igPost = await prisma.igPost.upsert({
+     *   create: {
+     *     // ... data to create a IgPost
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the IgPost we want to update
+     *   }
+     * })
+     */
+    upsert<T extends IgPostUpsertArgs>(args: SelectSubset<T, IgPostUpsertArgs<ExtArgs>>): Prisma__IgPostClient<$Result.GetResult<Prisma.$IgPostPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of IgPosts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IgPostCountArgs} args - Arguments to filter IgPosts to count.
+     * @example
+     * // Count the number of IgPosts
+     * const count = await prisma.igPost.count({
+     *   where: {
+     *     // ... the filter for the IgPosts we want to count
+     *   }
+     * })
+    **/
+    count<T extends IgPostCountArgs>(
+      args?: Subset<T, IgPostCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], IgPostCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a IgPost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IgPostAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends IgPostAggregateArgs>(args: Subset<T, IgPostAggregateArgs>): Prisma.PrismaPromise<GetIgPostAggregateType<T>>
+
+    /**
+     * Group by IgPost.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {IgPostGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends IgPostGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: IgPostGroupByArgs['orderBy'] }
+        : { orderBy?: IgPostGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, IgPostGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetIgPostGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the IgPost model
+   */
+  readonly fields: IgPostFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for IgPost.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__IgPostClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the IgPost model
+   */
+  interface IgPostFieldRefs {
+    readonly id: FieldRef<"IgPost", 'String'>
+    readonly tipe: FieldRef<"IgPost", 'String'>
+    readonly caption: FieldRef<"IgPost", 'String'>
+    readonly keys: FieldRef<"IgPost", 'Json'>
+    readonly jadwal: FieldRef<"IgPost", 'DateTime'>
+    readonly status: FieldRef<"IgPost", 'String'>
+    readonly containerId: FieldRef<"IgPost", 'String'>
+    readonly igMediaId: FieldRef<"IgPost", 'String'>
+    readonly permalink: FieldRef<"IgPost", 'String'>
+    readonly error: FieldRef<"IgPost", 'String'>
+    readonly createdBy: FieldRef<"IgPost", 'String'>
+    readonly createdAt: FieldRef<"IgPost", 'DateTime'>
+    readonly updatedAt: FieldRef<"IgPost", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * IgPost findUnique
+   */
+  export type IgPostFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IgPost
+     */
+    select?: IgPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IgPost
+     */
+    omit?: IgPostOmit<ExtArgs> | null
+    /**
+     * Filter, which IgPost to fetch.
+     */
+    where: IgPostWhereUniqueInput
+  }
+
+  /**
+   * IgPost findUniqueOrThrow
+   */
+  export type IgPostFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IgPost
+     */
+    select?: IgPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IgPost
+     */
+    omit?: IgPostOmit<ExtArgs> | null
+    /**
+     * Filter, which IgPost to fetch.
+     */
+    where: IgPostWhereUniqueInput
+  }
+
+  /**
+   * IgPost findFirst
+   */
+  export type IgPostFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IgPost
+     */
+    select?: IgPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IgPost
+     */
+    omit?: IgPostOmit<ExtArgs> | null
+    /**
+     * Filter, which IgPost to fetch.
+     */
+    where?: IgPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IgPosts to fetch.
+     */
+    orderBy?: IgPostOrderByWithRelationInput | IgPostOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IgPosts.
+     */
+    cursor?: IgPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IgPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IgPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IgPosts.
+     */
+    distinct?: IgPostScalarFieldEnum | IgPostScalarFieldEnum[]
+  }
+
+  /**
+   * IgPost findFirstOrThrow
+   */
+  export type IgPostFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IgPost
+     */
+    select?: IgPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IgPost
+     */
+    omit?: IgPostOmit<ExtArgs> | null
+    /**
+     * Filter, which IgPost to fetch.
+     */
+    where?: IgPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IgPosts to fetch.
+     */
+    orderBy?: IgPostOrderByWithRelationInput | IgPostOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for IgPosts.
+     */
+    cursor?: IgPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IgPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IgPosts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of IgPosts.
+     */
+    distinct?: IgPostScalarFieldEnum | IgPostScalarFieldEnum[]
+  }
+
+  /**
+   * IgPost findMany
+   */
+  export type IgPostFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IgPost
+     */
+    select?: IgPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IgPost
+     */
+    omit?: IgPostOmit<ExtArgs> | null
+    /**
+     * Filter, which IgPosts to fetch.
+     */
+    where?: IgPostWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of IgPosts to fetch.
+     */
+    orderBy?: IgPostOrderByWithRelationInput | IgPostOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing IgPosts.
+     */
+    cursor?: IgPostWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` IgPosts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` IgPosts.
+     */
+    skip?: number
+    distinct?: IgPostScalarFieldEnum | IgPostScalarFieldEnum[]
+  }
+
+  /**
+   * IgPost create
+   */
+  export type IgPostCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IgPost
+     */
+    select?: IgPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IgPost
+     */
+    omit?: IgPostOmit<ExtArgs> | null
+    /**
+     * The data needed to create a IgPost.
+     */
+    data: XOR<IgPostCreateInput, IgPostUncheckedCreateInput>
+  }
+
+  /**
+   * IgPost createMany
+   */
+  export type IgPostCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many IgPosts.
+     */
+    data: IgPostCreateManyInput | IgPostCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * IgPost createManyAndReturn
+   */
+  export type IgPostCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IgPost
+     */
+    select?: IgPostSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IgPost
+     */
+    omit?: IgPostOmit<ExtArgs> | null
+    /**
+     * The data used to create many IgPosts.
+     */
+    data: IgPostCreateManyInput | IgPostCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * IgPost update
+   */
+  export type IgPostUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IgPost
+     */
+    select?: IgPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IgPost
+     */
+    omit?: IgPostOmit<ExtArgs> | null
+    /**
+     * The data needed to update a IgPost.
+     */
+    data: XOR<IgPostUpdateInput, IgPostUncheckedUpdateInput>
+    /**
+     * Choose, which IgPost to update.
+     */
+    where: IgPostWhereUniqueInput
+  }
+
+  /**
+   * IgPost updateMany
+   */
+  export type IgPostUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update IgPosts.
+     */
+    data: XOR<IgPostUpdateManyMutationInput, IgPostUncheckedUpdateManyInput>
+    /**
+     * Filter which IgPosts to update
+     */
+    where?: IgPostWhereInput
+    /**
+     * Limit how many IgPosts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * IgPost updateManyAndReturn
+   */
+  export type IgPostUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IgPost
+     */
+    select?: IgPostSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the IgPost
+     */
+    omit?: IgPostOmit<ExtArgs> | null
+    /**
+     * The data used to update IgPosts.
+     */
+    data: XOR<IgPostUpdateManyMutationInput, IgPostUncheckedUpdateManyInput>
+    /**
+     * Filter which IgPosts to update
+     */
+    where?: IgPostWhereInput
+    /**
+     * Limit how many IgPosts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * IgPost upsert
+   */
+  export type IgPostUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IgPost
+     */
+    select?: IgPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IgPost
+     */
+    omit?: IgPostOmit<ExtArgs> | null
+    /**
+     * The filter to search for the IgPost to update in case it exists.
+     */
+    where: IgPostWhereUniqueInput
+    /**
+     * In case the IgPost found by the `where` argument doesn't exist, create a new IgPost with this data.
+     */
+    create: XOR<IgPostCreateInput, IgPostUncheckedCreateInput>
+    /**
+     * In case the IgPost was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<IgPostUpdateInput, IgPostUncheckedUpdateInput>
+  }
+
+  /**
+   * IgPost delete
+   */
+  export type IgPostDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IgPost
+     */
+    select?: IgPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IgPost
+     */
+    omit?: IgPostOmit<ExtArgs> | null
+    /**
+     * Filter which IgPost to delete.
+     */
+    where: IgPostWhereUniqueInput
+  }
+
+  /**
+   * IgPost deleteMany
+   */
+  export type IgPostDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which IgPosts to delete
+     */
+    where?: IgPostWhereInput
+    /**
+     * Limit how many IgPosts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * IgPost without action
+   */
+  export type IgPostDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the IgPost
+     */
+    select?: IgPostSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the IgPost
+     */
+    omit?: IgPostOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -91426,6 +92612,25 @@ export namespace Prisma {
   };
 
   export type InboxAutoScalarFieldEnum = (typeof InboxAutoScalarFieldEnum)[keyof typeof InboxAutoScalarFieldEnum]
+
+
+  export const IgPostScalarFieldEnum: {
+    id: 'id',
+    tipe: 'tipe',
+    caption: 'caption',
+    keys: 'keys',
+    jadwal: 'jadwal',
+    status: 'status',
+    containerId: 'containerId',
+    igMediaId: 'igMediaId',
+    permalink: 'permalink',
+    error: 'error',
+    createdBy: 'createdBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type IgPostScalarFieldEnum = (typeof IgPostScalarFieldEnum)[keyof typeof IgPostScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -97433,6 +98638,98 @@ export namespace Prisma {
     balasan?: StringWithAggregatesFilter<"InboxAuto"> | string
     aktif?: BoolWithAggregatesFilter<"InboxAuto"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"InboxAuto"> | Date | string
+  }
+
+  export type IgPostWhereInput = {
+    AND?: IgPostWhereInput | IgPostWhereInput[]
+    OR?: IgPostWhereInput[]
+    NOT?: IgPostWhereInput | IgPostWhereInput[]
+    id?: StringFilter<"IgPost"> | string
+    tipe?: StringFilter<"IgPost"> | string
+    caption?: StringFilter<"IgPost"> | string
+    keys?: JsonFilter<"IgPost">
+    jadwal?: DateTimeNullableFilter<"IgPost"> | Date | string | null
+    status?: StringFilter<"IgPost"> | string
+    containerId?: StringNullableFilter<"IgPost"> | string | null
+    igMediaId?: StringNullableFilter<"IgPost"> | string | null
+    permalink?: StringNullableFilter<"IgPost"> | string | null
+    error?: StringNullableFilter<"IgPost"> | string | null
+    createdBy?: StringNullableFilter<"IgPost"> | string | null
+    createdAt?: DateTimeFilter<"IgPost"> | Date | string
+    updatedAt?: DateTimeFilter<"IgPost"> | Date | string
+  }
+
+  export type IgPostOrderByWithRelationInput = {
+    id?: SortOrder
+    tipe?: SortOrder
+    caption?: SortOrder
+    keys?: SortOrder
+    jadwal?: SortOrderInput | SortOrder
+    status?: SortOrder
+    containerId?: SortOrderInput | SortOrder
+    igMediaId?: SortOrderInput | SortOrder
+    permalink?: SortOrderInput | SortOrder
+    error?: SortOrderInput | SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IgPostWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: IgPostWhereInput | IgPostWhereInput[]
+    OR?: IgPostWhereInput[]
+    NOT?: IgPostWhereInput | IgPostWhereInput[]
+    tipe?: StringFilter<"IgPost"> | string
+    caption?: StringFilter<"IgPost"> | string
+    keys?: JsonFilter<"IgPost">
+    jadwal?: DateTimeNullableFilter<"IgPost"> | Date | string | null
+    status?: StringFilter<"IgPost"> | string
+    containerId?: StringNullableFilter<"IgPost"> | string | null
+    igMediaId?: StringNullableFilter<"IgPost"> | string | null
+    permalink?: StringNullableFilter<"IgPost"> | string | null
+    error?: StringNullableFilter<"IgPost"> | string | null
+    createdBy?: StringNullableFilter<"IgPost"> | string | null
+    createdAt?: DateTimeFilter<"IgPost"> | Date | string
+    updatedAt?: DateTimeFilter<"IgPost"> | Date | string
+  }, "id">
+
+  export type IgPostOrderByWithAggregationInput = {
+    id?: SortOrder
+    tipe?: SortOrder
+    caption?: SortOrder
+    keys?: SortOrder
+    jadwal?: SortOrderInput | SortOrder
+    status?: SortOrder
+    containerId?: SortOrderInput | SortOrder
+    igMediaId?: SortOrderInput | SortOrder
+    permalink?: SortOrderInput | SortOrder
+    error?: SortOrderInput | SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: IgPostCountOrderByAggregateInput
+    _max?: IgPostMaxOrderByAggregateInput
+    _min?: IgPostMinOrderByAggregateInput
+  }
+
+  export type IgPostScalarWhereWithAggregatesInput = {
+    AND?: IgPostScalarWhereWithAggregatesInput | IgPostScalarWhereWithAggregatesInput[]
+    OR?: IgPostScalarWhereWithAggregatesInput[]
+    NOT?: IgPostScalarWhereWithAggregatesInput | IgPostScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"IgPost"> | string
+    tipe?: StringWithAggregatesFilter<"IgPost"> | string
+    caption?: StringWithAggregatesFilter<"IgPost"> | string
+    keys?: JsonWithAggregatesFilter<"IgPost">
+    jadwal?: DateTimeNullableWithAggregatesFilter<"IgPost"> | Date | string | null
+    status?: StringWithAggregatesFilter<"IgPost"> | string
+    containerId?: StringNullableWithAggregatesFilter<"IgPost"> | string | null
+    igMediaId?: StringNullableWithAggregatesFilter<"IgPost"> | string | null
+    permalink?: StringNullableWithAggregatesFilter<"IgPost"> | string | null
+    error?: StringNullableWithAggregatesFilter<"IgPost"> | string | null
+    createdBy?: StringNullableWithAggregatesFilter<"IgPost"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"IgPost"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"IgPost"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -103952,6 +105249,118 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type IgPostCreateInput = {
+    id?: string
+    tipe: string
+    caption: string
+    keys: JsonNullValueInput | InputJsonValue
+    jadwal?: Date | string | null
+    status?: string
+    containerId?: string | null
+    igMediaId?: string | null
+    permalink?: string | null
+    error?: string | null
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IgPostUncheckedCreateInput = {
+    id?: string
+    tipe: string
+    caption: string
+    keys: JsonNullValueInput | InputJsonValue
+    jadwal?: Date | string | null
+    status?: string
+    containerId?: string | null
+    igMediaId?: string | null
+    permalink?: string | null
+    error?: string | null
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IgPostUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipe?: StringFieldUpdateOperationsInput | string
+    caption?: StringFieldUpdateOperationsInput | string
+    keys?: JsonNullValueInput | InputJsonValue
+    jadwal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    containerId?: NullableStringFieldUpdateOperationsInput | string | null
+    igMediaId?: NullableStringFieldUpdateOperationsInput | string | null
+    permalink?: NullableStringFieldUpdateOperationsInput | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IgPostUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipe?: StringFieldUpdateOperationsInput | string
+    caption?: StringFieldUpdateOperationsInput | string
+    keys?: JsonNullValueInput | InputJsonValue
+    jadwal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    containerId?: NullableStringFieldUpdateOperationsInput | string | null
+    igMediaId?: NullableStringFieldUpdateOperationsInput | string | null
+    permalink?: NullableStringFieldUpdateOperationsInput | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IgPostCreateManyInput = {
+    id?: string
+    tipe: string
+    caption: string
+    keys: JsonNullValueInput | InputJsonValue
+    jadwal?: Date | string | null
+    status?: string
+    containerId?: string | null
+    igMediaId?: string | null
+    permalink?: string | null
+    error?: string | null
+    createdBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type IgPostUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipe?: StringFieldUpdateOperationsInput | string
+    caption?: StringFieldUpdateOperationsInput | string
+    keys?: JsonNullValueInput | InputJsonValue
+    jadwal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    containerId?: NullableStringFieldUpdateOperationsInput | string | null
+    igMediaId?: NullableStringFieldUpdateOperationsInput | string | null
+    permalink?: NullableStringFieldUpdateOperationsInput | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type IgPostUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    tipe?: StringFieldUpdateOperationsInput | string
+    caption?: StringFieldUpdateOperationsInput | string
+    keys?: JsonNullValueInput | InputJsonValue
+    jadwal?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    status?: StringFieldUpdateOperationsInput | string
+    containerId?: NullableStringFieldUpdateOperationsInput | string | null
+    igMediaId?: NullableStringFieldUpdateOperationsInput | string | null
+    permalink?: NullableStringFieldUpdateOperationsInput | string | null
+    error?: NullableStringFieldUpdateOperationsInput | string | null
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -107885,6 +109294,52 @@ export namespace Prisma {
     balasan?: SortOrder
     aktif?: SortOrder
     createdAt?: SortOrder
+  }
+
+  export type IgPostCountOrderByAggregateInput = {
+    id?: SortOrder
+    tipe?: SortOrder
+    caption?: SortOrder
+    keys?: SortOrder
+    jadwal?: SortOrder
+    status?: SortOrder
+    containerId?: SortOrder
+    igMediaId?: SortOrder
+    permalink?: SortOrder
+    error?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IgPostMaxOrderByAggregateInput = {
+    id?: SortOrder
+    tipe?: SortOrder
+    caption?: SortOrder
+    jadwal?: SortOrder
+    status?: SortOrder
+    containerId?: SortOrder
+    igMediaId?: SortOrder
+    permalink?: SortOrder
+    error?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type IgPostMinOrderByAggregateInput = {
+    id?: SortOrder
+    tipe?: SortOrder
+    caption?: SortOrder
+    jadwal?: SortOrder
+    status?: SortOrder
+    containerId?: SortOrder
+    igMediaId?: SortOrder
+    permalink?: SortOrder
+    error?: SortOrder
+    createdBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type BranchCreateNestedOneWithoutUsersInput = {
