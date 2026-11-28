@@ -31,6 +31,12 @@ function isi(m: Any): string {
   return `[${label[t] ?? t ?? "Pesan"}]${cap ? ` ${cap}` : ""}`;
 }
 
+/** Timestamp Meta: detik / milidetik, angka atau teks. */
+const waktu = (t: unknown) => {
+  const n = Number(t);
+  return !n ? new Date() : new Date(n < 1e12 ? n * 1000 : n);
+};
+
 /** Payload webhook Meta (WhatsApp + Instagram) → daftar pesan. Pesan dari HP admin (coexistence / echo) = dir "out". */
 export function parseMeta(p: Any): MetaEvent[] {
   const out: MetaEvent[] = [];
@@ -41,15 +47,17 @@ export function parseMeta(p: Any): MetaEvent[] {
         const acc = v.metadata?.phone_number_id;
         if (!acc) continue;
         const nama = new Map<string, string>((v.contacts ?? []).map((x: Any) => [x.wa_id, x.profile?.name]));
-        for (const m of v.messages ?? []) out.push({ channel: "WA", accountId: acc, contactId: m.from, name: nama.get(m.from), dir: "in", text: isi(m), metaId: m.id, at: new Date(Number(m.timestamp) * 1000) });
-        for (const m of v.message_echoes ?? []) out.push({ channel: "WA", accountId: acc, contactId: m.to, dir: "out", text: isi(m), metaId: m.id, at: new Date(Number(m.timestamp) * 1000) });
+        for (const m of v.messages ?? []) out.push({ channel: "WA", accountId: acc, contactId: m.from, name: nama.get(m.from), dir: "in", text: isi(m), metaId: m.id, at: waktu(m.timestamp) });
+        for (const m of v.message_echoes ?? []) out.push({ channel: "WA", accountId: acc, contactId: m.to, dir: "out", text: isi(m), metaId: m.id, at: waktu(m.timestamp) });
       }
     }
     if (p.object === "instagram") {
-      for (const m of e.messaging ?? []) {
+      // chat asli = entry.messaging; tombol "Uji" di dashboard Meta = entry.changes[].value
+      const list = [...(e.messaging ?? []), ...(e.changes ?? []).filter((c: Any) => c.field === "messages").map((c: Any) => c.value)];
+      for (const m of list) {
         if (!m.message?.mid) continue;
         const echo = !!m.message.is_echo;
-        out.push({ channel: "IG", accountId: e.id, contactId: echo ? m.recipient?.id : m.sender?.id, dir: echo ? "out" : "in", text: isi(m.message), metaId: m.message.mid, at: new Date(m.timestamp ?? Date.now()) });
+        out.push({ channel: "IG", accountId: e.id, contactId: echo ? m.recipient?.id : m.sender?.id, dir: echo ? "out" : "in", text: isi(m.message), metaId: m.message.mid, at: waktu(m.timestamp) });
       }
     }
   }

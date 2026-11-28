@@ -16,6 +16,13 @@ test("parseMeta: WA masuk + echo dari HP + IG masuk/echo", () => {
   assert.deepStrictEqual(ig.map((m) => [m.accountId, m.contactId, m.dir]), [["IG1", "u9", "in"], ["IG1", "u9", "out"]]);
 });
 
+test("parseMeta: tombol Uji dashboard (changes, timestamp teks detik)", () => {
+  const ev = parseMeta({ object: "instagram", entry: [{ id: "0", time: 1700000000, changes: [{ field: "messages", value: { sender: { id: "12334" }, recipient: { id: "23245" }, timestamp: "1527459824", message: { mid: "random_mid", text: "random_text" } } }] }] });
+  assert.strictEqual(ev.length, 1);
+  assert.strictEqual(ev[0].text, "random_text");
+  assert.strictEqual(ev[0].at.getUTCFullYear(), 2018);
+});
+
 test("sahMeta: tanda tangan benar / salah", () => {
   const sig = "sha256=" + createHmac("sha256", "s3").update("{}").digest("hex");
   assert.ok(sahMeta("{}", sig, "s3"));
