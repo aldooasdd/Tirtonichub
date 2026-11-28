@@ -1260,3 +1260,33 @@ model DraftProduk {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+/// Inbox WA + IG (Tirtonic Channel → Inbox): chat pelanggan dari Meta (WhatsApp Cloud API coexistence + Instagram API) lewat webhook /api/meta/webhook.
+model InboxThread {
+  id        String         @id @default(cuid())
+  channel   String // WA | IG
+  accountId String // WA: phone_number_id nomor admin; IG: id akun IG Tirtonic
+  contactId String // WA: nomor pelanggan (wa_id); IG: IGSID pelanggan
+  name      String?
+  lastText  String?
+  lastAt    DateTime       @default(now())
+  unread    Int            @default(0)
+  messages  InboxMessage[]
+
+  @@unique([channel, accountId, contactId])
+  @@index([lastAt])
+}
+
+model InboxMessage {
+  id       String      @id @default(cuid())
+  threadId String
+  thread   InboxThread @relation(fields: [threadId], references: [id], onDelete: Cascade)
+  dir      String // in = dari pelanggan, out = dari Tirtonic (web atau HP)
+  text     String
+  metaId   String?     @unique // id pesan dari Meta (wamid / mid), cegah dobel
+  userId   String? // admin Tirtonichub yang membalas; null = dari HP / pelanggan
+  error    String?
+  at       DateTime    @default(now())
+
+  @@index([threadId, at])
+}
