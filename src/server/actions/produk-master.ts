@@ -139,3 +139,27 @@ export async function pushProductToWeb(itemId: string): Promise<Res> {
   if (r.failed.length) return { ok: false, message: r.failed[0] };
   return { ok: true, message: r.created ? "Masuk ke web." : "Diperbarui di web (ditimpa)." };
 }
+
+/** Pilih banyak (Produk Master & Sampah): checkbox name="pick", value = "PLATFORM:itemId,PLATFORM:itemId" (semua listing 1 produk). */
+function pickedWhere(fd: FormData) {
+  const ls = fd.getAll("pick").flatMap((v) => String(v).split(",")).map((x) => x.split(":")).filter((x) => x.length === 2 && x[0] && x[1]);
+  return { n: fd.getAll("pick").length, where: { OR: ls.map(([platform, itemId]) => ({ platform, itemId })) } };
+}
+
+export async function trashPicked(fd: FormData): Promise<void> {
+  await requireProduk();
+  const { n, where } = pickedWhere(fd);
+  if (!n) return;
+  await prisma.marketplaceItem.updateMany({ where: { AND: [where, { deletedAt: null }] }, data: { deletedAt: new Date() } });
+  await log("produk_trash_banyak", `${n} produk`, { pick: fd.getAll("pick") });
+  revalidatePath("/channel/produk", "layout");
+}
+
+export async function restorePicked(fd: FormData): Promise<void> {
+  await requireProduk();
+  const { n, where } = pickedWhere(fd);
+  if (!n) return;
+  await prisma.marketplaceItem.updateMany({ where, data: { deletedAt: null } });
+  await log("produk_restore_banyak", `${n} produk`, { pick: fd.getAll("pick") });
+  revalidatePath("/channel/produk", "layout");
+}

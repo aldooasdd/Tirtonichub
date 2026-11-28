@@ -7,6 +7,8 @@ import { loadProductGroups } from "@/server/marketplace/product-groups";
 import { productStatus as statusInfo } from "@/lib/channel-status";
 import { PRODUK_KE_MARKETPLACE, PRODUK_OFF_MSG } from "@/lib/flags";
 import { PushWebButton } from "@/components/channel/push-web-button";
+import { PilihBar } from "@/components/channel/pilih-bar";
+import { trashPicked } from "@/server/actions/produk-master";
 
 const rupiah = (n: number) => "Rp " + new Intl.NumberFormat("id-ID").format(n);
 const TAG: Record<string, string> = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600", WEBSITE: "bg-sky-500/15 text-sky-600" };
@@ -130,10 +132,13 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
       {rows.length === 0 ? (
         <p className="rounded-lg border bg-card py-10 text-center text-muted-foreground">{all.length ? "Tidak ada produk yang cocok." : "Belum ada produk. Sinkron toko dulu."}</p>
       ) : (
+        <form className="space-y-2">
+        <PilihBar tombol={[{ label: "Hapus yang dipilih", action: trashPicked, tone: "text-destructive", tanya: "Pindahkan {n} produk ke Sampah? Produk di marketplace tidak ikut terhapus." }]} />
         <div className="overflow-x-auto rounded-lg border bg-card">
           <table className="w-full text-14">
             <thead>
               <tr className="border-b text-left text-muted-foreground">
+                <th className="w-8 p-3" />
                 <th className="p-3">Produk</th>
                 <th className="p-3">Dijual di (stok)</th>
                 <th className="p-3">Kategori</th>
@@ -149,6 +154,9 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
                 const max = Math.max(...g.listings.map((l) => l.maxPrice));
                 return (
                   <tr key={g.key} className="border-b align-top last:border-b-0 hover:bg-muted/40">
+                    <td className="p-3 pt-6">
+                      <input type="checkbox" name="pick" value={g.listings.map((l) => `${l.platform}:${l.itemId}`).join(",")} aria-label={`Pilih ${g.title}`} className="size-4" />
+                    </td>
                     <td className="p-3">
                       <Link href={`/channel/produk/${first.platform}/${first.itemId}`} className="flex items-center gap-3">
                         {g.image ? (
@@ -196,6 +204,7 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
             </tbody>
           </table>
         </div>
+        </form>
       )}
     </div>
   );
