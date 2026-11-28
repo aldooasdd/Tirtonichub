@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { parseMeta, sahMeta, simpanPesan } from "@/server/meta-inbox";
+import { prisma } from "@/server/db";
+import { kontakMeta, parseMeta, sahMeta, simpanPesan } from "@/server/meta-inbox";
 
 /** Verifikasi URL webhook dari dashboard Meta (hub.challenge). */
 export async function GET(req: NextRequest) {
@@ -14,7 +15,9 @@ export async function POST(req: NextRequest) {
   const body = await req.text();
   if (!sahMeta(body, req.headers.get("x-hub-signature-256"))) return new NextResponse("bad signature", { status: 401 });
   try {
-    await simpanPesan(parseMeta(JSON.parse(body)));
+    const p = JSON.parse(body);
+    await simpanPesan(parseMeta(p));
+    for (const k of kontakMeta(p)) await prisma.inboxThread.updateMany({ where: { channel: "WA", accountId: k.accountId, contactId: k.contactId }, data: { name: k.name } });
   } catch (e) {
     console.error("meta webhook", e);
     return new NextResponse("error", { status: 500 }); // Meta mengulang kirim

@@ -1010,6 +1010,17 @@ exports.Prisma.InboxMessageScalarFieldEnum = {
   at: 'at'
 };
 
+exports.Prisma.WaNumberScalarFieldEnum = {
+  phoneNumberId: 'phoneNumberId',
+  wabaId: 'wabaId',
+  label: 'label',
+  displayPhone: 'displayPhone',
+  token: 'token',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1172,7 +1183,8 @@ exports.Prisma.ModelName = {
   ScriptReview: 'ScriptReview',
   DraftProduk: 'DraftProduk',
   InboxThread: 'InboxThread',
-  InboxMessage: 'InboxMessage'
+  InboxMessage: 'InboxMessage',
+  WaNumber: 'WaNumber'
 };
 
 /**

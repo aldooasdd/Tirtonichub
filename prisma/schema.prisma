@@ -1290,3 +1290,16 @@ model InboxMessage {
 
   @@index([threadId, at])
 }
+
+/// Nomor WA admin yang disambungkan lewat Embedded Signup (coexistence) di Inbox → Sambungkan WhatsApp.
+/// token = token pengguna sistem integrasi bisnis dari Meta (tidak kedaluwarsa); dipakai kirim balasan.
+model WaNumber {
+  phoneNumberId String   @id
+  wabaId        String
+  label         String
+  displayPhone  String?
+  token         String
+  createdBy     String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

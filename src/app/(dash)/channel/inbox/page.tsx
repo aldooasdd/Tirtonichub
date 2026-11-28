@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { requireChannel } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { userNames } from "@/server/user-names";
@@ -9,7 +10,10 @@ const dalam24Jam = (d: Date) => Date.now() - d.getTime() < 24 * 3600_000; // jen
 export default async function InboxPage({ searchParams }: { searchParams: Promise<{ t?: string; q?: string }> }) {
   await requireChannel();
   const { t, q } = await searchParams;
-  const labels = new Map((process.env.META_LABELS ?? "").split(",").map((x) => x.split("=").map((s) => s.trim()) as [string, string]).filter((x) => x[0] && x[1]));
+  const labels = new Map([
+    ...(process.env.META_LABELS ?? "").split(",").map((x) => x.split("=").map((s) => s.trim()) as [string, string]).filter((x) => x[0] && x[1]),
+    ...(await prisma.waNumber.findMany({ select: { phoneNumberId: true, label: true } })).map((n) => [n.phoneNumberId, n.label] as [string, string]),
+  ]);
   const s = (q ?? "").trim();
   const threads = await prisma.inboxThread.findMany({
     where: s ? { OR: [{ name: { contains: s, mode: "insensitive" } }, { contactId: { contains: s } }, { lastText: { contains: s, mode: "insensitive" } }] } : {},
@@ -26,7 +30,10 @@ export default async function InboxPage({ searchParams }: { searchParams: Promis
   return (
     <div className="space-y-3">
       <div>
-        <h1 className="text-24 font-semibold">Inbox</h1>
+        <h1 className="flex flex-wrap items-center justify-between gap-2 text-24 font-semibold">
+          Inbox
+          <Link href="/channel/inbox/sambung" className="rounded-md border px-3 py-1.5 text-14 font-medium">Sambungkan WhatsApp</Link>
+        </h1>
         <p className="text-14 text-muted-foreground">Chat WhatsApp & Instagram pelanggan. Balasan dari HP juga ikut muncul di sini. Balas maksimal 24 jam sejak pesan terakhir pelanggan.</p>
       </div>
       <Inbox
