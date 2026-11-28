@@ -1037,6 +1037,22 @@ exports.Prisma.InboxAutoScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.IgPostScalarFieldEnum = {
+  id: 'id',
+  tipe: 'tipe',
+  caption: 'caption',
+  keys: 'keys',
+  jadwal: 'jadwal',
+  status: 'status',
+  containerId: 'containerId',
+  igMediaId: 'igMediaId',
+  permalink: 'permalink',
+  error: 'error',
+  createdBy: 'createdBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1202,7 +1218,8 @@ exports.Prisma.ModelName = {
   InboxMessage: 'InboxMessage',
   WaNumber: 'WaNumber',
   InboxTemplate: 'InboxTemplate',
-  InboxAuto: 'InboxAuto'
+  InboxAuto: 'InboxAuto',
+  IgPost: 'IgPost'
 };
 
 /**

@@ -1321,3 +1321,22 @@ model InboxAuto {
   aktif     Boolean  @default(true)
   createdAt DateTime @default(now())
 }
+
+/// Posting Instagram dari Tirtonichub (Channel/Media → Instagram). Terbit sekarang atau dijadwalkan (dicek tiap menit di pushTick).
+model IgPost {
+  id          String    @id @default(cuid())
+  tipe        String // IMAGE | CAROUSEL | REELS
+  caption     String
+  keys        Json // kunci storage file (urut), disajikan publik lewat /api/file
+  jadwal      DateTime? // null = sekarang
+  status      String    @default("TERJADWAL") // TERJADWAL | PROSES | TERBIT | GAGAL
+  containerId String? // container IG yang sedang diproses (video/reels)
+  igMediaId   String?
+  permalink   String?
+  error       String?
+  createdBy   String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([status, jadwal])
+}
