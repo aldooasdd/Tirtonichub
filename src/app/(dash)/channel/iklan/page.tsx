@@ -1,3 +1,4 @@
+import { MetaAdsView } from "@/components/channel/meta-ads-view";
 import Link from "next/link";
 import { requireChannel } from "@/server/auth/rbac";
 import { DEMO, activeShop, fresh } from "@/server/marketplace/sync";
@@ -28,6 +29,7 @@ const SUB = [
 const TABS = [
   { key: "SHOPEE", label: "Shopee", on: "bg-orange-500/15 text-orange-600" },
   { key: "TOKOPEDIA", label: "Tokopedia", on: "bg-emerald-500/15 text-emerald-600" },
+  { key: "META", label: "Meta (FB & IG)", on: "bg-blue-500/15 text-blue-600" },
 ];
 
 /** Rentang tanggal dari URL; default 7 hari terakhir. */
@@ -47,7 +49,7 @@ export default async function IklanPage({ searchParams }: { searchParams: Promis
   await requireChannel();
   const sp = await searchParams;
   const { today, from, to } = range(sp);
-  const tab = sp.p === "TOKOPEDIA" ? "TOKOPEDIA" : "SHOPEE";
+  const tab = sp.p === "TOKOPEDIA" || sp.p === "META" ? sp.p : "SHOPEE";
   const v = SUB.some((x) => x.key === sp.v) ? sp.v! : "ringkasan";
 
   const head = (
@@ -74,6 +76,13 @@ export default async function IklanPage({ searchParams }: { searchParams: Promis
       )}
     </div>
   );
+  if (tab === "META")
+    return (
+      <div className="space-y-5">
+        {head}
+        <MetaAdsView from={from} to={to} />
+      </div>
+    );
   if (tab === "TOKOPEDIA")
     return (
       <div className="space-y-5">
