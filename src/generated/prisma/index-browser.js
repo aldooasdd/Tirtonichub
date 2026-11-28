@@ -977,6 +977,16 @@ exports.Prisma.ScriptReviewScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.DraftProdukScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  data: 'data',
+  createdBy: 'createdBy',
+  updatedBy: 'updatedBy',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1136,7 +1146,8 @@ exports.Prisma.ModelName = {
   ScriptDoc: 'ScriptDoc',
   ScriptRevision: 'ScriptRevision',
   ScriptComment: 'ScriptComment',
-  ScriptReview: 'ScriptReview'
+  ScriptReview: 'ScriptReview',
+  DraftProduk: 'DraftProduk'
 };
 
 /**

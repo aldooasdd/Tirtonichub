@@ -5,7 +5,8 @@ import { useRouter } from "next/navigation";
 import { CheckCircle2, ImagePlus, Loader2, Plus, Sparkles, Trash2, XCircle } from "lucide-react";
 import { brandSearch, catInfo, catRecommend, catSearch, checkProduct, saveProduct, uploadMedia } from "@/server/actions/channel-product";
 import type { Attribute, Brand, Category, CategoryRules, ListingCheck, ShipTemplate } from "@/server/marketplace/tiktok-product";
-import type { DraftCert, DraftVariant, Img, ProductDraft } from "@/lib/product-draft";
+import type { DraftCert, DraftData, DraftVariant, Img, ProductDraft } from "@/lib/product-draft";
+import { hapusDraft, simpanDraft } from "@/server/actions/draft-produk";
 import type { WebFormKategori } from "@/server/marketplace/website";
 import { simpanProdukWeb } from "@/server/actions/web-produk";
 import { useWebData } from "@/components/channel/web-data-fields";
@@ -27,18 +28,18 @@ async function send(file: File, kind: string): Promise<Uploaded> {
 
 const emptyVariant = (): DraftVariant => ({ value: "", price: 0, stock: 0, sellerSku: "", image: null });
 
-/** Form buat / edit produk Tokopedia. `initial.productId` ada = mode edit. */
-export function ProductForm({ initial, brandName, webKategori = [] }: { initial: ProductDraft; brandName?: string | null; webKategori?: WebFormKategori[] }) {
+/** Form buat / edit produk Tokopedia. `initial.productId` ada = mode edit. `draft` = buka draft Tirtonichub (Produk Master → Draft). */
+export function ProductForm({ initial, brandName, webKategori = [], draft: saved }: { initial: ProductDraft; brandName?: string | null; webKategori?: WebFormKategori[]; draft?: { id: string; data: DraftData } }) {
   const router = useRouter();
   const edit = !!initial.productId;
   const [d, setD] = useState<ProductDraft>(initial);
   const set = <K extends keyof ProductDraft>(k: K, v: ProductDraft[K]) => setD((x) => ({ ...x, [k]: v }));
   const [descDirty, setDescDirty] = useState(!edit);
-  const [hasVariant, setHasVariant] = useState(!!initial.variantName);
+  const [hasVariant, setHasVariant] = useState(saved ? saved.data.hasVariant : !!initial.variantName);
   // tujuan tirtonic.com (buat baru saja): produk yang sama ikut tayang di web, ref TOKOPEDIA:<id>
-  const [web, setWeb] = useState(false);
-  const [webKat, setWebKat] = useState(webKategori[0]?.db ?? "");
-  const webData = useWebData(webKategori.find((x) => x.db === webKat));
+  const [web, setWeb] = useState(saved?.data.web ?? false);
+  const [webKat, setWebKat] = useState(saved?.data.webKat || webKategori[0]?.db || "");
+  const webData = useWebData(webKategori.find((x) => x.db === webKat), saved?.data.webState);
 
   const [busy, start] = useTransition();
   const [uploading, setUploading] = useState("");
@@ -46,7 +47,7 @@ export function ProductForm({ initial, brandName, webKategori = [] }: { initial:
   const [info, setInfo] = useState<{ attributes: Attribute[]; rules: CategoryRules } | null>(null);
   const [cats, setCats] = useState<Category[] | null>(null);
   const [catQ, setCatQ] = useState("");
-  const [brandQ, setBrandQ] = useState(brandName ?? "");
+  const [brandQ, setBrandQ] = useState(saved?.data.brandName ?? brandName ?? "");
   const [brandList, setBrandList] = useState<Brand[] | null>(null);
   const [check, setCheck] = useState<{ check: ListingCheck; templates: ShipTemplate[] } | null>(null);
   const loadedCat = useRef("");
@@ -103,6 +104,18 @@ export function ProductForm({ initial, brandName, webKategori = [] }: { initial:
     });
   }
 
+  /** Simpan draft di Tirtonichub (bukan di Tokopedia), satu draft untuk semua toko. */
+  function doDraft() {
+    setErr("");
+    start(async () => {
+      const r = await simpanDraft(saved?.id ?? null, { d: { ...draft(), saveMode: "LISTING" }, hasVariant, brandName: brandQ, web, webKat, webState: webData.state() });
+      if (!r.ok) return setErr(r.message);
+      alert("Draft tersimpan di Produk Master → Draft. QC tinggal isi SKU & RFID.");
+      if (!saved) router.push(`/channel/produk/baru?draft=${r.id}`);
+      router.refresh();
+    });
+  }
+
   function doSave(saveMode: ProductDraft["saveMode"]) {
     setErr("");
     start(async () => {
@@ -129,6 +142,7 @@ export function ProductForm({ initial, brandName, webKategori = [] }: { initial:
         });
         webMsg = rw.ok ? "\n\nTayang juga di tirtonic.com." : `\n\nGagal tayang di tirtonic.com: ${rw.message}`;
       }
+      if (saved && saveMode === "LISTING") await hapusDraft(saved.id).catch(() => {});
       alert((edit ? "Perubahan tersimpan di Tokopedia." : saveMode === "AS_DRAFT" ? "Draft produk tersimpan di Tokopedia." : "Produk dibuat di Tokopedia.") + w + webMsg + "\n\nData di Tirtonichub diperbarui beberapa menit lagi.");
       router.push(edit ? `/channel/produk/TOKOPEDIA/${r.data.productId}` : "/channel/produk");
       router.refresh();
@@ -651,7 +665,7 @@ export function ProductForm({ initial, brandName, webKategori = [] }: { initial:
           Cek kelayakan
         </button>
         {!edit && (
-          <button type="button" className={btn} disabled={busy || !!uploading} onClick={() => doSave("AS_DRAFT")}>
+          <button type="button" className={btn} disabled={busy || !!uploading} onClick={doDraft}>
             Simpan draft
           </button>
         )}

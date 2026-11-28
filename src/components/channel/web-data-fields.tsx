@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { WebFormKategori } from "@/server/marketplace/website";
+import type { WebState } from "@/lib/product-draft";
 
 // Data tambahan produk tirtonic.com (filter shop, spesifikasi, skor Tirtoniclab) di balik centang
 // "Barang ini punya data". Dipakai form Produk web baru & form Tambah Produk (tujuan tirtonic.com).
@@ -11,13 +12,13 @@ const card = "space-y-3 rounded-lg border bg-card p-4";
 const chip = (on: boolean) => `rounded-full border px-3 py-1 text-12 ${on ? "border-primary bg-primary text-primary-foreground" : "bg-background hover:bg-muted"}`;
 const angka = (s: string) => (s.trim() === "" ? null : Number(s.replace(/\./g, "").replace(",", ".")));
 
-export function useWebData(k: WebFormKategori | undefined) {
-  const [atribut, setAtribut] = useState<Record<string, string[]>>({});
-  const [lain, setLain] = useState<Record<string, string>>({});
-  const [spek, setSpek] = useState<Record<string, string>>({});
-  const [nilai, setNilai] = useState<Record<string, string>>({});
-  const [skor, setSkor] = useState("");
-  const [punyaData, setPunyaData] = useState(false);
+export function useWebData(k: WebFormKategori | undefined, init?: WebState | null) {
+  const [atribut, setAtribut] = useState<Record<string, string[]>>(init?.atribut ?? {});
+  const [lain, setLain] = useState<Record<string, string>>(init?.lain ?? {});
+  const [spek, setSpek] = useState<Record<string, string>>(init?.spek ?? {});
+  const [nilai, setNilai] = useState<Record<string, string>>(init?.nilai ?? {});
+  const [skor, setSkor] = useState(init?.skor ?? "");
+  const [punyaData, setPunyaData] = useState(init?.punyaData ?? false);
   const toggle = (key: string, v: string) =>
     setAtribut((a) => ({ ...a, [key]: (a[key] ?? []).includes(v) ? a[key].filter((x) => x !== v) : [...(a[key] ?? []), v] }));
 
@@ -32,6 +33,8 @@ export function useWebData(k: WebFormKategori | undefined) {
     };
   };
   const reset = () => { setAtribut({}); setLain({}); };
+  /** Untuk disimpan di draft. */
+  const state = (): WebState => ({ atribut, lain, spek, nilai, skor, punyaData });
 
   const ui = (
     <>
@@ -96,5 +99,5 @@ export function useWebData(k: WebFormKategori | undefined) {
       )}
     </>
   );
-  return { ui, payload, reset };
+  return { ui, payload, reset, state };
 }
