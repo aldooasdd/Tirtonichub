@@ -24,7 +24,7 @@ export default async function ProdukMasterPage({ searchParams }: { searchParams:
   const [all, detailCount, sampah] = await Promise.all([
     loadProductGroups(),
     prisma.marketplaceProduct.count({ where: { platform: "TOKOPEDIA" } }),
-    prisma.marketplaceItem.groupBy({ by: ["platform", "itemId"], where: { deletedAt: { not: null } } }),
+    prisma.marketplaceItem.groupBy({ by: ["platform", "itemId"], where: { deletedAt: { not: null }, purgedAt: null } }),
   ]);
   const drafts = await prisma.draftProduk.count();
   const stockOf = (g: (typeof all)[number]) => g.listings.reduce((n, l) => n + l.stock, 0);

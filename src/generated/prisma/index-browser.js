@@ -503,6 +503,7 @@ exports.Prisma.MarketplaceItemScalarFieldEnum = {
   localName: 'localName',
   localSku: 'localSku',
   deletedAt: 'deletedAt',
+  purgedAt: 'purgedAt',
   syncedAt: 'syncedAt'
 };
 

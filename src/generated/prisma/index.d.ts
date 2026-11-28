@@ -39140,6 +39140,7 @@ export namespace Prisma {
     localName: string | null
     localSku: string | null
     deletedAt: Date | null
+    purgedAt: Date | null
     syncedAt: Date | null
   }
 
@@ -39160,6 +39161,7 @@ export namespace Prisma {
     localName: string | null
     localSku: string | null
     deletedAt: Date | null
+    purgedAt: Date | null
     syncedAt: Date | null
   }
 
@@ -39181,6 +39183,7 @@ export namespace Prisma {
     localName: number
     localSku: number
     deletedAt: number
+    purgedAt: number
     syncedAt: number
     _all: number
   }
@@ -39213,6 +39216,7 @@ export namespace Prisma {
     localName?: true
     localSku?: true
     deletedAt?: true
+    purgedAt?: true
     syncedAt?: true
   }
 
@@ -39233,6 +39237,7 @@ export namespace Prisma {
     localName?: true
     localSku?: true
     deletedAt?: true
+    purgedAt?: true
     syncedAt?: true
   }
 
@@ -39254,6 +39259,7 @@ export namespace Prisma {
     localName?: true
     localSku?: true
     deletedAt?: true
+    purgedAt?: true
     syncedAt?: true
     _all?: true
   }
@@ -39362,6 +39368,7 @@ export namespace Prisma {
     localName: string | null
     localSku: string | null
     deletedAt: Date | null
+    purgedAt: Date | null
     syncedAt: Date
     _count: MarketplaceItemCountAggregateOutputType | null
     _avg: MarketplaceItemAvgAggregateOutputType | null
@@ -39402,6 +39409,7 @@ export namespace Prisma {
     localName?: boolean
     localSku?: boolean
     deletedAt?: boolean
+    purgedAt?: boolean
     syncedAt?: boolean
   }, ExtArgs["result"]["marketplaceItem"]>
 
@@ -39423,6 +39431,7 @@ export namespace Prisma {
     localName?: boolean
     localSku?: boolean
     deletedAt?: boolean
+    purgedAt?: boolean
     syncedAt?: boolean
   }, ExtArgs["result"]["marketplaceItem"]>
 
@@ -39444,6 +39453,7 @@ export namespace Prisma {
     localName?: boolean
     localSku?: boolean
     deletedAt?: boolean
+    purgedAt?: boolean
     syncedAt?: boolean
   }, ExtArgs["result"]["marketplaceItem"]>
 
@@ -39465,10 +39475,11 @@ export namespace Prisma {
     localName?: boolean
     localSku?: boolean
     deletedAt?: boolean
+    purgedAt?: boolean
     syncedAt?: boolean
   }
 
-  export type MarketplaceItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "shopId" | "itemId" | "modelId" | "name" | "sku" | "price" | "stock" | "warehouseId" | "whStock" | "variant" | "image" | "skuStatus" | "localName" | "localSku" | "deletedAt" | "syncedAt", ExtArgs["result"]["marketplaceItem"]>
+  export type MarketplaceItemOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "platform" | "shopId" | "itemId" | "modelId" | "name" | "sku" | "price" | "stock" | "warehouseId" | "whStock" | "variant" | "image" | "skuStatus" | "localName" | "localSku" | "deletedAt" | "purgedAt" | "syncedAt", ExtArgs["result"]["marketplaceItem"]>
 
   export type $MarketplaceItemPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "MarketplaceItem"
@@ -39491,6 +39502,7 @@ export namespace Prisma {
       localName: string | null
       localSku: string | null
       deletedAt: Date | null
+      purgedAt: Date | null
       syncedAt: Date
     }, ExtArgs["result"]["marketplaceItem"]>
     composites: {}
@@ -39932,6 +39944,7 @@ export namespace Prisma {
     readonly localName: FieldRef<"MarketplaceItem", 'String'>
     readonly localSku: FieldRef<"MarketplaceItem", 'String'>
     readonly deletedAt: FieldRef<"MarketplaceItem", 'DateTime'>
+    readonly purgedAt: FieldRef<"MarketplaceItem", 'DateTime'>
     readonly syncedAt: FieldRef<"MarketplaceItem", 'DateTime'>
   }
     
@@ -84989,6 +85002,7 @@ export namespace Prisma {
     localName: 'localName',
     localSku: 'localSku',
     deletedAt: 'deletedAt',
+    purgedAt: 'purgedAt',
     syncedAt: 'syncedAt'
   };
 
@@ -88203,6 +88217,7 @@ export namespace Prisma {
     localName?: StringNullableFilter<"MarketplaceItem"> | string | null
     localSku?: StringNullableFilter<"MarketplaceItem"> | string | null
     deletedAt?: DateTimeNullableFilter<"MarketplaceItem"> | Date | string | null
+    purgedAt?: DateTimeNullableFilter<"MarketplaceItem"> | Date | string | null
     syncedAt?: DateTimeFilter<"MarketplaceItem"> | Date | string
   }
 
@@ -88224,6 +88239,7 @@ export namespace Prisma {
     localName?: SortOrderInput | SortOrder
     localSku?: SortOrderInput | SortOrder
     deletedAt?: SortOrderInput | SortOrder
+    purgedAt?: SortOrderInput | SortOrder
     syncedAt?: SortOrder
   }
 
@@ -88249,6 +88265,7 @@ export namespace Prisma {
     localName?: StringNullableFilter<"MarketplaceItem"> | string | null
     localSku?: StringNullableFilter<"MarketplaceItem"> | string | null
     deletedAt?: DateTimeNullableFilter<"MarketplaceItem"> | Date | string | null
+    purgedAt?: DateTimeNullableFilter<"MarketplaceItem"> | Date | string | null
     syncedAt?: DateTimeFilter<"MarketplaceItem"> | Date | string
   }, "id" | "platform_itemId_modelId">
 
@@ -88270,6 +88287,7 @@ export namespace Prisma {
     localName?: SortOrderInput | SortOrder
     localSku?: SortOrderInput | SortOrder
     deletedAt?: SortOrderInput | SortOrder
+    purgedAt?: SortOrderInput | SortOrder
     syncedAt?: SortOrder
     _count?: MarketplaceItemCountOrderByAggregateInput
     _avg?: MarketplaceItemAvgOrderByAggregateInput
@@ -88299,6 +88317,7 @@ export namespace Prisma {
     localName?: StringNullableWithAggregatesFilter<"MarketplaceItem"> | string | null
     localSku?: StringNullableWithAggregatesFilter<"MarketplaceItem"> | string | null
     deletedAt?: DateTimeNullableWithAggregatesFilter<"MarketplaceItem"> | Date | string | null
+    purgedAt?: DateTimeNullableWithAggregatesFilter<"MarketplaceItem"> | Date | string | null
     syncedAt?: DateTimeWithAggregatesFilter<"MarketplaceItem"> | Date | string
   }
 
@@ -93948,6 +93967,7 @@ export namespace Prisma {
     localName?: string | null
     localSku?: string | null
     deletedAt?: Date | string | null
+    purgedAt?: Date | string | null
     syncedAt?: Date | string
   }
 
@@ -93969,6 +93989,7 @@ export namespace Prisma {
     localName?: string | null
     localSku?: string | null
     deletedAt?: Date | string | null
+    purgedAt?: Date | string | null
     syncedAt?: Date | string
   }
 
@@ -93990,6 +94011,7 @@ export namespace Prisma {
     localName?: NullableStringFieldUpdateOperationsInput | string | null
     localSku?: NullableStringFieldUpdateOperationsInput | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purgedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -94011,6 +94033,7 @@ export namespace Prisma {
     localName?: NullableStringFieldUpdateOperationsInput | string | null
     localSku?: NullableStringFieldUpdateOperationsInput | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purgedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -94032,6 +94055,7 @@ export namespace Prisma {
     localName?: string | null
     localSku?: string | null
     deletedAt?: Date | string | null
+    purgedAt?: Date | string | null
     syncedAt?: Date | string
   }
 
@@ -94053,6 +94077,7 @@ export namespace Prisma {
     localName?: NullableStringFieldUpdateOperationsInput | string | null
     localSku?: NullableStringFieldUpdateOperationsInput | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purgedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -94074,6 +94099,7 @@ export namespace Prisma {
     localName?: NullableStringFieldUpdateOperationsInput | string | null
     localSku?: NullableStringFieldUpdateOperationsInput | string | null
     deletedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    purgedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     syncedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -99434,6 +99460,7 @@ export namespace Prisma {
     localName?: SortOrder
     localSku?: SortOrder
     deletedAt?: SortOrder
+    purgedAt?: SortOrder
     syncedAt?: SortOrder
   }
 
@@ -99459,6 +99486,7 @@ export namespace Prisma {
     localName?: SortOrder
     localSku?: SortOrder
     deletedAt?: SortOrder
+    purgedAt?: SortOrder
     syncedAt?: SortOrder
   }
 
@@ -99479,6 +99507,7 @@ export namespace Prisma {
     localName?: SortOrder
     localSku?: SortOrder
     deletedAt?: SortOrder
+    purgedAt?: SortOrder
     syncedAt?: SortOrder
   }
 

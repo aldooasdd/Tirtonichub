@@ -123,7 +123,7 @@ export async function trashListing(platform: string, itemId: string): Promise<Re
 export async function restoreProduct(platform: string, itemId: string): Promise<Res> {
   await requireProduk();
   const where = await groupWhere(platform, itemId, true);
-  await prisma.marketplaceItem.updateMany({ where, data: { deletedAt: null } });
+  await prisma.marketplaceItem.updateMany({ where: { AND: [where, { purgedAt: null }] }, data: { deletedAt: null } });
   await log("produk_restore", `${platform}:${itemId}`, {});
   revalidatePath("/channel/produk");
   return { ok: true, message: "Produk dipulihkan." };
@@ -159,7 +159,17 @@ export async function restorePicked(fd: FormData): Promise<void> {
   await requireProduk();
   const { n, where } = pickedWhere(fd);
   if (!n) return;
-  await prisma.marketplaceItem.updateMany({ where, data: { deletedAt: null } });
+  await prisma.marketplaceItem.updateMany({ where: { AND: [where, { purgedAt: null }] }, data: { deletedAt: null } });
   await log("produk_restore_banyak", `${n} produk`, { pick: fd.getAll("pick") });
+  revalidatePath("/channel/produk", "layout");
+}
+
+/** Hapus permanen dari Sampah: hilang dari Tirtonichub. Baris tetap disimpan (purgedAt) supaya sinkron marketplace tidak memunculkannya lagi. */
+export async function purgePicked(fd: FormData): Promise<void> {
+  await requireProduk();
+  const { n, where } = pickedWhere(fd);
+  if (!n) return;
+  await prisma.marketplaceItem.updateMany({ where: { AND: [where, { deletedAt: { not: null } }] }, data: { purgedAt: new Date() } });
+  await log("produk_hapus_permanen", `${n} produk`, { pick: fd.getAll("pick") });
   revalidatePath("/channel/produk", "layout");
 }
