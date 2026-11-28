@@ -5,7 +5,7 @@ import { PLATFORM_LABEL } from "@/server/marketplace/sync";
 import { loadProductGroups } from "@/server/marketplace/product-groups";
 import { RestoreButton } from "@/components/channel/restore-button";
 import { PilihBar } from "@/components/channel/pilih-bar";
-import { restorePicked } from "@/server/actions/produk-master";
+import { purgePicked, restorePicked } from "@/server/actions/produk-master";
 
 const TAG: Record<string, string> = { SHOPEE: "bg-orange-500/15 text-orange-600", TOKOPEDIA: "bg-emerald-500/15 text-emerald-600", WEBSITE: "bg-sky-500/15 text-sky-600" };
 const label = (p: string) => PLATFORM_LABEL[p as keyof typeof PLATFORM_LABEL] ?? p;
@@ -27,7 +27,10 @@ export default async function SampahProdukPage() {
         <p className="rounded-lg border bg-card py-10 text-center text-muted-foreground">Sampah kosong.</p>
       ) : (
         <form className="space-y-2">
-        <PilihBar tombol={[{ label: "Pulihkan yang dipilih", action: restorePicked, tone: "text-emerald-600" }]} />
+        <PilihBar tombol={[
+          { label: "Pulihkan yang dipilih", action: restorePicked, tone: "text-emerald-600" },
+          { label: "Hapus permanen", action: purgePicked, tone: "text-destructive", tanya: "Hapus permanen {n} produk dari Tirtonichub? Tidak bisa dipulihkan. Produk di marketplace tidak ikut terhapus." },
+        ]} />
         <div className="divide-y rounded-lg border bg-card">
           {rows.map((g) => {
             const first = g.listings[0];

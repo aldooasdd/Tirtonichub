@@ -54,7 +54,7 @@ const ORDER: Record<string, number> = { TOKOPEDIA: 0, SHOPEE: 1, WEBSITE: 2 };
 /** trash=true → hanya produk di Sampah. */
 export async function loadProductGroups(trash = false): Promise<ProductGroup[]> {
   const [items, details] = await Promise.all([
-    prisma.marketplaceItem.findMany({ where: { deletedAt: trash ? { not: null } : null }, orderBy: { name: "asc" } }),
+    prisma.marketplaceItem.findMany({ where: trash ? { deletedAt: { not: null }, purgedAt: null } : { deletedAt: null }, orderBy: { name: "asc" } }),
     prisma.marketplaceProduct.findMany(),
   ]);
   const det = new Map<string, DetailRow>(details.map((d) => [`${d.platform}:${d.productId}`, d]));

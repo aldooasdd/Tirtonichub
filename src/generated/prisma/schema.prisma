@@ -612,6 +612,7 @@ model MarketplaceItem {
   localName   String? // nama produk pengganti (sama di semua varian produk ini)
   localSku    String? // SKU pengganti varian ini
   deletedAt   DateTime? // masuk Sampah Produk Master; null = tampil
+  purgedAt    DateTime? // dihapus permanen dari Sampah: tetap disimpan agar sinkron tidak memunculkannya lagi
   syncedAt    DateTime  @updatedAt
 
   @@unique([platform, itemId, modelId])
