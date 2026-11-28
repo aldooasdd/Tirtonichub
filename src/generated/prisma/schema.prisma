@@ -1286,6 +1286,7 @@ model InboxMessage {
   metaId   String?     @unique // id pesan dari Meta (wamid / mid), cegah dobel
   userId   String? // admin Tirtonichub yang membalas; null = dari HP / pelanggan
   error    String?
+  mediaUrl String? // foto masuk (URL CDN Meta) / foto terkirim (URL /api/file)
   at       DateTime    @default(now())
 
   @@index([threadId, at])
@@ -1302,4 +1303,21 @@ model WaNumber {
   createdBy     String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+}
+
+/// Template balasan cepat di Inbox.
+model InboxTemplate {
+  id        String   @id @default(cuid())
+  judul     String
+  teks      String
+  createdAt DateTime @default(now())
+}
+
+/// Auto DM komentar Instagram: komentar berisi keyword → kirim DM (private reply) otomatis, sekali per komentar.
+model InboxAuto {
+  id        String   @id @default(cuid())
+  keyword   String
+  balasan   String
+  aktif     Boolean  @default(true)
+  createdAt DateTime @default(now())
 }

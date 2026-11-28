@@ -30,6 +30,13 @@ test("parseMeta + kontakMeta: riwayat coexistence & kontak HP", () => {
   assert.deepStrictEqual(k, [{ accountId: "P1", contactId: "6281", name: "Budi Raket" }]);
 });
 
+test("parseMeta: komentar IG & Messenger FB + foto", () => {
+  const k = parseMeta({ object: "instagram", entry: [{ id: "IG1", time: 1700000000, changes: [{ field: "comments", value: { id: "C1", text: "harga berapa?", from: { id: "u5", username: "budi" }, media: { id: "M1" } } }, { field: "comments", value: { id: "C2", text: "dm ya", from: { id: "IG1", username: "tirtonic.id" } } }] }] });
+  assert.deepStrictEqual(k.map((m) => [m.channel, m.contactId, m.name, m.text, m.metaId]), [["IGK", "u5", "@budi", "[Komentar] harga berapa?", "c:C1"]]);
+  const fb = parseMeta({ object: "page", entry: [{ id: "PG", messaging: [{ sender: { id: "p9" }, recipient: { id: "PG" }, timestamp: 1700000000000, message: { mid: "f1", attachments: [{ type: "image", payload: { url: "https://cdn/x.jpg" } }] } }] }] });
+  assert.deepStrictEqual(fb.map((m) => [m.channel, m.accountId, m.text, m.mediaUrl]), [["FB", "PG", "[Foto]", "https://cdn/x.jpg"]]);
+});
+
 test("sahMeta: tanda tangan benar / salah", () => {
   const sig = "sha256=" + createHmac("sha256", "s3").update("{}").digest("hex");
   assert.ok(sahMeta("{}", sig, "s3"));

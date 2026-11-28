@@ -46,15 +46,25 @@ export function parseGowa(p: Any, akun: string): MetaEvent | null {
 }
 
 /** Kirim teks lewat GOWA instance nomor itu. id dikembalikan supaya echo webhook (from_me) tidak dobel. */
-export async function kirimGowa(akun: string, to: string, text: string): Promise<{ ok: true; id: string } | { ok: false; error: string }> {
+export async function kirimGowa(akun: string, to: string, text: string, foto?: { buf: Buffer; name: string; type: string }): Promise<{ ok: true; id: string } | { ok: false; error: string }> {
   const a = gowaAkun().find((x) => x.n === akun);
   if (!a) return { ok: false, error: `GOWA akun ${akun} belum diatur di GOWA_INBOX.` };
+  const auth: Record<string, string> = a.auth ? { authorization: `Basic ${Buffer.from(a.auth).toString("base64")}` } : {};
+  const phone = `${to}@s.whatsapp.net`;
   try {
-    const r = await fetch(`${a.base.replace(/\/$/, "")}/send/message`, {
+    let body: BodyInit;
+    if (foto) {
+      const fd = new FormData();
+      fd.append("phone", phone);
+      fd.append("caption", text);
+      fd.append("image", new Blob([new Uint8Array(foto.buf)], { type: foto.type }), foto.name);
+      body = fd;
+    } else body = JSON.stringify({ phone, message: text });
+    const r = await fetch(`${a.base.replace(/\/$/, "")}/send/${foto ? "image" : "message"}`, {
       method: "POST",
-      headers: { "content-type": "application/json", ...(a.auth ? { authorization: `Basic ${Buffer.from(a.auth).toString("base64")}` } : {}) },
-      body: JSON.stringify({ phone: `${to}@s.whatsapp.net`, message: text }),
-      signal: AbortSignal.timeout(15000),
+      headers: foto ? auth : { "content-type": "application/json", ...auth },
+      body,
+      signal: AbortSignal.timeout(30000),
     });
     const j = (await r.json().catch(() => ({}))) as Any;
     if (!r.ok) return { ok: false, error: j.message || `GOWA ${r.status}` };
