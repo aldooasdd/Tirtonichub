@@ -357,6 +357,12 @@ export type ScriptComment = $Result.DefaultSelection<Prisma.$ScriptCommentPayloa
  * 
  */
 export type ScriptReview = $Result.DefaultSelection<Prisma.$ScriptReviewPayload>
+/**
+ * Model DraftProduk
+ * Draft produk Tirtonichub (Produk Master → Draft): orang produk isi data, QC isi SKU + RFID, lalu tayang ke semua toko.
+ * data = isi form Tambah Produk (ProductDraft + pilihan tirtonic.com), lihat src/lib/product-draft.ts.
+ */
+export type DraftProduk = $Result.DefaultSelection<Prisma.$DraftProdukPayload>
 
 /**
  * Enums
@@ -1278,6 +1284,16 @@ export class PrismaClient<
     * ```
     */
   get scriptReview(): Prisma.ScriptReviewDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.draftProduk`: Exposes CRUD operations for the **DraftProduk** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more DraftProduks
+    * const draftProduks = await prisma.draftProduk.findMany()
+    * ```
+    */
+  get draftProduk(): Prisma.DraftProdukDelegate<ExtArgs, ClientOptions>;
 }
 
 export namespace Prisma {
@@ -1786,7 +1802,8 @@ export namespace Prisma {
     ScriptDoc: 'ScriptDoc',
     ScriptRevision: 'ScriptRevision',
     ScriptComment: 'ScriptComment',
-    ScriptReview: 'ScriptReview'
+    ScriptReview: 'ScriptReview',
+    DraftProduk: 'DraftProduk'
   };
 
   export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -1805,7 +1822,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioPageUse" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit" | "scriptDoc" | "scriptRevision" | "scriptComment" | "scriptReview"
+      modelProps: "user" | "report" | "shift" | "cashout" | "salesReport" | "accurateCompare" | "role" | "userRole" | "session" | "branch" | "cashSession" | "workSchedule" | "userSchedule" | "holiday" | "attendance" | "request" | "notification" | "activityLog" | "chatRoom" | "chatMember" | "chatMessage" | "calendarEvent" | "rawProduct" | "ocrSample" | "cashDeposit" | "marketplaceShop" | "marketplaceOrder" | "marketplaceItem" | "marketplaceProduct" | "marketplacePayout" | "marketplaceTransfer" | "onlineRecon" | "mediaMember" | "mediaItem" | "mediaAsset" | "mediaTask" | "mediaSettings" | "mediaIdccReport" | "mediaBalanceLog" | "personalCalEvent" | "mediaPcal" | "studioDoc" | "studioPageUse" | "studioTombstone" | "pushSubscription" | "pushLog" | "katalogNotif" | "pushItemQueue" | "chatTemplate" | "posCampaign" | "skuCheck" | "demoPhoto" | "rfidTag" | "cprCounter" | "automationWorkflow" | "automationWorkflowVersion" | "automationEvent" | "automationInbox" | "automationRun" | "automationRunStep" | "automationTimer" | "automationDelivery" | "automationPolicy" | "automationAudit" | "scriptDoc" | "scriptRevision" | "scriptComment" | "scriptReview" | "draftProduk"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -6841,6 +6858,80 @@ export namespace Prisma {
           }
         }
       }
+      DraftProduk: {
+        payload: Prisma.$DraftProdukPayload<ExtArgs>
+        fields: Prisma.DraftProdukFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.DraftProdukFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DraftProdukPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.DraftProdukFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DraftProdukPayload>
+          }
+          findFirst: {
+            args: Prisma.DraftProdukFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DraftProdukPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.DraftProdukFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DraftProdukPayload>
+          }
+          findMany: {
+            args: Prisma.DraftProdukFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DraftProdukPayload>[]
+          }
+          create: {
+            args: Prisma.DraftProdukCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DraftProdukPayload>
+          }
+          createMany: {
+            args: Prisma.DraftProdukCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.DraftProdukCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DraftProdukPayload>[]
+          }
+          delete: {
+            args: Prisma.DraftProdukDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DraftProdukPayload>
+          }
+          update: {
+            args: Prisma.DraftProdukUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DraftProdukPayload>
+          }
+          deleteMany: {
+            args: Prisma.DraftProdukDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.DraftProdukUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.DraftProdukUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DraftProdukPayload>[]
+          }
+          upsert: {
+            args: Prisma.DraftProdukUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$DraftProdukPayload>
+          }
+          aggregate: {
+            args: Prisma.DraftProdukAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateDraftProduk>
+          }
+          groupBy: {
+            args: Prisma.DraftProdukGroupByArgs<ExtArgs>
+            result: $Utils.Optional<DraftProdukGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.DraftProdukCountArgs<ExtArgs>
+            result: $Utils.Optional<DraftProdukCountAggregateOutputType> | number
+          }
+        }
+      }
     }
   } & {
     other: {
@@ -7005,6 +7096,7 @@ export namespace Prisma {
     scriptRevision?: ScriptRevisionOmit
     scriptComment?: ScriptCommentOmit
     scriptReview?: ScriptReviewOmit
+    draftProduk?: DraftProdukOmit
   }
 
   /* Types for Logging */
@@ -83404,6 +83496,1023 @@ export namespace Prisma {
 
 
   /**
+   * Model DraftProduk
+   */
+
+  export type AggregateDraftProduk = {
+    _count: DraftProdukCountAggregateOutputType | null
+    _min: DraftProdukMinAggregateOutputType | null
+    _max: DraftProdukMaxAggregateOutputType | null
+  }
+
+  export type DraftProdukMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    createdBy: string | null
+    updatedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DraftProdukMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    createdBy: string | null
+    updatedBy: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type DraftProdukCountAggregateOutputType = {
+    id: number
+    title: number
+    data: number
+    createdBy: number
+    updatedBy: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type DraftProdukMinAggregateInputType = {
+    id?: true
+    title?: true
+    createdBy?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DraftProdukMaxAggregateInputType = {
+    id?: true
+    title?: true
+    createdBy?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type DraftProdukCountAggregateInputType = {
+    id?: true
+    title?: true
+    data?: true
+    createdBy?: true
+    updatedBy?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type DraftProdukAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DraftProduk to aggregate.
+     */
+    where?: DraftProdukWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DraftProduks to fetch.
+     */
+    orderBy?: DraftProdukOrderByWithRelationInput | DraftProdukOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: DraftProdukWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DraftProduks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DraftProduks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned DraftProduks
+    **/
+    _count?: true | DraftProdukCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: DraftProdukMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: DraftProdukMaxAggregateInputType
+  }
+
+  export type GetDraftProdukAggregateType<T extends DraftProdukAggregateArgs> = {
+        [P in keyof T & keyof AggregateDraftProduk]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateDraftProduk[P]>
+      : GetScalarType<T[P], AggregateDraftProduk[P]>
+  }
+
+
+
+
+  export type DraftProdukGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: DraftProdukWhereInput
+    orderBy?: DraftProdukOrderByWithAggregationInput | DraftProdukOrderByWithAggregationInput[]
+    by: DraftProdukScalarFieldEnum[] | DraftProdukScalarFieldEnum
+    having?: DraftProdukScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: DraftProdukCountAggregateInputType | true
+    _min?: DraftProdukMinAggregateInputType
+    _max?: DraftProdukMaxAggregateInputType
+  }
+
+  export type DraftProdukGroupByOutputType = {
+    id: string
+    title: string
+    data: JsonValue
+    createdBy: string | null
+    updatedBy: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: DraftProdukCountAggregateOutputType | null
+    _min: DraftProdukMinAggregateOutputType | null
+    _max: DraftProdukMaxAggregateOutputType | null
+  }
+
+  type GetDraftProdukGroupByPayload<T extends DraftProdukGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<DraftProdukGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof DraftProdukGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], DraftProdukGroupByOutputType[P]>
+            : GetScalarType<T[P], DraftProdukGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type DraftProdukSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    data?: boolean
+    createdBy?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["draftProduk"]>
+
+  export type DraftProdukSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    data?: boolean
+    createdBy?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["draftProduk"]>
+
+  export type DraftProdukSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    data?: boolean
+    createdBy?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["draftProduk"]>
+
+  export type DraftProdukSelectScalar = {
+    id?: boolean
+    title?: boolean
+    data?: boolean
+    createdBy?: boolean
+    updatedBy?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type DraftProdukOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "data" | "createdBy" | "updatedBy" | "createdAt" | "updatedAt", ExtArgs["result"]["draftProduk"]>
+
+  export type $DraftProdukPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "DraftProduk"
+    objects: {}
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      data: Prisma.JsonValue
+      createdBy: string | null
+      updatedBy: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["draftProduk"]>
+    composites: {}
+  }
+
+  type DraftProdukGetPayload<S extends boolean | null | undefined | DraftProdukDefaultArgs> = $Result.GetResult<Prisma.$DraftProdukPayload, S>
+
+  type DraftProdukCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<DraftProdukFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: DraftProdukCountAggregateInputType | true
+    }
+
+  export interface DraftProdukDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['DraftProduk'], meta: { name: 'DraftProduk' } }
+    /**
+     * Find zero or one DraftProduk that matches the filter.
+     * @param {DraftProdukFindUniqueArgs} args - Arguments to find a DraftProduk
+     * @example
+     * // Get one DraftProduk
+     * const draftProduk = await prisma.draftProduk.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends DraftProdukFindUniqueArgs>(args: SelectSubset<T, DraftProdukFindUniqueArgs<ExtArgs>>): Prisma__DraftProdukClient<$Result.GetResult<Prisma.$DraftProdukPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one DraftProduk that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {DraftProdukFindUniqueOrThrowArgs} args - Arguments to find a DraftProduk
+     * @example
+     * // Get one DraftProduk
+     * const draftProduk = await prisma.draftProduk.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends DraftProdukFindUniqueOrThrowArgs>(args: SelectSubset<T, DraftProdukFindUniqueOrThrowArgs<ExtArgs>>): Prisma__DraftProdukClient<$Result.GetResult<Prisma.$DraftProdukPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DraftProduk that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DraftProdukFindFirstArgs} args - Arguments to find a DraftProduk
+     * @example
+     * // Get one DraftProduk
+     * const draftProduk = await prisma.draftProduk.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends DraftProdukFindFirstArgs>(args?: SelectSubset<T, DraftProdukFindFirstArgs<ExtArgs>>): Prisma__DraftProdukClient<$Result.GetResult<Prisma.$DraftProdukPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first DraftProduk that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DraftProdukFindFirstOrThrowArgs} args - Arguments to find a DraftProduk
+     * @example
+     * // Get one DraftProduk
+     * const draftProduk = await prisma.draftProduk.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends DraftProdukFindFirstOrThrowArgs>(args?: SelectSubset<T, DraftProdukFindFirstOrThrowArgs<ExtArgs>>): Prisma__DraftProdukClient<$Result.GetResult<Prisma.$DraftProdukPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more DraftProduks that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DraftProdukFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all DraftProduks
+     * const draftProduks = await prisma.draftProduk.findMany()
+     * 
+     * // Get first 10 DraftProduks
+     * const draftProduks = await prisma.draftProduk.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const draftProdukWithIdOnly = await prisma.draftProduk.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends DraftProdukFindManyArgs>(args?: SelectSubset<T, DraftProdukFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DraftProdukPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a DraftProduk.
+     * @param {DraftProdukCreateArgs} args - Arguments to create a DraftProduk.
+     * @example
+     * // Create one DraftProduk
+     * const DraftProduk = await prisma.draftProduk.create({
+     *   data: {
+     *     // ... data to create a DraftProduk
+     *   }
+     * })
+     * 
+     */
+    create<T extends DraftProdukCreateArgs>(args: SelectSubset<T, DraftProdukCreateArgs<ExtArgs>>): Prisma__DraftProdukClient<$Result.GetResult<Prisma.$DraftProdukPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many DraftProduks.
+     * @param {DraftProdukCreateManyArgs} args - Arguments to create many DraftProduks.
+     * @example
+     * // Create many DraftProduks
+     * const draftProduk = await prisma.draftProduk.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends DraftProdukCreateManyArgs>(args?: SelectSubset<T, DraftProdukCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many DraftProduks and returns the data saved in the database.
+     * @param {DraftProdukCreateManyAndReturnArgs} args - Arguments to create many DraftProduks.
+     * @example
+     * // Create many DraftProduks
+     * const draftProduk = await prisma.draftProduk.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many DraftProduks and only return the `id`
+     * const draftProdukWithIdOnly = await prisma.draftProduk.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends DraftProdukCreateManyAndReturnArgs>(args?: SelectSubset<T, DraftProdukCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DraftProdukPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a DraftProduk.
+     * @param {DraftProdukDeleteArgs} args - Arguments to delete one DraftProduk.
+     * @example
+     * // Delete one DraftProduk
+     * const DraftProduk = await prisma.draftProduk.delete({
+     *   where: {
+     *     // ... filter to delete one DraftProduk
+     *   }
+     * })
+     * 
+     */
+    delete<T extends DraftProdukDeleteArgs>(args: SelectSubset<T, DraftProdukDeleteArgs<ExtArgs>>): Prisma__DraftProdukClient<$Result.GetResult<Prisma.$DraftProdukPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one DraftProduk.
+     * @param {DraftProdukUpdateArgs} args - Arguments to update one DraftProduk.
+     * @example
+     * // Update one DraftProduk
+     * const draftProduk = await prisma.draftProduk.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends DraftProdukUpdateArgs>(args: SelectSubset<T, DraftProdukUpdateArgs<ExtArgs>>): Prisma__DraftProdukClient<$Result.GetResult<Prisma.$DraftProdukPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more DraftProduks.
+     * @param {DraftProdukDeleteManyArgs} args - Arguments to filter DraftProduks to delete.
+     * @example
+     * // Delete a few DraftProduks
+     * const { count } = await prisma.draftProduk.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends DraftProdukDeleteManyArgs>(args?: SelectSubset<T, DraftProdukDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DraftProduks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DraftProdukUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many DraftProduks
+     * const draftProduk = await prisma.draftProduk.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends DraftProdukUpdateManyArgs>(args: SelectSubset<T, DraftProdukUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more DraftProduks and returns the data updated in the database.
+     * @param {DraftProdukUpdateManyAndReturnArgs} args - Arguments to update many DraftProduks.
+     * @example
+     * // Update many DraftProduks
+     * const draftProduk = await prisma.draftProduk.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more DraftProduks and only return the `id`
+     * const draftProdukWithIdOnly = await prisma.draftProduk.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends DraftProdukUpdateManyAndReturnArgs>(args: SelectSubset<T, DraftProdukUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$DraftProdukPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one DraftProduk.
+     * @param {DraftProdukUpsertArgs} args - Arguments to update or create a DraftProduk.
+     * @example
+     * // Update or create a DraftProduk
+     * const draftProduk = await prisma.draftProduk.upsert({
+     *   create: {
+     *     // ... data to create a DraftProduk
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the DraftProduk we want to update
+     *   }
+     * })
+     */
+    upsert<T extends DraftProdukUpsertArgs>(args: SelectSubset<T, DraftProdukUpsertArgs<ExtArgs>>): Prisma__DraftProdukClient<$Result.GetResult<Prisma.$DraftProdukPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of DraftProduks.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DraftProdukCountArgs} args - Arguments to filter DraftProduks to count.
+     * @example
+     * // Count the number of DraftProduks
+     * const count = await prisma.draftProduk.count({
+     *   where: {
+     *     // ... the filter for the DraftProduks we want to count
+     *   }
+     * })
+    **/
+    count<T extends DraftProdukCountArgs>(
+      args?: Subset<T, DraftProdukCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], DraftProdukCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a DraftProduk.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DraftProdukAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends DraftProdukAggregateArgs>(args: Subset<T, DraftProdukAggregateArgs>): Prisma.PrismaPromise<GetDraftProdukAggregateType<T>>
+
+    /**
+     * Group by DraftProduk.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {DraftProdukGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends DraftProdukGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: DraftProdukGroupByArgs['orderBy'] }
+        : { orderBy?: DraftProdukGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, DraftProdukGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetDraftProdukGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the DraftProduk model
+   */
+  readonly fields: DraftProdukFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for DraftProduk.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__DraftProdukClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the DraftProduk model
+   */
+  interface DraftProdukFieldRefs {
+    readonly id: FieldRef<"DraftProduk", 'String'>
+    readonly title: FieldRef<"DraftProduk", 'String'>
+    readonly data: FieldRef<"DraftProduk", 'Json'>
+    readonly createdBy: FieldRef<"DraftProduk", 'String'>
+    readonly updatedBy: FieldRef<"DraftProduk", 'String'>
+    readonly createdAt: FieldRef<"DraftProduk", 'DateTime'>
+    readonly updatedAt: FieldRef<"DraftProduk", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * DraftProduk findUnique
+   */
+  export type DraftProdukFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DraftProduk
+     */
+    select?: DraftProdukSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DraftProduk
+     */
+    omit?: DraftProdukOmit<ExtArgs> | null
+    /**
+     * Filter, which DraftProduk to fetch.
+     */
+    where: DraftProdukWhereUniqueInput
+  }
+
+  /**
+   * DraftProduk findUniqueOrThrow
+   */
+  export type DraftProdukFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DraftProduk
+     */
+    select?: DraftProdukSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DraftProduk
+     */
+    omit?: DraftProdukOmit<ExtArgs> | null
+    /**
+     * Filter, which DraftProduk to fetch.
+     */
+    where: DraftProdukWhereUniqueInput
+  }
+
+  /**
+   * DraftProduk findFirst
+   */
+  export type DraftProdukFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DraftProduk
+     */
+    select?: DraftProdukSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DraftProduk
+     */
+    omit?: DraftProdukOmit<ExtArgs> | null
+    /**
+     * Filter, which DraftProduk to fetch.
+     */
+    where?: DraftProdukWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DraftProduks to fetch.
+     */
+    orderBy?: DraftProdukOrderByWithRelationInput | DraftProdukOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DraftProduks.
+     */
+    cursor?: DraftProdukWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DraftProduks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DraftProduks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DraftProduks.
+     */
+    distinct?: DraftProdukScalarFieldEnum | DraftProdukScalarFieldEnum[]
+  }
+
+  /**
+   * DraftProduk findFirstOrThrow
+   */
+  export type DraftProdukFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DraftProduk
+     */
+    select?: DraftProdukSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DraftProduk
+     */
+    omit?: DraftProdukOmit<ExtArgs> | null
+    /**
+     * Filter, which DraftProduk to fetch.
+     */
+    where?: DraftProdukWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DraftProduks to fetch.
+     */
+    orderBy?: DraftProdukOrderByWithRelationInput | DraftProdukOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for DraftProduks.
+     */
+    cursor?: DraftProdukWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DraftProduks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DraftProduks.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of DraftProduks.
+     */
+    distinct?: DraftProdukScalarFieldEnum | DraftProdukScalarFieldEnum[]
+  }
+
+  /**
+   * DraftProduk findMany
+   */
+  export type DraftProdukFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DraftProduk
+     */
+    select?: DraftProdukSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DraftProduk
+     */
+    omit?: DraftProdukOmit<ExtArgs> | null
+    /**
+     * Filter, which DraftProduks to fetch.
+     */
+    where?: DraftProdukWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of DraftProduks to fetch.
+     */
+    orderBy?: DraftProdukOrderByWithRelationInput | DraftProdukOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing DraftProduks.
+     */
+    cursor?: DraftProdukWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` DraftProduks from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` DraftProduks.
+     */
+    skip?: number
+    distinct?: DraftProdukScalarFieldEnum | DraftProdukScalarFieldEnum[]
+  }
+
+  /**
+   * DraftProduk create
+   */
+  export type DraftProdukCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DraftProduk
+     */
+    select?: DraftProdukSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DraftProduk
+     */
+    omit?: DraftProdukOmit<ExtArgs> | null
+    /**
+     * The data needed to create a DraftProduk.
+     */
+    data: XOR<DraftProdukCreateInput, DraftProdukUncheckedCreateInput>
+  }
+
+  /**
+   * DraftProduk createMany
+   */
+  export type DraftProdukCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many DraftProduks.
+     */
+    data: DraftProdukCreateManyInput | DraftProdukCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DraftProduk createManyAndReturn
+   */
+  export type DraftProdukCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DraftProduk
+     */
+    select?: DraftProdukSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DraftProduk
+     */
+    omit?: DraftProdukOmit<ExtArgs> | null
+    /**
+     * The data used to create many DraftProduks.
+     */
+    data: DraftProdukCreateManyInput | DraftProdukCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * DraftProduk update
+   */
+  export type DraftProdukUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DraftProduk
+     */
+    select?: DraftProdukSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DraftProduk
+     */
+    omit?: DraftProdukOmit<ExtArgs> | null
+    /**
+     * The data needed to update a DraftProduk.
+     */
+    data: XOR<DraftProdukUpdateInput, DraftProdukUncheckedUpdateInput>
+    /**
+     * Choose, which DraftProduk to update.
+     */
+    where: DraftProdukWhereUniqueInput
+  }
+
+  /**
+   * DraftProduk updateMany
+   */
+  export type DraftProdukUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update DraftProduks.
+     */
+    data: XOR<DraftProdukUpdateManyMutationInput, DraftProdukUncheckedUpdateManyInput>
+    /**
+     * Filter which DraftProduks to update
+     */
+    where?: DraftProdukWhereInput
+    /**
+     * Limit how many DraftProduks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DraftProduk updateManyAndReturn
+   */
+  export type DraftProdukUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DraftProduk
+     */
+    select?: DraftProdukSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the DraftProduk
+     */
+    omit?: DraftProdukOmit<ExtArgs> | null
+    /**
+     * The data used to update DraftProduks.
+     */
+    data: XOR<DraftProdukUpdateManyMutationInput, DraftProdukUncheckedUpdateManyInput>
+    /**
+     * Filter which DraftProduks to update
+     */
+    where?: DraftProdukWhereInput
+    /**
+     * Limit how many DraftProduks to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * DraftProduk upsert
+   */
+  export type DraftProdukUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DraftProduk
+     */
+    select?: DraftProdukSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DraftProduk
+     */
+    omit?: DraftProdukOmit<ExtArgs> | null
+    /**
+     * The filter to search for the DraftProduk to update in case it exists.
+     */
+    where: DraftProdukWhereUniqueInput
+    /**
+     * In case the DraftProduk found by the `where` argument doesn't exist, create a new DraftProduk with this data.
+     */
+    create: XOR<DraftProdukCreateInput, DraftProdukUncheckedCreateInput>
+    /**
+     * In case the DraftProduk was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<DraftProdukUpdateInput, DraftProdukUncheckedUpdateInput>
+  }
+
+  /**
+   * DraftProduk delete
+   */
+  export type DraftProdukDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DraftProduk
+     */
+    select?: DraftProdukSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DraftProduk
+     */
+    omit?: DraftProdukOmit<ExtArgs> | null
+    /**
+     * Filter which DraftProduk to delete.
+     */
+    where: DraftProdukWhereUniqueInput
+  }
+
+  /**
+   * DraftProduk deleteMany
+   */
+  export type DraftProdukDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which DraftProduks to delete
+     */
+    where?: DraftProdukWhereInput
+    /**
+     * Limit how many DraftProduks to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * DraftProduk without action
+   */
+  export type DraftProdukDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the DraftProduk
+     */
+    select?: DraftProdukSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the DraftProduk
+     */
+    omit?: DraftProdukOmit<ExtArgs> | null
+  }
+
+
+  /**
    * Enums
    */
 
@@ -84475,6 +85584,19 @@ export namespace Prisma {
   };
 
   export type ScriptReviewScalarFieldEnum = (typeof ScriptReviewScalarFieldEnum)[keyof typeof ScriptReviewScalarFieldEnum]
+
+
+  export const DraftProdukScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    data: 'data',
+    createdBy: 'createdBy',
+    updatedBy: 'updatedBy',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type DraftProdukScalarFieldEnum = (typeof DraftProdukScalarFieldEnum)[keyof typeof DraftProdukScalarFieldEnum]
 
 
   export const SortOrder: {
@@ -90101,6 +91223,68 @@ export namespace Prisma {
     note?: StringNullableWithAggregatesFilter<"ScriptReview"> | string | null
     exc?: StringNullableWithAggregatesFilter<"ScriptReview"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"ScriptReview"> | Date | string
+  }
+
+  export type DraftProdukWhereInput = {
+    AND?: DraftProdukWhereInput | DraftProdukWhereInput[]
+    OR?: DraftProdukWhereInput[]
+    NOT?: DraftProdukWhereInput | DraftProdukWhereInput[]
+    id?: StringFilter<"DraftProduk"> | string
+    title?: StringFilter<"DraftProduk"> | string
+    data?: JsonFilter<"DraftProduk">
+    createdBy?: StringNullableFilter<"DraftProduk"> | string | null
+    updatedBy?: StringNullableFilter<"DraftProduk"> | string | null
+    createdAt?: DateTimeFilter<"DraftProduk"> | Date | string
+    updatedAt?: DateTimeFilter<"DraftProduk"> | Date | string
+  }
+
+  export type DraftProdukOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    data?: SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    updatedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DraftProdukWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: DraftProdukWhereInput | DraftProdukWhereInput[]
+    OR?: DraftProdukWhereInput[]
+    NOT?: DraftProdukWhereInput | DraftProdukWhereInput[]
+    title?: StringFilter<"DraftProduk"> | string
+    data?: JsonFilter<"DraftProduk">
+    createdBy?: StringNullableFilter<"DraftProduk"> | string | null
+    updatedBy?: StringNullableFilter<"DraftProduk"> | string | null
+    createdAt?: DateTimeFilter<"DraftProduk"> | Date | string
+    updatedAt?: DateTimeFilter<"DraftProduk"> | Date | string
+  }, "id">
+
+  export type DraftProdukOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    data?: SortOrder
+    createdBy?: SortOrderInput | SortOrder
+    updatedBy?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: DraftProdukCountOrderByAggregateInput
+    _max?: DraftProdukMaxOrderByAggregateInput
+    _min?: DraftProdukMinOrderByAggregateInput
+  }
+
+  export type DraftProdukScalarWhereWithAggregatesInput = {
+    AND?: DraftProdukScalarWhereWithAggregatesInput | DraftProdukScalarWhereWithAggregatesInput[]
+    OR?: DraftProdukScalarWhereWithAggregatesInput[]
+    NOT?: DraftProdukScalarWhereWithAggregatesInput | DraftProdukScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"DraftProduk"> | string
+    title?: StringWithAggregatesFilter<"DraftProduk"> | string
+    data?: JsonWithAggregatesFilter<"DraftProduk">
+    createdBy?: StringNullableWithAggregatesFilter<"DraftProduk"> | string | null
+    updatedBy?: StringNullableWithAggregatesFilter<"DraftProduk"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"DraftProduk"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"DraftProduk"> | Date | string
   }
 
   export type UserCreateInput = {
@@ -96197,6 +97381,76 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
+  export type DraftProdukCreateInput = {
+    id?: string
+    title: string
+    data: JsonNullValueInput | InputJsonValue
+    createdBy?: string | null
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DraftProdukUncheckedCreateInput = {
+    id?: string
+    title: string
+    data: JsonNullValueInput | InputJsonValue
+    createdBy?: string | null
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DraftProdukUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DraftProdukUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DraftProdukCreateManyInput = {
+    id?: string
+    title: string
+    data: JsonNullValueInput | InputJsonValue
+    createdBy?: string | null
+    updatedBy?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type DraftProdukUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type DraftProdukUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    data?: JsonNullValueInput | InputJsonValue
+    createdBy?: NullableStringFieldUpdateOperationsInput | string | null
+    updatedBy?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type StringFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -99923,6 +101177,34 @@ export namespace Prisma {
 
   export type ScriptReviewSumOrderByAggregateInput = {
     rev?: SortOrder
+  }
+
+  export type DraftProdukCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    data?: SortOrder
+    createdBy?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DraftProdukMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    createdBy?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type DraftProdukMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    createdBy?: SortOrder
+    updatedBy?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
   }
 
   export type BranchCreateNestedOneWithoutUsersInput = {

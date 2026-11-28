@@ -3,7 +3,7 @@
 // Pasangkan Tag (Tirtonic Channel): scan barcode SKU → muncul baris sebanyak stok → sapu stiker, baris terisi → Simpan. Reader HC-YK947 mode keyboard: tiap tag = kode + Enter.
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/server/db";
-import { requireChannel } from "@/server/auth/rbac";
+import { requireChannel, requireProduk } from "@/server/auth/rbac";
 import { buildCatalog, tokoGudang } from "@/server/pos-catalog";
 import { productKey } from "@/server/marketplace/product-groups";
 import { setBranchStock } from "@/server/pos-stock";
@@ -65,7 +65,7 @@ export async function lookupSku(raw: string): Promise<SkuInfo> {
 
 /** Pasang banyak tag sekaligus ke 1 SKU di 1 cabang. Tag milik SKU/cabang lain tidak dipindah kecuali move=true; tag SKU ini yang belum ada cabang langsung diisi. */
 export async function pairTags(epcs: string[], rawSku: string, branchId: string, move = false): Promise<BatchRes> {
-  const ctx = await requireChannel();
+  const ctx = await requireProduk(); // Pasangkan Tag (Channel) + Draft produk (QC Stock Room)
   const sku = rawSku.trim();
   const list = clean(epcs);
   const toko = await prisma.branch.findMany({ select: { id: true, name: true } });

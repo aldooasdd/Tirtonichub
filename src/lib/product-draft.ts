@@ -58,3 +58,8 @@ export function htmlToText(html: string | undefined): string {
     .replace(/\n{3,}/g, "\n\n")
     .trim();
 }
+
+/** Isi web tambahan (filter shop, spek, skor) — state form useWebData. */
+export type WebState = { atribut: Record<string, string[]>; lain: Record<string, string>; spek: Record<string, string>; nilai: Record<string, string>; skor: string; punyaData: boolean };
+/** Draft produk Tirtonichub (tabel DraftProduk.data): isi form Tambah Produk lengkap, termasuk tujuan tirtonic.com. */
+export type DraftData = { d: ProductDraft; hasVariant: boolean; brandName: string; web: boolean; webKat: string; webState: WebState | null };

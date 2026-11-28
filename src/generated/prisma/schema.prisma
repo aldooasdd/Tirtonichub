@@ -1247,3 +1247,15 @@ model ScriptReview {
 
   @@index([docId])
 }
+
+/// Draft produk Tirtonichub (Produk Master → Draft): orang produk isi data, QC isi SKU + RFID, lalu tayang ke semua toko.
+/// data = isi form Tambah Produk (ProductDraft + pilihan tirtonic.com), lihat src/lib/product-draft.ts.
+model DraftProduk {
+  id        String   @id @default(cuid())
+  title     String
+  data      Json
+  createdBy String?
+  updatedBy String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
