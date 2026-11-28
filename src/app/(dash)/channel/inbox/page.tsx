@@ -4,6 +4,7 @@ import { prisma } from "@/server/db";
 import { userNames } from "@/server/user-names";
 import { Inbox, type Chat } from "@/components/channel/inbox";
 import { gowaAkun } from "@/server/gowa-inbox";
+import { isiNamaIg } from "@/server/meta-inbox";
 
 const dalam24Jam = (d: Date) => Date.now() - d.getTime() < 24 * 3600_000; // jendela balas Meta
 
@@ -16,6 +17,7 @@ export default async function InboxPage({ searchParams }: { searchParams: Promis
     ...(await prisma.waNumber.findMany({ select: { phoneNumberId: true, label: true } })).map((n) => [n.phoneNumberId, n.label] as [string, string]),
     ...gowaAkun().map((a) => [`gowa:${a.n}`, a.label] as [string, string]),
   ]);
+  await isiNamaIg(); // chat IG lama yang belum punya nama
   const s = (q ?? "").trim();
   const threads = await prisma.inboxThread.findMany({
     where: s ? { OR: [{ name: { contains: s, mode: "insensitive" } }, { contactId: { contains: s } }, { lastText: { contains: s, mode: "insensitive" } }] } : {},
