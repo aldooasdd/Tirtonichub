@@ -3,6 +3,7 @@ import { requireChannel } from "@/server/auth/rbac";
 import { prisma } from "@/server/db";
 import { userNames } from "@/server/user-names";
 import { Inbox, type Chat } from "@/components/channel/inbox";
+import { gowaAkun } from "@/server/gowa-inbox";
 
 const dalam24Jam = (d: Date) => Date.now() - d.getTime() < 24 * 3600_000; // jendela balas Meta
 
@@ -13,6 +14,7 @@ export default async function InboxPage({ searchParams }: { searchParams: Promis
   const labels = new Map([
     ...(process.env.META_LABELS ?? "").split(",").map((x) => x.split("=").map((s) => s.trim()) as [string, string]).filter((x) => x[0] && x[1]),
     ...(await prisma.waNumber.findMany({ select: { phoneNumberId: true, label: true } })).map((n) => [n.phoneNumberId, n.label] as [string, string]),
+    ...gowaAkun().map((a) => [`gowa:${a.n}`, a.label] as [string, string]),
   ]);
   const s = (q ?? "").trim();
   const threads = await prisma.inboxThread.findMany({
@@ -34,13 +36,13 @@ export default async function InboxPage({ searchParams }: { searchParams: Promis
           Inbox
           <Link href="/channel/inbox/sambung" className="rounded-md border px-3 py-1.5 text-14 font-medium">Sambungkan WhatsApp</Link>
         </h1>
-        <p className="text-14 text-muted-foreground">Chat WhatsApp & Instagram pelanggan. Balasan dari HP juga ikut muncul di sini. Balas maksimal 24 jam sejak pesan terakhir pelanggan.</p>
+        <p className="text-14 text-muted-foreground">Chat WhatsApp & Instagram pelanggan. Balasan dari HP juga ikut muncul di sini. Instagram: balas maksimal 24 jam sejak pesan terakhir pelanggan.</p>
       </div>
       <Inbox
         threads={threads.map(chat)}
         aktif={aktif ? chat(aktif) : null}
         q={s}
-        buka={!!lastIn && dalam24Jam(lastIn.at)}
+        buka={!!aktif?.accountId.startsWith("gowa:") || (!!lastIn && dalam24Jam(lastIn.at))}
         msgs={msgs.map((m) => ({ id: m.id, dir: m.dir, text: m.text, at: m.at.toISOString(), by: m.userId ? names(m.userId) : m.dir === "out" ? "HP" : null, error: m.error }))}
       />
     </div>
