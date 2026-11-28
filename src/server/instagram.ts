@@ -100,3 +100,38 @@ export async function igTick(now = new Date()): Promise<void> {
   const due = await prisma.igPost.findMany({ where: { OR: [{ status: "TERJADWAL", jadwal: { lte: now } }, { status: "PROSES" }] }, take: 5, orderBy: { jadwal: "asc" } });
   for (const p of due) await terbitkan(p.id);
 }
+
+export type IgKomentar = { id: string; user: string; text: string; at: string; likes: number; hidden: boolean; replies: { id: string; user: string; text: string; at: string }[] };
+
+/** Komentar 1 postingan (terbaru dulu) + balasannya. Langsung dari Instagram, jadi komentar lama ikut tampil. */
+export async function igKomentar(mediaId: string): Promise<IgKomentar[]> {
+  const j = await api(`${mediaId}/comments?fields=id,text,username,timestamp,like_count,hidden,replies{id,text,username,timestamp}&limit=50`);
+  return (j.data ?? [])
+    .map((c: Any) => ({
+      id: c.id,
+      user: c.username ?? "",
+      text: c.text ?? "",
+      at: c.timestamp,
+      likes: c.like_count ?? 0,
+      hidden: !!c.hidden,
+      replies: (c.replies?.data ?? []).map((r: Any) => ({ id: r.id, user: r.username ?? "", text: r.text ?? "", at: r.timestamp })).sort((a: { at: string }, b: { at: string }) => a.at.localeCompare(b.at)),
+    }))
+    .sort((a: IgKomentar, b: IgKomentar) => b.at.localeCompare(a.at));
+}
+
+/** Balas komentar: publik (balasan di postingan) atau dm=true (DM pribadi ke pengomentar, ≤7 hari). */
+export async function igBalasKomentar(commentId: string, text: string, dm: boolean): Promise<void> {
+  if (dm) {
+    const { igId } = await igIds();
+    await api(`${igId}/messages`, { method: "POST", body: { recipient: { comment_id: commentId }, message: { text } } });
+  } else await api(`${commentId}/replies`, { method: "POST", body: { message: text } });
+}
+
+export async function igSembunyikan(commentId: string, hide: boolean): Promise<void> {
+  await api(`${commentId}?hide=${hide}`, { method: "POST", body: {} });
+}
+
+export async function igPost1(mediaId: string): Promise<IgMedia> {
+  const m = await api(`${mediaId}?fields=id,caption,media_type,media_url,thumbnail_url,permalink,timestamp,like_count,comments_count`);
+  return { id: m.id, caption: m.caption ?? "", type: m.media_type, img: m.thumbnail_url ?? m.media_url ?? null, link: m.permalink, at: m.timestamp, likes: m.like_count ?? 0, comments: m.comments_count ?? 0 };
+}
